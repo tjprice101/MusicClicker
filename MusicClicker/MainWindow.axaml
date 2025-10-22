@@ -1,0 +1,38 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="MusicClicker.MainWindow"
+        Title="🌹🎹 Magnum Opus 🎹🌹"
+        Width="1200" Height="700">
+
+    <!-- Background Image -->
+    <Window.Background>
+        <ImageBrush Source="avares://MusicClicker/Assets/sacredtrevor_A_grand_musical_city_lights_everywhere_popular_shi_d84ff662-c87b-4630-9887-25228f42097b-min.png"
+                    Stretch="UniformToFill"/>
+    </Window.Background>
+
+    <Grid>
+        <!-- Top section: Title and Harmony counter -->
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0" Spacing="10">
+            <TextBlock Text="🌹🎹 Magnum Opus 🎹🌹"
+                       FontSize="36"
+                       Foreground="White"
+                       HorizontalAlignment="Center"
+                       FontWeight="Bold"/>
+            <TextBlock x:Name="HarmonyText"
+                       Text="Harmony: 0"
+                       FontSize="28"
+                       Foreground="White"
+                       HorizontalAlignment="Center"/>
+        </StackPanel>
+
+        <!-- Center section: Main clickable button -->
+        <Button x:Name="ClickButton"
+                Width="250"
+                Height="250"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+            <Image Source="avares://MusicClicker/Assets/Music Game Assets [A961E2A]-min.png"
+                   Stretch="Uniform"/>
+        </Button>
+    </Grid>
+</Window>
