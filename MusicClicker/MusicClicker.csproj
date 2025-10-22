@@ -15,6 +15,7 @@
     <AvaloniaResource Include="Assets\Music Game 16_9 Assets [5A28B4B]-min.png" />
     <AvaloniaResource Include="Assets\Music Game 16_9 Assets [2299EA4]-min.png" />
     <AvaloniaResource Include="Assets\Music Game 16_9 Assets [C690BBF]-min.png" />
+    <AvaloniaResource Include="Assets\MusicGameAssetsChord-min.png" />
 
     <!-- All Avalonia packages aligned to 11.3.7 -->
     <PackageReference Include="Avalonia" Version="11.3.7" />

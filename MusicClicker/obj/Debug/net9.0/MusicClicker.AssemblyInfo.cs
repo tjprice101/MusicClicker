@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MusicClicker")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fbbc31b6bdaade42ced973f18179ddda576d53c1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bebabdaeae99cd9058d87498f7941cfea1bc715a")]
 [assembly: System.Reflection.AssemblyProductAttribute("MusicClicker")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MusicClicker")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
