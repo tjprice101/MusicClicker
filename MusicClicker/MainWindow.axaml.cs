@@ -18,7 +18,7 @@ namespace MusicClicker
         {
             InitializeComponent();
 
-            UpdateEssenceUI();
+            UIUpdater.UpdateEssenceUI(this, gameState);
 
             // ------------------- BUTTON HANDLERS -------------------
 
@@ -98,7 +98,7 @@ namespace MusicClicker
             {
                 MainScreen.IsVisible = false;
                 UpgradeScreen.IsVisible = true;
-                UpdateUI();
+                UIUpdater.UpdateUI(this, gameState);
             };
             BackButtonBottom.Click += BackButton_Click;
 
@@ -106,7 +106,7 @@ namespace MusicClicker
             {
                 MainScreen.IsVisible = false;
                 FragmentationScreen.IsVisible = true;
-                UpdateFragmentationUI();
+                UIUpdater.UpdateFragmentationUI(this, gameState);
             };
             BackButtonFragmentation.Click += (s, e) =>
             {
@@ -118,7 +118,7 @@ namespace MusicClicker
             {
                 MainScreen.IsVisible = false;
                 SaveScoresScreen.IsVisible = true;
-                UpdateSaveScoresUI();
+                UIUpdater.UpdateSaveScoresUI(this, gameState);
             };
             BackButtonSaveScores.Click += (s, e) =>
             {
@@ -130,7 +130,7 @@ namespace MusicClicker
             {
                 MainScreen.IsVisible = false;
                 HeartOfHarmonyScreen.IsVisible = true;
-                UpdateHeartOfHarmonyUI();
+                UIUpdater.UpdateHeartOfHarmonyUI(this, gameState);
             };
             BackButtonHeartOfHarmony.Click += (s, e) =>
             {
@@ -142,7 +142,7 @@ namespace MusicClicker
             {
                 MainScreen.IsVisible = false;
                 UnityTheSymphonyScreen.IsVisible = true;
-                UpdateUnitySymphonyUI();
+                UIUpdater.UpdateUnitySymphonyUI(this, gameState);
             };
             BackButtonUnitySymphony.Click += (s, e) =>
             {
@@ -214,7 +214,7 @@ namespace MusicClicker
                 {
                     gameState.Notes -= 1000;
                     gameState.MelodiousOwned++;
-                    UpdateFragmentationUI();
+                    UIUpdater.UpdateFragmentationUI(this, gameState);
                 }
             };
             HarmoniousFragmentButton.Click += (s, e) =>
@@ -223,7 +223,7 @@ namespace MusicClicker
                 {
                     gameState.Notes -= 5000;
                     gameState.HarmoniousOwned++;
-                    UpdateFragmentationUI();
+                    UIUpdater.UpdateFragmentationUI(this, gameState);
                 }
             };
 
@@ -245,11 +245,11 @@ namespace MusicClicker
                 gameState.Notes += gameState.NotesPerSecond;
                 Dispatcher.UIThread.Post(() =>
                 {
-                    UpdateUI();
-                    UpdateFragmentationUI();
-                    UpdateSaveScoresUI();
-                    UpdateHeartOfHarmonyUI();
-                    UpdateUnitySymphonyUI();
+                    UIUpdater.UpdateUI(this, gameState);
+    UIUpdater.UpdateFragmentationUI(this, gameState);
+    UIUpdater.UpdateSaveScoresUI(this, gameState);
+    UIUpdater.UpdateHeartOfHarmonyUI(this, gameState);
+    UIUpdater.UpdateUnitySymphonyUI(this, gameState);
                 });
             };
             _timer.Start();
@@ -259,11 +259,11 @@ namespace MusicClicker
         private void ClickButton_Click(object? sender, RoutedEventArgs e)
         {
             gameState.Notes += gameState.NotesPerClick;
-            UpdateUI();
-            UpdateFragmentationUI();
-            UpdateSaveScoresUI();
-            UpdateHeartOfHarmonyUI();
-            UpdateUnitySymphonyUI();
+            UIUpdater.UpdateUI(this, gameState);
+UIUpdater.UpdateFragmentationUI(this, gameState);
+UIUpdater.UpdateSaveScoresUI(this, gameState);
+UIUpdater.UpdateHeartOfHarmonyUI(this, gameState);
+UIUpdater.UpdateUnitySymphonyUI(this, gameState);
         }
 
         private void BackButton_Click(object? sender, RoutedEventArgs e)
@@ -337,40 +337,6 @@ namespace MusicClicker
             costText.Text = $"Cost: {Math.Round(baseCost * Math.Pow(1.15, owned), 2)}";
         }
 
-        // ------------------- UI UPDATES -------------------
-        private void UpdateUI()
-        {
-            NotesText.Text = $"Notes: {Math.Round(gameState.Notes, 1)}";
-            NpsText.Text = $"Notes Per Second: {Math.Round(gameState.NotesPerSecond, 1)}";
-            UpgradeNotesTextHeader.Text = $"Notes: {Math.Round(gameState.Notes, 1)}";
-
-            ChordOwnedTextUpgrade.Text = $"Number Owned: {gameState.ChordOwned}";
-            ScaleOwnedTextUpgrade.Text = $"Number Owned: {gameState.ScaleOwned}";
-            OrchestraOwnedTextUpgrade.Text = $"Number Owned: {gameState.OrchestraOwned}";
-            SymphonyOwnedTextUpgrade.Text = $"Number Owned: {gameState.SymphonyOwned}";
-            AriaOwnedTextUpgrade.Text = $"Number Owned: {gameState.AriaOwned}";
-            RequiemOwnedTextUpgrade.Text = $"Number Owned: {gameState.RequiemOwned}";
-            OpusOwnedTextUpgrade.Text = $"Number Owned: {gameState.OpusOwned}";
-            MagnumOpusOwnedTextUpgrade.Text = $"Number Owned: {gameState.MagnumOpusOwned}";
-
-            ChordCostTextUpgrade.Text = $"Cost: {Math.Round(gameState.ChordBaseCost * Math.Pow(1.15, gameState.ChordOwned), 2)}";
-            ScaleCostTextUpgrade.Text = $"Cost: {Math.Round(gameState.ScaleBaseCost * Math.Pow(1.15, gameState.ScaleOwned), 2)}";
-            OrchestraCostTextUpgrade.Text = $"Cost: {Math.Round(gameState.OrchestraBaseCost * Math.Pow(1.15, gameState.OrchestraOwned), 2)}";
-            SymphonyCostTextUpgrade.Text = $"Cost: {Math.Round(gameState.SymphonyBaseCost * Math.Pow(1.15, gameState.SymphonyOwned), 2)}";
-            AriaCostTextUpgrade.Text = $"Cost: {Math.Round(gameState.AriaBaseCost * Math.Pow(1.15, gameState.AriaOwned), 2)}";
-            RequiemCostTextUpgrade.Text = $"Cost: {Math.Round(gameState.RequiemBaseCost * Math.Pow(1.15, gameState.RequiemOwned), 2)}";
-            OpusCostTextUpgrade.Text = $"Cost: {Math.Round(gameState.OpusBaseCost * Math.Pow(1.15, gameState.OpusOwned), 2)}";
-            MagnumOpusCostTextUpgrade.Text = $"Cost: {Math.Round(gameState.MagnumOpusBaseCost * Math.Pow(1.15, gameState.MagnumOpusOwned), 2)}";
-        }
-
-        private void UpdateEssenceUI()
-        {
-            EssenceBeethovenOwnedText.Text = $"{gameState.EssenceBeethoven} Owned";
-            EssencePyotrOwnedText.Text = $"{gameState.EssencePyotr} Owned";
-            EssenceElgarOwnedText.Text = $"{gameState.EssenceElgar} Owned";
-            EssenceLisztOwnedText.Text = $"{gameState.EssenceLiszt} Owned";
-        }
-
         private void BuyEssence(ref int essenceAmount, int cost, TextBlock ownedText)
         {
             if (gameState.Notes >= cost)
@@ -379,71 +345,6 @@ namespace MusicClicker
                 essenceAmount++;
                 ownedText.Text = $"{essenceAmount} Owned";
             }
-        }
-
-        private void UpdateFragmentationUI()
-        {
-            FragmentationNotesText.Text = $"Notes: {Math.Round(gameState.Notes, 1)}";
-            MelodiousOwnedText.Text = $"{gameState.MelodiousOwned} Owned";
-            HarmoniousOwnedText.Text = $"{gameState.HarmoniousOwned} Owned";
-        }
-
-        private void UpdateSaveScoresUI()
-        {
-            MoonlightMinorKeysText.Text = $"{gameState.MoonlightMinorKeys} Minor Keys of Moonlight Sonata Owned";
-            MoonlightMinorScalesText.Text = $"{gameState.MoonlightMinorScales} Minor Scales of Moonlight Sonata Owned";
-            MoonlightMinorProgressionsText.Text = $"{gameState.MoonlightMinorProgressions} Minor Progressions of Moonlight Sonata Owned";
-            MoonlightMajorSheetsText.Text = $"{gameState.MoonlightMajorSheets} Major Sheets of Moonlight Sonata Owned";
-
-            EroicaMinorKeysText.Text = $"{gameState.EroicaMinorKeys} Minor Keys of Eroica Owned";
-            EroicaMinorScalesText.Text = $"{gameState.EroicaMinorScales} Minor Scales of Eroica Owned";
-            EroicaMinorProgressionsText.Text = $"{gameState.EroicaMinorProgressions} Minor Progressions of Eroica Owned";
-            EroicaMajorSheetsText.Text = $"{gameState.EroicaMajorSheets} Major Sheets of Eroica Owned";
-
-            SwanLakeMinorKeysText.Text = $"{gameState.SwanLakeMinorKeys} Minor Keys of Swan Lake Owned";
-            SwanLakeMinorScalesText.Text = $"{gameState.SwanLakeMinorScales} Minor Scales of Swan Lake Owned";
-            SwanLakeMinorProgressionsText.Text = $"{gameState.SwanLakeMinorProgressions} Minor Progressions of Swan Lake Owned";
-            SwanLakeMajorSheetsText.Text = $"{gameState.SwanLakeMajorSheets} Major Sheets of Swan Lake Owned";
-            SaveScoresNotesText.Text = $"Notes: {Math.Round(gameState.Notes, 1)}";
-        }
-
-        private void UpdateHeartOfHarmonyUI()
-        {
-            MoonlightMajorSheetsOwnedText.Text = $"{gameState.MoonlightMajorSheets} Moonlight Sonata Major Sheets Owned";
-            MoonlightMajorKeysOwnedText.Text = $"{gameState.MoonlightMajorKeys} Moonlight Sonata Major Keys Owned";
-            MoonlightMajorScalesOwnedText.Text = $"{gameState.MoonlightMajorScales} Moonlight Sonata Major Scales Owned";
-            MoonlightMajorProgressionsOwnedText.Text = $"{gameState.MoonlightMajorProgressions} Moonlight Sonata Major Progressions Owned";
-
-            EroicaMajorSheetsOwnedText.Text = $"{gameState.EroicaMajorSheets} Eroica Major Sheets Owned";
-            EroicaMajorKeysOwnedText.Text = $"{gameState.EroicaMajorKeys} Eroica Major Keys Owned";
-            EroicaMajorScalesOwnedText.Text = $"{gameState.EroicaMajorScales} Eroica Major Scales Owned";
-            EroicaMajorProgressionsOwnedText.Text = $"{gameState.EroicaMajorProgressions} Eroica Major Progressions Owned";
-
-            SwanLakeMajorSheetsOwnedText.Text = $"{gameState.SwanLakeMajorSheets} Swan Lake Major Sheets Owned";
-            SwanLakeMajorKeysOwnedText.Text = $"{gameState.SwanLakeMajorKeys} Swan Lake Major Keys Owned";
-            SwanLakeMajorScalesOwnedText.Text = $"{gameState.SwanLakeMajorScales} Swan Lake Major Scales Owned";
-            SwanLakeMajorProgressionsOwnedText.Text = $"{gameState.SwanLakeMajorProgressions} Swan Lake Major Progressions Owned";
-
-            HeartOfHarmonyNotesText.Text = $"Notes: {Math.Round(gameState.Notes, 1)}";
-        }
-
-        private void UpdateUnitySymphonyUI()
-        {
-            UnityNotesTextHeader.Text = $"Notes: {Math.Round(gameState.Notes, 1)}";
-            MoonlightMinorOwnedText.Text = $"{gameState.MoonlightMinorOwned} Owned";
-            MoonlightMajorOwnedText.Text = $"{gameState.MoonlightMajorOwned} Owned";
-            EroicaMinorOwnedText.Text = $"{gameState.EroicaMinorOwned} Owned";
-            EroicaMajorOwnedText.Text = $"{gameState.EroicaMajorOwned} Owned";
-            SwanMinorOwnedText.Text = $"{gameState.SwanMinorOwned} Owned";
-            SwanMajorOwnedText.Text = $"{gameState.SwanMajorOwned} Owned";
-            LaCampanellaMinorOwnedText.Text = $"{gameState.LaCampanellaMinorOwned} Owned";
-            LaCampanellaMajorOwnedText.Text = $"{gameState.LaCampanellaMajorOwned} Owned";
-            EnigmaMinorOwnedText.Text = $"{gameState.EnigmaMinorOwned} Owned";
-            EnigmaMajorOwnedText.Text = $"{gameState.EnigmaMajorOwned} Owned";
-            FateMinorOwnedText.Text = $"{gameState.FateMinorOwned} Owned";
-            FateMajorOwnedText.Text = $"{gameState.FateMajorOwned} Owned";
-            OdeToJoyMinorOwnedText.Text = $"{gameState.OdeToJoyMinorOwned} Owned";
-            OdeToJoyMajorOwnedText.Text = $"{gameState.OdeToJoyMajorOwned} Owned";
         }
 
         // ------------------- CRAFTING -------------------
@@ -463,9 +364,9 @@ namespace MusicClicker
             if (addNps > 0) gameState.NotesPerSecond += addNps;
             if (isMajor) majorAbilityFlag = true;
 
-            UpdateUnitySymphonyUI();
-            UpdateEssenceUI();
-            UpdateFragmentationUI();
+            UIUpdater.UpdateUnitySymphonyUI(this, gameState);
+UIUpdater.UpdateEssenceUI(this, gameState);
+UIUpdater.UpdateFragmentationUI(this, gameState);
 
             return true;
         }
@@ -475,11 +376,11 @@ namespace MusicClicker
             if (e.Key == Avalonia.Input.Key.Space)
             {
                 gameState.Notes += 1_000_000;
-                UpdateUI();
-                UpdateFragmentationUI();
-                UpdateSaveScoresUI();
-                UpdateHeartOfHarmonyUI();
-                UpdateUnitySymphonyUI();
+                UIUpdater.UpdateUI(this, gameState);
+                UIUpdater.UpdateFragmentationUI(this, gameState);
+                UIUpdater.UpdateSaveScoresUI(this, gameState);
+                UIUpdater.UpdateHeartOfHarmonyUI(this, gameState);
+                UIUpdater.UpdateUnitySymphonyUI(this, gameState);
             }
         }
 
@@ -496,7 +397,7 @@ namespace MusicClicker
 
             Dispatcher.UIThread.Post(() =>
             {
-                UpdateSaveScoresUI();
+                UIUpdater.UpdateSaveScoresUI(this, gameState);
             });
         }
     }
