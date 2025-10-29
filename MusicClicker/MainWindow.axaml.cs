@@ -6,6 +6,13 @@ using System;
 using System.Timers;
 
 namespace MusicClicker
+
+// TODO List:
+// 1.) AI Generate an Image for a new Essence Button and background underneath of the main clicker button.
+// 2.) Hook up the Essence screen to work properly. 
+// 3.) AI Generate the "Upgrades" button and background to put to the right of the essence button. 
+// 4.) Add functionality to Heart of Harmony for the major versions of La Campanella and up. 
+
 {
     public partial class MainWindow : Window
     {

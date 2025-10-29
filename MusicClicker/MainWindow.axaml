@@ -948,6 +948,229 @@
                         </StackPanel>
                     </Grid>
 
+                    <!-- La Campanella Major -->
+                    <Grid Height="250">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Left: Large Button + Texts -->
+                        <StackPanel Grid.Column="0" HorizontalAlignment="Center"
+                            VerticalAlignment="Center" Spacing="10">
+                            <TextBlock x:Name="LaCampanellaMajorSheetsOwnedText"
+                                Text="0 La Campanella Major Sheets Owned" FontSize="16"
+                                Foreground="White" HorizontalAlignment="Center" />
+                            <TextBlock Text="Needs 1 La Campanella Major Sheets" FontSize="20"
+                                Foreground="White" HorizontalAlignment="Center" />
+                            <Button x:Name="LaCampanellaHarmonyButton" Width="216" Height="216"
+                                Background="Transparent" BorderThickness="0">
+                                <Image Source="avares://MusicClicker/Assets/LaCampanellaMajorSheets.png"
+                                    Stretch="UniformToFill" Width="216" Height="216" />
+                            </Button>
+                        </StackPanel>
+
+                        <!-- Right: Small Images with Text aligned horizontally -->
+                        <StackPanel Grid.Column="1" Orientation="Horizontal"
+                            HorizontalAlignment="Left" VerticalAlignment="Center" Spacing="30"
+                            Margin="15,0,0,0">
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
+                                Spacing="6">
+                                <Image Source="avares://MusicClicker/Assets/LaCampanellaMajorKey.png"
+                                    Width="50" Height="50" Stretch="Uniform" />
+                                <TextBlock x:Name="LaCampanellaMajorKeysOwnedText"
+                                    Text="0 La Campanella Major Keys Owned" FontSize="16"
+                                    Foreground="White" TextWrapping="Wrap" Width="180"
+                                    TextAlignment="Center" />
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
+                                Spacing="6">
+                                <Image Source="avares://MusicClicker/Assets/LaCampanellaMajorScale.png"
+                                    Width="50" Height="50" Stretch="Uniform" />
+                                <TextBlock x:Name="LaCampanellaMajorScalesOwnedText"
+                                    Text="0 La Campanella Major Scales Owned" FontSize="16"
+                                    Foreground="White" TextWrapping="Wrap" Width="180"
+                                    TextAlignment="Center" />
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
+                                Spacing="6">
+                                <Image Source="avares://MusicClicker/Assets/LaCampanellaMajorProgression.png"
+                                    Width="50" Height="50" Stretch="Uniform" />
+                                <TextBlock x:Name="LaCampanellaMajorProgressionsOwnedText"
+                                    Text="0 La Campanella Major Progressions Owned" FontSize="16"
+                                    Foreground="White" TextWrapping="Wrap" Width="180"
+                                    TextAlignment="Center" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Enigma Major -->
+                    <Grid Height="250">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Left: Large Button + Texts -->
+                        <StackPanel Grid.Column="0" HorizontalAlignment="Center"
+                            VerticalAlignment="Center" Spacing="10">
+                            <TextBlock x:Name="EnigmaMajorSheetsOwnedText"
+                                Text="0 Enigma Major Sheets Owned" FontSize="16"
+                                Foreground="White" HorizontalAlignment="Center" />
+                            <TextBlock Text="Needs 1 Enigma Major Sheets" FontSize="20"
+                                Foreground="White" HorizontalAlignment="Center" />
+                            <Button x:Name="EnigmaHarmonyButton" Width="216" Height="216"
+                                Background="Transparent" BorderThickness="0">
+                                <Image Source="avares://MusicClicker/Assets/EnigmaMajorSheets.png"
+                                    Stretch="UniformToFill" Width="216" Height="216" />
+                            </Button>
+                        </StackPanel>
+
+                        <!-- Right: Small Images with Text aligned horizontally -->
+                        <StackPanel Grid.Column="1" Orientation="Horizontal"
+                            HorizontalAlignment="Left" VerticalAlignment="Center" Spacing="30"
+                            Margin="15,0,0,0">
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
+                                Spacing="6">
+                                <Image Source="avares://MusicClicker/Assets/EnigmaMajorKey.png"
+                                    Width="50" Height="50" Stretch="Uniform" />
+                                <TextBlock x:Name="EnigmaMajorKeysOwnedText"
+                                    Text="0 Enigma Major Keys Owned" FontSize="16"
+                                    Foreground="White" TextWrapping="Wrap" Width="180"
+                                    TextAlignment="Center" />
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
+                                Spacing="6">
+                                <Image Source="avares://MusicClicker/Assets/EnigmaMajorScale.png"
+                                    Width="50" Height="50" Stretch="Uniform" />
+                                <TextBlock x:Name="EnigmaMajorScalesOwnedText"
+                                    Text="0 Enigma Major Scales Owned" FontSize="16"
+                                    Foreground="White" TextWrapping="Wrap" Width="180"
+                                    TextAlignment="Center" />
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
+                                Spacing="6">
+                                <Image Source="avares://MusicClicker/Assets/EnigmaMajorProgression.png"
+                                    Width="50" Height="50" Stretch="Uniform" />
+                                <TextBlock x:Name="EnigmaMajorProgressionsOwnedText"
+                                    Text="0 Enigma Major Progressions Owned" FontSize="16"
+                                    Foreground="White" TextWrapping="Wrap" Width="180"
+                                    TextAlignment="Center" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Fate Major -->
+                    <Grid Height="250">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Left: Large Button + Texts -->
+                        <StackPanel Grid.Column="0" HorizontalAlignment="Center"
+                            VerticalAlignment="Center" Spacing="10">
+                            <TextBlock x:Name="FateMajorSheetsOwnedText"
+                                Text="0 Fate Major Sheets Owned" FontSize="16"
+                                Foreground="White" HorizontalAlignment="Center" />
+                            <TextBlock Text="Needs 1 Fate Major Sheets" FontSize="20"
+                                Foreground="White" HorizontalAlignment="Center" />
+                            <Button x:Name="FateHarmonyButton" Width="216" Height="216"
+                                Background="Transparent" BorderThickness="0">
+                                <Image Source="avares://MusicClicker/Assets/FateMajorSheets.png"
+                                    Stretch="UniformToFill" Width="216" Height="216" />
+                            </Button>
+                        </StackPanel>
+
+                        <!-- Right: Small Images with Text aligned horizontally -->
+                        <StackPanel Grid.Column="1" Orientation="Horizontal"
+                            HorizontalAlignment="Left" VerticalAlignment="Center" Spacing="30"
+                            Margin="15,0,0,0">
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
+                                Spacing="6">
+                                <Image Source="avares://MusicClicker/Assets/FateMajorKey.png"
+                                    Width="50" Height="50" Stretch="Uniform" />
+                                <TextBlock x:Name="FateMajorKeysOwnedText"
+                                    Text="0 Fate Major Keys Owned" FontSize="16"
+                                    Foreground="White" TextWrapping="Wrap" Width="180"
+                                    TextAlignment="Center" />
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
+                                Spacing="6">
+                                <Image Source="avares://MusicClicker/Assets/FateMajorScale.png"
+                                    Width="50" Height="50" Stretch="Uniform" />
+                                <TextBlock x:Name="FateMajorScalesOwnedText"
+                                    Text="0 Fate Major Scales Owned" FontSize="16"
+                                    Foreground="White" TextWrapping="Wrap" Width="180"
+                                    TextAlignment="Center" />
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
+                                Spacing="6">
+                                <Image Source="avares://MusicClicker/Assets/FateMajorProgression.png"
+                                    Width="50" Height="50" Stretch="Uniform" />
+                                <TextBlock x:Name="FateMajorProgressionsOwnedText"
+                                    Text="0 Fate Major Progressions Owned" FontSize="16"
+                                    Foreground="White" TextWrapping="Wrap" Width="180"
+                                    TextAlignment="Center" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Ode to Joy Major -->
+                    <Grid Height="250">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Left: Large Button + Texts -->
+                        <StackPanel Grid.Column="0" HorizontalAlignment="Center"
+                            VerticalAlignment="Center" Spacing="10">
+                            <TextBlock x:Name="OdeToJoyMajorSheetsOwnedText"
+                                Text="0 Ode to Joy Major Sheets Owned" FontSize="16"
+                                Foreground="White" HorizontalAlignment="Center" />
+                            <TextBlock Text="Needs 1 Ode to Joy Major Sheets" FontSize="20"
+                                Foreground="White" HorizontalAlignment="Center" />
+                            <Button x:Name="OdeToJoyHarmonyButton" Width="216" Height="216"
+                                Background="Transparent" BorderThickness="0">
+                                <Image Source="avares://MusicClicker/Assets/OdeToJoyMajorSheets.png"
+                                    Stretch="UniformToFill" Width="216" Height="216" />
+                            </Button>
+                        </StackPanel>
+
+                        <!-- Right: Small Images with Text aligned horizontally -->
+                        <StackPanel Grid.Column="1" Orientation="Horizontal"
+                            HorizontalAlignment="Left" VerticalAlignment="Center" Spacing="30"
+                            Margin="15,0,0,0">
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
+                                Spacing="6">
+                                <Image Source="avares://MusicClicker/Assets/OdeToJoyMajorKey.png"
+                                    Width="50" Height="50" Stretch="Uniform" />
+                                <TextBlock x:Name="OdeToJoyMajorKeysOwnedText"
+                                    Text="0 Ode to Joy Major Keys Owned" FontSize="16"
+                                    Foreground="White" TextWrapping="Wrap" Width="180"
+                                    TextAlignment="Center" />
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
+                                Spacing="6">
+                                <Image Source="avares://MusicClicker/Assets/OdeToJoyMajorScale.png"
+                                    Width="50" Height="50" Stretch="Uniform" />
+                                <TextBlock x:Name="OdeToJoyMajorScalesOwnedText"
+                                    Text="0 Ode to Joy Major Scales Owned" FontSize="16"
+                                    Foreground="White" TextWrapping="Wrap" Width="180"
+                                    TextAlignment="Center" />
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
+                                Spacing="6">
+                                <Image Source="avares://MusicClicker/Assets/OdeToJoyMajorProgression.png"
+                                    Width="50" Height="50" Stretch="Uniform" />
+                                <TextBlock x:Name="OdeToJoyMajorProgressionsOwnedText"
+                                    Text="0 Ode to Joy Major Progressions Owned" FontSize="16"
+                                    Foreground="White" TextWrapping="Wrap" Width="180"
+                                    TextAlignment="Center" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
                 </StackPanel>
             </ScrollViewer>
 
@@ -992,7 +1215,7 @@
                                 <TextBlock x:Name="MoonlightMinorOwnedText" Text="0 Owned"
                                     Foreground="White"
                                     FontSize="16" HorizontalAlignment="Center" />
-                                <TextBlock Text="Adds 3000 NPS" Foreground="White" FontSize="14"
+                                <TextBlock Text="Adds 3,000 NPS" Foreground="White" FontSize="14"
                                     HorizontalAlignment="Center" />
                             </StackPanel>
 
@@ -1077,7 +1300,7 @@
                                 <TextBlock x:Name="EroicaMinorOwnedText" Text="0 Owned"
                                     Foreground="White"
                                     FontSize="16" HorizontalAlignment="Center" />
-                                <TextBlock Text="Adds 8000 NPS" Foreground="White" FontSize="14"
+                                <TextBlock Text="Adds 8,000 NPS" Foreground="White" FontSize="14"
                                     HorizontalAlignment="Center" />
                             </StackPanel>
 
@@ -1162,7 +1385,7 @@
                                 <TextBlock x:Name="SwanMinorOwnedText" Text="0 Owned"
                                     Foreground="White"
                                     FontSize="16" HorizontalAlignment="Center" />
-                                <TextBlock Text="Adds 15000 NPS" Foreground="White" FontSize="14"
+                                <TextBlock Text="Adds 15,000 NPS" Foreground="White" FontSize="14"
                                     HorizontalAlignment="Center" />
                             </StackPanel>
 
@@ -1337,7 +1560,8 @@
                             <Button x:Name="EnigmaMinorButton" Grid.Column="1" Margin="5"
                                 Width="384" Height="216"
                                 Background="Transparent" BorderThickness="0">
-                                <Image Source="avares://MusicClicker/Assets/EnigmaVariationsMinor.png"
+                                <Image
+                                    Source="avares://MusicClicker/Assets/EnigmaVariationsMinor.png"
                                     Stretch="UniformToFill" Width="384" Height="216" />
                             </Button>
 
@@ -1564,7 +1788,6 @@
                             </StackPanel>
                         </Grid>
                     </Border>
-
                 </StackPanel>
             </ScrollViewer>
 

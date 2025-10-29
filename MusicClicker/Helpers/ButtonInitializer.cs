@@ -218,48 +218,57 @@ namespace MusicClicker
         }
 
         private static void InitializeManualCrafting(MainWindow window)
-        {
-            // Moonlight
-            window.MoonlightMinorButton.Click += (s, e) =>
-                UniteTheSymphonyManager.TryCraft(window, ref window.GameState.MoonlightMinorOwned, 5, 0, 10, 0, 3000, false, ref window.GameState.MoonlightMajorAbility);
-            window.MoonlightMajorButton.Click += (s, e) =>
-                UniteTheSymphonyManager.TryCraft(window, ref window.GameState.MoonlightMajorOwned, 10, 0, 0, 10, 0, true, ref window.GameState.MoonlightMajorAbility);
+{
+    // Moonlight Sonata - Minor and Major
+    window.MoonlightMinorButton.Click += (s, e) =>
+        UniteTheSymphonyManager.TryCraftMoonlightMinor(window, ref window.GameState.MoonlightMinorOwned);
 
-            // Eroica
-            window.EroicaMinorButton.Click += (s, e) =>
-                UniteTheSymphonyManager.TryCraft(window, ref window.GameState.EroicaMinorOwned, 10, 0, 15, 0, 8000, false, ref window.GameState.EroicaMajorAbility);
-            window.EroicaMajorButton.Click += (s, e) =>
-                UniteTheSymphonyManager.TryCraft(window, ref window.GameState.EroicaMajorOwned, 15, 0, 0, 15, 0, true, ref window.GameState.EroicaMajorAbility);
+    window.MoonlightMajorButton.Click += (s, e) =>
+        UniteTheSymphonyManager.TryCraftMoonlightSonataMajor(window, ref window.GameState.MoonlightMajorOwned);
 
-            // Swan
-            window.SwanMinorButton.Click += (s, e) =>
-                UniteTheSymphonyManager.TryCraft(window, ref window.GameState.SwanMinorOwned, 0, 5, 20, 0, 15000, false, ref window.GameState.SwanMajorAbility);
-            window.SwanMajorButton.Click += (s, e) =>
-                UniteTheSymphonyManager.TryCraft(window, ref window.GameState.SwanMajorOwned, 0, 10, 0, 20, 0, true, ref window.GameState.SwanMajorAbility);
+    // Eroica - Minor and Major
+    window.EroicaMinorButton.Click += (s, e) =>
+        UniteTheSymphonyManager.TryCraftEroicaMinor(window, ref window.GameState.EroicaMinorOwned);
 
-            // La Campanella
-            window.LaCampanellaMinorButton.Click += (s, e) =>
-                UniteTheSymphonyManager.TryCraft(window, ref window.GameState.LaCampanellaMinorOwned, 0, 0, 25, 0, 35000, false, ref window.GameState.LaCampanellaMajorAbility);
-            window.LaCampanellaMajorButton.Click += (s, e) =>
-                UniteTheSymphonyManager.TryCraft(window, ref window.GameState.LaCampanellaMajorOwned, 0, 0, 0, 25, 0, true, ref window.GameState.LaCampanellaMajorAbility);
+    window.EroicaMajorButton.Click += (s, e) =>
+        UniteTheSymphonyManager.TryCraftEroicaMajor(window, ref window.GameState.EroicaMajorOwned);
 
-            // Enigma
-            window.EnigmaMinorButton.Click += (s, e) =>
-                UniteTheSymphonyManager.TryCraft(window, ref window.GameState.EnigmaMinorOwned, 0, 10, 30, 0, 75000, false, ref window.GameState.EnigmaMajorAbility);
-            window.EnigmaMajorButton.Click += (s, e) =>
-                UniteTheSymphonyManager.TryCraft(window, ref window.GameState.EnigmaMajorOwned, 0, 15, 0, 30, 0, true, ref window.GameState.EnigmaMajorAbility);
+    // Swan Lake - Minor and Major
+    window.SwanMinorButton.Click += (s, e) =>
+        UniteTheSymphonyManager.TryCraftSwanLakeMinor(window, ref window.GameState.SwanMinorOwned);
 
-            // Fate
-            window.FateMinorButton.Click += (s, e) =>
-                UniteTheSymphonyManager.TryCraft(window, ref window.GameState.FateMinorOwned, 20, 0, 35, 0, 125000, false, ref window.GameState.FateMajorAbility);
-            window.FateMajorButton.Click += (s, e) =>
-                UniteTheSymphonyManager.TryCraft(window, ref window.GameState.FateMajorOwned, 25, 0, 0, 35, 0, true, ref window.GameState.FateMajorAbility);
+    window.SwanMajorButton.Click += (s, e) =>
+        UniteTheSymphonyManager.TryCraftSwanLakeMajor(window, ref window.GameState.SwanMajorOwned);
 
-            // Ode to Joy
-            window.OdeToJoyMinorButton.Click += (s, e) =>
-                UniteTheSymphonyManager.TryCraft(window, ref window.GameState.OdeToJoyMinorOwned, 10, 0, 40, 0, 255000, false, ref window.GameState.OdeToJoyMajorAbility);
-            window.OdeToJoyMajorButton.Click += (s, e) =>
-                UniteTheSymphonyManager.TryCraft(window, ref window.GameState.OdeToJoyMajorOwned, 15, 0, 0, 40, 0, true, ref window.GameState.OdeToJoyMajorAbility);
-        }
+    // La Campanella - Minor and Major
+    window.LaCampanellaMinorButton.Click += (s, e) =>
+        UniteTheSymphonyManager.TryCraftLaCampanellaMinor(window, ref window.GameState.LaCampanellaMinorOwned);
+
+    window.LaCampanellaMajorButton.Click += (s, e) =>
+        UniteTheSymphonyManager.TryCraftLaCampanellaMajor(window, ref window.GameState.LaCampanellaMajorOwned);
+
+    // Enigma - Minor and Major
+    window.EnigmaMinorButton.Click += (s, e) =>
+        UniteTheSymphonyManager.TryCraftEnigmaMinor(window, ref window.GameState.EnigmaMinorOwned);
+
+    window.EnigmaMajorButton.Click += (s, e) =>
+        UniteTheSymphonyManager.TryCraftEnigmaMajor(window, ref window.GameState.EnigmaMajorOwned);
+
+    // Fate - Minor and Major
+    window.FateMinorButton.Click += (s, e) =>
+        UniteTheSymphonyManager.TryCraftFateMinor(window, ref window.GameState.FateMinorOwned);
+
+    window.FateMajorButton.Click += (s, e) =>
+        UniteTheSymphonyManager.TryCraftFateMajor(window, ref window.GameState.FateMajorOwned);
+
+    // Ode to Joy - Minor and Major
+    window.OdeToJoyMinorButton.Click += (s, e) =>
+        UniteTheSymphonyManager.TryCraftOdeToJoyMinor(window, ref window.GameState.OdeToJoyMinorOwned);
+
+    window.OdeToJoyMajorButton.Click += (s, e) =>
+        UniteTheSymphonyManager.TryCraftOdeToJoyMajor(window, ref window.GameState.OdeToJoyMajorOwned);
+}
+
+
     }
 }
