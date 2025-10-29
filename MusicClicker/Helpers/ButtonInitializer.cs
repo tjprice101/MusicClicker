@@ -38,6 +38,35 @@ namespace MusicClicker
                     ref window.GameState.SwanLakeMajorProgressions,
                     window.SwanLakeMajorSheetsOwnedText, window.SwanLakeMajorKeysOwnedText,
                     window.SwanLakeMajorScalesOwnedText, window.SwanLakeMajorProgressionsOwnedText, "Swan Lake");
+
+                    // New Scores
+    window.LaCampanellaHarmonyButton.Click += (s, e) =>
+        HeartOfHarmonyManager.HandleMajorSheetClick(window, ref window.GameState.LaCampanellaMajorSheets,
+            ref window.GameState.LaCampanellaMajorKeys, ref window.GameState.LaCampanellaMajorScales,
+            ref window.GameState.LaCampanellaMajorProgressions,
+            window.LaCampanellaMajorSheetsOwnedText, window.LaCampanellaMajorKeysOwnedText,
+            window.LaCampanellaMajorScalesOwnedText, window.LaCampanellaMajorProgressionsOwnedText, "La Campanella");
+
+    window.EnigmaHarmonyButton.Click += (s, e) =>
+        HeartOfHarmonyManager.HandleMajorSheetClick(window, ref window.GameState.EnigmaMajorSheets,
+            ref window.GameState.EnigmaMajorKeys, ref window.GameState.EnigmaMajorScales,
+            ref window.GameState.EnigmaMajorProgressions,
+            window.EnigmaMajorSheetsOwnedText, window.EnigmaMajorKeysOwnedText,
+            window.EnigmaMajorScalesOwnedText, window.EnigmaMajorProgressionsOwnedText, "Enigma");
+
+    window.FateHarmonyButton.Click += (s, e) =>
+        HeartOfHarmonyManager.HandleMajorSheetClick(window, ref window.GameState.FateMajorSheets,
+            ref window.GameState.FateMajorKeys, ref window.GameState.FateMajorScales,
+            ref window.GameState.FateMajorProgressions,
+            window.FateMajorSheetsOwnedText, window.FateMajorKeysOwnedText,
+            window.FateMajorScalesOwnedText, window.FateMajorProgressionsOwnedText, "Fate");
+
+    window.OdeToJoyHarmonyButton.Click += (s, e) =>
+        HeartOfHarmonyManager.HandleMajorSheetClick(window, ref window.GameState.OdeToJoyMajorSheets,
+            ref window.GameState.OdeToJoyMajorKeys, ref window.GameState.OdeToJoyMajorScales,
+            ref window.GameState.OdeToJoyMajorProgressions,
+            window.OdeToJoyMajorSheetsOwnedText, window.OdeToJoyMajorKeysOwnedText,
+            window.OdeToJoyMajorScalesOwnedText, window.OdeToJoyMajorProgressionsOwnedText, "Ode to Joy");
         }
 
         private static void InitializeEssenceButtons(MainWindow window)
