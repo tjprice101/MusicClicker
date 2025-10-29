@@ -66,6 +66,22 @@ namespace MusicClicker
         private int _swanMinorOwned = 0;
         private int _swanMajorOwned = 0;
 
+        // Craft Ownership (Unite the Symphony)
+private int _laCampanellaMinorOwned = 0;
+private int _laCampanellaMajorOwned = 0;
+private int _enigmaMinorOwned = 0;
+private int _enigmaMajorOwned = 0;
+private int _fateMinorOwned = 0;
+private int _fateMajorOwned = 0;
+private int _odeToJoyMinorOwned = 0;
+private int _odeToJoyMajorOwned = 0;
+
+// Ability unlock flags
+private bool _laCampanellaMajorAbility = false;
+private bool _enigmaMajorAbility = false;
+private bool _fateMajorAbility = false;
+private bool _odeToJoyMajorAbility = false;
+
         // Ability unlock flags (major crafts)
         private bool _moonlightMajorAbility = false;
         private bool _eroicaMajorAbility = false;
@@ -83,6 +99,27 @@ namespace MusicClicker
         private int _swanLakeMajorKeys = 0;
         private int _swanLakeMajorScales = 0;
         private int _swanLakeMajorProgressions = 0;
+
+        // 🆕 New Save Scores entries
+        private int _laCampanellaMinorKeys = 0;
+        private int _laCampanellaMinorScales = 0;
+        private int _laCampanellaMinorProgressions = 0;
+        private int _laCampanellaMajorSheets = 0;
+
+        private int _enigmaMinorKeys = 0;
+        private int _enigmaMinorScales = 0;
+        private int _enigmaMinorProgressions = 0;
+        private int _enigmaMajorSheets = 0;
+
+        private int _fateMinorKeys = 0;
+        private int _fateMinorScales = 0;
+        private int _fateMinorProgressions = 0;
+        private int _fateMajorSheets = 0;
+
+        private int _odeToJoyMinorKeys = 0;
+        private int _odeToJoyMinorScales = 0;
+        private int _odeToJoyMinorProgressions = 0;
+        private int _odeToJoyMajorSheets = 0;
 
         private Timer _timer;
         private Random _random = new Random();
@@ -207,6 +244,16 @@ namespace MusicClicker
                 MainScreen.IsVisible = true;
             };
 
+            // 🆕 NEW Save Scores buttons
+            LaCampanellaButton.Click += (s, e) =>
+                HandleSaveScoreClick(ref _laCampanellaMinorKeys, ref _laCampanellaMinorScales, ref _laCampanellaMinorProgressions, ref _laCampanellaMajorSheets, 12000);
+            EnigmaButton.Click += (s, e) =>
+                HandleSaveScoreClick(ref _enigmaMinorKeys, ref _enigmaMinorScales, ref _enigmaMinorProgressions, ref _enigmaMajorSheets, 25000);
+            FateButton.Click += (s, e) =>
+                HandleSaveScoreClick(ref _fateMinorKeys, ref _fateMinorScales, ref _fateMinorProgressions, ref _fateMajorSheets, 35000);
+            OdeToJoyButton.Click += (s, e) =>
+                HandleSaveScoreClick(ref _odeToJoyMinorKeys, ref _odeToJoyMinorScales, ref _odeToJoyMinorProgressions, ref _odeToJoyMajorSheets, 55000);
+
             // Manual crafting buttons (Unite the Symphony)
             MoonlightMinorButton.Click += (s, e) =>
                 TryCraft(ref _moonlightMinorOwned, 5, 0, 10, 0, 3000, false, ref _moonlightMajorAbility);
@@ -222,6 +269,50 @@ namespace MusicClicker
                 TryCraft(ref _swanMinorOwned, 0, 5, 20, 0, 15000, false, ref _swanMajorAbility);
             SwanMajorButton.Click += (s, e) =>
                 TryCraft(ref _swanMajorOwned, 0, 10, 0, 20, 0, true, ref _swanMajorAbility);
+
+            // La Campanella
+LaCampanellaMinorButton.Click += (s, e) => 
+    TryCraft(ref _laCampanellaMinorOwned, 0, 0, 25, 0, 35000, false, ref _laCampanellaMajorAbility);
+
+LaCampanellaMajorButton.Click += (s, e) => 
+    TryCraft(ref _laCampanellaMajorOwned, 0, 0, 0, 25, 0, true, ref _laCampanellaMajorAbility);
+
+// Enigma
+EnigmaMinorButton.Click += (s, e) => 
+    TryCraft(ref _enigmaMinorOwned, 0, 10, 30, 0, 75000, false, ref _enigmaMajorAbility);
+
+EnigmaMajorButton.Click += (s, e) => 
+    TryCraft(ref _enigmaMajorOwned, 0, 15, 0, 30, 0, true, ref _enigmaMajorAbility);
+
+// Fate
+FateMinorButton.Click += (s, e) => 
+    TryCraft(ref _fateMinorOwned, 20, 0, 35, 0, 125000, false, ref _fateMajorAbility);
+
+FateMajorButton.Click += (s, e) => 
+    TryCraft(ref _fateMajorOwned, 25, 0, 0, 35, 0, true, ref _fateMajorAbility);
+
+// Ode to Joy
+OdeToJoyMinorButton.Click += (s, e) =>
+    TryCraft(
+        ref _odeToJoyMinorOwned,
+        costEssenceBeethoven: 10,     // 10 Essence of Beethoven
+        costEssencePyotr: 0,
+        costMelodious: 40,            // 40 Melodious Fragments
+        costHarmonious: 0,
+        addNps: 255000,                // Minor craft adds 255,000 NPS
+        isMajor: false,
+        ref _odeToJoyMajorAbility);
+
+OdeToJoyMajorButton.Click += (s, e) =>
+    TryCraft(
+        ref _odeToJoyMajorOwned,
+        costEssenceBeethoven: 15,     // 15 Essence of Beethoven
+        costEssencePyotr: 0,
+        costMelodious: 0,
+        costHarmonious: 40,           // 40 Harmonious Fragments
+        addNps: 0,                     // Major craft does NOT add NPS directly
+        isMajor: true,
+        ref _odeToJoyMajorAbility);
 
             // Fragmentation Buttons
             MelodiousFragmentButton.Click += (s, e) =>
@@ -400,6 +491,27 @@ namespace MusicClicker
             SwanLakeMajorScalesOwnedText.Text = $"{_swanLakeMajorScales} Swan Lake Major Scales Owned";
             SwanLakeMajorProgressionsOwnedText.Text = $"{_swanLakeMajorProgressions} Swan Lake Major Progressions Owned";
 
+            // 🆕 New Scores
+            LaCampanellaMinorKeysText.Text = $"{_laCampanellaMinorKeys} Minor Keys of La Campanella Owned";
+            LaCampanellaMinorScalesText.Text = $"{_laCampanellaMinorScales} Minor Scales of La Campanella Owned";
+            LaCampanellaMinorProgressionsText.Text = $"{_laCampanellaMinorProgressions} Minor Progressions of La Campanella Owned";
+            LaCampanellaMajorSheetsText.Text = $"{_laCampanellaMajorSheets} Major Sheets of La Campanella Owned";
+
+            EnigmaMinorKeysText.Text = $"{_enigmaMinorKeys} Minor Keys of Enigma Owned";
+            EnigmaMinorScalesText.Text = $"{_enigmaMinorScales} Minor Scales of Enigma Owned";
+            EnigmaMinorProgressionsText.Text = $"{_enigmaMinorProgressions} Minor Progressions of Enigma Owned";
+            EnigmaMajorSheetsText.Text = $"{_enigmaMajorSheets} Major Sheets of Enigma Owned";
+
+            FateMinorKeysText.Text = $"{_fateMinorKeys} Minor Keys of Fate Owned";
+            FateMinorScalesText.Text = $"{_fateMinorScales} Minor Scales of Fate Owned";
+            FateMinorProgressionsText.Text = $"{_fateMinorProgressions} Minor Progressions of Fate Owned";
+            FateMajorSheetsText.Text = $"{_fateMajorSheets} Major Sheets of Fate Owned";
+
+            OdeToJoyMinorKeysText.Text = $"{_odeToJoyMinorKeys} Minor Keys of Ode to Joy Owned";
+            OdeToJoyMinorScalesText.Text = $"{_odeToJoyMinorScales} Minor Scales of Ode to Joy Owned";
+            OdeToJoyMinorProgressionsText.Text = $"{_odeToJoyMinorProgressions} Minor Progressions of Ode to Joy Owned";
+            OdeToJoyMajorSheetsText.Text = $"{_odeToJoyMajorSheets} Major Sheets of Ode to Joy Owned";
+
             HeartOfHarmonyNotesText.Text = $"Notes: {Math.Round(_notes, 1)}";
         }
 
@@ -456,6 +568,15 @@ namespace MusicClicker
             EroicaMajorOwnedText.Text = $"{_eroicaMajorOwned} Owned";
             SwanMinorOwnedText.Text = $"{_swanMinorOwned} Owned";
             SwanMajorOwnedText.Text = $"{_swanMajorOwned} Owned";
+            LaCampanellaMinorOwnedText.Text = $"{_laCampanellaMinorOwned} Owned";
+LaCampanellaMajorOwnedText.Text = $"{_laCampanellaMajorOwned} Owned";
+EnigmaMinorOwnedText.Text = $"{_enigmaMinorOwned} Owned";
+EnigmaMajorOwnedText.Text = $"{_enigmaMajorOwned} Owned";
+FateMinorOwnedText.Text = $"{_fateMinorOwned} Owned";
+FateMajorOwnedText.Text = $"{_fateMajorOwned} Owned";
+OdeToJoyMinorOwnedText.Text = $"{_odeToJoyMinorOwned} Owned";
+OdeToJoyMajorOwnedText.Text = $"{_odeToJoyMajorOwned} Owned";
+
         }
 
         // ------------------- CRAFTING -------------------
@@ -502,7 +623,10 @@ namespace MusicClicker
                 if (_random.NextDouble() <= 0.05) majorSheets++;
             }
 
-            UpdateSaveScoresUI();
+            Dispatcher.UIThread.Post(() =>
+    {
+        UpdateSaveScoresUI();
+    });
         }
     }
 }

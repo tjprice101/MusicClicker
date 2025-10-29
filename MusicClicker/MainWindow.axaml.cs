@@ -9,48 +9,41 @@ namespace MusicClicker
 {
     public partial class MainWindow : Window
     {
+        private UpgradeManager _upgradeManager;
+        private SaveScoresManager _saveScoresManager;
+
+
+// La Campanella
+private int _laCampanellaMinorKeys = 0;
+private int _laCampanellaMinorScales = 0;
+private int _laCampanellaMinorProgressions = 0;
+private int _laCampanellaMajorSheets = 0;
+
+// Enigma
+private int _enigmaMinorKeys = 0;
+private int _enigmaMinorScales = 0;
+private int _enigmaMinorProgressions = 0;
+private int _enigmaMajorSheets = 0;
+
+// Fate
+private int _fateMinorKeys = 0;
+private int _fateMinorScales = 0;
+private int _fateMinorProgressions = 0;
+private int _fateMajorSheets = 0;
+
+// Ode to Joy
+private int _odeToJoyMinorKeys = 0;
+private int _odeToJoyMinorScales = 0;
+private int _odeToJoyMinorProgressions = 0;
+private int _odeToJoyMajorSheets = 0;
         // Base gameplay stats
         private double _notes = 0;
         private double _notesPerSecond = 0;
         private double _notesPerClick = 1;
 
-        // Upgrade state
-        private int _chordOwned = 0;
-        private int _scaleOwned = 0;
-        private int _orchestraOwned = 0;
-        private int _symphonyOwned = 0;
-        private int _ariaOwned = 0;
-        private int _requiemOwned = 0;
-        private int _opusOwned = 0;
-        private int _magnumOpusOwned = 0;
-
-        // Base upgrade costs
-        private double _chordBaseCost = 10;
-        private double _scaleBaseCost = 50;
-        private double _orchestraBaseCost = 100;
-        private double _symphonyBaseCost = 350;
-        private double _ariaBaseCost = 350;
-        private double _requiemBaseCost = 750;
-        private double _opusBaseCost = 1500;
-        private double _magnumOpusBaseCost = 3000;
-
         // Fragmentation state
         private int _melodiousOwned = 0;
         private int _harmoniousOwned = 0;
-
-        // Save Scores state
-        private int _moonlightMinorKeys = 0;
-        private int _moonlightMinorScales = 0;
-        private int _moonlightMinorProgressions = 0;
-        private int _moonlightMajorSheets = 0;
-        private int _eroicaMinorKeys = 0;
-        private int _eroicaMinorScales = 0;
-        private int _eroicaMinorProgressions = 0;
-        private int _eroicaMajorSheets = 0;
-        private int _swanLakeMinorKeys = 0;
-        private int _swanLakeMinorScales = 0;
-        private int _swanLakeMinorProgressions = 0;
-        private int _swanLakeMajorSheets = 0;
 
         // Essence resources
         private int _essenceBeethoven = 0;
@@ -76,6 +69,24 @@ private int _fateMajorOwned = 0;
 private int _odeToJoyMinorOwned = 0;
 private int _odeToJoyMajorOwned = 0;
 
+// Moonlight Sonata
+private int _moonlightMajorSheets = 0;
+private int _moonlightMajorKeys = 0;
+private int _moonlightMajorScales = 0;
+private int _moonlightMajorProgressions = 0;
+
+// Eroica
+private int _eroicaMajorSheets = 0;
+private int _eroicaMajorKeys = 0;
+private int _eroicaMajorScales = 0;
+private int _eroicaMajorProgressions = 0;
+
+// Swan Lake
+private int _swanLakeMajorSheets = 0;
+private int _swanLakeMajorKeys = 0;
+private int _swanLakeMajorScales = 0;
+private int _swanLakeMajorProgressions = 0;
+
 // Ability unlock flags
 private bool _laCampanellaMajorAbility = false;
 private bool _enigmaMajorAbility = false;
@@ -86,41 +97,7 @@ private bool _odeToJoyMajorAbility = false;
         private bool _moonlightMajorAbility = false;
         private bool _eroicaMajorAbility = false;
         private bool _swanMajorAbility = false;
-
-        // Major fragments for Heart of Harmony
-        private int _moonlightMajorKeys = 0;
-        private int _moonlightMajorScales = 0;
-        private int _moonlightMajorProgressions = 0;
-
-        private int _eroicaMajorKeys = 0;
-        private int _eroicaMajorScales = 0;
-        private int _eroicaMajorProgressions = 0;
-
-        private int _swanLakeMajorKeys = 0;
-        private int _swanLakeMajorScales = 0;
-        private int _swanLakeMajorProgressions = 0;
-
-        // 🆕 New Save Scores entries
-        private int _laCampanellaMinorKeys = 0;
-        private int _laCampanellaMinorScales = 0;
-        private int _laCampanellaMinorProgressions = 0;
-        private int _laCampanellaMajorSheets = 0;
-
-        private int _enigmaMinorKeys = 0;
-        private int _enigmaMinorScales = 0;
-        private int _enigmaMinorProgressions = 0;
-        private int _enigmaMajorSheets = 0;
-
-        private int _fateMinorKeys = 0;
-        private int _fateMinorScales = 0;
-        private int _fateMinorProgressions = 0;
-        private int _fateMajorSheets = 0;
-
-        private int _odeToJoyMinorKeys = 0;
-        private int _odeToJoyMinorScales = 0;
-        private int _odeToJoyMinorProgressions = 0;
-        private int _odeToJoyMajorSheets = 0;
-
+        
         private Timer _timer;
         private Random _random = new Random();
 
@@ -128,6 +105,28 @@ private bool _odeToJoyMajorAbility = false;
         {
             InitializeComponent();
 
+            // ------------------- SAVE SCORES MANAGER -------------------
+_saveScoresManager = new SaveScoresManager(
+    getNotes: () => _notes,
+    setNotes: value => _notes = value
+);
+_saveScoresManager.RegisterButtons(this);
+_saveScoresManager.UpdateUI(this, _notes);
+
+            // ------------------- UPGRADE MANAGER -------------------
+            _upgradeManager = new UpgradeManager(
+    getNotes: () => _notes,
+    setNotes: value => _notes = value,
+    addNps: value => _notesPerSecond += value,
+    addClick: value => _notesPerClick += value
+);
+
+            _upgradeManager.RegisterButtons(this); // Wires all upgrade buttons
+            _upgradeManager.OnUpgradeChanged += () =>
+{
+    UpdateUpgradeUI();
+    UpdateUI();  // <--- make NPS update immediately after buying upgrades
+};
             UpdateEssenceUI();
 
             // Heart of Harmony Buttons
@@ -151,31 +150,6 @@ private bool _odeToJoyMajorAbility = false;
             EssencePyotrButton.Click += (s, e) => BuyEssence(ref _essencePyotr, 1500, EssencePyotrOwnedText);
             EssenceElgarButton.Click += (s, e) => BuyEssence(ref _essenceElgar, 4000, EssenceElgarOwnedText);
             EssenceLisztButton.Click += (s, e) => BuyEssence(ref _essenceLiszt, 6000, EssenceLisztOwnedText);
-
-            // Upgrade Buttons
-            BuyChordButton.Click += (s, e) => BuyUpgrade(ref _chordOwned, _chordBaseCost, 0.5, 0, 1, ChordOwnedTextUpgrade, ChordCostTextUpgrade);
-            BuyChordMaxButton.Click += (s, e) => BuyUpgrade(ref _chordOwned, _chordBaseCost, 0.5, 0, double.MaxValue, ChordOwnedTextUpgrade, ChordCostTextUpgrade);
-
-            BuyScaleButton.Click += (s, e) => BuyUpgrade(ref _scaleOwned, _scaleBaseCost, 3, 0, 1, ScaleOwnedTextUpgrade, ScaleCostTextUpgrade);
-            BuyScaleMaxButton.Click += (s, e) => BuyUpgrade(ref _scaleOwned, _scaleBaseCost, 3, 0, double.MaxValue, ScaleOwnedTextUpgrade, ScaleCostTextUpgrade);
-
-            BuyOrchestraButton.Click += (s, e) => BuyUpgrade(ref _orchestraOwned, _orchestraBaseCost, 5, 0, 1, OrchestraOwnedTextUpgrade, OrchestraCostTextUpgrade);
-            BuyOrchestraMaxButton.Click += (s, e) => BuyUpgrade(ref _orchestraOwned, _orchestraBaseCost, 5, 0, double.MaxValue, OrchestraOwnedTextUpgrade, OrchestraCostTextUpgrade);
-
-            BuySymphonyButton.Click += (s, e) => BuyUpgrade(ref _symphonyOwned, _symphonyBaseCost, 9, 0, 1, SymphonyOwnedTextUpgrade, SymphonyCostTextUpgrade);
-            BuySymphonyMaxButton.Click += (s, e) => BuyUpgrade(ref _symphonyOwned, _symphonyBaseCost, 9, 0, double.MaxValue, SymphonyOwnedTextUpgrade, SymphonyCostTextUpgrade);
-
-            BuyAriaButton.Click += (s, e) => BuyUpgrade(ref _ariaOwned, _ariaBaseCost, 0, 1, 1, AriaOwnedTextUpgrade, AriaCostTextUpgrade);
-            BuyAriaMaxButton.Click += (s, e) => BuyUpgrade(ref _ariaOwned, _ariaBaseCost, 0, 1, double.MaxValue, AriaOwnedTextUpgrade, AriaCostTextUpgrade);
-
-            BuyRequiemButton.Click += (s, e) => BuyUpgrade(ref _requiemOwned, _requiemBaseCost, 0, 2, 1, RequiemOwnedTextUpgrade, RequiemCostTextUpgrade);
-            BuyRequiemMaxButton.Click += (s, e) => BuyUpgrade(ref _requiemOwned, _requiemBaseCost, 0, 2, double.MaxValue, RequiemOwnedTextUpgrade, RequiemCostTextUpgrade);
-
-            BuyOpusButton.Click += (s, e) => BuyUpgrade(ref _opusOwned, _opusBaseCost, 0, 3, 1, OpusOwnedTextUpgrade, OpusCostTextUpgrade);
-            BuyOpusMaxButton.Click += (s, e) => BuyUpgrade(ref _opusOwned, _opusBaseCost, 0, 3, double.MaxValue, OpusOwnedTextUpgrade, OpusCostTextUpgrade);
-
-            BuyMagnumOpusButton.Click += (s, e) => BuyUpgrade(ref _magnumOpusOwned, _magnumOpusBaseCost, 0, 4, 1, MagnumOpusOwnedTextUpgrade, MagnumOpusCostTextUpgrade);
-            BuyMagnumOpusMaxButton.Click += (s, e) => BuyUpgrade(ref _magnumOpusOwned, _magnumOpusBaseCost, 0, 4, double.MaxValue, MagnumOpusOwnedTextUpgrade, MagnumOpusCostTextUpgrade);
 
             // Clicker button
             ClickButton.Click += ClickButton_Click;
@@ -244,16 +218,6 @@ private bool _odeToJoyMajorAbility = false;
                 MainScreen.IsVisible = true;
             };
 
-            // 🆕 NEW Save Scores buttons
-            LaCampanellaButton.Click += (s, e) =>
-                HandleSaveScoreClick(ref _laCampanellaMinorKeys, ref _laCampanellaMinorScales, ref _laCampanellaMinorProgressions, ref _laCampanellaMajorSheets, 12000);
-            EnigmaButton.Click += (s, e) =>
-                HandleSaveScoreClick(ref _enigmaMinorKeys, ref _enigmaMinorScales, ref _enigmaMinorProgressions, ref _enigmaMajorSheets, 25000);
-            FateButton.Click += (s, e) =>
-                HandleSaveScoreClick(ref _fateMinorKeys, ref _fateMinorScales, ref _fateMinorProgressions, ref _fateMajorSheets, 35000);
-            OdeToJoyButton.Click += (s, e) =>
-                HandleSaveScoreClick(ref _odeToJoyMinorKeys, ref _odeToJoyMinorScales, ref _odeToJoyMinorProgressions, ref _odeToJoyMajorSheets, 55000);
-
             // Manual crafting buttons (Unite the Symphony)
             MoonlightMinorButton.Click += (s, e) =>
                 TryCraft(ref _moonlightMinorOwned, 5, 0, 10, 0, 3000, false, ref _moonlightMajorAbility);
@@ -292,11 +256,27 @@ FateMajorButton.Click += (s, e) =>
     TryCraft(ref _fateMajorOwned, 25, 0, 0, 35, 0, true, ref _fateMajorAbility);
 
 // Ode to Joy
-OdeToJoyMinorButton.Click += (s, e) => 
-    TryCraft(ref _odeToJoyMinorOwned, 30, 0, 50, 0, 250000, false, ref _odeToJoyMajorAbility);
+OdeToJoyMinorButton.Click += (s, e) =>
+    TryCraft(
+        ref _odeToJoyMinorOwned,
+        costEssenceBeethoven: 10,     // 10 Essence of Beethoven
+        costEssencePyotr: 0,
+        costMelodious: 40,            // 40 Melodious Fragments
+        costHarmonious: 0,
+        addNps: 255000,                // Minor craft adds 255,000 NPS
+        isMajor: false,
+        ref _odeToJoyMajorAbility);
 
-OdeToJoyMajorButton.Click += (s, e) => 
-    TryCraft(ref _odeToJoyMajorOwned, 40, 0, 0, 50, 0, true, ref _odeToJoyMajorAbility);
+OdeToJoyMajorButton.Click += (s, e) =>
+    TryCraft(
+        ref _odeToJoyMajorOwned,
+        costEssenceBeethoven: 15,     // 15 Essence of Beethoven
+        costEssencePyotr: 0,
+        costMelodious: 0,
+        costHarmonious: 40,           // 40 Harmonious Fragments
+        addNps: 0,                     // Major craft does NOT add NPS directly
+        isMajor: true,
+        ref _odeToJoyMajorAbility);
 
             // Fragmentation Buttons
             MelodiousFragmentButton.Click += (s, e) =>
@@ -318,14 +298,6 @@ OdeToJoyMajorButton.Click += (s, e) =>
                 }
             };
 
-            // Save Scores Crafting
-            MoonlightSonataButton.Click += (s, e) =>
-                HandleSaveScoreClick(ref _moonlightMinorKeys, ref _moonlightMinorScales, ref _moonlightMinorProgressions, ref _moonlightMajorSheets, 1000);
-            EroicaButton.Click += (s, e) =>
-                HandleSaveScoreClick(ref _eroicaMinorKeys, ref _eroicaMinorScales, ref _eroicaMinorProgressions, ref _eroicaMajorSheets, 3000);
-            SwanLakeButton.Click += (s, e) =>
-                HandleSaveScoreClick(ref _swanLakeMinorKeys, ref _swanLakeMinorScales, ref _swanLakeMinorProgressions, ref _swanLakeMajorSheets, 8000);
-
             // Passive production & UI update for all screens
             _timer = new Timer(1000);
             _timer.Elapsed += (s, e) =>
@@ -343,6 +315,11 @@ OdeToJoyMajorButton.Click += (s, e) =>
             };
             _timer.Start();
         }
+
+        private void UpdateSaveScoresUI()
+{
+    _saveScoresManager.UpdateUI(this, _notes);
+}
 
         // ------------------- CLICK & NAVIGATION -------------------
         private void ClickButton_Click(object? sender, RoutedEventArgs e)
@@ -394,69 +371,58 @@ OdeToJoyMajorButton.Click += (s, e) =>
             majorProgressionsText.Text = $"{majorProgressions} {scoreName} Major Progressions Owned";
         }
 
-        // ------------------- UPGRADE SYSTEM -------------------
-        private void BuyUpgrade(ref int owned, double baseCost, double npsIncrease, double clickIncrease, double amount, TextBlock ownedText, TextBlock costText)
-        {
-            if (amount == double.MaxValue)
-            {
-                while (true)
-                {
-                    double cost = Math.Round(baseCost * Math.Pow(1.15, owned), 2);
-                    if (_notes >= cost)
-                    {
-                        _notes -= cost;
-                        owned++;
-                        _notesPerSecond += npsIncrease;
-                        _notesPerClick += clickIncrease;
-                    }
-                    else break;
-                }
-            }
-            else
-            {
-                for (int i = 0; i < amount; i++)
-                {
-                    double cost = Math.Round(baseCost * Math.Pow(1.15, owned), 2);
-                    if (_notes >= cost)
-                    {
-                        _notes -= cost;
-                        owned++;
-                        _notesPerSecond += npsIncrease;
-                        _notesPerClick += clickIncrease;
-                    }
-                    else break;
-                }
-            }
+        private void UpdateUI()
+{
+    NotesText.Text = $"Notes: {Math.Round(_notes, 1)}";
+    UpgradeNotesTextHeader.Text = $"Notes: {Math.Round(_notes, 1)}";
+    NpsText.Text = $"Notes per Second: {Math.Round(_notesPerSecond, 1)}";
 
-            ownedText.Text = $"Number Owned: {owned}";
-            costText.Text = $"Cost: {Math.Round(baseCost * Math.Pow(1.15, owned), 2)}";
-        }
+    // Keep other screens in sync
+    FragmentationNotesText.Text = $"Notes: {Math.Round(_notes, 1)}";
+    SaveScoresNotesText.Text = $"Notes: {Math.Round(_notes, 1)}";
+    HeartOfHarmonyNotesText.Text = $"Notes: {Math.Round(_notes, 1)}";
+    UnityNotesTextHeader.Text = $"Notes: {Math.Round(_notes, 1)}";
+}
+
 
         // ------------------- UI UPDATES -------------------
-        private void UpdateUI()
+        // Upgrade UI
+        private void UpdateUpgradeUI()
         {
-            NotesText.Text = $"Notes: {Math.Round(_notes, 1)}";
-            NpsText.Text = $"Notes Per Second: {Math.Round(_notesPerSecond, 1)}";
-            UpgradeNotesTextHeader.Text = $"Notes: {Math.Round(_notes, 1)}";
+            ChordOwnedTextUpgrade.Text = $"Number Owned: {_upgradeManager.ChordOwned}";
+            ChordCostTextUpgrade.Text = $"Cost: {ChordCost()}";
 
-            ChordOwnedTextUpgrade.Text = $"Number Owned: {_chordOwned}";
-            ScaleOwnedTextUpgrade.Text = $"Number Owned: {_scaleOwned}";
-            OrchestraOwnedTextUpgrade.Text = $"Number Owned: {_orchestraOwned}";
-            SymphonyOwnedTextUpgrade.Text = $"Number Owned: {_symphonyOwned}";
-            AriaOwnedTextUpgrade.Text = $"Number Owned: {_ariaOwned}";
-            RequiemOwnedTextUpgrade.Text = $"Number Owned: {_requiemOwned}";
-            OpusOwnedTextUpgrade.Text = $"Number Owned: {_opusOwned}";
-            MagnumOpusOwnedTextUpgrade.Text = $"Number Owned: {_magnumOpusOwned}";
+            ScaleOwnedTextUpgrade.Text = $"Number Owned: {_upgradeManager.ScaleOwned}";
+            ScaleCostTextUpgrade.Text = $"Cost: {ScaleCost()}";
 
-            ChordCostTextUpgrade.Text = $"Cost: {Math.Round(_chordBaseCost * Math.Pow(1.15, _chordOwned), 2)}";
-            ScaleCostTextUpgrade.Text = $"Cost: {Math.Round(_scaleBaseCost * Math.Pow(1.15, _scaleOwned), 2)}";
-            OrchestraCostTextUpgrade.Text = $"Cost: {Math.Round(_orchestraBaseCost * Math.Pow(1.15, _orchestraOwned), 2)}";
-            SymphonyCostTextUpgrade.Text = $"Cost: {Math.Round(_symphonyBaseCost * Math.Pow(1.15, _symphonyOwned), 2)}";
-            AriaCostTextUpgrade.Text = $"Cost: {Math.Round(_ariaBaseCost * Math.Pow(1.15, _ariaOwned), 2)}";
-            RequiemCostTextUpgrade.Text = $"Cost: {Math.Round(_requiemBaseCost * Math.Pow(1.15, _requiemOwned), 2)}";
-            OpusCostTextUpgrade.Text = $"Cost: {Math.Round(_opusBaseCost * Math.Pow(1.15, _opusOwned), 2)}";
-            MagnumOpusCostTextUpgrade.Text = $"Cost: {Math.Round(_magnumOpusBaseCost * Math.Pow(1.15, _magnumOpusOwned), 2)}";
+            OrchestraOwnedTextUpgrade.Text = $"Number Owned: {_upgradeManager.OrchestraOwned}";
+            OrchestraCostTextUpgrade.Text = $"Cost: {OrchestraCost()}";
+
+            SymphonyOwnedTextUpgrade.Text = $"Number Owned: {_upgradeManager.SymphonyOwned}";
+            SymphonyCostTextUpgrade.Text = $"Cost: {SymphonyCost()}";
+
+            AriaOwnedTextUpgrade.Text = $"Number Owned: {_upgradeManager.AriaOwned}";
+            AriaCostTextUpgrade.Text = $"Cost: {AriaCost()}";
+
+            RequiemOwnedTextUpgrade.Text = $"Number Owned: {_upgradeManager.RequiemOwned}";
+            RequiemCostTextUpgrade.Text = $"Cost: {RequiemCost()}";
+
+            OpusOwnedTextUpgrade.Text = $"Number Owned: {_upgradeManager.OpusOwned}";
+            OpusCostTextUpgrade.Text = $"Cost: {OpusCost()}";
+
+            MagnumOpusOwnedTextUpgrade.Text = $"Number Owned: {_upgradeManager.MagnumOpusOwned}";
+            MagnumOpusCostTextUpgrade.Text = $"Cost: {MagnumOpusCost()}";
         }
+
+        // Upgrade cost helpers
+        private double ChordCost() => Math.Round(_upgradeManager.ChordBaseCost * Math.Pow(1.15, _upgradeManager.ChordOwned), 2);
+        private double ScaleCost() => Math.Round(_upgradeManager.ScaleBaseCost * Math.Pow(1.15, _upgradeManager.ScaleOwned), 2);
+        private double OrchestraCost() => Math.Round(_upgradeManager.OrchestraBaseCost * Math.Pow(1.15, _upgradeManager.OrchestraOwned), 2);
+        private double SymphonyCost() => Math.Round(_upgradeManager.SymphonyBaseCost * Math.Pow(1.15, _upgradeManager.SymphonyOwned), 2);
+        private double AriaCost() => Math.Round(_upgradeManager.AriaBaseCost * Math.Pow(1.15, _upgradeManager.AriaOwned), 2);
+        private double RequiemCost() => Math.Round(_upgradeManager.RequiemBaseCost * Math.Pow(1.15, _upgradeManager.RequiemOwned), 2);
+        private double OpusCost() => Math.Round(_upgradeManager.OpusBaseCost * Math.Pow(1.15, _upgradeManager.OpusOwned), 2);
+        private double MagnumOpusCost() => Math.Round(_upgradeManager.MagnumOpusBaseCost * Math.Pow(1.15, _upgradeManager.MagnumOpusOwned), 2);
 
         private void UpdateHeartOfHarmonyUI()
         {
@@ -524,25 +490,6 @@ OdeToJoyMajorButton.Click += (s, e) =>
             HarmoniousOwnedText.Text = $"{_harmoniousOwned} Owned";
         }
 
-        private void UpdateSaveScoresUI()
-        {
-            MoonlightMinorKeysText.Text = $"{_moonlightMinorKeys} Minor Keys of Moonlight Sonata Owned";
-            MoonlightMinorScalesText.Text = $"{_moonlightMinorScales} Minor Scales of Moonlight Sonata Owned";
-            MoonlightMinorProgressionsText.Text = $"{_moonlightMinorProgressions} Minor Progressions of Moonlight Sonata Owned";
-            MoonlightMajorSheetsText.Text = $"{_moonlightMajorSheets} Major Sheets of Moonlight Sonata Owned";
-
-            EroicaMinorKeysText.Text = $"{_eroicaMinorKeys} Minor Keys of Eroica Owned";
-            EroicaMinorScalesText.Text = $"{_eroicaMinorScales} Minor Scales of Eroica Owned";
-            EroicaMinorProgressionsText.Text = $"{_eroicaMinorProgressions} Minor Progressions of Eroica Owned";
-            EroicaMajorSheetsText.Text = $"{_eroicaMajorSheets} Major Sheets of Eroica Owned";
-
-            SwanLakeMinorKeysText.Text = $"{_swanLakeMinorKeys} Minor Keys of Swan Lake Owned";
-            SwanLakeMinorScalesText.Text = $"{_swanLakeMinorScales} Minor Scales of Swan Lake Owned";
-            SwanLakeMinorProgressionsText.Text = $"{_swanLakeMinorProgressions} Minor Progressions of Swan Lake Owned";
-            SwanLakeMajorSheetsText.Text = $"{_swanLakeMajorSheets} Major Sheets of Swan Lake Owned";
-            SaveScoresNotesText.Text = $"Notes: {Math.Round(_notes, 1)}";
-        }
-
         private void UpdateUnitySymphonyUI()
         {
             UnityNotesTextHeader.Text = $"Notes: {Math.Round(_notes, 1)}";
@@ -594,20 +541,6 @@ OdeToJoyMajorOwnedText.Text = $"{_odeToJoyMajorOwned} Owned";
             {
                 _notes += 1_000_000;
             }
-        }
-
-        private void HandleSaveScoreClick(ref int minorKeys, ref int minorScales, ref int minorProgressions, ref int majorSheets, int cost)
-        {
-            if (_notes >= cost)
-            {
-                _notes -= cost;
-                if (_random.NextDouble() <= 0.50) minorKeys++;
-                if (_random.NextDouble() <= 0.25) minorScales++;
-                if (_random.NextDouble() <= 0.15) minorProgressions++;
-                if (_random.NextDouble() <= 0.05) majorSheets++;
-            }
-
-            UpdateSaveScoresUI();
         }
     }
 }
