@@ -156,6 +156,7 @@ namespace MusicClicker
             window.FateMajorOwnedText.Text = $"{gameState.FateMajorOwned} Owned";
             window.OdeToJoyMinorOwnedText.Text = $"{gameState.OdeToJoyMinorOwned} Owned";
             window.OdeToJoyMajorOwnedText.Text = $"{gameState.OdeToJoyMajorOwned} Owned";
+            MainWindow.GlobalTempoManager.RefreshDrawer();
         }
     }
 }

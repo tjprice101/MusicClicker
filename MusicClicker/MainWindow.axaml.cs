@@ -3,7 +3,9 @@ using Avalonia.Markup.Xaml;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
 using System;
+using System.Collections.Generic;
 using System.Timers;
+using Avalonia.Platform;
 
 namespace MusicClicker
 
@@ -21,15 +23,26 @@ namespace MusicClicker
         private Random _random = new Random();
         private GameState gameState = new GameState();
         public GameState GameState => gameState;
-
-        private TempoResonateManager? _tempoManager;
+        public static TempoResonateManager GlobalTempoManager = null!;
 
         // ------------------- CONSTRUCTOR -------------------
         public MainWindow()
 {
     InitializeComponent();
 
-    _tempoManager = new TempoResonateManager(TileCanvas, SlotPanel, TileSelector);
+    GlobalTempoManager = new TempoResonateManager(
+    LeftDrawerPanel,
+    EquippedScoreDisplay,
+    EquippedScoreText,
+    gameState,
+    EquipPromptPanel,
+    EquipPromptText,
+    EquipYesButton,
+    EquipNoButton
+);
+
+BackButtonTempoResonate.Click += BackButtonTempoResonate_Click;
+
 
     UIUpdater.UpdateEssenceUI(this, gameState);
 
@@ -59,14 +72,26 @@ namespace MusicClicker
 
         // ------------------- CLICK & NAVIGATION HANDLERS -------------------
         public void ClickButton_Click(object? sender, RoutedEventArgs e)
-        {
-            gameState.Notes += gameState.NotesPerClick;
-            UIUpdater.UpdateUI(this, gameState);
-            UIUpdater.UpdateFragmentationUI(this, gameState);
-            UIUpdater.UpdateSaveScoresUI(this, gameState);
-            UIUpdater.UpdateHeartOfHarmonyUI(this, gameState);
-            UIUpdater.UpdateUnitySymphonyUI(this, gameState);
-        }
+{
+    // Make notesPerClick a double to allow temporary boosts
+    double notesPerClick = gameState.NotesPerClick;
+
+    // Check the ability flag in gameState (or MainWindow, wherever you defined it)
+    if (gameState.MoonlightMajorAbility) 
+    {
+        notesPerClick += 5000; // 5000 is fine as an integer literal
+    }
+
+    // Increment notes
+    gameState.Notes += notesPerClick;
+
+    // Update all UI
+    UIUpdater.UpdateUI(this, gameState);
+    UIUpdater.UpdateFragmentationUI(this, gameState);
+    UIUpdater.UpdateSaveScoresUI(this, gameState);
+    UIUpdater.UpdateHeartOfHarmonyUI(this, gameState);
+    UIUpdater.UpdateUnitySymphonyUI(this, gameState);
+}
 
         public void BackButton_Click(object? sender, RoutedEventArgs e)
         {
@@ -79,6 +104,8 @@ namespace MusicClicker
             if (e.Key == Avalonia.Input.Key.Space)
             {
                 gameState.Notes += 1_000_000;
+                gameState.MoonlightMajorOwned += 1;
+                gameState.EroicaMajorOwned += 1;
                 UIUpdater.UpdateUI(this, gameState);
                 UIUpdater.UpdateFragmentationUI(this, gameState);
                 UIUpdater.UpdateSaveScoresUI(this, gameState);

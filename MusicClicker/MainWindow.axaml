@@ -205,46 +205,54 @@
             </Grid>
         </Grid>
 
-        <!-- Tempo Resonate Screen -->
         <Grid x:Name="TempoResonateScreen" IsVisible="False" Background="#AA000000">
-            <!-- Top title -->
+            <!-- Title -->
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0">
                 <TextBlock Text="Tempo Resonate" FontSize="36" FontWeight="Bold"
                     Foreground="White" HorizontalAlignment="Center" />
-                <TextBlock x:Name="TempoResonateNotesText" Text="Notes: 0" FontSize="28"
-                    Foreground="White" HorizontalAlignment="Center" />
             </StackPanel>
 
-            <!-- ComboBox to select color "tiles" -->
-            <ComboBox x:Name="TileSelector" Width="150" HorizontalAlignment="Left"
-                VerticalAlignment="Top" Margin="20,100,0,0">
-                <ComboBoxItem Content="Red" />
-                <ComboBoxItem Content="Green" />
-                <ComboBoxItem Content="Blue" />
-                <ComboBoxItem Content="Yellow" />
-            </ComboBox>
+            <!-- Scrollable drawer on the left -->
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                VerticalScrollBarVisibility="Auto"
+                Width="280" Margin="20,100,0,20"
+                HorizontalAlignment="Left" VerticalAlignment="Stretch">
+                <StackPanel x:Name="LeftDrawerPanel" Orientation="Vertical" Spacing="10" />
+            </ScrollViewer>
 
-            <!-- Canvas to drag tiles from -->
-            <Canvas x:Name="TileCanvas" Width="200" Height="200" Background="#333"
-                HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,150,0,0">
-                <!-- Dragged squares will appear here -->
-            </Canvas>
+            <!-- Right side display panel -->
+            <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,100,20,20"
+                Spacing="20">
+                <!-- Equipped Score (top) -->
+                <Border x:Name="EquippedScoreDisplay" Width="384" Height="216" Background="#555"
+                    CornerRadius="8">
+                    <TextBlock x:Name="EquippedScoreText" Text="Equipped Score"
+                        HorizontalAlignment="Center" VerticalAlignment="Center"
+                        Foreground="White" />
+                </Border>
 
-            <!-- Slot area -->
-            <StackPanel x:Name="SlotPanel" Orientation="Horizontal" HorizontalAlignment="Center"
-                VerticalAlignment="Bottom" Margin="0,0,0,50" Spacing="20">
-                <Rectangle Width="100" Height="100" Fill="#555" Stroke="White" StrokeThickness="2" />
-                <Rectangle Width="100" Height="100" Fill="#555" Stroke="White" StrokeThickness="2" />
-                <Rectangle Width="100" Height="100" Fill="#555" Stroke="White" StrokeThickness="2" />
+                <!-- Placeholder slots (3 empty) -->
+                <Border Width="384" Height="216" Background="#333" CornerRadius="8" />
+                <Border Width="384" Height="216" Background="#333" CornerRadius="8" />
+                <Border Width="384" Height="216" Background="#333" CornerRadius="8" />
             </StackPanel>
+
+            <StackPanel x:Name="EquipPromptPanel" Orientation="Horizontal"
+                HorizontalAlignment="Center" VerticalAlignment="Top"
+                Margin="0,340,0,0" IsVisible="False" Spacing="10">
+                <TextBlock x:Name="EquipPromptText" Text="Equip X?" Foreground="White" FontSize="20" />
+                <Button x:Name="EquipYesButton" Content="Yes" Width="80" />
+                <Button x:Name="EquipNoButton" Content="No" Width="80" />
+            </StackPanel>
+
 
             <!-- Back button -->
             <Button x:Name="BackButtonTempoResonate" Content="Back" Width="200" Height="50"
                 Background="White" Foreground="Black" FontSize="20"
-                HorizontalAlignment="Center" VerticalAlignment="Center"
+                HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                Margin="0,0,0,20"
                 Click="BackButtonTempoResonate_Click" />
         </Grid>
-
 
         <!-- Upgrade Screen -->
         <Grid x:Name="UpgradeScreen" IsVisible="False" Background="#AA000000">
@@ -1343,7 +1351,7 @@
                                 <TextBlock x:Name="MoonlightMajorOwnedText" Text="0 Owned"
                                     Foreground="White"
                                     FontSize="16" HorizontalAlignment="Center" />
-                                <TextBlock Text="Crescendance Ability" Foreground="White"
+                                <TextBlock Text="Tempo Resonate Ability: Adds +5,000 Notes per Click" Foreground="White"
                                     FontSize="14"
                                     HorizontalAlignment="Center" />
                             </StackPanel>
