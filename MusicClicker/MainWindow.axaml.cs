@@ -22,15 +22,23 @@ namespace MusicClicker
         private GameState gameState = new GameState();
         public GameState GameState => gameState;
 
+        private TempoResonateManager? _tempoManager;
+
         // ------------------- CONSTRUCTOR -------------------
         public MainWindow()
 {
     InitializeComponent();
 
+    _tempoManager = new TempoResonateManager(TileCanvas, SlotPanel, TileSelector);
+
     UIUpdater.UpdateEssenceUI(this, gameState);
 
     // ------------------- BUTTON HANDLERS -------------------
     ButtonInitializer.InitializeAllButtons(this);
+
+    // Hook up Tempo Resonate
+    TempoResonateButton.Click += TempoResonateButton_Click;
+    BackButtonTempoResonate.Click += BackButtonTempoResonate_Click;
 
     // ------------------- PASSIVE PRODUCTION -------------------
     _timer = new Timer(1000);
@@ -78,5 +86,19 @@ namespace MusicClicker
                 UIUpdater.UpdateUnitySymphonyUI(this, gameState);
             }
         }
+
+        // Open Tempo Resonate screen
+public void TempoResonateButton_Click(object? sender, RoutedEventArgs e)
+{
+    MainScreen.IsVisible = false;       // Hide main screen
+    TempoResonateScreen.IsVisible = true; // Show Tempo Resonate screen
+}
+
+// Back button
+public void BackButtonTempoResonate_Click(object? sender, RoutedEventArgs e)
+{
+    TempoResonateScreen.IsVisible = false;
+    MainScreen.IsVisible = true;
+}
     }
 }
