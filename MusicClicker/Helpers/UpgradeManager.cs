@@ -40,8 +40,16 @@ namespace MusicClicker
                 }
             }
 
+            // Immediately update local UI elements
             ownedText.Text = $"Number Owned: {owned}";
             costText.Text = $"Cost: {Math.Round(baseCost * Math.Pow(1.15, owned), 2)}";
+
+            // NEW: update displayed Notes count immediately
+            window.NotesText.Text = $"Notes: {Math.Round(gameState.Notes, 1)}";
+            window.UpgradeNotesTextHeader.Text = $"Notes: {Math.Round(gameState.Notes, 1)}";
+
+            // Also refresh other upgrade text (costs/owned values)
+            UIUpdater.UpdateUI(window, gameState);
         }
     }
 }

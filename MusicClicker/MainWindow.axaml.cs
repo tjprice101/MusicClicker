@@ -79,7 +79,7 @@ BackButtonTempoResonate.Click += BackButtonTempoResonate_Click;
     // Check the ability flag in gameState (or MainWindow, wherever you defined it)
     if (gameState.MoonlightMajorAbility) 
     {
-        notesPerClick += 5000; // 5000 is fine as an integer literal
+        notesPerClick += gameState.NotesPerSecond; // 5000 is fine as an integer literal
     } else if (gameState.FateMajorAbility) {
         gameState.FateCounter++;
         if (gameState.FateCounter == 5) {
