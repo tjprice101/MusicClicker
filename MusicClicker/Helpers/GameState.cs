@@ -55,6 +55,9 @@ namespace MusicClicker
 // public int EssenceCelano = 0;
 // public int EssenceMozart = 0;
 
+        // Major Ability Counters
+        public int FateCounter = 0;
+
         // Craft Ownership (Unite the Symphony)
         public int MoonlightMinorOwned = 0;
         public int MoonlightMajorOwned = 0;

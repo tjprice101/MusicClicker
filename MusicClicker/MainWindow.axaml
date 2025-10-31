@@ -1605,7 +1605,7 @@
                                 <TextBlock x:Name="LaCampanellaMajorOwnedText" Text="0 Owned"
                                     Foreground="White"
                                     FontSize="16" HorizontalAlignment="Center" />
-                                <TextBlock Text="Crescendance Ability" Foreground="White"
+                                <TextBlock Text="Tempo Resonate Ability: Notes Per Second updates every .5 seconds." Foreground="White"
                                     FontSize="14"
                                     HorizontalAlignment="Center" />
                             </StackPanel>
@@ -1689,7 +1689,7 @@
                                 <TextBlock x:Name="EnigmaMajorOwnedText" Text="0 Owned"
                                     Foreground="White"
                                     FontSize="16" HorizontalAlignment="Center" />
-                                <TextBlock Text="Crescendance Ability" Foreground="White"
+                                <TextBlock Text="Tempo Resonate Ability: ???" Foreground="White"
                                     FontSize="14"
                                     HorizontalAlignment="Center" />
                             </StackPanel>
@@ -1772,7 +1772,7 @@
                                 <TextBlock x:Name="FateMajorOwnedText" Text="0 Owned"
                                     Foreground="White"
                                     FontSize="16" HorizontalAlignment="Center" />
-                                <TextBlock Text="Crescendance Ability" Foreground="White"
+                                <TextBlock Text="Tempo Resonate Ability: Every 5th click on the main menu button increases your current amount of notes by 10%." Foreground="White"
                                     FontSize="14"
                                     HorizontalAlignment="Center" />
                             </StackPanel>
@@ -1855,7 +1855,7 @@
                                 <TextBlock x:Name="OdeToJoyMajorOwnedText" Text="0 Owned"
                                     Foreground="White"
                                     FontSize="16" HorizontalAlignment="Center" />
-                                <TextBlock Text="Crescendance Ability" Foreground="White"
+                                <TextBlock Text="Tempo Resonate Ability: Guarantees 1 major sheet on each click in the Save the Souls menu." Foreground="White"
                                     FontSize="14"
                                     HorizontalAlignment="Center" />
                             </StackPanel>

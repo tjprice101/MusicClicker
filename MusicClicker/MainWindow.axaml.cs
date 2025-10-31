@@ -80,6 +80,12 @@ BackButtonTempoResonate.Click += BackButtonTempoResonate_Click;
     if (gameState.MoonlightMajorAbility) 
     {
         notesPerClick += 5000; // 5000 is fine as an integer literal
+    } else if (gameState.FateMajorAbility) {
+        gameState.FateCounter++;
+        if (gameState.FateCounter == 5) {
+            gameState.FateCounter = 0;
+            gameState.Notes += (gameState.Notes * .30);
+        }
     }
 
     // Increment notes
@@ -106,6 +112,12 @@ BackButtonTempoResonate.Click += BackButtonTempoResonate_Click;
                 gameState.Notes += 1_000_000;
                 gameState.MoonlightMajorOwned += 1;
                 gameState.EroicaMajorOwned += 1;
+                gameState.SwanMajorOwned += 1;
+                gameState.LaCampanellaMajorOwned += 1;
+                gameState.EnigmaMajorOwned += 1;
+                gameState.FateMajorOwned += 1;
+                gameState.OdeToJoyMajorOwned += 1;
+
                 UIUpdater.UpdateUI(this, gameState);
                 UIUpdater.UpdateFragmentationUI(this, gameState);
                 UIUpdater.UpdateSaveScoresUI(this, gameState);

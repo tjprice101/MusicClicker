@@ -17,6 +17,10 @@ namespace MusicClicker
         {
             var gameState = window.GameState;
 
+            if (gameState.OdeToJoyMajorAbility) {
+                majorSheets++;
+            }
+
             if (gameState.Notes >= cost)
             {
                 gameState.Notes -= cost;
@@ -25,7 +29,6 @@ namespace MusicClicker
                 if (_random.NextDouble() <= 0.15) minorProgressions++;
                 if (_random.NextDouble() <= 0.05) majorSheets++;
             }
-
             Dispatcher.UIThread.Post(() =>
             {
                 UIUpdater.UpdateSaveScoresUI(window, gameState);
