@@ -284,7 +284,10 @@ public static bool TryCraftMoonlightSonataMajor(MainWindow window, ref int owned
         gameState.HarmoniousOwned -= 10;
 
         owned++; // Increment the owned count for this major score
-        gameState.MoonlightMajorAbility = true; // Enable Crescendance ability for Moonlight Sonata
+        if ( gameState.EroicaMajorAbility ) {
+            gameState.MoonlightMinorOwned += 2;
+            gameState.NotesPerSecond += 6000;
+        }
 
         canCraft = true; // Successfully crafted
     }
@@ -321,7 +324,10 @@ public static bool TryCraftEroicaMajor(MainWindow window, ref int owned)
         gameState.HarmoniousOwned -= 15;
 
         owned++; // Increment the owned count for this major score
-        gameState.EroicaMajorAbility = true; // Enable Crescendance ability for Eroica
+        if ( gameState.EroicaMajorAbility ) {
+            gameState.EroicaMinorOwned += 2;
+            gameState.NotesPerSecond += 16000;
+        }
 
         canCraft = true; // Successfully crafted
     }
@@ -358,7 +364,10 @@ public static bool TryCraftSwanLakeMajor(MainWindow window, ref int owned)
         gameState.HarmoniousOwned -= 20;
 
         owned++; // Increment the owned count for this major score
-        gameState.SwanMajorAbility = true; // Enable Crescendance ability for Swan Lake
+        if ( gameState.EroicaMajorAbility ) {
+            gameState.SwanMinorOwned += 2;
+            gameState.NotesPerSecond += 30000;
+        }
 
         canCraft = true; // Successfully crafted
     }
@@ -395,7 +404,10 @@ public static bool TryCraftLaCampanellaMajor(MainWindow window, ref int owned)
         gameState.HarmoniousOwned -= 25;
 
         owned++; // Increment the owned count for this major score
-        gameState.LaCampanellaMajorAbility = true; // Enable Crescendance ability for La Campanella
+        if ( gameState.EroicaMajorAbility ) {
+            gameState.LaCampanellaMinorOwned += 2;
+            gameState.NotesPerSecond += 70000;
+        }
 
         canCraft = true; // Successfully crafted
     }
@@ -432,7 +444,10 @@ public static bool TryCraftEnigmaMajor(MainWindow window, ref int owned)
         gameState.HarmoniousOwned -= 30;
 
         owned++; // Increment the owned count for this major score
-        gameState.EnigmaMajorAbility = true; // Enable Crescendance ability for Enigma
+        if ( gameState.EroicaMajorAbility ) {
+            gameState.FateMinorOwned += 2;
+            gameState.NotesPerSecond += 150000;
+        }
 
         canCraft = true; // Successfully crafted
     }
@@ -469,7 +484,10 @@ public static bool TryCraftFateMajor(MainWindow window, ref int owned)
         gameState.HarmoniousOwned -= 35;
 
         owned++; // Increment the owned count for this major score
-        gameState.FateMajorAbility = true; // Enable Crescendance ability for Fate
+        if ( gameState.EroicaMajorAbility ) {
+            gameState.FateMinorOwned += 2;
+            gameState.NotesPerSecond += 270000;
+        }
 
         canCraft = true; // Successfully crafted
     }
@@ -506,7 +524,10 @@ public static bool TryCraftOdeToJoyMajor(MainWindow window, ref int owned)
         gameState.HarmoniousOwned -= 40;
 
         owned++; // Increment the owned count for this major score
-        gameState.OdeToJoyMajorAbility = true; // Enable Crescendance ability for Ode to Joy
+        if ( gameState.EroicaMajorAbility ) {
+            gameState.OdeToJoyMinorOwned += 2;
+            gameState.NotesPerSecond += 510000;
+        }
 
         canCraft = true; // Successfully crafted
     }

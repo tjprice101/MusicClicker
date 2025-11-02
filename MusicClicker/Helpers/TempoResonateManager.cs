@@ -10,11 +10,10 @@ namespace MusicClicker
 {
     public class TempoResonateManager : IDisposable
     {
-
         private bool _disposed = false;
-        
-        private readonly StackPanel _leftDrawerPanel; 
-        private readonly Border _equippedDisplay;     
+
+        private readonly StackPanel _leftDrawerPanel;
+        private readonly Border _equippedDisplay;
         private readonly TextBlock _equippedText;
         private readonly GameState _gameState;
 
@@ -36,6 +35,7 @@ namespace MusicClicker
 
         private readonly Dictionary<string, Bitmap> _bitmapCache = new();
         private Bitmap? _equippedBitmap;
+        private Bitmap? _emptyBitmap;
 
         public TempoResonateManager(
             StackPanel leftDrawerPanel, Border equippedDisplay, TextBlock equippedText, GameState gameState,
@@ -53,6 +53,7 @@ namespace MusicClicker
 
             LoadBitmaps();
             InitializeDrawer();
+            SetDefaultEquipped();
         }
 
         private void LoadBitmaps()
@@ -65,6 +66,24 @@ namespace MusicClicker
                     _bitmapCache[kvp.Key] = new Bitmap(stream);
                 }
             }
+
+            // Load empty placeholder bitmap
+            using var emptyStream = AssetLoader.Open(new Uri("avares://MusicClicker/Assets/EmptyResonate.png"));
+            _emptyBitmap = new Bitmap(emptyStream);
+        }
+
+        private void SetDefaultEquipped()
+        {
+            _equippedText.Text = "None";
+            _equippedBitmap = _emptyBitmap;
+
+            _equippedDisplay.Child = new Image
+            {
+                Source = _equippedBitmap,
+                Width = 384,
+                Height = 216,
+                Stretch = Stretch.UniformToFill
+            };
         }
 
         private void InitializeDrawer()
@@ -98,7 +117,17 @@ namespace MusicClicker
                     IsEnabled = OwnsScore(score)
                 };
 
-                button.Click += (_, _) => ShowEquipPrompt(score);
+                button.Click += (_, _) =>
+                {
+                    if (_equippedText.Text == score)
+                    {
+                        ShowDisablePrompt(score);
+                    }
+                    else
+                    {
+                        ShowEquipPrompt(score);
+                    }
+                };
 
                 _leftDrawerPanel.Children.Add(button);
             }
@@ -159,55 +188,96 @@ namespace MusicClicker
             _equipNoButton.Click += EquipNoButtonHandler;
         }
 
+        private void ShowDisablePrompt(string scoreName)
+        {
+            _equipPromptPanel.IsVisible = true;
+            _equipPromptText.Text = $"Do you want to disable {scoreName}'s resonance?";
+
+            _equipYesButton.Click -= DisableYesHandler;
+            _equipNoButton.Click -= DisableNoHandler;
+
+            void DisableYesHandler(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+            {
+                UnequipScore();
+                _equipPromptPanel.IsVisible = false;
+                _equipYesButton.Click -= DisableYesHandler;
+                _equipNoButton.Click -= DisableNoHandler;
+            }
+
+            void DisableNoHandler(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+            {
+                _equipPromptPanel.IsVisible = false;
+                _equipYesButton.Click -= DisableYesHandler;
+                _equipNoButton.Click -= DisableNoHandler;
+            }
+
+            _equipYesButton.Click += DisableYesHandler;
+            _equipNoButton.Click += DisableNoHandler;
+        }
+
         private void EquipScore(string scoreName)
-{
-    _equippedText.Text = scoreName;
-    _equippedDisplay.Background = Brushes.DarkBlue;
+        {
+            _equippedText.Text = scoreName;
+            _equippedBitmap = _bitmapCache[scoreName];
 
-    // Assign cached bitmap without disposing
-    _equippedBitmap = _bitmapCache[scoreName];
+            _equippedDisplay.Child = new Image
+            {
+                Source = _equippedBitmap,
+                Width = 384,
+                Height = 216,
+                Stretch = Stretch.UniformToFill
+            };
 
-    _equippedDisplay.Child = new Image
-    {
-        Source = _equippedBitmap,
-        Width = 384,
-        Height = 216,
-        Stretch = Stretch.UniformToFill
-    };
+            // Reset all major abilities
+            _gameState.MoonlightMajorAbility = false;
+            _gameState.EroicaMajorAbility = false;
+            _gameState.SwanMajorAbility = false;
+            _gameState.LaCampanellaMajorAbility = false;
+            _gameState.EnigmaMajorAbility = false;
+            _gameState.FateMajorAbility = false;
+            _gameState.OdeToJoyMajorAbility = false;
 
-    // Reset all major abilities
-    _gameState.MoonlightMajorAbility = false;
-    _gameState.EroicaMajorAbility = false;
-    _gameState.SwanMajorAbility = false;
-    _gameState.LaCampanellaMajorAbility = false;
-    _gameState.EnigmaMajorAbility = false;
-    _gameState.FateMajorAbility = false;
-    _gameState.OdeToJoyMajorAbility = false;
+            // Enable selected ability
+            switch (scoreName)
+            {
+                case "Moonlight": _gameState.MoonlightMajorAbility = true; break;
+                case "Eroica": _gameState.EroicaMajorAbility = true; break;
+                case "Swan": _gameState.SwanMajorAbility = true; break;
+                case "LaCampanella": _gameState.LaCampanellaMajorAbility = true; break;
+                case "Enigma": _gameState.EnigmaMajorAbility = true; break;
+                case "Fate": _gameState.FateMajorAbility = true; break;
+                case "OdeToJoy": _gameState.OdeToJoyMajorAbility = true; break;
+            }
+        }
 
-    // Enable selected ability
-    switch (scoreName)
-    {
-        case "Moonlight": _gameState.MoonlightMajorAbility = true; break;
-        case "Eroica": _gameState.EroicaMajorAbility = true; break;
-        case "Swan": _gameState.SwanMajorAbility = true; break;
-        case "LaCampanella": _gameState.LaCampanellaMajorAbility = true; break;
-        case "Enigma": _gameState.EnigmaMajorAbility = true; break;
-        case "Fate": _gameState.FateMajorAbility = true; break;
-        case "OdeToJoy": _gameState.OdeToJoyMajorAbility = true; break;
-    }
-}
+        private void UnequipScore()
+        {
+            _equippedText.Text = "None";
+            _equippedBitmap = _emptyBitmap;
 
-public void Dispose()
-    {
-        if (_disposed) return;
+            _equippedDisplay.Child = new Image
+            {
+                Source = _equippedBitmap,
+                Width = 384,
+                Height = 216,
+                Stretch = Stretch.UniformToFill
+            };
 
-        // If you have any temporary streams or other IDisposable objects, dispose them here
-        // Example:
-        // _someStream?.Dispose();
+            // Disable all major abilities
+            _gameState.MoonlightMajorAbility = false;
+            _gameState.EroicaMajorAbility = false;
+            _gameState.SwanMajorAbility = false;
+            _gameState.LaCampanellaMajorAbility = false;
+            _gameState.EnigmaMajorAbility = false;
+            _gameState.FateMajorAbility = false;
+            _gameState.OdeToJoyMajorAbility = false;
+        }
 
-        _disposed = true;
-        GC.SuppressFinalize(this);
-    }
-
+        public void Dispose()
+        {
+            if (_disposed) return;
+            _disposed = true;
+            GC.SuppressFinalize(this);
+        }
     }
 }
