@@ -219,31 +219,31 @@ namespace MusicClicker
         {
             window.LaCampanellaButton.Click += (s, e) =>
                 SaveScoresManager.HandleSaveScoreClick(window, ref window.GameState.LaCampanellaMinorKeys, ref window.GameState.LaCampanellaMinorScales,
-                    ref window.GameState.LaCampanellaMinorProgressions, ref window.GameState.LaCampanellaMajorSheets, 12000);
+                    ref window.GameState.LaCampanellaMinorProgressions, ref window.GameState.LaCampanellaMajorSheets, 135000);
 
             window.EnigmaButton.Click += (s, e) =>
                 SaveScoresManager.HandleSaveScoreClick(window, ref window.GameState.EnigmaMinorKeys, ref window.GameState.EnigmaMinorScales,
-                    ref window.GameState.EnigmaMinorProgressions, ref window.GameState.EnigmaMajorSheets, 25000);
+                    ref window.GameState.EnigmaMinorProgressions, ref window.GameState.EnigmaMajorSheets, 405000);
 
             window.FateButton.Click += (s, e) =>
                 SaveScoresManager.HandleSaveScoreClick(window, ref window.GameState.FateMinorKeys, ref window.GameState.FateMinorScales,
-                    ref window.GameState.FateMinorProgressions, ref window.GameState.FateMajorSheets, 35000);
+                    ref window.GameState.FateMinorProgressions, ref window.GameState.FateMajorSheets, 1215000);
 
             window.OdeToJoyButton.Click += (s, e) =>
                 SaveScoresManager.HandleSaveScoreClick(window, ref window.GameState.OdeToJoyMinorKeys, ref window.GameState.OdeToJoyMinorScales,
-                    ref window.GameState.OdeToJoyMinorProgressions, ref window.GameState.OdeToJoyMajorSheets, 55000);
+                    ref window.GameState.OdeToJoyMinorProgressions, ref window.GameState.OdeToJoyMajorSheets, 3645000);
 
             window.MoonlightSonataButton.Click += (s, e) =>
                 SaveScoresManager.HandleSaveScoreClick(window, ref window.GameState.MoonlightMinorKeys, ref window.GameState.MoonlightMinorScales,
-                    ref window.GameState.MoonlightMinorProgressions, ref window.GameState.MoonlightMajorSheets, 1000);
+                    ref window.GameState.MoonlightMinorProgressions, ref window.GameState.MoonlightMajorSheets, 5000);
 
             window.EroicaButton.Click += (s, e) =>
                 SaveScoresManager.HandleSaveScoreClick(window, ref window.GameState.EroicaMinorKeys, ref window.GameState.EroicaMinorScales,
-                    ref window.GameState.EroicaMinorProgressions, ref window.GameState.EroicaMajorSheets, 3000);
+                    ref window.GameState.EroicaMinorProgressions, ref window.GameState.EroicaMajorSheets, 15000);
 
             window.SwanLakeButton.Click += (s, e) =>
                 SaveScoresManager.HandleSaveScoreClick(window, ref window.GameState.SwanLakeMinorKeys, ref window.GameState.SwanLakeMinorScales,
-                    ref window.GameState.SwanLakeMinorProgressions, ref window.GameState.SwanLakeMajorSheets, 8000);
+                    ref window.GameState.SwanLakeMinorProgressions, ref window.GameState.SwanLakeMajorSheets, 45000);
         }
 
         private static void InitializeManualCrafting(MainWindow window)

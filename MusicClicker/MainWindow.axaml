@@ -35,9 +35,9 @@
                Stretch="UniformToFill" />
     </Button>
 
-    <!-- Heart of Harmony Button (placeholder for now) -->
-    <Button x:Name="HeartOfHarmonyButton" Width="300" Height="170">
-        <Image Source="avares://MusicClicker/Assets/TempoResonate.png"
+    <!-- Eternal Modulation Button -->
+    <Button x:Name="EternalModulationButton" Width="300" Height="170">
+        <Image Source="avares://MusicClicker/Assets/EternalModulation.png"
                Stretch="UniformToFill" />
     </Button>
 
@@ -50,12 +50,6 @@
     <!-- Symphonic Gallery Button -->
     <Button x:Name="SymphonicGalleryButton" Width="300" Height="170">
         <Image Source="avares://MusicClicker/Assets/SymphonicGallery.png"
-               Stretch="UniformToFill" />
-    </Button>
-
-    <!-- Save Scores Button -->
-    <Button x:Name="SaveScoresButton" Width="300" Height="170">
-        <Image Source="avares://MusicClicker/Assets/TempoResonate.png"
                Stretch="UniformToFill" />
     </Button>
 </StackPanel>
@@ -211,53 +205,78 @@
         <ImageBrush Source="avares://MusicClicker/Assets/TempoResonateBG.png"
                     Stretch="UniformToFill" />
     </Grid.Background>
-            <!-- Title -->
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0">
-                <TextBlock Text="Tempo Resonate" FontSize="36" FontWeight="Bold"
-                    Foreground="White" HorizontalAlignment="Center" />
-            </StackPanel>
 
-            <!-- Scrollable drawer on the left -->
-            <ScrollViewer HorizontalScrollBarVisibility="Disabled"
-                VerticalScrollBarVisibility="Auto"
-                Width="280" Margin="20,100,0,20"
-                HorizontalAlignment="Left" VerticalAlignment="Stretch">
-                <StackPanel x:Name="LeftDrawerPanel" Orientation="Vertical" Spacing="10" />
-            </ScrollViewer>
+    <!-- Title -->
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0">
+        <TextBlock Text="Tempo Resonate" FontSize="36" FontWeight="Bold"
+                   Foreground="White" HorizontalAlignment="Center" />
+    </StackPanel>
 
-            <!-- Right side display panel -->
-            <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,100,20,20"
-                Spacing="20">
-                <!-- Equipped Score (top) -->
-                <Border x:Name="EquippedScoreDisplay" Width="384" Height="216" Background="#555"
-                    CornerRadius="8">
-                    <TextBlock x:Name="EquippedScoreText" Text="Equipped Score"
-                        HorizontalAlignment="Center" VerticalAlignment="Center"
-                        Foreground="White" />
-                </Border>
+    <!-- Scrollable drawer on the left -->
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                  VerticalScrollBarVisibility="Auto"
+                  Width="280" Margin="20,100,0,20"
+                  HorizontalAlignment="Left" VerticalAlignment="Stretch">
+        <StackPanel x:Name="LeftDrawerPanel" Orientation="Vertical" Spacing="10" />
+    </ScrollViewer>
 
-                <!-- Placeholder slots (3 empty) -->
-                <Border Width="384" Height="216" Background="#333" CornerRadius="8" />
-                <Border Width="384" Height="216" Background="#333" CornerRadius="8" />
-                <Border Width="384" Height="216" Background="#333" CornerRadius="8" />
-            </StackPanel>
-
-            <StackPanel x:Name="EquipPromptPanel" Orientation="Horizontal"
-                HorizontalAlignment="Center" VerticalAlignment="Top"
-                Margin="0,340,0,0" IsVisible="False" Spacing="10">
-                <TextBlock x:Name="EquipPromptText" Text="Equip X?" Foreground="White" FontSize="20" />
-                <Button x:Name="EquipYesButton" Content="Yes" Width="80" />
-                <Button x:Name="EquipNoButton" Content="No" Width="80" />
-            </StackPanel>
+    <!-- Equip prompt panel above equip image -->
+<StackPanel x:Name="EquipPromptPanel"
+            Orientation="Horizontal"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            IsVisible="False"
+            Spacing="10"
+            Margin="0,150,0,0"> <!-- adjust top margin to position above equip image -->
+    <TextBlock x:Name="EquipPromptText"
+               Text="Equip X?"
+               Foreground="White"
+               FontSize="20" />
+    <Button x:Name="EquipYesButton" Content="Yes" Width="80" />
+    <Button x:Name="EquipNoButton" Content="No" Width="80" />
+</StackPanel>
 
 
-            <!-- Back button -->
-            <Button x:Name="BackButtonTempoResonate" Content="Back" Width="200" Height="50"
-                Background="White" Foreground="Black" FontSize="20"
-                HorizontalAlignment="Center" VerticalAlignment="Bottom"
-                Margin="0,0,0,20"
-                Click="BackButtonTempoResonate_Click" />
-        </Grid>
+    <!-- Centered content wrapper -->
+    <StackPanel HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Spacing="20"
+                Margin="0,100,0,0">
+
+        <!-- Equipped score display -->
+        <Border x:Name="EquippedScoreDisplay"
+                Width="300" Height="170"
+                Background="#555"
+                CornerRadius="8"
+                HorizontalAlignment="Center">
+            <TextBlock x:Name="EquippedScoreText"
+                       Text="Equipped Score"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Foreground="White" />
+        </Border>
+
+        <!-- Horizontal placeholder rectangles -->
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Spacing="25"
+                    Margin="0,60,0,0">
+            <Border Width="250" Height="160" Background="#333" CornerRadius="8"/>
+            <Border Width="250" Height="160" Background="#333" CornerRadius="8"/>
+            <Border Width="250" Height="160" Background="#333" CornerRadius="8"/>
+        </StackPanel>
+    </StackPanel>
+
+    <!-- Back button -->
+    <Button x:Name="BackButtonTempoResonate" Content="Back"
+            Width="200" Height="50"
+            Background="White" Foreground="Black"
+            FontSize="20"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Bottom"
+            Margin="0,0,0,20"
+            Click="BackButtonTempoResonate_Click" />
+</Grid>
 
         <!-- Upgrade Screen -->
         <Grid x:Name="UpgradeScreen" IsVisible="False" Background="#AA000000">
@@ -619,7 +638,7 @@
 
                             <StackPanel Grid.Column="1" Orientation="Vertical" Margin="15"
                                 Spacing="5">
-                                <TextBlock Text="1000 Notes for Soul Resonance" FontSize="20"
+                                <TextBlock Text="5000 Notes for Soul Resonance" FontSize="20"
                                     Foreground="White" />
                                 <TextBlock x:Name="MoonlightMinorKeysText" FontSize="16"
                                     Foreground="White" />
@@ -650,7 +669,7 @@
 
                             <StackPanel Grid.Column="1" Orientation="Vertical" Margin="15"
                                 Spacing="5">
-                                <TextBlock Text="3000 Notes for Soul Resonance" FontSize="20"
+                                <TextBlock Text="15000 Notes for Soul Resonance" FontSize="20"
                                     Foreground="White" />
                                 <TextBlock x:Name="EroicaMinorKeysText" FontSize="16"
                                     Foreground="White" />
@@ -681,7 +700,7 @@
 
                             <StackPanel Grid.Column="1" Orientation="Vertical" Margin="15"
                                 Spacing="5">
-                                <TextBlock Text="8000 Notes for Soul Resonance" FontSize="20"
+                                <TextBlock Text="45000 Notes for Soul Resonance" FontSize="20"
                                     Foreground="White" />
                                 <TextBlock x:Name="SwanLakeMinorKeysText" FontSize="16"
                                     Foreground="White" />
@@ -712,7 +731,7 @@
 
                             <StackPanel Grid.Column="1" Orientation="Vertical" Margin="15"
                                 Spacing="5">
-                                <TextBlock Text="12,000 Notes for Soul Resonance" FontSize="20"
+                                <TextBlock Text="135,000 Notes for Soul Resonance" FontSize="20"
                                     Foreground="White" />
                                 <TextBlock x:Name="LaCampanellaMinorKeysText"
                                     Text="Minor key of La Campanella"
@@ -747,7 +766,7 @@
 
                             <StackPanel Grid.Column="1" Orientation="Vertical" Margin="15"
                                 Spacing="5">
-                                <TextBlock Text="25,000 Notes for Soul Resonance" FontSize="20"
+                                <TextBlock Text="405,000 Notes for Soul Resonance" FontSize="20"
                                     Foreground="White" />
                                 <TextBlock x:Name="EnigmaMinorKeysText" Text="Minor key of Enigma"
                                     FontSize="16" Foreground="White" />
@@ -781,7 +800,7 @@
 
                             <StackPanel Grid.Column="1" Orientation="Vertical" Margin="15"
                                 Spacing="5">
-                                <TextBlock Text="35,000 Notes for Soul Resonance" FontSize="20"
+                                <TextBlock Text="1,215,000 Notes for Soul Resonance" FontSize="20"
                                     Foreground="White" />
                                 <TextBlock x:Name="FateMinorKeysText" Text="Minor key of Fate"
                                     FontSize="16" Foreground="White" />
@@ -813,7 +832,7 @@
 
                             <StackPanel Grid.Column="1" Orientation="Vertical" Margin="15"
                                 Spacing="5">
-                                <TextBlock Text="55,000 Notes for Soul Resonance" FontSize="20"
+                                <TextBlock Text="3,645,000 Notes for Soul Resonance" FontSize="20"
                                     Foreground="White" />
                                 <TextBlock x:Name="OdeToJoyMinorKeysText"
                                     Text="Minor key of Ode to Joy"
