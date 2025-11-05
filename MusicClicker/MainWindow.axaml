@@ -227,7 +227,7 @@
             VerticalAlignment="Top"
             IsVisible="False"
             Spacing="10"
-            Margin="0,150,0,0"> <!-- adjust top margin to position above equip image -->
+            Margin="0,150,0,0"> 
     <TextBlock x:Name="EquipPromptText"
                Text="Equip X?"
                Foreground="White"
