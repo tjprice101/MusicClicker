@@ -53,8 +53,6 @@
                Stretch="UniformToFill" />
     </Button>
 </StackPanel>
-
-
                 <!-- Left side buttons -->
                 <StackPanel Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Left"
                     VerticalAlignment="Top"
