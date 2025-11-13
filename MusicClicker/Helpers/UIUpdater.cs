@@ -10,25 +10,25 @@ namespace MusicClicker
         {
             window.NotesText.Text = $"Notes: {Math.Round(gameState.Notes, 1)}";
             window.NpsText.Text = $"Notes Per Second: {Math.Round(gameState.NotesPerSecond, 1)}";
-            window.UpgradeNotesTextHeader.Text = $"Notes: {Math.Round(gameState.Notes, 1)}";
+            window.UpgradeScreen.UpgradeNotesTextHeader.Text = $"Notes: {Math.Round(gameState.Notes, 1)}";
 
-            window.ChordOwnedTextUpgrade.Text = $"Number Owned: {gameState.ChordOwned}";
-            window.ScaleOwnedTextUpgrade.Text = $"Number Owned: {gameState.ScaleOwned}";
-            window.OrchestraOwnedTextUpgrade.Text = $"Number Owned: {gameState.OrchestraOwned}";
-            window.SymphonyOwnedTextUpgrade.Text = $"Number Owned: {gameState.SymphonyOwned}";
-            window.AriaOwnedTextUpgrade.Text = $"Number Owned: {gameState.AriaOwned}";
-            window.RequiemOwnedTextUpgrade.Text = $"Number Owned: {gameState.RequiemOwned}";
-            window.OpusOwnedTextUpgrade.Text = $"Number Owned: {gameState.OpusOwned}";
-            window.MagnumOpusOwnedTextUpgrade.Text = $"Number Owned: {gameState.MagnumOpusOwned}";
+            window.UpgradeScreen.ChordOwnedTextUpgrade.Text = $"Number Owned: {gameState.ChordOwned}";
+            window.UpgradeScreen.ScaleOwnedTextUpgrade.Text = $"Number Owned: {gameState.ScaleOwned}";
+            window.UpgradeScreen.OrchestraOwnedTextUpgrade.Text = $"Number Owned: {gameState.OrchestraOwned}";
+            window.UpgradeScreen.SymphonyOwnedTextUpgrade.Text = $"Number Owned: {gameState.SymphonyOwned}";
+            window.UpgradeScreen.AriaOwnedTextUpgrade.Text = $"Number Owned: {gameState.AriaOwned}";
+            window.UpgradeScreen.RequiemOwnedTextUpgrade.Text = $"Number Owned: {gameState.RequiemOwned}";
+            window.UpgradeScreen.OpusOwnedTextUpgrade.Text = $"Number Owned: {gameState.OpusOwned}";
+            window.UpgradeScreen.MagnumOpusOwnedTextUpgrade.Text = $"Number Owned: {gameState.MagnumOpusOwned}";
 
-            window.ChordCostTextUpgrade.Text = $"Cost: {Math.Round(gameState.ChordBaseCost * Math.Pow(1.15, gameState.ChordOwned), 2)}";
-            window.ScaleCostTextUpgrade.Text = $"Cost: {Math.Round(gameState.ScaleBaseCost * Math.Pow(1.15, gameState.ScaleOwned), 2)}";
-            window.OrchestraCostTextUpgrade.Text = $"Cost: {Math.Round(gameState.OrchestraBaseCost * Math.Pow(1.15, gameState.OrchestraOwned), 2)}";
-            window.SymphonyCostTextUpgrade.Text = $"Cost: {Math.Round(gameState.SymphonyBaseCost * Math.Pow(1.15, gameState.SymphonyOwned), 2)}";
-            window.AriaCostTextUpgrade.Text = $"Cost: {Math.Round(gameState.AriaBaseCost * Math.Pow(1.15, gameState.AriaOwned), 2)}";
-            window.RequiemCostTextUpgrade.Text = $"Cost: {Math.Round(gameState.RequiemBaseCost * Math.Pow(1.15, gameState.RequiemOwned), 2)}";
-            window.OpusCostTextUpgrade.Text = $"Cost: {Math.Round(gameState.OpusBaseCost * Math.Pow(1.15, gameState.OpusOwned), 2)}";
-            window.MagnumOpusCostTextUpgrade.Text = $"Cost: {Math.Round(gameState.MagnumOpusBaseCost * Math.Pow(1.15, gameState.MagnumOpusOwned), 2)}";
+            window.UpgradeScreen.ChordCostTextUpgrade.Text = $"Cost: {Math.Round(gameState.ChordBaseCost * Math.Pow(1.15, gameState.ChordOwned), 2)}";
+            window.UpgradeScreen.ScaleCostTextUpgrade.Text = $"Cost: {Math.Round(gameState.ScaleBaseCost * Math.Pow(1.15, gameState.ScaleOwned), 2)}";
+            window.UpgradeScreen.OrchestraCostTextUpgrade.Text = $"Cost: {Math.Round(gameState.OrchestraBaseCost * Math.Pow(1.15, gameState.OrchestraOwned), 2)}";
+            window.UpgradeScreen.SymphonyCostTextUpgrade.Text = $"Cost: {Math.Round(gameState.SymphonyBaseCost * Math.Pow(1.15, gameState.SymphonyOwned), 2)}";
+            window.UpgradeScreen.AriaCostTextUpgrade.Text = $"Cost: {Math.Round(gameState.AriaBaseCost * Math.Pow(1.15, gameState.AriaOwned), 2)}";
+            window.UpgradeScreen.RequiemCostTextUpgrade.Text = $"Cost: {Math.Round(gameState.RequiemBaseCost * Math.Pow(1.15, gameState.RequiemOwned), 2)}";
+            window.UpgradeScreen.OpusCostTextUpgrade.Text = $"Cost: {Math.Round(gameState.OpusBaseCost * Math.Pow(1.15, gameState.OpusOwned), 2)}";
+            window.UpgradeScreen.MagnumOpusCostTextUpgrade.Text = $"Cost: {Math.Round(gameState.MagnumOpusBaseCost * Math.Pow(1.15, gameState.MagnumOpusOwned), 2)}";
         }
 
         public static void UpdateEssenceUI(MainWindow window, GameState gameState)
@@ -141,21 +141,21 @@ namespace MusicClicker
 
         public static void UpdateUnitySymphonyUI(MainWindow window, GameState gameState)
         {
-            window.UnityNotesTextHeader.Text = $"Notes: {Math.Round(gameState.Notes, 1)}";
-            window.MoonlightMinorOwnedText.Text = $"{gameState.MoonlightMinorOwned} Owned";
-            window.MoonlightMajorOwnedText.Text = $"{gameState.MoonlightMajorOwned} Owned";
-            window.EroicaMinorOwnedText.Text = $"{gameState.EroicaMinorOwned} Owned";
-            window.EroicaMajorOwnedText.Text = $"{gameState.EroicaMajorOwned} Owned";
-            window.SwanMinorOwnedText.Text = $"{gameState.SwanMinorOwned} Owned";
-            window.SwanMajorOwnedText.Text = $"{gameState.SwanMajorOwned} Owned";
-            window.LaCampanellaMinorOwnedText.Text = $"{gameState.LaCampanellaMinorOwned} Owned";
-            window.LaCampanellaMajorOwnedText.Text = $"{gameState.LaCampanellaMajorOwned} Owned";
-            window.EnigmaMinorOwnedText.Text = $"{gameState.EnigmaMinorOwned} Owned";
-            window.EnigmaMajorOwnedText.Text = $"{gameState.EnigmaMajorOwned} Owned";
-            window.FateMinorOwnedText.Text = $"{gameState.FateMinorOwned} Owned";
-            window.FateMajorOwnedText.Text = $"{gameState.FateMajorOwned} Owned";
-            window.OdeToJoyMinorOwnedText.Text = $"{gameState.OdeToJoyMinorOwned} Owned";
-            window.OdeToJoyMajorOwnedText.Text = $"{gameState.OdeToJoyMajorOwned} Owned";
+            window.UnityTheSymphonyScreen.UnityNotesTextHeader.Text = $"Notes: {Math.Round(gameState.Notes, 1)}";
+            window.UnityTheSymphonyScreen.MoonlightMinorOwnedText.Text = $"{gameState.MoonlightMinorOwned} Owned";
+            window.UnityTheSymphonyScreen.MoonlightMajorOwnedText.Text = $"{gameState.MoonlightMajorOwned} Owned";
+            window.UnityTheSymphonyScreen.EroicaMinorOwnedText.Text = $"{gameState.EroicaMinorOwned} Owned";
+            window.UnityTheSymphonyScreen.EroicaMajorOwnedText.Text = $"{gameState.EroicaMajorOwned} Owned";
+            window.UnityTheSymphonyScreen.SwanMinorOwnedText.Text = $"{gameState.SwanMinorOwned} Owned";
+            window.UnityTheSymphonyScreen.SwanMajorOwnedText.Text = $"{gameState.SwanMajorOwned} Owned";
+            window.UnityTheSymphonyScreen.LaCampanellaMinorOwnedText.Text = $"{gameState.LaCampanellaMinorOwned} Owned";
+            window.UnityTheSymphonyScreen.LaCampanellaMajorOwnedText.Text = $"{gameState.LaCampanellaMajorOwned} Owned";
+            window.UnityTheSymphonyScreen.EnigmaMinorOwnedText.Text = $"{gameState.EnigmaMinorOwned} Owned";
+            window.UnityTheSymphonyScreen.EnigmaMajorOwnedText.Text = $"{gameState.EnigmaMajorOwned} Owned";
+            window.UnityTheSymphonyScreen.FateMinorOwnedText.Text = $"{gameState.FateMinorOwned} Owned";
+            window.UnityTheSymphonyScreen.FateMajorOwnedText.Text = $"{gameState.FateMajorOwned} Owned";
+            window.UnityTheSymphonyScreen.OdeToJoyMinorOwnedText.Text = $"{gameState.OdeToJoyMinorOwned} Owned";
+            window.UnityTheSymphonyScreen.OdeToJoyMajorOwnedText.Text = $"{gameState.OdeToJoyMajorOwned} Owned";
             MainWindow.GlobalTempoManager.RefreshDrawer();
         }
     }

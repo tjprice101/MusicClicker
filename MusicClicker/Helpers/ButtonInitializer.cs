@@ -78,55 +78,55 @@ namespace MusicClicker
         }
 
         private static void InitializeUpgradeButtons(MainWindow window)
-        {
-            // Chord
-            window.BuyChordButton.Click += (s, e) =>
-                UpgradeManager.BuyUpgrade(window, ref window.GameState.ChordOwned, window.GameState.ChordBaseCost, 0.5, 0, 1, window.ChordOwnedTextUpgrade, window.ChordCostTextUpgrade);
-            window.BuyChordMaxButton.Click += (s, e) =>
-                UpgradeManager.BuyUpgrade(window, ref window.GameState.ChordOwned, window.GameState.ChordBaseCost, 0.5, 0, double.MaxValue, window.ChordOwnedTextUpgrade, window.ChordCostTextUpgrade);
+{
+    // Chord
+    window.UpgradeScreen.BuyChordButton.Click += (s, e) =>
+        UpgradeManager.BuyUpgrade(window, ref window.GameState.ChordOwned, window.GameState.ChordBaseCost, 0.5, 0, 1, window.UpgradeScreen.ChordOwnedTextUpgrade, window.UpgradeScreen.ChordCostTextUpgrade);
+    window.UpgradeScreen.BuyChordMaxButton.Click += (s, e) =>
+        UpgradeManager.BuyUpgrade(window, ref window.GameState.ChordOwned, window.GameState.ChordBaseCost, 0.5, 0, double.MaxValue, window.UpgradeScreen.ChordOwnedTextUpgrade, window.UpgradeScreen.ChordCostTextUpgrade);
 
-            // Scale
-            window.BuyScaleButton.Click += (s, e) =>
-                UpgradeManager.BuyUpgrade(window, ref window.GameState.ScaleOwned, window.GameState.ScaleBaseCost, 3, 0, 1, window.ScaleOwnedTextUpgrade, window.ScaleCostTextUpgrade);
-            window.BuyScaleMaxButton.Click += (s, e) =>
-                UpgradeManager.BuyUpgrade(window, ref window.GameState.ScaleOwned, window.GameState.ScaleBaseCost, 3, 0, double.MaxValue, window.ScaleOwnedTextUpgrade, window.ScaleCostTextUpgrade);
+    // Scale
+    window.UpgradeScreen.BuyScaleButton.Click += (s, e) =>
+        UpgradeManager.BuyUpgrade(window, ref window.GameState.ScaleOwned, window.GameState.ScaleBaseCost, 3, 0, 1, window.UpgradeScreen.ScaleOwnedTextUpgrade, window.UpgradeScreen.ScaleCostTextUpgrade);
+    window.UpgradeScreen.BuyScaleMaxButton.Click += (s, e) =>
+        UpgradeManager.BuyUpgrade(window, ref window.GameState.ScaleOwned, window.GameState.ScaleBaseCost, 3, 0, double.MaxValue, window.UpgradeScreen.ScaleOwnedTextUpgrade, window.UpgradeScreen.ScaleCostTextUpgrade);
 
-            // Orchestra
-            window.BuyOrchestraButton.Click += (s, e) =>
-                UpgradeManager.BuyUpgrade(window, ref window.GameState.OrchestraOwned, window.GameState.OrchestraBaseCost, 5, 0, 1, window.OrchestraOwnedTextUpgrade, window.OrchestraCostTextUpgrade);
-            window.BuyOrchestraMaxButton.Click += (s, e) =>
-                UpgradeManager.BuyUpgrade(window, ref window.GameState.OrchestraOwned, window.GameState.OrchestraBaseCost, 5, 0, double.MaxValue, window.OrchestraOwnedTextUpgrade, window.OrchestraCostTextUpgrade);
+    // Orchestra
+    window.UpgradeScreen.BuyOrchestraButton.Click += (s, e) =>
+        UpgradeManager.BuyUpgrade(window, ref window.GameState.OrchestraOwned, window.GameState.OrchestraBaseCost, 5, 0, 1, window.UpgradeScreen.OrchestraOwnedTextUpgrade, window.UpgradeScreen.OrchestraCostTextUpgrade);
+    window.UpgradeScreen.BuyOrchestraMaxButton.Click += (s, e) =>
+        UpgradeManager.BuyUpgrade(window, ref window.GameState.OrchestraOwned, window.GameState.OrchestraBaseCost, 5, 0, double.MaxValue, window.UpgradeScreen.OrchestraOwnedTextUpgrade, window.UpgradeScreen.OrchestraCostTextUpgrade);
 
-            // Symphony
-            window.BuySymphonyButton.Click += (s, e) =>
-                UpgradeManager.BuyUpgrade(window, ref window.GameState.SymphonyOwned, window.GameState.SymphonyBaseCost, 9, 0, 1, window.SymphonyOwnedTextUpgrade, window.SymphonyCostTextUpgrade);
-            window.BuySymphonyMaxButton.Click += (s, e) =>
-                UpgradeManager.BuyUpgrade(window, ref window.GameState.SymphonyOwned, window.GameState.SymphonyBaseCost, 9, 0, double.MaxValue, window.SymphonyOwnedTextUpgrade, window.SymphonyCostTextUpgrade);
+    // Symphony
+    window.UpgradeScreen.BuySymphonyButton.Click += (s, e) =>
+        UpgradeManager.BuyUpgrade(window, ref window.GameState.SymphonyOwned, window.GameState.SymphonyBaseCost, 9, 0, 1, window.UpgradeScreen.SymphonyOwnedTextUpgrade, window.UpgradeScreen.SymphonyCostTextUpgrade);
+    window.UpgradeScreen.BuySymphonyMaxButton.Click += (s, e) =>
+        UpgradeManager.BuyUpgrade(window, ref window.GameState.SymphonyOwned, window.GameState.SymphonyBaseCost, 9, 0, double.MaxValue, window.UpgradeScreen.SymphonyOwnedTextUpgrade, window.UpgradeScreen.SymphonyCostTextUpgrade);
 
-            // Aria
-            window.BuyAriaButton.Click += (s, e) =>
-                UpgradeManager.BuyUpgrade(window, ref window.GameState.AriaOwned, window.GameState.AriaBaseCost, 0, 1, 1, window.AriaOwnedTextUpgrade, window.AriaCostTextUpgrade);
-            window.BuyAriaMaxButton.Click += (s, e) =>
-                UpgradeManager.BuyUpgrade(window, ref window.GameState.AriaOwned, window.GameState.AriaBaseCost, 0, 1, double.MaxValue, window.AriaOwnedTextUpgrade, window.AriaCostTextUpgrade);
+    // Aria
+    window.UpgradeScreen.BuyAriaButton.Click += (s, e) =>
+        UpgradeManager.BuyUpgrade(window, ref window.GameState.AriaOwned, window.GameState.AriaBaseCost, 0, 1, 1, window.UpgradeScreen.AriaOwnedTextUpgrade, window.UpgradeScreen.AriaCostTextUpgrade);
+    window.UpgradeScreen.BuyAriaMaxButton.Click += (s, e) =>
+        UpgradeManager.BuyUpgrade(window, ref window.GameState.AriaOwned, window.GameState.AriaBaseCost, 0, 1, double.MaxValue, window.UpgradeScreen.AriaOwnedTextUpgrade, window.UpgradeScreen.AriaCostTextUpgrade);
 
-            // Requiem
-            window.BuyRequiemButton.Click += (s, e) =>
-                UpgradeManager.BuyUpgrade(window, ref window.GameState.RequiemOwned, window.GameState.RequiemBaseCost, 0, 2, 1, window.RequiemOwnedTextUpgrade, window.RequiemCostTextUpgrade);
-            window.BuyRequiemMaxButton.Click += (s, e) =>
-                UpgradeManager.BuyUpgrade(window, ref window.GameState.RequiemOwned, window.GameState.RequiemBaseCost, 0, 2, double.MaxValue, window.RequiemOwnedTextUpgrade, window.RequiemCostTextUpgrade);
+    // Requiem
+    window.UpgradeScreen.BuyRequiemButton.Click += (s, e) =>
+        UpgradeManager.BuyUpgrade(window, ref window.GameState.RequiemOwned, window.GameState.RequiemBaseCost, 0, 2, 1, window.UpgradeScreen.RequiemOwnedTextUpgrade, window.UpgradeScreen.RequiemCostTextUpgrade);
+    window.UpgradeScreen.BuyRequiemMaxButton.Click += (s, e) =>
+        UpgradeManager.BuyUpgrade(window, ref window.GameState.RequiemOwned, window.GameState.RequiemBaseCost, 0, 2, double.MaxValue, window.UpgradeScreen.RequiemOwnedTextUpgrade, window.UpgradeScreen.RequiemCostTextUpgrade);
 
-            // Opus
-            window.BuyOpusButton.Click += (s, e) =>
-                UpgradeManager.BuyUpgrade(window, ref window.GameState.OpusOwned, window.GameState.OpusBaseCost, 0, 3, 1, window.OpusOwnedTextUpgrade, window.OpusCostTextUpgrade);
-            window.BuyOpusMaxButton.Click += (s, e) =>
-                UpgradeManager.BuyUpgrade(window, ref window.GameState.OpusOwned, window.GameState.OpusBaseCost, 0, 3, double.MaxValue, window.OpusOwnedTextUpgrade, window.OpusCostTextUpgrade);
+    // Opus
+    window.UpgradeScreen.BuyOpusButton.Click += (s, e) =>
+        UpgradeManager.BuyUpgrade(window, ref window.GameState.OpusOwned, window.GameState.OpusBaseCost, 0, 3, 1, window.UpgradeScreen.OpusOwnedTextUpgrade, window.UpgradeScreen.OpusCostTextUpgrade);
+    window.UpgradeScreen.BuyOpusMaxButton.Click += (s, e) =>
+        UpgradeManager.BuyUpgrade(window, ref window.GameState.OpusOwned, window.GameState.OpusBaseCost, 0, 3, double.MaxValue, window.UpgradeScreen.OpusOwnedTextUpgrade, window.UpgradeScreen.OpusCostTextUpgrade);
 
-            // Magnum Opus
-            window.BuyMagnumOpusButton.Click += (s, e) =>
-                UpgradeManager.BuyUpgrade(window, ref window.GameState.MagnumOpusOwned, window.GameState.MagnumOpusBaseCost, 0, 4, 1, window.MagnumOpusOwnedTextUpgrade, window.MagnumOpusCostTextUpgrade);
-            window.BuyMagnumOpusMaxButton.Click += (s, e) =>
-                UpgradeManager.BuyUpgrade(window, ref window.GameState.MagnumOpusOwned, window.GameState.MagnumOpusBaseCost, 0, 4, double.MaxValue, window.MagnumOpusOwnedTextUpgrade, window.MagnumOpusCostTextUpgrade);
-        }
+    // Magnum Opus
+    window.UpgradeScreen.BuyMagnumOpusButton.Click += (s, e) =>
+        UpgradeManager.BuyUpgrade(window, ref window.GameState.MagnumOpusOwned, window.GameState.MagnumOpusBaseCost, 0, 4, 1, window.UpgradeScreen.MagnumOpusOwnedTextUpgrade, window.UpgradeScreen.MagnumOpusCostTextUpgrade);
+    window.UpgradeScreen.BuyMagnumOpusMaxButton.Click += (s, e) =>
+        UpgradeManager.BuyUpgrade(window, ref window.GameState.MagnumOpusOwned, window.GameState.MagnumOpusBaseCost, 0, 4, double.MaxValue, window.UpgradeScreen.MagnumOpusOwnedTextUpgrade, window.UpgradeScreen.MagnumOpusCostTextUpgrade);
+}
 
         private static void InitializeClicker(MainWindow window)
         {
@@ -142,7 +142,7 @@ namespace MusicClicker
                 window.UpgradeScreen.IsVisible = true;
                 UIUpdater.UpdateUI(window, window.GameState);
             };
-            window.BackButtonBottom.Click += window.BackButton_Click;
+            window.UpgradeScreen.BackButtonBottom.Click += window.BackButton_Click;
 
             window.FragmentationButton.Click += (s, e) =>
             {
@@ -186,7 +186,7 @@ namespace MusicClicker
                 window.UnityTheSymphonyScreen.IsVisible = true;
                 UIUpdater.UpdateUnitySymphonyUI(window, window.GameState);
             };
-            window.BackButtonUnitySymphony.Click += (s, e) =>
+            window.UnityTheSymphonyScreen.BackButtonUnitySymphony.Click += (s, e) =>
             {
                 window.UnityTheSymphonyScreen.IsVisible = false;
                 window.MainScreen.IsVisible = true;
@@ -249,52 +249,52 @@ namespace MusicClicker
         private static void InitializeManualCrafting(MainWindow window)
 {
     // Moonlight Sonata - Minor and Major
-    window.MoonlightMinorButton.Click += (s, e) =>
+    window.UnityTheSymphonyScreen.MoonlightMinorButton.Click += (s, e) =>
         UniteTheSymphonyManager.TryCraftMoonlightMinor(window, ref window.GameState.MoonlightMinorOwned);
 
-    window.MoonlightMajorButton.Click += (s, e) =>
+    window.UnityTheSymphonyScreen.MoonlightMajorButton.Click += (s, e) =>
         UniteTheSymphonyManager.TryCraftMoonlightSonataMajor(window, ref window.GameState.MoonlightMajorOwned);
 
     // Eroica - Minor and Major
-    window.EroicaMinorButton.Click += (s, e) =>
+    window.UnityTheSymphonyScreen.EroicaMinorButton.Click += (s, e) =>
         UniteTheSymphonyManager.TryCraftEroicaMinor(window, ref window.GameState.EroicaMinorOwned);
 
-    window.EroicaMajorButton.Click += (s, e) =>
+    window.UnityTheSymphonyScreen.EroicaMajorButton.Click += (s, e) =>
         UniteTheSymphonyManager.TryCraftEroicaMajor(window, ref window.GameState.EroicaMajorOwned);
 
     // Swan Lake - Minor and Major
-    window.SwanMinorButton.Click += (s, e) =>
+    window.UnityTheSymphonyScreen.SwanMinorButton.Click += (s, e) =>
         UniteTheSymphonyManager.TryCraftSwanLakeMinor(window, ref window.GameState.SwanMinorOwned);
 
-    window.SwanMajorButton.Click += (s, e) =>
+    window.UnityTheSymphonyScreen.SwanMajorButton.Click += (s, e) =>
         UniteTheSymphonyManager.TryCraftSwanLakeMajor(window, ref window.GameState.SwanMajorOwned);
 
     // La Campanella - Minor and Major
-    window.LaCampanellaMinorButton.Click += (s, e) =>
+    window.UnityTheSymphonyScreen.LaCampanellaMinorButton.Click += (s, e) =>
         UniteTheSymphonyManager.TryCraftLaCampanellaMinor(window, ref window.GameState.LaCampanellaMinorOwned);
 
-    window.LaCampanellaMajorButton.Click += (s, e) =>
+    window.UnityTheSymphonyScreen.LaCampanellaMajorButton.Click += (s, e) =>
         UniteTheSymphonyManager.TryCraftLaCampanellaMajor(window, ref window.GameState.LaCampanellaMajorOwned);
 
     // Enigma - Minor and Major
-    window.EnigmaMinorButton.Click += (s, e) =>
+    window.UnityTheSymphonyScreen.EnigmaMinorButton.Click += (s, e) =>
         UniteTheSymphonyManager.TryCraftEnigmaMinor(window, ref window.GameState.EnigmaMinorOwned);
 
-    window.EnigmaMajorButton.Click += (s, e) =>
+    window.UnityTheSymphonyScreen.EnigmaMajorButton.Click += (s, e) =>
         UniteTheSymphonyManager.TryCraftEnigmaMajor(window, ref window.GameState.EnigmaMajorOwned);
 
     // Fate - Minor and Major
-    window.FateMinorButton.Click += (s, e) =>
+    window.UnityTheSymphonyScreen.FateMinorButton.Click += (s, e) =>
         UniteTheSymphonyManager.TryCraftFateMinor(window, ref window.GameState.FateMinorOwned);
 
-    window.FateMajorButton.Click += (s, e) =>
+    window.UnityTheSymphonyScreen.FateMajorButton.Click += (s, e) =>
         UniteTheSymphonyManager.TryCraftFateMajor(window, ref window.GameState.FateMajorOwned);
 
     // Ode to Joy - Minor and Major
-    window.OdeToJoyMinorButton.Click += (s, e) =>
+    window.UnityTheSymphonyScreen.OdeToJoyMinorButton.Click += (s, e) =>
         UniteTheSymphonyManager.TryCraftOdeToJoyMinor(window, ref window.GameState.OdeToJoyMinorOwned);
 
-    window.OdeToJoyMajorButton.Click += (s, e) =>
+    window.UnityTheSymphonyScreen.OdeToJoyMajorButton.Click += (s, e) =>
         UniteTheSymphonyManager.TryCraftOdeToJoyMajor(window, ref window.GameState.OdeToJoyMajorOwned);
 }
 
