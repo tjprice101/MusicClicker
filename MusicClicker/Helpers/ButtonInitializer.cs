@@ -18,55 +18,55 @@ namespace MusicClicker
 
         private static void InitializeHarmonyButtons(MainWindow window)
         {
-            window.MoonlightHarmonyButton.Click += (s, e) =>
+            window.HeartOfHarmonyScreen.MoonlightHarmonyButton.Click += (s, e) =>
                 HeartOfHarmonyManager.HandleMajorSheetClick(window, ref window.GameState.MoonlightMajorSheets,
                     ref window.GameState.MoonlightMajorKeys, ref window.GameState.MoonlightMajorScales,
                     ref window.GameState.MoonlightMajorProgressions,
-                    window.MoonlightMajorSheetsOwnedText, window.MoonlightMajorKeysOwnedText,
-                    window.MoonlightMajorScalesOwnedText, window.MoonlightMajorProgressionsOwnedText, "Moonlight Sonata");
+                    window.HeartOfHarmonyScreen.MoonlightMajorSheetsOwnedText, window.HeartOfHarmonyScreen.MoonlightMajorKeysOwnedText,
+                    window.HeartOfHarmonyScreen.MoonlightMajorScalesOwnedText, window.HeartOfHarmonyScreen.MoonlightMajorProgressionsOwnedText, "Moonlight Sonata");
 
-            window.EroicaHarmonyButton.Click += (s, e) =>
+            window.HeartOfHarmonyScreen.EroicaHarmonyButton.Click += (s, e) =>
                 HeartOfHarmonyManager.HandleMajorSheetClick(window, ref window.GameState.EroicaMajorSheets,
                     ref window.GameState.EroicaMajorKeys, ref window.GameState.EroicaMajorScales,
                     ref window.GameState.EroicaMajorProgressions,
-                    window.EroicaMajorSheetsOwnedText, window.EroicaMajorKeysOwnedText,
-                    window.EroicaMajorScalesOwnedText, window.EroicaMajorProgressionsOwnedText, "Eroica");
+                    window.HeartOfHarmonyScreen.EroicaMajorSheetsOwnedText, window.HeartOfHarmonyScreen.EroicaMajorKeysOwnedText,
+                    window.HeartOfHarmonyScreen.EroicaMajorScalesOwnedText, window.HeartOfHarmonyScreen.EroicaMajorProgressionsOwnedText, "Eroica");
 
-            window.SwanLakeHarmonyButton.Click += (s, e) =>
+            window.HeartOfHarmonyScreen.SwanLakeHarmonyButton.Click += (s, e) =>
                 HeartOfHarmonyManager.HandleMajorSheetClick(window, ref window.GameState.SwanLakeMajorSheets,
                     ref window.GameState.SwanLakeMajorKeys, ref window.GameState.SwanLakeMajorScales,
                     ref window.GameState.SwanLakeMajorProgressions,
-                    window.SwanLakeMajorSheetsOwnedText, window.SwanLakeMajorKeysOwnedText,
-                    window.SwanLakeMajorScalesOwnedText, window.SwanLakeMajorProgressionsOwnedText, "Swan Lake");
+                    window.HeartOfHarmonyScreen.SwanLakeMajorSheetsOwnedText, window.HeartOfHarmonyScreen.SwanLakeMajorKeysOwnedText,
+                    window.HeartOfHarmonyScreen.SwanLakeMajorScalesOwnedText, window.HeartOfHarmonyScreen.SwanLakeMajorProgressionsOwnedText, "Swan Lake");
 
                     // New Scores
-    window.LaCampanellaHarmonyButton.Click += (s, e) =>
+    window.HeartOfHarmonyScreen.LaCampanellaHarmonyButton.Click += (s, e) =>
         HeartOfHarmonyManager.HandleMajorSheetClick(window, ref window.GameState.LaCampanellaMajorSheets,
             ref window.GameState.LaCampanellaMajorKeys, ref window.GameState.LaCampanellaMajorScales,
             ref window.GameState.LaCampanellaMajorProgressions,
-            window.LaCampanellaMajorSheetsOwnedText, window.LaCampanellaMajorKeysOwnedText,
-            window.LaCampanellaMajorScalesOwnedText, window.LaCampanellaMajorProgressionsOwnedText, "La Campanella");
+            window.HeartOfHarmonyScreen.LaCampanellaMajorSheetsOwnedText, window.HeartOfHarmonyScreen.LaCampanellaMajorKeysOwnedText,
+            window.HeartOfHarmonyScreen.LaCampanellaMajorScalesOwnedText, window.HeartOfHarmonyScreen.LaCampanellaMajorProgressionsOwnedText, "La Campanella");
 
-    window.EnigmaHarmonyButton.Click += (s, e) =>
+    window.HeartOfHarmonyScreen.EnigmaHarmonyButton.Click += (s, e) =>
         HeartOfHarmonyManager.HandleMajorSheetClick(window, ref window.GameState.EnigmaMajorSheets,
             ref window.GameState.EnigmaMajorKeys, ref window.GameState.EnigmaMajorScales,
             ref window.GameState.EnigmaMajorProgressions,
-            window.EnigmaMajorSheetsOwnedText, window.EnigmaMajorKeysOwnedText,
-            window.EnigmaMajorScalesOwnedText, window.EnigmaMajorProgressionsOwnedText, "Enigma");
+            window.HeartOfHarmonyScreen.EnigmaMajorSheetsOwnedText, window.HeartOfHarmonyScreen.EnigmaMajorKeysOwnedText,
+            window.HeartOfHarmonyScreen.EnigmaMajorScalesOwnedText, window.HeartOfHarmonyScreen.EnigmaMajorProgressionsOwnedText, "Enigma");
 
-    window.FateHarmonyButton.Click += (s, e) =>
+    window.HeartOfHarmonyScreen.FateHarmonyButton.Click += (s, e) =>
         HeartOfHarmonyManager.HandleMajorSheetClick(window, ref window.GameState.FateMajorSheets,
             ref window.GameState.FateMajorKeys, ref window.GameState.FateMajorScales,
             ref window.GameState.FateMajorProgressions,
-            window.FateMajorSheetsOwnedText, window.FateMajorKeysOwnedText,
-            window.FateMajorScalesOwnedText, window.FateMajorProgressionsOwnedText, "Fate");
+            window.HeartOfHarmonyScreen.FateMajorSheetsOwnedText, window.HeartOfHarmonyScreen.FateMajorKeysOwnedText,
+            window.HeartOfHarmonyScreen.FateMajorScalesOwnedText, window.HeartOfHarmonyScreen.FateMajorProgressionsOwnedText, "Fate");
 
-    window.OdeToJoyHarmonyButton.Click += (s, e) =>
+    window.HeartOfHarmonyScreen.OdeToJoyHarmonyButton.Click += (s, e) =>
         HeartOfHarmonyManager.HandleMajorSheetClick(window, ref window.GameState.OdeToJoyMajorSheets,
             ref window.GameState.OdeToJoyMajorKeys, ref window.GameState.OdeToJoyMajorScales,
             ref window.GameState.OdeToJoyMajorProgressions,
-            window.OdeToJoyMajorSheetsOwnedText, window.OdeToJoyMajorKeysOwnedText,
-            window.OdeToJoyMajorScalesOwnedText, window.OdeToJoyMajorProgressionsOwnedText, "Ode to Joy");
+            window.HeartOfHarmonyScreen.OdeToJoyMajorSheetsOwnedText, window.HeartOfHarmonyScreen.OdeToJoyMajorKeysOwnedText,
+            window.HeartOfHarmonyScreen.OdeToJoyMajorScalesOwnedText, window.HeartOfHarmonyScreen.OdeToJoyMajorProgressionsOwnedText, "Ode to Joy");
         }
 
         private static void InitializeEssenceButtons(MainWindow window)
@@ -150,7 +150,7 @@ namespace MusicClicker
                 window.FragmentationScreen.IsVisible = true;
                 UIUpdater.UpdateFragmentationUI(window, window.GameState);
             };
-            window.BackButtonFragmentation.Click += (s, e) =>
+            window.FragmentationScreen.BackButtonFragmentation.Click += (s, e) =>
             {
                 window.FragmentationScreen.IsVisible = false;
                 window.MainScreen.IsVisible = true;
@@ -162,7 +162,7 @@ namespace MusicClicker
                 window.SaveScoresScreen.IsVisible = true;
                 UIUpdater.UpdateSaveScoresUI(window, window.GameState);
             };
-            window.BackButtonSaveScores.Click += (s, e) =>
+            window.SaveScoresScreen.BackButtonSaveScores.Click += (s, e) =>
             {
                 window.SaveScoresScreen.IsVisible = false;
                 window.MainScreen.IsVisible = true;
@@ -174,7 +174,7 @@ namespace MusicClicker
                 window.HeartOfHarmonyScreen.IsVisible = true;
                 UIUpdater.UpdateHeartOfHarmonyUI(window, window.GameState);
             };
-            window.BackButtonHeartOfHarmony.Click += (s, e) =>
+            window.HeartOfHarmonyScreen.BackButtonHeartOfHarmony.Click += (s, e) =>
             {
                 window.HeartOfHarmonyScreen.IsVisible = false;
                 window.MainScreen.IsVisible = true;
@@ -195,7 +195,7 @@ namespace MusicClicker
 
         private static void InitializeFragmentationButtons(MainWindow window)
         {
-            window.MelodiousFragmentButton.Click += (s, e) =>
+            window.FragmentationScreen.MelodiousFragmentButton.Click += (s, e) =>
             {
                 if (window.GameState.Notes >= 1000)
                 {
@@ -204,7 +204,7 @@ namespace MusicClicker
                     UIUpdater.UpdateFragmentationUI(window, window.GameState);
                 }
             };
-            window.HarmoniousFragmentButton.Click += (s, e) =>
+            window.FragmentationScreen.HarmoniousFragmentButton.Click += (s, e) =>
             {
                 if (window.GameState.Notes >= 5000)
                 {
@@ -217,31 +217,31 @@ namespace MusicClicker
 
         private static void InitializeSaveScoresButtons(MainWindow window)
         {
-            window.LaCampanellaButton.Click += (s, e) =>
+            window.SaveScoresScreen.LaCampanellaButton.Click += (s, e) =>
                 SaveScoresManager.HandleSaveScoreClick(window, ref window.GameState.LaCampanellaMinorKeys, ref window.GameState.LaCampanellaMinorScales,
                     ref window.GameState.LaCampanellaMinorProgressions, ref window.GameState.LaCampanellaMajorSheets, 135000);
 
-            window.EnigmaButton.Click += (s, e) =>
+            window.SaveScoresScreen.EnigmaButton.Click += (s, e) =>
                 SaveScoresManager.HandleSaveScoreClick(window, ref window.GameState.EnigmaMinorKeys, ref window.GameState.EnigmaMinorScales,
                     ref window.GameState.EnigmaMinorProgressions, ref window.GameState.EnigmaMajorSheets, 405000);
 
-            window.FateButton.Click += (s, e) =>
+            window.SaveScoresScreen.FateButton.Click += (s, e) =>
                 SaveScoresManager.HandleSaveScoreClick(window, ref window.GameState.FateMinorKeys, ref window.GameState.FateMinorScales,
                     ref window.GameState.FateMinorProgressions, ref window.GameState.FateMajorSheets, 1215000);
 
-            window.OdeToJoyButton.Click += (s, e) =>
+            window.SaveScoresScreen.OdeToJoyButton.Click += (s, e) =>
                 SaveScoresManager.HandleSaveScoreClick(window, ref window.GameState.OdeToJoyMinorKeys, ref window.GameState.OdeToJoyMinorScales,
                     ref window.GameState.OdeToJoyMinorProgressions, ref window.GameState.OdeToJoyMajorSheets, 3645000);
 
-            window.MoonlightSonataButton.Click += (s, e) =>
+            window.SaveScoresScreen.MoonlightSonataButton.Click += (s, e) =>
                 SaveScoresManager.HandleSaveScoreClick(window, ref window.GameState.MoonlightMinorKeys, ref window.GameState.MoonlightMinorScales,
                     ref window.GameState.MoonlightMinorProgressions, ref window.GameState.MoonlightMajorSheets, 5000);
 
-            window.EroicaButton.Click += (s, e) =>
+            window.SaveScoresScreen.EroicaButton.Click += (s, e) =>
                 SaveScoresManager.HandleSaveScoreClick(window, ref window.GameState.EroicaMinorKeys, ref window.GameState.EroicaMinorScales,
                     ref window.GameState.EroicaMinorProgressions, ref window.GameState.EroicaMajorSheets, 15000);
 
-            window.SwanLakeButton.Click += (s, e) =>
+            window.SaveScoresScreen.SwanLakeButton.Click += (s, e) =>
                 SaveScoresManager.HandleSaveScoreClick(window, ref window.GameState.SwanLakeMinorKeys, ref window.GameState.SwanLakeMinorScales,
                     ref window.GameState.SwanLakeMinorProgressions, ref window.GameState.SwanLakeMajorSheets, 45000);
         }

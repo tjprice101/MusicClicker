@@ -8,15 +8,8 @@
                 Stretch="UniformToFill" AlignmentX="Center" AlignmentY="Center" />
         </Grid.Background>
 
-        <!-- Unity the Symphony Screen -->
-        <Grid x:Name="UnityTheSymphonyScreen" IsVisible="False">
-            <Grid.Background>
-                <ImageBrush Source="avares://MusicClicker/Assets/Concert Hall Menu-min.png"
-                    Stretch="UniformToFill" AlignmentX="Center" AlignmentY="Center" />
-            </Grid.Background>
-
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="20,15,20,10"
-                Spacing="8">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="20,15,20,10"
+            Spacing="8">
                 <TextBlock Text="Unite the Symphony" FontSize="32" FontWeight="Bold"
                     Foreground="White"
                     HorizontalAlignment="Center" />
@@ -621,6 +614,5 @@
             <Button x:Name="BackButtonUnitySymphony" Content="Back" Width="200" Height="50"
                 Background="White" Foreground="Black" FontSize="20"
                 HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20" />
-        </Grid>
     </Grid>
 </UserControl>

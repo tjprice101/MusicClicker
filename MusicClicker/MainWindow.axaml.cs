@@ -8,14 +8,13 @@ using System.Timers;
 using Avalonia.Platform;
 
 namespace MusicClicker
-
-// TODO List:
-// 1.) AI Generate an Image for a new Essence Button and background underneath of the main clicker button.
-// 2.) Hook up the Essence screen to work properly. 
-// 3.) AI Generate the "Upgrades" button and background to put to the right of the essence button. 
-// 4.) Add functionality to Heart of Harmony for the major versions of La Campanella and up. 
-
 {
+    // TODO List:
+    // 1.) AI Generate an Image for a new Essence Button and background underneath of the main clicker button.
+    // 2.) Hook up the Essence screen to work properly. 
+    // 3.) AI Generate the "Upgrades" button and background to put to the right of the essence button. 
+    // 4.) Add functionality to Heart of Harmony for the major versions of La Campanella and up. 
+
     public partial class MainWindow : Window
     {
         // ------------------- FIELDS / STATE -------------------
@@ -27,77 +26,79 @@ namespace MusicClicker
 
         // ------------------- CONSTRUCTOR -------------------
         public MainWindow()
-{
-    InitializeComponent();
-
-    GlobalTempoManager = new TempoResonateManager(
-    LeftDrawerPanel,
-    EquippedScoreDisplay,
-    EquippedScoreText,
-    gameState,
-    EquipPromptPanel,
-    EquipPromptText,
-    EquipYesButton,
-    EquipNoButton
-);
-
-BackButtonTempoResonate.Click += BackButtonTempoResonate_Click;
-
-
-    UIUpdater.UpdateEssenceUI(this, gameState);
-
-    // ------------------- BUTTON HANDLERS -------------------
-    ButtonInitializer.InitializeAllButtons(this);
-
-    // Hook up Tempo Resonate
-    TempoResonateButton.Click += TempoResonateButton_Click;
-    BackButtonTempoResonate.Click += BackButtonTempoResonate_Click;
-
-    // ------------------- PASSIVE PRODUCTION -------------------
-    _timer = new Timer(1000);
-    _timer.Elapsed += (s, e) =>
-    {
-        gameState.Notes += gameState.NotesPerSecond;
-        Dispatcher.UIThread.Post(() =>
         {
+            InitializeComponent();
+
+            GlobalTempoManager = new TempoResonateManager(
+                TempoResonateScreen.LeftDrawerPanel,
+                TempoResonateScreen.EquippedScoreDisplay,
+                TempoResonateScreen.EquippedScoreText,
+                gameState,
+                TempoResonateScreen.EquipPromptPanel,
+                TempoResonateScreen.EquipPromptText,
+                TempoResonateScreen.EquipYesButton,
+                TempoResonateScreen.EquipNoButton
+            );
+
+            TempoResonateScreen.BackButtonTempoResonate.Click += BackButtonTempoResonate_Click;
+
+            UIUpdater.UpdateEssenceUI(this, gameState);
+
+            // ------------------- BUTTON HANDLERS -------------------
+            ButtonInitializer.InitializeAllButtons(this);
+
+            // Hook up Tempo Resonate
+            TempoResonateButton.Click += TempoResonateButton_Click;
+            TempoResonateScreen.BackButtonTempoResonate.Click += BackButtonTempoResonate_Click;
+
+            // ------------------- PASSIVE PRODUCTION -------------------
+            _timer = new Timer(1000);
+            _timer.Elapsed += (s, e) =>
+            {
+                gameState.Notes += gameState.NotesPerSecond;
+                Dispatcher.UIThread.Post(() =>
+                {
+                    UIUpdater.UpdateUI(this, gameState);
+                    UIUpdater.UpdateFragmentationUI(this, gameState);
+                    UIUpdater.UpdateSaveScoresUI(this, gameState);
+                    UIUpdater.UpdateHeartOfHarmonyUI(this, gameState);
+                    UIUpdater.UpdateUnitySymphonyUI(this, gameState);
+                });
+            };
+            _timer.Start();
+        }
+
+        // ------------------- CLICK & NAVIGATION HANDLERS -------------------
+        public void ClickButton_Click(object? sender, RoutedEventArgs e)
+        {
+            // Make notesPerClick a double to allow temporary boosts
+            double notesPerClick = gameState.NotesPerClick;
+
+            // Check the ability flag in gameState (or MainWindow, wherever you defined it)
+            if (gameState.MoonlightMajorAbility)
+            {
+                notesPerClick += gameState.NotesPerSecond;
+            }
+            else if (gameState.FateMajorAbility)
+            {
+                gameState.FateCounter++;
+                if (gameState.FateCounter == 5)
+                {
+                    gameState.FateCounter = 0;
+                    gameState.Notes += (gameState.Notes * 0.30);
+                }
+            }
+
+            // Increment notes
+            gameState.Notes += notesPerClick;
+
+            // Update all UI
             UIUpdater.UpdateUI(this, gameState);
             UIUpdater.UpdateFragmentationUI(this, gameState);
             UIUpdater.UpdateSaveScoresUI(this, gameState);
             UIUpdater.UpdateHeartOfHarmonyUI(this, gameState);
             UIUpdater.UpdateUnitySymphonyUI(this, gameState);
-        });
-    };
-    _timer.Start();
-}
-
-        // ------------------- CLICK & NAVIGATION HANDLERS -------------------
-        public void ClickButton_Click(object? sender, RoutedEventArgs e)
-{
-    // Make notesPerClick a double to allow temporary boosts
-    double notesPerClick = gameState.NotesPerClick;
-
-    // Check the ability flag in gameState (or MainWindow, wherever you defined it)
-    if (gameState.MoonlightMajorAbility) 
-    {
-        notesPerClick += gameState.NotesPerSecond; // 5000 is fine as an integer literal
-    } else if (gameState.FateMajorAbility) {
-        gameState.FateCounter++;
-        if (gameState.FateCounter == 5) {
-            gameState.FateCounter = 0;
-            gameState.Notes += (gameState.Notes * .30);
         }
-    }
-
-    // Increment notes
-    gameState.Notes += notesPerClick;
-
-    // Update all UI
-    UIUpdater.UpdateUI(this, gameState);
-    UIUpdater.UpdateFragmentationUI(this, gameState);
-    UIUpdater.UpdateSaveScoresUI(this, gameState);
-    UIUpdater.UpdateHeartOfHarmonyUI(this, gameState);
-    UIUpdater.UpdateUnitySymphonyUI(this, gameState);
-}
 
         public void BackButton_Click(object? sender, RoutedEventArgs e)
         {
@@ -126,18 +127,17 @@ BackButtonTempoResonate.Click += BackButtonTempoResonate_Click;
             }
         }
 
-        // Open Tempo Resonate screen
-public void TempoResonateButton_Click(object? sender, RoutedEventArgs e)
-{
-    MainScreen.IsVisible = false;       // Hide main screen
-    TempoResonateScreen.IsVisible = true; // Show Tempo Resonate screen
-}
+        // ------------------- TEMPO RESONATE HANDLERS -------------------
+        public void TempoResonateButton_Click(object? sender, RoutedEventArgs e)
+        {
+            MainScreen.IsVisible = false;
+            TempoResonateScreen.IsVisible = true;
+        }
 
-// Back button
-public void BackButtonTempoResonate_Click(object? sender, RoutedEventArgs e)
-{
-    TempoResonateScreen.IsVisible = false;
-    MainScreen.IsVisible = true;
-}
+        public void BackButtonTempoResonate_Click(object? sender, RoutedEventArgs e)
+        {
+            TempoResonateScreen.IsVisible = false;
+            MainScreen.IsVisible = true;
+        }
     }
 }
