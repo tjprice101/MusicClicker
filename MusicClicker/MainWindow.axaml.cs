@@ -18,10 +18,20 @@ namespace MusicClicker
     public partial class MainWindow : Window
     {
         // ------------------- FIELDS / STATE -------------------
+
+        // Timer that triggers once per second for passive note production.
         private Timer _timer;
+
+        // Random generator used throughout the game (click effects, loot, etc.).
         private Random _random = new Random();
+
+        // Centralized game state that stores all persistent gameplay values.
         private GameState gameState = new GameState();
+
+        // Public accessor for other classes that need the shared GameState.
         public GameState GameState => gameState;
+
+        // Global instance of TempoResonateManager so other systems can access it if necessary.
         public static TempoResonateManager GlobalTempoManager = null!;
 
         // ------------------- CONSTRUCTOR -------------------
@@ -29,6 +39,8 @@ namespace MusicClicker
         {
             InitializeComponent();
 
+            // Initialize the Tempo Resonate manager using UI elements from the TempoResonateScreen user control.
+            // These are wired up via code-behind accessors defined in TempoResonateScreen.axaml.cs.
             GlobalTempoManager = new TempoResonateManager(
                 TempoResonateScreen.LeftDrawerPanel,
                 TempoResonateScreen.EquippedScoreDisplay,
@@ -40,22 +52,29 @@ namespace MusicClicker
                 TempoResonateScreen.EquipNoButton
             );
 
+            // Back button inside the Tempo Resonate Screen; returns to main screen.
             TempoResonateScreen.BackButtonTempoResonate.Click += BackButtonTempoResonate_Click;
 
+            // Update essence-related UI immediately on startup.
             UIUpdater.UpdateEssenceUI(this, gameState);
 
-            // ------------------- BUTTON HANDLERS -------------------
+            // Register handlers for all buy / upgrade buttons across all menus.
             ButtonInitializer.InitializeAllButtons(this);
 
-            // Hook up Tempo Resonate
+            // Handle the main navigation button to open the Tempo Resonate system.
             TempoResonateButton.Click += TempoResonateButton_Click;
             TempoResonateScreen.BackButtonTempoResonate.Click += BackButtonTempoResonate_Click;
 
             // ------------------- PASSIVE PRODUCTION -------------------
+
+            // Timer triggers every second to add passive Notes based on NotesPerSecond.
             _timer = new Timer(1000);
             _timer.Elapsed += (s, e) =>
             {
+                // Apply passive NotesPerSecond production.
                 gameState.Notes += gameState.NotesPerSecond;
+
+                // Because UI must update on the UI thread, we dispatch UI updates safely.
                 Dispatcher.UIThread.Post(() =>
                 {
                     UIUpdater.UpdateUI(this, gameState);
@@ -69,16 +88,19 @@ namespace MusicClicker
         }
 
         // ------------------- CLICK & NAVIGATION HANDLERS -------------------
+
         public void ClickButton_Click(object? sender, RoutedEventArgs e)
         {
-            // Make notesPerClick a double to allow temporary boosts
+            // Notes per click starts from the default value stored in GameState.
+            // Defined as double to allow temporary multipliers and Major Ability boosts.
             double notesPerClick = gameState.NotesPerClick;
 
-            // Check the ability flag in gameState (or MainWindow, wherever you defined it)
+            // Moonlight Major — clicking also adds your NotesPerSecond to the click.
             if (gameState.MoonlightMajorAbility)
             {
                 notesPerClick += gameState.NotesPerSecond;
             }
+            // Fate Major — every 5 clicks, reward 30% of current note total.
             else if (gameState.FateMajorAbility)
             {
                 gameState.FateCounter++;
@@ -89,10 +111,10 @@ namespace MusicClicker
                 }
             }
 
-            // Increment notes
+            // Apply click reward.
             gameState.Notes += notesPerClick;
 
-            // Update all UI
+            // Refresh UI everywhere that displays note totals or score-related elements.
             UIUpdater.UpdateUI(this, gameState);
             UIUpdater.UpdateFragmentationUI(this, gameState);
             UIUpdater.UpdateSaveScoresUI(this, gameState);
@@ -102,15 +124,20 @@ namespace MusicClicker
 
         public void BackButton_Click(object? sender, RoutedEventArgs e)
         {
+            // Generic back button used on submenus such as Upgrades.
             UpgradeScreen.IsVisible = false;
             MainScreen.IsVisible = true;
         }
 
         public void MainWindow_KeyDown(object? sender, Avalonia.Input.KeyEventArgs e)
         {
+            // Debug key — space bar grants huge resources and major scores.
+            // Convenient for testing without manual grinding.
             if (e.Key == Avalonia.Input.Key.Space)
             {
                 gameState.Notes += 1_000_000;
+
+                // Add ownership flags for all Major Scores.
                 gameState.MoonlightMajorOwned += 1;
                 gameState.EroicaMajorOwned += 1;
                 gameState.SwanMajorOwned += 1;
@@ -119,6 +146,7 @@ namespace MusicClicker
                 gameState.FateMajorOwned += 1;
                 gameState.OdeToJoyMajorOwned += 1;
 
+                // Update all score-related UI.
                 UIUpdater.UpdateUI(this, gameState);
                 UIUpdater.UpdateFragmentationUI(this, gameState);
                 UIUpdater.UpdateSaveScoresUI(this, gameState);
@@ -128,14 +156,17 @@ namespace MusicClicker
         }
 
         // ------------------- TEMPO RESONATE HANDLERS -------------------
+
         public void TempoResonateButton_Click(object? sender, RoutedEventArgs e)
         {
+            // Open Tempo Resonate screen and hide the main gameplay screen.
             MainScreen.IsVisible = false;
             TempoResonateScreen.IsVisible = true;
         }
 
         public void BackButtonTempoResonate_Click(object? sender, RoutedEventArgs e)
         {
+            // Return to the main gameplay screen from the Tempo Resonate UI.
             TempoResonateScreen.IsVisible = false;
             MainScreen.IsVisible = true;
         }
