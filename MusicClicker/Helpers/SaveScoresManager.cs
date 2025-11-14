@@ -16,13 +16,11 @@ namespace MusicClicker
             int cost)
         {
             var gameState = window.GameState;
-
-            if (gameState.OdeToJoyMajorAbility) {
-                majorSheets++;
-            }
-
             if (gameState.Notes >= cost)
             {
+                if (gameState.OdeToJoyMajorAbility) {
+                    majorSheets++;
+                }
                 gameState.Notes -= cost;
                 if (_random.NextDouble() <= 0.50) minorKeys++;
                 if (_random.NextDouble() <= 0.25) minorScales++;

@@ -46,7 +46,7 @@ namespace MusicClicker
 
             // NEW: update displayed Notes count immediately
             window.NotesText.Text = $"Notes: {Math.Round(gameState.Notes, 1)}";
-            window.UpgradeNotesTextHeader.Text = $"Notes: {Math.Round(gameState.Notes, 1)}";
+            window.UpgradeScreen.UpgradeNotesTextHeader.Text = $"Notes: {Math.Round(gameState.Notes, 1)}";
 
             // Also refresh other upgrade text (costs/owned values)
             UIUpdater.UpdateUI(window, gameState);

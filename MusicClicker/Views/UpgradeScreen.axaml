@@ -1,0 +1,245 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="MusicClicker.Views.UpgradeScreen">
+
+    <Grid Background="#AA000000">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="20,15,20,10" Spacing="8">
+            <TextBlock Text="Upgrades" FontSize="32" FontWeight="Bold" Foreground="White"
+                HorizontalAlignment="Center" />
+            <TextBlock x:Name="UpgradeNotesTextHeader" Text="Notes: 0" FontSize="22"
+                Foreground="White" HorizontalAlignment="Center" />
+        </StackPanel>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto"
+            HorizontalScrollBarVisibility="Disabled"
+            Margin="0,160,0,80">
+            <WrapPanel HorizontalAlignment="Center" Orientation="Horizontal" ItemWidth="240"
+                ItemHeight="140">
+
+                <!-- Chord Upgrade -->
+                <Border Background="Black" BorderBrush="White" BorderThickness="2" Padding="6"
+                    Width="240" Height="140" Margin="8">
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <Image
+                            Source="avares://MusicClicker/Assets/MusicGameAssetsChord-min.png"
+                            Width="50" Height="50" Stretch="UniformToFill" />
+                        <StackPanel Spacing="2">
+                            <TextBlock Text="Chord" FontSize="16" FontWeight="Bold"
+                                Foreground="White" />
+                            <TextBlock x:Name="ChordOwnedTextUpgrade" Text="Number Owned: 0"
+                                FontSize="12" Foreground="White" />
+                            <TextBlock x:Name="ChordCostTextUpgrade" Text="Cost: 10"
+                                FontSize="12" Foreground="White" />
+                            <TextBlock Text="Adds 0.5 NPS" FontSize="12" Foreground="White" />
+                            <StackPanel Orientation="Horizontal" Spacing="4" Margin="0,2,0,0">
+                                <Button x:Name="BuyChordButton" Content="Buy 1" Width="60"
+                                    Height="26"
+                                    Background="Black" Foreground="White" FontSize="10" />
+                                <Button x:Name="BuyChordMaxButton" Content="Buy Max" Width="70"
+                                    Height="26"
+                                    Background="Black" Foreground="White" FontSize="10" />
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Scale Upgrade -->
+                <Border Background="Black" BorderBrush="White" BorderThickness="2" Padding="6"
+                    Width="240" Height="140" Margin="8">
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <Image
+                            Source="avares://MusicClicker/Assets/MusicGameAssetsScale-min.png"
+                            Width="50" Height="50" Stretch="UniformToFill" />
+                        <StackPanel Spacing="2">
+                            <TextBlock Text="Scale" FontSize="16" FontWeight="Bold"
+                                Foreground="White" />
+                            <TextBlock x:Name="ScaleOwnedTextUpgrade" Text="Number Owned: 0"
+                                FontSize="12" Foreground="White" />
+                            <TextBlock x:Name="ScaleCostTextUpgrade" Text="Cost: 50"
+                                FontSize="12" Foreground="White" />
+                            <TextBlock Text="Adds 3 NPS" FontSize="12" Foreground="White" />
+                            <StackPanel Orientation="Horizontal" Spacing="4" Margin="0,2,0,0">
+                                <Button x:Name="BuyScaleButton" Content="Buy 1" Width="60"
+                                    Height="26"
+                                    Background="Black" Foreground="White" FontSize="10" />
+                                <Button x:Name="BuyScaleMaxButton" Content="Buy Max" Width="70"
+                                    Height="26"
+                                    Background="Black" Foreground="White" FontSize="10" />
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Orchestra Upgrade -->
+                <Border Background="Black" BorderBrush="White" BorderThickness="2" Padding="6"
+                    Width="240" Height="140" Margin="8">
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <Image
+                            Source="avares://MusicClicker/Assets/MusicGameAssetsOrchestra-min.png"
+                            Width="50" Height="50" Stretch="UniformToFill" />
+                        <StackPanel Spacing="2">
+                            <TextBlock Text="Orchestra" FontSize="16" FontWeight="Bold"
+                                Foreground="White" />
+                            <TextBlock x:Name="OrchestraOwnedTextUpgrade" Text="Number Owned: 0"
+                                FontSize="12" Foreground="White" />
+                            <TextBlock x:Name="OrchestraCostTextUpgrade" Text="Cost: 100"
+                                FontSize="12" Foreground="White" />
+                            <TextBlock Text="Adds 5 NPS" FontSize="12" Foreground="White" />
+                            <StackPanel Orientation="Horizontal" Spacing="4" Margin="0,2,0,0">
+                                <Button x:Name="BuyOrchestraButton" Content="Buy 1" Width="60"
+                                    Height="26"
+                                    Background="Black" Foreground="White" FontSize="10" />
+                                <Button x:Name="BuyOrchestraMaxButton" Content="Buy Max"
+                                    Width="70" Height="26"
+                                    Background="Black" Foreground="White" FontSize="10" />
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Symphony Upgrade -->
+                <Border Background="Black" BorderBrush="White" BorderThickness="2" Padding="6"
+                    Width="240" Height="140" Margin="8">
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <Image
+                            Source="avares://MusicClicker/Assets/MusicGameAssetsSymphony-min.png"
+                            Width="50" Height="50" Stretch="UniformToFill" />
+                        <StackPanel Spacing="2">
+                            <TextBlock Text="Symphony" FontSize="16" FontWeight="Bold"
+                                Foreground="White" />
+                            <TextBlock x:Name="SymphonyOwnedTextUpgrade" Text="Number Owned: 0"
+                                FontSize="12" Foreground="White" />
+                            <TextBlock x:Name="SymphonyCostTextUpgrade" Text="Cost: 350"
+                                FontSize="12" Foreground="White" />
+                            <TextBlock Text="Adds 9 NPS" FontSize="12" Foreground="White" />
+                            <StackPanel Orientation="Horizontal" Spacing="4" Margin="0,2,0,0">
+                                <Button x:Name="BuySymphonyButton" Content="Buy 1" Width="60"
+                                    Height="26"
+                                    Background="Black" Foreground="White" FontSize="10" />
+                                <Button x:Name="BuySymphonyMaxButton" Content="Buy Max"
+                                    Width="70" Height="26"
+                                    Background="Black" Foreground="White" FontSize="10" />
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Aria Upgrade -->
+                <Border Background="Black" BorderBrush="White" BorderThickness="2" Padding="6"
+                    Width="240" Height="140" Margin="8">
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <Image Source="avares://MusicClicker/Assets/MusicGameAssetsAria-min.png"
+                            Width="50" Height="50" Stretch="UniformToFill" />
+                        <StackPanel Spacing="2">
+                            <TextBlock Text="Aria" FontSize="16" FontWeight="Bold"
+                                Foreground="White" />
+                            <TextBlock x:Name="AriaOwnedTextUpgrade" Text="Number Owned: 0"
+                                FontSize="12" Foreground="White" />
+                            <TextBlock x:Name="AriaCostTextUpgrade" Text="Cost: 350"
+                                FontSize="12" Foreground="White" />
+                            <TextBlock Text="Adds +1 Note on Click" FontSize="12"
+                                Foreground="White" />
+                            <StackPanel Orientation="Horizontal" Spacing="4" Margin="0,2,0,0">
+                                <Button x:Name="BuyAriaButton" Content="Buy 1" Width="60"
+                                    Height="26"
+                                    Background="Black" Foreground="White" FontSize="10" />
+                                <Button x:Name="BuyAriaMaxButton" Content="Buy Max" Width="70"
+                                    Height="26"
+                                    Background="Black" Foreground="White" FontSize="10" />
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Requiem Upgrade -->
+                <Border Background="Black" BorderBrush="White" BorderThickness="2" Padding="6"
+                    Width="240" Height="140" Margin="8">
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <Image
+                            Source="avares://MusicClicker/Assets/MusicGameAssetsRequiem-min.png"
+                            Width="50" Height="50" Stretch="UniformToFill" />
+                        <StackPanel Spacing="2">
+                            <TextBlock Text="Requiem" FontSize="16" FontWeight="Bold"
+                                Foreground="White" />
+                            <TextBlock x:Name="RequiemOwnedTextUpgrade" Text="Number Owned: 0"
+                                FontSize="12" Foreground="White" />
+                            <TextBlock x:Name="RequiemCostTextUpgrade" Text="Cost: 750"
+                                FontSize="12" Foreground="White" />
+                            <TextBlock Text="Adds +2 Notes on Click" FontSize="12"
+                                Foreground="White" />
+                            <StackPanel Orientation="Horizontal" Spacing="4" Margin="0,2,0,0">
+                                <Button x:Name="BuyRequiemButton" Content="Buy 1" Width="60"
+                                    Height="26"
+                                    Background="Black" Foreground="White" FontSize="10" />
+                                <Button x:Name="BuyRequiemMaxButton" Content="Buy Max"
+                                    Width="70" Height="26"
+                                    Background="Black" Foreground="White" FontSize="10" />
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Opus Upgrade -->
+                <Border Background="Black" BorderBrush="White" BorderThickness="2" Padding="6"
+                    Width="240" Height="140" Margin="8">
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <Image Source="avares://MusicClicker/Assets/MusicGameAssetsOpus-min.png"
+                            Width="50" Height="50" Stretch="UniformToFill" />
+                        <StackPanel Spacing="2">
+                            <TextBlock Text="Opus" FontSize="16" FontWeight="Bold"
+                                Foreground="White" />
+                            <TextBlock x:Name="OpusOwnedTextUpgrade" Text="Number Owned: 0"
+                                FontSize="12" Foreground="White" />
+                            <TextBlock x:Name="OpusCostTextUpgrade" Text="Cost: 1500"
+                                FontSize="12" Foreground="White" />
+                            <TextBlock Text="Adds +3 Notes on Click" FontSize="12"
+                                Foreground="White" />
+                            <StackPanel Orientation="Horizontal" Spacing="4" Margin="0,2,0,0">
+                                <Button x:Name="BuyOpusButton" Content="Buy 1" Width="60"
+                                    Height="26"
+                                    Background="Black" Foreground="White" FontSize="10" />
+                                <Button x:Name="BuyOpusMaxButton" Content="Buy Max" Width="70"
+                                    Height="26"
+                                    Background="Black" Foreground="White" FontSize="10" />
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Magnum Opus Upgrade -->
+                <Border Background="Black" BorderBrush="White" BorderThickness="2" Padding="6"
+                    Width="240" Height="140" Margin="8">
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <Image
+                            Source="avares://MusicClicker/Assets/MusicGameAssetsMagnumOpus-min.png"
+                            Width="50" Height="50" Stretch="UniformToFill" />
+                        <StackPanel Spacing="2">
+                            <TextBlock Text="Magnum Opus" FontSize="16" FontWeight="Bold"
+                                Foreground="White" />
+                            <TextBlock x:Name="MagnumOpusOwnedTextUpgrade"
+                                Text="Number Owned: 0"
+                                FontSize="12" Foreground="White" />
+                            <TextBlock x:Name="MagnumOpusCostTextUpgrade" Text="Cost: 3000"
+                                FontSize="12" Foreground="White" />
+                            <TextBlock Text="Adds +4 Notes on Click" FontSize="12"
+                                Foreground="White" />
+                            <StackPanel Orientation="Horizontal" Spacing="4" Margin="0,2,0,0">
+                                <Button x:Name="BuyMagnumOpusButton" Content="Buy 1" Width="60"
+                                    Height="26"
+                                    Background="Black" Foreground="White" FontSize="10" />
+                                <Button x:Name="BuyMagnumOpusMaxButton" Content="Buy Max"
+                                    Width="70" Height="26"
+                                    Background="Black" Foreground="White" FontSize="10" />
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+            </WrapPanel>
+        </ScrollViewer>
+
+        <Button x:Name="BackButtonBottom" Content="Back" Width="200" Height="50"
+            Background="White" Foreground="Black" FontSize="20"
+            HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20" />
+    </Grid>
+</UserControl>

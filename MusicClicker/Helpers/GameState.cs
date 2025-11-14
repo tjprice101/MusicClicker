@@ -51,9 +51,9 @@ namespace MusicClicker
         public int EssencePyotr = 0;
         public int EssenceElgar = 0;
         public int EssenceLiszt = 0;
-// public int EssenceVivaldi = 0;
-// public int EssenceCelano = 0;
-// public int EssenceMozart = 0;
+        // public int EssenceVivaldi = 0;
+        // public int EssenceCelano = 0;
+        // public int EssenceMozart = 0;
 
         // Major Ability Counters
         public int FateCounter = 0;
@@ -94,17 +94,17 @@ namespace MusicClicker
         public int SwanLakeMajorScales = 0;
         public int SwanLakeMajorProgressions = 0;
         public int LaCampanellaMajorKeys = 0;
-public int LaCampanellaMajorScales = 0;
-public int LaCampanellaMajorProgressions = 0;
-public int EnigmaMajorKeys = 0;
-public int EnigmaMajorScales = 0;
-public int EnigmaMajorProgressions = 0;
-public int FateMajorKeys = 0;
-public int FateMajorScales = 0;
-public int FateMajorProgressions = 0;
-public int OdeToJoyMajorKeys = 0;
-public int OdeToJoyMajorScales = 0;
-public int OdeToJoyMajorProgressions = 0;
+        public int LaCampanellaMajorScales = 0;
+        public int LaCampanellaMajorProgressions = 0;
+        public int EnigmaMajorKeys = 0;
+        public int EnigmaMajorScales = 0;
+        public int EnigmaMajorProgressions = 0;
+        public int FateMajorKeys = 0;
+        public int FateMajorScales = 0;
+        public int FateMajorProgressions = 0;
+        public int OdeToJoyMajorKeys = 0;
+        public int OdeToJoyMajorScales = 0;
+        public int OdeToJoyMajorProgressions = 0;
 
         // 🆕 New Save Scores entries
         public int LaCampanellaMinorKeys = 0;
