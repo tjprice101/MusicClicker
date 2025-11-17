@@ -1,46 +1,52 @@
+using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
 using Avalonia.Interactivity;
+using Avalonia.Media;
 using Avalonia.Threading;
+using Avalonia.Animation;
+using Avalonia.Animation.Easings;
+using Avalonia.Input;
 using System;
 using System.Collections.Generic;
 using System.Timers;
-using Avalonia.Platform;
 
 namespace MusicClicker
 {
-    // TODO List:
-    // 1.) AI Generate an Image for a new Essence Button and background underneath of the main clicker button.
-    // 2.) Hook up the Essence screen to work properly. 
-    // 3.) AI Generate the "Upgrades" button and background to put to the right of the essence button. 
-    // 4.) Add functionality to Heart of Harmony for the major versions of La Campanella and up. 
-
     public partial class MainWindow : Window
     {
-        // ------------------- FIELDS / STATE -------------------
-
-        // Timer that triggers once per second for passive note production.
+        // ------------------- EXISTING FIELDS -------------------
         private Timer _timer;
-
-        // Random generator used throughout the game (click effects, loot, etc.).
         private Random _random = new Random();
-
-        // Centralized game state that stores all persistent gameplay values.
         private GameState gameState = new GameState();
-
-        // Public accessor for other classes that need the shared GameState.
         public GameState GameState => gameState;
-
-        // Global instance of TempoResonateManager so other systems can access it if necessary.
         public static TempoResonateManager GlobalTempoManager = null!;
+
+        // ------------------- CAROUSEL FIELDS -------------------
+        private int currentIndex = 0;
+        private double targetRotation = 0;
+        private double currentRotation = 0;
+        private bool isAnimating = false;
+        
+        private const double RADIUS = 350; // Distance from center
+        private const int BUTTON_COUNT = 8;
+        
+        private DispatcherTimer animationTimer = null!;
+        
+        // Drag fields
+        private bool isDragging = false;
+        private Point lastDragPoint;
+        private double dragVelocity = 0;
+        private double dragMomentum = 0;
+        
+        private List<(Button button, TranslateTransform translate, ScaleTransform scale)> carouselButtons = null!;
 
         // ------------------- CONSTRUCTOR -------------------
         public MainWindow()
         {
             InitializeComponent();
 
-            // Initialize the Tempo Resonate manager using UI elements from the TempoResonateScreen user control.
-            // These are wired up via code-behind accessors defined in TempoResonateScreen.axaml.cs.
+            InitializeCarousel();
+
             GlobalTempoManager = new TempoResonateManager(
                 TempoResonateScreen.LeftDrawerPanel,
                 TempoResonateScreen.EquippedScoreDisplay,
@@ -52,29 +58,14 @@ namespace MusicClicker
                 TempoResonateScreen.EquipNoButton
             );
 
-            // Back button inside the Tempo Resonate Screen; returns to main screen.
             TempoResonateScreen.BackButtonTempoResonate.Click += BackButtonTempoResonate_Click;
-
-            // Update essence-related UI immediately on startup.
-            UIUpdater.UpdateEssenceUI(this, gameState);
-
-            // Register handlers for all buy / upgrade buttons across all menus.
             ButtonInitializer.InitializeAllButtons(this);
-
-            // Handle the main navigation button to open the Tempo Resonate system.
             TempoResonateButton.Click += TempoResonateButton_Click;
-            TempoResonateScreen.BackButtonTempoResonate.Click += BackButtonTempoResonate_Click;
 
-            // ------------------- PASSIVE PRODUCTION -------------------
-
-            // Timer triggers every second to add passive Notes based on NotesPerSecond.
             _timer = new Timer(1000);
             _timer.Elapsed += (s, e) =>
             {
-                // Apply passive NotesPerSecond production.
                 gameState.Notes += gameState.NotesPerSecond;
-
-                // Because UI must update on the UI thread, we dispatch UI updates safely.
                 Dispatcher.UIThread.Post(() =>
                 {
                     UIUpdater.UpdateUI(this, gameState);
@@ -87,20 +78,213 @@ namespace MusicClicker
             _timer.Start();
         }
 
-        // ------------------- CLICK & NAVIGATION HANDLERS -------------------
+        // ------------------- CAROUSEL INITIALIZATION -------------------
+        private void InitializeCarousel()
+        {
+            carouselButtons = new List<(Button, TranslateTransform, ScaleTransform)>
+            {
+                GetButtonTransforms(FragmentationButton),
+                GetButtonTransforms(ResonanceButton),
+                GetButtonTransforms(MelodyButton),
+                GetButtonTransforms(HarmonyButton),
+                GetButtonTransforms(TempoResonateButton),
+                GetButtonTransforms(EternalModulationButton),
+                GetButtonTransforms(ArmorOfForteButton),
+                GetButtonTransforms(SymphonicGalleryButton)
+            };
 
+            // Add drag event handlers to the carousel canvas
+            var canvas = this.FindControl<Canvas>("CarouselCanvas");
+            if (canvas != null)
+            {
+                canvas.PointerPressed += CarouselCanvas_PointerPressed;
+                canvas.PointerMoved += CarouselCanvas_PointerMoved;
+                canvas.PointerReleased += CarouselCanvas_PointerReleased;
+            }
+
+            animationTimer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromMilliseconds(16)
+            };
+            animationTimer.Tick += AnimationTimer_Tick;
+            animationTimer.Start();
+
+            UpdateCarouselPositions();
+        }
+
+        private (Button, TranslateTransform, ScaleTransform) GetButtonTransforms(Button button)
+        {
+            var transformGroup = button.RenderTransform as TransformGroup;
+            if (transformGroup != null && transformGroup.Children.Count >= 2)
+            {
+                var translate = transformGroup.Children[0] as TranslateTransform;
+                var scale = transformGroup.Children[1] as ScaleTransform;
+                
+                if (translate != null && scale != null)
+                {
+                    return (button, translate, scale);
+                }
+            }
+            
+            var newTranslate = new TranslateTransform();
+            var newScale = new ScaleTransform { ScaleX = 1, ScaleY = 1 };
+            var newTransformGroup = new TransformGroup();
+            newTransformGroup.Children.Add(newTranslate);
+            newTransformGroup.Children.Add(newScale);
+            button.RenderTransform = newTransformGroup;
+            
+            return (button, newTranslate, newScale);
+        }
+
+        // ------------------- DRAG HANDLERS -------------------
+        private void CarouselCanvas_PointerPressed(object? sender, PointerPressedEventArgs e)
+        {
+            isDragging = true;
+            lastDragPoint = e.GetPosition(sender as Control);
+            dragVelocity = 0;
+            dragMomentum = 0;
+            isAnimating = false;
+        }
+
+        private void CarouselCanvas_PointerMoved(object? sender, PointerEventArgs e)
+        {
+            if (!isDragging) return;
+
+            var currentPoint = e.GetPosition(sender as Control);
+            double deltaY = currentPoint.Y - lastDragPoint.Y;
+            
+            // Reduced sensitivity from 0.5 to 0.25
+            double rotationDelta = deltaY * 0.25;
+            currentRotation -= rotationDelta;
+            
+            // Track velocity for momentum
+            dragVelocity = -rotationDelta;
+            
+            lastDragPoint = currentPoint;
+        }
+
+        private void CarouselCanvas_PointerReleased(object? sender, PointerReleasedEventArgs e)
+        {
+            if (!isDragging) return;
+            
+            isDragging = false;
+            
+            // Apply momentum
+            dragMomentum = dragVelocity * 2.0;
+            
+            // Snap to nearest item after momentum
+            if (Math.Abs(dragMomentum) < 1.0)
+            {
+                SnapToNearest();
+            }
+        }
+
+        private void SnapToNearest()
+        {
+            double angleStep = 360.0 / BUTTON_COUNT;
+            int nearestIndex = (int)Math.Round(currentRotation / angleStep) % BUTTON_COUNT;
+            if (nearestIndex < 0) nearestIndex += BUTTON_COUNT;
+            
+            currentIndex = nearestIndex;
+            targetRotation = nearestIndex * angleStep;
+            isAnimating = true;
+        }
+
+        // ------------------- CAROUSEL METHODS -------------------
+        private void RotateCarousel(int direction)
+        {
+            if (isAnimating) return;
+
+            currentIndex = (currentIndex + direction + BUTTON_COUNT) % BUTTON_COUNT;
+            
+            double angleStep = 360.0 / BUTTON_COUNT;
+            targetRotation = currentIndex * angleStep;
+            
+            isAnimating = true;
+        }
+
+        private void AnimationTimer_Tick(object? sender, EventArgs e)
+        {
+            // Apply momentum decay
+            if (!isDragging && Math.Abs(dragMomentum) > 0.1)
+            {
+                currentRotation += dragMomentum;
+                dragMomentum *= 0.92;
+                
+                // When momentum is low, snap to nearest
+                if (Math.Abs(dragMomentum) < 0.5)
+                {
+                    dragMomentum = 0;
+                    SnapToNearest();
+                }
+            }
+            else if (isAnimating)
+            {
+                double diff = targetRotation - currentRotation;
+                
+                if (diff > 180) diff -= 360;
+                if (diff < -180) diff += 360;
+                
+                currentRotation += diff * 0.15;
+                
+                if (Math.Abs(diff) < 0.5)
+                {
+                    currentRotation = targetRotation;
+                    isAnimating = false;
+                }
+            }
+            
+            UpdateCarouselPositions();
+        }
+
+        private void UpdateCarouselPositions()
+{
+    double angleStep = 360.0 / BUTTON_COUNT;
+    double horizontalOffset = 15; // Shift entire carousel 50px to the right
+
+    for (int i = 0; i < carouselButtons.Count; i++)
+    {
+        var (button, translate, scale) = carouselButtons[i];
+
+        double angle = (i * angleStep - currentRotation) * (Math.PI / 180.0);
+
+        // Vertical position
+        double y = -Math.Cos(angle) * RADIUS;
+        bool isAtBottom = y > (RADIUS - 50);
+
+        // Opacity
+        double opacity = Math.Max(0, (y + 100) / (RADIUS + 100));
+
+        // Scale
+        double t = (RADIUS - y) / (2 * RADIUS); // 0 = bottom, 1 = top
+        double scaleValue = 0.9 - 0.4 * t;
+
+        // Horizontal spacing adjustment
+        double centerOffset = Math.Sin(angle) * RADIUS;
+
+        // Extra spacing for middle button
+        double spacingMultiplier = 1.0 + 1.2 * Math.Pow(Math.Cos(angle), 2); 
+        double x = centerOffset * spacingMultiplier + horizontalOffset; // <-- add offset here
+
+        translate.X = x;
+        translate.Y = y;
+        scale.ScaleX = scaleValue;
+        scale.ScaleY = scaleValue;
+        button.Opacity = opacity;
+        button.IsHitTestVisible = isAtBottom && opacity > 0.8;
+        button.ZIndex = isAtBottom ? 50 : (int)(-y);
+    }
+}
+
+        // ------------------- EXISTING METHODS -------------------
         public void ClickButton_Click(object? sender, RoutedEventArgs e)
         {
-            // Notes per click starts from the default value stored in GameState.
-            // Defined as double to allow temporary multipliers and Major Ability boosts.
             double notesPerClick = gameState.NotesPerClick;
 
-            // Moonlight Major — clicking also adds your NotesPerSecond to the click.
             if (gameState.MoonlightMajorAbility)
             {
                 notesPerClick += gameState.NotesPerSecond;
             }
-            // Fate Major — every 5 clicks, reward 30% of current note total.
             else if (gameState.FateMajorAbility)
             {
                 gameState.FateCounter++;
@@ -111,10 +295,8 @@ namespace MusicClicker
                 }
             }
 
-            // Apply click reward.
             gameState.Notes += notesPerClick;
 
-            // Refresh UI everywhere that displays note totals or score-related elements.
             UIUpdater.UpdateUI(this, gameState);
             UIUpdater.UpdateFragmentationUI(this, gameState);
             UIUpdater.UpdateSaveScoresUI(this, gameState);
@@ -124,20 +306,15 @@ namespace MusicClicker
 
         public void BackButton_Click(object? sender, RoutedEventArgs e)
         {
-            // Generic back button used on submenus such as Upgrades.
             UpgradeScreen.IsVisible = false;
             MainScreen.IsVisible = true;
         }
 
         public void MainWindow_KeyDown(object? sender, Avalonia.Input.KeyEventArgs e)
         {
-            // Debug key — space bar grants huge resources and major scores.
-            // Convenient for testing without manual grinding.
             if (e.Key == Avalonia.Input.Key.Space)
             {
                 gameState.Notes += 1_000_000;
-
-                // Add ownership flags for all Major Scores.
                 gameState.MoonlightMajorOwned += 1;
                 gameState.EroicaMajorOwned += 1;
                 gameState.SwanMajorOwned += 1;
@@ -146,7 +323,6 @@ namespace MusicClicker
                 gameState.FateMajorOwned += 1;
                 gameState.OdeToJoyMajorOwned += 1;
 
-                // Update all score-related UI.
                 UIUpdater.UpdateUI(this, gameState);
                 UIUpdater.UpdateFragmentationUI(this, gameState);
                 UIUpdater.UpdateSaveScoresUI(this, gameState);
@@ -155,18 +331,14 @@ namespace MusicClicker
             }
         }
 
-        // ------------------- TEMPO RESONATE HANDLERS -------------------
-
         public void TempoResonateButton_Click(object? sender, RoutedEventArgs e)
         {
-            // Open Tempo Resonate screen and hide the main gameplay screen.
             MainScreen.IsVisible = false;
             TempoResonateScreen.IsVisible = true;
         }
 
         public void BackButtonTempoResonate_Click(object? sender, RoutedEventArgs e)
         {
-            // Return to the main gameplay screen from the Tempo Resonate UI.
             TempoResonateScreen.IsVisible = false;
             MainScreen.IsVisible = true;
         }

@@ -56,8 +56,6 @@
                                     Foreground="White" FontSize="14" />
                                 <TextBlock Text="1 Minor Progression of Moonlight Sonata"
                                     Foreground="White" FontSize="14" />
-                                <TextBlock Text="5 Essence of Beethoven" Foreground="White"
-                                    FontSize="14" />
                                 <TextBlock Text="10 Melodious Fragments" Foreground="White"
                                     FontSize="14" />
                             </StackPanel>
@@ -99,8 +97,6 @@
                                     Foreground="White" FontSize="14" />
                                 <TextBlock Text="1 Major Progression of Moonlight Sonata"
                                     Foreground="White" FontSize="14" />
-                                <TextBlock Text="10 Essence of Beethoven" Foreground="White"
-                                    FontSize="14" />
                                 <TextBlock Text="10 Harmonious Fragments" Foreground="White"
                                     FontSize="14" />
                             </StackPanel>
@@ -140,8 +136,6 @@
                                 <TextBlock Text="1 Minor Scale of Eroica" Foreground="White"
                                     FontSize="14" />
                                 <TextBlock Text="1 Minor Progression of Eroica" Foreground="White"
-                                    FontSize="14" />
-                                <TextBlock Text="10 Essence of Beethoven" Foreground="White"
                                     FontSize="14" />
                                 <TextBlock Text="15 Melodious Fragments" Foreground="White"
                                     FontSize="14" />
@@ -184,8 +178,6 @@
                                     FontSize="14" />
                                 <TextBlock Text="1 Major Progression of Eroica" Foreground="White"
                                     FontSize="14" />
-                                <TextBlock Text="15 Essence of Beethoven" Foreground="White"
-                                    FontSize="14" />
                                 <TextBlock Text="15 Harmonious Fragments" Foreground="White"
                                     FontSize="14" />
                             </StackPanel>
@@ -226,8 +218,6 @@
                                     FontSize="14" />
                                 <TextBlock Text="1 Minor Progression of Swan Lake"
                                     Foreground="White" FontSize="14" />
-                                <TextBlock Text="5 Essence of Pyotr" Foreground="White"
-                                    FontSize="14" />
                                 <TextBlock Text="20 Melodious Fragments" Foreground="White"
                                     FontSize="14" />
                             </StackPanel>
@@ -269,8 +259,6 @@
                                     FontSize="14" />
                                 <TextBlock Text="1 Major Progression of Swan Lake"
                                     Foreground="White" FontSize="14" />
-                                <TextBlock Text="10 Essence of Pyotr" Foreground="White"
-                                    FontSize="14" />
                                 <TextBlock Text="20 Harmonious Fragments" Foreground="White"
                                     FontSize="14" />
                             </StackPanel>
@@ -310,8 +298,6 @@
                                     FontSize="14" />
                                 <TextBlock Text="1 Minor Progression of La Campanella"
                                     Foreground="White" FontSize="14" />
-                                <TextBlock Text="10 Essence of Liszt" Foreground="White"
-                                    FontSize="14" />
                                 <TextBlock Text="25 Melodious Fragments" Foreground="White"
                                     FontSize="14" />
                             </StackPanel>
@@ -352,8 +338,6 @@
                                     FontSize="14" />
                                 <TextBlock Text="1 Major Progression of La Campanella"
                                     Foreground="White" FontSize="14" />
-                                <TextBlock Text="15 Essence of Liszt" Foreground="White"
-                                    FontSize="14" />
                                 <TextBlock Text="25 Harmonious Fragments" Foreground="White"
                                     FontSize="14" />
                             </StackPanel>
@@ -393,8 +377,6 @@
                                 <TextBlock Text="1 Minor Scale of Enigma" Foreground="White"
                                     FontSize="14" />
                                 <TextBlock Text="1 Minor Progression of Enigma" Foreground="White"
-                                    FontSize="14" />
-                                <TextBlock Text="10 Essence of Elgar" Foreground="White"
                                     FontSize="14" />
                                 <TextBlock Text="30 Melodious Fragments" Foreground="White"
                                     FontSize="14" />
@@ -436,8 +418,6 @@
                                     FontSize="14" />
                                 <TextBlock Text="1 Major Progression of Enigma" Foreground="White"
                                     FontSize="14" />
-                                <TextBlock Text="15 Essence of Elgar" Foreground="White"
-                                    FontSize="14" />
                                 <TextBlock Text="30 Harmonious Fragments" Foreground="White"
                                     FontSize="14" />
                             </StackPanel>
@@ -476,8 +456,6 @@
                                 <TextBlock Text="1 Minor Scale of Fate" Foreground="White"
                                     FontSize="14" />
                                 <TextBlock Text="1 Minor Progression of Fate" Foreground="White"
-                                    FontSize="14" />
-                                <TextBlock Text="10 Essence of Beethoven" Foreground="White"
                                     FontSize="14" />
                                 <TextBlock Text="35 Melodious Fragments" Foreground="White"
                                     FontSize="14" />
@@ -519,8 +497,6 @@
                                     FontSize="14" />
                                 <TextBlock Text="1 Major Progression of Fate" Foreground="White"
                                     FontSize="14" />
-                                <TextBlock Text="15 Essence of Beethoven" Foreground="White"
-                                    FontSize="14" />
                                 <TextBlock Text="35 Harmonious Fragments" Foreground="White"
                                     FontSize="14" />
                             </StackPanel>
@@ -560,8 +536,6 @@
                                     FontSize="14" />
                                 <TextBlock Text="1 Minor Progression of Ode to Joy"
                                     Foreground="White" FontSize="14" />
-                                <TextBlock Text="10 Essence of Beethoven" Foreground="White"
-                                    FontSize="14" />
                                 <TextBlock Text="40 Melodious Fragments" Foreground="White"
                                     FontSize="14" />
                             </StackPanel>
@@ -602,8 +576,6 @@
                                     FontSize="14" />
                                 <TextBlock Text="1 Major Progression of Ode to Joy"
                                     Foreground="White" FontSize="14" />
-                                <TextBlock Text="15 Essence of Beethoven" Foreground="White"
-                                    FontSize="14" />
                                 <TextBlock Text="40 Harmonious Fragments" Foreground="White"
                                     FontSize="14" />
                             </StackPanel>

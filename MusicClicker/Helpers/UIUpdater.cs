@@ -42,18 +42,6 @@ namespace MusicClicker
         }
 
         /// <summary>
-        /// Updates the essence display showing owned counts for all composer essences.
-        /// </summary>
-        public static void UpdateEssenceUI(MainWindow window, GameState gameState)
-        {
-            window.EssenceBeethovenOwnedText.Text = $"{gameState.EssenceBeethoven} Owned";
-            window.EssencePyotrOwnedText.Text = $"{gameState.EssencePyotr} Owned";
-            window.EssenceElgarOwnedText.Text = $"{gameState.EssenceElgar} Owned";
-            window.EssenceLisztOwnedText.Text = $"{gameState.EssenceLiszt} Owned";
-            // Future essences (commented out): Vivaldi, Celano, Mozart
-        }
-
-        /// <summary>
         /// Updates the fragmentation screen showing notes and owned Melodious/Harmonious upgrades.
         /// </summary>
         public static void UpdateFragmentationUI(MainWindow window, GameState gameState)

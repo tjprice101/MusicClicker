@@ -46,15 +46,6 @@ namespace MusicClicker
         public int SwanLakeMinorProgressions = 0;
         public int SwanLakeMajorSheets = 0;
 
-        // Essence resources
-        public int EssenceBeethoven = 0;
-        public int EssencePyotr = 0;
-        public int EssenceElgar = 0;
-        public int EssenceLiszt = 0;
-        // public int EssenceVivaldi = 0;
-        // public int EssenceCelano = 0;
-        // public int EssenceMozart = 0;
-
         // Major Ability Counters
         public int FateCounter = 0;
 

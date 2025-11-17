@@ -1,9 +1,9 @@
 <Window xmlns="https://github.com/avaloniaui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:views="clr-namespace:MusicClicker.Views"
-    x:Class="MusicClicker.MainWindow"
-    Title="🌹🎹 Magnum Opus 🎹🌹"
-    Width="1600" Height="900">
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:views="clr-namespace:MusicClicker.Views"
+        x:Class="MusicClicker.MainWindow"
+        Title="🌹🎹 Magnum Opus 🎹🌹"
+        Width="1600" Height="900">
 
     <Window.Background>
         <ImageBrush
@@ -14,182 +14,156 @@
     <Grid>
         <!-- Main Screen -->
         <Grid x:Name="MainScreen">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" /> <!-- Left navigation buttons -->
-                    <ColumnDefinition Width="*" />    <!-- Main clicker content -->
-                    <ColumnDefinition Width="Auto" /> <!-- Right side buttons -->
-                </Grid.ColumnDefinitions>
+            <!-- Center Content -->
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" /> <!-- Title and Notes -->
+                    <RowDefinition Height="Auto" /> <!-- Click Button with Carousel -->
+                    <RowDefinition Height="Auto" /> <!-- Upgrades Button -->
+                </Grid.RowDefinitions>
 
-                <!-- Left Navigation Buttons -->
-                <StackPanel Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Left"
-                    VerticalAlignment="Top" Margin="30,10,0,0" Spacing="10">
-                    <Button x:Name="FragmentationButton" Width="300" Height="170">
-                        <Image Source="avares://MusicClicker/Assets/Fragmentation Button-min.png"
-                            Stretch="UniformToFill" />
-                    </Button>
-                    <Button x:Name="ResonanceButton" Width="300" Height="170">
-                        <Image
-                            Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [C690BBF]-min.png"
-                            Stretch="UniformToFill" />
-                    </Button>
-                    <Button x:Name="MelodyButton" Width="300" Height="170">
-                        <Image
-                            Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [2299EA4]-min.png"
-                            Stretch="UniformToFill" />
-                    </Button>
-                    <Button x:Name="HarmonyButton" Width="300" Height="170">
-                        <Image
-                            Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [5A28B4B]-min.png"
-                            Stretch="UniformToFill" />
-                    </Button>
+                <!-- Title and Notes -->
+                <StackPanel Grid.Row="0" HorizontalAlignment="Center" Spacing="10" Margin="0,0,0,30">
+                    <TextBlock Text="🌹🎹 Magnum Opus 🎹🌹"
+                               FontSize="36"
+                               Foreground="White"
+                               HorizontalAlignment="Center"
+                               FontWeight="Bold" />
+                    <TextBlock x:Name="NotesText"
+                               Text="Notes: 0"
+                               FontSize="28"
+                               Foreground="White"
+                               HorizontalAlignment="Center" />
+                    <TextBlock x:Name="NpsText"
+                               Text="Notes Per Second: 0"
+                               FontSize="22"
+                               Foreground="White"
+                               HorizontalAlignment="Center" />
                 </StackPanel>
 
-                <!-- Center Content Grid -->
-                <Grid Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"
-                    Margin="50,0,0,0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" /> <!-- Title and Notes -->
-                        <RowDefinition Height="Auto" /> <!-- Click Button -->
-                        <RowDefinition Height="Auto" /> <!-- Upgrades Button -->
-                        <RowDefinition Height="Auto" /> <!-- Essence Buttons -->
-                    </Grid.RowDefinitions>
+                <!-- Main Click Button with Carousel Behind It -->
+                <Grid Grid.Row="1"
+                      Width="1400"
+                      Height="1400"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      Margin="0,-150,0,0">
 
-                    <!-- Title and Notes -->
-                    <StackPanel Grid.Row="0" HorizontalAlignment="Center" Spacing="10"
-                        Margin="0,0,0,30">
-                        <TextBlock Text="🌹🎹 Magnum Opus 🎹🌹" FontSize="36" Foreground="White"
-                            HorizontalAlignment="Center" FontWeight="Bold" />
-                        <TextBlock x:Name="NotesText" Text="Notes: 0" FontSize="28"
-                            Foreground="White" HorizontalAlignment="Center" />
-                        <TextBlock x:Name="NpsText" Text="Notes Per Second: 0" FontSize="22"
-                            Foreground="White" HorizontalAlignment="Center" />
-                    </StackPanel>
+                    <!-- Carousel Canvas (Behind) -->
+                    <Canvas x:Name="CarouselCanvas"
+                            Width="1400"
+                            Height="1400"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            ClipToBounds="False"
+                            Background="Transparent">
 
-                    <!-- Main Click Button -->
-                    <Button Grid.Row="1" x:Name="ClickButton" Width="200" Height="200"
-                        HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,30">
-                        <Image
-                            Source="avares://MusicClicker/Assets/Music Game Assets [A961E2A]-min.png"
-                            Stretch="Uniform" />
+                        <!-- Button 0: Fragmentation -->
+                        <Button x:Name="FragmentationButton"
+                                Width="374"
+                                Height="213"
+                                Canvas.Left="503"
+                                Canvas.Top="100">
+                            <Image Source="avares://MusicClicker/Assets/Fragmentation Button-min.png"
+                                   Stretch="UniformToFill" />
+                        </Button>
+
+                        <!-- Button 1: Resonance -->
+                        <Button x:Name="ResonanceButton"
+                                Width="374"
+                                Height="213"
+                                Canvas.Left="503"
+                                Canvas.Top="100">
+                            <Image Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [C690BBF]-min.png"
+                                   Stretch="UniformToFill" />
+                        </Button>
+
+                        <!-- Button 2: Melody -->
+                        <Button x:Name="MelodyButton"
+                                Width="374"
+                                Height="213"
+                                Canvas.Left="503"
+                                Canvas.Top="100">
+                            <Image Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [2299EA4]-min.png"
+                                   Stretch="UniformToFill" />
+                        </Button>
+
+                        <!-- Button 3: Harmony -->
+                        <Button x:Name="HarmonyButton"
+                                Width="374"
+                                Height="213"
+                                Canvas.Left="503"
+                                Canvas.Top="100">
+                            <Image Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [5A28B4B]-min.png"
+                                   Stretch="UniformToFill" />
+                        </Button>
+
+                        <!-- Button 4: Tempo Resonate -->
+                        <Button x:Name="TempoResonateButton"
+                                Width="374"
+                                Height="213"
+                                Canvas.Left="503"
+                                Canvas.Top="100">
+                            <Image Source="avares://MusicClicker/Assets/TempoResonate.png"
+                                   Stretch="UniformToFill" />
+                        </Button>
+
+                        <!-- Button 5: Eternal Modulation -->
+                        <Button x:Name="EternalModulationButton"
+                                Width="374"
+                                Height="213"
+                                Canvas.Left="503"
+                                Canvas.Top="100">
+                            <Image Source="avares://MusicClicker/Assets/EternalModulation.png"
+                                   Stretch="UniformToFill" />
+                        </Button>
+
+                        <!-- Button 6: Armor of Forte -->
+                        <Button x:Name="ArmorOfForteButton"
+                                Width="374"
+                                Height="213"
+                                Canvas.Left="503"
+                                Canvas.Top="100">
+                            <Image Source="avares://MusicClicker/Assets/ArmoryofForte.png"
+                                   Stretch="UniformToFill" />
+                        </Button>
+
+                        <!-- Button 7: Symphonic Gallery -->
+                        <Button x:Name="SymphonicGalleryButton"
+                                Width="374"
+                                Height="213"
+                                Canvas.Left="503"
+                                Canvas.Top="100">
+                            <Image Source="avares://MusicClicker/Assets/SymphonicGallery.png"
+                                   Stretch="UniformToFill" />
+                        </Button>
+
+                    </Canvas>
+
+                    <!-- Main Click Button (Unchanged) -->
+                    <Button x:Name="ClickButton"
+                            Width="220"
+                            Height="220"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
+                            Margin="0,180,0,0"
+                            ZIndex="200">
+                        <Image Source="avares://MusicClicker/Assets/Music Game Assets [A961E2A]-min.png"
+                               Stretch="Uniform" />
                     </Button>
-
-                    <!-- Upgrades Button -->
-                    <Button Grid.Row="2" x:Name="OpenUpgradesButton" Content="Upgrades"
-                        Width="250" Height="50" Background="#55000000" Foreground="White"
-                        FontSize="20" HorizontalAlignment="Center" Margin="0,0,0,30" />
-
-                    <!-- Essence Buttons -->
-                    <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center"
-                        VerticalAlignment="Top" Spacing="40" Margin="0,10,0,0">
-
-                        <!-- Essence of Beethoven -->
-                        <StackPanel Spacing="5" HorizontalAlignment="Center" VerticalAlignment="Top">
-                            <TextBlock Text="Essence of Beethoven" FontSize="18" FontWeight="Bold"
-                                Foreground="White" TextAlignment="Center"
-                                HorizontalAlignment="Center" />
-                            <Button x:Name="EssenceBeethovenButton" Width="140" Height="140"
-                                Background="Transparent" BorderThickness="2"
-                                HorizontalAlignment="Center">
-                                <Image
-                                    Source="avares://MusicClicker/Assets/Music Game Assets [7EA44B0]-min.png"
-                                    Stretch="Uniform" />
-                            </Button>
-                            <TextBlock Text="500 Notes" FontSize="14" Foreground="White"
-                                TextAlignment="Center" HorizontalAlignment="Center" />
-                            <TextBlock x:Name="EssenceBeethovenOwnedText" Text="0 Owned"
-                                FontSize="14" Foreground="White"
-                                TextAlignment="Center" HorizontalAlignment="Center" />
-                        </StackPanel>
-
-                        <!-- Essence of Pyotr -->
-                        <StackPanel Spacing="5" HorizontalAlignment="Center" VerticalAlignment="Top">
-                            <TextBlock Text="Essence of Pyotr" FontSize="18" FontWeight="Bold"
-                                Foreground="White" TextAlignment="Center"
-                                HorizontalAlignment="Center" />
-                            <Button x:Name="EssencePyotrButton" Width="140" Height="140"
-                                Background="Transparent" BorderThickness="2"
-                                HorizontalAlignment="Center">
-                                <Image
-                                    Source="avares://MusicClicker/Assets/Music Game Assets [8895F90]-min.png"
-                                    Stretch="Uniform" />
-                            </Button>
-                            <TextBlock Text="1500 Notes" FontSize="14" Foreground="White"
-                                TextAlignment="Center" HorizontalAlignment="Center" />
-                            <TextBlock x:Name="EssencePyotrOwnedText" Text="0 Owned" FontSize="14"
-                                Foreground="White"
-                                TextAlignment="Center" HorizontalAlignment="Center" />
-                        </StackPanel>
-
-                        <!-- Essence of Elgar -->
-                        <StackPanel Spacing="5" HorizontalAlignment="Center" VerticalAlignment="Top">
-                            <TextBlock Text="Essence of Elgar" FontSize="18" FontWeight="Bold"
-                                Foreground="White" TextAlignment="Center"
-                                HorizontalAlignment="Center" />
-                            <Button x:Name="EssenceElgarButton" Width="140" Height="140"
-                                Background="Transparent" BorderThickness="2"
-                                HorizontalAlignment="Center">
-                                <Image
-                                    Source="avares://MusicClicker/Assets/EssenceOfElgar.png"
-                                    Stretch="Uniform" />
-                            </Button>
-                            <TextBlock Text="4000 Notes" FontSize="14" Foreground="White"
-                                TextAlignment="Center" HorizontalAlignment="Center" />
-                            <TextBlock x:Name="EssenceElgarOwnedText" Text="0 Owned"
-                                FontSize="14" Foreground="White"
-                                TextAlignment="Center" HorizontalAlignment="Center" />
-                        </StackPanel>
-
-                        <!-- Essence of Liszt -->
-                        <StackPanel Spacing="5" HorizontalAlignment="Center" VerticalAlignment="Top">
-                            <TextBlock Text="Essence of Liszt" FontSize="18" FontWeight="Bold"
-                                Foreground="White" TextAlignment="Center"
-                                HorizontalAlignment="Center" />
-                            <Button x:Name="EssenceLisztButton" Width="140" Height="140"
-                                Background="Transparent" BorderThickness="2"
-                                HorizontalAlignment="Center">
-                                <Image
-                                    Source="avares://MusicClicker/Assets/EssenceOfLiszt.png"
-                                    Stretch="Uniform" />
-                            </Button>
-                            <TextBlock Text="6000 Notes" FontSize="14" Foreground="White"
-                                TextAlignment="Center" HorizontalAlignment="Center" />
-                            <TextBlock x:Name="EssenceLisztOwnedText" Text="0 Owned"
-                                FontSize="14" Foreground="White"
-                                TextAlignment="Center" HorizontalAlignment="Center" />
-                        </StackPanel>
-                    </StackPanel>
                 </Grid>
 
-                <!-- Right Navigation Buttons -->
-                <StackPanel Grid.Column="2" Orientation="Vertical"
-                    HorizontalAlignment="Right" VerticalAlignment="Top"
-                    Margin="0,10,30,0" Spacing="10">
-
-                    <!-- Tempo Resonate Button -->
-                    <Button x:Name="TempoResonateButton" Width="300" Height="170">
-                        <Image Source="avares://MusicClicker/Assets/TempoResonate.png"
-                            Stretch="UniformToFill" />
-                    </Button>
-
-                    <!-- Eternal Modulation Button -->
-                    <Button x:Name="EternalModulationButton" Width="300" Height="170">
-                        <Image Source="avares://MusicClicker/Assets/EternalModulation.png"
-                            Stretch="UniformToFill" />
-                    </Button>
-
-                    <!-- Armor of Forte Button -->
-                    <Button x:Name="ArmorOfForteButton" Width="300" Height="170">
-                        <Image Source="avares://MusicClicker/Assets/ArmoryofForte.png"
-                            Stretch="UniformToFill" />
-                    </Button>
-
-                    <!-- Symphonic Gallery Button -->
-                    <Button x:Name="SymphonicGalleryButton" Width="300" Height="170">
-                        <Image Source="avares://MusicClicker/Assets/SymphonicGallery.png"
-                            Stretch="UniformToFill" />
-                    </Button>
-                </StackPanel>
+                <!-- Upgrades Button -->
+                <Button Grid.Row="2"
+                        x:Name="OpenUpgradesButton"
+                        Content="Upgrades"
+                        Width="250"
+                        Height="50"
+                        Background="#55000000"
+                        Foreground="White"
+                        FontSize="20"
+                        HorizontalAlignment="Center"
+                        Margin="0,30,0,0" />
             </Grid>
         </Grid>
 

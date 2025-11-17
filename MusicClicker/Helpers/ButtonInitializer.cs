@@ -8,7 +8,6 @@ namespace MusicClicker
         public static void InitializeAllButtons(MainWindow window)
         {
             InitializeHarmonyButtons(window);
-            InitializeEssenceButtons(window);
             InitializeUpgradeButtons(window);
             InitializeClicker(window);
             InitializeNavigationButtons(window);
@@ -75,22 +74,6 @@ namespace MusicClicker
                     ref window.GameState.OdeToJoyMajorProgressions,
                     window.HeartOfHarmonyScreen.OdeToJoyMajorSheetsOwnedText, window.HeartOfHarmonyScreen.OdeToJoyMajorKeysOwnedText,
                     window.HeartOfHarmonyScreen.OdeToJoyMajorScalesOwnedText, window.HeartOfHarmonyScreen.OdeToJoyMajorProgressionsOwnedText, "Ode to Joy");
-        }
-
-        // Initializes all essence-buying buttons
-        private static void InitializeEssenceButtons(MainWindow window)
-        {
-            window.EssenceBeethovenButton.Click += (s, e) =>
-                EssenceManager.BuyEssence(window, ref window.GameState.EssenceBeethoven, 500, window.EssenceBeethovenOwnedText);
-
-            window.EssencePyotrButton.Click += (s, e) =>
-                EssenceManager.BuyEssence(window, ref window.GameState.EssencePyotr, 1500, window.EssencePyotrOwnedText);
-
-            window.EssenceElgarButton.Click += (s, e) =>
-                EssenceManager.BuyEssence(window, ref window.GameState.EssenceElgar, 4000, window.EssenceElgarOwnedText);
-
-            window.EssenceLisztButton.Click += (s, e) =>
-                EssenceManager.BuyEssence(window, ref window.GameState.EssenceLiszt, 6000, window.EssenceLisztOwnedText);
         }
 
         // Initializes all upgrade purchase buttons (single and max-buy)
