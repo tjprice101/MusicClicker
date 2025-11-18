@@ -59,84 +59,140 @@
                             Background="Transparent">
 
                         <!-- Button 0: Fragmentation -->
-                        <Button x:Name="FragmentationButton"
-                                Width="374"
-                                Height="213"
-                                Canvas.Left="503"
-                                Canvas.Top="100">
-                            <Image Source="avares://MusicClicker/Assets/Fragmentation Button-min.png"
-                                   Stretch="UniformToFill" />
-                        </Button>
+                        <Border Canvas.Left="503" Canvas.Top="100" CornerRadius="4">
+                            <Border.Effect>
+                                <DropShadowEffect Color="Black" 
+                                                  BlurRadius="15" 
+                                                  Opacity="0.7"
+                                                  OffsetX="0"
+                                                  OffsetY="0" />
+                            </Border.Effect>
+                            <Button x:Name="FragmentationButton"
+                                    Width="374"
+                                    Height="213">
+                                <Image Source="avares://MusicClicker/Assets/Fragmentation Button-min.png"
+                                       Stretch="UniformToFill" />
+                            </Button>
+                        </Border>
 
                         <!-- Button 1: Resonance -->
-                        <Button x:Name="ResonanceButton"
-                                Width="374"
-                                Height="213"
-                                Canvas.Left="503"
-                                Canvas.Top="100">
-                            <Image Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [C690BBF]-min.png"
-                                   Stretch="UniformToFill" />
-                        </Button>
+                        <Border Canvas.Left="503" Canvas.Top="100" CornerRadius="4">
+                            <Border.Effect>
+                                <DropShadowEffect Color="Black" 
+                                                  BlurRadius="15" 
+                                                  Opacity="0.7"
+                                                  OffsetX="0"
+                                                  OffsetY="0" />
+                            </Border.Effect>
+                            <Button x:Name="ResonanceButton"
+                                    Width="374"
+                                    Height="213">
+                                <Image Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [C690BBF]-min.png"
+                                       Stretch="UniformToFill" />
+                            </Button>
+                        </Border>
 
                         <!-- Button 2: Melody -->
-                        <Button x:Name="MelodyButton"
-                                Width="374"
-                                Height="213"
-                                Canvas.Left="503"
-                                Canvas.Top="100">
-                            <Image Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [2299EA4]-min.png"
-                                   Stretch="UniformToFill" />
-                        </Button>
+                        <Border Canvas.Left="503" Canvas.Top="100" CornerRadius="4">
+                            <Border.Effect>
+                                <DropShadowEffect Color="Black" 
+                                                  BlurRadius="15" 
+                                                  Opacity="0.7"
+                                                  OffsetX="0"
+                                                  OffsetY="0" />
+                            </Border.Effect>
+                            <Button x:Name="MelodyButton"
+                                    Width="374"
+                                    Height="213">
+                                <Image Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [2299EA4]-min.png"
+                                       Stretch="UniformToFill" />
+                            </Button>
+                        </Border>
 
                         <!-- Button 3: Harmony -->
-                        <Button x:Name="HarmonyButton"
-                                Width="374"
-                                Height="213"
-                                Canvas.Left="503"
-                                Canvas.Top="100">
-                            <Image Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [5A28B4B]-min.png"
-                                   Stretch="UniformToFill" />
-                        </Button>
+                        <Border Canvas.Left="503" Canvas.Top="100" CornerRadius="4">
+                            <Border.Effect>
+                                <DropShadowEffect Color="Black" 
+                                                  BlurRadius="15" 
+                                                  Opacity="0.7"
+                                                  OffsetX="0"
+                                                  OffsetY="0" />
+                            </Border.Effect>
+                            <Button x:Name="HarmonyButton"
+                                    Width="374"
+                                    Height="213">
+                                <Image Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [5A28B4B]-min.png"
+                                       Stretch="UniformToFill" />
+                            </Button>
+                        </Border>
 
                         <!-- Button 4: Tempo Resonate -->
-                        <Button x:Name="TempoResonateButton"
-                                Width="374"
-                                Height="213"
-                                Canvas.Left="503"
-                                Canvas.Top="100">
-                            <Image Source="avares://MusicClicker/Assets/TempoResonate.png"
-                                   Stretch="UniformToFill" />
-                        </Button>
+                        <Border Canvas.Left="503" Canvas.Top="100" CornerRadius="4">
+                            <Border.Effect>
+                                <DropShadowEffect Color="Black" 
+                                                  BlurRadius="15" 
+                                                  Opacity="0.7"
+                                                  OffsetX="0"
+                                                  OffsetY="0" />
+                            </Border.Effect>
+                            <Button x:Name="TempoResonateButton"
+                                    Width="374"
+                                    Height="213">
+                                <Image Source="avares://MusicClicker/Assets/TempoResonate.png"
+                                       Stretch="UniformToFill" />
+                            </Button>
+                        </Border>
 
                         <!-- Button 5: Eternal Modulation -->
-                        <Button x:Name="EternalModulationButton"
-                                Width="374"
-                                Height="213"
-                                Canvas.Left="503"
-                                Canvas.Top="100">
-                            <Image Source="avares://MusicClicker/Assets/EternalModulation.png"
-                                   Stretch="UniformToFill" />
-                        </Button>
+                        <Border Canvas.Left="503" Canvas.Top="100" CornerRadius="4">
+                            <Border.Effect>
+                                <DropShadowEffect Color="Black" 
+                                                  BlurRadius="15" 
+                                                  Opacity="0.7"
+                                                  OffsetX="0"
+                                                  OffsetY="0" />
+                            </Border.Effect>
+                            <Button x:Name="EternalModulationButton"
+                                    Width="374"
+                                    Height="213">
+                                <Image Source="avares://MusicClicker/Assets/EternalModulation.png"
+                                       Stretch="UniformToFill" />
+                            </Button>
+                        </Border>
 
                         <!-- Button 6: Armor of Forte -->
-                        <Button x:Name="ArmorOfForteButton"
-                                Width="374"
-                                Height="213"
-                                Canvas.Left="503"
-                                Canvas.Top="100">
-                            <Image Source="avares://MusicClicker/Assets/ArmoryofForte.png"
-                                   Stretch="UniformToFill" />
-                        </Button>
+                        <Border Canvas.Left="503" Canvas.Top="100" CornerRadius="4">
+                            <Border.Effect>
+                                <DropShadowEffect Color="Black" 
+                                                  BlurRadius="15" 
+                                                  Opacity="0.7"
+                                                  OffsetX="0"
+                                                  OffsetY="0" />
+                            </Border.Effect>
+                            <Button x:Name="ArmorOfForteButton"
+                                    Width="374"
+                                    Height="213">
+                                <Image Source="avares://MusicClicker/Assets/ArmoryofForte.png"
+                                       Stretch="UniformToFill" />
+                            </Button>
+                        </Border>
 
                         <!-- Button 7: Symphonic Gallery -->
-                        <Button x:Name="SymphonicGalleryButton"
-                                Width="374"
-                                Height="213"
-                                Canvas.Left="503"
-                                Canvas.Top="100">
-                            <Image Source="avares://MusicClicker/Assets/SymphonicGallery.png"
-                                   Stretch="UniformToFill" />
-                        </Button>
+                        <Border Canvas.Left="503" Canvas.Top="100" CornerRadius="4">
+                            <Border.Effect>
+                                <DropShadowEffect Color="Black" 
+                                                  BlurRadius="15" 
+                                                  Opacity="0.7"
+                                                  OffsetX="0"
+                                                  OffsetY="0" />
+                            </Border.Effect>
+                            <Button x:Name="SymphonicGalleryButton"
+                                    Width="374"
+                                    Height="213">
+                                <Image Source="avares://MusicClicker/Assets/SymphonicGallery.png"
+                                       Stretch="UniformToFill" />
+                            </Button>
+                        </Border>
 
                     </Canvas>
 
@@ -175,5 +231,13 @@
         <views:HeartOfHarmonyScreen x:Name="HeartOfHarmonyScreen" IsVisible="False" />
         <views:UniteTheSymphonyScreen x:Name="UnityTheSymphonyScreen" IsVisible="False" />
         <views:ArmorOfForteScreen x:Name="ArmorOfForteScreen" IsVisible="False" />
+        <views:EternalModulationScreen x:Name="EternalModulationScreen" IsVisible="False" />
+        
+        <!-- Currently Active Events. Comment out any events that are not currently active in sets of 2. (Top = left and bottom = right) -->
+        <views:DiesIraeEventScreen x:Name="DiesIraeEventScreen" IsVisible="False" />
+        <views:WinterEventScreen x:Name="WinterEventScreen" IsVisible="False" />
+
+
+        
     </Grid>
 </Window>

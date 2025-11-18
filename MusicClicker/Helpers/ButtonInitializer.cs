@@ -230,6 +230,13 @@ namespace MusicClicker
                 window.ArmorOfForteScreen.IsVisible = true;
                 window.ArmorOfForteScreen.UpdateUI(window.GameState);
             };
+
+            // Eternal Modulation
+            window.EternalModulationButton.Click += (s, e) =>   
+            {
+                window.MainScreen.IsVisible = false;
+                window.EternalModulationScreen.IsVisible = true;
+            };
         }
 
         // Handles buttons that convert Notes into fragments
