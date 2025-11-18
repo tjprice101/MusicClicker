@@ -174,5 +174,6 @@
         <views:SaveScoresScreen x:Name="SaveScoresScreen" IsVisible="False" />
         <views:HeartOfHarmonyScreen x:Name="HeartOfHarmonyScreen" IsVisible="False" />
         <views:UniteTheSymphonyScreen x:Name="UnityTheSymphonyScreen" IsVisible="False" />
+        <views:ArmorOfForteScreen x:Name="ArmorOfForteScreen" IsVisible="False" />
     </Grid>
 </Window>

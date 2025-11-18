@@ -1,0 +1,291 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="MusicClicker.Views.ArmorOfForteScreen"
+             Background="#33000000">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" /> <!-- Header -->
+            <RowDefinition Height="*" />    <!-- Scrollable Content -->
+            <RowDefinition Height="Auto" /> <!-- Footer -->
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center" Spacing="10" Margin="0,20,0,20">
+            <TextBlock Text="⚔️ Armor of Forte ⚔️"
+                       FontSize="42"
+                       Foreground="White"
+                       HorizontalAlignment="Center"
+                       FontWeight="Bold" />
+            <TextBlock x:Name="ArmorNotesText"
+                       Text="Notes: 0"
+                       FontSize="24"
+                       Foreground="White"
+                       HorizontalAlignment="Center" />
+        </StackPanel>
+
+        <!-- Scrollable Content -->
+        <ScrollViewer Grid.Row="1" 
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto"
+                      Margin="50,0,50,20">
+            
+            <StackPanel Spacing="40" HorizontalAlignment="Center">
+                
+                <!-- Row 1 -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
+                    
+                    <!-- Item 1 -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmorItem1Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <TextBlock Text="[Armor Item 1]" 
+                                       FontSize="20" 
+                                       Foreground="White"
+                                       TextAlignment="Center" />
+                        </Button>
+                        <TextBlock x:Name="ArmorItem1CostText"
+                                   Text="Cost: 10,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem1OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                    </StackPanel>
+
+                    <!-- Item 2 -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmorItem2Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <TextBlock Text="[Armor Item 2]" 
+                                       FontSize="20" 
+                                       Foreground="White"
+                                       TextAlignment="Center" />
+                        </Button>
+                        <TextBlock x:Name="ArmorItem2CostText"
+                                   Text="Cost: 25,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem2OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                    </StackPanel>
+
+                    <!-- Item 3 -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmorItem3Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <TextBlock Text="[Armor Item 3]" 
+                                       FontSize="20" 
+                                       Foreground="White"
+                                       TextAlignment="Center" />
+                        </Button>
+                        <TextBlock x:Name="ArmorItem3CostText"
+                                   Text="Cost: 50,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem3OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                    </StackPanel>
+
+                </StackPanel>
+
+                <!-- Row 2 -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
+                    
+                    <!-- Item 4 -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmorItem4Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <TextBlock Text="[Armor Item 4]" 
+                                       FontSize="20" 
+                                       Foreground="White"
+                                       TextAlignment="Center" />
+                        </Button>
+                        <TextBlock x:Name="ArmorItem4CostText"
+                                   Text="Cost: 100,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem4OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                    </StackPanel>
+
+                    <!-- Item 5 -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmorItem5Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <TextBlock Text="[Armor Item 5]" 
+                                       FontSize="20" 
+                                       Foreground="White"
+                                       TextAlignment="Center" />
+                        </Button>
+                        <TextBlock x:Name="ArmorItem5CostText"
+                                   Text="Cost: 250,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem5OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                    </StackPanel>
+
+                    <!-- Item 6 -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmorItem6Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <TextBlock Text="[Armor Item 6]" 
+                                       FontSize="20" 
+                                       Foreground="White"
+                                       TextAlignment="Center" />
+                        </Button>
+                        <TextBlock x:Name="ArmorItem6CostText"
+                                   Text="Cost: 500,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem6OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                    </StackPanel>
+
+                </StackPanel>
+
+                <!-- Row 3 -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
+                    
+                    <!-- Item 7 -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmorItem7Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <TextBlock Text="[Armor Item 7]" 
+                                       FontSize="20" 
+                                       Foreground="White"
+                                       TextAlignment="Center" />
+                        </Button>
+                        <TextBlock x:Name="ArmorItem7CostText"
+                                   Text="Cost: 1,000,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem7OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                    </StackPanel>
+
+                    <!-- Item 8 -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmorItem8Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <TextBlock Text="[Armor Item 8]" 
+                                       FontSize="20" 
+                                       Foreground="White"
+                                       TextAlignment="Center" />
+                        </Button>
+                        <TextBlock x:Name="ArmorItem8CostText"
+                                   Text="Cost: 2,500,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem8OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                    </StackPanel>
+
+                    <!-- Item 9 -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmorItem9Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <TextBlock Text="[Armor Item 9]" 
+                                       FontSize="20" 
+                                       Foreground="White"
+                                       TextAlignment="Center" />
+                        </Button>
+                        <TextBlock x:Name="ArmorItem9CostText"
+                                   Text="Cost: 5,000,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem9OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                    </StackPanel>
+
+                </StackPanel>
+
+            </StackPanel>
+            
+        </ScrollViewer>
+
+        <!-- Footer -->
+        <Button Grid.Row="2"
+                x:Name="BackButton"
+                Content="Back to Main"
+                Width="250"
+                Height="50"
+                HorizontalAlignment="Center"
+                Margin="0,0,0,20"
+                Background="#55000000"
+                Foreground="White"
+                FontSize="20" />
+    </Grid>
+</UserControl>

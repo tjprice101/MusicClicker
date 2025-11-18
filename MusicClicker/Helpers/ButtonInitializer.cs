@@ -222,6 +222,14 @@ namespace MusicClicker
                 window.UnityTheSymphonyScreen.IsVisible = false;
                 window.MainScreen.IsVisible = true;
             };
+
+            // Armor of Forte
+            window.ArmorOfForteButton.Click += (s, e) =>
+            {
+                window.MainScreen.IsVisible = false;
+                window.ArmorOfForteScreen.IsVisible = true;
+                window.ArmorOfForteScreen.UpdateUI(window.GameState);
+            };
         }
 
         // Handles buttons that convert Notes into fragments
