@@ -12,7 +12,7 @@
 
         <!-- Header -->
         <StackPanel Grid.Row="0" HorizontalAlignment="Center" Spacing="10" Margin="0,20,0,20">
-            <TextBlock Text="⚔️ Armor of Forte ⚔️"
+            <TextBlock Text="Armor of Forte"
                        FontSize="42"
                        Foreground="White"
                        HorizontalAlignment="Center"
@@ -32,7 +32,7 @@
             
             <StackPanel Spacing="40" HorizontalAlignment="Center">
                 
-                <!-- Row 1 -->
+                <!-- Row 1: Moonlight Sonata Weapons -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
                     
                     <!-- Item 1 -->
@@ -43,10 +43,8 @@
                                 Background="#44000000"
                                 BorderBrush="White"
                                 BorderThickness="2">
-                            <TextBlock Text="[Armor Item 1]" 
-                                       FontSize="20" 
-                                       Foreground="White"
-                                       TextAlignment="Center" />
+                            <Image Source="avares://MusicClicker/Assets/MoonlightWeapon1.png"
+                                   Stretch="UniformToFill" />
                         </Button>
                         <TextBlock x:Name="ArmorItem1CostText"
                                    Text="Cost: 10,000 Notes"
@@ -68,10 +66,8 @@
                                 Background="#44000000"
                                 BorderBrush="White"
                                 BorderThickness="2">
-                            <TextBlock Text="[Armor Item 2]" 
-                                       FontSize="20" 
-                                       Foreground="White"
-                                       TextAlignment="Center" />
+                            <Image Source="avares://MusicClicker/Assets/MoonlightWeapon2.png"
+                                   Stretch="UniformToFill" />
                         </Button>
                         <TextBlock x:Name="ArmorItem2CostText"
                                    Text="Cost: 25,000 Notes"
@@ -93,10 +89,8 @@
                                 Background="#44000000"
                                 BorderBrush="White"
                                 BorderThickness="2">
-                            <TextBlock Text="[Armor Item 3]" 
-                                       FontSize="20" 
-                                       Foreground="White"
-                                       TextAlignment="Center" />
+                            <Image Source="avares://MusicClicker/Assets/EroicaWeapon1.png"
+                                   Stretch="UniformToFill" />
                         </Button>
                         <TextBlock x:Name="ArmorItem3CostText"
                                    Text="Cost: 50,000 Notes"
@@ -112,7 +106,7 @@
 
                 </StackPanel>
 
-                <!-- Row 2 -->
+                <!-- Row 2: Eroica & Swan Lake -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
                     
                     <!-- Item 4 -->
@@ -123,10 +117,8 @@
                                 Background="#44000000"
                                 BorderBrush="White"
                                 BorderThickness="2">
-                            <TextBlock Text="[Armor Item 4]" 
-                                       FontSize="20" 
-                                       Foreground="White"
-                                       TextAlignment="Center" />
+                            <Image Source="avares://MusicClicker/Assets/EroicaWeapon2.png"
+                                   Stretch="UniformToFill" />
                         </Button>
                         <TextBlock x:Name="ArmorItem4CostText"
                                    Text="Cost: 100,000 Notes"
@@ -148,10 +140,8 @@
                                 Background="#44000000"
                                 BorderBrush="White"
                                 BorderThickness="2">
-                            <TextBlock Text="[Armor Item 5]" 
-                                       FontSize="20" 
-                                       Foreground="White"
-                                       TextAlignment="Center" />
+                            <Image Source="avares://MusicClicker/Assets/SwanLakeWeapon1.png"
+                                   Stretch="UniformToFill" />
                         </Button>
                         <TextBlock x:Name="ArmorItem5CostText"
                                    Text="Cost: 250,000 Notes"
@@ -173,10 +163,8 @@
                                 Background="#44000000"
                                 BorderBrush="White"
                                 BorderThickness="2">
-                            <TextBlock Text="[Armor Item 6]" 
-                                       FontSize="20" 
-                                       Foreground="White"
-                                       TextAlignment="Center" />
+                            <Image Source="avares://MusicClicker/Assets/SwanLakeWeapon2.png"
+                                   Stretch="UniformToFill" />
                         </Button>
                         <TextBlock x:Name="ArmorItem6CostText"
                                    Text="Cost: 500,000 Notes"
@@ -192,7 +180,7 @@
 
                 </StackPanel>
 
-                <!-- Row 3 -->
+                <!-- Row 3: La Campanella & Enigma -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
                     
                     <!-- Item 7 -->
@@ -203,10 +191,8 @@
                                 Background="#44000000"
                                 BorderBrush="White"
                                 BorderThickness="2">
-                            <TextBlock Text="[Armor Item 7]" 
-                                       FontSize="20" 
-                                       Foreground="White"
-                                       TextAlignment="Center" />
+                            <Image Source="avares://MusicClicker/Assets/LaCampanellaWeapon1.png"
+                                   Stretch="UniformToFill" />
                         </Button>
                         <TextBlock x:Name="ArmorItem7CostText"
                                    Text="Cost: 1,000,000 Notes"
@@ -228,10 +214,8 @@
                                 Background="#44000000"
                                 BorderBrush="White"
                                 BorderThickness="2">
-                            <TextBlock Text="[Armor Item 8]" 
-                                       FontSize="20" 
-                                       Foreground="White"
-                                       TextAlignment="Center" />
+                            <Image Source="avares://MusicClicker/Assets/LaCampanellaWeapon2.png"
+                                   Stretch="UniformToFill" />
                         </Button>
                         <TextBlock x:Name="ArmorItem8CostText"
                                    Text="Cost: 2,500,000 Notes"
@@ -253,10 +237,8 @@
                                 Background="#44000000"
                                 BorderBrush="White"
                                 BorderThickness="2">
-                            <TextBlock Text="[Armor Item 9]" 
-                                       FontSize="20" 
-                                       Foreground="White"
-                                       TextAlignment="Center" />
+                            <Image Source="avares://MusicClicker/Assets/EnigmaWeapon1.png"
+                                   Stretch="UniformToFill" />
                         </Button>
                         <TextBlock x:Name="ArmorItem9CostText"
                                    Text="Cost: 5,000,000 Notes"
@@ -264,6 +246,236 @@
                                    Foreground="White"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmorItem9OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                    </StackPanel>
+
+                </StackPanel>
+
+                <!-- Row 4: Fate & Ode to Joy -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
+                    
+                    <!-- Item 10 -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmorItem10Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Assets/EnigmaWeapon2.png"
+                                   Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="ArmorItem10CostText"
+                                   Text="Cost: 10,000,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem10OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                    </StackPanel>
+
+                    <!-- Item 11 -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmorItem11Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Assets/FateWeapon1.png"
+                                   Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="ArmorItem11CostText"
+                                   Text="Cost: 25,000,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem11OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                    </StackPanel>
+
+                    <!-- Item 12 -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmorItem12Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Assets/FateWeapon2.png"
+                                   Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="ArmorItem12CostText"
+                                   Text="Cost: 50,000,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem12OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                    </StackPanel>
+
+                </StackPanel>
+
+                <!-- Row 5: Ode to Joy & Dies Irae -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
+                    
+                    <!-- Item 13 -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmorItem13Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Assets/OdeToJoyWeapon1.png"
+                                   Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="ArmorItem13CostText"
+                                   Text="Cost: 100,000,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem13OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                    </StackPanel>
+
+                    <!-- Item 14 -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmorItem14Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Assets/OdeToJoyWeapon2.png"
+                                   Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="ArmorItem14CostText"
+                                   Text="Cost: 250,000,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem14OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                    </StackPanel>
+
+                    <!-- Item 15 -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmorItem15Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <TextBlock Text="[Dies Irae Weapon 1]" 
+                                       FontSize="20" 
+                                       Foreground="White"
+                                       TextAlignment="Center" />
+                        </Button>
+                        <TextBlock x:Name="ArmorItem15CostText"
+                                   Text="Cost: 500,000,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem15OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                    </StackPanel>
+
+                </StackPanel>
+
+                <!-- Row 6: Dies Irae & Winter -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
+                    
+                    <!-- Item 16 -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmorItem16Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <TextBlock Text="[Dies Irae Weapon 2]" 
+                                       FontSize="20" 
+                                       Foreground="White"
+                                       TextAlignment="Center" />
+                        </Button>
+                        <TextBlock x:Name="ArmorItem16CostText"
+                                   Text="Cost: 1,000,000,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem16OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                    </StackPanel>
+
+                    <!-- Item 17 -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmorItem17Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <TextBlock Text="[Winter Weapon 1]" 
+                                       FontSize="20" 
+                                       Foreground="White"
+                                       TextAlignment="Center" />
+                        </Button>
+                        <TextBlock x:Name="ArmorItem17CostText"
+                                   Text="Cost: 2,500,000,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem17OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                    </StackPanel>
+
+                    <!-- Item 18 -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmorItem18Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <TextBlock Text="[Winter Weapon 2]" 
+                                       FontSize="20" 
+                                       Foreground="White"
+                                       TextAlignment="Center" />
+                        </Button>
+                        <TextBlock x:Name="ArmorItem18CostText"
+                                   Text="Cost: 5,000,000,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem18OwnedText"
                                    Text="Owned: 0"
                                    FontSize="18"
                                    Foreground="White"

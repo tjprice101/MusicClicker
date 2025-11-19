@@ -16,7 +16,7 @@
 
         <!-- Header -->
         <StackPanel Grid.Row="0" HorizontalAlignment="Center" Spacing="10" Margin="0,30,0,30">
-            <TextBlock Text="✨ Eternal Modulation ✨"
+            <TextBlock Text="Eternal Modulation"
                        FontSize="42"
                        Foreground="White"
                        HorizontalAlignment="Center"

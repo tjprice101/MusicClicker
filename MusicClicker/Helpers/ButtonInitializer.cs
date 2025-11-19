@@ -237,6 +237,13 @@ namespace MusicClicker
                 window.MainScreen.IsVisible = false;
                 window.EternalModulationScreen.IsVisible = true;
             };
+
+            // Symphonic Gallery - Main hub
+            window.SymphonicGalleryButton.Click += (s, e) =>
+            {
+                window.MainScreen.IsVisible = false;
+                window.SymphonicGalleryScreen.IsVisible = true;
+            };
         }
 
         // Handles buttons that convert Notes into fragments

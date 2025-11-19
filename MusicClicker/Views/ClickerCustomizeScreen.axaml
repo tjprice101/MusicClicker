@@ -1,0 +1,82 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="MusicClicker.Views.ClickerCustomizeScreen"
+             Background="#33000000">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" /> <!-- Header -->
+            <RowDefinition Height="*" />    <!-- Scrollable Content -->
+            <RowDefinition Height="Auto" /> <!-- Footer -->
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center" Spacing="10" Margin="0,20,0,20">
+            <TextBlock Text="Clicker Button Gallery"
+                       FontSize="42"
+                       Foreground="White"
+                       HorizontalAlignment="Center"
+                       FontWeight="Bold" />
+            <TextBlock Text="Select Your Clicker Button Design"
+                       FontSize="24"
+                       Foreground="White"
+                       HorizontalAlignment="Center" />
+        </StackPanel>
+
+        <!-- Scrollable Content - 4x4 Grid -->
+        <ScrollViewer Grid.Row="1" 
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto"
+                      Margin="50,0,50,20">
+            
+            <StackPanel Spacing="30" HorizontalAlignment="Center">
+                
+                <!-- Row 1 -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
+                    <Button x:Name="ClickerOption1" Width="220" Height="220" Background="Black" BorderBrush="White" BorderThickness="2" />
+                    <Button x:Name="ClickerOption2" Width="220" Height="220" Background="Black" BorderBrush="White" BorderThickness="2" />
+                    <Button x:Name="ClickerOption3" Width="220" Height="220" Background="Black" BorderBrush="White" BorderThickness="2" />
+                    <Button x:Name="ClickerOption4" Width="220" Height="220" Background="Black" BorderBrush="White" BorderThickness="2" />
+                </StackPanel>
+
+                <!-- Row 2 -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
+                    <Button x:Name="ClickerOption5" Width="220" Height="220" Background="Black" BorderBrush="White" BorderThickness="2" />
+                    <Button x:Name="ClickerOption6" Width="220" Height="220" Background="Black" BorderBrush="White" BorderThickness="2" />
+                    <Button x:Name="ClickerOption7" Width="220" Height="220" Background="Black" BorderBrush="White" BorderThickness="2" />
+                    <Button x:Name="ClickerOption8" Width="220" Height="220" Background="Black" BorderBrush="White" BorderThickness="2" />
+                </StackPanel>
+
+                <!-- Row 3 -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
+                    <Button x:Name="ClickerOption9" Width="220" Height="220" Background="Black" BorderBrush="White" BorderThickness="2" />
+                    <Button x:Name="ClickerOption10" Width="220" Height="220" Background="Black" BorderBrush="White" BorderThickness="2" />
+                    <Button x:Name="ClickerOption11" Width="220" Height="220" Background="Black" BorderBrush="White" BorderThickness="2" />
+                    <Button x:Name="ClickerOption12" Width="220" Height="220" Background="Black" BorderBrush="White" BorderThickness="2" />
+                </StackPanel>
+
+                <!-- Row 4 -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
+                    <Button x:Name="ClickerOption13" Width="220" Height="220" Background="Black" BorderBrush="White" BorderThickness="2" />
+                    <Button x:Name="ClickerOption14" Width="220" Height="220" Background="Black" BorderBrush="White" BorderThickness="2" />
+                    <Button x:Name="ClickerOption15" Width="220" Height="220" Background="Black" BorderBrush="White" BorderThickness="2" />
+                    <Button x:Name="ClickerOption16" Width="220" Height="220" Background="Black" BorderBrush="White" BorderThickness="2" />
+                </StackPanel>
+
+            </StackPanel>
+            
+        </ScrollViewer>
+
+        <!-- Footer -->
+        <Button Grid.Row="2"
+                x:Name="BackButton"
+                Content="Back to Gallery"
+                Width="250"
+                Height="50"
+                HorizontalAlignment="Center"
+                Margin="0,0,0,20"
+                Background="#55000000"
+                Foreground="White"
+                FontSize="20" />
+    </Grid>
+</UserControl>

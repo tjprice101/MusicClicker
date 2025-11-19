@@ -237,7 +237,9 @@
         <views:DiesIraeEventScreen x:Name="DiesIraeEventScreen" IsVisible="False" />
         <views:WinterEventScreen x:Name="WinterEventScreen" IsVisible="False" />
 
-
+        <views:SymphonicGalleryScreen x:Name="SymphonicGalleryScreen" IsVisible="False" />
+        <views:ClickerCustomizeScreen x:Name="ClickerCustomizeScreen" IsVisible="False" />
+        <views:BackgroundCustomizeScreen x:Name="BackgroundCustomizeScreen" IsVisible="False" />
         
     </Grid>
 </Window>
