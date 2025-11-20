@@ -29,7 +29,14 @@ namespace MusicClicker.Views
             {
                 var clickerScreen = parentWindow.FindControl<ClickerCustomizeScreen>("ClickerCustomizeScreen");
                 if (clickerScreen != null)
+                {
+                    // Provide the game state and main window reference so the customize screen can update UI
+                    if (parentWindow is MainWindow mw)
+                    {
+                        clickerScreen.SetGameState(mw.GameState, mw);
+                    }
                     clickerScreen.IsVisible = true;
+                }
             }
         }
 
@@ -48,7 +55,13 @@ namespace MusicClicker.Views
             {
                 var backgroundScreen = parentWindow.FindControl<BackgroundCustomizeScreen>("BackgroundCustomizeScreen");
                 if (backgroundScreen != null)
+                {
+                    if (parentWindow is MainWindow mw)
+                    {
+                        backgroundScreen.SetGameState(mw.GameState, mw);
+                    }
                     backgroundScreen.IsVisible = true;
+                }
             }
         }
 

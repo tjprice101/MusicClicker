@@ -12,11 +12,21 @@
 
         <!-- Header -->
         <StackPanel Grid.Row="0" HorizontalAlignment="Center" Spacing="10" Margin="0,30,0,30">
-            <TextBlock Text="❄️ Winter Event ❄️"
+            <TextBlock Text="Winter Event"
                        FontSize="42"
                        Foreground="White"
                        HorizontalAlignment="Center"
                        FontWeight="Bold" />
+            <TextBlock x:Name="NotesText"
+                       Text="Notes: 0"
+                       FontSize="20"
+                       Foreground="White"
+                       HorizontalAlignment="Center" />
+            <TextBlock x:Name="NpsText"
+                       Text="Notes Per Second: 0"
+                       FontSize="18"
+                       Foreground="#CCCCCC"
+                       HorizontalAlignment="Center" />
         </StackPanel>
 
         <!-- Event Content - Horizontal Layout -->
@@ -71,14 +81,17 @@
                            Stretch="UniformToFill" />
                 </Button>
                 
-                <!-- Placeholder for consistency (can add cost/info later if needed) -->
-                <TextBlock Text=""
+                <!-- Number Owned -->
+                <TextBlock x:Name="WinterMajorOwnedRightText"
+                           Text="Number Owned: 0"
                            FontSize="20"
                            Foreground="White"
                            HorizontalAlignment="Center"
                            TextAlignment="Center" />
-                
-                <TextBlock Text=""
+
+                <!-- Crescendance Ability placeholder -->
+                <TextBlock x:Name="WinterCrescendanceText"
+                           Text="Crescendance Ability: &lt;placeholder&gt;"
                            FontSize="18"
                            Foreground="#CCCCCC"
                            HorizontalAlignment="Center"

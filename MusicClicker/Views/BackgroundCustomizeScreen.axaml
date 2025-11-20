@@ -28,9 +28,8 @@
                       HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto"
                       Margin="50,0,50,20">
-            
-            <StackPanel Spacing="30" HorizontalAlignment="Center">
-                
+
+                <StackPanel Spacing="30" HorizontalAlignment="Center">
                 <!-- Row 1 -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
                     <Button x:Name="BackgroundOption1" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2" />
@@ -61,7 +60,7 @@
                     <Button x:Name="BackgroundOption10" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2" />
                 </StackPanel>
 
-            </StackPanel>
+                </StackPanel>
             
         </ScrollViewer>
 

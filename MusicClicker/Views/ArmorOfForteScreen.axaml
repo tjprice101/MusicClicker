@@ -56,6 +56,16 @@
                                    FontSize="18"
                                    Foreground="White"
                                    TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem1SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem1SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
                     </StackPanel>
 
                     <!-- Item 2 -->
@@ -79,6 +89,16 @@
                                    FontSize="18"
                                    Foreground="White"
                                    TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem2SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem2SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
                     </StackPanel>
 
                     <!-- Item 3 -->
@@ -101,6 +121,16 @@
                                    Text="Owned: 0"
                                    FontSize="18"
                                    Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem3SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem3SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
                                    TextAlignment="Center" />
                     </StackPanel>
 
@@ -130,6 +160,16 @@
                                    FontSize="18"
                                    Foreground="White"
                                    TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem4SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem4SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
                     </StackPanel>
 
                     <!-- Item 5 -->
@@ -153,6 +193,16 @@
                                    FontSize="18"
                                    Foreground="White"
                                    TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem5SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem5SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
                     </StackPanel>
 
                     <!-- Item 6 -->
@@ -175,6 +225,16 @@
                                    Text="Owned: 0"
                                    FontSize="18"
                                    Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem6SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem6SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
                                    TextAlignment="Center" />
                     </StackPanel>
 
@@ -204,6 +264,16 @@
                                    FontSize="18"
                                    Foreground="White"
                                    TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem7SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem7SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
                     </StackPanel>
 
                     <!-- Item 8 -->
@@ -227,6 +297,16 @@
                                    FontSize="18"
                                    Foreground="White"
                                    TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem8SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem8SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
                     </StackPanel>
 
                     <!-- Item 9 -->
@@ -249,6 +329,16 @@
                                    Text="Owned: 0"
                                    FontSize="18"
                                    Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem9SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem9SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
                                    TextAlignment="Center" />
                     </StackPanel>
 
@@ -278,6 +368,16 @@
                                    FontSize="18"
                                    Foreground="White"
                                    TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem10SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem10SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
                     </StackPanel>
 
                     <!-- Item 11 -->
@@ -301,6 +401,16 @@
                                    FontSize="18"
                                    Foreground="White"
                                    TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem11SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem11SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
                     </StackPanel>
 
                     <!-- Item 12 -->
@@ -323,6 +433,16 @@
                                    Text="Owned: 0"
                                    FontSize="18"
                                    Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem12SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem12SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
                                    TextAlignment="Center" />
                     </StackPanel>
 
@@ -352,6 +472,16 @@
                                    FontSize="18"
                                    Foreground="White"
                                    TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem13SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem13SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
                     </StackPanel>
 
                     <!-- Item 14 -->
@@ -374,6 +504,16 @@
                                    Text="Owned: 0"
                                    FontSize="18"
                                    Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem14SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem14SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
                                    TextAlignment="Center" />
                     </StackPanel>
 
@@ -399,6 +539,16 @@
                                    Text="Owned: 0"
                                    FontSize="18"
                                    Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem15SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem15SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
                                    TextAlignment="Center" />
                     </StackPanel>
 
@@ -430,6 +580,16 @@
                                    FontSize="18"
                                    Foreground="White"
                                    TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem16SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem16SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
                     </StackPanel>
 
                     <!-- Item 17 -->
@@ -455,6 +615,16 @@
                                    FontSize="18"
                                    Foreground="White"
                                    TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem17SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem17SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
                     </StackPanel>
 
                     <!-- Item 18 -->
@@ -479,6 +649,16 @@
                                    Text="Owned: 0"
                                    FontSize="18"
                                    Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem18SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmorItem18SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
                                    TextAlignment="Center" />
                     </StackPanel>
 

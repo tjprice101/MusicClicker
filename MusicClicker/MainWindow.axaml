@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:views="clr-namespace:MusicClicker.Views"
         x:Class="MusicClicker.MainWindow"
-        Title="🌹🎹 Magnum Opus 🎹🌹"
+        Title="Magnum Opus"
         Width="1600" Height="900">
 
     <Window.Background>
@@ -24,7 +24,7 @@
 
                 <!-- Title and Notes -->
                 <StackPanel Grid.Row="0" HorizontalAlignment="Center" Spacing="10" Margin="0,0,0,30">
-                    <TextBlock Text="🌹🎹 Magnum Opus 🎹🌹"
+                    <TextBlock Text="Magnum Opus"
                                FontSize="36"
                                Foreground="White"
                                HorizontalAlignment="Center"

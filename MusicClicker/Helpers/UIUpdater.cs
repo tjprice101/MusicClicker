@@ -101,6 +101,24 @@ namespace MusicClicker
 
             // Update notes display
             window.SaveScoresScreen.SaveScoresNotesText.Text = $"Notes: {Math.Round(gameState.Notes, 1)}";
+
+            // Enable/disable soul buttons based on whether the player can afford each fixed cost
+            // Costs: Moonlight=5000, Eroica=15000, SwanLake=45000, LaCampanella=135000,
+            // Enigma=405000, Fate=1215000, OdeToJoy=3645000
+            try
+            {
+                window.SaveScoresScreen.MoonlightSonataButton.IsEnabled = gameState.Notes >= 5000;
+                window.SaveScoresScreen.EroicaButton.IsEnabled = gameState.Notes >= 15000;
+                window.SaveScoresScreen.SwanLakeButton.IsEnabled = gameState.Notes >= 45000;
+                window.SaveScoresScreen.LaCampanellaButton.IsEnabled = gameState.Notes >= 135000;
+                window.SaveScoresScreen.EnigmaButton.IsEnabled = gameState.Notes >= 405000;
+                window.SaveScoresScreen.FateButton.IsEnabled = gameState.Notes >= 1215000;
+                window.SaveScoresScreen.OdeToJoyButton.IsEnabled = gameState.Notes >= 3645000;
+            }
+            catch (Exception)
+            {
+                // If any controls are not available yet, ignore — update will run again later.
+            }
         }
 
         /// <summary>

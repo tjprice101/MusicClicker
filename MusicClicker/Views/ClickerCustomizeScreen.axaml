@@ -28,43 +28,92 @@
                       HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto"
                       Margin="50,0,50,20">
-            
+
             <StackPanel Spacing="30" HorizontalAlignment="Center">
-                
                 <!-- Row 1 -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
-                    <Button x:Name="ClickerOption1" Width="220" Height="220" Background="Black" BorderBrush="White" BorderThickness="2" />
-                    <Button x:Name="ClickerOption2" Width="220" Height="220" Background="Black" BorderBrush="White" BorderThickness="2" />
-                    <Button x:Name="ClickerOption3" Width="220" Height="220" Background="Black" BorderBrush="White" BorderThickness="2" />
-                    <Button x:Name="ClickerOption4" Width="220" Height="220" Background="Black" BorderBrush="White" BorderThickness="2" />
+                    <StackPanel>
+                        <Button x:Name="ClickerOption1" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2" />
+                        <TextBlock Text="Return to Default Image" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
+                    </StackPanel>
+                    <StackPanel>
+                        <Button x:Name="ClickerOption2" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Assets/EssenceOfElgar.png" Width="180" Height="180" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Button>
+                        <TextBlock Text="Requires all Non-Event Major Scores Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
+                    </StackPanel>
+                    <StackPanel>
+                        <Button x:Name="ClickerOption3" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2" />
+                        <TextBlock Text="Requires Moonlight Sonata Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
+                    </StackPanel>
+                    <StackPanel>
+                        <Button x:Name="ClickerOption4" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2" />
+                        <TextBlock Text="Requires Eroica Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
+                    </StackPanel>
                 </StackPanel>
 
                 <!-- Row 2 -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
-                    <Button x:Name="ClickerOption5" Width="220" Height="220" Background="Black" BorderBrush="White" BorderThickness="2" />
-                    <Button x:Name="ClickerOption6" Width="220" Height="220" Background="Black" BorderBrush="White" BorderThickness="2" />
-                    <Button x:Name="ClickerOption7" Width="220" Height="220" Background="Black" BorderBrush="White" BorderThickness="2" />
-                    <Button x:Name="ClickerOption8" Width="220" Height="220" Background="Black" BorderBrush="White" BorderThickness="2" />
+                    <StackPanel>
+                        <Button x:Name="ClickerOption5" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2" />
+                        <TextBlock Text="Requires Swan Lake Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
+                    </StackPanel>
+                    <StackPanel>
+                        <Button x:Name="ClickerOption6" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2" />
+                        <TextBlock Text="Requires La Campanella Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
+                    </StackPanel>
+                    <StackPanel>
+                        <Button x:Name="ClickerOption7" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2" />
+                        <TextBlock Text="Requires Enigma Variations Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
+                    </StackPanel>
+                    <StackPanel>
+                        <Button x:Name="ClickerOption8" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2" />
+                        <TextBlock Text="Requires Fate Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
+                    </StackPanel>
                 </StackPanel>
 
                 <!-- Row 3 -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
-                    <Button x:Name="ClickerOption9" Width="220" Height="220" Background="Black" BorderBrush="White" BorderThickness="2" />
-                    <Button x:Name="ClickerOption10" Width="220" Height="220" Background="Black" BorderBrush="White" BorderThickness="2" />
-                    <Button x:Name="ClickerOption11" Width="220" Height="220" Background="Black" BorderBrush="White" BorderThickness="2" />
-                    <Button x:Name="ClickerOption12" Width="220" Height="220" Background="Black" BorderBrush="White" BorderThickness="2" />
+                    <StackPanel>
+                        <Button x:Name="ClickerOption9" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2" />
+                        <TextBlock Text="Requires Ode to Joy Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
+                    </StackPanel>
+                    <StackPanel>
+                        <Button x:Name="ClickerOption10" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2" />
+                        <TextBlock Text="Requires Dies Irae Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
+                    </StackPanel>
+                    <StackPanel>
+                        <Button x:Name="ClickerOption11" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2" />
+                        <TextBlock Text="Requires Winter Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
+                    </StackPanel>
+                    <StackPanel>
+                        <Button x:Name="ClickerOption12" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2" />
+                        <TextBlock Text="(Custom Requirement)" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
+                    </StackPanel>
                 </StackPanel>
 
                 <!-- Row 4 -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
-                    <Button x:Name="ClickerOption13" Width="220" Height="220" Background="Black" BorderBrush="White" BorderThickness="2" />
-                    <Button x:Name="ClickerOption14" Width="220" Height="220" Background="Black" BorderBrush="White" BorderThickness="2" />
-                    <Button x:Name="ClickerOption15" Width="220" Height="220" Background="Black" BorderBrush="White" BorderThickness="2" />
-                    <Button x:Name="ClickerOption16" Width="220" Height="220" Background="Black" BorderBrush="White" BorderThickness="2" />
+                    <StackPanel>
+                        <Button x:Name="ClickerOption13" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2" />
+                        <TextBlock Text="(Custom Requirement)" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
+                    </StackPanel>
+                    <StackPanel>
+                        <Button x:Name="ClickerOption14" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2" />
+                        <TextBlock Text="(Custom Requirement)" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
+                    </StackPanel>
+                    <StackPanel>
+                        <Button x:Name="ClickerOption15" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2" />
+                        <TextBlock Text="(Custom Requirement)" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
+                    </StackPanel>
+                    <StackPanel>
+                        <Button x:Name="ClickerOption16" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2" />
+                        <TextBlock Text="(Custom Requirement)" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
+                    </StackPanel>
                 </StackPanel>
 
             </StackPanel>
-            
+        
         </ScrollViewer>
 
         <!-- Footer -->

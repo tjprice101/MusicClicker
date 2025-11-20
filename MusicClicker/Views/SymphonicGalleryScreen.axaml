@@ -42,10 +42,8 @@
                             BorderBrush="White"
                             BorderThickness="3">
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="20">
-                            <TextBlock Text="🎹"
-                                       FontSize="72"
-                                       Foreground="White"
-                                       HorizontalAlignment="Center" />
+                            <!--<emoji removed: replaced with empty spacer for aesthetics>-->
+                            <TextBlock Text="" FontSize="72" HorizontalAlignment="Center" />
                             <TextBlock Text="Customize"
                                        FontSize="32"
                                        Foreground="White"
@@ -68,10 +66,8 @@
                             BorderBrush="White"
                             BorderThickness="3">
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="20">
-                            <TextBlock Text="🖼️"
-                                       FontSize="72"
-                                       Foreground="White"
-                                       HorizontalAlignment="Center" />
+                            <!--<emoji removed: replaced with empty spacer for aesthetics>-->
+                            <TextBlock Text="" FontSize="72" HorizontalAlignment="Center" />
                             <TextBlock Text="Customize"
                                        FontSize="32"
                                        Foreground="White"
