@@ -95,7 +95,7 @@ namespace MusicClicker.Views
             double baseMultiplier = 250 * Math.Pow(20, weaponIndex + 1);
             
             // Cost = NPS + 250 * 20^weaponNumber
-            return _gameState.NotesPerSecond + baseMultiplier;
+            return (_gameState.NotesPerSecond + baseMultiplier) * (_gameState.NotesPerClick / 2);
         }
 
         private bool IsWeaponUnlocked(int weaponIndex)

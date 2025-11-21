@@ -60,7 +60,7 @@ namespace MusicClicker.Views
         {
             if (_gameState == null) return;
             // Calculate cost using same formula as the UI
-            double cost = (_gameState.NotesPerSecond * 5) + 250;
+            double cost = ((_gameState.NotesPerSecond * 5) * _gameState.NotesPerClick) + 250;
 
             // Only allow attempt if player has enough Notes
             if (_gameState.Notes >= cost)

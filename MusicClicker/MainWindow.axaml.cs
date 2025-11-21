@@ -9,6 +9,7 @@ using Avalonia.Input;
 using System;
 using System.Collections.Generic;
 using System.Timers;
+using MusicClicker.Helpers;
 
 namespace MusicClicker
 {
@@ -16,8 +17,9 @@ namespace MusicClicker
     {
         // ------------------- EXISTING FIELDS -------------------
         private Timer _timer;
+        private Timer _saveTimer; // Auto-save timer
         private Random _random = new Random();
-        private GameState gameState = new GameState();
+        private GameState gameState;
         public GameState GameState => gameState;
         public static TempoResonateManager GlobalTempoManager = null!;
 
@@ -27,7 +29,7 @@ namespace MusicClicker
         private double currentRotation = 0;
         private bool isAnimating = false;
         
-        private const double RADIUS = 350; // Distance from center
+        private const double RADIUS = 350;
         private const int BUTTON_COUNT = 8;
         
         private DispatcherTimer animationTimer = null!;
@@ -44,6 +46,19 @@ namespace MusicClicker
         public MainWindow()
         {
             InitializeComponent();
+
+            // Try to load saved game state on startup. If load fails, fall back to defaults.
+            string loadErr;
+            if (SaveManager.TryLoad(out GameState loaded, out loadErr))
+            {
+                gameState = loaded;
+                Console.WriteLine("Game loaded successfully!");
+            }
+            else
+            {
+                gameState = new GameState();
+                Console.WriteLine($"Starting new game. Load error: {loadErr}");
+            }
 
             InitializeCarousel();
 
@@ -62,6 +77,7 @@ namespace MusicClicker
             ButtonInitializer.InitializeAllButtons(this);
             TempoResonateButton.Click += TempoResonateButton_Click;
 
+            // Game update timer (1 second)
             _timer = new Timer(1000);
             _timer.Elapsed += (s, e) =>
             {
@@ -76,6 +92,51 @@ namespace MusicClicker
                 });
             };
             _timer.Start();
+
+            // Auto-save timer (every 30 seconds)
+            _saveTimer = new Timer(30000);
+            _saveTimer.Elapsed += (s, e) =>
+            {
+                SaveGame();
+            };
+            _saveTimer.Start();
+
+            // Save on window close
+            this.Closing += MainWindow_Closing;
+
+            // Initial UI update with loaded data
+            Dispatcher.UIThread.Post(() =>
+            {
+                UIUpdater.UpdateUI(this, gameState);
+                UIUpdater.UpdateFragmentationUI(this, gameState);
+                UIUpdater.UpdateSaveScoresUI(this, gameState);
+                UIUpdater.UpdateHeartOfHarmonyUI(this, gameState);
+                UIUpdater.UpdateUnitySymphonyUI(this, gameState);
+            });
+        }
+
+        // ------------------- SAVE/LOAD METHODS -------------------
+        private void SaveGame()
+        {
+            string error;
+            if (SaveManager.Save(gameState, out error))
+            {
+                Console.WriteLine("Game saved successfully!");
+            }
+            else
+            {
+                Console.WriteLine($"Save failed: {error}");
+            }
+        }
+
+        private void MainWindow_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
+        {
+            // Save game when window closes
+            SaveGame();
+            
+            // Stop timers
+            _timer?.Stop();
+            _saveTimer?.Stop();
         }
 
         // ------------------- CAROUSEL INITIALIZATION -------------------
@@ -93,7 +154,6 @@ namespace MusicClicker
                 GetButtonTransforms(SymphonicGalleryButton)
             };
 
-            // Add drag event handlers to the carousel canvas
             var canvas = this.FindControl<Canvas>("CarouselCanvas");
             if (canvas != null)
             {
@@ -153,11 +213,9 @@ namespace MusicClicker
             var currentPoint = e.GetPosition(sender as Control);
             double deltaY = currentPoint.Y - lastDragPoint.Y;
             
-            // Reduced sensitivity from 0.5 to 0.25
             double rotationDelta = deltaY * 0.25;
             currentRotation -= rotationDelta;
             
-            // Track velocity for momentum
             dragVelocity = -rotationDelta;
             
             lastDragPoint = currentPoint;
@@ -169,10 +227,8 @@ namespace MusicClicker
             
             isDragging = false;
             
-            // Apply momentum
             dragMomentum = dragVelocity * 2.0;
             
-            // Snap to nearest item after momentum
             if (Math.Abs(dragMomentum) < 1.0)
             {
                 SnapToNearest();
@@ -205,13 +261,11 @@ namespace MusicClicker
 
         private void AnimationTimer_Tick(object? sender, EventArgs e)
         {
-            // Apply momentum decay
             if (!isDragging && Math.Abs(dragMomentum) > 0.1)
             {
                 currentRotation += dragMomentum;
                 dragMomentum *= 0.92;
                 
-                // When momentum is low, snap to nearest
                 if (Math.Abs(dragMomentum) < 0.5)
                 {
                     dragMomentum = 0;
@@ -238,43 +292,38 @@ namespace MusicClicker
         }
 
         private void UpdateCarouselPositions()
-{
-    double angleStep = 360.0 / BUTTON_COUNT;
-    double horizontalOffset = 15; // Shift entire carousel 50px to the right
+        {
+            double angleStep = 360.0 / BUTTON_COUNT;
+            double horizontalOffset = 15;
 
-    for (int i = 0; i < carouselButtons.Count; i++)
-    {
-        var (button, translate, scale) = carouselButtons[i];
+            for (int i = 0; i < carouselButtons.Count; i++)
+            {
+                var (button, translate, scale) = carouselButtons[i];
 
-        double angle = (i * angleStep - currentRotation) * (Math.PI / 180.0);
+                double angle = (i * angleStep - currentRotation) * (Math.PI / 180.0);
 
-        // Vertical position
-        double y = -Math.Cos(angle) * RADIUS;
-        bool isAtBottom = y > (RADIUS - 50);
+                double y = -Math.Cos(angle) * RADIUS;
+                bool isAtBottom = y > (RADIUS - 50);
 
-        // Opacity
-        double opacity = Math.Max(0, (y + 100) / (RADIUS + 100));
+                double opacity = Math.Max(0, (y + 100) / (RADIUS + 100));
 
-        // Scale
-        double t = (RADIUS - y) / (2 * RADIUS); // 0 = bottom, 1 = top
-        double scaleValue = 0.9 - 0.4 * t;
+                double t = (RADIUS - y) / (2 * RADIUS);
+                double scaleValue = 0.9 - 0.4 * t;
 
-        // Horizontal spacing adjustment
-        double centerOffset = Math.Sin(angle) * RADIUS;
+                double centerOffset = Math.Sin(angle) * RADIUS;
 
-        // Extra spacing for middle button
-        double spacingMultiplier = 1.0 + 1.2 * Math.Pow(Math.Cos(angle), 2); 
-        double x = centerOffset * spacingMultiplier + horizontalOffset; // <-- add offset here
+                double spacingMultiplier = 1.0 + 1.2 * Math.Pow(Math.Cos(angle), 2); 
+                double x = centerOffset * spacingMultiplier + horizontalOffset;
 
-        translate.X = x;
-        translate.Y = y;
-        scale.ScaleX = scaleValue;
-        scale.ScaleY = scaleValue;
-        button.Opacity = opacity;
-        button.IsHitTestVisible = isAtBottom && opacity > 0.8;
-        button.ZIndex = isAtBottom ? 50 : (int)(-y);
-    }
-}
+                translate.X = x;
+                translate.Y = y;
+                scale.ScaleX = scaleValue;
+                scale.ScaleY = scaleValue;
+                button.Opacity = opacity;
+                button.IsHitTestVisible = isAtBottom && opacity > 0.8;
+                button.ZIndex = isAtBottom ? 50 : (int)(-y);
+            }
+        }
 
         // ------------------- EXISTING METHODS -------------------
         public void ClickButton_Click(object? sender, RoutedEventArgs e)
