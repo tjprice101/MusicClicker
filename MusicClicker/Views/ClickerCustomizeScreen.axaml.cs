@@ -20,7 +20,7 @@ namespace MusicClicker.Views
 
             BackButton.Click += BackButton_Click;
             
-            // Initialize all clicker option buttons (placeholder for future functionality)
+            // Initialize all clicker option buttons
             InitializeClickerOptions();
         }
 
@@ -126,32 +126,40 @@ namespace MusicClicker.Views
 
         private void HandleClickerSelection(int optionNumber)
         {
-            if (_mainWindow == null)
+            if (_mainWindow == null || _gameState == null)
                 return;
 
-            // Option 1: Reset to default image
+            string imageUri = "";
 
+            // Map option numbers to their respective image URIs
+            switch (optionNumber)
+            {
+                case 1:
+                    imageUri = "avares://MusicClicker/Assets/Music Game Assets [A961E2A]-min.png";
+                    break;
+                case 2:
+                    if (!ClickerOption2.IsEnabled) return;
+                    imageUri = "avares://MusicClicker/Assets/EssenceOfElgar.png";
+                    break;
+                // Add more cases for options 3-16 as needed
+                default:
+                    return;
+            }
+
+            if (string.IsNullOrEmpty(imageUri))
+                return;
+
+            // Update the clicker button image
             if (_mainWindow?.ClickButton?.Content is Avalonia.Controls.Image clickerImage)
             {
-                if (optionNumber == 1)
+                var uri = new System.Uri(imageUri);
+                if (Avalonia.Platform.AssetLoader.Exists(uri))
                 {
-                    var uri = new System.Uri("avares://MusicClicker/Assets/Music Game Assets [A961E2A]-min.png");
-                    if (Avalonia.Platform.AssetLoader.Exists(uri))
-                    {
-                        var assets = Avalonia.Platform.AssetLoader.Open(uri);
-                        clickerImage.Source = new Avalonia.Media.Imaging.Bitmap(assets);
-                    }
-                    return;
-                }
-                if (optionNumber == 2 && ClickerOption2.IsEnabled)
-                {
-                    var uri = new System.Uri("avares://MusicClicker/Assets/EssenceOfElgar.png");
-                    if (Avalonia.Platform.AssetLoader.Exists(uri))
-                    {
-                        var assets = Avalonia.Platform.AssetLoader.Open(uri);
-                        clickerImage.Source = new Avalonia.Media.Imaging.Bitmap(assets);
-                    }
-                    return;
+                    var assets = Avalonia.Platform.AssetLoader.Open(uri);
+                    clickerImage.Source = new Avalonia.Media.Imaging.Bitmap(assets);
+                    
+                    // Save the selected image URI to GameState
+                    _gameState.CurrentClickerImage = imageUri;
                 }
             }
         }

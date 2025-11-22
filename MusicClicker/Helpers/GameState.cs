@@ -363,5 +363,9 @@ namespace MusicClicker
         
         public int _winterBowIIOwned = 0;
         public int WinterBowIIOwned { get => _winterBowIIOwned; set => _winterBowIIOwned = value; }
+
+        public string CurrentClickerImage { get; set; } = "avares://MusicClicker/Assets/Music Game Assets [A961E2A]-min.png";
+        public string CurrentBackgroundImage { get; set; } = "avares://MusicClicker/Assets/sacredtrevor_A_grand_musical_city_lights_everywhere_popular_shi_d84ff662-c87b-4630-9887-25228f42097b-min.png";
+        public string CurrentResonatedScore { get; set; } = "None";
     }
 }

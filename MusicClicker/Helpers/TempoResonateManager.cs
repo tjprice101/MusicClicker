@@ -63,7 +63,7 @@ namespace MusicClicker
             // Load images, populate drawer, and set initial equipped state
             LoadBitmaps();
             InitializeDrawer();
-            SetDefaultEquipped();
+            RestoreSavedState();
         }
 
         private void LoadBitmaps()
@@ -83,6 +83,27 @@ namespace MusicClicker
             _emptyBitmap = new Bitmap(emptyStream);
         }
 
+        private void RestoreSavedState()
+        {
+            // Restore the previously saved resonated score
+            string savedScore = _gameState.CurrentResonatedScore;
+
+            if (savedScore == "None" || string.IsNullOrEmpty(savedScore))
+            {
+                SetDefaultEquipped();
+            }
+            else if (_bitmapCache.ContainsKey(savedScore) && OwnsScore(savedScore))
+            {
+                // Restore the saved score
+                EquipScore(savedScore, saveToState: false); // Don't re-save during restoration
+            }
+            else
+            {
+                // If saved score is invalid or not owned, default to None
+                SetDefaultEquipped();
+            }
+        }
+
         private void SetDefaultEquipped()
         {
             // Display default "None" state
@@ -97,6 +118,9 @@ namespace MusicClicker
                 Height = 216,
                 Stretch = Stretch.UniformToFill
             };
+
+            // Update GameState
+            _gameState.CurrentResonatedScore = "None";
         }
 
         private void InitializeDrawer()
@@ -245,7 +269,7 @@ namespace MusicClicker
             _equipNoButton.Click += DisableNoHandler;
         }
 
-        private void EquipScore(string scoreName)
+        private void EquipScore(string scoreName, bool saveToState = true)
         {
             // Set new equipped score text + bitmap
             _equippedText.Text = scoreName;
@@ -279,6 +303,12 @@ namespace MusicClicker
                 case "Fate": _gameState.FateMajorAbility = true; break;
                 case "OdeToJoy": _gameState.OdeToJoyMajorAbility = true; break;
             }
+
+            // Save to GameState
+            if (saveToState)
+            {
+                _gameState.CurrentResonatedScore = scoreName;
+            }
         }
 
         private void UnequipScore()
@@ -303,6 +333,9 @@ namespace MusicClicker
             _gameState.EnigmaMajorAbility = false;
             _gameState.FateMajorAbility = false;
             _gameState.OdeToJoyMajorAbility = false;
+
+            // Save to GameState
+            _gameState.CurrentResonatedScore = "None";
         }
 
         public void Dispose()
