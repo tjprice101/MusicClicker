@@ -44,6 +44,55 @@ namespace MusicClicker
         
         private List<(Button button, TranslateTransform translate, ScaleTransform scale)> carouselButtons = null!;
 
+        // Add these methods to your MainWindow class
+
+private void RestoreSavedCustomizations()
+{
+    // Restore clicker image
+    if (!string.IsNullOrEmpty(gameState.CurrentClickerImage))
+    {
+        try
+        {
+            var clickerUri = new System.Uri(gameState.CurrentClickerImage);
+            if (Avalonia.Platform.AssetLoader.Exists(clickerUri))
+            {
+                if (ClickButton?.Content is Avalonia.Controls.Image clickerImage)
+                {
+                    using var stream = Avalonia.Platform.AssetLoader.Open(clickerUri);
+                    clickerImage.Source = new Avalonia.Media.Imaging.Bitmap(stream);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Failed to restore clicker image: {ex.Message}");
+        }
+    }
+
+    // Restore background image
+    if (!string.IsNullOrEmpty(gameState.CurrentBackgroundImage))
+    {
+        try
+        {
+            var bgUri = new System.Uri(gameState.CurrentBackgroundImage);
+            if (Avalonia.Platform.AssetLoader.Exists(bgUri))
+            {
+                using var stream = Avalonia.Platform.AssetLoader.Open(bgUri);
+                var bmp = new Avalonia.Media.Imaging.Bitmap(stream);
+                this.Background = new Avalonia.Media.ImageBrush 
+                { 
+                    Source = bmp, 
+                    Stretch = Avalonia.Media.Stretch.UniformToFill 
+                };
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Failed to restore background image: {ex.Message}");
+        }
+    }
+}
+
         // ------------------- CONSTRUCTOR -------------------
         public MainWindow()
         {
@@ -52,15 +101,18 @@ namespace MusicClicker
             // Try to load saved game state on startup. If load fails, fall back to defaults.
             string loadErr;
             if (SaveManager.TryLoad(out GameState loaded, out loadErr))
-            {
-                gameState = loaded;
-                Console.WriteLine("Game loaded successfully!");
-            }
-            else
-            {
-                gameState = new GameState();
-                Console.WriteLine($"Starting new game. Load error: {loadErr}");
-            }
+{
+    gameState = loaded;
+    Console.WriteLine("Game loaded successfully!");
+
+    // <-- Restore Clicker & Background Here
+    RestoreSavedCustomizations();
+}
+else
+{
+    gameState = new GameState();
+    Console.WriteLine($"Starting new game. Load error: {loadErr}");
+}
 
             InitializeCarousel();
 

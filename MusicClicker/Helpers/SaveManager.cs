@@ -20,7 +20,10 @@ namespace MusicClicker.Helpers
                     Directory.CreateDirectory(SaveFolder);
                 }
 
-                var options = new JsonSerializerOptions { WriteIndented = true };
+                var options = new JsonSerializerOptions { 
+                    WriteIndented = true,
+                    IncludeFields = true 
+                };
                 string json = JsonSerializer.Serialize(state, options);
 
                 File.WriteAllText(SaveFile, json);

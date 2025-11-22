@@ -64,25 +64,37 @@ namespace MusicClicker.Views
 
         private void HandleBackgroundSelection(int optionNumber)
         {
-            if (_mainWindow == null)
+            if (_mainWindow == null || _gameState == null)
+                return;
+
+            string imageUri = "";
+
+            // Map option numbers to their respective background URIs
+            switch (optionNumber)
+            {
+                case 1:
+                    imageUri = "avares://MusicClicker/Assets/sacredtrevor_A_grand_musical_city_lights_everywhere_popular_shi_d84ff662-c87b-4630-9887-25228f42097b-min.png";
+                    break;
+                case 2:
+                    imageUri = "avares://MusicClicker/Assets/CustomizeScreenBackground.png";
+                    break;
+                // Add more cases for options 3-10 as needed
+                default:
+                    return;
+            }
+
+            if (string.IsNullOrEmpty(imageUri))
                 return;
 
             try
             {
-                if (optionNumber == 1)
-                {
-                    var uri = new System.Uri("avares://MusicClicker/Assets/sacredtrevor_A_grand_musical_city_lights_everywhere_popular_shi_d84ff662-c87b-4630-9887-25228f42097b-min.png");
-                    using var s = Avalonia.Platform.AssetLoader.Open(uri);
-                    var bmp = new Avalonia.Media.Imaging.Bitmap(s);
-                    _mainWindow.Background = new Avalonia.Media.ImageBrush { Source = bmp, Stretch = Avalonia.Media.Stretch.UniformToFill };
-                }
-                else if (optionNumber == 2)
-                {
-                    var uri = new System.Uri("avares://MusicClicker/Assets/CustomizeScreenBackground.png");
-                    using var s = Avalonia.Platform.AssetLoader.Open(uri);
-                    var bmp = new Avalonia.Media.Imaging.Bitmap(s);
-                    _mainWindow.Background = new Avalonia.Media.ImageBrush { Source = bmp, Stretch = Avalonia.Media.Stretch.UniformToFill };
-                }
+                var uri = new System.Uri(imageUri);
+                using var s = Avalonia.Platform.AssetLoader.Open(uri);
+                var bmp = new Avalonia.Media.Imaging.Bitmap(s);
+                _mainWindow.Background = new Avalonia.Media.ImageBrush { Source = bmp, Stretch = Avalonia.Media.Stretch.UniformToFill };
+                
+                // Save the selected background URI to GameState
+                _gameState.CurrentBackgroundImage = imageUri;
             }
             catch
             {
