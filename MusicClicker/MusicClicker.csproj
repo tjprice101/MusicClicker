@@ -11,7 +11,7 @@
   <ItemGroup>
     <!-- Existing Assets -->
     <AvaloniaResource Include="Assets\**\*.*" />
-
+    <AvaloniaResource Include="Fonts\**\*.ttf" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,5 +25,6 @@
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
     </PackageReference>
     <PackageReference Include="MessageBox.Avalonia" Version="3.2.0" />
+    <PackageReference Include="Raylib-cs" Version="7.0.2" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,93 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="MusicClicker.Views.EternalModulationScreen">
+
+    <UserControl.Background>
+        <ImageBrush Source="avares://MusicClicker/Assets/sacredtrevor_Musical_warriors_fighting_back_creatures_in_a_neon_cf8e60cc-d1bc-4542-bece-767848ecea8f-min.png"
+                    Stretch="UniformToFill" />
+    </UserControl.Background>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" /> <!-- Header -->
+            <RowDefinition Height="*" />    <!-- Content -->
+            <RowDefinition Height="Auto" /> <!-- Footer -->
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center" Spacing="10" Margin="0,30,0,30">
+            <TextBlock Text="Eternal Modulation"
+                       FontSize="42"
+                       Foreground="White"
+                       HorizontalAlignment="Center"
+                       FontWeight="Bold" />
+            <TextBlock Text="Special Events"
+                       FontSize="24"
+                       Foreground="#CCCCCC"
+                       HorizontalAlignment="Center" />
+        </StackPanel>
+
+        <!-- Event Banners -->
+        <StackPanel Grid.Row="1" 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center"
+                    Spacing="60">
+            
+            <!-- Dies Irae Banner (2160x3840 scaled down proportionally to ~270x480) -->
+            <Border CornerRadius="4">
+                <Border.Effect>
+                    <DropShadowEffect Color="Black" 
+                                      BlurRadius="15" 
+                                      Opacity="0.7"
+                                      OffsetX="0"
+                                      OffsetY="0" />
+                </Border.Effect>
+                <Button x:Name="DiesIraeBannerButton"
+                        Width="270"
+                        Height="480"
+                        Background="Transparent"
+                        BorderBrush="Transparent"
+                        BorderThickness="0"
+                        Padding="0">
+                    <Image Source="avares://MusicClicker/Assets/DiesIraeBanner.png"
+                           Stretch="Fill" />
+                </Button>
+            </Border>
+
+            <!-- Winter Banner (2160x3840 scaled down proportionally to ~270x480) -->
+            <Border CornerRadius="4">
+                <Border.Effect>
+                    <DropShadowEffect Color="Black" 
+                                      BlurRadius="15" 
+                                      Opacity="0.7"
+                                      OffsetX="0"
+                                      OffsetY="0" />
+                </Border.Effect>
+                <Button x:Name="WinterBannerButton"
+                        Width="270"
+                        Height="480"
+                        Background="Transparent"
+                        BorderBrush="Transparent"
+                        BorderThickness="0"
+                        Padding="0">
+                    <Image Source="avares://MusicClicker/Assets/WinterBanner.png"
+                           Stretch="Fill" />
+                </Button>
+            </Border>
+
+        </StackPanel>
+
+        <!-- Footer -->
+        <Button Grid.Row="2"
+                x:Name="BackButton"
+                Content="Back to Main"
+                Width="250"
+                Height="50"
+                HorizontalAlignment="Center"
+                Margin="0,0,0,30"
+                Background="#55000000"
+                Foreground="White"
+                FontSize="20" />
+    </Grid>
+</UserControl>

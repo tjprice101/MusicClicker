@@ -22,7 +22,7 @@
             VerticalAlignment="Center" Spacing="80">
 
             <!-- Melodious Fragments -->
-            <Grid Width="260" Margin="0,30,0,0">
+            <Grid Width="260">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -34,7 +34,7 @@
                     FontWeight="Bold"
                     Foreground="White" HorizontalAlignment="Center" TextWrapping="Wrap" />
                 <Button Grid.Row="1" x:Name="MelodiousFragmentButton" Width="200" Height="200"
-                    HorizontalAlignment="Center">
+                    HorizontalAlignment="Center" VerticalAlignment="Top">
                     <Image
                         Source="avares://MusicClicker/Assets/Music Game Assets [F503F6F]-min.png"
                         Stretch="Uniform" />
@@ -56,9 +56,9 @@
 
                 <TextBlock Grid.Row="0" Text="Harmonious Fragments" FontSize="24"
                     FontWeight="Bold"
-                    Foreground="Black" HorizontalAlignment="Center" TextWrapping="Wrap" />
+                    Foreground="White" HorizontalAlignment="Center" TextWrapping="Wrap" />
                 <Button Grid.Row="1" x:Name="HarmoniousFragmentButton" Width="200" Height="200"
-                    HorizontalAlignment="Center">
+                    HorizontalAlignment="Center" VerticalAlignment="Top">
                     <Image
                         Source="avares://MusicClicker/Assets/Music Game Assets [0EE1949]-min.png"
                         Stretch="Uniform" />
@@ -73,7 +73,7 @@
 
         <!-- Back Button -->
         <Button x:Name="BackButtonFragmentation" Content="Back" Width="200" Height="50"
-            Background="White" Foreground="Black" FontSize="20"
+            Background="#55000000" Foreground="White" FontSize="20"
             HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20" />
     </Grid>
 </UserControl>

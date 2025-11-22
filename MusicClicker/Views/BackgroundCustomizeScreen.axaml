@@ -1,0 +1,79 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="MusicClicker.Views.BackgroundCustomizeScreen"
+             Background="#33000000">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" /> <!-- Header -->
+            <RowDefinition Height="*" />    <!-- Scrollable Content -->
+            <RowDefinition Height="Auto" /> <!-- Footer -->
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center" Spacing="10" Margin="0,20,0,20">
+            <TextBlock Text="Background Gallery"
+                       FontSize="42"
+                       Foreground="White"
+                       HorizontalAlignment="Center"
+                       FontWeight="Bold" />
+            <TextBlock Text="Select Your Background Theme"
+                       FontSize="24"
+                       Foreground="White"
+                       HorizontalAlignment="Center" />
+        </StackPanel>
+
+        <!-- Scrollable Content - 2x5 Grid (16:9 rectangles) -->
+        <ScrollViewer Grid.Row="1" 
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto"
+                      Margin="50,0,50,20">
+
+                <StackPanel Spacing="30" HorizontalAlignment="Center">
+                <!-- Row 1 -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
+                    <Button x:Name="BackgroundOption1" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2" />
+                    <Button x:Name="BackgroundOption2" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2" />
+                </StackPanel>
+
+                <!-- Row 2 -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
+                    <Button x:Name="BackgroundOption3" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2" />
+                    <Button x:Name="BackgroundOption4" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2" />
+                </StackPanel>
+
+                <!-- Row 3 -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
+                    <Button x:Name="BackgroundOption5" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2" />
+                    <Button x:Name="BackgroundOption6" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2" />
+                </StackPanel>
+
+                <!-- Row 4 -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
+                    <Button x:Name="BackgroundOption7" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2" />
+                    <Button x:Name="BackgroundOption8" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2" />
+                </StackPanel>
+
+                <!-- Row 5 -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
+                    <Button x:Name="BackgroundOption9" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2" />
+                    <Button x:Name="BackgroundOption10" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2" />
+                </StackPanel>
+
+                </StackPanel>
+            
+        </ScrollViewer>
+
+        <!-- Footer -->
+        <Button Grid.Row="2"
+                x:Name="BackButton"
+                Content="Back to Gallery"
+                Width="250"
+                Height="50"
+                HorizontalAlignment="Center"
+                Margin="0,0,0,20"
+                Background="#55000000"
+                Foreground="White"
+                FontSize="20" />
+    </Grid>
+</UserControl>

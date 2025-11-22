@@ -6,5 +6,20 @@
 
     <Application.Styles>
         <FluentTheme />
+
+        <!-- Global TextBlock style: white text with a subtle centered shadow outline (fading) -->
+        <Style Selector="TextBlock">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <!-- Centered drop shadow (zero offset) creates a faded outline around text -->
+            <Setter Property="Effect">
+                <DropShadowEffect Color="Black" BlurRadius="7" Opacity="1.0" OffsetX="0" OffsetY="0" />
+            </Setter>
+            <!-- Use Playfair Display (bundled in Fonts/) for a slightly elegant but readable look -->
+            <Setter Property="FontFamily" Value="avares://MusicClicker/Fonts/Playfair_Display/static/PlayfairDisplay-Regular.ttf#Playfair Display" />
+        </Style>
+
     </Application.Styles>
 </Application>
