@@ -4,7 +4,9 @@ namespace MusicClicker
 {
     public static class ButtonInitializer
     {
-        // Calls all individual button-initializer groups
+        // Aggregate initializer that wires every UI button to its handler.
+        // This single entry point is called during window initialization and keeps
+        // button wiring centralized for easier lifecycle management and testing.
         public static void InitializeAllButtons(MainWindow window)
         {
             InitializeHarmonyButtons(window);
@@ -16,7 +18,9 @@ namespace MusicClicker
             InitializeManualCrafting(window);
         }
 
-        // Initializes all Heart of Harmony conversion buttons
+        // Wire handlers for Heart of Harmony conversion UI elements.
+        // Each button delegates to HeartOfHarmonyManager.HandleMajorSheetClick and
+        // passes GameState fields by reference so the manager can mutate them directly.
         private static void InitializeHarmonyButtons(MainWindow window)
         {
             // Moonlight Sonata conversions
@@ -76,7 +80,8 @@ namespace MusicClicker
                     window.HeartOfHarmonyScreen.OdeToJoyMajorScalesOwnedText, window.HeartOfHarmonyScreen.OdeToJoyMajorProgressionsOwnedText, "Ode to Joy");
         }
 
-        // Initializes all upgrade purchase buttons (single and max-buy)
+        // Wire handlers for upgrade purchase buttons. Each button calls UpgradeManager.BuyUpgrade.
+        // Note: "Max" buttons pass double.MaxValue to request buying until funds are exhausted.
         private static void InitializeUpgradeButtons(MainWindow window)
         {
             // Chord
@@ -152,14 +157,16 @@ namespace MusicClicker
                     0, 4, double.MaxValue, window.UpgradeScreen.MagnumOpusOwnedTextUpgrade, window.UpgradeScreen.MagnumOpusCostTextUpgrade);
         }
 
-        // Initializes click button + keyboard input
+        // Wire clicker button and keyboard event to the main click handler.
+        // Click events are routed to MainWindow's implementations so this method keeps
+        // the initialization logic in one place.
         private static void InitializeClicker(MainWindow window)
         {
             window.ClickButton.Click += window.ClickButton_Click;
             window.KeyDown += window.MainWindow_KeyDown;
         }
 
-        // Controls navigation between menu screens
+        // Wire navigation buttons that show/hide different screens and trigger UI updates.
         private static void InitializeNavigationButtons(MainWindow window)
         {
             // Open upgrades menu
@@ -272,7 +279,8 @@ namespace MusicClicker
             
         }
 
-        // Handles buttons that convert Notes into fragments
+        // Wire the fragmentation buttons which convert Notes into Melodious/Harmonious fragments.
+        // Handlers check affordability and update GameState then refresh related UI sections.
         private static void InitializeFragmentationButtons(MainWindow window)
         {
             // Buy Melodious Fragments
@@ -298,7 +306,8 @@ namespace MusicClicker
             };
         }
 
-        // Handles all Save Scores buttons
+        // Wire Save Scores buttons which spend fixed costs to attempt randomized fragment drops.
+        // Each handler delegates to SaveScoresManager.HandleSaveScoreClick for the core logic.
         private static void InitializeSaveScoresButtons(MainWindow window)
         {
             // La Campanella
@@ -344,7 +353,8 @@ namespace MusicClicker
                     ref window.GameState._swanLakeMajorSheets, 45000);
         }
 
-        // Initializes all manual crafting buttons on Unity the Symphony screen
+        // Wire manual crafting buttons on the "Unite The Symphony" screen. These buttons
+        // call UniteTheSymphonyManager.TryCraft* methods which adjust GameState and refresh UI.
         private static void InitializeManualCrafting(MainWindow window)
         {
             // Moonlight Sonata crafting

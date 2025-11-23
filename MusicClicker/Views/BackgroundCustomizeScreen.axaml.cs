@@ -3,28 +3,49 @@ using Avalonia.Interactivity;
 
 namespace MusicClicker.Views
 {
+    /// <summary>
+    /// Screen that allows players to customize the background image of the main window.
+    /// Provides 10 background options that can be unlocked and selected.
+    /// </summary>
     public partial class BackgroundCustomizeScreen : UserControl
     {
+        // Reference to game state for saving selected background
         private GameState? _gameState;
+        
+        // Reference to main window so we can change its background
         private MainWindow? _mainWindow;
 
+        /// <summary>
+        /// Constructor initializes the background customization screen.
+        /// </summary>
         public BackgroundCustomizeScreen()
         {
             InitializeComponent();
 
+            // Wire up back button to return to gallery screen
             BackButton.Click += BackButton_Click;
 
-            // Initialize all background option buttons
+            // Set up click handlers for all 10 background option buttons
             InitializeBackgroundOptions();
         }
 
+        /// <summary>
+        /// Sets references to game state and main window.
+        /// Called when screen becomes visible to ensure it can access game data.
+        /// </summary>
         public void SetGameState(GameState gameState, MainWindow mainWindow)
         {
             _gameState = gameState;
             _mainWindow = mainWindow;
+            
+            // Load thumbnail previews for background options
             PopulateOptionThumbnails();
         }
 
+        /// <summary>
+        /// Connects each background option button to the selection handler.
+        /// Each button is linked to option number 1-10.
+        /// </summary>
         private void InitializeBackgroundOptions()
         {
             BackgroundOption1.Click += (s, e) => HandleBackgroundSelection(1);
@@ -39,80 +60,119 @@ namespace MusicClicker.Views
             BackgroundOption10.Click += (s, e) => HandleBackgroundSelection(10);
         }
 
+        /// <summary>
+        /// Loads and displays thumbnail previews for background options.
+        /// Currently shows previews for options 1 and 2.
+        /// </summary>
         private void PopulateOptionThumbnails()
         {
-            // Display thumbnails for option 1 (default background) and option 2 (customize screen background)
             try
             {
-                // Default main background used in MainWindow.axaml
+                // Load option 1: Default main background used in MainWindow.axaml
                 var defaultUri = new System.Uri("avares://MusicClicker/Assets/sacredtrevor_A_grand_musical_city_lights_everywhere_popular_shi_d84ff662-c87b-4630-9887-25228f42097b-min.png");
                 using var ds = Avalonia.Platform.AssetLoader.Open(defaultUri);
                 var defaultBmp = new Avalonia.Media.Imaging.Bitmap(ds);
-                BackgroundOption1.Content = new Image { Source = defaultBmp, Stretch = Avalonia.Media.Stretch.UniformToFill };
+                
+                // Set thumbnail as button content
+                BackgroundOption1.Content = new Image 
+                { 
+                    Source = defaultBmp, 
+                    Stretch = Avalonia.Media.Stretch.UniformToFill 
+                };
 
-                // Customization screen background asset (sample)
+                // Load option 2: Customization screen background asset
                 var customUri = new System.Uri("avares://MusicClicker/Assets/CustomizeScreenBackground.png");
                 using var cs = Avalonia.Platform.AssetLoader.Open(customUri);
                 var customBmp = new Avalonia.Media.Imaging.Bitmap(cs);
-                BackgroundOption2.Content = new Image { Source = customBmp, Stretch = Avalonia.Media.Stretch.UniformToFill };
+                
+                // Set thumbnail as button content
+                BackgroundOption2.Content = new Image 
+                { 
+                    Source = customBmp, 
+                    Stretch = Avalonia.Media.Stretch.UniformToFill 
+                };
             }
             catch
             {
-                // ignore asset loading failures silently (thumbnails are optional)
+                // Silently ignore asset loading failures
+                // Thumbnails are optional - buttons will still work without them
             }
         }
 
+        /// <summary>
+        /// Handles background selection when player clicks an option button.
+        /// Changes the main window background to the selected image.
+        /// </summary>
         private void HandleBackgroundSelection(int optionNumber)
         {
+            // Validate we have access to required objects
             if (_mainWindow == null || _gameState == null)
                 return;
 
             string imageUri = "";
 
-            // Map option numbers to their respective background URIs
+            // Map option number to its corresponding background image URI
             switch (optionNumber)
             {
                 case 1:
+                    // Default main background (musical city lights)
                     imageUri = "avares://MusicClicker/Assets/sacredtrevor_A_grand_musical_city_lights_everywhere_popular_shi_d84ff662-c87b-4630-9887-25228f42097b-min.png";
                     break;
                 case 2:
+                    // Customization screen background
                     imageUri = "avares://MusicClicker/Assets/CustomizeScreenBackground.png";
                     break;
-                // Add more cases for options 3-10 as needed
+                // TODO: Add cases for options 3-10 when additional backgrounds are added
                 default:
-                    return;
+                    return; // Invalid option number
             }
 
+            // Validate we got a valid image URI
             if (string.IsNullOrEmpty(imageUri))
                 return;
 
             try
             {
+                // Load the background image from application assets
                 var uri = new System.Uri(imageUri);
                 using var s = Avalonia.Platform.AssetLoader.Open(uri);
                 var bmp = new Avalonia.Media.Imaging.Bitmap(s);
-                _mainWindow.Background = new Avalonia.Media.ImageBrush { Source = bmp, Stretch = Avalonia.Media.Stretch.UniformToFill };
+                
+                // Apply the image as the main window's background
+                // Uses ImageBrush with UniformToFill to cover entire window
+                _mainWindow.Background = new Avalonia.Media.ImageBrush 
+                { 
+                    Source = bmp, 
+                    Stretch = Avalonia.Media.Stretch.UniformToFill 
+                };
                 
                 // Save the selected background URI to GameState
+                // This ensures it persists when game is saved/loaded
                 _gameState.CurrentBackgroundImage = imageUri;
             }
             catch
             {
-                // ignore failures to change background
+                // Silently ignore failures to change background
+                // Could happen if asset doesn't exist or load fails
             }
         }
 
+        /// <summary>
+        /// Handler for back button - returns to Symphonic Gallery screen.
+        /// </summary>
         private void BackButton_Click(object? sender, RoutedEventArgs e)
         {
-            // Hide this screen and show SymphonicGalleryScreen
+            // Hide this customization screen
             this.IsVisible = false;
 
+            // Navigate up the visual tree to find parent window
             var current = this.Parent;
             while (current != null && current is not Window)
             {
                 current = current.Parent;
             }
 
+            // Show the Symphonic Gallery screen (parent customization hub)
             if (current is Window parentWindow)
             {
                 var galleryScreen = parentWindow.FindControl<SymphonicGalleryScreen>("SymphonicGalleryScreen");

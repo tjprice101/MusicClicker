@@ -3,27 +3,50 @@ using Avalonia.Interactivity;
 
 namespace MusicClicker.Views
 {
+    /// <summary>
+    /// Screen that allows players to customize the clicker button image.
+    /// Provides 16 clicker options that unlock based on major scores owned.
+    /// </summary>
     public partial class ClickerCustomizeScreen : UserControl
     {
+        // Reference to game state for checking unlock requirements
         private GameState? _gameState;
+        
+        // Reference to main window so we can change the clicker image
         private MainWindow? _mainWindow;
 
+        /// <summary>
+        /// Sets references to game state and main window.
+        /// Called when screen becomes visible to ensure it can access game data.
+        /// Also updates button states based on unlock requirements.
+        /// </summary>
         public void SetGameState(GameState gameState, MainWindow mainWindow)
         {
             _gameState = gameState;
             _mainWindow = mainWindow;
+            
+            // Update which buttons are enabled/disabled based on player progress
             UpdateButtonStates();
         }
+        
+        /// <summary>
+        /// Constructor initializes the clicker customization screen.
+        /// </summary>
         public ClickerCustomizeScreen()
         {
             InitializeComponent();
 
+            // Wire up back button to return to gallery screen
             BackButton.Click += BackButton_Click;
             
-            // Initialize all clicker option buttons
+            // Set up click handlers for all 16 clicker option buttons
             InitializeClickerOptions();
         }
 
+        /// <summary>
+        /// Connects each clicker option button to the selection handler.
+        /// Each button is linked to option number 1-16.
+        /// </summary>
         private void InitializeClickerOptions()
         {
             ClickerOption1.Click += (s, e) => HandleClickerSelection(1);
@@ -44,17 +67,21 @@ namespace MusicClicker.Views
             ClickerOption16.Click += (s, e) => HandleClickerSelection(16);
         }
 
+        /// <summary>
+        /// Updates the enabled/disabled state and appearance of all clicker option buttons.
+        /// Each option has different unlock requirements based on major scores owned.
+        /// </summary>
         private void UpdateButtonStates()
         {
             if (_gameState == null)
                 return;
 
-            // Requirements for each button
-            // 1: Always enabled (default)
+            // Option 1: Always enabled (default clicker, no requirements)
             ClickerOption1.IsEnabled = true;
             ClickerOption1.Background = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Colors.White);
 
-            // 2: All non-event major scores (exclude Dies Irae and Winter)
+            // Option 2: Requires ALL non-event major scores
+            // (Excludes Dies Irae and Winter which are event-only)
             bool allNonEventMajors =
                 _gameState.MoonlightMajorOwned > 0 &&
                 _gameState.EroicaMajorOwned > 0 &&
@@ -64,54 +91,64 @@ namespace MusicClicker.Views
                 _gameState.FateMajorOwned > 0 &&
                 _gameState.OdeToJoyMajorOwned > 0;
             ClickerOption2.IsEnabled = allNonEventMajors;
-            ClickerOption2.Background = new Avalonia.Media.SolidColorBrush(allNonEventMajors ? Avalonia.Media.Colors.White : Avalonia.Media.Colors.Gray);
+            ClickerOption2.Background = new Avalonia.Media.SolidColorBrush(
+                allNonEventMajors ? Avalonia.Media.Colors.White : Avalonia.Media.Colors.Gray);
 
-            // 3: Moonlight
+            // Option 3: Requires Moonlight Sonata Major
             bool moonlight = _gameState.MoonlightMajorOwned > 0;
             ClickerOption3.IsEnabled = moonlight;
-            ClickerOption3.Background = new Avalonia.Media.SolidColorBrush(moonlight ? Avalonia.Media.Colors.White : Avalonia.Media.Colors.Gray);
+            ClickerOption3.Background = new Avalonia.Media.SolidColorBrush(
+                moonlight ? Avalonia.Media.Colors.White : Avalonia.Media.Colors.Gray);
 
-            // 4: Eroica
+            // Option 4: Requires Eroica Major
             bool eroica = _gameState.EroicaMajorOwned > 0;
             ClickerOption4.IsEnabled = eroica;
-            ClickerOption4.Background = new Avalonia.Media.SolidColorBrush(eroica ? Avalonia.Media.Colors.White : Avalonia.Media.Colors.Gray);
+            ClickerOption4.Background = new Avalonia.Media.SolidColorBrush(
+                eroica ? Avalonia.Media.Colors.White : Avalonia.Media.Colors.Gray);
 
-            // 5: Swan Lake
+            // Option 5: Requires Swan Lake Major
             bool swan = _gameState.SwanMajorOwned > 0;
             ClickerOption5.IsEnabled = swan;
-            ClickerOption5.Background = new Avalonia.Media.SolidColorBrush(swan ? Avalonia.Media.Colors.White : Avalonia.Media.Colors.Gray);
+            ClickerOption5.Background = new Avalonia.Media.SolidColorBrush(
+                swan ? Avalonia.Media.Colors.White : Avalonia.Media.Colors.Gray);
 
-            // 6: La Campanella
+            // Option 6: Requires La Campanella Major
             bool campanella = _gameState.LaCampanellaMajorOwned > 0;
             ClickerOption6.IsEnabled = campanella;
-            ClickerOption6.Background = new Avalonia.Media.SolidColorBrush(campanella ? Avalonia.Media.Colors.White : Avalonia.Media.Colors.Gray);
+            ClickerOption6.Background = new Avalonia.Media.SolidColorBrush(
+                campanella ? Avalonia.Media.Colors.White : Avalonia.Media.Colors.Gray);
 
-            // 7: Enigma
+            // Option 7: Requires Enigma Major
             bool enigma = _gameState.EnigmaMajorOwned > 0;
             ClickerOption7.IsEnabled = enigma;
-            ClickerOption7.Background = new Avalonia.Media.SolidColorBrush(enigma ? Avalonia.Media.Colors.White : Avalonia.Media.Colors.Gray);
+            ClickerOption7.Background = new Avalonia.Media.SolidColorBrush(
+                enigma ? Avalonia.Media.Colors.White : Avalonia.Media.Colors.Gray);
 
-            // 8: Fate
+            // Option 8: Requires Fate Major
             bool fate = _gameState.FateMajorOwned > 0;
             ClickerOption8.IsEnabled = fate;
-            ClickerOption8.Background = new Avalonia.Media.SolidColorBrush(fate ? Avalonia.Media.Colors.White : Avalonia.Media.Colors.Gray);
+            ClickerOption8.Background = new Avalonia.Media.SolidColorBrush(
+                fate ? Avalonia.Media.Colors.White : Avalonia.Media.Colors.Gray);
 
-            // 9: Ode to Joy
+            // Option 9: Requires Ode to Joy Major
             bool ode = _gameState.OdeToJoyMajorOwned > 0;
             ClickerOption9.IsEnabled = ode;
-            ClickerOption9.Background = new Avalonia.Media.SolidColorBrush(ode ? Avalonia.Media.Colors.White : Avalonia.Media.Colors.Gray);
+            ClickerOption9.Background = new Avalonia.Media.SolidColorBrush(
+                ode ? Avalonia.Media.Colors.White : Avalonia.Media.Colors.Gray);
 
-            // 10: Dies Irae Major
+            // Option 10: Requires Dies Irae Major (event score)
             bool dies = _gameState.DiesIraeMajorSheets > 0;
             ClickerOption10.IsEnabled = dies;
-            ClickerOption10.Background = new Avalonia.Media.SolidColorBrush(dies ? Avalonia.Media.Colors.White : Avalonia.Media.Colors.Gray);
+            ClickerOption10.Background = new Avalonia.Media.SolidColorBrush(
+                dies ? Avalonia.Media.Colors.White : Avalonia.Media.Colors.Gray);
 
-            // 11: Winter Major
+            // Option 11: Requires Winter Major (event score)
             bool winter = _gameState.WinterMajorSheets > 0;
             ClickerOption11.IsEnabled = winter;
-            ClickerOption11.Background = new Avalonia.Media.SolidColorBrush(winter ? Avalonia.Media.Colors.White : Avalonia.Media.Colors.Gray);
+            ClickerOption11.Background = new Avalonia.Media.SolidColorBrush(
+                winter ? Avalonia.Media.Colors.White : Avalonia.Media.Colors.Gray);
 
-            // 12-16: Custom requirements (disabled, gray)
+            // Options 12-16: Not yet implemented, disabled and grayed out
             ClickerOption12.IsEnabled = false;
             ClickerOption12.Background = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Colors.Gray);
             ClickerOption13.IsEnabled = false;
@@ -124,28 +161,37 @@ namespace MusicClicker.Views
             ClickerOption16.Background = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Colors.Gray);
         }
 
+        /// <summary>
+        /// Handles clicker image selection when player clicks an option button.
+        /// Changes the main clicker button image to the selected option.
+        /// </summary>
         private void HandleClickerSelection(int optionNumber)
         {
+            // Validate we have access to required objects
             if (_mainWindow == null || _gameState == null)
                 return;
 
             string imageUri = "";
 
-            // Map option numbers to their respective image URIs
+            // Map option number to its corresponding clicker image URI
             switch (optionNumber)
             {
                 case 1:
+                    // Default clicker image (musical note)
                     imageUri = "avares://MusicClicker/Assets/Music Game Assets [A961E2A]-min.png";
                     break;
                 case 2:
+                    // Check if option 2 is enabled before allowing selection
                     if (!ClickerOption2.IsEnabled) return;
+                    // Special "Essence of Elgar" clicker (requires all non-event majors)
                     imageUri = "avares://MusicClicker/Assets/EssenceOfElgar.png";
                     break;
-                // Add more cases for options 3-16 as needed
+                // TODO: Add cases for options 3-16 when additional clicker images are added
                 default:
-                    return;
+                    return; // Invalid option number
             }
 
+            // Validate we got a valid image URI
             if (string.IsNullOrEmpty(imageUri))
                 return;
 
@@ -153,28 +199,37 @@ namespace MusicClicker.Views
             if (_mainWindow?.ClickButton?.Content is Avalonia.Controls.Image clickerImage)
             {
                 var uri = new System.Uri(imageUri);
+                
+                // Verify the asset exists before trying to load it
                 if (Avalonia.Platform.AssetLoader.Exists(uri))
                 {
+                    // Load the image from application assets
                     var assets = Avalonia.Platform.AssetLoader.Open(uri);
                     clickerImage.Source = new Avalonia.Media.Imaging.Bitmap(assets);
                     
                     // Save the selected image URI to GameState
+                    // This ensures it persists when game is saved/loaded
                     _gameState.CurrentClickerImage = imageUri;
                 }
             }
         }
 
+        /// <summary>
+        /// Handler for back button - returns to Symphonic Gallery screen.
+        /// </summary>
         private void BackButton_Click(object? sender, RoutedEventArgs e)
         {
-            // Hide this screen and show SymphonicGalleryScreen
+            // Hide this customization screen
             this.IsVisible = false;
 
+            // Navigate up the visual tree to find parent window
             var current = this.Parent;
             while (current != null && current is not Window)
             {
                 current = current.Parent;
             }
 
+            // Show the Symphonic Gallery screen (parent customization hub)
             if (current is Window parentWindow)
             {
                 var galleryScreen = parentWindow.FindControl<Views.SymphonicGalleryScreen>("SymphonicGalleryScreen");

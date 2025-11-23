@@ -1,4 +1,10 @@
-// GameState.cs
+// GameState holds the full, serializable snapshot of the player's progression.
+// Design choices:
+// - Many fields are exposed as public backing fields with thin properties. This allows
+//   other parts of the code to pass fields by reference (ref) where necessary (e.g.
+//   crafting and upgrade handlers) while still providing properties for serialization
+//   systems that expect property access.
+// - Keep this class lightweight: it is a plain data container without behavior.
 namespace MusicClicker
 {
     public class GameState
@@ -309,60 +315,61 @@ namespace MusicClicker
         public int _odeToJoyMajorProgressions = 0;
         public int OdeToJoyMajorProgressions { get => _odeToJoyMajorProgressions; set => _odeToJoyMajorProgressions = value; }
 
-        // Armor of Forte - Weapon Ownership (0 = not owned, 1 = owned)
-        public int _moonlightBladeIOwned = 0;
-        public int MoonlightBladeIOwned { get => _moonlightBladeIOwned; set => _moonlightBladeIOwned = value; }
-        
-        public int _moonlightBladeIIOwned = 0;
-        public int MoonlightBladeIIOwned { get => _moonlightBladeIIOwned; set => _moonlightBladeIIOwned = value; }
-        
-        public int _eroicaSwordIOwned = 0;
-        public int EroicaSwordIOwned { get => _eroicaSwordIOwned; set => _eroicaSwordIOwned = value; }
-        
-        public int _eroicaSwordIIOwned = 0;
-        public int EroicaSwordIIOwned { get => _eroicaSwordIIOwned; set => _eroicaSwordIIOwned = value; }
-        
-        public int _swanLanceIOwned = 0;
-        public int SwanLanceIOwned { get => _swanLanceIOwned; set => _swanLanceIOwned = value; }
-        
-        public int _swanLanceIIOwned = 0;
-        public int SwanLanceIIOwned { get => _swanLanceIIOwned; set => _swanLanceIIOwned = value; }
-        
-        public int _campanellaDaggerIOwned = 0;
-        public int CampanellaDaggerIOwned { get => _campanellaDaggerIOwned; set => _campanellaDaggerIOwned = value; }
-        
-        public int _campanellaDaggerIIOwned = 0;
-        public int CampanellaDaggerIIOwned { get => _campanellaDaggerIIOwned; set => _campanellaDaggerIIOwned = value; }
-        
-        public int _enigmaStaffIOwned = 0;
-        public int EnigmaStaffIOwned { get => _enigmaStaffIOwned; set => _enigmaStaffIOwned = value; }
-        
-        public int _enigmaStaffIIOwned = 0;
-        public int EnigmaStaffIIOwned { get => _enigmaStaffIIOwned; set => _enigmaStaffIIOwned = value; }
-        
-        public int _fateAxeIOwned = 0;
-        public int FateAxeIOwned { get => _fateAxeIOwned; set => _fateAxeIOwned = value; }
-        
-        public int _fateAxeIIOwned = 0;
-        public int FateAxeIIOwned { get => _fateAxeIIOwned; set => _fateAxeIIOwned = value; }
-        
-        public int _joyHammerIOwned = 0;
-        public int JoyHammerIOwned { get => _joyHammerIOwned; set => _joyHammerIOwned = value; }
-        
-        public int _joyHammerIIOwned = 0;
-        public int JoyHammerIIOwned { get => _joyHammerIIOwned; set => _joyHammerIIOwned = value; }
-        
-        public int _diesIraeScytheIOwned = 0;
-        public int DiesIraeScytheIOwned { get => _diesIraeScytheIOwned; set => _diesIraeScytheIOwned = value; }
-        
-        public int _diesIraeScytheIIOwned = 0;
-        public int DiesIraeScytheIIOwned { get => _diesIraeScytheIIOwned; set => _diesIraeScytheIIOwned = value; }
-        
-        public int _winterBowIOwned = 0;
-        public int WinterBowIOwned { get => _winterBowIOwned; set => _winterBowIOwned = value; }
-        
-        public int _winterBowIIOwned = 0;
-        public int WinterBowIIOwned { get => _winterBowIIOwned; set => _winterBowIIOwned = value; }
+        // Armor of Forte - Weapon Ownership booleans (true = owned)
+        // Naming uses the weapon identifier (no spaces/special chars) matching displayed names.
+        public bool _eulogyOfTheMoon = false;
+        public bool EulogyOfTheMoon { get => _eulogyOfTheMoon; set => _eulogyOfTheMoon = value; }
+
+        public bool _incisorOfMoonlight = false;
+        public bool IncisorOfMoonlight { get => _incisorOfMoonlight; set => _incisorOfMoonlight = value; }
+
+        public bool _sakurasBlossom = false;
+        public bool SakurasBlossom { get => _sakurasBlossom; set => _sakurasBlossom = value; }
+
+        public bool _funeralPrayer = false;
+        public bool FuneralPrayer { get => _funeralPrayer; set => _funeralPrayer = value; }
+
+        public bool _starScatteredWings = false;
+        public bool StarScatteredWings { get => _starScatteredWings; set => _starScatteredWings = value; }
+
+        public bool _thousandWingedSwan = false;
+        public bool ThousandWingedSwan { get => _thousandWingedSwan; set => _thousandWingedSwan = value; }
+
+        public bool _symphonyOfBells = false;
+        public bool SymphonyOfBells { get => _symphonyOfBells; set => _symphonyOfBells = value; }
+
+        public bool _razerOfBellsChimes = false;
+        public bool RazerOfBellsChimes { get => _razerOfBellsChimes; set => _razerOfBellsChimes = value; }
+
+        public bool _creatorOfMystery = false;
+        public bool CreatorOfMystery { get => _creatorOfMystery; set => _creatorOfMystery = value; }
+
+        public bool _truthseeker = false;
+        public bool Truthseeker { get => _truthseeker; set => _truthseeker = value; }
+
+        public bool _astralChainripper = false;
+        public bool AstralChainripper { get => _astralChainripper; set => _astralChainripper = value; }
+
+        public bool _cosmicWeaver = false;
+        public bool CosmicWeaver { get => _cosmicWeaver; set => _cosmicWeaver = value; }
+
+        public bool _joyfulCatharsis = false;
+        public bool JoyfulCatharsis { get => _joyfulCatharsis; set => _joyfulCatharsis = value; }
+
+        public bool _odeToCreation = false;
+        public bool OdeToCreation { get => _odeToCreation; set => _odeToCreation = value; }
+
+        public bool _diesIraeScytheI = false;
+        public bool DiesIraeScytheI { get => _diesIraeScytheI; set => _diesIraeScytheI = value; }
+
+        public bool _diesIraeScytheII = false;
+        public bool DiesIraeScytheII { get => _diesIraeScytheII; set => _diesIraeScytheII = value; }
+
+        public bool _winterBowI = false;
+        public bool WinterBowI { get => _winterBowI; set => _winterBowI = value; }
+
+        public bool _winterBowII = false;
+        public bool WinterBowII { get => _winterBowII; set => _winterBowII = value; }
 
         public string CurrentClickerImage { get; set; } = "avares://MusicClicker/Assets/Music Game Assets [A961E2A]-min.png";
         public string CurrentBackgroundImage { get; set; } = "avares://MusicClicker/Assets/sacredtrevor_A_grand_musical_city_lights_everywhere_popular_shi_d84ff662-c87b-4630-9887-25228f42097b-min.png";

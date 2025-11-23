@@ -4,6 +4,15 @@ namespace MusicClicker
 {
     public static class UniteTheSymphonyManager
     {
+        // Crafting manager for combining fragments into full scores.
+        // Each TryCraft* method verifies required fragment counts and consumes them
+        // atomically. On success the method increments the owned count and applies
+        // any NotesPerSecond bonuses or minor-score rewards from active abilities.
+        // The methods call UIUpdater to refresh the related screens; this keeps UI
+        // logic separate from crafting rules and keeps rendering consistent.
+        //
+        // Performance note: crafting methods update UI only when a craft succeeds,
+        // which reduces unnecessary UI churn.
         // ==================== MINOR SCORES ====================
 
         public static bool TryCraftMoonlightMinor(MainWindow window, ref int owned)

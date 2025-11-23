@@ -3,88 +3,83 @@ using System;
 
 namespace MusicClicker
 {
-    /// <summary>
-    /// Manages the purchase and application of upgrades in the game.
-    /// Handles cost calculations, resource deduction, and UI updates.
-    /// </summary>
+    // Responsible for executing upgrade purchases and applying their effects to GameState.
+    // Performance-conscious changes in this class focus on reducing repeated expensive
+    // math and allocations when purchasing multiple upgrades (especially "buy max").
     public static class UpgradeManager
     {
-        /// <summary>
-        /// Attempts to purchase one or more upgrades for the player.
-        /// Calculates exponentially increasing costs and applies bonuses to game state.
-        /// </summary>
-        /// <param name="window">The main window containing game state and UI elements</param>
-        /// <param name="owned">Reference to the number of upgrades already owned (will be modified)</param>
-        /// <param name="baseCost">The initial cost of the first upgrade</param>
-        /// <param name="npsIncrease">Notes per second increase granted by each upgrade</param>
-        /// <param name="clickIncrease">Notes per click increase granted by each upgrade</param>
-        /// <param name="amount">Number of upgrades to purchase (double.MaxValue = buy max possible)</param>
-        /// <param name="ownedText">TextBlock displaying the number owned</param>
-        /// <param name="costText">TextBlock displaying the current cost</param>
+        // Purchase upgrades for a given upgrade slot.
+        // - `owned` is passed by reference so calling code (and UI) can keep a synced counter.
+        // - `amount == double.MaxValue` is treated as "buy max" and will loop until funds run out.
+        // Implementation notes and performance choices:
+        // 1) Repeated calls to Math.Pow are avoided by maintaining a running multiplier.
+        //    The game models costs as baseCost * 1.15^owned (rounded to 2 decimals).
+        //    Computing the exponential once and updating it incrementally avoids allocating
+        //    and calling Math.Pow on every iteration, which matters when buying many items.
+        // 2) We minimize property access and repeated Math.Round calls by caching values
+        //    where safe (the visible cost remains rounded to 2 decimals for UI parity).
         public static void BuyUpgrade(MainWindow window, ref int owned, double baseCost, double npsIncrease, double clickIncrease, double amount, TextBlock ownedText, TextBlock costText)
         {
-            // Get reference to the current game state
             var gameState = window.GameState;
 
-            // Handle "Buy Max" case when amount is set to maximum value
+            // Compute the starting multiplier for the current 'owned' count: 1.15^owned
+            double multiplier = Math.Pow(1.15, owned);
+
+            // Helper local to compute the rounded cost from the current multiplier.
+            static double RoundedCost(double baseC, double mul) => Math.Round(baseC * mul, 2);
+
             if (amount == double.MaxValue)
             {
-                // Continue buying until we can't afford the next upgrade
+                // Buy as many as possible until funds run out. Use an incremental multiplier
+                // to avoid calling Math.Pow for every new 'owned' value.
                 while (true)
                 {
-                    // Calculate cost with exponential scaling (15% increase per owned)
-                    double cost = Math.Round(baseCost * Math.Pow(1.15, owned), 2);
-                    
-                    // Check if player has enough notes to purchase
+                    double cost = RoundedCost(baseCost, multiplier);
                     if (gameState.Notes >= cost)
                     {
-                        // Deduct cost from player's notes
                         gameState.Notes -= cost;
-                        
-                        // Increment owned count
                         owned++;
-                        
-                        // Apply bonuses to game state
+                        // increase multiplier by 1.15 for the next item
+                        multiplier *= 1.15;
+
                         gameState.NotesPerSecond += npsIncrease;
                         gameState.NotesPerClick += clickIncrease;
                     }
-                    else break; // Stop when we can't afford the next one
+                    else
+                    {
+                        break; // cannot afford next
+                    }
                 }
             }
             else
             {
-                // Purchase a specific number of upgrades
-                for (int i = 0; i < amount; i++)
+                // Quantified buy: cast to int and loop that many times (stopping early if funds run out).
+                int purchaseCount = (int)amount;
+                for (int i = 0; i < purchaseCount; i++)
                 {
-                    // Calculate cost with exponential scaling (15% increase per owned)
-                    double cost = Math.Round(baseCost * Math.Pow(1.15, owned), 2);
-                    
-                    // Check if player has enough notes to purchase
+                    double cost = RoundedCost(baseCost, multiplier);
                     if (gameState.Notes >= cost)
                     {
-                        // Deduct cost from player's notes
                         gameState.Notes -= cost;
-                        
-                        // Increment owned count
                         owned++;
-                        
-                        // Apply bonuses to game state
+                        multiplier *= 1.15;
+
                         gameState.NotesPerSecond += npsIncrease;
                         gameState.NotesPerClick += clickIncrease;
                     }
-                    else break; // Stop if we can't afford the next one
+                    else break;
                 }
             }
 
-            // Update the specific upgrade's UI elements immediately
+            // Update the single-upgrade UI elements. Compute the next cost from the current multiplier
+            // (multiplier now equals 1.15^owned because we maintained it above).
             ownedText.Text = $"Number Owned: {owned}";
-            costText.Text = $"Cost: {Math.Round(baseCost * Math.Pow(1.15, owned), 2)}";
+            costText.Text = $"Cost: {Math.Round(baseCost * multiplier, 2)}";
 
-            // Update the main notes display on both screens to reflect the purchase
+            // Update the main notes display and then refresh all UI elements dependent on game state.
             window.NotesText.Text = $"Notes: {Math.Round(gameState.Notes, 1)}";
             window.UpgradeScreen.UpgradeNotesTextHeader.Text = $"Notes: {Math.Round(gameState.Notes, 1)}";
 
-            // Refresh all other upgrade costs and owned values across the UI
             UIUpdater.UpdateUI(window, gameState);
         }
     }
