@@ -74,16 +74,14 @@ namespace MusicClicker
             {
                 if (!_bitmapCache.TryGetValue(kvp.Key, out _))
                 {
-                    var uri = new Uri(kvp.Value);
-                    using var stream = AssetLoader.Open(uri);
-                    _bitmapCache[kvp.Key] = new Bitmap(stream);
+                    var bmp = MusicClicker.Helpers.ImageHelpers.GetBitmap(kvp.Value, 256);
+                    if (bmp != null)
+                        _bitmapCache[kvp.Key] = bmp;
                 }
             }
 
             // Load placeholder image for the "None" equipped state once and reuse it.
-            var emptyUri = new Uri("avares://MusicClicker/Assets/EmptyResonate.png");
-            using var emptyStream = AssetLoader.Open(emptyUri);
-            _emptyBitmap = new Bitmap(emptyStream);
+            _emptyBitmap = MusicClicker.Helpers.ImageHelpers.GetBitmap("avares://MusicClicker/Assets/EmptyResonate.png", 256);
         }
 
         private void RestoreSavedState()

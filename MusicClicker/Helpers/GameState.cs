@@ -9,6 +9,9 @@ namespace MusicClicker
 {
     public class GameState
     {
+        // Save format version - keep this field to support future migrations.
+        public int SaveVersion = 2;
+
         // Base gameplay stats - public fields for ref support, properties for serialization
         public double _notes = 0;
         public double Notes { get => _notes; set => _notes = value; }
@@ -45,28 +48,57 @@ namespace MusicClicker
         public int MagnumOpusOwned { get => _magnumOpusOwned; set => _magnumOpusOwned = value; }
 
         // Base upgrade costs
-        public double _chordBaseCost = 10;
+        public double _chordBaseCost = 50;
         public double ChordBaseCost { get => _chordBaseCost; set => _chordBaseCost = value; }
         
-        public double _scaleBaseCost = 50;
+        public double _scaleBaseCost = 500;
         public double ScaleBaseCost { get => _scaleBaseCost; set => _scaleBaseCost = value; }
         
-        public double _orchestraBaseCost = 100;
+        public double _orchestraBaseCost = 1000;
         public double OrchestraBaseCost { get => _orchestraBaseCost; set => _orchestraBaseCost = value; }
         
-        public double _symphonyBaseCost = 350;
+        public double _symphonyBaseCost = 10000;
         public double SymphonyBaseCost { get => _symphonyBaseCost; set => _symphonyBaseCost = value; }
+
+        // Per-upgrade effect tuning (base effect and exponential growth factors)
+        // NPS upgrades
+        // Set to fixed values as requested: +5, +25, +125, +625 NPS respectively.
+        public double ChordBaseNpsEffect { get; set; } = 5.0;
+        public double ChordNpsGrowth { get; set; } = 1.0;
+
+        public double ScaleBaseNpsEffect { get; set; } = 25.0;
+        public double ScaleNpsGrowth { get; set; } = 1.0;
+
+        public double OrchestraBaseNpsEffect { get; set; } = 125.0;
+        public double OrchestraNpsGrowth { get; set; } = 1.0;
+
+        public double SymphonyBaseNpsEffect { get; set; } = 625.0;
+        public double SymphonyNpsGrowth { get; set; } = 1.0;
+
+        // Click upgrades
+        // NPC / click upgrade values as requested: +1, +5, +25, +125 clicks respectively.
+        public double AriaBaseClickEffect { get; set; } = 1.0;
+        public double AriaClickGrowth { get; set; } = 1.0;
+
+        public double RequiemBaseClickEffect { get; set; } = 5.0;
+        public double RequiemClickGrowth { get; set; } = 1.0;
+
+        public double OpusBaseClickEffect { get; set; } = 25.0;
+        public double OpusClickGrowth { get; set; } = 1.0;
+
+        public double MagnumOpusBaseClickEffect { get; set; } = 125.0;
+        public double MagnumOpusClickGrowth { get; set; } = 1.0;
         
-        public double _ariaBaseCost = 350;
+        public double _ariaBaseCost = 500;
         public double AriaBaseCost { get => _ariaBaseCost; set => _ariaBaseCost = value; }
         
-        public double _requiemBaseCost = 750;
+        public double _requiemBaseCost = 5000;
         public double RequiemBaseCost { get => _requiemBaseCost; set => _requiemBaseCost = value; }
         
-        public double _opusBaseCost = 1500;
+        public double _opusBaseCost = 500000;
         public double OpusBaseCost { get => _opusBaseCost; set => _opusBaseCost = value; }
         
-        public double _magnumOpusBaseCost = 3000;
+        public double _magnumOpusBaseCost = 5000000;
         public double MagnumOpusBaseCost { get => _magnumOpusBaseCost; set => _magnumOpusBaseCost = value; }
 
         // Fragmentation state
@@ -296,7 +328,7 @@ namespace MusicClicker
         
         public int _enigmaMajorProgressions = 0;
         public int EnigmaMajorProgressions { get => _enigmaMajorProgressions; set => _enigmaMajorProgressions = value; }
-        
+
         public int _fateMajorKeys = 0;
         public int FateMajorKeys { get => _fateMajorKeys; set => _fateMajorKeys = value; }
         
@@ -305,16 +337,16 @@ namespace MusicClicker
         
         public int _fateMajorProgressions = 0;
         public int FateMajorProgressions { get => _fateMajorProgressions; set => _fateMajorProgressions = value; }
-        
-        public int _odeToJoyMajorKeys = 0;
+
+        // Ode to Joy major fragments (may be referenced by other systems)
+        public int _odeToJoyMajorKeys = 0; 
         public int OdeToJoyMajorKeys { get => _odeToJoyMajorKeys; set => _odeToJoyMajorKeys = value; }
-        
-        public int _odeToJoyMajorScales = 0;
+
+        public int _odeToJoyMajorScales = 0; 
         public int OdeToJoyMajorScales { get => _odeToJoyMajorScales; set => _odeToJoyMajorScales = value; }
-        
+
         public int _odeToJoyMajorProgressions = 0;
         public int OdeToJoyMajorProgressions { get => _odeToJoyMajorProgressions; set => _odeToJoyMajorProgressions = value; }
-
         // Armor of Forte - Weapon Ownership booleans (true = owned)
         // Naming uses the weapon identifier (no spaces/special chars) matching displayed names.
         public bool _eulogyOfTheMoon = false;
@@ -359,17 +391,19 @@ namespace MusicClicker
         public bool _odeToCreation = false;
         public bool OdeToCreation { get => _odeToCreation; set => _odeToCreation = value; }
 
-        public bool _diesIraeScytheI = false;
-        public bool DiesIraeScytheI { get => _diesIraeScytheI; set => _diesIraeScytheI = value; }
+        // Renamed event weapon ownership fields to match display names.
+        // Note: renaming these fields/properties will change serialized names in saves.
+        public bool _sevenCircles = false;
+        public bool SevenCircles { get => _sevenCircles; set => _sevenCircles = value; }
 
-        public bool _diesIraeScytheII = false;
-        public bool DiesIraeScytheII { get => _diesIraeScytheII; set => _diesIraeScytheII = value; }
+        public bool _hellsWrath = false;
+        public bool HellsWrath { get => _hellsWrath; set => _hellsWrath = value; }
 
-        public bool _winterBowI = false;
-        public bool WinterBowI { get => _winterBowI; set => _winterBowI = value; }
+        public bool _cacophonicBlizzard = false;
+        public bool CacophonicBlizzard { get => _cacophonicBlizzard; set => _cacophonicBlizzard = value; }
 
-        public bool _winterBowII = false;
-        public bool WinterBowII { get => _winterBowII; set => _winterBowII = value; }
+        public bool _theSnowsDesire = false;
+        public bool TheSnowsDesire { get => _theSnowsDesire; set => _theSnowsDesire = value; }
 
         public string CurrentClickerImage { get; set; } = "avares://MusicClicker/Assets/Music Game Assets [A961E2A]-min.png";
         public string CurrentBackgroundImage { get; set; } = "avares://MusicClicker/Assets/sacredtrevor_A_grand_musical_city_lights_everywhere_popular_shi_d84ff662-c87b-4630-9887-25228f42097b-min.png";

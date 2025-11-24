@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Text.Json;
+using System.Threading.Tasks;
 using MusicClicker;
 
 namespace MusicClicker.Helpers
@@ -30,9 +31,7 @@ namespace MusicClicker.Helpers
                     Directory.CreateDirectory(SaveFolder);
                 }
 
-                // Serialize the full GameState to disk. Keeping this simple and synchronous
-                // is appropriate for a small single-file save system; reusing `_jsonOptions`
-                // reduces GC pressure during frequent saves.
+                // Synchronous save remains available for callers that expect it.
                 string json = JsonSerializer.Serialize(state, _jsonOptions);
                 File.WriteAllText(SaveFile, json);
                 return true;
@@ -44,6 +43,39 @@ namespace MusicClicker.Helpers
             }
         }
 
+        // Async save method for background saving to avoid blocking UI thread.
+        public static async Task<(bool success, string error)> SaveAsync(GameState state)
+        {
+            try
+            {
+                if (!Directory.Exists(SaveFolder))
+                {
+                    Directory.CreateDirectory(SaveFolder);
+                }
+
+                string json = JsonSerializer.Serialize(state, _jsonOptions);
+                await File.WriteAllTextAsync(SaveFile, json).ConfigureAwait(false);
+                return (true, string.Empty);
+            }
+            catch (Exception ex)
+            {
+                return (false, ex.Message);
+            }
+        }
+
+        // Fire-and-forget background save. Errors are logged to console.
+        public static void SaveBackground(GameState state)
+        {
+            _ = Task.Run(async () =>
+            {
+                var (success, error) = await SaveAsync(state).ConfigureAwait(false);
+                if (!success)
+                {
+                    Console.WriteLine($"Background save failed: {error}");
+                }
+            });
+        }
+
         public static bool Exists()
         {
             return File.Exists(SaveFile);
@@ -53,7 +85,7 @@ namespace MusicClicker.Helpers
 
         public static bool TryLoad(out GameState state, out string error)
         {
-            state = new GameState();
+            state = null;
             error = string.Empty;
             try
             {
@@ -70,6 +102,7 @@ namespace MusicClicker.Helpers
                     return false;
                 }
 
+                // Optional migration hook: if you add migrations later, handle them here.
                 state = loaded;
                 return true;
             }

@@ -53,8 +53,8 @@
                                 Background="#44000000"
                                 BorderBrush="White"
                                 BorderThickness="2">
-                            <Image Source="avares://MusicClicker/Assets/MoonlightWeapon1.png"
-                                   Stretch="UniformToFill" />
+                            <Image Source="avares://MusicClicker/Assets/IncisorOfMoonlight.png"
+                                Stretch="UniformToFill" />
                         </Button>
                         <TextBlock x:Name="ArmorItem1CostText"
                                    Text="Cost: 10,000 Notes"
@@ -92,8 +92,8 @@
                                 Background="#44000000"
                                 BorderBrush="White"
                                 BorderThickness="2">
-                            <Image Source="avares://MusicClicker/Assets/MoonlightWeapon2.png"
-                                   Stretch="UniformToFill" />
+                            <Image Source="avares://MusicClicker/Assets/EulogyOfTheMoon.png"
+                                Stretch="UniformToFill" />
                         </Button>
                         <TextBlock x:Name="ArmorItem2CostText"
                                    Text="Cost: 25,000 Notes"
@@ -131,8 +131,8 @@
                                 Background="#44000000"
                                 BorderBrush="White"
                                 BorderThickness="2">
-                            <Image Source="avares://MusicClicker/Assets/EroicaWeapon1.png"
-                                   Stretch="UniformToFill" />
+                            <Image Source="avares://MusicClicker/Assets/Sakura'sBlossom.png"
+                                Stretch="UniformToFill" />
                         </Button>
                         <TextBlock x:Name="ArmorItem3CostText"
                                    Text="Cost: 50,000 Notes"
@@ -175,8 +175,8 @@
                                 Background="#44000000"
                                 BorderBrush="White"
                                 BorderThickness="2">
-                            <Image Source="avares://MusicClicker/Assets/EroicaWeapon2.png"
-                                   Stretch="UniformToFill" />
+                            <Image Source="avares://MusicClicker/Assets/FuneralPrayer.png"
+                                Stretch="UniformToFill" />
                         </Button>
                         <TextBlock x:Name="ArmorItem4CostText"
                                    Text="Cost: 100,000 Notes"
@@ -214,8 +214,8 @@
                                 Background="#44000000"
                                 BorderBrush="White"
                                 BorderThickness="2">
-                            <Image Source="avares://MusicClicker/Assets/SwanLakeWeapon1.png"
-                                   Stretch="UniformToFill" />
+                            <Image Source="avares://MusicClicker/Assets/StarScatteredWings.png"
+                                Stretch="UniformToFill" />
                         </Button>
                         <TextBlock x:Name="ArmorItem5CostText"
                                    Text="Cost: 250,000 Notes"
@@ -253,8 +253,8 @@
                                 Background="#44000000"
                                 BorderBrush="White"
                                 BorderThickness="2">
-                            <Image Source="avares://MusicClicker/Assets/SwanLakeWeapon2.png"
-                                   Stretch="UniformToFill" />
+                            <Image Source="avares://MusicClicker/Assets/ThousandWingedSwan.png"
+                                Stretch="UniformToFill" />
                         </Button>
                         <TextBlock x:Name="ArmorItem6CostText"
                                    Text="Cost: 500,000 Notes"
@@ -297,8 +297,8 @@
                                 Background="#44000000"
                                 BorderBrush="White"
                                 BorderThickness="2">
-                            <Image Source="avares://MusicClicker/Assets/LaCampanellaWeapon1.png"
-                                   Stretch="UniformToFill" />
+                            <Image Source="avares://MusicClicker/Assets/SymphonyOfBells.png"
+                                Stretch="UniformToFill" />
                         </Button>
                         <TextBlock x:Name="ArmorItem7CostText"
                                    Text="Cost: 1,000,000 Notes"
@@ -336,8 +336,8 @@
                                 Background="#44000000"
                                 BorderBrush="White"
                                 BorderThickness="2">
-                            <Image Source="avares://MusicClicker/Assets/LaCampanellaWeapon2.png"
-                                   Stretch="UniformToFill" />
+                            <Image Source="avares://MusicClicker/Assets/RazeofBellsChimes.png"
+                                Stretch="UniformToFill" />
                         </Button>
                         <TextBlock x:Name="ArmorItem8CostText"
                                    Text="Cost: 2,500,000 Notes"
@@ -375,8 +375,8 @@
                                 Background="#44000000"
                                 BorderBrush="White"
                                 BorderThickness="2">
-                            <Image Source="avares://MusicClicker/Assets/EnigmaWeapon1.png"
-                                   Stretch="UniformToFill" />
+                            <Image Source="avares://MusicClicker/Assets/CreatorofMystery.png"
+                                Stretch="UniformToFill" />
                         </Button>
                         <TextBlock x:Name="ArmorItem9CostText"
                                    Text="Cost: 5,000,000 Notes"
@@ -419,8 +419,8 @@
                                 Background="#44000000"
                                 BorderBrush="White"
                                 BorderThickness="2">
-                            <Image Source="avares://MusicClicker/Assets/EnigmaWeapon2.png"
-                                   Stretch="UniformToFill" />
+                            <Image Source="avares://MusicClicker/Assets/Truthseeker.png"
+                                Stretch="UniformToFill" />
                         </Button>
                         <TextBlock x:Name="ArmorItem10CostText"
                                    Text="Cost: 10,000,000 Notes"
@@ -458,8 +458,8 @@
                                 Background="#44000000"
                                 BorderBrush="White"
                                 BorderThickness="2">
-                            <Image Source="avares://MusicClicker/Assets/FateWeapon1.png"
-                                   Stretch="UniformToFill" />
+                            <Image Source="avares://MusicClicker/Assets/AstralChainripper.png"
+                                Stretch="UniformToFill" />
                         </Button>
                         <TextBlock x:Name="ArmorItem11CostText"
                                    Text="Cost: 25,000,000 Notes"
@@ -497,8 +497,8 @@
                                 Background="#44000000"
                                 BorderBrush="White"
                                 BorderThickness="2">
-                            <Image Source="avares://MusicClicker/Assets/FateWeapon2.png"
-                                   Stretch="UniformToFill" />
+                            <Image Source="avares://MusicClicker/Assets/CosmicWeaver.png"
+                                Stretch="UniformToFill" />
                         </Button>
                         <TextBlock x:Name="ArmorItem12CostText"
                                    Text="Cost: 50,000,000 Notes"
@@ -541,8 +541,8 @@
                                 Background="#44000000"
                                 BorderBrush="White"
                                 BorderThickness="2">
-                            <Image Source="avares://MusicClicker/Assets/OdeToJoyWeapon1.png"
-                                   Stretch="UniformToFill" />
+                            <Image Source="avares://MusicClicker/Assets/JoyfulCatharsis.png"
+                                Stretch="UniformToFill" />
                         </Button>
                         <TextBlock x:Name="ArmorItem13CostText"
                                    Text="Cost: 100,000,000 Notes"
@@ -580,8 +580,8 @@
                                 Background="#44000000"
                                 BorderBrush="White"
                                 BorderThickness="2">
-                            <Image Source="avares://MusicClicker/Assets/OdeToJoyWeapon2.png"
-                                   Stretch="UniformToFill" />
+                            <Image Source="avares://MusicClicker/Assets/OdeToCreation.png"
+                                Stretch="UniformToFill" />
                         </Button>
                         <TextBlock x:Name="ArmorItem14CostText"
                                    Text="Cost: 250,000,000 Notes"
@@ -619,10 +619,7 @@
                                 Background="#44000000"
                                 BorderBrush="White"
                                 BorderThickness="2">
-                            <TextBlock Text="[Dies Irae Weapon 1]" 
-                                       FontSize="20" 
-                                       Foreground="White"
-                                       TextAlignment="Center" />
+                            <Image Source="avares://MusicClicker/Assets/SevenCircles.png" Stretch="UniformToFill" />
                         </Button>
                         <TextBlock x:Name="ArmorItem15CostText"
                                    Text="Cost: 500,000,000 Notes"
@@ -665,10 +662,7 @@
                                 Background="#44000000"
                                 BorderBrush="White"
                                 BorderThickness="2">
-                            <TextBlock Text="[Dies Irae Weapon 2]" 
-                                       FontSize="20" 
-                                       Foreground="White"
-                                       TextAlignment="Center" />
+                            <Image Source="avares://MusicClicker/Assets/Hell'sWrath.png" Stretch="UniformToFill" />
                         </Button>
                         <TextBlock x:Name="ArmorItem16CostText"
                                    Text="Cost: 1,000,000,000 Notes"
@@ -706,10 +700,7 @@
                                 Background="#44000000"
                                 BorderBrush="White"
                                 BorderThickness="2">
-                            <TextBlock Text="[Winter Weapon 1]" 
-                                       FontSize="20" 
-                                       Foreground="White"
-                                       TextAlignment="Center" />
+                            <Image Source="avares://MusicClicker/Assets/CacophonicBlizzard.png" Stretch="UniformToFill" />
                         </Button>
                         <TextBlock x:Name="ArmorItem17CostText"
                                    Text="Cost: 2,500,000,000 Notes"
@@ -747,10 +738,7 @@
                                 Background="#44000000"
                                 BorderBrush="White"
                                 BorderThickness="2">
-                            <TextBlock Text="[Winter Weapon 2]" 
-                                       FontSize="20" 
-                                       Foreground="White"
-                                       TextAlignment="Center" />
+                            <Image Source="avares://MusicClicker/Assets/TheSwan'sDesire.png" Stretch="UniformToFill" />
                         </Button>
                         <TextBlock x:Name="ArmorItem18CostText"
                                    Text="Cost: 5,000,000,000 Notes"

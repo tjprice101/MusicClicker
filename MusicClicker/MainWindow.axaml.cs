@@ -1,3 +1,10 @@
+/*
+ * File: MainWindow.axaml.cs
+ * Summary: Main window implementation for MusicClicker.
+ * Purpose: Manages game state, timers, UI updates, and navigation among screens.
+ * Notes: Controls the game loop, carousel animation, and screen transitions.
+ */
+
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
@@ -8,6 +15,8 @@ using Avalonia.Animation.Easings;
 using Avalonia.Input;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Avalonia.Controls.Shapes;
 using MusicClicker.Helpers;
 
 namespace MusicClicker
@@ -25,6 +34,8 @@ namespace MusicClicker
         // the UI is refreshed. This keeps math frequent but UI updates batched for performance.
         private DispatcherTimer _gameLoopTimer = null!;
         private System.Diagnostics.Stopwatch _stopwatch = null!;
+        // Accumulator (milliseconds) used to apply NotesPerSecond in discrete 1s bursts.
+        private double _npsAccumulatorMs = 0.0;
         
         // DispatcherTimer that fires every 30 seconds to auto-save the game
         private DispatcherTimer _saveTimer = null!;
@@ -34,12 +45,26 @@ namespace MusicClicker
         
         // The core game state object containing all player progress data
         private GameState gameState;
+
+        // Cached reference to the full-screen fader rectangle to avoid repeated FindControl lookups
+        private Avalonia.Controls.Shapes.Rectangle? _screenFader;
         
         // Public accessor for game state to allow other components to read it
         public GameState GameState => gameState;
         
         // Global manager for the Tempo Resonate feature (musical score system)
         public static TempoResonateManager GlobalTempoManager = null!;
+
+        // Smoothed display values used for visual interpolation (updated at FRAME_RATE)
+        public double DisplayedNotes { get; set; }
+        public double DisplayedNps { get; set; }
+        
+        // Flag set while the user is actively interacting (scrolling, dragging sliders, etc.).
+        // When true, UI text updates are temporarily suppressed to avoid layout churn.
+        public bool IsUserInteracting { get; private set; } = false;
+
+        // Short timer used to debounce interaction end; when it elapses we set IsUserInteracting=false.
+        private DispatcherTimer _interactionTimer = null!;
 
         // ------------------- CAROUSEL FIELDS -------------------
         
@@ -60,9 +85,16 @@ namespace MusicClicker
         
         // Total number of buttons in the carousel (8 different game screens)
         private const int BUTTON_COUNT = 8;
-        
-        // Timer that fires 60 times per second (16ms interval) for smooth carousel animation
+        // Target frame rate for animations (frames per second). Starts at 120 for smoother animation.
+        private int _frameRate = 120;
+
+        // Animation timer: fires at `_frameRate` to produce smooth carousel animation
         private DispatcherTimer animationTimer = null!;
+
+        // Animation performance tracking for adaptive framerate
+        private System.Diagnostics.Stopwatch _animTickStopwatch = new System.Diagnostics.Stopwatch();
+        private double _animAverageMs = 0.0;
+        private int _animSamples = 0;
         
         // Fields for implementing drag-to-rotate functionality
         private bool isDragging = false;              // Whether user is currently dragging
@@ -73,75 +105,62 @@ namespace MusicClicker
         // List storing each carousel button along with its transform components for positioning
         private List<(Button button, TranslateTransform translate, ScaleTransform scale)> carouselButtons = null!;
 
+        // Cached per-button visual state to avoid redundant property sets each frame (reduces layout churn)
+        private struct CarouselState
+        {
+            public double X;
+            public double Y;
+            public double Scale;
+            public double Opacity;
+            public bool IsAtBottom;
+            public int ZIndex;
+        }
+
+        private CarouselState[] carouselStates = null!;
+
         /// <summary>
         /// Restores customizations (clicker image and background) from saved game state.
         /// Called after loading a saved game to apply the player's previous visual choices.
         /// </summary>
         private void RestoreSavedCustomizations()
         {
-            // Attempt to restore the clicker button image
-            if (!string.IsNullOrEmpty(gameState.CurrentClickerImage))
+            try
             {
-                try
+                // Restore the clicker button image (replace Content with a cached Image)
+                if (!string.IsNullOrEmpty(gameState.CurrentClickerImage))
                 {
-                    // Create a URI from the saved image path
-                    var clickerUri = new System.Uri(gameState.CurrentClickerImage);
-                    
-                    // Check if the asset actually exists in the application resources
-                    if (Avalonia.Platform.AssetLoader.Exists(clickerUri))
+                    var bmp = MusicClicker.Helpers.ImageHelpers.GetBitmap(gameState.CurrentClickerImage, 128);
+                    if (bmp != null)
                     {
-                        // Get the Image control inside the ClickButton
-                        if (ClickButton?.Content is Avalonia.Controls.Image clickerImage)
-                        {
-                            // Load the image from application assets and set it as the clicker image
-                            using var stream = Avalonia.Platform.AssetLoader.Open(clickerUri);
-                            clickerImage.Source = new Avalonia.Media.Imaging.Bitmap(stream);
-                            // Apply higher-quality rendering settings so a scaled clicker image looks smooth
-                            try
-                            {
-                                MusicClicker.Helpers.ImageHelpers.ApplyHighQuality(clickerImage);
-                            }
-                            catch { }
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    // Log any errors but don't crash - just use default image
-                    Console.WriteLine($"Failed to restore clicker image: {ex.Message}");
-                }
-            }
-
-            // Attempt to restore the background image
-            if (!string.IsNullOrEmpty(gameState.CurrentBackgroundImage))
-            {
-                try
-                {
-                    // Create a URI from the saved background path
-                    var bgUri = new System.Uri(gameState.CurrentBackgroundImage);
-                    
-                    // Check if the background asset exists
-                    if (Avalonia.Platform.AssetLoader.Exists(bgUri))
-                    {
-                        // Load the background image
-                        using var stream = Avalonia.Platform.AssetLoader.Open(bgUri);
-                        var bmp = new Avalonia.Media.Imaging.Bitmap(stream);
-
-                        // Apply it as an ImageBrush to the window background; ImageBrush doesn't
-                        // expose interpolation directly so we ensure the bitmap is prepped and rely
-                        // on layout rounding when rendering controls that display it.
-                        this.Background = new Avalonia.Media.ImageBrush
+                        var img = new Avalonia.Controls.Image
                         {
                             Source = bmp,
+                            Stretch = Avalonia.Media.Stretch.Uniform
+                        };
+                        // Prevent the image from intercepting pointer events so the Button still receives clicks
+                        img.IsHitTestVisible = false;
+                        ClickButton.Content = img;
+                    }
+                }
+
+                // Restore background image if present in save
+                if (!string.IsNullOrEmpty(gameState.CurrentBackgroundImage))
+                {
+                    var bg = MusicClicker.Helpers.ImageHelpers.GetBitmap(gameState.CurrentBackgroundImage, 1920);
+                    if (bg != null)
+                    {
+                        this.Background = new Avalonia.Media.ImageBrush
+                        {
+                            Source = bg,
                             Stretch = Avalonia.Media.Stretch.UniformToFill
                         };
                     }
                 }
-                catch (Exception ex)
-                {
-                    // Log any errors but don't crash - just use default background
-                    Console.WriteLine($"Failed to restore background image: {ex.Message}");
-                }
+            }
+            catch (Exception ex)
+            {
+                // Log errors but continue with defaults
+                Console.WriteLine($"Failed to restore customizations: {ex.Message}");
             }
         }
 
@@ -154,6 +173,40 @@ namespace MusicClicker
         {
             // Initialize the window and all UI components defined in AXAML
             InitializeComponent();
+
+            // Interaction debounce timer: after user input stops, clear the interaction flag.
+            // Start with a base interval and allow exponential backoff while frequent interactions continue.
+            _interactionTimer = new DispatcherTimer();
+            _interactionTimer.Interval = TimeSpan.FromMilliseconds(400);
+            _interactionTimer.Tick += (s, e) =>
+            {
+                // Reset interaction flag and restore debounce to base value
+                IsUserInteracting = false;
+                _interactionTimer.Stop();
+                _interactionTimer.Interval = TimeSpan.FromMilliseconds(400);
+            };
+
+            // Listen for pointer and wheel events at the window level — these will fire
+            // during scrolling and slider drags so we can temporarily suppress heavy UI updates.
+            // Use AddHandler to capture pointer wheel events even when handled by ScrollViewer
+            this.AddHandler(InputElement.PointerWheelChangedEvent, new EventHandler<Avalonia.Input.PointerWheelEventArgs>(MainWindow_PointerWheelChanged), handledEventsToo: true);
+            this.AddHandler(InputElement.PointerPressedEvent, new EventHandler<Avalonia.Input.PointerPressedEventArgs>(MainWindow_PointerPressed), handledEventsToo: true);
+            this.AddHandler(InputElement.PointerReleasedEvent, new EventHandler<Avalonia.Input.PointerReleasedEventArgs>(MainWindow_PointerReleased), handledEventsToo: true);
+
+            // Cache the fader rectangle (used for screen transitions) and move it to top once
+            try
+            {
+                _screenFader = this.FindControl<Rectangle>("ScreenFader");
+                if (_screenFader != null && this.Content is Panel root)
+                {
+                    if (root.Children.Contains(_screenFader))
+                    {
+                        root.Children.Remove(_screenFader);
+                        root.Children.Add(_screenFader);
+                    }
+                }
+            }
+            catch { }
 
             // Try to load a previously saved game
             string loadErr;
@@ -172,6 +225,11 @@ namespace MusicClicker
                 gameState = new GameState();
                 Console.WriteLine($"Starting new game. Load error: {loadErr}");
             }
+
+            // Initialize smoothed display values to the loaded/current game state so
+            // the animation-driven display starts from the correct baseline.
+            DisplayedNotes = gameState.Notes;
+            DisplayedNps = gameState.NotesPerSecond;
 
             // Set up the carousel UI (circular button navigation system)
             InitializeCarousel();
@@ -198,7 +256,7 @@ namespace MusicClicker
             // Stopwatch to measure exact elapsed time between ticks to avoid drift.
             _stopwatch = System.Diagnostics.Stopwatch.StartNew();
             _gameLoopTimer = new DispatcherTimer();
-            _gameLoopTimer.Interval = TimeSpan.FromMilliseconds(100); // 10hz accumulation
+            _gameLoopTimer.Interval = TimeSpan.FromMilliseconds(100); // 10hz tick for UI batching
 
             // We batch UI updates to a slightly lower frequency than accumulation to
             // avoid excessive UI work. Configure UI update interval (milliseconds).
@@ -211,14 +269,9 @@ namespace MusicClicker
                 double elapsedSeconds = _stopwatch.Elapsed.TotalSeconds;
                 _stopwatch.Restart();
 
-                // Accumulate notes continuously based on NotesPerSecond
-                if (gameState.NotesPerSecond != 0)
-                {
-                    gameState.Notes += gameState.NotesPerSecond * elapsedSeconds;
-                }
-
-                // Update lightweight notes-only displays every tick so the Notes counter
-                // feels continuous on every screen. Full UI updates remain batched below.
+                // Accumulate lightweight display updates every tick so the Notes counter
+                // feels responsive. NPS is applied as discrete 1-second bursts below
+                // using the `_npsAccumulatorMs` so it is not applied fractionally.
                 try
                 {
                     UIUpdater.UpdateNotesOnly(this, gameState);
@@ -227,6 +280,21 @@ namespace MusicClicker
 
                 // Accumulate time and only run UI updates at the configured rate
                 uiAccumulatorMs += elapsedSeconds * 1000.0;
+                // Accumulate for 1-second NPS bursts
+                _npsAccumulatorMs += elapsedSeconds * 1000.0;
+                if (_npsAccumulatorMs >= 1000.0)
+                {
+                    // How many whole seconds have passed? (handle long frames)
+                    int wholeSeconds = (int)(_npsAccumulatorMs / 1000.0);
+                    _npsAccumulatorMs -= wholeSeconds * 1000.0;
+                    if (gameState.NotesPerSecond != 0)
+                    {
+                        // Add the full NotesPerSecond once per second (times wholeSeconds)
+                        gameState.Notes += gameState.NotesPerSecond * wholeSeconds;
+                        // Update the lightweight notes display immediately
+                        try { UIUpdater.UpdateNotesOnly(this, gameState); } catch { }
+                    }
+                }
                 if (uiAccumulatorMs >= uiUpdateIntervalMs)
                 {
                     uiAccumulatorMs = 0;
@@ -262,6 +330,7 @@ namespace MusicClicker
                 UIUpdater.UpdateHeartOfHarmonyUI(this, gameState);
                 UIUpdater.UpdateUnitySymphonyUI(this, gameState);
             });
+
         }
 
         // ------------------- SAVE/LOAD METHODS -------------------
@@ -271,14 +340,15 @@ namespace MusicClicker
         /// </summary>
         private void SaveGame()
         {
-            string error;
-            if (SaveManager.Save(gameState, out error))
+            // Use background save to avoid blocking UI thread during disk writes.
+            try
             {
-                Console.WriteLine("Game saved successfully!");
+                SaveManager.SaveBackground(gameState);
+                Console.WriteLine("Background save scheduled.");
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine($"Save failed: {error}");
+                Console.WriteLine($"Save scheduling failed: {ex.Message}");
             }
         }
 
@@ -294,6 +364,50 @@ namespace MusicClicker
             // Stop timers to prevent them from firing after window closes
             _gameLoopTimer?.Stop();
             _saveTimer?.Stop();
+            // No background NPS timer to dispose (NPS applied via UI loop accumulator)
+        }
+
+        /// <summary>
+        /// Performs a fullscreen black fade-out, runs the provided action (switch screens), then fades back in.
+        /// Duration is seconds for each half of the transition.
+        /// </summary>
+        public async Task TransitionAsync(Action switchAction, double durationSeconds = 0.18)
+        {
+            var fader = _screenFader ?? this.FindControl<Rectangle>("ScreenFader");
+            if (fader == null)
+            {
+                // No fader present - just run the action
+                switchAction?.Invoke();
+                return;
+            }
+
+            // Make sure the fader blocks input while visible
+            fader.IsHitTestVisible = true;
+
+            // Fade to opaque
+            await FadeToAsync(fader, 1.0, durationSeconds);
+
+            // Perform the screen switch
+            try { switchAction?.Invoke(); } catch { }
+
+            // Fade back to transparent
+            await FadeToAsync(fader, 0.0, durationSeconds);
+            fader.IsHitTestVisible = false;
+        }
+
+        private async Task FadeToAsync(Rectangle fader, double targetOpacity, double durationSeconds)
+        {
+            double start = fader.Opacity;
+            int steps = Math.Max(1, (int)(durationSeconds * _frameRate));
+            for (int i = 1; i <= steps; i++)
+            {
+                double t = (double)i / steps;
+                double value = start + (targetOpacity - start) * t;
+                // Ensure UI thread update
+                await Dispatcher.UIThread.InvokeAsync(() => fader.Opacity = value);
+                await Task.Delay(TimeSpan.FromMilliseconds(durationSeconds * 1000.0 / steps));
+            }
+            await Dispatcher.UIThread.InvokeAsync(() => fader.Opacity = targetOpacity);
         }
 
         // ------------------- CAROUSEL INITIALIZATION -------------------
@@ -328,16 +442,21 @@ namespace MusicClicker
                 canvas.PointerReleased += CarouselCanvas_PointerReleased; // Drag end
             }
 
-            // Create animation timer that fires ~60 times per second (every 16ms)
+            // Create animation timer that fires at the target _frameRate (adaptive)
             animationTimer = new DispatcherTimer
             {
-                Interval = TimeSpan.FromMilliseconds(16)
+                Interval = TimeSpan.FromMilliseconds(1000.0 / _frameRate)
             };
             animationTimer.Tick += AnimationTimer_Tick;
             animationTimer.Start();
 
             // Calculate and apply initial positions for all buttons
+            // Initialize state cache and apply initial positions
+            carouselStates = new CarouselState[carouselButtons.Count];
             UpdateCarouselPositions();
+
+            // Ensure animation tick also performs small UI animation updates for smooth visuals
+            // (AnimateVisuals will be called at FRAME_RATE from AnimationTimer_Tick)
         }
 
         /// <summary>
@@ -450,6 +569,47 @@ namespace MusicClicker
             isAnimating = true; // Begin smooth animation to target
         }
 
+        // ---- Interaction event handlers to suppress heavy UI updates while user scrolls/drags ----
+
+        private void MainWindow_PointerWheelChanged(object? sender, Avalonia.Input.PointerWheelEventArgs e)
+        {
+            MarkUserInteraction();
+        }
+
+        private void MainWindow_PointerPressed(object? sender, Avalonia.Input.PointerPressedEventArgs e)
+        {
+            MarkUserInteraction();
+        }
+
+        private void MainWindow_PointerReleased(object? sender, Avalonia.Input.PointerReleasedEventArgs e)
+        {
+            // Mark interaction so the debounce timer restarts; the timer will clear the flag.
+            MarkUserInteraction();
+        }
+
+        private void MarkUserInteraction()
+        {
+            IsUserInteracting = true;
+            try
+            {
+                // If timer already running, increase interval slightly (exponential backoff up to 1000ms)
+                if (_interactionTimer.IsEnabled)
+                {
+                    int cur = (int)_interactionTimer.Interval.TotalMilliseconds;
+                    int next = Math.Min(1000, cur + 100);
+                    _interactionTimer.Interval = TimeSpan.FromMilliseconds(next);
+                }
+                else
+                {
+                    _interactionTimer.Interval = TimeSpan.FromMilliseconds(400);
+                }
+
+                _interactionTimer.Stop();
+                _interactionTimer.Start();
+            }
+            catch { }
+        }
+
         // ------------------- CAROUSEL METHODS -------------------
         
         /// <summary>
@@ -471,7 +631,7 @@ namespace MusicClicker
         }
 
         /// <summary>
-        /// Animation tick handler called ~60 times per second.
+        /// Animation tick handler called at the configured `FRAME_RATE` (e.g., 120 times per second).
         /// Handles momentum physics and smooth interpolation to target position.
         /// </summary>
         private void AnimationTimer_Tick(object? sender, EventArgs e)
@@ -515,6 +675,31 @@ namespace MusicClicker
             
             // Update visual positions of all buttons based on current rotation
             UpdateCarouselPositions();
+
+            // Run lightweight visual smoothing for key UI elements (notes counter, NPS, etc.)
+            _animTickStopwatch.Restart();
+            try
+            {
+                UIUpdater.AnimateVisuals(this, gameState, 1.0 / _frameRate);
+            }
+            catch { }
+            _animTickStopwatch.Stop();
+
+            // Update moving average of tick duration and adapt _frameRate downward if ticks are
+            // taking too long. This helps lower-end machines avoid overload and reduce jitter.
+            double ms = _animTickStopwatch.Elapsed.TotalMilliseconds;
+            _animSamples++;
+            if (_animSamples > 120) _animSamples = 120; // keep sample window bounded
+            _animAverageMs = (_animAverageMs * (_animSamples - 1) + ms) / _animSamples;
+
+            // If average tick time exceeds expected interval by a factor, reduce frame rate.
+            double expectedMs = 1000.0 / _frameRate;
+            if (_animAverageMs > expectedMs * 1.8 && _frameRate > 30)
+            {
+                // reduce frame rate to relieve CPU, but not lower than 30
+                _frameRate = Math.Max(30, _frameRate / 2);
+                animationTimer.Interval = TimeSpan.FromMilliseconds(1000.0 / _frameRate);
+            }
         }
 
         /// <summary>
@@ -553,8 +738,9 @@ namespace MusicClicker
                 double centerOffset = Math.Sin(angle) * RADIUS;
 
                 // Apply spacing multiplier to spread buttons more when at sides
-                // cos²(angle) is high at top/bottom, creating more compact center
-                double spacingMultiplier = 1.0 + 1.2 * Math.Pow(Math.Cos(angle), 2); 
+                // Use squared cosine via multiplication to avoid Math.Pow overhead
+                double cos = Math.Cos(angle);
+                double spacingMultiplier = 1.0 + 1.2 * (cos * cos);
                 double x = centerOffset * spacingMultiplier + horizontalOffset;
 
                 // Apply calculated transforms
@@ -602,22 +788,46 @@ namespace MusicClicker
             // Add calculated notes to player's total
             gameState.Notes += notesPerClick;
 
-            // Update all UI displays with new values
-            UIUpdater.UpdateUI(this, gameState);
-            UIUpdater.UpdateFragmentationUI(this, gameState);
-            UIUpdater.UpdateSaveScoresUI(this, gameState);
-            UIUpdater.UpdateHeartOfHarmonyUI(this, gameState);
-            UIUpdater.UpdateUnitySymphonyUI(this, gameState);
+            // Immediate, lightweight UI updates so rapid clicks feel responsive.
+            try
+            {
+                DisplayedNotes = gameState.Notes;
+                DisplayedNps = gameState.NotesPerSecond;
+
+                string notesText = $"Notes: {Math.Round(gameState.Notes, 1)}";
+                if (NotesText != null && NotesText.Text != notesText) NotesText.Text = notesText;
+
+                if (SaveScoresScreen?.SaveScoresNotesText != null) SaveScoresScreen.SaveScoresNotesText.Text = notesText;
+                if (HeartOfHarmonyScreen?.HeartOfHarmonyNotesText != null) HeartOfHarmonyScreen.HeartOfHarmonyNotesText.Text = notesText;
+                if (UnityTheSymphonyScreen?.UnityNotesTextHeader != null) UnityTheSymphonyScreen.UnityNotesTextHeader.Text = notesText;
+                if (ArmorOfForteScreen?.ArmorNotesText != null) ArmorOfForteScreen.ArmorNotesText.Text = notesText;
+            }
+            catch { }
+
+            // Perform fuller UI updates immediately so clicks reflect instantly.
+            try
+            {
+                UIUpdater.UpdateNotesOnly(this, gameState);
+                UIUpdater.UpdateSaveScoresUIImmediate(this, gameState);
+                UIUpdater.UpdateFragmentationUI(this, gameState);
+                UIUpdater.UpdateHeartOfHarmonyUI(this, gameState);
+                UIUpdater.UpdateUnitySymphonyUI(this, gameState);
+                UIUpdater.UpdateUI(this, gameState);
+            }
+            catch { }
         }
 
         /// <summary>
         /// Handler for back button on upgrade screen.
         /// Returns to main game screen.
         /// </summary>
-        public void BackButton_Click(object? sender, RoutedEventArgs e)
+        public async void BackButton_Click(object? sender, RoutedEventArgs e)
         {
-            UpgradeScreen.IsVisible = false;
-            MainScreen.IsVisible = true;
+            await TransitionAsync(() =>
+            {
+                UpgradeScreen.IsVisible = false;
+                MainScreen.IsVisible = true;
+            });
         }
 
         /// <summary>
@@ -628,9 +838,9 @@ namespace MusicClicker
         {
             if (e.Key == Avalonia.Input.Key.Space)
             {
-                // Give large amount of notes for testing
+                // Give large amount of notes for testing and grant majors
                 gameState.Notes += 1_000_000;
-                
+
                 // Give one of each major score type
                 gameState.MoonlightMajorOwned += 1;
                 gameState.EroicaMajorOwned += 1;
@@ -653,20 +863,26 @@ namespace MusicClicker
         /// Handler for Tempo Resonate button click.
         /// Navigates to the Tempo Resonate (musical scores) screen.
         /// </summary>
-        public void TempoResonateButton_Click(object? sender, RoutedEventArgs e)
+        public async void TempoResonateButton_Click(object? sender, RoutedEventArgs e)
         {
-            MainScreen.IsVisible = false;
-            TempoResonateScreen.IsVisible = true;
+            await TransitionAsync(() =>
+            {
+                MainScreen.IsVisible = false;
+                TempoResonateScreen.IsVisible = true;
+            });
         }
 
         /// <summary>
         /// Handler for back button on Tempo Resonate screen.
         /// Returns to main game screen.
         /// </summary>
-        public void BackButtonTempoResonate_Click(object? sender, RoutedEventArgs e)
+        public async void BackButtonTempoResonate_Click(object? sender, RoutedEventArgs e)
         {
-            TempoResonateScreen.IsVisible = false;
-            MainScreen.IsVisible = true;
+            await TransitionAsync(() =>
+            {
+                TempoResonateScreen.IsVisible = false;
+                MainScreen.IsVisible = true;
+            });
         }
     }
 }

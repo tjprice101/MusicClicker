@@ -1,5 +1,12 @@
+/*
+ * File: Views/ClickerCustomizeScreen.axaml.cs
+ * Summary: Code-behind for clicker customization screen.
+ * Purpose: Allows player to change the clicker image and manages unlock logic for options.
+ */
+
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using MusicClicker.Helpers;
 
 namespace MusicClicker.Views
 {
@@ -27,6 +34,27 @@ namespace MusicClicker.Views
             
             // Update which buttons are enabled/disabled based on player progress
             UpdateButtonStates();
+
+            // Ensure the first option shows the current clicker image (dynamic)
+            try
+            {
+                if (!string.IsNullOrEmpty(_gameState.CurrentClickerImage))
+                {
+                    var bmp = ImageHelpers.GetBitmap(_gameState.CurrentClickerImage, 128);
+                    if (bmp != null)
+                    {
+                        ClickerOption1.Content = new Avalonia.Controls.Image
+                        {
+                            Source = bmp,
+                            Stretch = Avalonia.Media.Stretch.Uniform
+                        };
+                    }
+                }
+            }
+            catch
+            {
+                // ignore thumbnail failures
+            }
         }
         
         /// <summary>
@@ -183,8 +211,8 @@ namespace MusicClicker.Views
                 case 2:
                     // Check if option 2 is enabled before allowing selection
                     if (!ClickerOption2.IsEnabled) return;
-                    // Special "Essence of Elgar" clicker (requires all non-event majors)
-                    imageUri = "avares://MusicClicker/Assets/EssenceOfElgar.png";
+                    // Special all-majors clicker button (requires all non-event majors)
+                    imageUri = "avares://MusicClicker/Assets/ALLMAJORClickerButton.png";
                     break;
                 // TODO: Add cases for options 3-16 when additional clicker images are added
                 default:
@@ -198,17 +226,11 @@ namespace MusicClicker.Views
             // Update the clicker button image
             if (_mainWindow?.ClickButton?.Content is Avalonia.Controls.Image clickerImage)
             {
-                var uri = new System.Uri(imageUri);
-                
-                // Verify the asset exists before trying to load it
-                if (Avalonia.Platform.AssetLoader.Exists(uri))
+                // Use the cached loader which avoids repeated decoding
+                var bmp = ImageHelpers.GetBitmap(imageUri, 128);
+                if (bmp != null)
                 {
-                    // Load the image from application assets
-                    var assets = Avalonia.Platform.AssetLoader.Open(uri);
-                    clickerImage.Source = new Avalonia.Media.Imaging.Bitmap(assets);
-                    
-                    // Save the selected image URI to GameState
-                    // This ensures it persists when game is saved/loaded
+                    clickerImage.Source = bmp;
                     _gameState.CurrentClickerImage = imageUri;
                 }
             }
@@ -217,11 +239,8 @@ namespace MusicClicker.Views
         /// <summary>
         /// Handler for back button - returns to Symphonic Gallery screen.
         /// </summary>
-        private void BackButton_Click(object? sender, RoutedEventArgs e)
+        private async void BackButton_Click(object? sender, RoutedEventArgs e)
         {
-            // Hide this customization screen
-            this.IsVisible = false;
-
             // Navigate up the visual tree to find parent window
             var current = this.Parent;
             while (current != null && current is not Window)
@@ -229,8 +248,20 @@ namespace MusicClicker.Views
                 current = current.Parent;
             }
 
-            // Show the Symphonic Gallery screen (parent customization hub)
-            if (current is Window parentWindow)
+            if (current is MainWindow mw)
+            {
+                var parentWindow = mw as Window;
+                var galleryScreen = parentWindow.FindControl<Views.SymphonicGalleryScreen>("SymphonicGalleryScreen");
+                if (galleryScreen != null)
+                {
+                    await mw.TransitionAsync(() =>
+                    {
+                        this.IsVisible = false;
+                        galleryScreen.IsVisible = true;
+                    });
+                }
+            }
+            else if (current is Window parentWindow)
             {
                 var galleryScreen = parentWindow.FindControl<Views.SymphonicGalleryScreen>("SymphonicGalleryScreen");
                 if (galleryScreen != null)

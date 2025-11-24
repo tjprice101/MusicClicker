@@ -1,0 +1,397 @@
+Progression Graphs Report
+=========================
+
+Overview
+--------
+This document lists the main growth formulas used in MusicClicker, where they are defined/used in the codebase, what they do, and sample numeric progressions (tables) for a few purchase counts or typical states. Numeric samples are computed using current default base values found in `Helpers/GameState.cs` and logic in `Helpers/UpgradeManager.cs`, `Views/ArmorOfForteScreen.axaml.cs`, and event banner screens.
+
+Files referenced (key locations)
+- Upgrade cost & effects: `Helpers/UpgradeManager.cs` (BuyUpgrade)
+  - Cost formula: cost = Round(baseCost * 1.15^owned, 2)
+  - Effect per purchase: +NPS (NotesPerSecond) and/or +Click (NotesPerClick)
+- Base costs and initial values: `Helpers/GameState.cs` (fields like `ChordBaseCost`, `ScaleBaseCost`, initial NotesPerSecond and NotesPerClick)
+- Armor (weapon) cost formula: `Views/ArmorOfForteScreen.axaml.cs`
+  - baseMultiplier = 250 * 20^(weaponIndex+1)
+  - Cost formula: cost = (NotesPerSecond + baseMultiplier) * (NotesPerClick / 2)
+- Event banners (DiesIrae/Winter): `Views/Event Banners/DiesIraeEventScreen.axaml.cs` and `WinterEventScreen.axaml.cs`
+  - Cost formula: cost = ((NotesPerSecond * 5) * NotesPerClick) + 250
+- Other fixed NPS grants: `Helpers/UniteTheSymphonyManager.cs` (large one-time NPS bonuses for crafted items)
+
+Conventions used here
+- NPS = NotesPerSecond
+- NPC = NotesPerClick
+- `owned` means number already bought for an upgrade slot
+- We show sample tables for owned = 0..10 for upgrade slots. Numbers rounded to the same rules the game uses (costs rounded to 2 decimals; visible notes rounded to 1 decimal).
+
+1) Upgrades (exponential cost growth)
+------------------------------------
+General cost formula (used by `UpgradeManager` and UI code):
+  cost(owned) = round(baseCost * 1.15^owned, 2)
+Effect per purchase: add `npsIncrease` to `NotesPerSecond` and/or add `clickIncrease` to `NotesPerClick`.
+
+Base costs (from `Helpers/GameState.cs` defaults):
+- ChordBaseCost = 10 (adds +0.5 NPS per purchase)
+- ScaleBaseCost = 50 (adds +3 NPS per purchase)
+- OrchestraBaseCost = 100 (adds +5 NPS)
+- SymphonyBaseCost = 350 (adds +9 NPS)
+- AriaBaseCost = 350 (adds +1 click per purchase)
+- RequiemBaseCost = 750 (adds +2 click)
+- OpusBaseCost = 1500 (adds +3 click)
+- MagnumOpusBaseCost = 3000 (adds +4 click)
+
+Samples: Costs and cumulative effects after N purchases
+(Columns: owned, cost for next purchase, cumulative NPS or Click increases)
+
+Chord (base 10, +0.5 NPS each)
+owned | next cost | total NPS
+--------------------------------
+0     | 10.00     | 0.0
+1     | 11.50     | 0.5
+2     | 13.23     | 1.0
+3     | 15.21     | 1.5
+4     | 17.49     | 2.0
+5     | 20.11     | 2.5
+6     | 23.13     | 3.0
+7     | 26.60     | 3.5
+8     | 30.59     | 4.0
+9     | 35.18     | 4.5
+10    | 40.46     | 5.0
+
+Scale (base 50, +3 NPS each)
+owned | next cost | total NPS
+--------------------------------
+0     | 50.00     | 0
+1     | 57.50     | 3
+2     | 66.13     | 6
+3     | 76.04     | 9
+4     | 87.45     | 12
+5     |100.57     | 15
+6     |115.65     | 18
+7     |133.00     | 21
+8     |152.95     | 24
+9     |175.89     | 27
+10    |202.28     | 30
+
+Orchestra (base 100, +5 NPS each)
+owned | next cost | total NPS
+--------------------------------
+0     |100.00     | 0
+1     |115.00     | 5
+2     |132.25     |10
+3     |152.09     |15
+4     |174.90     |20
+5     |201.14     |25
+6     |231.30     |30
+7     |266.00     |35
+8     |305.90     |40
+9     |351.79     |45
+10    |404.56     |50
+
+Symphony (base 350, +9 NPS each)
+owned | next cost | total NPS
+--------------------------------
+0     |350.00     |0
+1     |402.50     |9
+2     |462.88     |18
+3     |532.31     |27
+4     |612.15     |36
+5     |704.98     |45
+6     |809.56     |54
+7     |931.01     |63
+8     |1066.66    |72
+9     |1221.30    |81
+10    |1405.94    |90
+
+Aria / Requiem / Opus / Magnum (click upgrades)
+- Aria (base 350) adds +1 click per purchase
+- Requiem (base 750) adds +2 click
+- Opus (base 1500) adds +3 click
+- Magnum Opus (base 3000) adds +4 click
+
+Example (Aria base 350, +1 click): next purchase costs follow the same 1.15^owned multiplier as above for base=350 (see Symphony table). Cumulative click increases = owned * clickIncrease.
+
+Notes on exponential growth
+- Costs grow multiplicatively by 15% per purchase (1.15 per owned). This means cost doubles roughly every ln(2)/ln(1.15) ≈ 5 purchases (approx). The game's economy is controlled by choosing baseCost and per-purchase NPS/click increases.
+
+2) Armor / Weapons (very large, base dominated)
+------------------------------------------------
+From `Views/ArmorOfForteScreen.axaml.cs`:
+- baseMultiplier(weaponIndex) = 250 * 20^(weaponIndex + 1)
+- cost = (NotesPerSecond + baseMultiplier) * (NotesPerClick / 2)
+
+Interpretation:
+- `baseMultiplier` grows by 20x per weapon index (weapon 0 → 20^1; weapon1 → 20^2; etc.). This makes higher-tier weapons vastly more expensive and dominated by the baseMultiplier rather than the player's NPS.
+- NotesPerClick (NPC) scales multiplicatively: cost is proportional to (NPC / 2).
+
+Sample using saved data default values (example saved NPS=1004.5 and NPC=1)
+- weapon 0 baseMultiplier = 250 * 20^1 = 5,000
+  cost = (1004.5 + 5000) * (1 / 2) = 6004.5 / 2 = 3002.25
+- weapon 1 baseMultiplier = 250 * 20^2 = 100,000
+  cost = (1004.5 + 100000) * 0.5 = 101004.5 * 0.5 = 50502.25
+- weapon 2 baseMultiplier = 250 * 20^3 = 2,000,000
+  cost ≈ (2,001,004.5) * 0.5 = 1,000,502.25
+
+Observation: weapon costs are enormous and scale by ×20 per weapon tier; incremental NPS has negligible effect at high tiers.
+
+3) Event banners (DiesIrae, Winter)
+-----------------------------------
+From `Views/Event Banners/*EventScreen.axaml.cs`:
+- cost = ((NotesPerSecond * 5) * NotesPerClick) + 250
+
+Sample (NPS = 1004.5, NPC = 1):
+- cost = (1004.5 * 5 * 1) + 250 = 5022.5 + 250 = 5272.5
+
+Effect of growth:
+- Cost is linear in NotesPerSecond and NotesPerClick; doubling NPS doubles the dynamic portion (NPS*5*NPC).
+- The fixed +250 makes low-NPS purchases slightly more expensive than zero.
+
+4) Notes accumulation over time
+-------------------------------
+- The main game loop adds NPS * elapsedSeconds to Notes each accumulation tick (see `MainWindow.axaml.cs`):
+    gameState.Notes += gameState.NotesPerSecond * elapsedSeconds;
+  So Notes grows linearly with current NPS while NPS is constant. Because purchasing upgrades increases NPS discretely, Notes growth accelerates stepwise when upgrades bought.
+
+5) Graphing guidance (how to visualize these growths)
+----------------------------------------------------
+If you want actual plotted charts (PNG/SVG), next steps would be:
+- Export numeric series for each formula over a chosen domain (e.g. purchases 0..40 for upgrades; NPS range for event/weapon costs).
+- Use a plotting library (Python matplotlib) or a small C# app to render charts. I can produce CSVs and a small Python script to generate PNGs if you want visual charts.
+
+Quick CSV-style numeric outputs I can produce next on request:
+- `upgrade_costs_Chord.csv` with columns owned,cost,cumulativeNPS
+- `weapon_costs_example.csv` with columns weaponIndex,cost_at_NPS=1004.5,NPC=1
+- `event_banner_costs.csv` with NPS vs cost for NPC=1
+
+Summary / Recommendations
+-------------------------
+- The dominant growth mechanisms are:
+  - exponential per-upgrade cost: base * 1.15^owned (Upgrade slots)
+  - multiplicative tier jumps for weapons: 20^tier factor in base multiplier
+  - linear dependence on NPS/NPC for event banners and weapon formulas (but weapon baseMultiplier dwarfs NPS at high tiers)
+
+Files created
+- `Progression Graphs/ProgressionGraphs.txt` (this file)
+
+
+---
+Concrete formulas to implement (your preference respected)
+-------------------------------------------------------
+Per your instruction, we will *not* change how NPS or NPC themselves grow — they remain the underlying associated values. Instead, costs and gating will be computed from those values so that:
+- Higher-tier weapons require significant idle time (hard to get).
+- Clicking (NPC) reduces idle time but cannot fully trivialize purchases.
+- Event banners use a simple, predictable formula — example you gave: Cost = NPS * 2 + (NPC * 5).
+
+Below are implementable formulas, with default tuning parameters and sample tables. These are intentionally simple, deterministic, and safe to put into code in a single place (e.g., a new `ProgressionConfig` and small helper methods used by `ArmorOfForteScreen` and event screens).
+
+Parameters (defaults)
+- idleBaseSeconds = 60           // base idle cost in seconds for tier 0
+- idleGrowth = 6                // multiplier per weapon tier (60s, 360s, 2160s...)
+- clickWeight = 50              // how many NPS-equivalent units one NPC counts for (pre-clamp)
+- clickCapFraction = 0.10      // max fraction of player's NPS that clicks may substitute
+- baseOffset(tier) = 0         // optional small constant per-tier (default 0)
+
+Weapon cost formula (idle-time interpretation)
+  idleSecondsTarget(tier) = idleBaseSeconds * idleGrowth^tier
+  clickContribution = min(NPC * clickWeight, NPS * clickCapFraction)
+  effectiveNPS = NPS + clickContribution
+  cost_weapon(tier) = round(idleSecondsTarget(tier) * effectiveNPS + baseOffset(tier), 2)
+
+Notes:
+- `clickContribution` is clamped so excessive clicking cannot fully replace idle progression.
+- You can choose a different diminishing-returns style (sqrt/log) for clicks, but the clamp is simplest and predictable.
+
+Sample numeric table: NPS = 1000, NPC = 1 (defaults)
+- clickContribution = min(1*50, 1000*0.10) = min(50,100) = 50
+- effectiveNPS = 1050
+
+Tier | idleSeconds | cost (approx)
+-----|-------------|---------------
+0    | 60s         | 60 * 1050 = 63,000
+1    | 360s        | 360 * 1050 = 378,000
+2    | 2160s       | 2,160 * 1050 = 2,268,000
+3    |12960s       |12,960 * 1050 =13,608,000
+
+If NPC rises (example NPC = 10):
+- clickContribution = min(10*50=500, 1000*0.10=100) => 100 (clamped)
+- effectiveNPS = 1100
+- Tier0 cost = 60 * 1100 = 66,000 (idle reduced from 63k to 66k? actually slightly higher; this shows clickContribution increases effectiveNPS slightly)
+
+Note: you may want clickWeight lower (e.g., 10) so each click contributes less NPS-equivalent; clickCapFraction controls the maximum substitution.
+
+Event banner formula (your example)
+---------------------------------
+You proposed a short, intuitive formula for event banners:
+  cost_event = round(NPS * 2 + NPC * 5, 2)
+
+Interpretation and implementation notes:
+- This is intentionally lightweight: the dynamic part is 2 seconds worth of NPS plus an additive term from NPC scaled by 5.
+- In gameplay terms: a single click on the "Soul of X" button should cost roughly 2 seconds of idle production plus an extra multiple proportional to the player's click strength.
+- If you prefer to express event cost as an idle-time target, you can scale it by an `eventIdleMultiplier`, but the formula above matches your example and is easy to reason about.
+
+Sample event costs (NPS=1000, NPC=1):
+- cost_event = 1000*2 + 1*5 = 2005
+
+If player uses many clicks (NPC=10):
+- cost_event = 1000*2 + 10*5 = 2050 (clicks reduce relative idle time slightly but do not trivialize)
+
+Suggested implementation steps
+------------------------------
+1. Add a `ProgressionConfig` class (or fields in `GameState`) with the tuning parameters listed above.
+2. Implement helper methods in a new `Helpers/Progression.cs`:
+    - `double ComputeWeaponCost(int tier, double nps, double npc)`
+    - `double ComputeEventCost(double nps, double npc)`
+3. Replace the old weapon/event cost calculations in `Views/ArmorOfForteScreen.axaml.cs` and `Views/Event Banners/*EventScreen.axaml.cs` with calls to these helpers.
+4. Expose tuning values in `ProgressionConfig` so you can iterate without code changes.
+
+Backward compatibility
+----------------------
+If you change cost formulas in-place, existing saves may find items suddenly more or less affordable. Recommended path:
+- Add a `saveVersion` integer to `GameState`.
+- If `saveVersion` is older, apply the new formulas going forward but do not retroactively change owned counts; optionally show players a message that the progression has been rebalanced.
+
+Would you like me to:
+- (A) Generate CSVs showing weapon cost vs tier for a set of NPS/NPC sample states, or
+- (B) Implement `ProgressionConfig` and `Helpers/Progression.cs` and update `ArmorOfForteScreen` and event screens to use the new formulas now?
+
+If (A), tell me which sample NPS/NPC values to include (e.g., NPS: [100,1000,10000], NPC: [1,5,10]).
+If (B), tell me whether I should also add a `saveVersion` field and a simple migration message for players.
+
+
+---
+Analysis & Proposed Redesign (based on your request)
+---------------------------------------------------
+You asked for two main changes:
+- Make NPS upgrades start at a meaningful baseline (e.g., 5 NPS) and grow exponentially thereafter.
+- Make Notes-per-Click upgrades follow a similar exponential growth rule (but balanced so clicks don't trivialize costs).
+
+You also asked that purchasable items (weapons) be priced in a way that reflects "how long a player must idle to obtain them" and that clicks (NPC) should not let players bypass intended progression. Event banners should follow a similar progression pattern and encourage strategy.
+
+Below I propose concrete formulas, rationale, and numeric samples you can adopt. These are intentionally parameterized so you can tweak base values and growth rates during playtesting.
+
+A. Upgrade effect model (NPS and NPC)
+-------------------------------------
+Goal: each purchase gives a growing effect; the first purchase should be meaningful (e.g., 5 NPS), and later purchases scale up exponentially.
+
+Formula (per-slot incremental effect):
+  effect_increase(owned) = baseEffect * growth^owned
+Where:
+  - baseEffect is the first-purchase increase (e.g., 5 for NPS upgrades).
+  - growth is the per-purchase multiplier (e.g., 1.20--1.30). A value of 1.2 gives moderate exponential growth.
+
+Two sensible presets:
+- Aggressive: baseEffect = 5, growth = 1.25
+- Balanced: baseEffect_NPS = 5, growth_NPS = 1.20; baseEffect_NPC = 1, growth_NPC = 1.25
+
+Implementation notes:
+- UpgradeManager should stop taking a fixed npsIncrease/clickIncrease and instead compute effect_increase(owned) for each purchase (or per-slot base/growth parameters kept in GameState or a config table).
+- Keep the cost formula (baseCost * 1.15^owned) but re-balance baseCost to match the larger effects; or optionally replace cost growth multiplier with a separate parameter (costGrowth) if you want faster or slower price escalation.
+
+Sample table (NPS slot using baseEffect = 5, growth = 1.20)
+owned | next increase | cumulative effect if bought sequentially
+------------------------------------------------------------
+0     | 5.00          | 0.00
+1     | 6.00          | 5.00
+2     | 7.20          | 11.00
+3     | 8.64          | 18.20
+4     |10.37          | 26.84
+5     |12.44          | 37.21
+6     |14.93          | 49.65
+7     |17.92          | 64.58
+8     |21.50          | 82.50
+9     |25.80          |103.99
+10    |30.96          |129.79
+
+Interpretation: after 5 purchases, the single-slot cumulative bonus ≈ 37 NPS; after 10 purchases ≈ 130 NPS. Use baseCost and the standard cost multiplier to make these purchases feel meaningful in time.
+
+Sample table (NPC slot using baseEffect = 1, growth = 1.25)
+owned | next increase | cumulative
+-----------------------------------
+0     | 1.000         | 0.000
+1     | 1.250         | 1.000
+2     | 1.563         | 2.250
+3     | 1.953         | 3.813
+4     | 2.441         | 5.766
+5     | 3.052         | 8.207
+6     | 3.814         |11.258
+7     | 4.768         |15.073
+8     | 5.960         |19.841
+9     | 7.451         |25.802
+10    | 9.314         |33.253
+
+Rationale: NPC growth uses a smaller baseEffect so clicks remain meaningful but do not instantly overwhelm idle progression. If you want clicks to be weaker still, reduce baseEffect_NPC or increase the cost of click-upgrades.
+
+B. Cost model for weapons (idle-time target)
+-------------------------------------------
+Goal: weapon prices should be interpretable as “how long must the player idle (with current NPS) to earn this weapon”, while clicks can contribute only a bounded share (so players cannot click their way past progression easily).
+
+Design parameters:
+- idleSecondsTarget(tier): desired idle time to earn a weapon of `tier`. This should grow with tier (e.g., 1 minute → 5 minutes → 30 minutes → several hours). A safe geometric rule:
+    idleSecondsTarget(tier) = idleBaseSeconds * idleGrowth^tier
+  Example: idleBaseSeconds = 60 (1 minute), idleGrowth = 6 → [60s, 360s, 2160s, 12960s,...]
+
+- clickCapFraction: maximum fraction of the effective NPS contribution that may come from clicking (e.g., 0.10 means clicks can at most substitute 10% of NPS contribution to weapon cost).
+- clickWeight: how much a single NPC counts toward an NPS-equivalent before clamping (a tuning parameter).
+
+Concrete formula (per weapon tier i):
+  clickContribution = min(NPC * clickWeight, NPS * clickCapFraction)
+  effectiveNPS = NPS + clickContribution
+  cost = round(idleSecondsTarget(i) * effectiveNPS + baseOffset(i), 2)
+
+Where baseOffset(i) is an optional static floor (small) to keep very low-tier weapons slightly non-zero when NPS ≈ 0. If you want to preserve the previous huge base multiplier scheme, you can retain a scaled baseMultiplier, but I recommend removing the enormous 20^n jumps and using idleSecondsTarget to express intended player-time directly.
+
+Example parameters and samples (NPS=1000, NPC=1):
+- idleBaseSeconds = 60, idleGrowth = 6 ⇒ idleSeconds = [60, 360, 2160, 12960]
+- clickWeight = 50 (so 1 NPC ≈ 50 NPS before clamp)
+- clickCapFraction = 0.10 (clicks can contribute at most 10% of NPS)
+
+Compute clickContribution = min(1 * 50, 1000 * 0.10) = min(50,100) = 50
+effectiveNPS = 1050
+
+Costs:
+- tier 0 (60s): cost = 60 * 1050 = 63,000
+- tier 1 (360s): cost = 360 * 1050 = 378,000
+- tier 2 (2160s): cost = 2,268,000
+
+Interpretation: those numbers express how many seconds of idling at 1000 NPS (plus permitted click contribution) would be required to buy a weapon. Tuning idleBase and idleGrowth lets you compress or expand these time windows.
+
+Notes on click domination and alternatives:
+- Using a clamp (clickCapFraction) prevents small-NPC players from using very high click rates to trivialize purchase times.
+- Alternative click dampening: use `clickContribution = sqrt(NPC) * clickScale` or `log1p(NPC) * scale`, both of which make clicks subject to diminishing returns without an explicit clamp.
+
+C. Event banners (baseline & strategy incentives)
+-------------------------------------------------
+Proposed pattern: treat event banners like smaller weapons with shorter idle targets and a strategic multiplier that makes them attractive at specific milestones.
+
+Formula example:
+  idleSecondsEvent = eventIdleBase * eventIdleGrowth^tier
+  clickContribution = min(NPC * clickWeightEvent, NPS * clickCapFractionEvent)
+  cost = round(idleSecondsEvent * (NPS + clickContribution) * eventDifficultyMultiplier + eventBaseOffset, 2)
+
+Tune eventDifficultyMultiplier < 1 for cheaper, > 1 for more demanding banners. Because event banners should reward strategy, consider adding requirement components (e.g., "requires owning X weapons" or "gives bonus only to certain builds") rather than only price changes.
+
+D. Implementation guidance
+---------------------------
+- Make the effect calculation pluggable (function or small table per upgrade type) so you can tune `baseEffect` and `growth` at runtime/config without touching core logic.
+- Keep cost scaling separate from effect scaling. That lets you iterate: e.g., larger effect with slower cost growth or smaller effect with faster cost growth.
+- For click influence on costs, prefer a diminishing-returns function (sqrt/log) or an explicit clamp (clickCapFraction) for predictable behavior.
+- Add developer configuration in `GameState` or a new `ProgressionConfig` static class with named tuning parameters (idleBaseSeconds, idleGrowth, clickWeight, clickCapFraction, baseEffect per slot, growth per slot). That allows live tuning without code changes.
+
+E. Backwards compatibility / saves
+---------------------------------
+- Changing base effects and cost formulas will alter existing save balance. Consider adding a `saveVersion` integer to `GameState` and a migration path that either:
+  1) Recomputes player-equivalent progress into the new system (hard); or
+  2) Leaves existing owned counts and notes, but ensure new formulas apply going forward (recommended for simpler rollout).
+
+F. Next steps I can do for you
+------------------------------
+- Produce CSV exports showing the new NPS/NPC upgrade tables (owned 0..40) using your preferred parameter set.
+- Produce CSVs for weapon costs vs tier for sample player states (several NPS/NPC combos) so you can see idle-time interpretations.
+- Implement a small config struct/class and change `UpgradeManager` & `ArmorOfForteScreen` to use the new formulas and add a `saveVersion` field and a simple migration strategy.
+
+Tell me which of the example parameter sets you prefer (aggressive or balanced), or provide specific numbers for:
+- baseEffect_NPS, growth_NPS
+- baseEffect_NPC, growth_NPC
+- idleBaseSeconds, idleGrowth
+- clickWeight, clickCapFraction
+
+I will then generate CSVs and optional PNG charts for those exact parameters so you can iterate quickly.

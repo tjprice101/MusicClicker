@@ -1,3 +1,9 @@
+/*
+ * File: Helpers/HeartOfHarmonyManager.cs
+ * Summary: Manages Heart of Harmony conversions and related gameplay mechanics.
+ * Purpose: Provides logic for converting fragments/scores into other components and updates GameState.
+ */
+
 using Avalonia.Controls;
 using Avalonia.Threading;
 using System;

@@ -178,24 +178,33 @@ namespace MusicClicker.Views
         /// <summary>
         /// Handler for back button - returns to Eternal Modulation (event hub) screen.
         /// </summary>
-        private void BackButton_Click(object? sender, RoutedEventArgs e)
+        private async void BackButton_Click(object? sender, RoutedEventArgs e)
         {
-            // Hide this event screen
-            this.IsVisible = false;
-
-            // Navigate up the visual tree to find parent window
             var current = this.Parent;
             while (current != null && current is not Window)
             {
                 current = current.Parent;
             }
 
-            if (current is Window parentWindow)
+            if (current is MainWindow mw)
             {
-                // Show the Eternal Modulation screen (event hub)
-                var eternalModulationScreen = parentWindow.FindControl<UserControl>("EternalModulationScreen");
-                if (eternalModulationScreen != null)
-                    eternalModulationScreen.IsVisible = true;
+                await mw.TransitionAsync(() =>
+                {
+                    this.IsVisible = false;
+                    var eternalModulationScreen = mw.FindControl<UserControl>("EternalModulationScreen");
+                    if (eternalModulationScreen != null)
+                        eternalModulationScreen.IsVisible = true;
+                });
+            }
+            else
+            {
+                this.IsVisible = false;
+                if (current is Window parentWindow)
+                {
+                    var eternalModulationScreen = parentWindow.FindControl<UserControl>("EternalModulationScreen");
+                    if (eternalModulationScreen != null)
+                        eternalModulationScreen.IsVisible = true;
+                }
             }
         }
     }

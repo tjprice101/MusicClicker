@@ -1,8 +1,15 @@
+/*
+ * File: Views/ArmorOfForteScreen.axaml.cs
+ * Summary: Code-behind for Armor of Forte weapon shop screen.
+ * Purpose: Displays weapon list, handles purchase logic, and shows Forte/Duet resonances.
+ */
+
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 using System;
+using MusicClicker;
 
 namespace MusicClicker.Views
 {
@@ -46,11 +53,11 @@ namespace MusicClicker.Views
             "Joyful Catharsis",          // Ode to Joy 1
             "Ode to Creation",           // Ode to Joy 2
 
-            // Dies Irae and Winter remain unchanged (events / placeholders)
-            "Dies Irae Scythe I",       // Tier 1 Dies Irae weapon (event)
-            "Dies Irae Scythe II",      // Tier 2 Dies Irae weapon (event)
-            "Winter Bow I",             // Tier 1 Winter weapon (event)
-            "Winter Bow II"             // Tier 2 Winter weapon (event)
+            // Event weapons (Dies Irae / Winter) - replaced with updated flavor names
+            "Seven Circles",            // Formerly: Dies Irae Scythe I (event)
+            "Hell's Wrath",             // Formerly: Dies Irae Scythe II (event)
+            "Cacophonic Blizzard",      // Formerly: Winter Bow I (event)
+            "The Snow's Desire"         // Formerly: Winter Bow II (event)
         };
 
         // Array mapping each weapon to its required major score
@@ -76,6 +83,18 @@ namespace MusicClicker.Views
             "Winter Major",            // Required for Winter Bow I & II
             "Winter Major"
         };
+
+        // Precomputed exponential base multipliers for weapon costs to avoid repeated Math.Pow calls.
+        private static readonly double[] _weaponBaseMultipliers;
+
+        static ArmorOfForteScreen()
+        {
+            _weaponBaseMultipliers = new double[18];
+            for (int i = 0; i < _weaponBaseMultipliers.Length; i++)
+            {
+                _weaponBaseMultipliers[i] = 250 * Math.Pow(20, i + 1);
+            }
+        }
 
         /// <summary>
         /// Constructor initializes the armor shop screen and sets up button handlers.
@@ -111,10 +130,10 @@ namespace MusicClicker.Views
             ArmorItem12Button.Click += (s, e) => HandleArmorPurchase(11); // Fate Axe II
             ArmorItem13Button.Click += (s, e) => HandleArmorPurchase(12); // Joy Hammer I
             ArmorItem14Button.Click += (s, e) => HandleArmorPurchase(13); // Joy Hammer II
-            ArmorItem15Button.Click += (s, e) => HandleArmorPurchase(14); // Dies Irae Scythe I
-            ArmorItem16Button.Click += (s, e) => HandleArmorPurchase(15); // Dies Irae Scythe II
-            ArmorItem17Button.Click += (s, e) => HandleArmorPurchase(16); // Winter Bow I
-            ArmorItem18Button.Click += (s, e) => HandleArmorPurchase(17); // Winter Bow II
+            ArmorItem15Button.Click += (s, e) => HandleArmorPurchase(14); // Seven Circles
+            ArmorItem16Button.Click += (s, e) => HandleArmorPurchase(15); // Hell's Wrath
+            ArmorItem17Button.Click += (s, e) => HandleArmorPurchase(16); // Cacophonic Blizzard
+            ArmorItem18Button.Click += (s, e) => HandleArmorPurchase(17); // The Snow's Desire
         }
 
         /// <summary>
@@ -127,10 +146,10 @@ namespace MusicClicker.Views
             if (_gameState == null)
                 return 0;
 
-            // Base multiplier grows exponentially: 250 * 20^(weaponIndex+1)
-            // Weapon 0 costs 250*20^1 = 5,000 base
-            // Weapon 1 costs 250*20^2 = 100,000 base, etc.
-            double baseMultiplier = 250 * Math.Pow(20, weaponIndex + 1);
+            // Use precomputed base multiplier to avoid repeated Math.Pow calls
+            double baseMultiplier = (weaponIndex >= 0 && weaponIndex < _weaponBaseMultipliers.Length)
+                ? _weaponBaseMultipliers[weaponIndex]
+                : 250 * Math.Pow(20, weaponIndex + 1);
             
             // Final cost combines passive income (NPS) + exponential base, scaled by click power
             return (_gameState.NotesPerSecond + baseMultiplier) * (_gameState.NotesPerClick / 2);
@@ -185,10 +204,10 @@ namespace MusicClicker.Views
                 11 => _gameState.CosmicWeaver,
                 12 => _gameState.JoyfulCatharsis,
                 13 => _gameState.OdeToCreation,
-                14 => _gameState.DiesIraeScytheI,
-                15 => _gameState.DiesIraeScytheII,
-                16 => _gameState.WinterBowI,
-                17 => _gameState.WinterBowII,
+                14 => _gameState.SevenCircles,
+                15 => _gameState.HellsWrath,
+                16 => _gameState.CacophonicBlizzard,
+                17 => _gameState.TheSnowsDesire,
                 _ => false
             };
         }
@@ -218,10 +237,10 @@ namespace MusicClicker.Views
                 case 11: _gameState.CosmicWeaver = value; break;
                 case 12: _gameState.JoyfulCatharsis = value; break;
                 case 13: _gameState.OdeToCreation = value; break;
-                case 14: _gameState.DiesIraeScytheI = value; break;
-                case 15: _gameState.DiesIraeScytheII = value; break;
-                case 16: _gameState.WinterBowI = value; break;
-                case 17: _gameState.WinterBowII = value; break;
+                case 14: _gameState.SevenCircles = value; break;
+                case 15: _gameState.HellsWrath = value; break;
+                case 16: _gameState.CacophonicBlizzard = value; break;
+                case 17: _gameState.TheSnowsDesire = value; break;
             }
         }
 
@@ -258,11 +277,8 @@ namespace MusicClicker.Views
         /// <summary>
         /// Handler for back button - returns to main screen.
         /// </summary>
-        private void BackButton_Click(object? sender, RoutedEventArgs e)
+        private async void BackButton_Click(object? sender, RoutedEventArgs e)
         {
-            // Hide this screen
-            this.IsVisible = false;
-
             // Navigate up the visual tree to find the parent window
             var current = this.Parent;
             while (current != null && current is not Window)
@@ -270,9 +286,21 @@ namespace MusicClicker.Views
                 current = current.Parent;
             }
 
-            // Show the main screen
-            if (current is Window parentWindow)
+            // If we found the main window, run the transition helper
+            if (current is MainWindow mainWindow)
             {
+                await mainWindow.TransitionAsync(() =>
+                {
+                    this.IsVisible = false;
+                    var mainScreen = mainWindow.FindControl<Grid>("MainScreen");
+                    if (mainScreen != null)
+                        mainScreen.IsVisible = true;
+                });
+            }
+            else if (current is Window parentWindow)
+            {
+                // Fallback: immediate switch without transition
+                this.IsVisible = false;
                 var mainScreen = parentWindow.FindControl<Grid>("MainScreen");
                 if (mainScreen != null)
                     mainScreen.IsVisible = true;

@@ -7,3 +7,7 @@ obj/
 *.tmp
 *.user
 *.cache/
+
+# Ignore save data and runtime cache created by the game
+Save/
+Save/**

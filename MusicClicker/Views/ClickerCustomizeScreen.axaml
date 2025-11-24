@@ -33,12 +33,14 @@
                 <!-- Row 1 -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
                     <StackPanel>
-                        <Button x:Name="ClickerOption1" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2" />
-                        <TextBlock Text="Return to Default Image" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
+                        <Button x:Name="ClickerOption1" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Assets/Music Game Assets [A961E2A]-min.png" Width="180" Height="180" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Button>
+                        <TextBlock Text="Current Clicker Image" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
                     </StackPanel>
                     <StackPanel>
                         <Button x:Name="ClickerOption2" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2">
-                            <Image Source="avares://MusicClicker/Assets/EssenceOfElgar.png" Width="180" Height="180" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Image Source="avares://MusicClicker/Assets/ALLMAJORClickerButton.png" Width="180" Height="180" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Button>
                         <TextBlock Text="Requires all Non-Event Major Scores Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
                     </StackPanel>
