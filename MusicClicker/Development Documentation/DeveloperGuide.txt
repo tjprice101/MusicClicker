@@ -1,0 +1,83 @@
+Music Clicker — Developer Guide
+
+Overview
+
+This guide describes the code structure, core components, and areas to modify when adding features.
+
+Project Structure (high-level)
+
+- Program.cs / App.axaml.cs: Application bootstrap for Avalonia.
+- MainWindow.axaml / MainWindow.axaml.cs: Main window and central coordination point. Manages GameState, timers, UI updates, carousel, and screen navigation.
+- Views/*: UI screens implemented with AXAML and code-behind (.axaml.cs). Examples: `ArmorOfForteScreen`, `UpgradeScreen`, `SymphonicGalleryScreen`, `HeartOfHarmonyScreen`.
+- Helpers/*: Non-UI helpers and managers. Key files:
+  - `GameState.cs`: Serializable model of all player state. Add new persistent fields here when adding new gameplay elements.
+  - `SaveManager.cs`: Handles save/load. If you change `GameState`, update serialization or add migration logic.
+  - `UIUpdater.cs`: Centralized UI refresh logic. Keeps frequent updates minimal; if you add UI elements, add update hooks here as appropriate.
+  - `ImageHelpers.cs`: Bitmap cache and image utilities.
+  - `UpgradeManager.cs`, `SaveScoresManager.cs`, `HeartOfHarmonyManager.cs`, `UniteTheSymphonyManager.cs`, `TempoResonateManager.cs`: Feature managers implementing game mechanics.
+- Views/Event Banners/: Event-specific screens (Dies Irae, Winter, etc.).
+- Assets/: All image/font resources.
+
+Where to add new Major Score (example walkthrough)
+
+To add support for a new major score (e.g., "Nocturne Major"), you typically need to update several parts of the codebase:
+
+1. GameState
+   - Add fields to track Minor/Major owned counts and any ability flags related to the new major.
+   - Example: `public int _nocturneMinorOwned = 0; public int NocturneMinorOwned { get => _nocturneMinorOwned; set => _nocturneMinorOwned = value; }`
+
+2. Views
+   - `SaveScoresScreen.axaml.cs` - add a button and handler to spend Notes for chances to obtain the new minor/major components.
+   - `HeartOfHarmonyScreen.axaml.cs` - if the major uses conversion mechanics, add UI text and handlers for conversion.
+   - `UniteTheSymphonyScreen.axaml.cs` - if crafting is required, add craft buttons and wiring.
+   - `ArmorOfForteScreen.axaml.cs` - if the new major unlocks weapons, add new weapon entries, requirements, and resonance text.
+   - `SymphonicGalleryScreen`, `ClickerCustomizeScreen`, `BackgroundCustomizeScreen` - update if the new major unlocks cosmetic options.
+
+3. Managers / Logic
+   - Implement any feature-specific behavior in the corresponding manager (e.g., new passive effects in `UpgradeManager` or `TempoResonateManager`).
+   - If the major provides a new active ability, expose flags in `GameState` and check them in `MainWindow.ClickButton_Click` or the relevant action handlers.
+
+4. UIUpdater
+   - Add code to refresh UI elements that display counts or effects from the new major.
+
+5. Save & Migration
+   - If adding new persistent fields, implement migration code in `SaveManager` so older saves are preserved. A simple migration approach: after loading an older save, detect missing fields and initialize defaults.
+
+6. Assets
+   - Add icons, background images, or UI art to the `Assets/` folder and reference them with `avares://MusicClicker/...` URIs. Use `ImageHelpers.GetBitmap` to load and cache bitmaps.
+
+7. Button wiring
+   - Register new button handlers in `ButtonInitializer.InitializeAllButtons` to keep wiring centralized.
+
+Testing
+
+- Unit tests: Project does not currently include a test suite; consider adding a small test project to validate managers and GameState logic.
+- Manual tests: Run the app and verify UI updates when interacting with new features; validate saves reload correctly.
+
+Performance notes & where to optimize further
+
+- Image decoding: Large images are expensive. Use `ImageHelpers.GetBitmap` cache and consider pre-scaling or converting assets to compressed formats.
+- UI updates: Keep frequent UI updates minimal (e.g., `UpdateNotesOnly` is lightweight). Avoid updating hidden screens.
+- Timers: Guest-configured game loop and animation timers are in `MainWindow.axaml.cs`. Use the `FRAME_RATE` constant to change animation resolution.
+
+Where to Add New Functionality (short map)
+
+- New screen: Add AXAML + .axaml.cs file in `Views/`, wire it in `MainWindow.axaml` and `ButtonInitializer`.
+- New persistent data: Modify `GameState.cs` and add save migration if needed.
+- New gameplay rule: Implement in an existing manager (e.g., `UpgradeManager`) or create a new manager under `Helpers/` and call it from UI/handlers.
+- New assets: Add to `Assets/` and load via `ImageHelpers.GetBitmap`.
+
+Developer workflow suggestions
+
+- Keep UI wiring centralized in `ButtonInitializer`.
+- Avoid long-running work on the UI thread—use background tasks for heavy computation and dispatch only UI updates.
+- When adding many fields to `GameState`, add a version number and a migration helper in `SaveManager`.
+
+Appendix: Quick file map
+
+- `MainWindow.axaml.cs` — app coordination, timers, carousel, transitions
+- `Helpers/UIUpdater.cs` — all UI refresh logic
+- `Helpers/SaveManager.cs` — save/load and JSON serialization
+- `Helpers/ImageHelpers.cs` — bitmap cache and image utilities
+- `Views/*` — UI screens and code-behind
+

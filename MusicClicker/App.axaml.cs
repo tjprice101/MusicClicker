@@ -1,3 +1,9 @@
+/*
+ * File: App.axaml.cs
+ * Summary: Application class wiring for Avalonia.
+ * Purpose: Application-level configuration and styling entry point.
+ */
+
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;

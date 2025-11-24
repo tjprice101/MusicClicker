@@ -1,4 +1,11 @@
-﻿using Avalonia;
+﻿/*
+ * File: Program.cs
+ * Summary: Application entry point for MusicClicker.
+ * Purpose: Initializes and starts the Avalonia application host.
+ * Notes: High-level program bootstrap. See Development Documentation/DeveloperGuide.txt for more.
+ */
+
+using Avalonia;
 using System;
 
 namespace MusicClicker;

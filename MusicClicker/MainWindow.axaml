@@ -22,15 +22,24 @@
             Margin="12,12,0,0"
             Panel.ZIndex="500">
 
-    <Button x:Name="TopSaveButton"
-            Width="250"     
-            Height="140"  
-            Background="Transparent"
-            BorderThickness="0"
-            Padding="0">
-        <Image Source="avares://MusicClicker/Assets/SaveIcon.png"
-               Stretch="Uniform" />
-    </Button>
+    <Border CornerRadius="4">
+        <Border.Effect>
+            <DropShadowEffect Color="Black" 
+                              BlurRadius="15" 
+                              Opacity="0.7"
+                              OffsetX="0"
+                              OffsetY="0" />
+        </Border.Effect>
+        <Button x:Name="TopSaveButton"
+                Width="250"     
+                Height="140"  
+                Background="Transparent"
+                BorderThickness="0"
+                Padding="0">
+            <Image Source="avares://MusicClicker/Assets/SaveIcon.png"
+                   Stretch="Uniform" IsHitTestVisible="False" />
+        </Button>
+    </Border>
 
     <TextBlock x:Name="SaveStatusText"
                Text=""
@@ -42,9 +51,18 @@
 
             <!-- Top-right Upgrades button (image) -->
             <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal" Spacing="8" Margin="0,12,12,0" Panel.ZIndex="500">
-                <Button x:Name="TopOpenUpgradesButton" Width="120" Height="42" Background="#55000000" Foreground="White" FontSize="16">
-                    <Image Source="avares://MusicClicker/Assets/WinterMajor.png" Stretch="Uniform" Width="28" Height="28" />
-                </Button>
+                <Border CornerRadius="4">
+                    <Border.Effect>
+                        <DropShadowEffect Color="Black" 
+                                          BlurRadius="15" 
+                                          Opacity="0.7"
+                                          OffsetX="0"
+                                          OffsetY="0" />
+                    </Border.Effect>
+                    <Button x:Name="TopOpenUpgradesButton" Width="250" Height="140" Background="Transparent" BorderThickness="0" Padding="0">
+                        <Image Source="avares://MusicClicker/Assets/UpgradeMenu.png" Stretch="UniformToFill" Width="250" Height="140" IsHitTestVisible="False" />
+                    </Button>
+                </Border>
             </StackPanel>
             <!-- Center Content -->
             <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -230,30 +248,48 @@
 
                     </Canvas>
 
-                    <!-- Main Click Button (Unchanged) -->
-                    <Button x:Name="ClickButton"
-                            Width="220"
-                            Height="220"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Top"
-                            Margin="0,180,0,0"
-                            ZIndex="200">
-                        <Image Source="avares://MusicClicker/Assets/Music Game Assets [A961E2A]-min.png"
-                               Stretch="Uniform" />
-                    </Button>
+                    <!-- Main Click Button (with shadow like carousel buttons) -->
+                    <Border HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,180,0,0" CornerRadius="110" ZIndex="200">
+                        <Border.Effect>
+                            <DropShadowEffect Color="Black" 
+                                              BlurRadius="15" 
+                                              Opacity="0.7"
+                                              OffsetX="0"
+                                              OffsetY="0" />
+                        </Border.Effect>
+                        <Button x:Name="ClickButton"
+                                Width="220"
+                                Height="220"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Top"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Padding="0">
+                            <Image Source="avares://MusicClicker/Assets/Music Game Assets [A961E2A]-min.png"
+                                   Stretch="Uniform" IsHitTestVisible="False" />
+                        </Button>
+                    </Border>
                 </Grid>
 
                 <!-- Upgrades Button -->
-                <Button Grid.Row="2"
-                        x:Name="OpenUpgradesButton"
-                        Content="Upgrades"
-                        Width="250"
-                        Height="50"
-                        Background="#55000000"
-                        Foreground="White"
-                        FontSize="20"
-                        HorizontalAlignment="Center"
-                        Margin="0,30,0,0" />
+                <Border Grid.Row="2" HorizontalAlignment="Center" Margin="0,30,0,0" CornerRadius="4">
+                    <Border.Effect>
+                        <DropShadowEffect Color="Black" 
+                                          BlurRadius="15" 
+                                          Opacity="0.7"
+                                          OffsetX="0"
+                                          OffsetY="0" />
+                    </Border.Effect>
+                    <Button x:Name="OpenUpgradesButton"
+                            Content="Upgrades"
+                            Width="250"
+                            Height="140"
+                            Background="#55000000"
+                            Foreground="White"
+                            FontSize="20"
+                            HorizontalAlignment="Center"
+                            Margin="0,0,0,0" />
+                </Border>
             </Grid>
         </Grid>
 
@@ -275,5 +311,11 @@
         <views:ClickerCustomizeScreen x:Name="ClickerCustomizeScreen" IsVisible="False" />
         <views:BackgroundCustomizeScreen x:Name="BackgroundCustomizeScreen" IsVisible="False" />
         
+        <!-- Fullscreen black fader used for cross-screen transitions -->
+        <Rectangle x:Name="ScreenFader"
+               Fill="Black"
+               Opacity="0"
+               IsHitTestVisible="False" />
+
     </Grid>
 </Window>

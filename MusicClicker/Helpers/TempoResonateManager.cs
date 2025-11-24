@@ -68,19 +68,20 @@ namespace MusicClicker
 
         private void LoadBitmaps()
         {
-            // Load all major score images into cache
+            // Preload all major score images into the bitmap cache.
+            // Use TryGetValue / single dictionary access per key to reduce hash lookups.
             foreach (var kvp in _majorScoreImages)
             {
-                if (!_bitmapCache.ContainsKey(kvp.Key))
+                if (!_bitmapCache.TryGetValue(kvp.Key, out _))
                 {
-                    using var stream = AssetLoader.Open(new Uri(kvp.Value));
-                    _bitmapCache[kvp.Key] = new Bitmap(stream);
+                    var bmp = MusicClicker.Helpers.ImageHelpers.GetBitmap(kvp.Value, 256);
+                    if (bmp != null)
+                        _bitmapCache[kvp.Key] = bmp;
                 }
             }
 
-            // Load placeholder image for "None" equipped state
-            using var emptyStream = AssetLoader.Open(new Uri("avares://MusicClicker/Assets/EmptyResonate.png"));
-            _emptyBitmap = new Bitmap(emptyStream);
+            // Load placeholder image for the "None" equipped state once and reuse it.
+            _emptyBitmap = MusicClicker.Helpers.ImageHelpers.GetBitmap("avares://MusicClicker/Assets/EmptyResonate.png", 256);
         }
 
         private void RestoreSavedState()
@@ -132,19 +133,14 @@ namespace MusicClicker
             // Create entry button for each score image
             foreach (var score in _majorScoreImages.Keys)
             {
-                var bitmap = _bitmapCache[score];
+                // Try fetch the preloaded bitmap from the cache; if for some reason it's missing,
+                // fall back to a placeholder image. This avoids an exception and reduces repeated
+                // dictionary lookups when re-rendering the drawer.
+                _bitmapCache.TryGetValue(score, out var bitmap);
+                var imageSource = bitmap ?? _emptyBitmap;
 
-                // Image for button content
-                var imageControl = new Image
-                {
-                    Source = bitmap,
-                    Width = 256,
-                    Height = 144,
-                    Stretch = Stretch.UniformToFill,
-                    Margin = new Thickness(5),
-                    Tag = score,
-                    Opacity = OwnsScore(score) ? 1.0 : 0.3 // Dim if not owned
-                };
+                // Image for button content - use helper to ensure smooth scaling and consistent settings
+                var imageControl = MusicClicker.Helpers.ImageHelpers.CreateSmoothImage(imageSource, 256, 144, score, OwnsScore(score) ? 1.0 : 0.3, OwnsScore(score));
 
                 // Transparent button overlay for click handling
                 var button = new Button
@@ -155,7 +151,7 @@ namespace MusicClicker
                     BorderThickness = new Thickness(0),
                     Margin = new Thickness(5),
                     Content = imageControl,
-                    IsEnabled = OwnsScore(score) // Disable if not owned
+                    IsEnabled = OwnsScore(score)
                 };
 
                 // Clicking toggles equip/disable prompt
@@ -171,7 +167,7 @@ namespace MusicClicker
                     }
                 };
 
-                _leftDrawerPanel.Children.Add(button);
+                    _leftDrawerPanel.Children.Add(button);
             }
         }
 
@@ -275,13 +271,7 @@ namespace MusicClicker
             _equippedText.Text = scoreName;
             _equippedBitmap = _bitmapCache[scoreName];
 
-            _equippedDisplay.Child = new Image
-            {
-                Source = _equippedBitmap,
-                Width = 384,
-                Height = 216,
-                Stretch = Stretch.UniformToFill
-            };
+            _equippedDisplay.Child = MusicClicker.Helpers.ImageHelpers.CreateSmoothImage(_equippedBitmap, 384, 216, null, 1.0, true);
 
             // Disable all major ability flags
             _gameState.MoonlightMajorAbility = false;

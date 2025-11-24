@@ -1,8 +1,17 @@
-// GameState.cs
+// GameState holds the full, serializable snapshot of the player's progression.
+// Design choices:
+// - Many fields are exposed as public backing fields with thin properties. This allows
+//   other parts of the code to pass fields by reference (ref) where necessary (e.g.
+//   crafting and upgrade handlers) while still providing properties for serialization
+//   systems that expect property access.
+// - Keep this class lightweight: it is a plain data container without behavior.
 namespace MusicClicker
 {
     public class GameState
     {
+        // Save format version - keep this field to support future migrations.
+        public int SaveVersion = 2;
+
         // Base gameplay stats - public fields for ref support, properties for serialization
         public double _notes = 0;
         public double Notes { get => _notes; set => _notes = value; }
@@ -39,28 +48,57 @@ namespace MusicClicker
         public int MagnumOpusOwned { get => _magnumOpusOwned; set => _magnumOpusOwned = value; }
 
         // Base upgrade costs
-        public double _chordBaseCost = 10;
+        public double _chordBaseCost = 50;
         public double ChordBaseCost { get => _chordBaseCost; set => _chordBaseCost = value; }
         
-        public double _scaleBaseCost = 50;
+        public double _scaleBaseCost = 500;
         public double ScaleBaseCost { get => _scaleBaseCost; set => _scaleBaseCost = value; }
         
-        public double _orchestraBaseCost = 100;
+        public double _orchestraBaseCost = 1000;
         public double OrchestraBaseCost { get => _orchestraBaseCost; set => _orchestraBaseCost = value; }
         
-        public double _symphonyBaseCost = 350;
+        public double _symphonyBaseCost = 10000;
         public double SymphonyBaseCost { get => _symphonyBaseCost; set => _symphonyBaseCost = value; }
+
+        // Per-upgrade effect tuning (base effect and exponential growth factors)
+        // NPS upgrades
+        // Set to fixed values as requested: +5, +25, +125, +625 NPS respectively.
+        public double ChordBaseNpsEffect { get; set; } = 5.0;
+        public double ChordNpsGrowth { get; set; } = 1.0;
+
+        public double ScaleBaseNpsEffect { get; set; } = 25.0;
+        public double ScaleNpsGrowth { get; set; } = 1.0;
+
+        public double OrchestraBaseNpsEffect { get; set; } = 125.0;
+        public double OrchestraNpsGrowth { get; set; } = 1.0;
+
+        public double SymphonyBaseNpsEffect { get; set; } = 625.0;
+        public double SymphonyNpsGrowth { get; set; } = 1.0;
+
+        // Click upgrades
+        // NPC / click upgrade values as requested: +1, +5, +25, +125 clicks respectively.
+        public double AriaBaseClickEffect { get; set; } = 1.0;
+        public double AriaClickGrowth { get; set; } = 1.0;
+
+        public double RequiemBaseClickEffect { get; set; } = 5.0;
+        public double RequiemClickGrowth { get; set; } = 1.0;
+
+        public double OpusBaseClickEffect { get; set; } = 25.0;
+        public double OpusClickGrowth { get; set; } = 1.0;
+
+        public double MagnumOpusBaseClickEffect { get; set; } = 125.0;
+        public double MagnumOpusClickGrowth { get; set; } = 1.0;
         
-        public double _ariaBaseCost = 350;
+        public double _ariaBaseCost = 500;
         public double AriaBaseCost { get => _ariaBaseCost; set => _ariaBaseCost = value; }
         
-        public double _requiemBaseCost = 750;
+        public double _requiemBaseCost = 5000;
         public double RequiemBaseCost { get => _requiemBaseCost; set => _requiemBaseCost = value; }
         
-        public double _opusBaseCost = 1500;
+        public double _opusBaseCost = 500000;
         public double OpusBaseCost { get => _opusBaseCost; set => _opusBaseCost = value; }
         
-        public double _magnumOpusBaseCost = 3000;
+        public double _magnumOpusBaseCost = 5000000;
         public double MagnumOpusBaseCost { get => _magnumOpusBaseCost; set => _magnumOpusBaseCost = value; }
 
         // Fragmentation state
@@ -290,7 +328,7 @@ namespace MusicClicker
         
         public int _enigmaMajorProgressions = 0;
         public int EnigmaMajorProgressions { get => _enigmaMajorProgressions; set => _enigmaMajorProgressions = value; }
-        
+
         public int _fateMajorKeys = 0;
         public int FateMajorKeys { get => _fateMajorKeys; set => _fateMajorKeys = value; }
         
@@ -299,70 +337,73 @@ namespace MusicClicker
         
         public int _fateMajorProgressions = 0;
         public int FateMajorProgressions { get => _fateMajorProgressions; set => _fateMajorProgressions = value; }
-        
-        public int _odeToJoyMajorKeys = 0;
+
+        // Ode to Joy major fragments (may be referenced by other systems)
+        public int _odeToJoyMajorKeys = 0; 
         public int OdeToJoyMajorKeys { get => _odeToJoyMajorKeys; set => _odeToJoyMajorKeys = value; }
-        
-        public int _odeToJoyMajorScales = 0;
+
+        public int _odeToJoyMajorScales = 0; 
         public int OdeToJoyMajorScales { get => _odeToJoyMajorScales; set => _odeToJoyMajorScales = value; }
-        
+
         public int _odeToJoyMajorProgressions = 0;
         public int OdeToJoyMajorProgressions { get => _odeToJoyMajorProgressions; set => _odeToJoyMajorProgressions = value; }
+        // Armor of Forte - Weapon Ownership booleans (true = owned)
+        // Naming uses the weapon identifier (no spaces/special chars) matching displayed names.
+        public bool _eulogyOfTheMoon = false;
+        public bool EulogyOfTheMoon { get => _eulogyOfTheMoon; set => _eulogyOfTheMoon = value; }
 
-        // Armor of Forte - Weapon Ownership (0 = not owned, 1 = owned)
-        public int _moonlightBladeIOwned = 0;
-        public int MoonlightBladeIOwned { get => _moonlightBladeIOwned; set => _moonlightBladeIOwned = value; }
-        
-        public int _moonlightBladeIIOwned = 0;
-        public int MoonlightBladeIIOwned { get => _moonlightBladeIIOwned; set => _moonlightBladeIIOwned = value; }
-        
-        public int _eroicaSwordIOwned = 0;
-        public int EroicaSwordIOwned { get => _eroicaSwordIOwned; set => _eroicaSwordIOwned = value; }
-        
-        public int _eroicaSwordIIOwned = 0;
-        public int EroicaSwordIIOwned { get => _eroicaSwordIIOwned; set => _eroicaSwordIIOwned = value; }
-        
-        public int _swanLanceIOwned = 0;
-        public int SwanLanceIOwned { get => _swanLanceIOwned; set => _swanLanceIOwned = value; }
-        
-        public int _swanLanceIIOwned = 0;
-        public int SwanLanceIIOwned { get => _swanLanceIIOwned; set => _swanLanceIIOwned = value; }
-        
-        public int _campanellaDaggerIOwned = 0;
-        public int CampanellaDaggerIOwned { get => _campanellaDaggerIOwned; set => _campanellaDaggerIOwned = value; }
-        
-        public int _campanellaDaggerIIOwned = 0;
-        public int CampanellaDaggerIIOwned { get => _campanellaDaggerIIOwned; set => _campanellaDaggerIIOwned = value; }
-        
-        public int _enigmaStaffIOwned = 0;
-        public int EnigmaStaffIOwned { get => _enigmaStaffIOwned; set => _enigmaStaffIOwned = value; }
-        
-        public int _enigmaStaffIIOwned = 0;
-        public int EnigmaStaffIIOwned { get => _enigmaStaffIIOwned; set => _enigmaStaffIIOwned = value; }
-        
-        public int _fateAxeIOwned = 0;
-        public int FateAxeIOwned { get => _fateAxeIOwned; set => _fateAxeIOwned = value; }
-        
-        public int _fateAxeIIOwned = 0;
-        public int FateAxeIIOwned { get => _fateAxeIIOwned; set => _fateAxeIIOwned = value; }
-        
-        public int _joyHammerIOwned = 0;
-        public int JoyHammerIOwned { get => _joyHammerIOwned; set => _joyHammerIOwned = value; }
-        
-        public int _joyHammerIIOwned = 0;
-        public int JoyHammerIIOwned { get => _joyHammerIIOwned; set => _joyHammerIIOwned = value; }
-        
-        public int _diesIraeScytheIOwned = 0;
-        public int DiesIraeScytheIOwned { get => _diesIraeScytheIOwned; set => _diesIraeScytheIOwned = value; }
-        
-        public int _diesIraeScytheIIOwned = 0;
-        public int DiesIraeScytheIIOwned { get => _diesIraeScytheIIOwned; set => _diesIraeScytheIIOwned = value; }
-        
-        public int _winterBowIOwned = 0;
-        public int WinterBowIOwned { get => _winterBowIOwned; set => _winterBowIOwned = value; }
-        
-        public int _winterBowIIOwned = 0;
-        public int WinterBowIIOwned { get => _winterBowIIOwned; set => _winterBowIIOwned = value; }
+        public bool _incisorOfMoonlight = false;
+        public bool IncisorOfMoonlight { get => _incisorOfMoonlight; set => _incisorOfMoonlight = value; }
+
+        public bool _sakurasBlossom = false;
+        public bool SakurasBlossom { get => _sakurasBlossom; set => _sakurasBlossom = value; }
+
+        public bool _funeralPrayer = false;
+        public bool FuneralPrayer { get => _funeralPrayer; set => _funeralPrayer = value; }
+
+        public bool _starScatteredWings = false;
+        public bool StarScatteredWings { get => _starScatteredWings; set => _starScatteredWings = value; }
+
+        public bool _thousandWingedSwan = false;
+        public bool ThousandWingedSwan { get => _thousandWingedSwan; set => _thousandWingedSwan = value; }
+
+        public bool _symphonyOfBells = false;
+        public bool SymphonyOfBells { get => _symphonyOfBells; set => _symphonyOfBells = value; }
+
+        public bool _razerOfBellsChimes = false;
+        public bool RazerOfBellsChimes { get => _razerOfBellsChimes; set => _razerOfBellsChimes = value; }
+
+        public bool _creatorOfMystery = false;
+        public bool CreatorOfMystery { get => _creatorOfMystery; set => _creatorOfMystery = value; }
+
+        public bool _truthseeker = false;
+        public bool Truthseeker { get => _truthseeker; set => _truthseeker = value; }
+
+        public bool _astralChainripper = false;
+        public bool AstralChainripper { get => _astralChainripper; set => _astralChainripper = value; }
+
+        public bool _cosmicWeaver = false;
+        public bool CosmicWeaver { get => _cosmicWeaver; set => _cosmicWeaver = value; }
+
+        public bool _joyfulCatharsis = false;
+        public bool JoyfulCatharsis { get => _joyfulCatharsis; set => _joyfulCatharsis = value; }
+
+        public bool _odeToCreation = false;
+        public bool OdeToCreation { get => _odeToCreation; set => _odeToCreation = value; }
+
+        // Renamed event weapon ownership fields to match display names.
+        // Note: renaming these fields/properties will change serialized names in saves.
+        public bool _sevenCircles = false;
+        public bool SevenCircles { get => _sevenCircles; set => _sevenCircles = value; }
+
+        public bool _hellsWrath = false;
+        public bool HellsWrath { get => _hellsWrath; set => _hellsWrath = value; }
+
+        public bool _cacophonicBlizzard = false;
+        public bool CacophonicBlizzard { get => _cacophonicBlizzard; set => _cacophonicBlizzard = value; }
+
+        public bool _theSnowsDesire = false;
+        public bool TheSnowsDesire { get => _theSnowsDesire; set => _theSnowsDesire = value; }
 
         public string CurrentClickerImage { get; set; } = "avares://MusicClicker/Assets/Music Game Assets [A961E2A]-min.png";
         public string CurrentBackgroundImage { get; set; } = "avares://MusicClicker/Assets/sacredtrevor_A_grand_musical_city_lights_everywhere_popular_shi_d84ff662-c87b-4630-9887-25228f42097b-min.png";
