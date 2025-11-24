@@ -243,7 +243,12 @@ namespace MusicClicker
                 TempoResonateScreen.EquipPromptPanel,
                 TempoResonateScreen.EquipPromptText,
                 TempoResonateScreen.EquipYesButton,
-                TempoResonateScreen.EquipNoButton
+                TempoResonateScreen.EquipNoButton,
+                TempoResonateScreen.RightDrawerPanel,
+                TempoResonateScreen.EquippedWeaponDisplay1,
+                TempoResonateScreen.EquippedWeaponText1,
+                TempoResonateScreen.EquippedWeaponDisplay2,
+                TempoResonateScreen.EquippedWeaponText2
             );
 
             // Wire up button click handlers
@@ -275,6 +280,15 @@ namespace MusicClicker
                 try
                 {
                     UIUpdater.UpdateNotesOnly(this, gameState);
+                }
+                catch { }
+
+                // Let the TempoResonateManager inspect state each tick and update its UI
+                // (e.g., reset equipped image when a resonated score is lost).
+                try
+                {
+                    if (GlobalTempoManager != null)
+                        GlobalTempoManager.TickUpdate();
                 }
                 catch { }
 

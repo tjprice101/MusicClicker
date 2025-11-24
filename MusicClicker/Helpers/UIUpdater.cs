@@ -429,6 +429,7 @@ namespace MusicClicker
             if (window.IsUserInteracting == true) return;
 
             window.UnityTheSymphonyScreen.UnityNotesTextHeader.Text = $"Notes: {Math.Round(gameState.Notes, 1)}";
+            try { window.UnityTheSymphonyScreen.EntropicMelodyText.Text = $"Entropic Melody: {gameState.EntropicMelodies}"; } catch { }
 
             window.UnityTheSymphonyScreen.MoonlightMinorOwnedText.Text = $"{gameState.MoonlightMinorOwned} Owned";
             window.UnityTheSymphonyScreen.EroicaMinorOwnedText.Text = $"{gameState.EroicaMinorOwned} Owned";
@@ -456,6 +457,7 @@ namespace MusicClicker
                 return;
 
             window.UnityTheSymphonyScreen.UnityNotesTextHeader.Text = $"Notes: {Math.Round(gameState.Notes, 1)}";
+            try { window.UnityTheSymphonyScreen.EntropicMelodyText.Text = $"Entropic Melody: {gameState.EntropicMelodies}"; } catch { }
 
             window.UnityTheSymphonyScreen.MoonlightMinorOwnedText.Text = $"{gameState.MoonlightMinorOwned} Owned";
             window.UnityTheSymphonyScreen.EroicaMinorOwnedText.Text = $"{gameState.EroicaMinorOwned} Owned";

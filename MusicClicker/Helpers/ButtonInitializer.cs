@@ -350,6 +350,9 @@ namespace MusicClicker
                 {
                     window.MainScreen.IsVisible = false;
                     window.UnityTheSymphonyScreen.IsVisible = true;
+                    // Ensure the screen has access to the current GameState so dissolve
+                    // buttons and other handlers can operate on it.
+                    try { window.UnityTheSymphonyScreen.SetGameState(window.GameState, window); } catch { }
                     UIUpdater.UpdateUnitySymphonyUI(window, window.GameState);
                 });
             };

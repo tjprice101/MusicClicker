@@ -75,10 +75,8 @@ namespace MusicClicker.Views
         {
             try
             {
-                // Option 1: show currently selected/default background from game state if available
-                string defaultUri = _gameState != null && !string.IsNullOrEmpty(_gameState.CurrentBackgroundImage)
-                    ? _gameState.CurrentBackgroundImage
-                    : "avares://MusicClicker/Assets/sacredtrevor_A_grand_musical_city_lights_everywhere_popular_shi_d84ff662-c87b-4630-9887-25228f42097b-min.png";
+                // Option 1: always show the app's default background asset
+                string defaultUri = "avares://MusicClicker/Assets/sacredtrevor_A_grand_musical_city_lights_everywhere_popular_shi_d84ff662-c87b-4630-9887-25228f42097b-min.png";
 
                 var defaultBmp = ImageHelpers.GetBitmap(defaultUri, 256);
                 if (defaultBmp != null)
@@ -137,10 +135,8 @@ namespace MusicClicker.Views
             switch (optionNumber)
             {
                 case 1:
-                    // Default main background (musical city lights)
-                    imageUri = _gameState != null && !string.IsNullOrEmpty(_gameState.CurrentBackgroundImage)
-                        ? _gameState.CurrentBackgroundImage
-                        : "avares://MusicClicker/Assets/sacredtrevor_A_grand_musical_city_lights_everywhere_popular_shi_d84ff662-c87b-4630-9887-25228f42097b-min.png";
+                    // Default main background (musical city lights) - reset to the packaged default
+                    imageUri = "avares://MusicClicker/Assets/sacredtrevor_A_grand_musical_city_lights_everywhere_popular_shi_d84ff662-c87b-4630-9887-25228f42097b-min.png";
                     break;
                 case 2:
                     // Custom background 1

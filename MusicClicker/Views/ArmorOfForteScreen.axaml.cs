@@ -25,9 +25,9 @@ namespace MusicClicker.Views
         // Array of all weapon names displayed in the shop (18 total weapons)
         private readonly string[] _weaponNames = new[]
         {
-            // Moonlight weapons — user requested Eulogy first, then Incisor
-            "Eulogy of the Moon",        // Tier 1 Moonlight weapon (now first)
-            "Incisor of Moonlight",      // Tier 2 Moonlight weapon (now second)
+            // Moonlight weapons — user requested Incisor first, then Eulogy
+            "Incisor of Moonlight",      // Tier 1 Moonlight weapon (now first)
+            "Eulogy of the Moon",        // Tier 2 Moonlight weapon (now second)
 
             // Eroica (user-provided replacements)
             "Sakura's Blossom",          // Eroica 1
@@ -190,8 +190,8 @@ namespace MusicClicker.Views
 
             return weaponIndex switch
             {
-                0 => _gameState.EulogyOfTheMoon,
-                1 => _gameState.IncisorOfMoonlight,
+                0 => _gameState.IncisorOfMoonlight,
+                1 => _gameState.EulogyOfTheMoon,
                 2 => _gameState.SakurasBlossom,
                 3 => _gameState.FuneralPrayer,
                 4 => _gameState.StarScatteredWings,
@@ -223,8 +223,8 @@ namespace MusicClicker.Views
             // Update the appropriate game state property based on weapon index
             switch (weaponIndex)
             {
-                case 0: _gameState.EulogyOfTheMoon = value; break;
-                case 1: _gameState.IncisorOfMoonlight = value; break;
+                case 0: _gameState.IncisorOfMoonlight = value; break;
+                case 1: _gameState.EulogyOfTheMoon = value; break;
                 case 2: _gameState.SakurasBlossom = value; break;
                 case 3: _gameState.FuneralPrayer = value; break;
                 case 4: _gameState.StarScatteredWings = value; break;

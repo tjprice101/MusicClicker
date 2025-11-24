@@ -35,20 +35,18 @@ namespace MusicClicker.Views
             // Update which buttons are enabled/disabled based on player progress
             UpdateButtonStates();
 
-            // Ensure the first option shows the current clicker image (dynamic)
+            // Ensure the first option shows the packaged default clicker image
             try
             {
-                if (!string.IsNullOrEmpty(_gameState.CurrentClickerImage))
+                string defaultUri = "avares://MusicClicker/Assets/Music Game Assets [A961E2A]-min.png";
+                var bmp = ImageHelpers.GetBitmap(defaultUri, 128);
+                if (bmp != null)
                 {
-                    var bmp = ImageHelpers.GetBitmap(_gameState.CurrentClickerImage, 128);
-                    if (bmp != null)
+                    ClickerOption1.Content = new Avalonia.Controls.Image
                     {
-                        ClickerOption1.Content = new Avalonia.Controls.Image
-                        {
-                            Source = bmp,
-                            Stretch = Avalonia.Media.Stretch.Uniform
-                        };
-                    }
+                        Source = bmp,
+                        Stretch = Avalonia.Media.Stretch.Uniform
+                    };
                 }
             }
             catch
