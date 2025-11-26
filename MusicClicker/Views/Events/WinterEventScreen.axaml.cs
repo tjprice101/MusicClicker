@@ -33,7 +33,7 @@ namespace MusicClicker.Views
 
 			if (this.FindControl<TextBlock>("NotesText") is TextBlock notes)
 			{
-				notes.Text = $"Notes: {Math.Round(gameState.Notes, 1)}";
+				notes.Text = $"Notes: {MusicClicker.UIUpdater.FormatNotes(gameState.Notes)}";
 			}
 
 			try

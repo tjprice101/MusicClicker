@@ -3,6 +3,7 @@ using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using Avalonia;
+using Avalonia.Threading;
 using System;
 using System.Collections.Generic;
 
@@ -22,6 +23,11 @@ namespace MusicClicker
         private readonly TextBlock? _equippedWeaponText1;
         private readonly Border? _equippedWeaponDisplay2;
         private readonly TextBlock? _equippedWeaponText2;
+        private readonly TextBlock? _duetResonanceText;
+
+        // Duet color oscillation state
+        private readonly DispatcherTimer _duetColorTimer;
+        private bool _duetColorToggle = false;
 
         // Game state reference
         private readonly GameState _gameState;
@@ -126,7 +132,7 @@ namespace MusicClicker
             StackPanel leftDrawerPanel, Border equippedDisplay, TextBlock equippedText, GameState gameState,
             StackPanel equipPromptPanel, TextBlock equipPromptText, Button equipYesButton, Button equipNoButton,
             StackPanel? rightDrawerPanel = null, Border? equippedWeaponDisplay1 = null, TextBlock? equippedWeaponText1 = null,
-            Border? equippedWeaponDisplay2 = null, TextBlock? equippedWeaponText2 = null)
+            Border? equippedWeaponDisplay2 = null, TextBlock? equippedWeaponText2 = null, TextBlock? duetResonanceText = null)
         {
             // Store UI and game state references
             _leftDrawerPanel = leftDrawerPanel;
@@ -137,12 +143,22 @@ namespace MusicClicker
             _equippedWeaponText1 = equippedWeaponText1;
             _equippedWeaponDisplay2 = equippedWeaponDisplay2;
             _equippedWeaponText2 = equippedWeaponText2;
+            _duetResonanceText = duetResonanceText;
             _gameState = gameState;
 
             _equipPromptPanel = equipPromptPanel;
             _equipPromptText = equipPromptText;
             _equipYesButton = equipYesButton;
             _equipNoButton = equipNoButton;
+
+            // Initialize duet color oscillation timer
+            _duetColorTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(500) };
+            _duetColorTimer.Tick += (s, e) =>
+            {
+                _duetColorToggle = !_duetColorToggle;
+                UpdateDuetTextColor();
+            };
+            _duetColorTimer.Start();
 
             // Load images, populate drawer, and set initial equipped state
             LoadBitmaps();
@@ -320,6 +336,17 @@ namespace MusicClicker
                 "StarScatteredWings" => _gameState.StarScatteredWings,
                 "ThousandWingedSwan" => _gameState.ThousandWingedSwan,
                 "SymphonyOfBells" => _gameState.SymphonyOfBells,
+                "RazerOfBellsChimes" => _gameState.RazerOfBellsChimes,
+                "CreatorOfMystery" => _gameState.CreatorOfMystery,
+                "Truthseeker" => _gameState.Truthseeker,
+                "AstralChainripper" => _gameState.AstralChainripper,
+                "CosmicWeaver" => _gameState.CosmicWeaver,
+                "JoyfulCatharsis" => _gameState.JoyfulCatharsis,
+                "OdeToCreation" => _gameState.OdeToCreation,
+                "SevenCircles" => _gameState.SevenCircles,
+                "HellsWrath" => _gameState.HellsWrath,
+                "CacophonicBlizzard" => _gameState.CacophonicBlizzard,
+                "TheSnowsDesire" => _gameState.TheSnowsDesire,
                 _ => false
             };
         }
@@ -428,6 +455,23 @@ namespace MusicClicker
                 case "StarScatteredWings": _gameState.StarScatteredWingsAbility = true; break;
                 case "ThousandWingedSwan": _gameState.ThousandWingedSwanAbility = true; break;
                 case "SymphonyOfBells": _gameState.SymphonyOfBellsAbility = true; break;
+                case "RazerOfBellsChimes": _gameState.RazerOfBellsChimes = true; break;
+                case "CreatorOfMystery": _gameState.CreatorOfMystery = true; break;
+                case "Truthseeker": _gameState.Truthseeker = true; break;
+                case "AstralChainripper": _gameState.AstralChainripper = true; break;
+                case "CosmicWeaver": _gameState.CosmicWeaver = true; break;
+                case "JoyfulCatharsis": _gameState.JoyfulCatharsis = true; break;
+                case "OdeToCreation": _gameState.OdeToCreation = true; break;
+                case "SevenCircles": _gameState.SevenCircles = true; break;
+                case "HellsWrath": _gameState.HellsWrath = true; break;
+                case "CacophonicBlizzard": 
+                    _gameState.CacophonicBlizzard = true; 
+                    _gameState.CacophonicBlizzardAbility = true; 
+                    break;
+                case "TheSnowsDesire": 
+                    _gameState.TheSnowsDesire = true; 
+                    _gameState.TheSnowsDesireAbility = true; 
+                    break;
             }
 
             // Refresh weapon drawer UI
@@ -449,6 +493,23 @@ namespace MusicClicker
                 case "StarScatteredWings": _gameState.StarScatteredWingsAbility = false; break;
                 case "ThousandWingedSwan": _gameState.ThousandWingedSwanAbility = false; break;
                 case "SymphonyOfBells": _gameState.SymphonyOfBellsAbility = false; break;
+                case "RazerOfBellsChimes": _gameState.RazerOfBellsChimes = false; break;
+                case "CreatorOfMystery": _gameState.CreatorOfMystery = false; break;
+                case "Truthseeker": _gameState.Truthseeker = false; break;
+                case "AstralChainripper": _gameState.AstralChainripper = false; break;
+                case "CosmicWeaver": _gameState.CosmicWeaver = false; break;
+                case "JoyfulCatharsis": _gameState.JoyfulCatharsis = false; break;
+                case "OdeToCreation": _gameState.OdeToCreation = false; break;
+                case "SevenCircles": _gameState.SevenCircles = false; break;
+                case "HellsWrath": _gameState.HellsWrath = false; break;
+                case "CacophonicBlizzard": 
+                    _gameState.CacophonicBlizzard = false; 
+                    _gameState.CacophonicBlizzardAbility = false; 
+                    break;
+                case "TheSnowsDesire": 
+                    _gameState.TheSnowsDesire = false; 
+                    _gameState.TheSnowsDesireAbility = false; 
+                    break;
             }
 
             if (slot == 1)
@@ -488,6 +549,101 @@ namespace MusicClicker
                 targetText.Text = _weaponDisplayNames.TryGetValue(weaponName, out var disp2) ? disp2 : weaponName;
                 targetBorder.Child = new Image { Source = _emptyBitmap, Width = targetBorder.Width, Height = targetBorder.Height, Stretch = Stretch.UniformToFill };
             }
+
+            // Update duet resonance text
+            UpdateDuetResonanceText();
+        }
+
+        private void UpdateDuetResonanceText()
+        {
+            if (_duetResonanceText == null) return;
+
+            string weapon1 = _gameState.CurrentResonatedWeapon1;
+            string weapon2 = _gameState.CurrentResonatedWeapon2;
+
+            // Check if both weapons are equipped and from the same score
+            string duetText = GetDuetText(weapon1, weapon2);
+            
+            if (!string.IsNullOrEmpty(duetText))
+            {
+                _duetResonanceText.Text = duetText;
+                _duetResonanceText.IsVisible = true;
+                UpdateDuetTextColor();
+            }
+            else
+            {
+                _duetResonanceText.Text = "";
+                _duetResonanceText.IsVisible = false;
+            }
+        }
+
+        private string GetDuetText(string weapon1, string weapon2)
+        {
+            // Check for matching pairs from the same score
+            if ((weapon1 == "IncisorOfMoonlight" && weapon2 == "EulogyOfTheMoon") ||
+                (weapon1 == "EulogyOfTheMoon" && weapon2 == "IncisorOfMoonlight"))
+            {
+                return "Moonlight Duet: Every 12th click increases all upgrade values by 1";
+            }
+
+            if ((weapon1 == "SakurasBlossom" && weapon2 == "FuneralPrayer") ||
+                (weapon1 == "FuneralPrayer" && weapon2 == "SakurasBlossom"))
+            {
+                return "Eroica Duet: If any minor score exceeds 10, double its NPS output";
+            }
+
+            if ((weapon1 == "StarScatteredWings" && weapon2 == "ThousandWingedSwan") ||
+                (weapon1 == "ThousandWingedSwan" && weapon2 == "StarScatteredWings"))
+            {
+                return "Swan Lake Duet: If you own 50+ Melodious and 100+ Harmonious fragments, NPS is doubled";
+            }
+
+            if ((weapon1 == "SymphonyOfBells" && weapon2 == "RazerOfBellsChimes") ||
+                (weapon1 == "RazerOfBellsChimes" && weapon2 == "SymphonyOfBells"))
+            {
+                return "La Campanella Duet: Major crafting grants +5 minor scores of that type";
+            }
+
+            if ((weapon1 == "CreatorOfMystery" && weapon2 == "Truthseeker") ||
+                (weapon1 == "Truthseeker" && weapon2 == "CreatorOfMystery"))
+            {
+                return "Enigma Duet: Effect TBD";
+            }
+
+            if ((weapon1 == "AstralChainripper" && weapon2 == "CosmicWeaver") ||
+                (weapon1 == "CosmicWeaver" && weapon2 == "AstralChainripper"))
+            {
+                return "Fate Duet: Every 45th click doubles whichever minor score is the lowest owned";
+            }
+
+            if ((weapon1 == "JoyfulCatharsis" && weapon2 == "OdeToCreation") ||
+                (weapon1 == "OdeToCreation" && weapon2 == "JoyfulCatharsis"))
+            {
+                return "Ode to Joy Duet: Notes per Second becomes Notes per Half-Second (2x rate)";
+            }
+
+            if ((weapon1 == "SevenCircles" && weapon2 == "HellsWrath") ||
+                (weapon1 == "HellsWrath" && weapon2 == "SevenCircles"))
+            {
+                return "Dies Irae Duet: ???";
+            }
+
+            if ((weapon1 == "CacophonicBlizzard" && weapon2 == "TheSnowsDesire") ||
+                (weapon1 == "TheSnowsDesire" && weapon2 == "CacophonicBlizzard"))
+            {
+                return "Winter Duet: Frozen NPS value is used as a multiplier for all clicks";
+            }
+
+            return "";
+        }
+
+        private void UpdateDuetTextColor()
+        {
+            if (_duetResonanceText == null || !_duetResonanceText.IsVisible) return;
+
+            _duetResonanceText.Foreground = _duetColorToggle 
+                ? new SolidColorBrush(Color.FromRgb(255, 192, 203))  // Pink
+                : Brushes.White;
         }
 
         public void RefreshDrawer()
@@ -652,6 +808,7 @@ namespace MusicClicker
             // Destructor-safe cleanup pattern
             if (_disposed) return;
             _disposed = true;
+            _duetColorTimer?.Stop();
             GC.SuppressFinalize(this);
         }
 

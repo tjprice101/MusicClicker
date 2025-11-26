@@ -21,7 +21,7 @@
 
             <ScrollViewer VerticalScrollBarVisibility="Auto"
                 HorizontalScrollBarVisibility="Disabled"
-                Margin="20,100,20,80" Background="Transparent">
+                Margin="20,130,20,80" Background="Transparent">
                 <StackPanel Orientation="Vertical" Spacing="20">
 
                     <!-- Moonlight Sonata Minor -->
@@ -81,7 +81,7 @@
                                 <TextBlock Text="Tempo Resonate Ability: Adds your current Notes per Second to your Notes per Click." Foreground="White"
                                     FontSize="14"
                                     HorizontalAlignment="Center" />
-                                <Button x:Name="MoonlightMajorDissolveButton" Content="Dissolve" Width="120" Height="26" HorizontalAlignment="Center" />
+                                <Button x:Name="MoonlightMajorDissolveButton" Content="Dissolve" Width="120" Height="32" HorizontalAlignment="Center" />
                                 <TextBlock Text="(+1 Entropic Melody)" Foreground="#CCCCCC" FontSize="12" HorizontalAlignment="Center" Margin="0,2,0,0" />
                             </StackPanel>
 
@@ -164,7 +164,7 @@
                                 <TextBlock Text="Tempo Resonate Ability: Uniting a Major Score gives 2 of the corresponding Minor Score." Foreground="White"
                                     FontSize="14"
                                     HorizontalAlignment="Center" />
-                                <Button x:Name="EroicaMajorDissolveButton" Content="Dissolve" Width="120" Height="26" HorizontalAlignment="Center" />
+                                <Button x:Name="EroicaMajorDissolveButton" Content="Dissolve" Width="120" Height="32" HorizontalAlignment="Center" />
                                 <TextBlock Text="(+1 Entropic Melody)" Foreground="#CCCCCC" FontSize="12" HorizontalAlignment="Center" Margin="0,2,0,0" />
                             </StackPanel>
 
@@ -247,7 +247,7 @@
                                 <TextBlock Text="Crescendance Ability" Foreground="White"
                                     FontSize="14"
                                     HorizontalAlignment="Center" />
-                                <Button x:Name="SwanMajorDissolveButton" Content="Dissolve" Width="120" Height="26" HorizontalAlignment="Center" />
+                                <Button x:Name="SwanMajorDissolveButton" Content="Dissolve" Width="120" Height="32" HorizontalAlignment="Center" />
                                 <TextBlock Text="(+1 Entropic Melody)" Foreground="#CCCCCC" FontSize="12" HorizontalAlignment="Center" Margin="0,2,0,0" />
                             </StackPanel>
 
@@ -329,7 +329,7 @@
                                 <TextBlock Text="Tempo Resonate Ability: Notes Per Second updates every .5 seconds." Foreground="White"
                                     FontSize="14"
                                     HorizontalAlignment="Center" />
-                                <Button x:Name="LaCampanellaMajorDissolveButton" Content="Dissolve" Width="120" Height="26" HorizontalAlignment="Center" />
+                                <Button x:Name="LaCampanellaMajorDissolveButton" Content="Dissolve" Width="120" Height="32" HorizontalAlignment="Center" />
                                 <TextBlock Text="(+1 Entropic Melody)" Foreground="#CCCCCC" FontSize="12" HorizontalAlignment="Center" Margin="0,2,0,0" />
                             </StackPanel>
 
@@ -411,7 +411,7 @@
                                 <TextBlock Text="Tempo Resonate Ability: ???" Foreground="White"
                                     FontSize="14"
                                     HorizontalAlignment="Center" />
-                                <Button x:Name="EnigmaMajorDissolveButton" Content="Dissolve" Width="120" Height="26" HorizontalAlignment="Center" />
+                                <Button x:Name="EnigmaMajorDissolveButton" Content="Dissolve" Width="120" Height="32" HorizontalAlignment="Center" />
                                 <TextBlock Text="(+1 Entropic Melody)" Foreground="#CCCCCC" FontSize="12" HorizontalAlignment="Center" Margin="0,2,0,0" />
                             </StackPanel>
 
@@ -492,7 +492,7 @@
                                 <TextBlock Text="Tempo Resonate Ability: Every 5th click on the main menu button increases your current amount of notes by 10%." Foreground="White"
                                     FontSize="14"
                                     HorizontalAlignment="Center" />
-                                <Button x:Name="FateMajorDissolveButton" Content="Dissolve" Width="120" Height="26" HorizontalAlignment="Center" />
+                                <Button x:Name="FateMajorDissolveButton" Content="Dissolve" Width="120" Height="32" HorizontalAlignment="Center" />
                                 <TextBlock Text="(+1 Entropic Melody)" Foreground="#CCCCCC" FontSize="12" HorizontalAlignment="Center" Margin="0,2,0,0" />
                             </StackPanel>
 
@@ -573,7 +573,7 @@
                                 <TextBlock Text="Tempo Resonate Ability: Guarantees 1 major sheet on each click in the Save the Souls menu." Foreground="White"
                                     FontSize="14"
                                     HorizontalAlignment="Center" />
-                                <Button x:Name="OdeToJoyMajorDissolveButton" Content="Dissolve" Width="120" Height="26" HorizontalAlignment="Center" />
+                                <Button x:Name="OdeToJoyMajorDissolveButton" Content="Dissolve" Width="120" Height="32" HorizontalAlignment="Center" />
                                 <TextBlock Text="(+1 Entropic Melody)" Foreground="#CCCCCC" FontSize="12" HorizontalAlignment="Center" Margin="0,2,0,0" />
                             </StackPanel>
 

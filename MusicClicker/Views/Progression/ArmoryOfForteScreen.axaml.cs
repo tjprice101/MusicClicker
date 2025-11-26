@@ -138,7 +138,7 @@ namespace MusicClicker.Views
 
         /// <summary>
         /// Calculates the cost of a weapon based on its index.
-        /// Cost formula: (NPS + 250 * 3^weaponNumber) * (NotesPerClick / 2)
+        /// Cost formula: (NPS + 250 * 3^weaponNumber) * NotesPerClick
         /// Higher weapon numbers = exponentially more expensive.
         /// </summary>
         private double CalculateWeaponCost(int weaponIndex)
@@ -152,7 +152,7 @@ namespace MusicClicker.Views
                 : 250 * Math.Pow(3, weaponIndex + 1);
             
             // Final cost combines passive income (NPS) + exponential base, scaled by click power
-            return (_gameState.NotesPerSecond + baseMultiplier) * (_gameState.NotesPerClick / 2);
+            return (_gameState.NotesPerSecond + baseMultiplier) * _gameState.NotesPerClick;
         }
 
         /// <summary>
@@ -376,24 +376,24 @@ namespace MusicClicker.Views
                 // Eroica (indices 2-3)
                 case 2:
                     forte1 = "Forte Resonance: On acquisition of a score's Major sheet, gives 1 of each Minor Component.";
-                    forte2 = "Forte Resonance: On resonance of a score's Major version, divide your current notes by 2 and give 3 minor scores of your lowest owned minor score.";
+                    forte2 = "Forte Resonance: On acquisition of a score's Major version, divide your current notes by 2 and give 3 minor scores of your lowest owned minor score.";
                     duet = "Duet Resonance: If any minor score exceeds 10, double its notes per second output amount (not time).";
                     break;
                 case 3:
                     forte1 = "Forte Resonance: On acquisition of a score's Major sheet, gives 1 of each Minor Component.";
-                    forte2 = "Forte Resonance: On resonance of a score's Major version, divide your current notes by 2 and give 3 minor scores of your lowest owned minor score.";
+                    forte2 = "Forte Resonance: On acquisition of a score's Major version, divide your current notes by 2 and give 3 minor scores of your lowest owned minor score.";
                     duet = "Duet Resonance: If any minor score exceeds 10, double its notes per second output amount (not time).";
                     break;
 
                 // Swan Lake (indices 4-5)
                 case 4:
-                    forte1 = "Forte Resonance: On buy of Melodious Fragment, increase your current notes by your notes per second / 10.";
-                    forte2 = "Forte Resonance: On buy of Harmonious Fragment, increase your current notes by your notes per second / 5.";
+                    forte1 = "Forte Resonance: On buy of Melodious Fragment, increase your current notes by 5 times your notes per second.";
+                    forte2 = "Forte Resonance: On buy of Harmonious Fragment, increase your current notes by 10 times your notes per second.";
                     duet = "Duet Resonance: If you own 50 or more Melodious fragments and 100 or more Harmonious fragments, your notes per second is doubled until this condition is not met.";
                     break;
                 case 5:
-                    forte1 = "Forte Resonance: On buy of Melodious Fragment, increase your current notes by your notes per second / 10.";
-                    forte2 = "Forte Resonance: On buy of Harmonious Fragment, increase your current notes by your notes per second / 5.";
+                    forte1 = "Forte Resonance: On buy of Melodious Fragment, increase your current notes by 5 times your notes per second.";
+                    forte2 = "Forte Resonance: On buy of Harmonious Fragment, increase your current notes by 10 times your notes per second.";
                     duet = "Duet Resonance: If you own 50 or more Melodious fragments and 100 or more Harmonious fragments, your notes per second is doubled until this condition is not met.";
                     break;
 
@@ -419,14 +419,14 @@ namespace MusicClicker.Views
 
                 // Fate (10-11)
                 case 10:
-                    forte1 = "Forte Resonance: Every 25th click gives you a Moonlight Sonata Minor.";
-                    forte2 = "Forte Resonance: Every 30th click gives you a Swan Lake Minor.";
-                    duet = "Duet Resonance: Every 100th click doubles whichever minor score is the lowest owned.";
+                    forte1 = "Forte Resonance: On Fate minor craft, quintuple your notes per second for the next 10 seconds.";
+                    forte2 = "Forte Resonance: On Fate minor craft, quintuple your notes per click for the next 10 seconds.";
+                    duet = "Duet Resonance: Every 45th click doubles whichever minor score is the lowest owned.";
                     break;
                 case 11:
-                    forte1 = "Forte Resonance: Every 25th click gives you a Moonlight Sonata Minor.";
-                    forte2 = "Forte Resonance: Every 30th click gives you a Swan Lake Minor.";
-                    duet = "Duet Resonance: Every 100th click doubles whichever minor score is the lowest owned.";
+                    forte1 = "Forte Resonance: On Fate minor craft, quintuple your notes per second for the next 10 seconds.";
+                    forte2 = "Forte Resonance: On Fate minor craft, quintuple your notes per click for the next 10 seconds.";
+                    duet = "Duet Resonance: Every 45th click doubles whichever minor score is the lowest owned.";
                     break;
 
                 // Ode to Joy (12-13)
@@ -441,7 +441,26 @@ namespace MusicClicker.Views
                     duet = "Duet Resonance: Notes per Second becomes Notes per Half-Second.";
                     break;
 
-                // Dies Irae & Winter (14-17) - keep existing placeholders
+                // Dies Irae (14-15)
+                case 14:
+                case 15:
+                    forte1 = "Forte Resonance: ???";
+                    forte2 = "Forte Resonance: ???";
+                    duet = "Duet Resonance: ???";
+                    break;
+
+                // Winter (16-17)
+                case 16:
+                    forte1 = "Forte Resonance: Every 50th click freezes your current NPS value for 8 seconds.";
+                    forte2 = "Forte Resonance: On Harmonious fragment purchase, gain notes equal to frozen NPS × 20.";
+                    duet = "Duet Resonance: Frozen NPS is used as a multiplier for all clicks.";
+                    break;
+                case 17:
+                    forte1 = "Forte Resonance: Every 50th click freezes your current NPS value for 8 seconds.";
+                    forte2 = "Forte Resonance: On Harmonious fragment purchase, gain notes equal to frozen NPS × 20.";
+                    duet = "Duet Resonance: Frozen NPS is used as a multiplier for all clicks.";
+                    break;
+
                 default:
                     forte1 = "Forte Resonance: <placeholder>";
                     forte2 = "Forte Resonance: <placeholder>";

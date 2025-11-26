@@ -5,6 +5,8 @@
 //   crafting and upgrade handlers) while still providing properties for serialization
 //   systems that expect property access.
 // - Keep this class lightweight: it is a plain data container without behavior.
+using System;
+
 namespace MusicClicker
 {
     public class GameState
@@ -395,6 +397,43 @@ namespace MusicClicker
 
         public bool _symphonyOfBellsAbility = false;
         public bool SymphonyOfBellsAbility { get => _symphonyOfBellsAbility; set => _symphonyOfBellsAbility = value; }
+
+        public bool _cacophonicBlizzardAbility = false;
+        public bool CacophonicBlizzardAbility { get => _cacophonicBlizzardAbility; set => _cacophonicBlizzardAbility = value; }
+
+        public bool _theSnowsDesireAbility = false;
+        public bool TheSnowsDesireAbility { get => _theSnowsDesireAbility; set => _theSnowsDesireAbility = value; }
+
+        // Duet click counters
+        public int MoonlightDuetClickCounter { get; set; } = 0;
+        public int FateDuetClickCounter { get; set; } = 0;
+
+        // Individual weapon click counters
+        public int OdeToCreationClickCounter { get; set; } = 0;
+
+        // Fate weapon temporary boosts
+        public bool AstralChainripperNpsBoostActive { get; set; } = false;
+        public DateTime AstralChainripperNpsBoostExpiry { get; set; } = DateTime.MinValue;
+        public bool CosmicWeaverClickBoostActive { get; set; } = false;
+        public DateTime CosmicWeaverClickBoostExpiry { get; set; } = DateTime.MinValue;
+
+        // Razer of Bell's Chimes temporary NPS boost
+        public bool RazerNpsBoostActive { get; set; } = false;
+        public DateTime RazerNpsBoostExpiry { get; set; } = DateTime.MinValue;
+
+        // Ode to Creation next click bonus
+        public bool OdeToCreationNextClickBonus { get; set; } = false;
+
+        // Winter weapon mechanics
+        public int CacophonicBlizzardClickCounter { get; set; } = 0;
+        public bool NpsFrozen { get; set; } = false;
+        public double FrozenNpsValue { get; set; } = 0;
+        public DateTime NpsFreezeExpiry { get; set; } = DateTime.MinValue;
+
+        // Dies Irae weapon mechanics
+        public int DiesIraeDuetClickCounter { get; set; } = 0;
+        public double HellsWrathNpsReduction { get; set; } = 0; // Tracks cumulative NPS lost from clicking (max 50%)
+        public DateTime LastCondemnTime { get; set; } = DateTime.MinValue; // Tracks when condemn was last used
 
         // Currently resonated weapons (up to two slots)
         public string CurrentResonatedWeapon1 { get; set; } = "None";

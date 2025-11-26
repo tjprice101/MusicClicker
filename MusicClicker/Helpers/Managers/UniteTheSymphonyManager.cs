@@ -33,6 +33,19 @@ namespace MusicClicker
                 owned++;
                 gameState.NotesPerSecond += 3000;
 
+                // Trigger Symphony of Bells ability (La Campanella I)
+                if (gameState.SymphonyOfBellsAbility)
+                {
+                    MusicClicker.Armory.WeaponAbilities.SymphonyOfBells_OnMinorCraft(gameState, "moonlight");
+                }
+
+                // Trigger Razer of Bell's Chimes ability (La Campanella II)
+                if (gameState.RazerOfBellsChimes && 
+                    (gameState.CurrentResonatedWeapon1 == "RazerOfBellsChimes" || gameState.CurrentResonatedWeapon2 == "RazerOfBellsChimes"))
+                {
+                    MusicClicker.Armory.WeaponAbilities.RazerOfBellsChimes_OnMinorCraft(gameState);
+                }
+
                 canCraft = true;
             }
 
@@ -62,6 +75,19 @@ namespace MusicClicker
 
                 owned++;
                 gameState.NotesPerSecond += 8000;
+
+                // Trigger Symphony of Bells ability (La Campanella I)
+                if (gameState.SymphonyOfBellsAbility)
+                {
+                    MusicClicker.Armory.WeaponAbilities.SymphonyOfBells_OnMinorCraft(gameState, "eroica");
+                }
+
+                // Trigger Razer of Bell's Chimes ability (La Campanella II)
+                if (gameState.RazerOfBellsChimes && 
+                    (gameState.CurrentResonatedWeapon1 == "RazerOfBellsChimes" || gameState.CurrentResonatedWeapon2 == "RazerOfBellsChimes"))
+                {
+                    MusicClicker.Armory.WeaponAbilities.RazerOfBellsChimes_OnMinorCraft(gameState);
+                }
 
                 canCraft = true;
             }
@@ -93,6 +119,19 @@ namespace MusicClicker
                 owned++;
                 gameState.NotesPerSecond += 15000;
 
+                // Trigger Symphony of Bells ability (La Campanella I)
+                if (gameState.SymphonyOfBellsAbility)
+                {
+                    MusicClicker.Armory.WeaponAbilities.SymphonyOfBells_OnMinorCraft(gameState, "swanlake");
+                }
+
+                // Trigger Razer of Bell's Chimes ability (La Campanella II)
+                if (gameState.RazerOfBellsChimes && 
+                    (gameState.CurrentResonatedWeapon1 == "RazerOfBellsChimes" || gameState.CurrentResonatedWeapon2 == "RazerOfBellsChimes"))
+                {
+                    MusicClicker.Armory.WeaponAbilities.RazerOfBellsChimes_OnMinorCraft(gameState);
+                }
+
                 canCraft = true;
             }
 
@@ -122,6 +161,19 @@ namespace MusicClicker
 
                 owned++;
                 gameState.NotesPerSecond += 35000;
+
+                // Trigger Symphony of Bells ability (La Campanella I)
+                if (gameState.SymphonyOfBellsAbility)
+                {
+                    MusicClicker.Armory.WeaponAbilities.SymphonyOfBells_OnMinorCraft(gameState, "lacampanella");
+                }
+
+                // Trigger Razer of Bell's Chimes ability (La Campanella II)
+                if (gameState.RazerOfBellsChimes && 
+                    (gameState.CurrentResonatedWeapon1 == "RazerOfBellsChimes" || gameState.CurrentResonatedWeapon2 == "RazerOfBellsChimes"))
+                {
+                    MusicClicker.Armory.WeaponAbilities.RazerOfBellsChimes_OnMinorCraft(gameState);
+                }
 
                 canCraft = true;
             }
@@ -153,6 +205,19 @@ namespace MusicClicker
                 owned++;
                 gameState.NotesPerSecond += 75000;
 
+                // Trigger Symphony of Bells ability (La Campanella I)
+                if (gameState.SymphonyOfBellsAbility)
+                {
+                    MusicClicker.Armory.WeaponAbilities.SymphonyOfBells_OnMinorCraft(gameState, "enigma");
+                }
+
+                // Trigger Razer of Bell's Chimes ability (La Campanella II)
+                if (gameState.RazerOfBellsChimes && 
+                    (gameState.CurrentResonatedWeapon1 == "RazerOfBellsChimes" || gameState.CurrentResonatedWeapon2 == "RazerOfBellsChimes"))
+                {
+                    MusicClicker.Armory.WeaponAbilities.RazerOfBellsChimes_OnMinorCraft(gameState);
+                }
+
                 canCraft = true;
             }
 
@@ -182,6 +247,33 @@ namespace MusicClicker
 
                 owned++;
                 gameState.NotesPerSecond += 135000;
+
+                // Trigger Symphony of Bells ability (La Campanella I)
+                if (gameState.SymphonyOfBellsAbility)
+                {
+                    MusicClicker.Armory.WeaponAbilities.SymphonyOfBells_OnMinorCraft(gameState, "fate");
+                }
+
+                // Trigger Razer of Bell's Chimes ability (La Campanella II)
+                if (gameState.RazerOfBellsChimes && 
+                    (gameState.CurrentResonatedWeapon1 == "RazerOfBellsChimes" || gameState.CurrentResonatedWeapon2 == "RazerOfBellsChimes"))
+                {
+                    MusicClicker.Armory.WeaponAbilities.RazerOfBellsChimes_OnMinorCraft(gameState);
+                }
+
+                // Trigger Astral Chainripper ability (Fate I)
+                if (gameState.AstralChainripper && 
+                    (gameState.CurrentResonatedWeapon1 == "AstralChainripper" || gameState.CurrentResonatedWeapon2 == "AstralChainripper"))
+                {
+                    MusicClicker.Armory.WeaponAbilities.AstralChainripper_OnFateMinorCraft(gameState);
+                }
+
+                // Trigger Cosmic Weaver ability (Fate II)
+                if (gameState.CosmicWeaver && 
+                    (gameState.CurrentResonatedWeapon1 == "CosmicWeaver" || gameState.CurrentResonatedWeapon2 == "CosmicWeaver"))
+                {
+                    MusicClicker.Armory.WeaponAbilities.CosmicWeaver_OnFateMinorCraft(gameState);
+                }
 
                 canCraft = true;
             }
@@ -213,6 +305,19 @@ namespace MusicClicker
                 owned++;
                 gameState.NotesPerSecond += 255000;
 
+                // Trigger Symphony of Bells ability (La Campanella I)
+                if (gameState.SymphonyOfBellsAbility)
+                {
+                    MusicClicker.Armory.WeaponAbilities.SymphonyOfBells_OnMinorCraft(gameState, "odetojoy");
+                }
+
+                // Trigger Razer of Bell's Chimes ability (La Campanella II)
+                if (gameState.RazerOfBellsChimes && 
+                    (gameState.CurrentResonatedWeapon1 == "RazerOfBellsChimes" || gameState.CurrentResonatedWeapon2 == "RazerOfBellsChimes"))
+                {
+                    MusicClicker.Armory.WeaponAbilities.RazerOfBellsChimes_OnMinorCraft(gameState);
+                }
+
                 canCraft = true;
             }
 
@@ -243,6 +348,18 @@ namespace MusicClicker
                 gameState.HarmoniousOwned -= 10;
 
                 owned++;
+
+                // Trigger Funeral Prayer ability (Eroica II) - on major acquisition
+                if (gameState.FuneralPrayerAbility)
+                {
+                    MusicClicker.Armory.WeaponAbilities.FuneralPrayer_OnMajorAcquisition(gameState);
+                }
+
+                // Trigger La Campanella Duet - gives 5 of corresponding minor
+                if (gameState.SymphonyOfBells && gameState.RazerOfBellsChimes)
+                {
+                    MusicClicker.Armory.WeaponAbilities.LaCampanellaDuet_OnMajorCraft(gameState, "moonlight");
+                }
 
                 if (gameState.EroicaMajorAbility)
                 {
@@ -279,6 +396,18 @@ namespace MusicClicker
 
                 owned++;
 
+                // Trigger Funeral Prayer ability (Eroica II) - on major acquisition
+                if (gameState.FuneralPrayerAbility)
+                {
+                    MusicClicker.Armory.WeaponAbilities.FuneralPrayer_OnMajorAcquisition(gameState);
+                }
+
+                // Trigger La Campanella Duet - gives 5 of corresponding minor
+                if (gameState.SymphonyOfBells && gameState.RazerOfBellsChimes)
+                {
+                    MusicClicker.Armory.WeaponAbilities.LaCampanellaDuet_OnMajorCraft(gameState, "eroica");
+                }
+
                 if (gameState.EroicaMajorAbility)
                 {
                     gameState.EroicaMinorOwned += 2;
@@ -313,6 +442,18 @@ namespace MusicClicker
                 gameState.HarmoniousOwned -= 20;
 
                 owned++;
+
+                // Trigger Funeral Prayer ability (Eroica II) - on major acquisition
+                if (gameState.FuneralPrayerAbility)
+                {
+                    MusicClicker.Armory.WeaponAbilities.FuneralPrayer_OnMajorAcquisition(gameState);
+                }
+
+                // Trigger La Campanella Duet - gives 5 of corresponding minor
+                if (gameState.SymphonyOfBells && gameState.RazerOfBellsChimes)
+                {
+                    MusicClicker.Armory.WeaponAbilities.LaCampanellaDuet_OnMajorCraft(gameState, "swanlake");
+                }
 
                 if (gameState.EroicaMajorAbility)
                 {
@@ -349,6 +490,18 @@ namespace MusicClicker
 
                 owned++;
 
+                // Trigger Funeral Prayer ability (Eroica II) - on major acquisition
+                if (gameState.FuneralPrayerAbility)
+                {
+                    MusicClicker.Armory.WeaponAbilities.FuneralPrayer_OnMajorAcquisition(gameState);
+                }
+
+                // Trigger La Campanella Duet - gives 5 of corresponding minor
+                if (gameState.SymphonyOfBells && gameState.RazerOfBellsChimes)
+                {
+                    MusicClicker.Armory.WeaponAbilities.LaCampanellaDuet_OnMajorCraft(gameState, "lacampanella");
+                }
+
                 if (gameState.EroicaMajorAbility)
                 {
                     gameState.LaCampanellaMinorOwned += 2;
@@ -383,6 +536,18 @@ namespace MusicClicker
                 gameState.HarmoniousOwned -= 30;
 
                 owned++;
+
+                // Trigger Funeral Prayer ability (Eroica II) - on major acquisition
+                if (gameState.FuneralPrayerAbility)
+                {
+                    MusicClicker.Armory.WeaponAbilities.FuneralPrayer_OnMajorAcquisition(gameState);
+                }
+
+                // Trigger La Campanella Duet - gives 5 of corresponding minor
+                if (gameState.SymphonyOfBells && gameState.RazerOfBellsChimes)
+                {
+                    MusicClicker.Armory.WeaponAbilities.LaCampanellaDuet_OnMajorCraft(gameState, "enigma");
+                }
 
                 if (gameState.EroicaMajorAbility)
                 {
@@ -419,6 +584,18 @@ namespace MusicClicker
 
                 owned++;
 
+                // Trigger Funeral Prayer ability (Eroica II) - on major acquisition
+                if (gameState.FuneralPrayerAbility)
+                {
+                    MusicClicker.Armory.WeaponAbilities.FuneralPrayer_OnMajorAcquisition(gameState);
+                }
+
+                // Trigger La Campanella Duet - gives 5 of corresponding minor
+                if (gameState.SymphonyOfBells && gameState.RazerOfBellsChimes)
+                {
+                    MusicClicker.Armory.WeaponAbilities.LaCampanellaDuet_OnMajorCraft(gameState, "fate");
+                }
+
                 if (gameState.EroicaMajorAbility)
                 {
                     gameState.FateMinorOwned += 2;
@@ -453,6 +630,18 @@ namespace MusicClicker
                 gameState.HarmoniousOwned -= 40;
 
                 owned++;
+
+                // Trigger Funeral Prayer ability (Eroica II) - on major acquisition
+                if (gameState.FuneralPrayerAbility)
+                {
+                    MusicClicker.Armory.WeaponAbilities.FuneralPrayer_OnMajorAcquisition(gameState);
+                }
+
+                // Trigger La Campanella Duet - gives 5 of corresponding minor
+                if (gameState.SymphonyOfBells && gameState.RazerOfBellsChimes)
+                {
+                    MusicClicker.Armory.WeaponAbilities.LaCampanellaDuet_OnMajorCraft(gameState, "odetojoy");
+                }
 
                 if (gameState.EroicaMajorAbility)
                 {

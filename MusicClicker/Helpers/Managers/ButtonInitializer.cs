@@ -52,7 +52,7 @@ namespace MusicClicker
                     }
                     catch { }
 
-                    string notesText = $"Notes: {Math.Round(gs.Notes, 1)}";
+                    string notesText = $"Notes: {UIUpdater.FormatNotes(gs.Notes)}";
                     if (window.NotesText != null && window.NotesText.Text != notesText) window.NotesText.Text = notesText;
 
                     // Quick per-screen minimal updates (avoid heavy work while clicking rapidly)
@@ -410,6 +410,12 @@ namespace MusicClicker
                 {
                     MusicClicker.Helpers.AtomicDouble.Add(ref window.GameState._notes, -1000);
                     window.GameState.MelodiousOwned++;
+                    
+                    // Trigger Star-Scattered Wings ability (Swan Lake I)
+                    if (window.GameState.StarScatteredWingsAbility)
+                    {
+                        MusicClicker.Armory.WeaponAbilities.StarScatteredWings_OnMelodiousPurchase(window.GameState);
+                    }
                 }
             });
 
@@ -420,6 +426,18 @@ namespace MusicClicker
                 {
                     MusicClicker.Helpers.AtomicDouble.Add(ref window.GameState._notes, -5000);
                     window.GameState.HarmoniousOwned++;
+                    
+                    // Trigger Thousand Winged Swan ability (Swan Lake II)
+                    if (window.GameState.ThousandWingedSwanAbility)
+                    {
+                        MusicClicker.Armory.WeaponAbilities.ThousandWingedSwan_OnHarmoniousPurchase(window.GameState);
+                    }
+
+                    // Trigger The Snow's Desire ability (Winter II)
+                    if (window.GameState.TheSnowsDesireAbility)
+                    {
+                        MusicClicker.Armory.WeaponAbilities.TheSnowsDesire_OnHarmoniousPurchase(window.GameState);
+                    }
                 }
             });
         }

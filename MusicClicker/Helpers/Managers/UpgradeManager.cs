@@ -116,8 +116,8 @@ namespace MusicClicker
             ownedText.Text = $"Number Owned: {owned}";
             costText.Text = $"Cost: {Math.Round(baseCost * multiplier, 2)}";
 
-            window.NotesText.Text = $"Notes: {Math.Round(gameState.Notes, 1)}";
-            window.UpgradeScreen.UpgradeNotesTextHeader.Text = $"Notes: {Math.Round(gameState.Notes, 1)}";
+            window.NotesText.Text = $"Notes: {UIUpdater.FormatNotes(gameState.Notes)}";
+            window.UpgradeScreen.UpgradeNotesTextHeader.Text = $"Notes: {UIUpdater.FormatNotes(gameState.Notes)}";
 
             UIUpdater.UpdateUI(window, gameState);
         }

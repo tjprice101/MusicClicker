@@ -41,6 +41,12 @@ namespace MusicClicker
 
             majorSheets--;
 
+            // Trigger Sakura's Blossom ability (Eroica I) - gives 1 of each minor component when acquiring major sheet
+            if (window.GameState.SakurasBlossomAbility)
+            {
+                MusicClicker.Armory.WeaponAbilities.SakurasBlossom_OnMajorSheetAcquired(window.GameState, scoreName);
+            }
+
             double roll = _random.NextDouble();
             if (roll < 0.33) majorKeys++;
             else if (roll < 0.66) majorScales++;

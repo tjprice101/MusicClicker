@@ -64,6 +64,7 @@
                     </Button>
                 </Border>
             </StackPanel>
+
             <!-- Center Content -->
             <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Grid.RowDefinitions>

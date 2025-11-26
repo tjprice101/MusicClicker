@@ -9,6 +9,16 @@ namespace MusicClicker
     // reducing repeated property access where possible without changing visible behavior.
     public static class UIUpdater
     {
+        // Helper function to format notes with shortened notation (K, M, B, T)
+        public static string FormatNotes(double notes)
+        {
+            if (notes >= 1_000_000_000_000) return $"{notes / 1_000_000_000_000:F2}T";
+            if (notes >= 1_000_000_000) return $"{notes / 1_000_000_000:F2}B";
+            if (notes >= 1_000_000) return $"{notes / 1_000_000:F2}M";
+            if (notes >= 1_000) return $"{notes / 1_000:F2}K";
+            return $"{notes:F1}";
+        }
+
         // Single responsibility: update the main upgrade UI quickly and with minimal allocations.
         public static void UpdateUI(MainWindow window, GameState gameState)
         {
@@ -25,7 +35,7 @@ namespace MusicClicker
             // Only update screens that are visible to reduce UI churn on hidden views.
             if (window.UpgradeScreen?.IsVisible == true)
             {
-                window.UpgradeScreen.UpgradeNotesTextHeader.Text = $"Notes: {Math.Round(notes, 1)}";
+                window.UpgradeScreen.UpgradeNotesTextHeader.Text = $"Notes: {FormatNotes(notes)}";
 
                 // Owned counts are simple integer-to-string conversions — inexpensive.
                 window.UpgradeScreen.ChordOwnedTextUpgrade.Text = $"Number Owned: {gameState.ChordOwned}";
@@ -74,13 +84,13 @@ namespace MusicClicker
                 if (window?.IsUserInteracting == true)
                 {
                     double displayNotesInteraction = window?.DisplayedNotes ?? gameState.Notes;
-                    string notesTextInteraction = $"Notes: {Math.Round(displayNotesInteraction, 1)}";
+                    string notesTextInteraction = $"Notes: {FormatNotes(displayNotesInteraction)}";
                     if (window.NotesText.Text != notesTextInteraction) window.NotesText.Text = notesTextInteraction;
                     return;
                 }
                 // Use the smoothed displayed notes when available (updated at FRAME_RATE by AnimateVisuals).
                 double displayNotes = window?.DisplayedNotes ?? gameState.Notes;
-                string notesText = $"Notes: {Math.Round(displayNotes, 1)}";
+                string notesText = $"Notes: {FormatNotes(displayNotes)}";
 
                 // Note: intentionally inlined simple checks to avoid allocating delegates.
 
@@ -142,7 +152,7 @@ namespace MusicClicker
             // Avoid changing text properties while the user is interacting to prevent layout
             // thrashing that can cause jitter (scrolling, slider drags, etc.). We still update
             // the internal displayed values so the numbers appear smooth once interaction stops.
-            string notesText = $"Notes: {Math.Round(window.DisplayedNotes, 1)}";
+            string notesText = $"Notes: {FormatNotes(window.DisplayedNotes)}";
             string npsText = $"Notes Per Second: {Math.Round(window.DisplayedNps, 1)}";
             if (window.IsUserInteracting != true)
             {
@@ -232,7 +242,7 @@ namespace MusicClicker
             if (window.FragmentationScreen?.IsVisible != true)
                 return;
 
-            window.FragmentationScreen.FragmentationNotesText.Text = $"Notes: {Math.Round(gameState.Notes, 1)}";
+            window.FragmentationScreen.FragmentationNotesText.Text = $"Notes: {FormatNotes(gameState.Notes)}";
             window.FragmentationScreen.MelodiousOwnedText.Text = $"{gameState.MelodiousOwned} Owned";
             window.FragmentationScreen.HarmoniousOwnedText.Text = $"{gameState.HarmoniousOwned} Owned";
         }
@@ -360,7 +370,7 @@ namespace MusicClicker
             window.SaveScoresScreen.OdeToJoyMajorSheetsText.Text = $"{gameState.OdeToJoyMajorSheets} Major Sheets of Ode to Joy Owned";
 
             // Update notes display
-            window.SaveScoresScreen.SaveScoresNotesText.Text = $"Notes: {Math.Round(gameState.Notes, 1)}";
+            window.SaveScoresScreen.SaveScoresNotesText.Text = $"Notes: {FormatNotes(gameState.Notes)}";
 
             // Enable/disable soul buttons based on whether the player can afford each fixed cost.
             try
@@ -422,7 +432,7 @@ namespace MusicClicker
             window.HeartOfHarmonyScreen.OdeToJoyMajorScalesOwnedText.Text = $"{gameState.OdeToJoyMajorScales} Ode to Joy Major Scales Owned";
             window.HeartOfHarmonyScreen.OdeToJoyMajorProgressionsOwnedText.Text = $"{gameState.OdeToJoyMajorProgressions} Ode to Joy Major Progressions Owned";
 
-            window.HeartOfHarmonyScreen.HeartOfHarmonyNotesText.Text = $"Notes: {Math.Round(gameState.Notes, 1)}";
+            window.HeartOfHarmonyScreen.HeartOfHarmonyNotesText.Text = $"Notes: {FormatNotes(gameState.Notes)}";
         }
 
         // Update the Unite the Symphony screen showing completed minor/major scores and refresh
@@ -462,7 +472,7 @@ namespace MusicClicker
             if (window.UnityTheSymphonyScreen?.IsVisible != true)
                 return;
 
-            window.UnityTheSymphonyScreen.UnityNotesTextHeader.Text = $"Notes: {Math.Round(gameState.Notes, 1)}";
+            window.UnityTheSymphonyScreen.UnityNotesTextHeader.Text = $"Notes: {FormatNotes(gameState.Notes)}";
             try { window.UnityTheSymphonyScreen.EntropicMelodyText.Text = $"Entropic Melody: {gameState.EntropicMelodies}"; } catch { }
 
             window.UnityTheSymphonyScreen.MoonlightMinorOwnedText.Text = $"{gameState.MoonlightMinorOwned} Owned";

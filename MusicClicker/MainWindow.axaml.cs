@@ -251,7 +251,8 @@ namespace MusicClicker
                 TempoResonateScreen.EquippedWeaponDisplay1,
                 TempoResonateScreen.EquippedWeaponText1,
                 TempoResonateScreen.EquippedWeaponDisplay2,
-                TempoResonateScreen.EquippedWeaponText2
+                TempoResonateScreen.EquippedWeaponText2,
+                TempoResonateScreen.DuetResonanceText
             );
 
             // Wire up button click handlers
@@ -322,8 +323,79 @@ namespace MusicClicker
                     _bgStopwatch.Restart();
                     if (gameState != null && gameState.NotesPerSecond != 0)
                     {
-                        // Advance notes by elapsedSeconds * NPS using lock-free atomic add
-                        MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, gameState.NotesPerSecond * elapsed);
+                        double effectiveNps = gameState.NotesPerSecond;
+
+                        // Check if Razer boost has expired
+                        if (gameState.RazerNpsBoostActive && DateTime.Now > gameState.RazerNpsBoostExpiry)
+                        {
+                            gameState.RazerNpsBoostActive = false;
+                        }
+
+                        // Check if Astral Chainripper boost has expired
+                        if (gameState.AstralChainripperNpsBoostActive && DateTime.Now > gameState.AstralChainripperNpsBoostExpiry)
+                        {
+                            gameState.AstralChainripperNpsBoostActive = false;
+                        }
+
+                        // Check if NPS freeze has expired
+                        if (gameState.NpsFrozen && DateTime.Now > gameState.NpsFreezeExpiry)
+                        {
+                            gameState.NpsFrozen = false;
+                            gameState.FrozenNpsValue = 0;
+                        }
+
+                        // Apply Astral Chainripper 5x NPS boost
+                        if (gameState.AstralChainripperNpsBoostActive)
+                        {
+                            effectiveNps *= 5.0;
+                        }
+
+                        // Apply Razer of Bell's Chimes temporary 50% NPS boost
+                        if (gameState.RazerNpsBoostActive)
+                        {
+                            effectiveNps *= 1.5; // 50% increase
+                        }
+
+                        // Apply Joyful Catharsis passive double NPS
+                        if (gameState.JoyfulCatharsis && 
+                            (gameState.CurrentResonatedWeapon1 == "JoyfulCatharsis" || gameState.CurrentResonatedWeapon2 == "JoyfulCatharsis"))
+                        {
+                            effectiveNps *= 2.0;
+                        }
+
+                        // Apply duet resonance NPS multipliers
+                        if (gameState.CurrentResonatedWeapon1 != "None" && gameState.CurrentResonatedWeapon2 != "None")
+                        {
+                            // Eroica Duet: Double NPS if any minor score > 10
+                            if ((gameState.CurrentResonatedWeapon1 == "SakurasBlossom" && gameState.CurrentResonatedWeapon2 == "FuneralPrayer") ||
+                                (gameState.CurrentResonatedWeapon1 == "FuneralPrayer" && gameState.CurrentResonatedWeapon2 == "SakurasBlossom"))
+                            {
+                                effectiveNps *= MusicClicker.Armory.WeaponAbilities.EroicaDuet_GetNpsMultiplier(gameState);
+                            }
+
+                            // Swan Lake Duet: Double NPS if 50+ Melodious and 100+ Harmonious
+                            if ((gameState.CurrentResonatedWeapon1 == "StarScatteredWings" && gameState.CurrentResonatedWeapon2 == "ThousandWingedSwan") ||
+                                (gameState.CurrentResonatedWeapon1 == "ThousandWingedSwan" && gameState.CurrentResonatedWeapon2 == "StarScatteredWings"))
+                            {
+                                effectiveNps *= MusicClicker.Armory.WeaponAbilities.SwanLakeDuet_GetNpsMultiplier(gameState);
+                            }
+
+                            // Ode to Joy Duet: NPS becomes NPS per half-second (double the rate)
+                            if ((gameState.CurrentResonatedWeapon1 == "JoyfulCatharsis" && gameState.CurrentResonatedWeapon2 == "OdeToCreation") ||
+                                (gameState.CurrentResonatedWeapon1 == "OdeToCreation" && gameState.CurrentResonatedWeapon2 == "JoyfulCatharsis"))
+                            {
+                                effectiveNps *= 2.0; // Double the application rate
+                            }
+                        }
+
+                        // Winter: If NPS is frozen, use frozen value instead
+                        if (gameState.NpsFrozen && DateTime.Now <= gameState.NpsFreezeExpiry)
+                        {
+                            effectiveNps = gameState.FrozenNpsValue;
+                        }
+
+                        // Advance notes by elapsedSeconds * effectiveNPS using lock-free atomic add
+                        MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, effectiveNps * elapsed);
                     }
                 }
                 catch { }
@@ -767,6 +839,36 @@ namespace MusicClicker
             // Start with base notes per click value
             double notesPerClick = gameState.NotesPerClick;
 
+            // Check if Cosmic Weaver boost has expired
+            if (gameState.CosmicWeaverClickBoostActive && DateTime.Now > gameState.CosmicWeaverClickBoostExpiry)
+            {
+                gameState.CosmicWeaverClickBoostActive = false;
+            }
+
+            // Apply Cosmic Weaver 5x click boost if active
+            if (gameState.CosmicWeaverClickBoostActive)
+            {
+                notesPerClick *= 5.0;
+            }
+
+            // Check Ode to Creation bonus first (before applying notes)
+            if (gameState.OdeToCreationNextClickBonus)
+            {
+                notesPerClick *= 1.33; // 33% increase
+                gameState.OdeToCreationNextClickBonus = false;
+            }
+
+            // Apply Winter Duet multiplier: Frozen NPS is used as a click multiplier
+            if (gameState.CurrentResonatedWeapon1 != "None" && gameState.CurrentResonatedWeapon2 != "None")
+            {
+                if ((gameState.CurrentResonatedWeapon1 == "CacophonicBlizzard" && gameState.CurrentResonatedWeapon2 == "TheSnowsDesire") ||
+                    (gameState.CurrentResonatedWeapon1 == "TheSnowsDesire" && gameState.CurrentResonatedWeapon2 == "CacophonicBlizzard"))
+                {
+                    double winterMultiplier = MusicClicker.Armory.WeaponAbilities.WinterDuet_GetClickMultiplier(gameState);
+                    notesPerClick *= winterMultiplier;
+                }
+            }
+
             // Apply Moonlight Major ability: adds notes-per-second to each click
             if (gameState.MoonlightMajorAbility)
             {
@@ -786,13 +888,45 @@ namespace MusicClicker
             // Add calculated notes to player's total
             MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, notesPerClick);
 
+            // Individual weapon click abilities
+            if (gameState.OdeToCreation && 
+                (gameState.CurrentResonatedWeapon1 == "OdeToCreation" || gameState.CurrentResonatedWeapon2 == "OdeToCreation"))
+            {
+                MusicClicker.Armory.WeaponAbilities.OdeToCreation_OnClick(gameState);
+            }
+
+            // Winter: Cacophonic Blizzard - every 50th click freezes NPS for 8s
+            if (gameState.CacophonicBlizzard &&
+                (gameState.CurrentResonatedWeapon1 == "CacophonicBlizzard" || gameState.CurrentResonatedWeapon2 == "CacophonicBlizzard"))
+            {
+                MusicClicker.Armory.WeaponAbilities.CacophonicBlizzard_OnClick(gameState);
+            }
+
+            // Check for duet resonance effects on click
+            if (gameState.CurrentResonatedWeapon1 != "None" && gameState.CurrentResonatedWeapon2 != "None")
+            {
+                // Moonlight Duet: Both Incisor and Eulogy equipped
+                if ((gameState.CurrentResonatedWeapon1 == "IncisorOfMoonlight" && gameState.CurrentResonatedWeapon2 == "EulogyOfTheMoon") ||
+                    (gameState.CurrentResonatedWeapon1 == "EulogyOfTheMoon" && gameState.CurrentResonatedWeapon2 == "IncisorOfMoonlight"))
+                {
+                    MusicClicker.Armory.WeaponAbilities.MoonlightDuet_OnClick(gameState);
+                }
+
+                // Fate Duet: Both Astral Chainripper and Cosmic Weaver equipped
+                if ((gameState.CurrentResonatedWeapon1 == "AstralChainripper" && gameState.CurrentResonatedWeapon2 == "CosmicWeaver") ||
+                    (gameState.CurrentResonatedWeapon1 == "CosmicWeaver" && gameState.CurrentResonatedWeapon2 == "AstralChainripper"))
+                {
+                    MusicClicker.Armory.WeaponAbilities.FateDuet_OnClick(gameState);
+                }
+            }
+
             // Immediate, lightweight UI updates so rapid clicks feel responsive.
             try
             {
                 DisplayedNotes = gameState.Notes;
                 DisplayedNps = gameState.NotesPerSecond;
 
-                string notesText = $"Notes: {Math.Round(gameState.Notes, 1)}";
+                string notesText = $"Notes: {UIUpdater.FormatNotes(gameState.Notes)}";
                 if (NotesText != null && NotesText.Text != notesText) NotesText.Text = notesText;
 
                 if (SaveScoresScreen?.SaveScoresNotesText != null) SaveScoresScreen.SaveScoresNotesText.Text = notesText;
@@ -848,6 +982,26 @@ namespace MusicClicker
                 gameState.EnigmaMajorOwned += 1;
                 gameState.FateMajorOwned += 1;
                 gameState.OdeToJoyMajorOwned += 1;
+
+                // Give one of each weapon
+                gameState.IncisorOfMoonlight = true;
+                gameState.EulogyOfTheMoon = true;
+                gameState.SakurasBlossom = true;
+                gameState.FuneralPrayer = true;
+                gameState.StarScatteredWings = true;
+                gameState.ThousandWingedSwan = true;
+                gameState.SymphonyOfBells = true;
+                gameState.RazerOfBellsChimes = true;
+                gameState.CreatorOfMystery = true;
+                gameState.Truthseeker = true;
+                gameState.AstralChainripper = true;
+                gameState.CosmicWeaver = true;
+                gameState.JoyfulCatharsis = true;
+                gameState.OdeToCreation = true;
+                gameState.SevenCircles = true;
+                gameState.HellsWrath = true;
+                gameState.CacophonicBlizzard = true;
+                gameState.TheSnowsDesire = true;
 
                 // Update all UI displays
                 UIUpdater.UpdateUI(this, gameState);
