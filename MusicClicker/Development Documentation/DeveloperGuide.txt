@@ -8,7 +8,7 @@ Project Structure (high-level)
 
 - Program.cs / App.axaml.cs: Application bootstrap for Avalonia.
 - MainWindow.axaml / MainWindow.axaml.cs: Main window and central coordination point. Manages GameState, timers, UI updates, carousel, and screen navigation.
-- Views/*: UI screens implemented with AXAML and code-behind (.axaml.cs). Examples: `ArmorOfForteScreen`, `UpgradeScreen`, `SymphonicGalleryScreen`, `HeartOfHarmonyScreen`.
+ - Views/*: UI screens implemented with AXAML and code-behind (.axaml.cs). Examples: `ArmoryOfForteScreen`, `UpgradeScreen`, `SymphonicGalleryScreen`, `HeartOfHarmonyScreen`.
 - Helpers/*: Non-UI helpers and managers. Key files:
   - `GameState.cs`: Serializable model of all player state. Add new persistent fields here when adding new gameplay elements.
   - `SaveManager.cs`: Handles save/load. If you change `GameState`, update serialization or add migration logic.
@@ -30,7 +30,7 @@ To add support for a new major score (e.g., "Nocturne Major"), you typically nee
    - `SaveScoresScreen.axaml.cs` - add a button and handler to spend Notes for chances to obtain the new minor/major components.
    - `HeartOfHarmonyScreen.axaml.cs` - if the major uses conversion mechanics, add UI text and handlers for conversion.
    - `UniteTheSymphonyScreen.axaml.cs` - if crafting is required, add craft buttons and wiring.
-   - `ArmorOfForteScreen.axaml.cs` - if the new major unlocks weapons, add new weapon entries, requirements, and resonance text.
+   - `ArmoryOfForteScreen.axaml.cs` - if the new major unlocks weapons, add new weapon entries, requirements, and resonance text.
    - `SymphonicGalleryScreen`, `ClickerCustomizeScreen`, `BackgroundCustomizeScreen` - update if the new major unlocks cosmetic options.
 
 3. Managers / Logic

@@ -3,14 +3,14 @@ Progression Graphs Report
 
 Overview
 --------
-This document lists the main growth formulas used in MusicClicker, where they are defined/used in the codebase, what they do, and sample numeric progressions (tables) for a few purchase counts or typical states. Numeric samples are computed using current default base values found in `Helpers/GameState.cs` and logic in `Helpers/UpgradeManager.cs`, `Views/ArmorOfForteScreen.axaml.cs`, and event banner screens.
+This document lists the main growth formulas used in MusicClicker, where they are defined/used in the codebase, what they do, and sample numeric progressions (tables) for a few purchase counts or typical states. Numeric samples are computed using current default base values found in `Helpers/GameState.cs` and logic in `Helpers/UpgradeManager.cs`, `Views/ArmoryOfForteScreen.axaml.cs`, and event banner screens.
 
 Files referenced (key locations)
 - Upgrade cost & effects: `Helpers/UpgradeManager.cs` (BuyUpgrade)
   - Cost formula: cost = Round(baseCost * 1.15^owned, 2)
   - Effect per purchase: +NPS (NotesPerSecond) and/or +Click (NotesPerClick)
 - Base costs and initial values: `Helpers/GameState.cs` (fields like `ChordBaseCost`, `ScaleBaseCost`, initial NotesPerSecond and NotesPerClick)
-- Armor (weapon) cost formula: `Views/ArmorOfForteScreen.axaml.cs`
+- Armory (weapon) cost formula: `Views/ArmoryOfForteScreen.axaml.cs`
   - baseMultiplier = 250 * 20^(weaponIndex+1)
   - Cost formula: cost = (NotesPerSecond + baseMultiplier) * (NotesPerClick / 2)
 - Event banners (DiesIrae/Winter): `Views/Event Banners/DiesIraeEventScreen.axaml.cs` and `WinterEventScreen.axaml.cs`
@@ -113,9 +113,9 @@ Example (Aria base 350, +1 click): next purchase costs follow the same 1.15^owne
 Notes on exponential growth
 - Costs grow multiplicatively by 15% per purchase (1.15 per owned). This means cost doubles roughly every ln(2)/ln(1.15) ≈ 5 purchases (approx). The game's economy is controlled by choosing baseCost and per-purchase NPS/click increases.
 
-2) Armor / Weapons (very large, base dominated)
+2) Armory / Weapons (very large, base dominated)
 ------------------------------------------------
-From `Views/ArmorOfForteScreen.axaml.cs`:
+From `Views/ArmoryOfForteScreen.axaml.cs`:
 - baseMultiplier(weaponIndex) = 250 * 20^(weaponIndex + 1)
 - cost = (NotesPerSecond + baseMultiplier) * (NotesPerClick / 2)
 
@@ -181,7 +181,7 @@ Per your instruction, we will *not* change how NPS or NPC themselves grow — th
 - Clicking (NPC) reduces idle time but cannot fully trivialize purchases.
 - Event banners use a simple, predictable formula — example you gave: Cost = NPS * 2 + (NPC * 5).
 
-Below are implementable formulas, with default tuning parameters and sample tables. These are intentionally simple, deterministic, and safe to put into code in a single place (e.g., a new `ProgressionConfig` and small helper methods used by `ArmorOfForteScreen` and event screens).
+Below are implementable formulas, with default tuning parameters and sample tables. These are intentionally simple, deterministic, and safe to put into code in a single place (e.g., a new `ProgressionConfig` and small helper methods used by `ArmoryOfForteScreen` and event screens).
 
 Parameters (defaults)
 - idleBaseSeconds = 60           // base idle cost in seconds for tier 0
@@ -240,7 +240,7 @@ Suggested implementation steps
 2. Implement helper methods in a new `Helpers/Progression.cs`:
     - `double ComputeWeaponCost(int tier, double nps, double npc)`
     - `double ComputeEventCost(double nps, double npc)`
-3. Replace the old weapon/event cost calculations in `Views/ArmorOfForteScreen.axaml.cs` and `Views/Event Banners/*EventScreen.axaml.cs` with calls to these helpers.
+3. Replace the old weapon/event cost calculations in `Views/ArmoryOfForteScreen.axaml.cs` and `Views/Event Banners/*EventScreen.axaml.cs` with calls to these helpers.
 4. Expose tuning values in `ProgressionConfig` so you can iterate without code changes.
 
 Backward compatibility
@@ -251,7 +251,7 @@ If you change cost formulas in-place, existing saves may find items suddenly mor
 
 Would you like me to:
 - (A) Generate CSVs showing weapon cost vs tier for a set of NPS/NPC sample states, or
-- (B) Implement `ProgressionConfig` and `Helpers/Progression.cs` and update `ArmorOfForteScreen` and event screens to use the new formulas now?
+- (B) Implement `ProgressionConfig` and `Helpers/Progression.cs` and update `ArmoryOfForteScreen` and event screens to use the new formulas now?
 
 If (A), tell me which sample NPS/NPC values to include (e.g., NPS: [100,1000,10000], NPC: [1,5,10]).
 If (B), tell me whether I should also add a `saveVersion` field and a simple migration message for players.
@@ -386,7 +386,7 @@ F. Next steps I can do for you
 ------------------------------
 - Produce CSV exports showing the new NPS/NPC upgrade tables (owned 0..40) using your preferred parameter set.
 - Produce CSVs for weapon costs vs tier for sample player states (several NPS/NPC combos) so you can see idle-time interpretations.
-- Implement a small config struct/class and change `UpgradeManager` & `ArmorOfForteScreen` to use the new formulas and add a `saveVersion` field and a simple migration strategy.
+- Implement a small config struct/class and change `UpgradeManager` & `ArmoryOfForteScreen` to use the new formulas and add a `saveVersion` field and a simple migration strategy.
 
 Tell me which of the example parameter sets you prefer (aggressive or balanced), or provide specific numbers for:
 - baseEffect_NPS, growth_NPS

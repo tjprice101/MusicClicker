@@ -12,12 +12,12 @@ Core Concepts
 - Upgrades: Persistent purchases that increase NPS or NPC. Each upgrade has a cost that scales with the number owned.
 - Major / Minor Scores: Progression items representing pieces of music. Certain weapons, clicker options, and crafting features unlock based on owned major/minor scores.
 - Fragments: Secondary currencies (Melodious / Harmonious) obtained via the Fragmentation screen.
-- Armor of Forte (Weapons Shop): A one-time-purchase list of weapons. Each weapon grants a Forte Resonance and pairs can provide a Duet Resonance bonus when both items in a pair are owned.
+ - Armory of Forte (Weapons Shop): A one-time-purchase list of weapons. Each weapon grants a Forte Resonance and pairs can provide a Duet Resonance bonus when both items in a pair are owned.
 - Heart Of Harmony & Unite The Symphony: Systems for converting sheet/music components and crafting scores.
 
 UI & Navigation
 
-- Carousel (Main Screen): Use the circular carousel in the main screen to switch between game modes (Upgrades, Fragmentation, Heart of Harmony, Armor, etc.).
+- Carousel (Main Screen): Use the circular carousel in the main screen to switch between game modes (Upgrades, Fragmentation, Heart of Harmony, Armory, etc.).
 - Top Buttons: Quick access to major features and a Save button.
 - Save System: The game auto-saves periodically and you can manually save via the top-right button.
 
@@ -27,7 +27,7 @@ Screens
 - Upgrade Screen: Purchase upgrades that increase NPS or NPC. Costs increase exponentially as you buy more.
 - Fragmentation: Convert Notes into Melodious/Harmonious fragments which can be used for other features.
 - Heart of Harmony: Convert and manage major/minor score components.
-- Armor of Forte: Buy one-time weapons. Each weapon shows a Forte Resonance description and a Duet line; duet is active when both pair items are owned.
+- Armory of Forte: Buy one-time weapons. Each weapon shows a Forte Resonance description and a Duet line; duet is active when both pair items are owned.
 - Symphonic Gallery: Customization hub where you can change clicker image and background.
 - Save Scores: Spend Notes for randomized chances to get score components.
 - Tempo Resonate: Manage equipped musical scores and activate special abilities.
@@ -35,8 +35,8 @@ Screens
 Gameplay Tips
 
 - Balance: Invest in upgrades that increase NPS to grow your passive income, but also consider upgrades that increase Notes Per Click if you click frequently.
-- Unlocks: Major scores unlock weapons and clicker options. Check the Armor of Forte and customization screens to see requirements.
-- Duet Resonance: Owning both weapons in a pair grants an additional set-bonus (Duet). Review the weapon descriptions in the Armor of Forte screen to see effects.
+- Unlocks: Major scores unlock weapons and clicker options. Check the Armory of Forte and customization screens to see requirements.
+- Duet Resonance: Owning both weapons in a pair grants an additional set-bonus (Duet). Review the weapon descriptions in the Armory of Forte screen to see effects.
 
 Saving and Backups
 

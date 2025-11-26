@@ -347,7 +347,11 @@ namespace MusicClicker
 
         public int _odeToJoyMajorProgressions = 0;
         public int OdeToJoyMajorProgressions { get => _odeToJoyMajorProgressions; set => _odeToJoyMajorProgressions = value; }
-        // Armor of Forte - Weapon Ownership booleans (true = owned)
+        
+        // Currency gained by dissolving major scores
+        public int _entropicMelodies = 0;
+        public int EntropicMelodies { get => _entropicMelodies; set => _entropicMelodies = value; }
+        // Armory of Forte - Weapon Ownership booleans (true = owned)
         // Naming uses the weapon identifier (no spaces/special chars) matching displayed names.
         public bool _eulogyOfTheMoon = false;
         public bool EulogyOfTheMoon { get => _eulogyOfTheMoon; set => _eulogyOfTheMoon = value; }
@@ -369,6 +373,32 @@ namespace MusicClicker
 
         public bool _symphonyOfBells = false;
         public bool SymphonyOfBells { get => _symphonyOfBells; set => _symphonyOfBells = value; }
+
+        // Weapon ability flags (true if weapon's resonance ability is currently active)
+        public bool _eulogyOfTheMoonAbility = false;
+        public bool EulogyOfTheMoonAbility { get => _eulogyOfTheMoonAbility; set => _eulogyOfTheMoonAbility = value; }
+
+        public bool _incisorOfMoonlightAbility = false;
+        public bool IncisorOfMoonlightAbility { get => _incisorOfMoonlightAbility; set => _incisorOfMoonlightAbility = value; }
+
+        public bool _sakurasBlossomAbility = false;
+        public bool SakurasBlossomAbility { get => _sakurasBlossomAbility; set => _sakurasBlossomAbility = value; }
+
+        public bool _funeralPrayerAbility = false;
+        public bool FuneralPrayerAbility { get => _funeralPrayerAbility; set => _funeralPrayerAbility = value; }
+
+        public bool _starScatteredWingsAbility = false;
+        public bool StarScatteredWingsAbility { get => _starScatteredWingsAbility; set => _starScatteredWingsAbility = value; }
+
+        public bool _thousandWingedSwanAbility = false;
+        public bool ThousandWingedSwanAbility { get => _thousandWingedSwanAbility; set => _thousandWingedSwanAbility = value; }
+
+        public bool _symphonyOfBellsAbility = false;
+        public bool SymphonyOfBellsAbility { get => _symphonyOfBellsAbility; set => _symphonyOfBellsAbility = value; }
+
+        // Currently resonated weapons (up to two slots)
+        public string CurrentResonatedWeapon1 { get; set; } = "None";
+        public string CurrentResonatedWeapon2 { get; set; } = "None";
 
         public bool _razerOfBellsChimes = false;
         public bool RazerOfBellsChimes { get => _razerOfBellsChimes; set => _razerOfBellsChimes = value; }

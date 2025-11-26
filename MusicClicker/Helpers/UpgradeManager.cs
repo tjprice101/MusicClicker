@@ -43,9 +43,9 @@ namespace MusicClicker
                 while (true)
                 {
                     double cost = RoundedCost(baseCost, multiplier);
-                    if (gameState.Notes >= cost)
+                    if (MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes) >= cost)
                     {
-                        gameState.Notes -= cost;
+                        MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, -cost);
 
                         // apply effects based on current owned (before increment)
                         double npsInc = EffectIncrease(baseNpsEffect, npsGrowth, owned);
@@ -53,6 +53,20 @@ namespace MusicClicker
 
                         gameState.NotesPerSecond += npsInc;
                         gameState.NotesPerClick += clickInc;
+
+                        // If any weapon abilities respond to upgrades, invoke them here.
+                        try
+                        {
+                            if (gameState.IncisorOfMoonlightAbility)
+                                MusicClicker.Armory.WeaponAbilities.IncisorOfMoonlight_OnUpgradePurchase(gameState);
+
+                            if (gameState.EulogyOfTheMoonAbility)
+                                MusicClicker.Armory.WeaponAbilities.EulogyOfTheMoon_OnUpgradePurchase(gameState);
+                        }
+                        catch (Exception)
+                        {
+                            // Swallow exceptions from ability code to avoid breaking purchases.
+                        }
 
                         owned++;
                         // increase multiplier for next purchase
@@ -67,15 +81,29 @@ namespace MusicClicker
                 for (int i = 0; i < purchaseCount; i++)
                 {
                     double cost = RoundedCost(baseCost, multiplier);
-                    if (gameState.Notes >= cost)
+                    if (MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes) >= cost)
                     {
-                        gameState.Notes -= cost;
+                        MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, -cost);
 
                         double npsInc = EffectIncrease(baseNpsEffect, npsGrowth, owned);
                         double clickInc = EffectIncrease(baseClickEffect, clickGrowth, owned);
 
                         gameState.NotesPerSecond += npsInc;
                         gameState.NotesPerClick += clickInc;
+
+                            // Invoke weapon ability hooks if their flags are active.
+                            try
+                            {
+                                if (gameState.IncisorOfMoonlightAbility)
+                                    MusicClicker.Armory.WeaponAbilities.IncisorOfMoonlight_OnUpgradePurchase(gameState);
+
+                                if (gameState.EulogyOfTheMoonAbility)
+                                    MusicClicker.Armory.WeaponAbilities.EulogyOfTheMoon_OnUpgradePurchase(gameState);
+                            }
+                            catch (Exception)
+                            {
+                                // ignore
+                            }
 
                         owned++;
                         multiplier *= 1.15;
