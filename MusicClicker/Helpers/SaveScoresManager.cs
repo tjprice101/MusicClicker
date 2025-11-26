@@ -27,14 +27,14 @@ namespace MusicClicker
         {
             var gameState = window.GameState;
 
-            if (gameState.Notes >= cost)
+            if (MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes) >= cost)
             {
                 if (gameState.OdeToJoyMajorAbility)
                 {
                     majorSheets++;
                 }
 
-                gameState.Notes -= cost;
+                MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, -cost);
 
                 // Independent random rolls; preserve original probability distribution.
                 if (_random.NextDouble() <= 0.50) minorKeys++;

@@ -17,8 +17,14 @@
             <Setter Property="Effect">
                 <DropShadowEffect Color="Black" BlurRadius="7" Opacity="1.0" OffsetX="0" OffsetY="0" />
             </Setter>
-            <!-- Use Playfair Display (bundled in Fonts/) for a slightly elegant but readable look -->
-            <Setter Property="FontFamily" Value="avares://MusicClicker/Fonts/Playfair_Display/static/PlayfairDisplay-Regular.ttf#Playfair Display" />
+            <!-- Use the bundled Roboto Condensed font for a compact, modern look -->
+            <Setter Property="FontFamily" Value="avares://MusicClicker/Fonts/Playfair_Display,Roboto_Condensed/Roboto_Condensed/static/RobotoCondensed-Regular.ttf#Roboto Condensed" />
+        </Style>
+
+        <!-- Apply the bundled Roboto Condensed to text-bearing controls only.
+             Avoid targeting generic control types to prevent Avalonia style resolution errors. -->
+        <Style Selector="TextBox, Window">
+            <Setter Property="FontFamily" Value="avares://MusicClicker/Fonts/Playfair_Display,Roboto_Condensed/Roboto_Condensed/static/RobotoCondensed-Regular.ttf#Roboto Condensed" />
         </Style>
 
     </Application.Styles>

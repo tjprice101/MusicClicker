@@ -351,7 +351,7 @@ namespace MusicClicker
         // Currency gained by dissolving major scores
         public int _entropicMelodies = 0;
         public int EntropicMelodies { get => _entropicMelodies; set => _entropicMelodies = value; }
-        // Armor of Forte - Weapon Ownership booleans (true = owned)
+        // Armory of Forte - Weapon Ownership booleans (true = owned)
         // Naming uses the weapon identifier (no spaces/special chars) matching displayed names.
         public bool _eulogyOfTheMoon = false;
         public bool EulogyOfTheMoon { get => _eulogyOfTheMoon; set => _eulogyOfTheMoon = value; }

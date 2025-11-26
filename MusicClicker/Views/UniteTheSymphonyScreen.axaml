@@ -82,6 +82,7 @@
                                     FontSize="14"
                                     HorizontalAlignment="Center" />
                                 <Button x:Name="MoonlightMajorDissolveButton" Content="Dissolve" Width="120" Height="26" HorizontalAlignment="Center" />
+                                <TextBlock Text="(+1 Entropic Melody)" Foreground="#CCCCCC" FontSize="12" HorizontalAlignment="Center" Margin="0,2,0,0" />
                             </StackPanel>
 
                             <Button x:Name="MoonlightMajorButton" Grid.Column="1" Margin="5"
@@ -164,6 +165,7 @@
                                     FontSize="14"
                                     HorizontalAlignment="Center" />
                                 <Button x:Name="EroicaMajorDissolveButton" Content="Dissolve" Width="120" Height="26" HorizontalAlignment="Center" />
+                                <TextBlock Text="(+1 Entropic Melody)" Foreground="#CCCCCC" FontSize="12" HorizontalAlignment="Center" Margin="0,2,0,0" />
                             </StackPanel>
 
                             <Button x:Name="EroicaMajorButton" Grid.Column="1" Margin="5"
@@ -246,6 +248,7 @@
                                     FontSize="14"
                                     HorizontalAlignment="Center" />
                                 <Button x:Name="SwanMajorDissolveButton" Content="Dissolve" Width="120" Height="26" HorizontalAlignment="Center" />
+                                <TextBlock Text="(+1 Entropic Melody)" Foreground="#CCCCCC" FontSize="12" HorizontalAlignment="Center" Margin="0,2,0,0" />
                             </StackPanel>
 
                             <Button x:Name="SwanMajorButton" Grid.Column="1" Margin="5" Width="384"
@@ -327,6 +330,7 @@
                                     FontSize="14"
                                     HorizontalAlignment="Center" />
                                 <Button x:Name="LaCampanellaMajorDissolveButton" Content="Dissolve" Width="120" Height="26" HorizontalAlignment="Center" />
+                                <TextBlock Text="(+1 Entropic Melody)" Foreground="#CCCCCC" FontSize="12" HorizontalAlignment="Center" Margin="0,2,0,0" />
                             </StackPanel>
 
                             <Button x:Name="LaCampanellaMajorButton" Grid.Column="1" Margin="5"
@@ -408,6 +412,7 @@
                                     FontSize="14"
                                     HorizontalAlignment="Center" />
                                 <Button x:Name="EnigmaMajorDissolveButton" Content="Dissolve" Width="120" Height="26" HorizontalAlignment="Center" />
+                                <TextBlock Text="(+1 Entropic Melody)" Foreground="#CCCCCC" FontSize="12" HorizontalAlignment="Center" Margin="0,2,0,0" />
                             </StackPanel>
 
                             <Button x:Name="EnigmaMajorButton" Grid.Column="1" Margin="5"
@@ -488,6 +493,7 @@
                                     FontSize="14"
                                     HorizontalAlignment="Center" />
                                 <Button x:Name="FateMajorDissolveButton" Content="Dissolve" Width="120" Height="26" HorizontalAlignment="Center" />
+                                <TextBlock Text="(+1 Entropic Melody)" Foreground="#CCCCCC" FontSize="12" HorizontalAlignment="Center" Margin="0,2,0,0" />
                             </StackPanel>
 
                             <Button x:Name="FateMajorButton" Grid.Column="1" Margin="5" Width="384"
@@ -568,6 +574,7 @@
                                     FontSize="14"
                                     HorizontalAlignment="Center" />
                                 <Button x:Name="OdeToJoyMajorDissolveButton" Content="Dissolve" Width="120" Height="26" HorizontalAlignment="Center" />
+                                <TextBlock Text="(+1 Entropic Melody)" Foreground="#CCCCCC" FontSize="12" HorizontalAlignment="Center" Margin="0,2,0,0" />
                             </StackPanel>
 
                             <Button x:Name="OdeToJoyMajorButton" Grid.Column="1" Margin="5"

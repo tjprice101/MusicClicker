@@ -1,6 +1,6 @@
 /*
- * File: Views/ArmorOfForteScreen.axaml.cs
- * Summary: Code-behind for Armor of Forte weapon shop screen.
+ * File: Views/ArmoryOfForteScreen.axaml.cs
+ * Summary: Code-behind for Armory of Forte weapon shop screen.
  * Purpose: Displays weapon list, handles purchase logic, and shows Forte/Duet resonances.
  */
 
@@ -14,10 +14,10 @@ using MusicClicker;
 namespace MusicClicker.Views
 {
     /// <summary>
-    /// Armor of Forte screen manages the weapon shop where players can purchase
+    /// Armory of Forte screen manages the weapon shop where players can purchase
     /// 18 different weapons, each tied to specific major scores they own.
     /// </summary>
-    public partial class ArmorOfForteScreen : UserControl
+    public partial class ArmoryOfForteScreen : UserControl
     {
         // Reference to the game state for checking/updating player progress
         private GameState? _gameState;
@@ -60,7 +60,7 @@ namespace MusicClicker.Views
             "The Snow's Desire"         // Formerly: Winter Bow II (event)
         };
 
-        // Array mapping each weapon to its required major score
+        // Array mapping each weapon to its required major
         // Player must own this major to unlock the corresponding weapon
         private readonly string[] _requiredMajors = new[]
         {
@@ -87,19 +87,19 @@ namespace MusicClicker.Views
         // Precomputed exponential base multipliers for weapon costs to avoid repeated Math.Pow calls.
         private static readonly double[] _weaponBaseMultipliers;
 
-        static ArmorOfForteScreen()
+        static ArmoryOfForteScreen()
         {
             _weaponBaseMultipliers = new double[18];
             for (int i = 0; i < _weaponBaseMultipliers.Length; i++)
             {
-                _weaponBaseMultipliers[i] = 250 * Math.Pow(20, i + 1);
+                _weaponBaseMultipliers[i] = 250 * Math.Pow(3, i + 1);
             }
         }
 
         /// <summary>
-        /// Constructor initializes the armor shop screen and sets up button handlers.
+        /// Constructor initializes the armory shop screen and sets up button handlers.
         /// </summary>
-        public ArmorOfForteScreen()
+        public ArmoryOfForteScreen()
         {
             InitializeComponent();
 
@@ -107,38 +107,38 @@ namespace MusicClicker.Views
             BackButton.Click += BackButton_Click;
             
             // Set up click handlers for all 18 weapon purchase buttons
-            InitializeArmorButtons();
+            InitializeArmoryButtons();
         }
 
         /// <summary>
         /// Connects each weapon button to its purchase handler.
         /// Each button is linked to its corresponding weapon index (0-17).
         /// </summary>
-        private void InitializeArmorButtons()
+        private void InitializeArmoryButtons()
         {
-            ArmorItem1Button.Click += (s, e) => HandleArmorPurchase(0);   // Moonlight Blade I
-            ArmorItem2Button.Click += (s, e) => HandleArmorPurchase(1);   // Moonlight Blade II
-            ArmorItem3Button.Click += (s, e) => HandleArmorPurchase(2);   // Eroica Sword I
-            ArmorItem4Button.Click += (s, e) => HandleArmorPurchase(3);   // Eroica Sword II
-            ArmorItem5Button.Click += (s, e) => HandleArmorPurchase(4);   // Swan Lance I
-            ArmorItem6Button.Click += (s, e) => HandleArmorPurchase(5);   // Swan Lance II
-            ArmorItem7Button.Click += (s, e) => HandleArmorPurchase(6);   // Campanella Dagger I
-            ArmorItem8Button.Click += (s, e) => HandleArmorPurchase(7);   // Campanella Dagger II
-            ArmorItem9Button.Click += (s, e) => HandleArmorPurchase(8);   // Enigma Staff I
-            ArmorItem10Button.Click += (s, e) => HandleArmorPurchase(9);  // Enigma Staff II
-            ArmorItem11Button.Click += (s, e) => HandleArmorPurchase(10); // Fate Axe I
-            ArmorItem12Button.Click += (s, e) => HandleArmorPurchase(11); // Fate Axe II
-            ArmorItem13Button.Click += (s, e) => HandleArmorPurchase(12); // Joy Hammer I
-            ArmorItem14Button.Click += (s, e) => HandleArmorPurchase(13); // Joy Hammer II
-            ArmorItem15Button.Click += (s, e) => HandleArmorPurchase(14); // Seven Circles
-            ArmorItem16Button.Click += (s, e) => HandleArmorPurchase(15); // Hell's Wrath
-            ArmorItem17Button.Click += (s, e) => HandleArmorPurchase(16); // Cacophonic Blizzard
-            ArmorItem18Button.Click += (s, e) => HandleArmorPurchase(17); // The Snow's Desire
+            ArmoryItem1Button.Click += (s, e) => HandleArmoryPurchase(0);   // Moonlight Blade I
+            ArmoryItem2Button.Click += (s, e) => HandleArmoryPurchase(1);   // Moonlight Blade II
+            ArmoryItem3Button.Click += (s, e) => HandleArmoryPurchase(2);   // Eroica Sword I
+            ArmoryItem4Button.Click += (s, e) => HandleArmoryPurchase(3);   // Eroica Sword II
+            ArmoryItem5Button.Click += (s, e) => HandleArmoryPurchase(4);   // Swan Lance I
+            ArmoryItem6Button.Click += (s, e) => HandleArmoryPurchase(5);   // Swan Lance II
+            ArmoryItem7Button.Click += (s, e) => HandleArmoryPurchase(6);   // Campanella Dagger I
+            ArmoryItem8Button.Click += (s, e) => HandleArmoryPurchase(7);   // Campanella Dagger II
+            ArmoryItem9Button.Click += (s, e) => HandleArmoryPurchase(8);   // Enigma Staff I
+            ArmoryItem10Button.Click += (s, e) => HandleArmoryPurchase(9);  // Enigma Staff II
+            ArmoryItem11Button.Click += (s, e) => HandleArmoryPurchase(10); // Fate Axe I
+            ArmoryItem12Button.Click += (s, e) => HandleArmoryPurchase(11); // Fate Axe II
+            ArmoryItem13Button.Click += (s, e) => HandleArmoryPurchase(12); // Joy Hammer I
+            ArmoryItem14Button.Click += (s, e) => HandleArmoryPurchase(13); // Joy Hammer II
+            ArmoryItem15Button.Click += (s, e) => HandleArmoryPurchase(14); // Seven Circles
+            ArmoryItem16Button.Click += (s, e) => HandleArmoryPurchase(15); // Hell's Wrath
+            ArmoryItem17Button.Click += (s, e) => HandleArmoryPurchase(16); // Cacophonic Blizzard
+            ArmoryItem18Button.Click += (s, e) => HandleArmoryPurchase(17); // The Snow's Desire
         }
 
         /// <summary>
         /// Calculates the cost of a weapon based on its index.
-        /// Cost formula: (NPS + 250 * 20^weaponNumber) * (NotesPerClick / 2)
+        /// Cost formula: (NPS + 250 * 3^weaponNumber) * (NotesPerClick / 2)
         /// Higher weapon numbers = exponentially more expensive.
         /// </summary>
         private double CalculateWeaponCost(int weaponIndex)
@@ -149,7 +149,7 @@ namespace MusicClicker.Views
             // Use precomputed base multiplier to avoid repeated Math.Pow calls
             double baseMultiplier = (weaponIndex >= 0 && weaponIndex < _weaponBaseMultipliers.Length)
                 ? _weaponBaseMultipliers[weaponIndex]
-                : 250 * Math.Pow(20, weaponIndex + 1);
+                : 250 * Math.Pow(3, weaponIndex + 1);
             
             // Final cost combines passive income (NPS) + exponential base, scaled by click power
             return (_gameState.NotesPerSecond + baseMultiplier) * (_gameState.NotesPerClick / 2);
@@ -248,7 +248,7 @@ namespace MusicClicker.Views
         /// Handles weapon purchase attempt.
         /// Checks if weapon is unlocked, not already owned, and player has enough notes.
         /// </summary>
-        private void HandleArmorPurchase(int weaponIndex)
+        private void HandleArmoryPurchase(int weaponIndex)
         {
             // Validate game state and weapon is unlocked
             if (_gameState == null || !IsWeaponUnlocked(weaponIndex))
@@ -261,17 +261,13 @@ namespace MusicClicker.Views
             // Calculate cost and check if player can afford it
             double cost = CalculateWeaponCost(weaponIndex);
             
-            if (_gameState.Notes >= cost)
-            {
-                // Deduct cost from player's notes
-                _gameState.Notes -= cost;
-                
-                // Mark weapon as owned
-                SetWeaponOwned(weaponIndex, true);
-                
-                // Refresh UI to show purchase
-                UpdateUI(_gameState);
-            }
+                if (MusicClicker.Helpers.AtomicDouble.Read(ref _gameState._notes) >= cost)
+                {
+                    MusicClicker.Helpers.AtomicDouble.Add(ref _gameState._notes, -cost);
+                    SetWeaponOwned(weaponIndex, true);
+                    // Refresh UI to show purchase
+                    UpdateUI(_gameState);
+                }
         }
 
         /// <summary>
@@ -316,27 +312,27 @@ namespace MusicClicker.Views
             _gameState = gameState;
             
             // Update the notes display at top of screen
-            ArmorNotesText.Text = $"Notes: {FormatNumber(gameState.Notes)}";
+            ArmoryNotesText.Text = $"Notes: {FormatNumber(gameState.Notes)}";
             
             // Update all 18 weapon slots with current state
-            UpdateWeaponSlot(0, ArmorItem1Button, ArmorItem1CostText, ArmorItem1OwnedText, ArmorItem1SoloConcertoText, ArmorItem1SymphonicModulationText, ArmorItem1DuetText);
-            UpdateWeaponSlot(1, ArmorItem2Button, ArmorItem2CostText, ArmorItem2OwnedText, ArmorItem2SoloConcertoText, ArmorItem2SymphonicModulationText, ArmorItem2DuetText);
-            UpdateWeaponSlot(2, ArmorItem3Button, ArmorItem3CostText, ArmorItem3OwnedText, ArmorItem3SoloConcertoText, ArmorItem3SymphonicModulationText, ArmorItem3DuetText);
-            UpdateWeaponSlot(3, ArmorItem4Button, ArmorItem4CostText, ArmorItem4OwnedText, ArmorItem4SoloConcertoText, ArmorItem4SymphonicModulationText, ArmorItem4DuetText);
-            UpdateWeaponSlot(4, ArmorItem5Button, ArmorItem5CostText, ArmorItem5OwnedText, ArmorItem5SoloConcertoText, ArmorItem5SymphonicModulationText, ArmorItem5DuetText);
-            UpdateWeaponSlot(5, ArmorItem6Button, ArmorItem6CostText, ArmorItem6OwnedText, ArmorItem6SoloConcertoText, ArmorItem6SymphonicModulationText, ArmorItem6DuetText);
-            UpdateWeaponSlot(6, ArmorItem7Button, ArmorItem7CostText, ArmorItem7OwnedText, ArmorItem7SoloConcertoText, ArmorItem7SymphonicModulationText, ArmorItem7DuetText);
-            UpdateWeaponSlot(7, ArmorItem8Button, ArmorItem8CostText, ArmorItem8OwnedText, ArmorItem8SoloConcertoText, ArmorItem8SymphonicModulationText, ArmorItem8DuetText);
-            UpdateWeaponSlot(8, ArmorItem9Button, ArmorItem9CostText, ArmorItem9OwnedText, ArmorItem9SoloConcertoText, ArmorItem9SymphonicModulationText, ArmorItem9DuetText);
-            UpdateWeaponSlot(9, ArmorItem10Button, ArmorItem10CostText, ArmorItem10OwnedText, ArmorItem10SoloConcertoText, ArmorItem10SymphonicModulationText, ArmorItem10DuetText);
-            UpdateWeaponSlot(10, ArmorItem11Button, ArmorItem11CostText, ArmorItem11OwnedText, ArmorItem11SoloConcertoText, ArmorItem11SymphonicModulationText, ArmorItem11DuetText);
-            UpdateWeaponSlot(11, ArmorItem12Button, ArmorItem12CostText, ArmorItem12OwnedText, ArmorItem12SoloConcertoText, ArmorItem12SymphonicModulationText, ArmorItem12DuetText);
-            UpdateWeaponSlot(12, ArmorItem13Button, ArmorItem13CostText, ArmorItem13OwnedText, ArmorItem13SoloConcertoText, ArmorItem13SymphonicModulationText, ArmorItem13DuetText);
-            UpdateWeaponSlot(13, ArmorItem14Button, ArmorItem14CostText, ArmorItem14OwnedText, ArmorItem14SoloConcertoText, ArmorItem14SymphonicModulationText, ArmorItem14DuetText);
-            UpdateWeaponSlot(14, ArmorItem15Button, ArmorItem15CostText, ArmorItem15OwnedText, ArmorItem15SoloConcertoText, ArmorItem15SymphonicModulationText, ArmorItem15DuetText);
-            UpdateWeaponSlot(15, ArmorItem16Button, ArmorItem16CostText, ArmorItem16OwnedText, ArmorItem16SoloConcertoText, ArmorItem16SymphonicModulationText, ArmorItem16DuetText);
-            UpdateWeaponSlot(16, ArmorItem17Button, ArmorItem17CostText, ArmorItem17OwnedText, ArmorItem17SoloConcertoText, ArmorItem17SymphonicModulationText, ArmorItem17DuetText);
-            UpdateWeaponSlot(17, ArmorItem18Button, ArmorItem18CostText, ArmorItem18OwnedText, ArmorItem18SoloConcertoText, ArmorItem18SymphonicModulationText, ArmorItem18DuetText);
+            UpdateWeaponSlot(0, ArmoryItem1Button, ArmoryItem1CostText, ArmoryItem1OwnedText, ArmoryItem1SoloConcertoText, ArmoryItem1SymphonicModulationText, ArmoryItem1DuetText);
+            UpdateWeaponSlot(1, ArmoryItem2Button, ArmoryItem2CostText, ArmoryItem2OwnedText, ArmoryItem2SoloConcertoText, ArmoryItem2SymphonicModulationText, ArmoryItem2DuetText);
+            UpdateWeaponSlot(2, ArmoryItem3Button, ArmoryItem3CostText, ArmoryItem3OwnedText, ArmoryItem3SoloConcertoText, ArmoryItem3SymphonicModulationText, ArmoryItem3DuetText);
+            UpdateWeaponSlot(3, ArmoryItem4Button, ArmoryItem4CostText, ArmoryItem4OwnedText, ArmoryItem4SoloConcertoText, ArmoryItem4SymphonicModulationText, ArmoryItem4DuetText);
+            UpdateWeaponSlot(4, ArmoryItem5Button, ArmoryItem5CostText, ArmoryItem5OwnedText, ArmoryItem5SoloConcertoText, ArmoryItem5SymphonicModulationText, ArmoryItem5DuetText);
+            UpdateWeaponSlot(5, ArmoryItem6Button, ArmoryItem6CostText, ArmoryItem6OwnedText, ArmoryItem6SoloConcertoText, ArmoryItem6SymphonicModulationText, ArmoryItem6DuetText);
+            UpdateWeaponSlot(6, ArmoryItem7Button, ArmoryItem7CostText, ArmoryItem7OwnedText, ArmoryItem7SoloConcertoText, ArmoryItem7SymphonicModulationText, ArmoryItem7DuetText);
+            UpdateWeaponSlot(7, ArmoryItem8Button, ArmoryItem8CostText, ArmoryItem8OwnedText, ArmoryItem8SoloConcertoText, ArmoryItem8SymphonicModulationText, ArmoryItem8DuetText);
+            UpdateWeaponSlot(8, ArmoryItem9Button, ArmoryItem9CostText, ArmoryItem9OwnedText, ArmoryItem9SoloConcertoText, ArmoryItem9SymphonicModulationText, ArmoryItem9DuetText);
+            UpdateWeaponSlot(9, ArmoryItem10Button, ArmoryItem10CostText, ArmoryItem10OwnedText, ArmoryItem10SoloConcertoText, ArmoryItem10SymphonicModulationText, ArmoryItem10DuetText);
+            UpdateWeaponSlot(10, ArmoryItem11Button, ArmoryItem11CostText, ArmoryItem11OwnedText, ArmoryItem11SoloConcertoText, ArmoryItem11SymphonicModulationText, ArmoryItem11DuetText);
+            UpdateWeaponSlot(11, ArmoryItem12Button, ArmoryItem12CostText, ArmoryItem12OwnedText, ArmoryItem12SoloConcertoText, ArmoryItem12SymphonicModulationText, ArmoryItem12DuetText);
+            UpdateWeaponSlot(12, ArmoryItem13Button, ArmoryItem13CostText, ArmoryItem13OwnedText, ArmoryItem13SoloConcertoText, ArmoryItem13SymphonicModulationText, ArmoryItem13DuetText);
+            UpdateWeaponSlot(13, ArmoryItem14Button, ArmoryItem14CostText, ArmoryItem14OwnedText, ArmoryItem14SoloConcertoText, ArmoryItem14SymphonicModulationText, ArmoryItem14DuetText);
+            UpdateWeaponSlot(14, ArmoryItem15Button, ArmoryItem15CostText, ArmoryItem15OwnedText, ArmoryItem15SoloConcertoText, ArmoryItem15SymphonicModulationText, ArmoryItem15DuetText);
+            UpdateWeaponSlot(15, ArmoryItem16Button, ArmoryItem16CostText, ArmoryItem16OwnedText, ArmoryItem16SoloConcertoText, ArmoryItem16SymphonicModulationText, ArmoryItem16DuetText);
+            UpdateWeaponSlot(16, ArmoryItem17Button, ArmoryItem17CostText, ArmoryItem17OwnedText, ArmoryItem17SoloConcertoText, ArmoryItem17SymphonicModulationText, ArmoryItem17DuetText);
+            UpdateWeaponSlot(17, ArmoryItem18Button, ArmoryItem18CostText, ArmoryItem18OwnedText, ArmoryItem18SoloConcertoText, ArmoryItem18SymphonicModulationText, ArmoryItem18DuetText);
         }
 
         /// <summary>
@@ -368,12 +364,12 @@ namespace MusicClicker.Views
                 // Moonlight (indices 0-1)
                 case 0:
                     forte1 = "Forte Resonance: On upgrade purchase, increase your current notes by 5%.";
-                    forte2 = "Forte Resonance: On upgrade purchase, increase your lowest owned upgrade by 5.";
+                    forte2 = "Forte Resonance: On upgrade purchase, increase your lowest owned upgrade by 2.";
                     duet = "Duet Resonance: Every 12th click increases all upgrade values by 1.";
                     break;
                 case 1:
                     forte1 = "Forte Resonance: On upgrade purchase, increase your current notes by 5%.";
-                    forte2 = "Forte Resonance: On upgrade purchase, increase your lowest owned upgrade by 5.";
+                    forte2 = "Forte Resonance: On upgrade purchase, increase your lowest owned upgrade by 2.";
                     duet = "Duet Resonance: Every 12th click increases all upgrade values by 1.";
                     break;
 

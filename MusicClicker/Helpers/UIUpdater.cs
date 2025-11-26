@@ -68,10 +68,16 @@ namespace MusicClicker
         {
             try
             {
-                // If the user is actively interacting (scrolling or dragging), skip updating
-                // text properties to avoid layout churn which causes stutter.
+                // When the user is interacting (scrolling/dragging), avoid expensive
+                // per-screen updates but still refresh the lightweight HUD so the
+                // Notes counter appears to increase continuously.
                 if (window?.IsUserInteracting == true)
+                {
+                    double displayNotesInteraction = window?.DisplayedNotes ?? gameState.Notes;
+                    string notesTextInteraction = $"Notes: {Math.Round(displayNotesInteraction, 1)}";
+                    if (window.NotesText.Text != notesTextInteraction) window.NotesText.Text = notesTextInteraction;
                     return;
+                }
                 // Use the smoothed displayed notes when available (updated at FRAME_RATE by AnimateVisuals).
                 double displayNotes = window?.DisplayedNotes ?? gameState.Notes;
                 string notesText = $"Notes: {Math.Round(displayNotes, 1)}";
@@ -101,9 +107,9 @@ namespace MusicClicker
                 if (window.UnityTheSymphonyScreen?.UnityNotesTextHeader != null && window.UnityTheSymphonyScreen.UnityNotesTextHeader.Text != notesText)
                     window.UnityTheSymphonyScreen.UnityNotesTextHeader.Text = notesText;
 
-                // Armor of Forte screen (direct access avoids FindControl allocations)
-                if (window.ArmorOfForteScreen?.ArmorNotesText != null && window.ArmorOfForteScreen.ArmorNotesText.Text != notesText)
-                    window.ArmorOfForteScreen.ArmorNotesText.Text = notesText;
+                // Armory of Forte screen (direct access avoids FindControl allocations)
+                if (window.ArmoryOfForteScreen?.ArmoryNotesText != null && window.ArmoryOfForteScreen.ArmoryNotesText.Text != notesText)
+                    window.ArmoryOfForteScreen.ArmoryNotesText.Text = notesText;
 
                 // Event banners (DiesIrae and Winter) - direct access if available
                 if (window.DiesIraeEventScreen?.NotesText != null && window.DiesIraeEventScreen.NotesText.Text != notesText)
@@ -174,10 +180,10 @@ namespace MusicClicker
                         window.UnityTheSymphonyScreen.UnityNotesTextHeader.Text = notesText;
                 }
 
-                if (window.ArmorOfForteScreen?.IsVisible == true && window.ArmorOfForteScreen.ArmorNotesText != null)
+                if (window.ArmoryOfForteScreen?.IsVisible == true && window.ArmoryOfForteScreen.ArmoryNotesText != null)
                 {
-                    if (window.ArmorOfForteScreen.ArmorNotesText.Text != notesText)
-                        window.ArmorOfForteScreen.ArmorNotesText.Text = notesText;
+                    if (window.ArmoryOfForteScreen.ArmoryNotesText.Text != notesText)
+                        window.ArmoryOfForteScreen.ArmoryNotesText.Text = notesText;
                 }
             }
 
@@ -213,10 +219,10 @@ namespace MusicClicker
                     window.UnityTheSymphonyScreen.UnityNotesTextHeader.Text = notesText;
             }
 
-            if (window.ArmorOfForteScreen?.IsVisible == true && window.ArmorOfForteScreen.ArmorNotesText != null)
+            if (window.ArmoryOfForteScreen?.IsVisible == true && window.ArmoryOfForteScreen.ArmoryNotesText != null)
             {
-                if (window.ArmorOfForteScreen.ArmorNotesText.Text != notesText)
-                    window.ArmorOfForteScreen.ArmorNotesText.Text = notesText;
+                if (window.ArmoryOfForteScreen.ArmoryNotesText.Text != notesText)
+                    window.ArmoryOfForteScreen.ArmoryNotesText.Text = notesText;
             }
         }
 

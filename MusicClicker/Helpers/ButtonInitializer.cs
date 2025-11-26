@@ -65,8 +65,8 @@ namespace MusicClicker
                     if (window.UnityTheSymphonyScreen?.UnityNotesTextHeader != null)
                         window.UnityTheSymphonyScreen.UnityNotesTextHeader.Text = notesText;
 
-                    if (window.ArmorOfForteScreen?.ArmorNotesText != null)
-                        window.ArmorOfForteScreen.ArmorNotesText.Text = notesText;
+                    if (window.ArmoryOfForteScreen?.ArmoryNotesText != null)
+                        window.ArmoryOfForteScreen.ArmoryNotesText.Text = notesText;
                 }
                 catch (Exception)
                 {
@@ -365,14 +365,14 @@ namespace MusicClicker
                 });
             };
 
-            // Armor of Forte
-            window.ArmorOfForteButton.Click += async (s, e) =>
+            // Armory of Forte
+            window.ArmoryOfForteButton.Click += async (s, e) =>
             {
                 await window.TransitionAsync(() =>
                 {
                     window.MainScreen.IsVisible = false;
-                    window.ArmorOfForteScreen.IsVisible = true;
-                    window.ArmorOfForteScreen.UpdateUI(window.GameState);
+                    window.ArmoryOfForteScreen.IsVisible = true;
+                    window.ArmoryOfForteScreen.UpdateUI(window.GameState);
                 });
             };
 
@@ -406,9 +406,9 @@ namespace MusicClicker
             // Buy Melodious Fragments
             SubscribeWithAutoUpdate(window.FragmentationScreen.MelodiousFragmentButton, window, () =>
             {
-                if (window.GameState.Notes >= 1000)
+                if (MusicClicker.Helpers.AtomicDouble.Read(ref window.GameState._notes) >= 1000)
                 {
-                    window.GameState.Notes -= 1000;
+                    MusicClicker.Helpers.AtomicDouble.Add(ref window.GameState._notes, -1000);
                     window.GameState.MelodiousOwned++;
                 }
             });
@@ -416,9 +416,9 @@ namespace MusicClicker
             // Buy Harmonious Fragments
             SubscribeWithAutoUpdate(window.FragmentationScreen.HarmoniousFragmentButton, window, () =>
             {
-                if (window.GameState.Notes >= 5000)
+                if (MusicClicker.Helpers.AtomicDouble.Read(ref window.GameState._notes) >= 5000)
                 {
-                    window.GameState.Notes -= 5000;
+                    MusicClicker.Helpers.AtomicDouble.Add(ref window.GameState._notes, -5000);
                     window.GameState.HarmoniousOwned++;
                 }
             });
@@ -433,8 +433,8 @@ namespace MusicClicker
             {
                 var gs = window.GameState;
                 const int cost = 135000;
-                if (gs.Notes < cost) return;
-                gs.Notes -= cost;
+                if (MusicClicker.Helpers.AtomicDouble.Read(ref gs._notes) < cost) return;
+                MusicClicker.Helpers.AtomicDouble.Add(ref gs._notes, -cost);
 
                 Task.Run(() =>
                 {
@@ -451,8 +451,8 @@ namespace MusicClicker
             {
                 var gs = window.GameState;
                 const int cost = 405000;
-                if (gs.Notes < cost) return;
-                gs.Notes -= cost;
+                if (MusicClicker.Helpers.AtomicDouble.Read(ref gs._notes) < cost) return;
+                MusicClicker.Helpers.AtomicDouble.Add(ref gs._notes, -cost);
 
                 Task.Run(() =>
                 {
@@ -469,8 +469,8 @@ namespace MusicClicker
             {
                 var gs = window.GameState;
                 const int cost = 1215000;
-                if (gs.Notes < cost) return;
-                gs.Notes -= cost;
+                if (MusicClicker.Helpers.AtomicDouble.Read(ref gs._notes) < cost) return;
+                MusicClicker.Helpers.AtomicDouble.Add(ref gs._notes, -cost);
 
                 Task.Run(() =>
                 {
@@ -487,8 +487,8 @@ namespace MusicClicker
             {
                 var gs = window.GameState;
                 const int cost = 3645000;
-                if (gs.Notes < cost) return;
-                gs.Notes -= cost;
+                if (MusicClicker.Helpers.AtomicDouble.Read(ref gs._notes) < cost) return;
+                MusicClicker.Helpers.AtomicDouble.Add(ref gs._notes, -cost);
 
                 Task.Run(() =>
                 {
@@ -505,8 +505,8 @@ namespace MusicClicker
             {
                 var gs = window.GameState;
                 const int cost = 5000;
-                if (gs.Notes < cost) return;
-                gs.Notes -= cost;
+                if (MusicClicker.Helpers.AtomicDouble.Read(ref gs._notes) < cost) return;
+                MusicClicker.Helpers.AtomicDouble.Add(ref gs._notes, -cost);
 
                 Task.Run(() =>
                 {
@@ -523,8 +523,8 @@ namespace MusicClicker
             {
                 var gs = window.GameState;
                 const int cost = 15000;
-                if (gs.Notes < cost) return;
-                gs.Notes -= cost;
+                if (MusicClicker.Helpers.AtomicDouble.Read(ref gs._notes) < cost) return;
+                MusicClicker.Helpers.AtomicDouble.Add(ref gs._notes, -cost);
 
                 Task.Run(() =>
                 {
@@ -541,8 +541,8 @@ namespace MusicClicker
             {
                 var gs = window.GameState;
                 const int cost = 45000;
-                if (gs.Notes < cost) return;
-                gs.Notes -= cost;
+                if (MusicClicker.Helpers.AtomicDouble.Read(ref gs._notes) < cost) return;
+                MusicClicker.Helpers.AtomicDouble.Add(ref gs._notes, -cost);
 
                 Task.Run(() =>
                 {

@@ -210,7 +210,7 @@
                             </Button>
                         </Border>
 
-                        <!-- Button 6: Armor of Forte -->
+                        <!-- Button 6: Armory of Forte -->
                         <Border Canvas.Left="503" Canvas.Top="100" CornerRadius="4">
                             <Border.Effect>
                                 <DropShadowEffect Color="Black" 
@@ -219,7 +219,7 @@
                                                   OffsetX="0"
                                                   OffsetY="0" />
                             </Border.Effect>
-                            <Button x:Name="ArmorOfForteButton"
+                                <Button x:Name="ArmoryOfForteButton"
                                     Width="374"
                                     Height="213">
                                 <Image Source="avares://MusicClicker/Assets/ArmoryofForte.png"
@@ -300,7 +300,7 @@
         <views:SaveScoresScreen x:Name="SaveScoresScreen" IsVisible="False" />
         <views:HeartOfHarmonyScreen x:Name="HeartOfHarmonyScreen" IsVisible="False" />
         <views:UniteTheSymphonyScreen x:Name="UnityTheSymphonyScreen" IsVisible="False" />
-        <views:ArmorOfForteScreen x:Name="ArmorOfForteScreen" IsVisible="False" />
+        <views:ArmoryOfForteScreen x:Name="ArmoryOfForteScreen" IsVisible="False" />
         <views:EternalModulationScreen x:Name="EternalModulationScreen" IsVisible="False" />
         
         <!-- Currently Active Events. Comment out any events that are not currently active in sets of 2. (Top = left and bottom = right) -->

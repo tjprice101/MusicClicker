@@ -44,7 +44,7 @@ namespace MusicClicker
             {"OdeToJoy", "avares://MusicClicker/Assets/OdeToJoyMajor2.png"}
         };
 
-        // Ordered list of weapon keys (matches ArmorOfForte screen order)
+        // Ordered list of weapon keys (matches ArmoryOfForte screen order)
         // NOTE: Moonlight weapons requested: Incisor first, then Eulogy.
         private readonly List<string> _weaponOrder = new()
         {

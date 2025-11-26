@@ -34,6 +34,9 @@ namespace MusicClicker
         // the UI is refreshed. This keeps math frequent but UI updates batched for performance.
         private DispatcherTimer _gameLoopTimer = null!;
         private System.Diagnostics.Stopwatch _stopwatch = null!;
+        // Background timer that advances Notes continuously on a threadpool thread
+        private System.Timers.Timer _backgroundNpsTimer = null!;
+        private System.Diagnostics.Stopwatch _bgStopwatch = null!;
         // Accumulator (milliseconds) used to apply NotesPerSecond in discrete 1s bursts.
         private double _npsAccumulatorMs = 0.0;
         
@@ -85,8 +88,8 @@ namespace MusicClicker
         
         // Total number of buttons in the carousel (8 different game screens)
         private const int BUTTON_COUNT = 8;
-        // Target frame rate for animations (frames per second). Starts at 120 for smoother animation.
-        private int _frameRate = 120;
+        // Target frame rate for animations (frames per second). Start higher for smoother visuals.
+        private int _frameRate = 144;
 
         // Animation timer: fires at `_frameRate` to produce smooth carousel animation
         private DispatcherTimer animationTimer = null!;
@@ -294,21 +297,6 @@ namespace MusicClicker
 
                 // Accumulate time and only run UI updates at the configured rate
                 uiAccumulatorMs += elapsedSeconds * 1000.0;
-                // Accumulate for 1-second NPS bursts
-                _npsAccumulatorMs += elapsedSeconds * 1000.0;
-                if (_npsAccumulatorMs >= 1000.0)
-                {
-                    // How many whole seconds have passed? (handle long frames)
-                    int wholeSeconds = (int)(_npsAccumulatorMs / 1000.0);
-                    _npsAccumulatorMs -= wholeSeconds * 1000.0;
-                    if (gameState.NotesPerSecond != 0)
-                    {
-                        // Add the full NotesPerSecond once per second (times wholeSeconds)
-                        gameState.Notes += gameState.NotesPerSecond * wholeSeconds;
-                        // Update the lightweight notes display immediately
-                        try { UIUpdater.UpdateNotesOnly(this, gameState); } catch { }
-                    }
-                }
                 if (uiAccumulatorMs >= uiUpdateIntervalMs)
                 {
                     uiAccumulatorMs = 0;
@@ -321,6 +309,26 @@ namespace MusicClicker
                 }
             };
             _gameLoopTimer.Start();
+
+            // Start a background timer to advance Notes continuously even when the UI thread
+            // is busy. This prevents progress from pausing during navigation or heavier UI work.
+            _bgStopwatch = System.Diagnostics.Stopwatch.StartNew();
+            _backgroundNpsTimer = new System.Timers.Timer(100); // 100ms interval
+            _backgroundNpsTimer.Elapsed += (sender, ev) =>
+            {
+                try
+                {
+                    double elapsed = _bgStopwatch.Elapsed.TotalSeconds;
+                    _bgStopwatch.Restart();
+                    if (gameState != null && gameState.NotesPerSecond != 0)
+                    {
+                        // Advance notes by elapsedSeconds * NPS using lock-free atomic add
+                        MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, gameState.NotesPerSecond * elapsed);
+                    }
+                }
+                catch { }
+            };
+            _backgroundNpsTimer.Start();
 
             // Create and start the auto-save DispatcherTimer (fires every 30 seconds)
             _saveTimer = new DispatcherTimer();
@@ -378,7 +386,8 @@ namespace MusicClicker
             // Stop timers to prevent them from firing after window closes
             _gameLoopTimer?.Stop();
             _saveTimer?.Stop();
-            // No background NPS timer to dispose (NPS applied via UI loop accumulator)
+            _backgroundNpsTimer?.Stop();
+            _backgroundNpsTimer?.Dispose();
         }
 
         /// <summary>
@@ -387,41 +396,16 @@ namespace MusicClicker
         /// </summary>
         public async Task TransitionAsync(Action switchAction, double durationSeconds = 0.18)
         {
-            var fader = _screenFader ?? this.FindControl<Rectangle>("ScreenFader");
-            if (fader == null)
-            {
-                // No fader present - just run the action
-                switchAction?.Invoke();
-                return;
-            }
-
-            // Make sure the fader blocks input while visible
-            fader.IsHitTestVisible = true;
-
-            // Fade to opaque
-            await FadeToAsync(fader, 1.0, durationSeconds);
-
-            // Perform the screen switch
+            // Immediate transition: perform the switch action without a fade to avoid expensive
+            // fullscreen animations which were causing performance problems on some systems.
             try { switchAction?.Invoke(); } catch { }
-
-            // Fade back to transparent
-            await FadeToAsync(fader, 0.0, durationSeconds);
-            fader.IsHitTestVisible = false;
+            await Task.CompletedTask;
         }
 
         private async Task FadeToAsync(Rectangle fader, double targetOpacity, double durationSeconds)
         {
-            double start = fader.Opacity;
-            int steps = Math.Max(1, (int)(durationSeconds * _frameRate));
-            for (int i = 1; i <= steps; i++)
-            {
-                double t = (double)i / steps;
-                double value = start + (targetOpacity - start) * t;
-                // Ensure UI thread update
-                await Dispatcher.UIThread.InvokeAsync(() => fader.Opacity = value);
-                await Task.Delay(TimeSpan.FromMilliseconds(durationSeconds * 1000.0 / steps));
-            }
-            await Dispatcher.UIThread.InvokeAsync(() => fader.Opacity = targetOpacity);
+            // Transition animations have been disabled for performance; set final opacity immediately.
+            try { await Dispatcher.UIThread.InvokeAsync(() => fader.Opacity = targetOpacity); } catch { }
         }
 
         // ------------------- CAROUSEL INITIALIZATION -------------------
@@ -442,7 +426,7 @@ namespace MusicClicker
                 GetButtonTransforms(HarmonyButton),            // Harmony feature
                 GetButtonTransforms(TempoResonateButton),      // Tempo Resonate (scores)
                 GetButtonTransforms(EternalModulationButton),  // Event screen
-                GetButtonTransforms(ArmorOfForteButton),       // Armor/weapons shop
+                GetButtonTransforms(ArmoryOfForteButton),       // Armory/weapons shop
                 GetButtonTransforms(SymphonicGalleryButton)    // Customization gallery
             };
 
@@ -795,12 +779,12 @@ namespace MusicClicker
                 if (gameState.FateCounter == 5)
                 {
                     gameState.FateCounter = 0;
-                    gameState.Notes += (gameState.Notes * 0.30);
+                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, (gameState.Notes * 0.30));
                 }
             }
 
             // Add calculated notes to player's total
-            gameState.Notes += notesPerClick;
+            MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, notesPerClick);
 
             // Immediate, lightweight UI updates so rapid clicks feel responsive.
             try
@@ -814,7 +798,7 @@ namespace MusicClicker
                 if (SaveScoresScreen?.SaveScoresNotesText != null) SaveScoresScreen.SaveScoresNotesText.Text = notesText;
                 if (HeartOfHarmonyScreen?.HeartOfHarmonyNotesText != null) HeartOfHarmonyScreen.HeartOfHarmonyNotesText.Text = notesText;
                 if (UnityTheSymphonyScreen?.UnityNotesTextHeader != null) UnityTheSymphonyScreen.UnityNotesTextHeader.Text = notesText;
-                if (ArmorOfForteScreen?.ArmorNotesText != null) ArmorOfForteScreen.ArmorNotesText.Text = notesText;
+                if (ArmoryOfForteScreen?.ArmoryNotesText != null) ArmoryOfForteScreen.ArmoryNotesText.Text = notesText;
             }
             catch { }
 
@@ -826,7 +810,8 @@ namespace MusicClicker
                 UIUpdater.UpdateFragmentationUI(this, gameState);
                 UIUpdater.UpdateHeartOfHarmonyUI(this, gameState);
                 UIUpdater.UpdateUnitySymphonyUI(this, gameState);
-                UIUpdater.UpdateUI(this, gameState);
+                // Avoid calling the full UpdateUI on every click to reduce heavy UI churn.
+                // Full UI updates are batched in the game loop at `uiUpdateIntervalMs`.
             }
             catch { }
         }
@@ -853,7 +838,7 @@ namespace MusicClicker
             if (e.Key == Avalonia.Input.Key.Space)
             {
                 // Give large amount of notes for testing and grant majors
-                gameState.Notes += 1_000_000;
+                MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, 1_000_000);
 
                 // Give one of each major score type
                 gameState.MoonlightMajorOwned += 1;
