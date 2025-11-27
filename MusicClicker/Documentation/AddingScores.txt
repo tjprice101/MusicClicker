@@ -10,16 +10,21 @@ UNDERSTANDING THE SCORE SYSTEM
 ═══════════════════════════════════════════════════════════════════════════════
 
 TERMINOLOGY REFRESHER:
-- FRAGMENTS:    Raw materials collected from clicking/upgrades
-- MINOR SCORE:  Craftable item made from minor fragments (3 types: Keys, Scales, Progressions)
-- MAJOR SCORE:  Craftable item made from major fragments (3 types: Keys, Scales, Progressions + Major Sheets)
-- SCORE FAMILY: A collection of related scores (e.g., Moonlight, Eroica, Swan Lake)
+- MINOR FRAGMENTS: Crafting components (Minor Keys, Minor Scales, Minor Progressions)
+- MAJOR SHEETS:    Special items that unlock major crafting components
+- MAJOR FRAGMENTS: Crafting components obtained from Major Sheets (Major Keys, Major Scales, Major Progressions)
+- MINOR SCORE:     Craftable item made from minor fragments
+- MAJOR SCORE:     Craftable item made from major fragments (requires Major Sheet to unlock components)
+- SCORE FAMILY:    A collection of related scores (e.g., Moonlight, Eroica, Swan Lake)
 
-FRAGMENT FLOW:
-1. Player collects fragments (minor/major keys, scales, progressions)
-2. Fragments are spent to craft scores in "Save Scores" screen
-3. Crafted scores are used in "Unite the Symphony" screen
-4. Major scores unlock weapons and special abilities
+CRAFTING FLOW:
+1. Player collects MINOR FRAGMENTS (keys, scales, progressions) from clicking/upgrades
+2. Minor fragments are spent to craft MINOR SCORES in "Save Scores" screen
+3. Player obtains MAJOR SHEETS (from milestones or special methods)
+4. Major Sheets unlock the ability to collect MAJOR FRAGMENTS (major keys, scales, progressions)
+5. Major fragments are spent to craft MAJOR SCORES in "Heart of Harmony" screen
+6. Crafted scores are used in "Unite the Symphony" screen
+7. Major scores unlock weapons and special abilities
 
 ═══════════════════════════════════════════════════════════════════════════════
 STEP 1: PLAN YOUR SCORE FAMILY
@@ -44,7 +49,9 @@ Before coding, decide on:
    - Keys Cost:        20 major keys
    - Scales Cost:      10 major scales
    - Progressions Cost: 5 major progressions
-   - Sheets Cost:      1 major sheet (unlocked via special method)
+   
+   Note: Major fragments (keys, scales, progressions) are obtained by using Major Sheets.
+   The Major Sheet itself is unlocked via special methods (milestones, achievements, etc.)
 
 4. ASSOCIATED WEAPONS
    - How many weapons in this family? (typically 2-3)
@@ -100,11 +107,11 @@ STEP 2: ADD SCORE DATA TO GAMESTATE
    public bool RequiemMajorAbility { get => _requiemMajorAbility; set => _requiemMajorAbility = value; }
    ```
 
-5. ADD MAJOR FRAGMENTS
+4. ADD MAJOR FRAGMENTS
    Find the "Major fragments for Heart of Harmony" section (around line 400-500):
    
    ```csharp
-   // Requiem Major Fragments
+   // Requiem Major Fragments (obtained from Major Sheets)
    public int _requiemMajorKeys = 0;
    public int RequiemMajorKeys { get => _requiemMajorKeys; set => _requiemMajorKeys = value; }
    
@@ -114,6 +121,8 @@ STEP 2: ADD SCORE DATA TO GAMESTATE
    public int _requiemMajorProgressions = 0;
    public int RequiemMajorProgressions { get => _requiemMajorProgressions; set => _requiemMajorProgressions = value; }
    ```
+   
+   Note: These fragments are NOT collected directly. They are obtained by using/consuming Major Sheets.
 
 ═══════════════════════════════════════════════════════════════════════════════
 STEP 3: ADD MINOR SCORE TO "SAVE SCORES" SCREEN
@@ -279,7 +288,7 @@ STEP 5: ADD MAJOR SCORE TO "HEART OF HARMONY" SCREEN
                    Click="CraftRequiemMajor_Click"/>
            
            <TextBlock Name="RequiemMajorCostText" 
-                      Text="Cost: 20 Keys, 10 Scales, 5 Progressions, 1 Sheet" 
+                      Text="Cost: 20 Keys, 10 Scales, 5 Progressions" 
                       FontSize="12" Foreground="Gray" 
                       HorizontalAlignment="Center" Margin="0,5,0,0"/>
            
@@ -320,6 +329,7 @@ STEP 6: IMPLEMENT MAJOR SCORE CRAFTING LOGIC
    ```csharp
    /// <summary>
    /// Crafts a Requiem Major Score using collected major fragments.
+   /// Note: Major fragments (keys, scales, progressions) are obtained by using Major Sheets.
    /// </summary>
    public static void CraftRequiemMajor(GameState gs)
    {
@@ -327,13 +337,11 @@ STEP 6: IMPLEMENT MAJOR SCORE CRAFTING LOGIC
        int keyCost = 20;
        int scaleCost = 10;
        int progressionCost = 5;
-       int sheetCost = 1;
        
        // Check fragments
        if (gs.RequiemMajorKeys < keyCost ||
            gs.RequiemMajorScales < scaleCost ||
-           gs.RequiemMajorProgressions < progressionCost ||
-           gs.RequiemMajorSheets < sheetCost)
+           gs.RequiemMajorProgressions < progressionCost)
        {
            Console.WriteLine("Not enough major fragments!");
            return;
@@ -343,7 +351,6 @@ STEP 6: IMPLEMENT MAJOR SCORE CRAFTING LOGIC
        gs.RequiemMajorKeys -= keyCost;
        gs.RequiemMajorScales -= scaleCost;
        gs.RequiemMajorProgressions -= progressionCost;
-       gs.RequiemMajorSheets -= sheetCost;
        
        // Award score
        gs.RequiemMajorOwned++;
@@ -413,22 +420,25 @@ STEP 7: HOOK UP FRAGMENT GENERATION
    }
    ```
 
-4. ADD MAJOR FRAGMENT DROPS
-   Major fragments typically come from special actions:
+4. ADD MAJOR SHEET DROPS
+   Major Sheets are obtained from special actions or milestones:
    
    ```csharp
-   // Example: Drop major fragments from high-tier upgrades
+   // Example: Award Major Sheets from high-tier upgrades or milestones
    private void BuyMagnumOpus()
    {
        // ... purchase logic ...
        
        if (Progression.IsRequiemUnlocked(gameState))
        {
-           gameState.RequiemMajorKeys++;
-           gameState.RequiemMajorScales++;
+           gameState.RequiemMajorSheets++;
+           Console.WriteLine("Awarded Requiem Major Sheet!");
        }
    }
    ```
+   
+   Note: Players then USE Major Sheets to obtain major fragments (keys, scales, progressions).
+   This is typically done through a conversion system in the Heart of Harmony screen.
 
 ═══════════════════════════════════════════════════════════════════════════════
 STEP 8: UPDATE UI REFRESH LOGIC
@@ -479,30 +489,57 @@ STEP 8: UPDATE UI REFRESH LOGIC
            // Update button state
            bool canCraft = gs.RequiemMajorKeys >= 20 && 
                           gs.RequiemMajorScales >= 10 && 
-                          gs.RequiemMajorProgressions >= 5 &&
-                          gs.RequiemMajorSheets >= 1;
+                          gs.RequiemMajorProgressions >= 5;
            window.HeartOfHarmonyScreen.CraftRequiemMajorButton.IsEnabled = canCraft;
        }
    }
    ```
 
 ═══════════════════════════════════════════════════════════════════════════════
-STEP 9: ADD MAJOR SHEET UNLOCK MECHANISM
+STEP 9: ADD MAJOR SHEET SYSTEM
 ═══════════════════════════════════════════════════════════════════════════════
 
-Major Sheets are special and should be unlocked through significant milestones.
+Major Sheets are special items that UNLOCK the ability to obtain major fragments.
+Players use/convert Major Sheets to get major keys, scales, and progressions.
 
-OPTION 1: UNLOCK VIA MILESTONE
+OPTION 1: DIRECT CONVERSION (1 SHEET → MAJOR FRAGMENTS)
 ```csharp
-// When player reaches certain threshold
-if (gs.RequiemMajorOwned >= 10 && gs.RequiemMajorSheets == 0)
+// Player spends 1 Major Sheet to get major fragments
+public static void ConvertRequiemMajorSheet(GameState gs)
 {
-    gs.RequiemMajorSheets = 1;
-    Console.WriteLine("Unlocked Requiem Major Sheet!");
+    if (gs.RequiemMajorSheets < 1)
+    {
+        Console.WriteLine("No Major Sheets available!");
+        return;
+    }
+    
+    // Deduct sheet
+    gs.RequiemMajorSheets--;
+    
+    // Award major fragments
+    gs.RequiemMajorKeys += 5;      // Example: 5 keys per sheet
+    gs.RequiemMajorScales += 3;    // Example: 3 scales per sheet
+    gs.RequiemMajorProgressions += 1; // Example: 1 progression per sheet
+    
+    Console.WriteLine("Converted Major Sheet to major fragments!");
 }
 ```
 
-OPTION 2: UNLOCK VIA CRAFTING
+OPTION 2: UNLOCK MAJOR FRAGMENT DROPS (SHEET UNLOCKS COLLECTION)
+```csharp
+// First Major Sheet unlocks the ability to collect major fragments
+public static void UnlockRequiemMajorFragments(GameState gs)
+{
+    if (gs.RequiemMajorSheets >= 1)
+    {
+        // Once player has ANY major sheet, they can collect major fragments
+        // from clicks, upgrades, etc.
+        // Major Sheets then become currency for other purposes
+    }
+}
+```
+
+OPTION 3: AWARD MAJOR SHEETS FROM MILESTONES
 ```csharp
 public static void CraftRequiemMinor(GameState gs)
 {
@@ -512,33 +549,14 @@ public static void CraftRequiemMinor(GameState gs)
     if (gs.RequiemMinorOwned % 5 == 0)
     {
         gs.RequiemMajorSheets++;
-        Console.WriteLine("Awarded Requiem Major Sheet!");
+        Console.WriteLine("Awarded Requiem Major Sheet for milestone!");
     }
 }
 ```
 
-OPTION 3: UNLOCK VIA FRAGMENTS
-```csharp
-// Trade minor fragments for major sheet
-public static void ConvertToRequiemMajorSheet(GameState gs)
-{
-    int keyCost = 100;
-    int scaleCost = 50;
-    int progressionCost = 25;
-    
-    if (gs.RequiemMinorKeys >= keyCost &&
-        gs.RequiemMinorScales >= scaleCost &&
-        gs.RequiemMinorProgressions >= progressionCost)
-    {
-        gs.RequiemMinorKeys -= keyCost;
-        gs.RequiemMinorScales -= scaleCost;
-        gs.RequiemMinorProgressions -= progressionCost;
-        gs.RequiemMajorSheets++;
-        
-        Console.WriteLine("Converted fragments to Requiem Major Sheet!");
-    }
-}
-```
+RECOMMENDED APPROACH:
+Use Major Sheets as a conversion currency. Players earn Major Sheets from milestones,
+then use them in the Heart of Harmony screen to convert to major fragments.
 
 ═══════════════════════════════════════════════════════════════════════════════
 STEP 10: IMPLEMENT MAJOR SCORE ABILITY
@@ -607,9 +625,10 @@ STEP 12: BALANCE TESTING
 ═══════════════════════════════════════════════════════════════════════════════
 
 1. FRAGMENT DROP RATES
-   - Test that fragments drop at reasonable rates
-   - Ensure players can progress without excessive grinding
-   - Balance minor vs major fragment rarity
+   - Test that MINOR fragments drop at reasonable rates
+   - Ensure Major Sheets are rare but obtainable
+   - Test conversion rate: Major Sheets → Major Fragments
+   - Balance minor fragment grinding vs major sheet acquisition
 
 2. CRAFTING COSTS
    - Verify costs feel fair for unlock tier
