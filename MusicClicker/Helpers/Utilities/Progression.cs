@@ -49,5 +49,49 @@ namespace MusicClicker.Helpers
         {
             return Math.Round(baseCost * Math.Pow(Config.UpgradeCostGrowth, owned), 2);
         }
+
+        // Recalculate total NPS from all sources (upgrades + minor scores)
+        public static double RecalculateNotesPerSecond(GameState gameState)
+        {
+            double totalNps = 0;
+
+            // Add NPS from upgrades
+            for (int i = 0; i < gameState.ChordOwned; i++)
+            {
+                totalNps += gameState.ChordBaseNpsEffect * Math.Pow(gameState.ChordNpsGrowth, i);
+            }
+            for (int i = 0; i < gameState.ScaleOwned; i++)
+            {
+                totalNps += gameState.ScaleBaseNpsEffect * Math.Pow(gameState.ScaleNpsGrowth, i);
+            }
+            for (int i = 0; i < gameState.OrchestraOwned; i++)
+            {
+                totalNps += gameState.OrchestraBaseNpsEffect * Math.Pow(gameState.OrchestraNpsGrowth, i);
+            }
+            for (int i = 0; i < gameState.SymphonyOwned; i++)
+            {
+                totalNps += gameState.SymphonyBaseNpsEffect * Math.Pow(gameState.SymphonyNpsGrowth, i);
+            }
+
+            // Add NPS from minor scores
+            totalNps += gameState.MoonlightMinorOwned * 3000;
+            totalNps += gameState.EroicaMinorOwned * 8000;
+            totalNps += gameState.SwanMinorOwned * 15000;
+            totalNps += gameState.LaCampanellaMinorOwned * 35000;
+            totalNps += gameState.EnigmaMinorOwned * 75000;
+            totalNps += gameState.FateMinorOwned * 135000;
+            totalNps += gameState.OdeToJoyMinorOwned * 255000;
+
+            // Add NPS from major scores
+            totalNps += gameState.MoonlightMajorOwned * 6000;
+            totalNps += gameState.EroicaMajorOwned * 16000;
+            totalNps += gameState.SwanMajorOwned * 30000;
+            totalNps += gameState.LaCampanellaMajorOwned * 70000;
+            totalNps += gameState.EnigmaMajorOwned * 150000;
+            totalNps += gameState.FateMajorOwned * 270000;
+            totalNps += gameState.OdeToJoyMajorOwned * 510000;
+
+            return totalNps;
+        }
     }
 }

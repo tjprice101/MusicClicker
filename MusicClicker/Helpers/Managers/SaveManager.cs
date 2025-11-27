@@ -102,6 +102,9 @@ namespace MusicClicker.Helpers
                     return false;
                 }
 
+                // Recalculate NPS from owned items to ensure accuracy
+                loaded.NotesPerSecond = MusicClicker.Helpers.Progression.RecalculateNotesPerSecond(loaded);
+
                 // Optional migration hook: if you add migrations later, handle them here.
                 state = loaded;
                 return true;

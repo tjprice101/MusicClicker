@@ -52,7 +52,7 @@ namespace MusicClicker
                     }
                     catch { }
 
-                    string notesText = $"Notes: {UIUpdater.FormatNotes(gs.Notes)}";
+                    string notesText = $"Notes: {Math.Round(gs.Notes, 1)}";
                     if (window.NotesText != null && window.NotesText.Text != notesText) window.NotesText.Text = notesText;
 
                     // Quick per-screen minimal updates (avoid heavy work while clicking rapidly)
@@ -270,6 +270,24 @@ namespace MusicClicker
                 });
             };
 
+            // Bottom-right Duet Ability button
+            window.OpenDuetAbilityButton.Click += (s, e) =>
+            {
+                if (window.DuetAbilityScreen != null)
+                {
+                    window.DuetAbilityScreen.IsVisible = !window.DuetAbilityScreen.IsVisible;
+                    if (window.DuetAbilityScreen.IsVisible)
+                    {
+                        window.DuetAbilityScreen.UpdateAbilityDisplay();
+                        window.DuetAbilityScreen.StartCooldownTimer();
+                    }
+                    else
+                    {
+                        window.DuetAbilityScreen.StopCooldownTimer();
+                    }
+                }
+            };
+
             // Top-left Save button
             window.TopSaveButton.Click += (s, e) =>
             {
@@ -411,6 +429,12 @@ namespace MusicClicker
                     MusicClicker.Helpers.AtomicDouble.Add(ref window.GameState._notes, -1000);
                     window.GameState.MelodiousOwned++;
                     
+                    // Queue for Mirror Lake reflection
+                    if (window.GameState.SwanLakeDuetActive && DateTime.Now <= window.GameState.SwanLakeDuetExpiry)
+                    {
+                        MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(window.GameState, "BuyFragment", ("Melodious", 1000.0));
+                    }
+                    
                     // Trigger Star-Scattered Wings ability (Swan Lake I)
                     if (window.GameState.StarScatteredWingsAbility)
                     {
@@ -426,6 +450,12 @@ namespace MusicClicker
                 {
                     MusicClicker.Helpers.AtomicDouble.Add(ref window.GameState._notes, -5000);
                     window.GameState.HarmoniousOwned++;
+                    
+                    // Queue for Mirror Lake reflection
+                    if (window.GameState.SwanLakeDuetActive && DateTime.Now <= window.GameState.SwanLakeDuetExpiry)
+                    {
+                        MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(window.GameState, "BuyFragment", ("Harmonious", 5000.0));
+                    }
                     
                     // Trigger Thousand Winged Swan ability (Swan Lake II)
                     if (window.GameState.ThousandWingedSwanAbility)

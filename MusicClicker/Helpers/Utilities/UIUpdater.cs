@@ -35,9 +35,9 @@ namespace MusicClicker
             // Only update screens that are visible to reduce UI churn on hidden views.
             if (window.UpgradeScreen?.IsVisible == true)
             {
-                window.UpgradeScreen.UpgradeNotesTextHeader.Text = $"Notes: {FormatNotes(notes)}";
+                window.UpgradeScreen.UpgradeNotesTextHeader.Text = $"Notes: {Math.Round(notes, 1)}";
 
-                // Owned counts are simple integer-to-string conversions — inexpensive.
+                // Owned counts are simple integer-to-string conversions  Einexpensive.
                 window.UpgradeScreen.ChordOwnedTextUpgrade.Text = $"Number Owned: {gameState.ChordOwned}";
                 window.UpgradeScreen.ScaleOwnedTextUpgrade.Text = $"Number Owned: {gameState.ScaleOwned}";
                 window.UpgradeScreen.OrchestraOwnedTextUpgrade.Text = $"Number Owned: {gameState.OrchestraOwned}";
@@ -49,14 +49,18 @@ namespace MusicClicker
 
                 // Compute each upgrade's cost once using Math.Pow per slot (still necessary to compute
                 // the exponential), but avoid calling Math.Round twice for the same value.
-                double chordCost = Math.Round(gameState.ChordBaseCost * Math.Pow(1.15, gameState.ChordOwned), 2);
-                double scaleCost = Math.Round(gameState.ScaleBaseCost * Math.Pow(1.15, gameState.ScaleOwned), 2);
-                double orchestraCost = Math.Round(gameState.OrchestraBaseCost * Math.Pow(1.15, gameState.OrchestraOwned), 2);
-                double symphonyCost = Math.Round(gameState.SymphonyBaseCost * Math.Pow(1.15, gameState.SymphonyOwned), 2);
-                double ariaCost = Math.Round(gameState.AriaBaseCost * Math.Pow(1.15, gameState.AriaOwned), 2);
-                double requiemCost = Math.Round(gameState.RequiemBaseCost * Math.Pow(1.15, gameState.RequiemOwned), 2);
-                double opusCost = Math.Round(gameState.OpusBaseCost * Math.Pow(1.15, gameState.OpusOwned), 2);
-                double magnumCost = Math.Round(gameState.MagnumOpusBaseCost * Math.Pow(1.15, gameState.MagnumOpusOwned), 2);
+                // Apply Moonlight Duet Waning phase cost reduction (50% off)
+                int moonPhase = MusicClicker.Armory.WeaponAbilities.MoonlightDuet_GetCurrentPhase(gameState);
+                double costMultiplier = (moonPhase == 3) ? 0.5 : 1.0; // Waning phase
+                
+                double chordCost = Math.Round(gameState.ChordBaseCost * Math.Pow(1.15, gameState.ChordOwned) * costMultiplier, 2);
+                double scaleCost = Math.Round(gameState.ScaleBaseCost * Math.Pow(1.15, gameState.ScaleOwned) * costMultiplier, 2);
+                double orchestraCost = Math.Round(gameState.OrchestraBaseCost * Math.Pow(1.15, gameState.OrchestraOwned) * costMultiplier, 2);
+                double symphonyCost = Math.Round(gameState.SymphonyBaseCost * Math.Pow(1.15, gameState.SymphonyOwned) * costMultiplier, 2);
+                double ariaCost = Math.Round(gameState.AriaBaseCost * Math.Pow(1.15, gameState.AriaOwned) * costMultiplier, 2);
+                double requiemCost = Math.Round(gameState.RequiemBaseCost * Math.Pow(1.15, gameState.RequiemOwned) * costMultiplier, 2);
+                double opusCost = Math.Round(gameState.OpusBaseCost * Math.Pow(1.15, gameState.OpusOwned) * costMultiplier, 2);
+                double magnumCost = Math.Round(gameState.MagnumOpusBaseCost * Math.Pow(1.15, gameState.MagnumOpusOwned) * costMultiplier, 2);
 
                 window.UpgradeScreen.ChordCostTextUpgrade.Text = $"Cost: {chordCost}";
                 window.UpgradeScreen.ScaleCostTextUpgrade.Text = $"Cost: {scaleCost}";
@@ -84,13 +88,13 @@ namespace MusicClicker
                 if (window?.IsUserInteracting == true)
                 {
                     double displayNotesInteraction = window?.DisplayedNotes ?? gameState.Notes;
-                    string notesTextInteraction = $"Notes: {FormatNotes(displayNotesInteraction)}";
+                    string notesTextInteraction = $"Notes: {Math.Round(displayNotesInteraction, 1)}";
                     if (window.NotesText.Text != notesTextInteraction) window.NotesText.Text = notesTextInteraction;
                     return;
                 }
                 // Use the smoothed displayed notes when available (updated at FRAME_RATE by AnimateVisuals).
                 double displayNotes = window?.DisplayedNotes ?? gameState.Notes;
-                string notesText = $"Notes: {FormatNotes(displayNotes)}";
+                string notesText = $"Notes: {Math.Round(displayNotes, 1)}";
 
                 // Note: intentionally inlined simple checks to avoid allocating delegates.
 
@@ -152,7 +156,7 @@ namespace MusicClicker
             // Avoid changing text properties while the user is interacting to prevent layout
             // thrashing that can cause jitter (scrolling, slider drags, etc.). We still update
             // the internal displayed values so the numbers appear smooth once interaction stops.
-            string notesText = $"Notes: {FormatNotes(window.DisplayedNotes)}";
+            string notesText = $"Notes: {Math.Round(window.DisplayedNotes, 1)}";
             string npsText = $"Notes Per Second: {Math.Round(window.DisplayedNps, 1)}";
             if (window.IsUserInteracting != true)
             {
@@ -242,12 +246,12 @@ namespace MusicClicker
             if (window.FragmentationScreen?.IsVisible != true)
                 return;
 
-            window.FragmentationScreen.FragmentationNotesText.Text = $"Notes: {FormatNotes(gameState.Notes)}";
+            window.FragmentationScreen.FragmentationNotesText.Text = $"Notes: {Math.Round(gameState.Notes, 1)}";
             window.FragmentationScreen.MelodiousOwnedText.Text = $"{gameState.MelodiousOwned} Owned";
             window.FragmentationScreen.HarmoniousOwnedText.Text = $"{gameState.HarmoniousOwned} Owned";
         }
 
-        // Update the Save Scores UI. This method sets many text fields — keep it straightforward
+        // Update the Save Scores UI. This method sets many text fields  Ekeep it straightforward
         // and avoid repeating Math.Round or expensive operations more than once per value.
         public static void UpdateSaveScoresUI(MainWindow window, GameState gameState)
         {
@@ -316,7 +320,7 @@ namespace MusicClicker
             }
             catch (Exception)
             {
-                // If any controls are not available yet, ignore — update will run again later.
+                // If any controls are not available yet, ignore  Eupdate will run again later.
             }
         }
 
@@ -370,7 +374,7 @@ namespace MusicClicker
             window.SaveScoresScreen.OdeToJoyMajorSheetsText.Text = $"{gameState.OdeToJoyMajorSheets} Major Sheets of Ode to Joy Owned";
 
             // Update notes display
-            window.SaveScoresScreen.SaveScoresNotesText.Text = $"Notes: {FormatNotes(gameState.Notes)}";
+            window.SaveScoresScreen.SaveScoresNotesText.Text = $"Notes: {Math.Round(gameState.Notes, 1)}";
 
             // Enable/disable soul buttons based on whether the player can afford each fixed cost.
             try
@@ -386,7 +390,7 @@ namespace MusicClicker
             }
             catch (Exception)
             {
-                // If any controls are not available yet, ignore — update will run again later.
+                // If any controls are not available yet, ignore  Eupdate will run again later.
             }
         }
 
@@ -432,7 +436,7 @@ namespace MusicClicker
             window.HeartOfHarmonyScreen.OdeToJoyMajorScalesOwnedText.Text = $"{gameState.OdeToJoyMajorScales} Ode to Joy Major Scales Owned";
             window.HeartOfHarmonyScreen.OdeToJoyMajorProgressionsOwnedText.Text = $"{gameState.OdeToJoyMajorProgressions} Ode to Joy Major Progressions Owned";
 
-            window.HeartOfHarmonyScreen.HeartOfHarmonyNotesText.Text = $"Notes: {FormatNotes(gameState.Notes)}";
+            window.HeartOfHarmonyScreen.HeartOfHarmonyNotesText.Text = $"Notes: {Math.Round(gameState.Notes, 1)}";
         }
 
         // Update the Unite the Symphony screen showing completed minor/major scores and refresh
@@ -463,6 +467,91 @@ namespace MusicClicker
             window.UnityTheSymphonyScreen.FateMajorOwnedText.Text = $"{gameState.FateMajorOwned} Owned";
             window.UnityTheSymphonyScreen.OdeToJoyMajorOwnedText.Text = $"{gameState.OdeToJoyMajorOwned} Owned";
 
+            // Update component requirement texts with owned counts
+            // Moonlight Minor
+            window.UnityTheSymphonyScreen.MoonlightMinorKeyText.Text = $"1 Minor Key of Moonlight Sonata ({gameState.MoonlightMinorKeys} owned)";
+            window.UnityTheSymphonyScreen.MoonlightMinorScaleText.Text = $"1 Minor Scale of Moonlight Sonata ({gameState.MoonlightMinorScales} owned)";
+            window.UnityTheSymphonyScreen.MoonlightMinorProgressionText.Text = $"1 Minor Progression of Moonlight Sonata ({gameState.MoonlightMinorProgressions} owned)";
+            window.UnityTheSymphonyScreen.MoonlightMinorMelodiousText.Text = $"10 Melodious Fragments ({gameState.MelodiousOwned} owned)";
+
+            // Moonlight Major
+            window.UnityTheSymphonyScreen.MoonlightMajorKeyText.Text = $"1 Major Key of Moonlight Sonata ({gameState.MoonlightMajorKeys} owned)";
+            window.UnityTheSymphonyScreen.MoonlightMajorScaleText.Text = $"1 Major Scale of Moonlight Sonata ({gameState.MoonlightMajorScales} owned)";
+            window.UnityTheSymphonyScreen.MoonlightMajorProgressionText.Text = $"1 Major Progression of Moonlight Sonata ({gameState.MoonlightMajorProgressions} owned)";
+            window.UnityTheSymphonyScreen.MoonlightMajorHarmoniousText.Text = $"10 Harmonious Fragments ({gameState.HarmoniousOwned} owned)";
+
+            // Eroica Minor
+            window.UnityTheSymphonyScreen.EroicaMinorKeyText.Text = $"1 Minor Key of Eroica ({gameState.EroicaMinorKeys} owned)";
+            window.UnityTheSymphonyScreen.EroicaMinorScaleText.Text = $"1 Minor Scale of Eroica ({gameState.EroicaMinorScales} owned)";
+            window.UnityTheSymphonyScreen.EroicaMinorProgressionText.Text = $"1 Minor Progression of Eroica ({gameState.EroicaMinorProgressions} owned)";
+            window.UnityTheSymphonyScreen.EroicaMinorMelodiousText.Text = $"15 Melodious Fragments ({gameState.MelodiousOwned} owned)";
+
+            // Eroica Major
+            window.UnityTheSymphonyScreen.EroicaMajorKeyText.Text = $"1 Major Key of Eroica ({gameState.EroicaMajorKeys} owned)";
+            window.UnityTheSymphonyScreen.EroicaMajorScaleText.Text = $"1 Major Scale of Eroica ({gameState.EroicaMajorScales} owned)";
+            window.UnityTheSymphonyScreen.EroicaMajorProgressionText.Text = $"1 Major Progression of Eroica ({gameState.EroicaMajorProgressions} owned)";
+            window.UnityTheSymphonyScreen.EroicaMajorHarmoniousText.Text = $"15 Harmonious Fragments ({gameState.HarmoniousOwned} owned)";
+
+            // Swan Minor
+            window.UnityTheSymphonyScreen.SwanMinorKeyText.Text = $"1 Minor Key of Swan Lake ({gameState.SwanLakeMinorKeys} owned)";
+            window.UnityTheSymphonyScreen.SwanMinorScaleText.Text = $"1 Minor Scale of Swan Lake ({gameState.SwanLakeMinorScales} owned)";
+            window.UnityTheSymphonyScreen.SwanMinorProgressionText.Text = $"1 Minor Progression of Swan Lake ({gameState.SwanLakeMinorProgressions} owned)";
+            window.UnityTheSymphonyScreen.SwanMinorMelodiousText.Text = $"20 Melodious Fragments ({gameState.MelodiousOwned} owned)";
+
+            // Swan Major
+            window.UnityTheSymphonyScreen.SwanMajorKeyText.Text = $"1 Major Key of Swan Lake ({gameState.SwanLakeMajorKeys} owned)";
+            window.UnityTheSymphonyScreen.SwanMajorScaleText.Text = $"1 Major Scale of Swan Lake ({gameState.SwanLakeMajorScales} owned)";
+            window.UnityTheSymphonyScreen.SwanMajorProgressionText.Text = $"1 Major Progression of Swan Lake ({gameState.SwanLakeMajorProgressions} owned)";
+            window.UnityTheSymphonyScreen.SwanMajorHarmoniousText.Text = $"20 Harmonious Fragments ({gameState.HarmoniousOwned} owned)";
+
+            // LaCampanella Minor
+            window.UnityTheSymphonyScreen.LaCampanellaMinorKeyText.Text = $"1 Minor Key of La Campanella ({gameState.LaCampanellaMinorKeys} owned)";
+            window.UnityTheSymphonyScreen.LaCampanellaMinorScaleText.Text = $"1 Minor Scale of La Campanella ({gameState.LaCampanellaMinorScales} owned)";
+            window.UnityTheSymphonyScreen.LaCampanellaMinorProgressionText.Text = $"1 Minor Progression of La Campanella ({gameState.LaCampanellaMinorProgressions} owned)";
+            window.UnityTheSymphonyScreen.LaCampanellaMinorMelodiousText.Text = $"25 Melodious Fragments ({gameState.MelodiousOwned} owned)";
+
+            // LaCampanella Major
+            window.UnityTheSymphonyScreen.LaCampanellaMajorKeyText.Text = $"1 Major Key of La Campanella ({gameState.LaCampanellaMajorKeys} owned)";
+            window.UnityTheSymphonyScreen.LaCampanellaMajorScaleText.Text = $"1 Major Scale of La Campanella ({gameState.LaCampanellaMajorScales} owned)";
+            window.UnityTheSymphonyScreen.LaCampanellaMajorProgressionText.Text = $"1 Major Progression of La Campanella ({gameState.LaCampanellaMajorProgressions} owned)";
+            window.UnityTheSymphonyScreen.LaCampanellaMajorHarmoniousText.Text = $"25 Harmonious Fragments ({gameState.HarmoniousOwned} owned)";
+
+            // Enigma Minor
+            window.UnityTheSymphonyScreen.EnigmaMinorKeyText.Text = $"1 Minor Key of Enigma ({gameState.EnigmaMinorKeys} owned)";
+            window.UnityTheSymphonyScreen.EnigmaMinorScaleText.Text = $"1 Minor Scale of Enigma ({gameState.EnigmaMinorScales} owned)";
+            window.UnityTheSymphonyScreen.EnigmaMinorProgressionText.Text = $"1 Minor Progression of Enigma ({gameState.EnigmaMinorProgressions} owned)";
+            window.UnityTheSymphonyScreen.EnigmaMinorMelodiousText.Text = $"30 Melodious Fragments ({gameState.MelodiousOwned} owned)";
+
+            // Enigma Major
+            window.UnityTheSymphonyScreen.EnigmaMajorKeyText.Text = $"1 Major Key of Enigma ({gameState.EnigmaMajorKeys} owned)";
+            window.UnityTheSymphonyScreen.EnigmaMajorScaleText.Text = $"1 Major Scale of Enigma ({gameState.EnigmaMajorScales} owned)";
+            window.UnityTheSymphonyScreen.EnigmaMajorProgressionText.Text = $"1 Major Progression of Enigma ({gameState.EnigmaMajorProgressions} owned)";
+            window.UnityTheSymphonyScreen.EnigmaMajorHarmoniousText.Text = $"30 Harmonious Fragments ({gameState.HarmoniousOwned} owned)";
+
+            // Fate Minor
+            window.UnityTheSymphonyScreen.FateMinorKeyText.Text = $"1 Minor Key of Fate ({gameState.FateMinorKeys} owned)";
+            window.UnityTheSymphonyScreen.FateMinorScaleText.Text = $"1 Minor Scale of Fate ({gameState.FateMinorScales} owned)";
+            window.UnityTheSymphonyScreen.FateMinorProgressionText.Text = $"1 Minor Progression of Fate ({gameState.FateMinorProgressions} owned)";
+            window.UnityTheSymphonyScreen.FateMinorMelodiousText.Text = $"35 Melodious Fragments ({gameState.MelodiousOwned} owned)";
+
+            // Fate Major
+            window.UnityTheSymphonyScreen.FateMajorKeyText.Text = $"1 Major Key of Fate ({gameState.FateMajorKeys} owned)";
+            window.UnityTheSymphonyScreen.FateMajorScaleText.Text = $"1 Major Scale of Fate ({gameState.FateMajorScales} owned)";
+            window.UnityTheSymphonyScreen.FateMajorProgressionText.Text = $"1 Major Progression of Fate ({gameState.FateMajorProgressions} owned)";
+            window.UnityTheSymphonyScreen.FateMajorHarmoniousText.Text = $"35 Harmonious Fragments ({gameState.HarmoniousOwned} owned)";
+
+            // OdeToJoy Minor
+            window.UnityTheSymphonyScreen.OdeToJoyMinorKeyText.Text = $"1 Minor Key of Ode to Joy ({gameState.OdeToJoyMinorKeys} owned)";
+            window.UnityTheSymphonyScreen.OdeToJoyMinorScaleText.Text = $"1 Minor Scale of Ode to Joy ({gameState.OdeToJoyMinorScales} owned)";
+            window.UnityTheSymphonyScreen.OdeToJoyMinorProgressionText.Text = $"1 Minor Progression of Ode to Joy ({gameState.OdeToJoyMinorProgressions} owned)";
+            window.UnityTheSymphonyScreen.OdeToJoyMinorMelodiousText.Text = $"40 Melodious Fragments ({gameState.MelodiousOwned} owned)";
+
+            // OdeToJoy Major
+            window.UnityTheSymphonyScreen.OdeToJoyMajorKeyText.Text = $"1 Major Key of Ode to Joy ({gameState.OdeToJoyMajorKeys} owned)";
+            window.UnityTheSymphonyScreen.OdeToJoyMajorScaleText.Text = $"1 Major Scale of Ode to Joy ({gameState.OdeToJoyMajorScales} owned)";
+            window.UnityTheSymphonyScreen.OdeToJoyMajorProgressionText.Text = $"1 Major Progression of Ode to Joy ({gameState.OdeToJoyMajorProgressions} owned)";
+            window.UnityTheSymphonyScreen.OdeToJoyMajorHarmoniousText.Text = $"40 Harmonious Fragments ({gameState.HarmoniousOwned} owned)";
+
             MainWindow.GlobalTempoManager.RefreshDrawer();
         }
 
@@ -472,7 +561,7 @@ namespace MusicClicker
             if (window.UnityTheSymphonyScreen?.IsVisible != true)
                 return;
 
-            window.UnityTheSymphonyScreen.UnityNotesTextHeader.Text = $"Notes: {FormatNotes(gameState.Notes)}";
+            window.UnityTheSymphonyScreen.UnityNotesTextHeader.Text = $"Notes: {Math.Round(gameState.Notes, 1)}";
             try { window.UnityTheSymphonyScreen.EntropicMelodyText.Text = $"Entropic Melody: {gameState.EntropicMelodies}"; } catch { }
 
             window.UnityTheSymphonyScreen.MoonlightMinorOwnedText.Text = $"{gameState.MoonlightMinorOwned} Owned";
@@ -490,6 +579,91 @@ namespace MusicClicker
             window.UnityTheSymphonyScreen.EnigmaMajorOwnedText.Text = $"{gameState.EnigmaMajorOwned} Owned";
             window.UnityTheSymphonyScreen.FateMajorOwnedText.Text = $"{gameState.FateMajorOwned} Owned";
             window.UnityTheSymphonyScreen.OdeToJoyMajorOwnedText.Text = $"{gameState.OdeToJoyMajorOwned} Owned";
+
+            // Update component requirement texts with owned counts
+            // Moonlight Minor
+            window.UnityTheSymphonyScreen.MoonlightMinorKeyText.Text = $"1 Minor Key of Moonlight Sonata ({gameState.MoonlightMinorKeys} owned)";
+            window.UnityTheSymphonyScreen.MoonlightMinorScaleText.Text = $"1 Minor Scale of Moonlight Sonata ({gameState.MoonlightMinorScales} owned)";
+            window.UnityTheSymphonyScreen.MoonlightMinorProgressionText.Text = $"1 Minor Progression of Moonlight Sonata ({gameState.MoonlightMinorProgressions} owned)";
+            window.UnityTheSymphonyScreen.MoonlightMinorMelodiousText.Text = $"10 Melodious Fragments ({gameState.MelodiousOwned} owned)";
+
+            // Moonlight Major
+            window.UnityTheSymphonyScreen.MoonlightMajorKeyText.Text = $"1 Major Key of Moonlight Sonata ({gameState.MoonlightMajorKeys} owned)";
+            window.UnityTheSymphonyScreen.MoonlightMajorScaleText.Text = $"1 Major Scale of Moonlight Sonata ({gameState.MoonlightMajorScales} owned)";
+            window.UnityTheSymphonyScreen.MoonlightMajorProgressionText.Text = $"1 Major Progression of Moonlight Sonata ({gameState.MoonlightMajorProgressions} owned)";
+            window.UnityTheSymphonyScreen.MoonlightMajorHarmoniousText.Text = $"10 Harmonious Fragments ({gameState.HarmoniousOwned} owned)";
+
+            // Eroica Minor
+            window.UnityTheSymphonyScreen.EroicaMinorKeyText.Text = $"1 Minor Key of Eroica ({gameState.EroicaMinorKeys} owned)";
+            window.UnityTheSymphonyScreen.EroicaMinorScaleText.Text = $"1 Minor Scale of Eroica ({gameState.EroicaMinorScales} owned)";
+            window.UnityTheSymphonyScreen.EroicaMinorProgressionText.Text = $"1 Minor Progression of Eroica ({gameState.EroicaMinorProgressions} owned)";
+            window.UnityTheSymphonyScreen.EroicaMinorMelodiousText.Text = $"15 Melodious Fragments ({gameState.MelodiousOwned} owned)";
+
+            // Eroica Major
+            window.UnityTheSymphonyScreen.EroicaMajorKeyText.Text = $"1 Major Key of Eroica ({gameState.EroicaMajorKeys} owned)";
+            window.UnityTheSymphonyScreen.EroicaMajorScaleText.Text = $"1 Major Scale of Eroica ({gameState.EroicaMajorScales} owned)";
+            window.UnityTheSymphonyScreen.EroicaMajorProgressionText.Text = $"1 Major Progression of Eroica ({gameState.EroicaMajorProgressions} owned)";
+            window.UnityTheSymphonyScreen.EroicaMajorHarmoniousText.Text = $"15 Harmonious Fragments ({gameState.HarmoniousOwned} owned)";
+
+            // Swan Minor
+            window.UnityTheSymphonyScreen.SwanMinorKeyText.Text = $"1 Minor Key of Swan Lake ({gameState.SwanLakeMinorKeys} owned)";
+            window.UnityTheSymphonyScreen.SwanMinorScaleText.Text = $"1 Minor Scale of Swan Lake ({gameState.SwanLakeMinorScales} owned)";
+            window.UnityTheSymphonyScreen.SwanMinorProgressionText.Text = $"1 Minor Progression of Swan Lake ({gameState.SwanLakeMinorProgressions} owned)";
+            window.UnityTheSymphonyScreen.SwanMinorMelodiousText.Text = $"20 Melodious Fragments ({gameState.MelodiousOwned} owned)";
+
+            // Swan Major
+            window.UnityTheSymphonyScreen.SwanMajorKeyText.Text = $"1 Major Key of Swan Lake ({gameState.SwanLakeMajorKeys} owned)";
+            window.UnityTheSymphonyScreen.SwanMajorScaleText.Text = $"1 Major Scale of Swan Lake ({gameState.SwanLakeMajorScales} owned)";
+            window.UnityTheSymphonyScreen.SwanMajorProgressionText.Text = $"1 Major Progression of Swan Lake ({gameState.SwanLakeMajorProgressions} owned)";
+            window.UnityTheSymphonyScreen.SwanMajorHarmoniousText.Text = $"20 Harmonious Fragments ({gameState.HarmoniousOwned} owned)";
+
+            // LaCampanella Minor
+            window.UnityTheSymphonyScreen.LaCampanellaMinorKeyText.Text = $"1 Minor Key of La Campanella ({gameState.LaCampanellaMinorKeys} owned)";
+            window.UnityTheSymphonyScreen.LaCampanellaMinorScaleText.Text = $"1 Minor Scale of La Campanella ({gameState.LaCampanellaMinorScales} owned)";
+            window.UnityTheSymphonyScreen.LaCampanellaMinorProgressionText.Text = $"1 Minor Progression of La Campanella ({gameState.LaCampanellaMinorProgressions} owned)";
+            window.UnityTheSymphonyScreen.LaCampanellaMinorMelodiousText.Text = $"25 Melodious Fragments ({gameState.MelodiousOwned} owned)";
+
+            // LaCampanella Major
+            window.UnityTheSymphonyScreen.LaCampanellaMajorKeyText.Text = $"1 Major Key of La Campanella ({gameState.LaCampanellaMajorKeys} owned)";
+            window.UnityTheSymphonyScreen.LaCampanellaMajorScaleText.Text = $"1 Major Scale of La Campanella ({gameState.LaCampanellaMajorScales} owned)";
+            window.UnityTheSymphonyScreen.LaCampanellaMajorProgressionText.Text = $"1 Major Progression of La Campanella ({gameState.LaCampanellaMajorProgressions} owned)";
+            window.UnityTheSymphonyScreen.LaCampanellaMajorHarmoniousText.Text = $"25 Harmonious Fragments ({gameState.HarmoniousOwned} owned)";
+
+            // Enigma Minor
+            window.UnityTheSymphonyScreen.EnigmaMinorKeyText.Text = $"1 Minor Key of Enigma ({gameState.EnigmaMinorKeys} owned)";
+            window.UnityTheSymphonyScreen.EnigmaMinorScaleText.Text = $"1 Minor Scale of Enigma ({gameState.EnigmaMinorScales} owned)";
+            window.UnityTheSymphonyScreen.EnigmaMinorProgressionText.Text = $"1 Minor Progression of Enigma ({gameState.EnigmaMinorProgressions} owned)";
+            window.UnityTheSymphonyScreen.EnigmaMinorMelodiousText.Text = $"30 Melodious Fragments ({gameState.MelodiousOwned} owned)";
+
+            // Enigma Major
+            window.UnityTheSymphonyScreen.EnigmaMajorKeyText.Text = $"1 Major Key of Enigma ({gameState.EnigmaMajorKeys} owned)";
+            window.UnityTheSymphonyScreen.EnigmaMajorScaleText.Text = $"1 Major Scale of Enigma ({gameState.EnigmaMajorScales} owned)";
+            window.UnityTheSymphonyScreen.EnigmaMajorProgressionText.Text = $"1 Major Progression of Enigma ({gameState.EnigmaMajorProgressions} owned)";
+            window.UnityTheSymphonyScreen.EnigmaMajorHarmoniousText.Text = $"30 Harmonious Fragments ({gameState.HarmoniousOwned} owned)";
+
+            // Fate Minor
+            window.UnityTheSymphonyScreen.FateMinorKeyText.Text = $"1 Minor Key of Fate ({gameState.FateMinorKeys} owned)";
+            window.UnityTheSymphonyScreen.FateMinorScaleText.Text = $"1 Minor Scale of Fate ({gameState.FateMinorScales} owned)";
+            window.UnityTheSymphonyScreen.FateMinorProgressionText.Text = $"1 Minor Progression of Fate ({gameState.FateMinorProgressions} owned)";
+            window.UnityTheSymphonyScreen.FateMinorMelodiousText.Text = $"35 Melodious Fragments ({gameState.MelodiousOwned} owned)";
+
+            // Fate Major
+            window.UnityTheSymphonyScreen.FateMajorKeyText.Text = $"1 Major Key of Fate ({gameState.FateMajorKeys} owned)";
+            window.UnityTheSymphonyScreen.FateMajorScaleText.Text = $"1 Major Scale of Fate ({gameState.FateMajorScales} owned)";
+            window.UnityTheSymphonyScreen.FateMajorProgressionText.Text = $"1 Major Progression of Fate ({gameState.FateMajorProgressions} owned)";
+            window.UnityTheSymphonyScreen.FateMajorHarmoniousText.Text = $"35 Harmonious Fragments ({gameState.HarmoniousOwned} owned)";
+
+            // OdeToJoy Minor
+            window.UnityTheSymphonyScreen.OdeToJoyMinorKeyText.Text = $"1 Minor Key of Ode to Joy ({gameState.OdeToJoyMinorKeys} owned)";
+            window.UnityTheSymphonyScreen.OdeToJoyMinorScaleText.Text = $"1 Minor Scale of Ode to Joy ({gameState.OdeToJoyMinorScales} owned)";
+            window.UnityTheSymphonyScreen.OdeToJoyMinorProgressionText.Text = $"1 Minor Progression of Ode to Joy ({gameState.OdeToJoyMinorProgressions} owned)";
+            window.UnityTheSymphonyScreen.OdeToJoyMinorMelodiousText.Text = $"40 Melodious Fragments ({gameState.MelodiousOwned} owned)";
+
+            // OdeToJoy Major
+            window.UnityTheSymphonyScreen.OdeToJoyMajorKeyText.Text = $"1 Major Key of Ode to Joy ({gameState.OdeToJoyMajorKeys} owned)";
+            window.UnityTheSymphonyScreen.OdeToJoyMajorScaleText.Text = $"1 Major Scale of Ode to Joy ({gameState.OdeToJoyMajorScales} owned)";
+            window.UnityTheSymphonyScreen.OdeToJoyMajorProgressionText.Text = $"1 Major Progression of Ode to Joy ({gameState.OdeToJoyMajorProgressions} owned)";
+            window.UnityTheSymphonyScreen.OdeToJoyMajorHarmoniousText.Text = $"40 Harmonious Fragments ({gameState.HarmoniousOwned} owned)";
 
             MainWindow.GlobalTempoManager.RefreshDrawer();
         }

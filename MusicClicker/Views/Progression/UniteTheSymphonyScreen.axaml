@@ -52,13 +52,13 @@
 
                             <StackPanel Grid.Column="2" Orientation="Vertical" Margin="15"
                                 Spacing="4" VerticalAlignment="Center">
-                                <TextBlock Text="1 Minor Key of Moonlight Sonata" Foreground="White"
+                                <TextBlock x:Name="MoonlightMinorKeyText" Text="1 Minor Key of Moonlight Sonata" Foreground="White"
                                     FontSize="14" />
-                                <TextBlock Text="1 Minor Scale of Moonlight Sonata"
+                                <TextBlock x:Name="MoonlightMinorScaleText" Text="1 Minor Scale of Moonlight Sonata"
                                     Foreground="White" FontSize="14" />
-                                <TextBlock Text="1 Minor Progression of Moonlight Sonata"
+                                <TextBlock x:Name="MoonlightMinorProgressionText" Text="1 Minor Progression of Moonlight Sonata"
                                     Foreground="White" FontSize="14" />
-                                <TextBlock Text="10 Melodious Fragments" Foreground="White"
+                                <TextBlock x:Name="MoonlightMinorMelodiousText" Text="10 Melodious Fragments" Foreground="White"
                                     FontSize="14" />
                             </StackPanel>
                         </Grid>
@@ -95,13 +95,13 @@
 
                             <StackPanel Grid.Column="2" Orientation="Vertical" Margin="15"
                                 Spacing="4" VerticalAlignment="Center">
-                                <TextBlock Text="1 Major Key of Moonlight Sonata" Foreground="White"
+                                <TextBlock x:Name="MoonlightMajorKeyText" Text="1 Major Key of Moonlight Sonata" Foreground="White"
                                     FontSize="14" />
-                                <TextBlock Text="1 Major Scale of Moonlight Sonata"
+                                <TextBlock x:Name="MoonlightMajorScaleText" Text="1 Major Scale of Moonlight Sonata"
                                     Foreground="White" FontSize="14" />
-                                <TextBlock Text="1 Major Progression of Moonlight Sonata"
+                                <TextBlock x:Name="MoonlightMajorProgressionText" Text="1 Major Progression of Moonlight Sonata"
                                     Foreground="White" FontSize="14" />
-                                <TextBlock Text="10 Harmonious Fragments" Foreground="White"
+                                <TextBlock x:Name="MoonlightMajorHarmoniousText" Text="10 Harmonious Fragments" Foreground="White"
                                     FontSize="14" />
                             </StackPanel>
                         </Grid>
@@ -135,13 +135,13 @@
 
                             <StackPanel Grid.Column="2" Orientation="Vertical" Margin="15"
                                 Spacing="4" VerticalAlignment="Center">
-                                <TextBlock Text="1 Minor Key of Eroica" Foreground="White"
+                                <TextBlock x:Name="EroicaMinorKeyText" Text="1 Minor Key of Eroica" Foreground="White"
                                     FontSize="14" />
-                                <TextBlock Text="1 Minor Scale of Eroica" Foreground="White"
+                                <TextBlock x:Name="EroicaMinorScaleText" Text="1 Minor Scale of Eroica" Foreground="White"
                                     FontSize="14" />
-                                <TextBlock Text="1 Minor Progression of Eroica" Foreground="White"
+                                <TextBlock x:Name="EroicaMinorProgressionText" Text="1 Minor Progression of Eroica" Foreground="White"
                                     FontSize="14" />
-                                <TextBlock Text="15 Melodious Fragments" Foreground="White"
+                                <TextBlock x:Name="EroicaMinorMelodiousText" Text="15 Melodious Fragments" Foreground="White"
                                     FontSize="14" />
                             </StackPanel>
                         </Grid>
@@ -178,13 +178,13 @@
 
                             <StackPanel Grid.Column="2" Orientation="Vertical" Margin="15"
                                 Spacing="4" VerticalAlignment="Center">
-                                <TextBlock Text="1 Major Key of Eroica" Foreground="White"
+                                <TextBlock x:Name="EroicaMajorKeyText" Text="1 Major Key of Eroica" Foreground="White"
                                     FontSize="14" />
-                                <TextBlock Text="1 Major Scale of Eroica" Foreground="White"
+                                <TextBlock x:Name="EroicaMajorScaleText" Text="1 Major Scale of Eroica" Foreground="White"
                                     FontSize="14" />
-                                <TextBlock Text="1 Major Progression of Eroica" Foreground="White"
+                                <TextBlock x:Name="EroicaMajorProgressionText" Text="1 Major Progression of Eroica" Foreground="White"
                                     FontSize="14" />
-                                <TextBlock Text="15 Harmonious Fragments" Foreground="White"
+                                <TextBlock x:Name="EroicaMajorHarmoniousText" Text="15 Harmonious Fragments" Foreground="White"
                                     FontSize="14" />
                             </StackPanel>
                         </Grid>
@@ -218,13 +218,13 @@
 
                             <StackPanel Grid.Column="2" Orientation="Vertical" Margin="15"
                                 Spacing="4" VerticalAlignment="Center">
-                                <TextBlock Text="1 Minor Key of Swan Lake" Foreground="White"
+                                <TextBlock x:Name="SwanMinorKeyText" Text="1 Minor Key of Swan Lake" Foreground="White"
                                     FontSize="14" />
-                                <TextBlock Text="1 Minor Scale of Swan Lake" Foreground="White"
+                                <TextBlock x:Name="SwanMinorScaleText" Text="1 Minor Scale of Swan Lake" Foreground="White"
                                     FontSize="14" />
-                                <TextBlock Text="1 Minor Progression of Swan Lake"
+                                <TextBlock x:Name="SwanMinorProgressionText" Text="1 Minor Progression of Swan Lake"
                                     Foreground="White" FontSize="14" />
-                                <TextBlock Text="20 Melodious Fragments" Foreground="White"
+                                <TextBlock x:Name="SwanMinorMelodiousText" Text="20 Melodious Fragments" Foreground="White"
                                     FontSize="14" />
                             </StackPanel>
                         </Grid>
@@ -261,13 +261,13 @@
 
                             <StackPanel Grid.Column="2" Orientation="Vertical" Margin="15"
                                 Spacing="4" VerticalAlignment="Center">
-                                <TextBlock Text="1 Major Key of Swan Lake" Foreground="White"
+                                <TextBlock x:Name="SwanMajorKeyText" Text="1 Major Key of Swan Lake" Foreground="White"
                                     FontSize="14" />
-                                <TextBlock Text="1 Major Scale of Swan Lake" Foreground="White"
+                                <TextBlock x:Name="SwanMajorScaleText" Text="1 Major Scale of Swan Lake" Foreground="White"
                                     FontSize="14" />
-                                <TextBlock Text="1 Major Progression of Swan Lake"
+                                <TextBlock x:Name="SwanMajorProgressionText" Text="1 Major Progression of Swan Lake"
                                     Foreground="White" FontSize="14" />
-                                <TextBlock Text="20 Harmonious Fragments" Foreground="White"
+                                <TextBlock x:Name="SwanMajorHarmoniousText" Text="20 Harmonious Fragments" Foreground="White"
                                     FontSize="14" />
                             </StackPanel>
                         </Grid>
@@ -300,13 +300,13 @@
 
                             <StackPanel Grid.Column="2" Orientation="Vertical" Margin="15"
                                 Spacing="4" VerticalAlignment="Center">
-                                <TextBlock Text="1 Minor Key of La Campanella" Foreground="White"
+                                <TextBlock x:Name="LaCampanellaMinorKeyText" Text="1 Minor Key of La Campanella" Foreground="White"
                                     FontSize="14" />
-                                <TextBlock Text="1 Minor Scale of La Campanella" Foreground="White"
+                                <TextBlock x:Name="LaCampanellaMinorScaleText" Text="1 Minor Scale of La Campanella" Foreground="White"
                                     FontSize="14" />
-                                <TextBlock Text="1 Minor Progression of La Campanella"
+                                <TextBlock x:Name="LaCampanellaMinorProgressionText" Text="1 Minor Progression of La Campanella"
                                     Foreground="White" FontSize="14" />
-                                <TextBlock Text="25 Melodious Fragments" Foreground="White"
+                                <TextBlock x:Name="LaCampanellaMinorMelodiousText" Text="25 Melodious Fragments" Foreground="White"
                                     FontSize="14" />
                             </StackPanel>
                         </Grid>
@@ -342,13 +342,13 @@
 
                             <StackPanel Grid.Column="2" Orientation="Vertical" Margin="15"
                                 Spacing="4" VerticalAlignment="Center">
-                                <TextBlock Text="1 Major Key of La Campanella" Foreground="White"
+                                <TextBlock x:Name="LaCampanellaMajorKeyText" Text="1 Major Key of La Campanella" Foreground="White"
                                     FontSize="14" />
-                                <TextBlock Text="1 Major Scale of La Campanella" Foreground="White"
+                                <TextBlock x:Name="LaCampanellaMajorScaleText" Text="1 Major Scale of La Campanella" Foreground="White"
                                     FontSize="14" />
-                                <TextBlock Text="1 Major Progression of La Campanella"
+                                <TextBlock x:Name="LaCampanellaMajorProgressionText" Text="1 Major Progression of La Campanella"
                                     Foreground="White" FontSize="14" />
-                                <TextBlock Text="25 Harmonious Fragments" Foreground="White"
+                                <TextBlock x:Name="LaCampanellaMajorHarmoniousText" Text="25 Harmonious Fragments" Foreground="White"
                                     FontSize="14" />
                             </StackPanel>
                         </Grid>
@@ -382,13 +382,13 @@
 
                             <StackPanel Grid.Column="2" Orientation="Vertical" Margin="15"
                                 Spacing="4" VerticalAlignment="Center">
-                                <TextBlock Text="1 Minor Key of Enigma" Foreground="White"
+                                <TextBlock x:Name="EnigmaMinorKeyText" Text="1 Minor Key of Enigma" Foreground="White"
                                     FontSize="14" />
-                                <TextBlock Text="1 Minor Scale of Enigma" Foreground="White"
+                                <TextBlock x:Name="EnigmaMinorScaleText" Text="1 Minor Scale of Enigma" Foreground="White"
                                     FontSize="14" />
-                                <TextBlock Text="1 Minor Progression of Enigma" Foreground="White"
+                                <TextBlock x:Name="EnigmaMinorProgressionText" Text="1 Minor Progression of Enigma" Foreground="White"
                                     FontSize="14" />
-                                <TextBlock Text="30 Melodious Fragments" Foreground="White"
+                                <TextBlock x:Name="EnigmaMinorMelodiousText" Text="30 Melodious Fragments" Foreground="White"
                                     FontSize="14" />
                             </StackPanel>
                         </Grid>
@@ -424,13 +424,13 @@
 
                             <StackPanel Grid.Column="2" Orientation="Vertical" Margin="15"
                                 Spacing="4" VerticalAlignment="Center">
-                                <TextBlock Text="1 Major Key of Enigma" Foreground="White"
+                                <TextBlock x:Name="EnigmaMajorKeyText" Text="1 Major Key of Enigma" Foreground="White"
                                     FontSize="14" />
-                                <TextBlock Text="1 Major Scale of Enigma" Foreground="White"
+                                <TextBlock x:Name="EnigmaMajorScaleText" Text="1 Major Scale of Enigma" Foreground="White"
                                     FontSize="14" />
-                                <TextBlock Text="1 Major Progression of Enigma" Foreground="White"
+                                <TextBlock x:Name="EnigmaMajorProgressionText" Text="1 Major Progression of Enigma" Foreground="White"
                                     FontSize="14" />
-                                <TextBlock Text="30 Harmonious Fragments" Foreground="White"
+                                <TextBlock x:Name="EnigmaMajorHarmoniousText" Text="30 Harmonious Fragments" Foreground="White"
                                     FontSize="14" />
                             </StackPanel>
                         </Grid>
@@ -463,13 +463,13 @@
 
                             <StackPanel Grid.Column="2" Orientation="Vertical" Margin="15"
                                 Spacing="4" VerticalAlignment="Center">
-                                <TextBlock Text="1 Minor Key of Fate" Foreground="White"
+                                <TextBlock x:Name="FateMinorKeyText" Text="1 Minor Key of Fate" Foreground="White"
                                     FontSize="14" />
-                                <TextBlock Text="1 Minor Scale of Fate" Foreground="White"
+                                <TextBlock x:Name="FateMinorScaleText" Text="1 Minor Scale of Fate" Foreground="White"
                                     FontSize="14" />
-                                <TextBlock Text="1 Minor Progression of Fate" Foreground="White"
+                                <TextBlock x:Name="FateMinorProgressionText" Text="1 Minor Progression of Fate" Foreground="White"
                                     FontSize="14" />
-                                <TextBlock Text="35 Melodious Fragments" Foreground="White"
+                                <TextBlock x:Name="FateMinorMelodiousText" Text="35 Melodious Fragments" Foreground="White"
                                     FontSize="14" />
                             </StackPanel>
                         </Grid>
@@ -505,13 +505,13 @@
 
                             <StackPanel Grid.Column="2" Orientation="Vertical" Margin="15"
                                 Spacing="4" VerticalAlignment="Center">
-                                <TextBlock Text="1 Major Key of Fate" Foreground="White"
+                                <TextBlock x:Name="FateMajorKeyText" Text="1 Major Key of Fate" Foreground="White"
                                     FontSize="14" />
-                                <TextBlock Text="1 Major Scale of Fate" Foreground="White"
+                                <TextBlock x:Name="FateMajorScaleText" Text="1 Major Scale of Fate" Foreground="White"
                                     FontSize="14" />
-                                <TextBlock Text="1 Major Progression of Fate" Foreground="White"
+                                <TextBlock x:Name="FateMajorProgressionText" Text="1 Major Progression of Fate" Foreground="White"
                                     FontSize="14" />
-                                <TextBlock Text="35 Harmonious Fragments" Foreground="White"
+                                <TextBlock x:Name="FateMajorHarmoniousText" Text="35 Harmonious Fragments" Foreground="White"
                                     FontSize="14" />
                             </StackPanel>
                         </Grid>
@@ -544,13 +544,13 @@
 
                             <StackPanel Grid.Column="2" Orientation="Vertical" Margin="15"
                                 Spacing="4" VerticalAlignment="Center">
-                                <TextBlock Text="1 Minor Key of Ode to Joy" Foreground="White"
+                                <TextBlock x:Name="OdeToJoyMinorKeyText" Text="1 Minor Key of Ode to Joy" Foreground="White"
                                     FontSize="14" />
-                                <TextBlock Text="1 Minor Scale of Ode to Joy" Foreground="White"
+                                <TextBlock x:Name="OdeToJoyMinorScaleText" Text="1 Minor Scale of Ode to Joy" Foreground="White"
                                     FontSize="14" />
-                                <TextBlock Text="1 Minor Progression of Ode to Joy"
+                                <TextBlock x:Name="OdeToJoyMinorProgressionText" Text="1 Minor Progression of Ode to Joy"
                                     Foreground="White" FontSize="14" />
-                                <TextBlock Text="40 Melodious Fragments" Foreground="White"
+                                <TextBlock x:Name="OdeToJoyMinorMelodiousText" Text="40 Melodious Fragments" Foreground="White"
                                     FontSize="14" />
                             </StackPanel>
                         </Grid>
@@ -586,13 +586,13 @@
 
                             <StackPanel Grid.Column="2" Orientation="Vertical" Margin="15"
                                 Spacing="4" VerticalAlignment="Center">
-                                <TextBlock Text="1 Major Key of Ode to Joy" Foreground="White"
+                                <TextBlock x:Name="OdeToJoyMajorKeyText" Text="1 Major Key of Ode to Joy" Foreground="White"
                                     FontSize="14" />
-                                <TextBlock Text="1 Major Scale of Ode to Joy" Foreground="White"
+                                <TextBlock x:Name="OdeToJoyMajorScaleText" Text="1 Major Scale of Ode to Joy" Foreground="White"
                                     FontSize="14" />
-                                <TextBlock Text="1 Major Progression of Ode to Joy"
+                                <TextBlock x:Name="OdeToJoyMajorProgressionText" Text="1 Major Progression of Ode to Joy"
                                     Foreground="White" FontSize="14" />
-                                <TextBlock Text="40 Harmonious Fragments" Foreground="White"
+                                <TextBlock x:Name="OdeToJoyMajorHarmoniousText" Text="40 Harmonious Fragments" Foreground="White"
                                     FontSize="14" />
                             </StackPanel>
                         </Grid>

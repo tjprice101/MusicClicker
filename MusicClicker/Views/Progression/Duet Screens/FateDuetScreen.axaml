@@ -1,0 +1,191 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="MusicClicker.Views.FateDuetScreen">
+
+    <Border Width="1200" Height="800"
+            Background="#DD0e0e1a"
+            CornerRadius="20"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+        
+        <Border.Effect>
+            <DropShadowEffect Color="Black" BlurRadius="40" Opacity="0.9" />
+        </Border.Effect>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!-- Title -->
+            <Border Grid.Row="0"
+                    Background="#1a1a2e"
+                    CornerRadius="20,20,0,0"
+                    Padding="30,20">
+                <TextBlock Text="Hourglass Fracture"
+                           FontSize="36"
+                           FontWeight="Bold"
+                           Foreground="#d946ef"
+                           HorizontalAlignment="Center"
+                           TextAlignment="Center">
+                    <TextBlock.Effect>
+                        <DropShadowEffect Color="Black" BlurRadius="15" Opacity="0.9" />
+                    </TextBlock.Effect>
+                </TextBlock>
+            </Border>
+
+            <!-- Main Content Area -->
+            <Grid Grid.Row="1" Margin="40,30">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!-- Status Display -->
+                <StackPanel Grid.Row="0" Spacing="15" Margin="0,0,0,30">
+                    <TextBlock x:Name="StatusText"
+                               Text="Ready to Activate"
+                               FontSize="24"
+                               FontWeight="SemiBold"
+                               Foreground="#d946ef"
+                               HorizontalAlignment="Center">
+                        <TextBlock.Effect>
+                            <DropShadowEffect Color="#d946ef" BlurRadius="10" Opacity="0.6" />
+                        </TextBlock.Effect>
+                    </TextBlock>
+
+                    <TextBlock Text="Split your NPS between 3 parallel timelines:"
+                               FontSize="18"
+                               Foreground="White"
+                               HorizontalAlignment="Center"
+                               Margin="0,10,0,0" />
+                </StackPanel>
+
+                <!-- Stream Allocation Buttons -->
+                <StackPanel Grid.Row="1" Spacing="20" Margin="0,0,0,30">
+                    
+                    <!-- Past Stream -->
+                    <Border Background="#1a1a2e" CornerRadius="10" Padding="15">
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="⏮️ Past Stream - Fragment Echoes"
+                                       FontSize="20"
+                                       Foreground="#fbbf24"
+                                       FontWeight="SemiBold" />
+                            <TextBlock Text="Grants random Melodious/Harmonious fragments over time. More allocation = more fragments!"
+                                       FontSize="13"
+                                       Foreground="#d4d4d4"
+                                       TextWrapping="Wrap" />
+                            <Grid Margin="0,8,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Button x:Name="Past25Button" Grid.Column="0" Content="25%" Margin="0,0,5,0" Height="40" Background="#2a2a40" Foreground="White" CornerRadius="5" />
+                                <Button x:Name="Past50Button" Grid.Column="1" Content="50%" Margin="5,0,5,0" Height="40" Background="#2a2a40" Foreground="White" CornerRadius="5" />
+                                <Button x:Name="Past75Button" Grid.Column="2" Content="75%" Margin="5,0,5,0" Height="40" Background="#2a2a40" Foreground="White" CornerRadius="5" />
+                                <Button x:Name="Past100Button" Grid.Column="3" Content="100%" Margin="5,0,0,0" Height="40" Background="#2a2a40" Foreground="White" CornerRadius="5" />
+                            </Grid>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="20" Margin="0,5,0,0">
+                                <TextBlock x:Name="PastValueText" Text="Current: 0%" FontSize="16" Foreground="#fbbf24" FontWeight="SemiBold" />
+                                <TextBlock x:Name="PastFragmentsText" Text="Fragments: 0" FontSize="14" Foreground="#9ca3af" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Present Stream -->
+                    <Border Background="#1a1a2e" CornerRadius="10" Padding="15">
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="⏸️ Present Stream - Instant Gratification"
+                                       FontSize="20"
+                                       Foreground="#10b981"
+                                       FontWeight="SemiBold" />
+                            <TextBlock Text="Grants notes immediately as NPS flows. Safe and reliable - perfect for steady income."
+                                       FontSize="13"
+                                       Foreground="#d4d4d4"
+                                       TextWrapping="Wrap" />
+                            <Grid Margin="0,8,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Button x:Name="Present25Button" Grid.Column="0" Content="25%" Margin="0,0,5,0" Height="40" Background="#2a2a40" Foreground="White" CornerRadius="5" />
+                                <Button x:Name="Present50Button" Grid.Column="1" Content="50%" Margin="5,0,5,0" Height="40" Background="#2a2a40" Foreground="White" CornerRadius="5" />
+                                <Button x:Name="Present75Button" Grid.Column="2" Content="75%" Margin="5,0,5,0" Height="40" Background="#2a2a40" Foreground="White" CornerRadius="5" />
+                                <Button x:Name="Present100Button" Grid.Column="3" Content="100%" Margin="5,0,0,0" Height="40" Background="#2a2a40" Foreground="White" CornerRadius="5" />
+                            </Grid>
+                            <TextBlock x:Name="PresentValueText" Text="Current: 100%" FontSize="16" Foreground="#10b981" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,5,0,0" />
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Future Stream -->
+                    <Border Background="#1a1a2e" CornerRadius="10" Padding="15">
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="⏭️ Future Stream - Exponential Gamble"
+                                       FontSize="20"
+                                       Foreground="#3b82f6"
+                                       FontWeight="SemiBold" />
+                            <TextBlock Text="Multiplier scales with allocation! 25%=2x, 50%=2.5x, 75%=3.25x, 100%=4x payout at end."
+                                       FontSize="13"
+                                       Foreground="#d4d4d4"
+                                       TextWrapping="Wrap" />
+                            <Grid Margin="0,8,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Button x:Name="Future25Button" Grid.Column="0" Content="25%" Margin="0,0,5,0" Height="40" Background="#2a2a40" Foreground="White" CornerRadius="5" />
+                                <Button x:Name="Future50Button" Grid.Column="1" Content="50%" Margin="5,0,5,0" Height="40" Background="#2a2a40" Foreground="White" CornerRadius="5" />
+                                <Button x:Name="Future75Button" Grid.Column="2" Content="75%" Margin="5,0,5,0" Height="40" Background="#2a2a40" Foreground="White" CornerRadius="5" />
+                                <Button x:Name="Future100Button" Grid.Column="3" Content="100%" Margin="5,0,0,0" Height="40" Background="#2a2a40" Foreground="White" CornerRadius="5" />
+                            </Grid>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="20" Margin="0,5,0,0">
+                                <TextBlock x:Name="FutureValueText" Text="Current: 0%" FontSize="16" Foreground="#3b82f6" FontWeight="SemiBold" />
+                                <TextBlock x:Name="FutureMultiplierText" Text="Multiplier: 0x" FontSize="14" Foreground="#9ca3af" />
+                                <TextBlock x:Name="FutureBankText" Text="Banked: 0" FontSize="14" Foreground="#9ca3af" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <!-- Info Box -->
+                <Border Grid.Row="2"
+                        Background="#1a1a2e"
+                        CornerRadius="10"
+                        Padding="20"
+                        VerticalAlignment="Bottom">
+                    <TextBlock TextWrapping="Wrap"
+                               FontSize="14"
+                               Foreground="#d4d4d4"
+                               Text="• Click percentage buttons to allocate NPS (can change anytime during duration!)&#x0a;• Past: Generates fragments over time (good for crafting materials)&#x0a;• Present: Instant notes (safe and steady)&#x0a;• Future: Scales multiplier with allocation (high risk, high reward!)&#x0a;• Duration: 30 seconds | Cooldown: 5 minutes" />
+                </Border>
+            </Grid>
+
+            <!-- Close Button -->
+            <Button Grid.Row="2"
+                    x:Name="CloseButton"
+                    Content="BACK"
+                    Width="200"
+                    Height="50"
+                    FontSize="20"
+                    FontWeight="Bold"
+                    Foreground="White"
+                    Background="#16213e"
+                    HorizontalAlignment="Center"
+                    Margin="0,0,0,30"
+                    CornerRadius="10">
+                <Button.Effect>
+                    <DropShadowEffect Color="Black" BlurRadius="10" Opacity="0.7" />
+                </Button.Effect>
+            </Button>
+        </Grid>
+    </Border>
+</UserControl>

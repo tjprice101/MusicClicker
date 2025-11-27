@@ -1,3 +1,4 @@
+using System;
 using Avalonia.Controls;
 
 namespace MusicClicker
@@ -30,8 +31,25 @@ namespace MusicClicker
                 gameState.MoonlightMinorProgressions--;
                 gameState.MelodiousOwned -= 10;
 
+                // Check Seven Circles refund (50% chance)
+                if (gameState.SevenCircles && 
+                    (gameState.CurrentResonatedWeapon1 == "SevenCircles" || gameState.CurrentResonatedWeapon2 == "SevenCircles"))
+                {
+                    if (MusicClicker.Armory.WeaponAbilities.SevenCircles_CheckMinorCraftRefund())
+                    {
+                        gameState.MoonlightMinorKeys++;
+                        gameState.MoonlightMinorScales++;
+                        gameState.MoonlightMinorProgressions++;
+                        gameState.MelodiousOwned += 10;
+                    }
+                }
+
                 owned++;
-                gameState.NotesPerSecond += 3000;
+                // Only add to NPS if not frozen
+                if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                {
+                    gameState.NotesPerSecond += 3000;
+                }
 
                 // Trigger Symphony of Bells ability (La Campanella I)
                 if (gameState.SymphonyOfBellsAbility)
@@ -51,6 +69,12 @@ namespace MusicClicker
 
             if (canCraft)
             {
+                // Queue for Mirror Lake reflection
+                if (gameState.SwanLakeDuetActive && DateTime.Now <= gameState.SwanLakeDuetExpiry)
+                {
+                    MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMinor", "Moonlight Sonata");
+                }
+
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
                 UIUpdater.UpdateFragmentationUI(window, gameState);
             }
@@ -73,8 +97,25 @@ namespace MusicClicker
                 gameState.EroicaMinorProgressions--;
                 gameState.MelodiousOwned -= 15;
 
+                // Check Seven Circles refund (50% chance)
+                if (gameState.SevenCircles && 
+                    (gameState.CurrentResonatedWeapon1 == "SevenCircles" || gameState.CurrentResonatedWeapon2 == "SevenCircles"))
+                {
+                    if (MusicClicker.Armory.WeaponAbilities.SevenCircles_CheckMinorCraftRefund())
+                    {
+                        gameState.EroicaMinorKeys++;
+                        gameState.EroicaMinorScales++;
+                        gameState.EroicaMinorProgressions++;
+                        gameState.MelodiousOwned += 15;
+                    }
+                }
+
                 owned++;
-                gameState.NotesPerSecond += 8000;
+                // Only add to NPS if not frozen
+                if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                {
+                    gameState.NotesPerSecond += 8000;
+                }
 
                 // Trigger Symphony of Bells ability (La Campanella I)
                 if (gameState.SymphonyOfBellsAbility)
@@ -94,6 +135,12 @@ namespace MusicClicker
 
             if (canCraft)
             {
+                // Queue for Mirror Lake reflection
+                if (gameState.SwanLakeDuetActive && DateTime.Now <= gameState.SwanLakeDuetExpiry)
+                {
+                    MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMinor", "Heroic");
+                }
+
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
                 UIUpdater.UpdateFragmentationUI(window, gameState);
             }
@@ -116,8 +163,25 @@ namespace MusicClicker
                 gameState.SwanLakeMinorProgressions--;
                 gameState.MelodiousOwned -= 20;
 
+                // Check Seven Circles refund (50% chance)
+                if (gameState.SevenCircles && 
+                    (gameState.CurrentResonatedWeapon1 == "SevenCircles" || gameState.CurrentResonatedWeapon2 == "SevenCircles"))
+                {
+                    if (MusicClicker.Armory.WeaponAbilities.SevenCircles_CheckMinorCraftRefund())
+                    {
+                        gameState.SwanLakeMinorKeys++;
+                        gameState.SwanLakeMinorScales++;
+                        gameState.SwanLakeMinorProgressions++;
+                        gameState.MelodiousOwned += 20;
+                    }
+                }
+
                 owned++;
-                gameState.NotesPerSecond += 15000;
+                // Only add to NPS if not frozen
+                if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                {
+                    gameState.NotesPerSecond += 15000;
+                }
 
                 // Trigger Symphony of Bells ability (La Campanella I)
                 if (gameState.SymphonyOfBellsAbility)
@@ -137,6 +201,12 @@ namespace MusicClicker
 
             if (canCraft)
             {
+                // Queue for Mirror Lake reflection
+                if (gameState.SwanLakeDuetActive && DateTime.Now <= gameState.SwanLakeDuetExpiry)
+                {
+                    MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMinor", "Swan Lake");
+                }
+
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
                 UIUpdater.UpdateFragmentationUI(window, gameState);
             }
@@ -159,8 +229,25 @@ namespace MusicClicker
                 gameState.LaCampanellaMinorProgressions--;
                 gameState.MelodiousOwned -= 25;
 
+                // Check Seven Circles refund (50% chance)
+                if (gameState.SevenCircles && 
+                    (gameState.CurrentResonatedWeapon1 == "SevenCircles" || gameState.CurrentResonatedWeapon2 == "SevenCircles"))
+                {
+                    if (MusicClicker.Armory.WeaponAbilities.SevenCircles_CheckMinorCraftRefund())
+                    {
+                        gameState.LaCampanellaMinorKeys++;
+                        gameState.LaCampanellaMinorScales++;
+                        gameState.LaCampanellaMinorProgressions++;
+                        gameState.MelodiousOwned += 25;
+                    }
+                }
+
                 owned++;
-                gameState.NotesPerSecond += 35000;
+                // Only add to NPS if not frozen
+                if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                {
+                    gameState.NotesPerSecond += 35000;
+                }
 
                 // Trigger Symphony of Bells ability (La Campanella I)
                 if (gameState.SymphonyOfBellsAbility)
@@ -180,6 +267,12 @@ namespace MusicClicker
 
             if (canCraft)
             {
+                // Queue for Mirror Lake reflection
+                if (gameState.SwanLakeDuetActive && DateTime.Now <= gameState.SwanLakeDuetExpiry)
+                {
+                    MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMinor", "La Campanella");
+                }
+
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
                 UIUpdater.UpdateFragmentationUI(window, gameState);
             }
@@ -202,8 +295,25 @@ namespace MusicClicker
                 gameState.EnigmaMinorProgressions--;
                 gameState.MelodiousOwned -= 30;
 
+                // Check Seven Circles refund (50% chance)
+                if (gameState.SevenCircles && 
+                    (gameState.CurrentResonatedWeapon1 == "SevenCircles" || gameState.CurrentResonatedWeapon2 == "SevenCircles"))
+                {
+                    if (MusicClicker.Armory.WeaponAbilities.SevenCircles_CheckMinorCraftRefund())
+                    {
+                        gameState.EnigmaMinorKeys++;
+                        gameState.EnigmaMinorScales++;
+                        gameState.EnigmaMinorProgressions++;
+                        gameState.MelodiousOwned += 30;
+                    }
+                }
+
                 owned++;
-                gameState.NotesPerSecond += 75000;
+                // Only add to NPS if not frozen
+                if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                {
+                    gameState.NotesPerSecond += 75000;
+                }
 
                 // Trigger Symphony of Bells ability (La Campanella I)
                 if (gameState.SymphonyOfBellsAbility)
@@ -223,6 +333,12 @@ namespace MusicClicker
 
             if (canCraft)
             {
+                // Queue for Mirror Lake reflection
+                if (gameState.SwanLakeDuetActive && DateTime.Now <= gameState.SwanLakeDuetExpiry)
+                {
+                    MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMinor", "Enigma Variations");
+                }
+
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
                 UIUpdater.UpdateFragmentationUI(window, gameState);
             }
@@ -245,8 +361,25 @@ namespace MusicClicker
                 gameState.FateMinorProgressions--;
                 gameState.MelodiousOwned -= 35;
 
+                // Check Seven Circles refund (50% chance)
+                if (gameState.SevenCircles && 
+                    (gameState.CurrentResonatedWeapon1 == "SevenCircles" || gameState.CurrentResonatedWeapon2 == "SevenCircles"))
+                {
+                    if (MusicClicker.Armory.WeaponAbilities.SevenCircles_CheckMinorCraftRefund())
+                    {
+                        gameState.FateMinorKeys++;
+                        gameState.FateMinorScales++;
+                        gameState.FateMinorProgressions++;
+                        gameState.MelodiousOwned += 35;
+                    }
+                }
+
                 owned++;
-                gameState.NotesPerSecond += 135000;
+                // Only add to NPS if not frozen
+                if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                {
+                    gameState.NotesPerSecond += 135000;
+                }
 
                 // Trigger Symphony of Bells ability (La Campanella I)
                 if (gameState.SymphonyOfBellsAbility)
@@ -302,8 +435,25 @@ namespace MusicClicker
                 gameState.OdeToJoyMinorProgressions--;
                 gameState.MelodiousOwned -= 40;
 
+                // Check Seven Circles refund (50% chance)
+                if (gameState.SevenCircles && 
+                    (gameState.CurrentResonatedWeapon1 == "SevenCircles" || gameState.CurrentResonatedWeapon2 == "SevenCircles"))
+                {
+                    if (MusicClicker.Armory.WeaponAbilities.SevenCircles_CheckMinorCraftRefund())
+                    {
+                        gameState.OdeToJoyMinorKeys++;
+                        gameState.OdeToJoyMinorScales++;
+                        gameState.OdeToJoyMinorProgressions++;
+                        gameState.MelodiousOwned += 40;
+                    }
+                }
+
                 owned++;
-                gameState.NotesPerSecond += 255000;
+                // Only add to NPS if not frozen
+                if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                {
+                    gameState.NotesPerSecond += 255000;
+                }
 
                 // Trigger Symphony of Bells ability (La Campanella I)
                 if (gameState.SymphonyOfBellsAbility)
@@ -323,6 +473,12 @@ namespace MusicClicker
 
             if (canCraft)
             {
+                // Queue for Mirror Lake reflection
+                if (gameState.SwanLakeDuetActive && DateTime.Now <= gameState.SwanLakeDuetExpiry)
+                {
+                    MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMinor", "Ode to Joy");
+                }
+
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
                 UIUpdater.UpdateFragmentationUI(window, gameState);
             }
@@ -355,16 +511,15 @@ namespace MusicClicker
                     MusicClicker.Armory.WeaponAbilities.FuneralPrayer_OnMajorAcquisition(gameState);
                 }
 
-                // Trigger La Campanella Duet - gives 5 of corresponding minor
-                if (gameState.SymphonyOfBells && gameState.RazerOfBellsChimes)
-                {
-                    MusicClicker.Armory.WeaponAbilities.LaCampanellaDuet_OnMajorCraft(gameState, "moonlight");
-                }
+
 
                 if (gameState.EroicaMajorAbility)
                 {
                     gameState.MoonlightMinorOwned += 2;
-                    gameState.NotesPerSecond += 6000;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                    {
+                        gameState.NotesPerSecond += 6000;
+                    }
                 }
 
                 canCraft = true;
@@ -372,6 +527,12 @@ namespace MusicClicker
 
             if (canCraft)
             {
+                // Queue for Mirror Lake reflection
+                if (gameState.SwanLakeDuetActive && DateTime.Now <= gameState.SwanLakeDuetExpiry)
+                {
+                    MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMajor", "Moonlight Sonata");
+                }
+
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
                 UIUpdater.UpdateFragmentationUI(window, gameState);
             }
@@ -402,16 +563,15 @@ namespace MusicClicker
                     MusicClicker.Armory.WeaponAbilities.FuneralPrayer_OnMajorAcquisition(gameState);
                 }
 
-                // Trigger La Campanella Duet - gives 5 of corresponding minor
-                if (gameState.SymphonyOfBells && gameState.RazerOfBellsChimes)
-                {
-                    MusicClicker.Armory.WeaponAbilities.LaCampanellaDuet_OnMajorCraft(gameState, "eroica");
-                }
+
 
                 if (gameState.EroicaMajorAbility)
                 {
                     gameState.EroicaMinorOwned += 2;
-                    gameState.NotesPerSecond += 16000;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                    {
+                        gameState.NotesPerSecond += 16000;
+                    }
                 }
 
                 canCraft = true;
@@ -419,6 +579,12 @@ namespace MusicClicker
 
             if (canCraft)
             {
+                // Queue for Mirror Lake reflection
+                if (gameState.SwanLakeDuetActive && DateTime.Now <= gameState.SwanLakeDuetExpiry)
+                {
+                    MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMajor", "Heroic");
+                }
+
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
                 UIUpdater.UpdateFragmentationUI(window, gameState);
             }
@@ -449,16 +615,15 @@ namespace MusicClicker
                     MusicClicker.Armory.WeaponAbilities.FuneralPrayer_OnMajorAcquisition(gameState);
                 }
 
-                // Trigger La Campanella Duet - gives 5 of corresponding minor
-                if (gameState.SymphonyOfBells && gameState.RazerOfBellsChimes)
-                {
-                    MusicClicker.Armory.WeaponAbilities.LaCampanellaDuet_OnMajorCraft(gameState, "swanlake");
-                }
+
 
                 if (gameState.EroicaMajorAbility)
                 {
                     gameState.SwanMinorOwned += 2;
-                    gameState.NotesPerSecond += 30000;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                    {
+                        gameState.NotesPerSecond += 30000;
+                    }
                 }
 
                 canCraft = true;
@@ -466,6 +631,12 @@ namespace MusicClicker
 
             if (canCraft)
             {
+                // Queue for Mirror Lake reflection
+                if (gameState.SwanLakeDuetActive && DateTime.Now <= gameState.SwanLakeDuetExpiry)
+                {
+                    MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMajor", "Swan Lake");
+                }
+
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
                 UIUpdater.UpdateFragmentationUI(window, gameState);
             }
@@ -496,16 +667,15 @@ namespace MusicClicker
                     MusicClicker.Armory.WeaponAbilities.FuneralPrayer_OnMajorAcquisition(gameState);
                 }
 
-                // Trigger La Campanella Duet - gives 5 of corresponding minor
-                if (gameState.SymphonyOfBells && gameState.RazerOfBellsChimes)
-                {
-                    MusicClicker.Armory.WeaponAbilities.LaCampanellaDuet_OnMajorCraft(gameState, "lacampanella");
-                }
+
 
                 if (gameState.EroicaMajorAbility)
                 {
                     gameState.LaCampanellaMinorOwned += 2;
-                    gameState.NotesPerSecond += 70000;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                    {
+                        gameState.NotesPerSecond += 70000;
+                    }
                 }
 
                 canCraft = true;
@@ -513,6 +683,12 @@ namespace MusicClicker
 
             if (canCraft)
             {
+                // Queue for Mirror Lake reflection
+                if (gameState.SwanLakeDuetActive && DateTime.Now <= gameState.SwanLakeDuetExpiry)
+                {
+                    MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMajor", "La Campanella");
+                }
+
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
                 UIUpdater.UpdateFragmentationUI(window, gameState);
             }
@@ -543,16 +719,15 @@ namespace MusicClicker
                     MusicClicker.Armory.WeaponAbilities.FuneralPrayer_OnMajorAcquisition(gameState);
                 }
 
-                // Trigger La Campanella Duet - gives 5 of corresponding minor
-                if (gameState.SymphonyOfBells && gameState.RazerOfBellsChimes)
-                {
-                    MusicClicker.Armory.WeaponAbilities.LaCampanellaDuet_OnMajorCraft(gameState, "enigma");
-                }
+
 
                 if (gameState.EroicaMajorAbility)
                 {
                     gameState.FateMinorOwned += 2;
-                    gameState.NotesPerSecond += 150000;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                    {
+                        gameState.NotesPerSecond += 150000;
+                    }
                 }
 
                 canCraft = true;
@@ -560,6 +735,12 @@ namespace MusicClicker
 
             if (canCraft)
             {
+                // Queue for Mirror Lake reflection
+                if (gameState.SwanLakeDuetActive && DateTime.Now <= gameState.SwanLakeDuetExpiry)
+                {
+                    MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMajor", "Enigma Variations");
+                }
+
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
                 UIUpdater.UpdateFragmentationUI(window, gameState);
             }
@@ -590,16 +771,15 @@ namespace MusicClicker
                     MusicClicker.Armory.WeaponAbilities.FuneralPrayer_OnMajorAcquisition(gameState);
                 }
 
-                // Trigger La Campanella Duet - gives 5 of corresponding minor
-                if (gameState.SymphonyOfBells && gameState.RazerOfBellsChimes)
-                {
-                    MusicClicker.Armory.WeaponAbilities.LaCampanellaDuet_OnMajorCraft(gameState, "fate");
-                }
+
 
                 if (gameState.EroicaMajorAbility)
                 {
                     gameState.FateMinorOwned += 2;
-                    gameState.NotesPerSecond += 270000;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                    {
+                        gameState.NotesPerSecond += 270000;
+                    }
                 }
 
                 canCraft = true;
@@ -607,6 +787,12 @@ namespace MusicClicker
 
             if (canCraft)
             {
+                // Queue for Mirror Lake reflection
+                if (gameState.SwanLakeDuetActive && DateTime.Now <= gameState.SwanLakeDuetExpiry)
+                {
+                    MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMajor", "Fate");
+                }
+
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
                 UIUpdater.UpdateFragmentationUI(window, gameState);
             }
@@ -637,16 +823,15 @@ namespace MusicClicker
                     MusicClicker.Armory.WeaponAbilities.FuneralPrayer_OnMajorAcquisition(gameState);
                 }
 
-                // Trigger La Campanella Duet - gives 5 of corresponding minor
-                if (gameState.SymphonyOfBells && gameState.RazerOfBellsChimes)
-                {
-                    MusicClicker.Armory.WeaponAbilities.LaCampanellaDuet_OnMajorCraft(gameState, "odetojoy");
-                }
+
 
                 if (gameState.EroicaMajorAbility)
                 {
                     gameState.OdeToJoyMinorOwned += 2;
-                    gameState.NotesPerSecond += 510000;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                    {
+                        gameState.NotesPerSecond += 510000;
+                    }
                 }
 
                 canCraft = true;
@@ -654,6 +839,12 @@ namespace MusicClicker
 
             if (canCraft)
             {
+                // Queue for Mirror Lake reflection
+                if (gameState.SwanLakeDuetActive && DateTime.Now <= gameState.SwanLakeDuetExpiry)
+                {
+                    MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMajor", "Ode to Joy");
+                }
+
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
                 UIUpdater.UpdateFragmentationUI(window, gameState);
             }

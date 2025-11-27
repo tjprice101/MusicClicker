@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using MusicClicker;
 
 namespace MusicClicker.Armory
@@ -72,28 +74,40 @@ namespace MusicClicker.Armory
                     case 0: // Chord
                         {
                             double effect = gameState.ChordBaseNpsEffect * Math.Pow(gameState.ChordNpsGrowth, gameState.ChordOwned);
-                            gameState.NotesPerSecond += effect;
+                            if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                            {
+                                gameState.NotesPerSecond += effect;
+                            }
                             gameState.ChordOwned++;
                         }
                         break;
                     case 1: // Scale
                         {
                             double effect = gameState.ScaleBaseNpsEffect * Math.Pow(gameState.ScaleNpsGrowth, gameState.ScaleOwned);
-                            gameState.NotesPerSecond += effect;
+                            if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                            {
+                                gameState.NotesPerSecond += effect;
+                            }
                             gameState.ScaleOwned++;
                         }
                         break;
                     case 2: // Orchestra
                         {
                             double effect = gameState.OrchestraBaseNpsEffect * Math.Pow(gameState.OrchestraNpsGrowth, gameState.OrchestraOwned);
-                            gameState.NotesPerSecond += effect;
+                            if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                            {
+                                gameState.NotesPerSecond += effect;
+                            }
                             gameState.OrchestraOwned++;
                         }
                         break;
                     case 3: // Symphony
                         {
                             double effect = gameState.SymphonyBaseNpsEffect * Math.Pow(gameState.SymphonyNpsGrowth, gameState.SymphonyOwned);
-                            gameState.NotesPerSecond += effect;
+                            if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                            {
+                                gameState.NotesPerSecond += effect;
+                            }
                             gameState.SymphonyOwned++;
                         }
                         break;
@@ -126,6 +140,93 @@ namespace MusicClicker.Armory
                             gameState.NotesPerClick += effect;
                             gameState.MagnumOpusOwned++;
                         }
+                        break;
+                }
+            }
+        }
+
+        // ==================== MOONLIGHT DUET ====================
+
+        /// <summary>
+        /// Moonlight Duet: "Lunar Phases"
+        /// Duet Ability (Toggle, 4min cooldown, 40s duration):
+        /// Cycles through 4 moon phases every 8 seconds:
+        /// - New Moon (0): 2x NPC
+        /// - Crescent (1): Components drop on click (10% chance per click)
+        /// - Full Moon (2): 3x NPS
+        /// - Waning (3): Upgrades cost 50% less
+        /// Returns the current phase (0-3) or -1 if not active.
+        /// </summary>
+        public static int MoonlightDuet_GetCurrentPhase(GameState gameState)
+        {
+            if (gameState == null) return -1;
+            
+            if (!gameState.MoonlightDuetActive || DateTime.Now > gameState.MoonlightDuetExpiry)
+                return -1;
+            
+            // Check if we need to advance to the next phase (every 8 seconds)
+            double elapsedSincePhaseStart = (DateTime.Now - gameState.MoonlightPhaseChangeTime).TotalSeconds;
+            if (elapsedSincePhaseStart >= 8.0)
+            {
+                // Advance to next phase
+                gameState.MoonlightCurrentPhase = (gameState.MoonlightCurrentPhase + 1) % 4;
+                gameState.MoonlightPhaseChangeTime = DateTime.Now;
+            }
+            
+            return gameState.MoonlightCurrentPhase;
+        }
+
+        /// <summary>
+        /// Moonlight Duet: Handle component drop during Crescent phase (10% chance per click)
+        /// </summary>
+        public static void MoonlightDuet_CrescentComponentDrop(GameState gameState)
+        {
+            if (gameState == null) return;
+            
+            Random rand = new Random();
+            if (rand.NextDouble() < 0.10) // 10% chance
+            {
+                // Pick a random score (0-6)
+                int scoreIndex = rand.Next(7);
+                // Pick a random component type (0=Keys, 1=Scales, 2=Progressions)
+                int componentType = rand.Next(3);
+
+                switch (scoreIndex)
+                {
+                    case 0: // Moonlight
+                        if (componentType == 0) gameState.MoonlightMinorKeys++;
+                        else if (componentType == 1) gameState.MoonlightMinorScales++;
+                        else gameState.MoonlightMinorProgressions++;
+                        break;
+                    case 1: // Eroica
+                        if (componentType == 0) gameState.EroicaMinorKeys++;
+                        else if (componentType == 1) gameState.EroicaMinorScales++;
+                        else gameState.EroicaMinorProgressions++;
+                        break;
+                    case 2: // Swan Lake
+                        if (componentType == 0) gameState.SwanLakeMinorKeys++;
+                        else if (componentType == 1) gameState.SwanLakeMinorScales++;
+                        else gameState.SwanLakeMinorProgressions++;
+                        break;
+                    case 3: // La Campanella
+                        if (componentType == 0) gameState.LaCampanellaMinorKeys++;
+                        else if (componentType == 1) gameState.LaCampanellaMinorScales++;
+                        else gameState.LaCampanellaMinorProgressions++;
+                        break;
+                    case 4: // Enigma
+                        if (componentType == 0) gameState.EnigmaMinorKeys++;
+                        else if (componentType == 1) gameState.EnigmaMinorScales++;
+                        else gameState.EnigmaMinorProgressions++;
+                        break;
+                    case 5: // Fate
+                        if (componentType == 0) gameState.FateMinorKeys++;
+                        else if (componentType == 1) gameState.FateMinorScales++;
+                        else gameState.FateMinorProgressions++;
+                        break;
+                    case 6: // Ode to Joy
+                        if (componentType == 0) gameState.OdeToJoyMinorKeys++;
+                        else if (componentType == 1) gameState.OdeToJoyMinorScales++;
+                        else gameState.OdeToJoyMinorProgressions++;
                         break;
                 }
             }
@@ -220,13 +321,55 @@ namespace MusicClicker.Armory
             // Give 3 of that minor score
             switch (minIndex)
             {
-                case 0: gameState.MoonlightMinorOwned += 3; break;
-                case 1: gameState.EroicaMinorOwned += 3; break;
-                case 2: gameState.SwanMinorOwned += 3; break;
-                case 3: gameState.LaCampanellaMinorOwned += 3; break;
-                case 4: gameState.EnigmaMinorOwned += 3; break;
-                case 5: gameState.FateMinorOwned += 3; break;
-                case 6: gameState.OdeToJoyMinorOwned += 3; break;
+                case 0:
+                    gameState.MoonlightMinorOwned += 3;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                    {
+                        gameState.NotesPerSecond += 9000; // 3000 * 3
+                    }
+                    break;
+                case 1:
+                    gameState.EroicaMinorOwned += 3;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                    {
+                        gameState.NotesPerSecond += 24000; // 8000 * 3
+                    }
+                    break;
+                case 2:
+                    gameState.SwanMinorOwned += 3;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                    {
+                        gameState.NotesPerSecond += 45000; // 15000 * 3
+                    }
+                    break;
+                case 3:
+                    gameState.LaCampanellaMinorOwned += 3;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                    {
+                        gameState.NotesPerSecond += 105000; // 35000 * 3
+                    }
+                    break;
+                case 4:
+                    gameState.EnigmaMinorOwned += 3;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                    {
+                        gameState.NotesPerSecond += 225000; // 75000 * 3
+                    }
+                    break;
+                case 5:
+                    gameState.FateMinorOwned += 3;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                    {
+                        gameState.NotesPerSecond += 405000; // 135000 * 3
+                    }
+                    break;
+                case 6:
+                    gameState.OdeToJoyMinorOwned += 3;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                    {
+                        gameState.NotesPerSecond += 765000; // 255000 * 3
+                    }
+                    break;
             }
         }
 
@@ -267,13 +410,55 @@ namespace MusicClicker.Armory
 
             switch (scoreName.ToLower())
             {
-                case "moonlight": gameState.MoonlightMinorOwned++; break;
-                case "eroica": gameState.EroicaMinorOwned++; break;
-                case "swanlake": gameState.SwanMinorOwned++; break;
-                case "lacampanella": gameState.LaCampanellaMinorOwned++; break;
-                case "enigma": gameState.EnigmaMinorOwned++; break;
-                case "fate": gameState.FateMinorOwned++; break;
-                case "odetojoy": gameState.OdeToJoyMinorOwned++; break;
+                case "moonlight":
+                    gameState.MoonlightMinorOwned++;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                    {
+                        gameState.NotesPerSecond += 3000;
+                    }
+                    break;
+                case "eroica":
+                    gameState.EroicaMinorOwned++;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                    {
+                        gameState.NotesPerSecond += 8000;
+                    }
+                    break;
+                case "swanlake":
+                    gameState.SwanMinorOwned++;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                    {
+                        gameState.NotesPerSecond += 15000;
+                    }
+                    break;
+                case "lacampanella":
+                    gameState.LaCampanellaMinorOwned++;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                    {
+                        gameState.NotesPerSecond += 35000;
+                    }
+                    break;
+                case "enigma":
+                    gameState.EnigmaMinorOwned++;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                    {
+                        gameState.NotesPerSecond += 75000;
+                    }
+                    break;
+                case "fate":
+                    gameState.FateMinorOwned++;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                    {
+                        gameState.NotesPerSecond += 135000;
+                    }
+                    break;
+                case "odetojoy":
+                    gameState.OdeToJoyMinorOwned++;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                    {
+                        gameState.NotesPerSecond += 255000;
+                    }
+                    break;
             }
         }
 
@@ -343,57 +528,6 @@ namespace MusicClicker.Armory
         // ==================== DUET RESONANCES ====================
 
         /// <summary>
-        /// Moonlight Duet: Every 12th click increases all upgrade values by 1.
-        /// Needs a click counter in GameState.
-        /// </summary>
-        public static void MoonlightDuet_OnClick(GameState gameState)
-        {
-            if (gameState == null) return;
-
-            gameState.MoonlightDuetClickCounter++;
-            if (gameState.MoonlightDuetClickCounter >= 12)
-            {
-                gameState.MoonlightDuetClickCounter = 0;
-                
-                // Increment owned counts
-                gameState.ChordOwned++;
-                gameState.ScaleOwned++;
-                gameState.OrchestraOwned++;
-                gameState.SymphonyOwned++;
-                gameState.AriaOwned++;
-                gameState.RequiemOwned++;
-                gameState.OpusOwned++;
-                gameState.MagnumOpusOwned++;
-
-                // Apply the NPS effects for each NPS upgrade
-                double chordEffect = gameState.ChordBaseNpsEffect * Math.Pow(gameState.ChordNpsGrowth, gameState.ChordOwned - 1);
-                gameState.NotesPerSecond += chordEffect;
-
-                double scaleEffect = gameState.ScaleBaseNpsEffect * Math.Pow(gameState.ScaleNpsGrowth, gameState.ScaleOwned - 1);
-                gameState.NotesPerSecond += scaleEffect;
-
-                double orchestraEffect = gameState.OrchestraBaseNpsEffect * Math.Pow(gameState.OrchestraNpsGrowth, gameState.OrchestraOwned - 1);
-                gameState.NotesPerSecond += orchestraEffect;
-
-                double symphonyEffect = gameState.SymphonyBaseNpsEffect * Math.Pow(gameState.SymphonyNpsGrowth, gameState.SymphonyOwned - 1);
-                gameState.NotesPerSecond += symphonyEffect;
-
-                // Apply the NPC effects for each click upgrade
-                double ariaEffect = gameState.AriaBaseClickEffect * Math.Pow(gameState.AriaClickGrowth, gameState.AriaOwned - 1);
-                gameState.NotesPerClick += ariaEffect;
-
-                double requiemEffect = gameState.RequiemBaseClickEffect * Math.Pow(gameState.RequiemClickGrowth, gameState.RequiemOwned - 1);
-                gameState.NotesPerClick += requiemEffect;
-
-                double opusEffect = gameState.OpusBaseClickEffect * Math.Pow(gameState.OpusClickGrowth, gameState.OpusOwned - 1);
-                gameState.NotesPerClick += opusEffect;
-
-                double magnumOpusEffect = gameState.MagnumOpusBaseClickEffect * Math.Pow(gameState.MagnumOpusClickGrowth, gameState.MagnumOpusOwned - 1);
-                gameState.NotesPerClick += magnumOpusEffect;
-            }
-        }
-
-        /// <summary>
         /// Eroica Duet: If any minor score exceeds 10, double its NPS output.
         /// This is a passive check - should be evaluated during NPS calculation.
         /// Returns the NPS multiplier to apply.
@@ -416,44 +550,131 @@ namespace MusicClicker.Armory
             return 1.0;
         }
 
-        /// <summary>
-        /// Swan Lake Duet: If you own 50+ Melodious and 100+ Harmonious fragments,
-        /// NPS is doubled. Returns multiplier to apply.
-        /// </summary>
-        public static double SwanLakeDuet_GetNpsMultiplier(GameState gameState)
-        {
-            if (gameState == null) return 1.0;
-
-            if (gameState.MelodiousOwned >= 50 && gameState.HarmoniousOwned >= 100)
-            {
-                return 2.0;
-            }
-            return 1.0;
-        }
+        // Swan Lake Duet passive removed - replaced by Mirror Lake active ability
 
         /// <summary>
-        /// La Campanella Duet: On craft of a Major score, gives 5 of its corresponding minor score.
+        /// La Campanella Duet "Chime Chain": Click within 1 second to extend chain. Rewards = chainLength² × NPS.
         /// </summary>
-        public static void LaCampanellaDuet_OnMajorCraft(GameState gameState, string scoreName)
+        public static void LaCampanellaDuet_OnClick(GameState gameState)
         {
-            if (gameState == null) return;
+            if (gameState == null || !gameState.LaCampanellaDuetActive) return;
 
-            switch (scoreName.ToLower())
+            double timeSinceLastClick = (DateTime.Now - gameState.LastChimeClickTime).TotalSeconds;
+            
+            if (timeSinceLastClick <= 1.0 || gameState.ChimeChainLength == 0)
             {
-                case "moonlight": gameState.MoonlightMinorOwned += 5; break;
-                case "eroica": gameState.EroicaMinorOwned += 5; break;
-                case "swanlake": gameState.SwanMinorOwned += 5; break;
-                case "lacampanella": gameState.LaCampanellaMinorOwned += 5; break;
-                case "enigma": gameState.EnigmaMinorOwned += 5; break;
-                case "fate": gameState.FateMinorOwned += 5; break;
-                case "odetojoy": gameState.OdeToJoyMinorOwned += 5; break;
+                // Extend chain
+                gameState.ChimeChainLength++;
+                gameState.LastChimeClickTime = DateTime.Now;
+                
+                // Grant reward: chainLength² × NPS as instant notes
+                double reward = gameState.ChimeChainLength * gameState.ChimeChainLength * gameState.NotesPerSecond;
+                gameState.Notes += reward;
+            }
+            else
+            {
+                // Chain broken, reset
+                gameState.ChimeChainLength = 0;
+                gameState.LastChimeClickTime = DateTime.MinValue;
             }
         }
+
+        /// <summary>
+        /// Enigma Duet "Mystery Clicks": Each click triggers 1 of 8 random effects.
+        /// </summary>
+        public static void EnigmaDuet_OnClick(GameState gameState)
+        {
+            if (gameState == null || !gameState.EnigmaDuetActive) return;
+
+            // Increment mystery click count
+            gameState.EnigmaMysteryClickCount++;
+
+            // Randomly select one of 8 effects (0-7)
+            Random random = new Random();
+            int effect = random.Next(0, 8);
+            
+            switch (effect)
+            {
+                case 0: // Red - +15× NPS
+                    gameState.Notes += gameState.NotesPerSecond * 15;
+                    break;
+                case 1: // Blue - 2x NPS boost until ability ends
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                    {
+                        gameState.NotesPerSecond *= 2.0;
+                    }
+                    break;
+                case 2: // Green - +30 Harmonious Fragments
+                    gameState.HarmoniousOwned += 30;
+                    break;
+                case 3: // Yellow - +30 Melodious Fragments
+                    gameState.MelodiousOwned += 30;
+                    break;
+                case 4: // Purple - +1 major sheet for each major score owned
+                    if (gameState.MoonlightMajorSheets > 0) gameState.MoonlightMajorSheets++;
+                    if (gameState.EroicaMajorSheets > 0) gameState.EroicaMajorSheets++;
+                    if (gameState.SwanLakeMajorSheets > 0) gameState.SwanLakeMajorSheets++;
+                    if (gameState.LaCampanellaMajorSheets > 0) gameState.LaCampanellaMajorSheets++;
+                    if (gameState.EnigmaMajorSheets > 0) gameState.EnigmaMajorSheets++;
+                    if (gameState.FateMajorSheets > 0) gameState.FateMajorSheets++;
+                    if (gameState.OdeToJoyMajorSheets > 0) gameState.OdeToJoyMajorSheets++;
+                    break;
+                case 5: // Orange - +1 minor component (key, scale, progression) for each minor score owned
+                    // Add 1 to each component type for each minor score that has at least 1 of that component
+                    if (gameState.MoonlightMinorKeys > 0) gameState.MoonlightMinorKeys++;
+                    if (gameState.MoonlightMinorScales > 0) gameState.MoonlightMinorScales++;
+                    if (gameState.MoonlightMinorProgressions > 0) gameState.MoonlightMinorProgressions++;
+                    if (gameState.EroicaMinorKeys > 0) gameState.EroicaMinorKeys++;
+                    if (gameState.EroicaMinorScales > 0) gameState.EroicaMinorScales++;
+                    if (gameState.EroicaMinorProgressions > 0) gameState.EroicaMinorProgressions++;
+                    if (gameState.SwanLakeMinorKeys > 0) gameState.SwanLakeMinorKeys++;
+                    if (gameState.SwanLakeMinorScales > 0) gameState.SwanLakeMinorScales++;
+                    if (gameState.SwanLakeMinorProgressions > 0) gameState.SwanLakeMinorProgressions++;
+                    if (gameState.LaCampanellaMinorKeys > 0) gameState.LaCampanellaMinorKeys++;
+                    if (gameState.LaCampanellaMinorScales > 0) gameState.LaCampanellaMinorScales++;
+                    if (gameState.LaCampanellaMinorProgressions > 0) gameState.LaCampanellaMinorProgressions++;
+                    if (gameState.EnigmaMinorKeys > 0) gameState.EnigmaMinorKeys++;
+                    if (gameState.EnigmaMinorScales > 0) gameState.EnigmaMinorScales++;
+                    if (gameState.EnigmaMinorProgressions > 0) gameState.EnigmaMinorProgressions++;
+                    if (gameState.FateMinorKeys > 0) gameState.FateMinorKeys++;
+                    if (gameState.FateMinorScales > 0) gameState.FateMinorScales++;
+                    if (gameState.FateMinorProgressions > 0) gameState.FateMinorProgressions++;
+                    if (gameState.OdeToJoyMinorKeys > 0) gameState.OdeToJoyMinorKeys++;
+                    if (gameState.OdeToJoyMinorScales > 0) gameState.OdeToJoyMinorScales++;
+                    if (gameState.OdeToJoyMinorProgressions > 0) gameState.OdeToJoyMinorProgressions++;
+                    break;
+                case 6: // White - Best reward (+1 owned to 3 random minor scores)
+                    List<Action> minorScoreOwned = new List<Action>
+                    {
+                        () => gameState.MoonlightMinorOwned++,
+                        () => gameState.EroicaMinorOwned++,
+                        () => gameState.SwanMinorOwned++,
+                        () => gameState.LaCampanellaMinorOwned++,
+                        () => gameState.EnigmaMinorOwned++,
+                        () => gameState.FateMinorOwned++,
+                        () => gameState.OdeToJoyMinorOwned++
+                    };
+                    for (int i = 0; i < 3; i++)
+                    {
+                        minorScoreOwned[random.Next(minorScoreOwned.Count)]();
+                    }
+                    break;
+                case 7: // Black - Penalty (Lose 65% of current notes)
+                    gameState.Notes *= 0.35;
+                    break;
+            }
+        }
+
+        // OLD DUET METHODS - DEPRECATED AND REMOVED
+        // Enigma cipher wheel, Fate time streams, and Ode orchestra conductor have been replaced
+        // with new mechanics (Mystery Clicks, Cosmic Dust Harvest, Petal Storm)
 
         /// <summary>
         /// Fate Duet: Every 45th click doubles whichever minor score is the lowest owned.
+        /// DEPRECATED - Old implementation, keeping for reference.
         /// </summary>
-        public static void FateDuet_OnClick(GameState gameState)
+        public static void FateDuet_OnClick_OLD(GameState gameState)
+
         {
             if (gameState == null) return;
 
@@ -476,13 +697,76 @@ namespace MusicClicker.Armory
                 // Double it
                 switch (minIndex)
                 {
-                    case 0: gameState.MoonlightMinorOwned *= 2; break;
-                    case 1: gameState.EroicaMinorOwned *= 2; break;
-                    case 2: gameState.SwanMinorOwned *= 2; break;
-                    case 3: gameState.LaCampanellaMinorOwned *= 2; break;
-                    case 4: gameState.EnigmaMinorOwned *= 2; break;
-                    case 5: gameState.FateMinorOwned *= 2; break;
-                    case 6: gameState.OdeToJoyMinorOwned *= 2; break;
+                    case 0:
+                        {
+                            int originalCount = gameState.MoonlightMinorOwned;
+                            gameState.MoonlightMinorOwned *= 2;
+                            if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                            {
+                                gameState.NotesPerSecond += originalCount * 3000; // Add NPS for the doubled amount
+                            }
+                        }
+                        break;
+                    case 1:
+                        {
+                            int originalCount = gameState.EroicaMinorOwned;
+                            gameState.EroicaMinorOwned *= 2;
+                            if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                            {
+                                gameState.NotesPerSecond += originalCount * 8000;
+                            }
+                        }
+                        break;
+                    case 2:
+                        {
+                            int originalCount = gameState.SwanMinorOwned;
+                            gameState.SwanMinorOwned *= 2;
+                            if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                            {
+                                gameState.NotesPerSecond += originalCount * 15000;
+                            }
+                        }
+                        break;
+                    case 3:
+                        {
+                            int originalCount = gameState.LaCampanellaMinorOwned;
+                            gameState.LaCampanellaMinorOwned *= 2;
+                            if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                            {
+                                gameState.NotesPerSecond += originalCount * 35000;
+                            }
+                        }
+                        break;
+                    case 4:
+                        {
+                            int originalCount = gameState.EnigmaMinorOwned;
+                            gameState.EnigmaMinorOwned *= 2;
+                            if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                            {
+                                gameState.NotesPerSecond += originalCount * 75000;
+                            }
+                        }
+                        break;
+                    case 5:
+                        {
+                            int originalCount = gameState.FateMinorOwned;
+                            gameState.FateMinorOwned *= 2;
+                            if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                            {
+                                gameState.NotesPerSecond += originalCount * 135000;
+                            }
+                        }
+                        break;
+                    case 6:
+                        {
+                            int originalCount = gameState.OdeToJoyMinorOwned;
+                            gameState.OdeToJoyMinorOwned *= 2;
+                            if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                            {
+                                gameState.NotesPerSecond += originalCount * 255000;
+                            }
+                        }
+                        break;
                 }
             }
         }
@@ -497,58 +781,686 @@ namespace MusicClicker.Armory
         // (No method needed - handled in timer logic)
 
         // ==================== WINTER EVENT WEAPONS (16-17) ====================
+        // Theme: "Eternal Frost" - Freeze mechanics with extended duration and multiplier effects
 
         /// <summary>
-        /// Cacophonic Blizzard (Winter I): Every 50th click "freezes" your current NPS value for 8 seconds.
-        /// While frozen, NPS is immune to changes from upgrades/purchases.
+        /// Cacophonic Blizzard (Winter I): Crystalline Shatter
+        /// Forte Effect: Every 10th click grants notes equal to 10 seconds worth of your current NPS instantly.
+        /// Duet Effect (with The Snow's Desire): Every 50th click freezes NPS for 12 seconds.
         /// </summary>
         public static void CacophonicBlizzard_OnClick(GameState gameState)
         {
             if (gameState == null) return;
 
+            // Crystalline Shatter - solo forte effect (every 10th click)
+            if (gameState.CacophonicBlizzardAbility)
+            {
+                gameState.CrystallineShatterCounter++;
+                if (gameState.CrystallineShatterCounter >= 10)
+                {
+                    gameState.CrystallineShatterCounter = 0;
+                    // Grant 10 seconds worth of NPS instantly
+                    double burst = gameState.NotesPerSecond * 10.0;
+                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, burst);
+                }
+            }
+
+            // Duet effect - freeze NPS every 50th click (only when both Winter weapons equipped)
             gameState.CacophonicBlizzardClickCounter++;
             if (gameState.CacophonicBlizzardClickCounter >= 50)
             {
                 gameState.CacophonicBlizzardClickCounter = 0;
                 gameState.NpsFrozen = true;
                 gameState.FrozenNpsValue = gameState.NotesPerSecond;
-                gameState.NpsFreezeExpiry = DateTime.Now.AddSeconds(8);
+                gameState.NpsFreezeExpiry = DateTime.Now.AddSeconds(12); // Extended duration
             }
         }
 
         /// <summary>
-        /// The Snow's Desire (Winter II): On Harmonious fragment purchase, 
-        /// gain notes equal to frozen NPS × 20 (if NPS is currently frozen).
+        /// The Snow's Desire (Winter II): Blizzard's Bounty
+        /// Forte Effect: Each Harmonious fragment purchase grants +2% NPS for 30 seconds (stacks additively, multiple purchases extend duration).
         /// </summary>
         public static void TheSnowsDesire_OnHarmoniousPurchase(GameState gameState)
         {
             if (gameState == null) return;
 
-            // Only grant bonus if NPS is currently frozen
-            if (gameState.NpsFrozen && DateTime.Now <= gameState.NpsFreezeExpiry)
+            // Blizzard's Bounty - solo forte effect
+            if (gameState.TheSnowsDesireAbility)
             {
-                double bonus = gameState.FrozenNpsValue * 20.0;
-                MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, bonus);
+                // Add 2% to the bonus (stacks additively)
+                gameState.BlizzardBountyNpsBonus += 0.02;
+                // Extend/set duration to 30 seconds from now
+                gameState.BlizzardBountyExpiry = DateTime.Now.AddSeconds(30);
             }
         }
 
         /// <summary>
-        /// Winter Duet: Frozen NPS is used as a multiplier for all clicks.
-        /// Returns the multiplier to apply to clicks (frozen NPS value).
+        /// Winter Duet: "Absolute Zero"
+        /// Duet Ability (Manual activation, 5min cooldown, 15s base duration):
+        /// Activate to convert frozen NPS into a click multiplier (requires NPS to be frozen first).
+        /// Every click during this time extends duration by 0.5s (max +10s extension).
+        /// Returns the multiplier to apply to clicks when duet is active.
         /// </summary>
         public static double WinterDuet_GetClickMultiplier(GameState gameState)
         {
             if (gameState == null) return 1.0;
 
-            // Check if NPS is frozen and hasn't expired
-            if (gameState.NpsFrozen && DateTime.Now <= gameState.NpsFreezeExpiry)
+            // Check if Winter Duet ability is active
+            if (gameState.WinterDuetActive && DateTime.Now <= gameState.WinterDuetExpiry)
             {
-                return gameState.FrozenNpsValue;
+                // Check if NPS is frozen and hasn't expired
+                if (gameState.NpsFrozen && DateTime.Now <= gameState.NpsFreezeExpiry)
+                {
+                    return gameState.FrozenNpsValue; // Frozen NPS as multiplier
+                }
             }
             return 1.0;
         }
 
+        /// <summary>
+        /// Winter Duet: Extend duration on click (called from click handler).
+        /// Each click extends the ability duration by 0.5s, up to a maximum of +10s total extension.
+        /// </summary>
+        public static void WinterDuet_OnClick(GameState gameState)
+        {
+            if (gameState == null) return;
+
+            if (gameState.WinterDuetActive && DateTime.Now <= gameState.WinterDuetExpiry)
+            {
+                // Only extend if we haven't hit the max extension
+                if (gameState.WinterDuetExtensionTime < 10.0)
+                {
+                    gameState.WinterDuetExpiry = gameState.WinterDuetExpiry.AddSeconds(0.5);
+                    gameState.WinterDuetExtensionTime += 0.5;
+                }
+            }
+        }
+
         // ==================== DIES IRAE EVENT WEAPONS (14-15) ====================
-        // Placeholder - abilities to be implemented later
+        // Theme: "Descending Judgment" - Seven Seals mechanic with resource efficiency
+
+        /// <summary>
+        /// Seven Circles (Dies Irae I): Hellfire Rebate
+        /// Forte Effect: Minor score crafts have 33% chance to not consume components.
+        /// Returns true if components should be refunded.
+        /// </summary>
+        public static bool SevenCircles_CheckMinorCraftRefund()
+        {
+            Random rand = new Random();
+            return rand.NextDouble() < 0.33; // 33% chance
+        }
+
+        /// <summary>
+        /// Hell's Wrath (Dies Irae II): Damnation's Gift
+        /// Forte Effect: Each click has a 7% chance to grant a random minor component.
+        /// Call this from the click handler when Hell's Wrath ability is active.
+        /// </summary>
+        public static void HellsWrath_OnClick(GameState gameState)
+        {
+            if (gameState == null) return;
+            if (!gameState.HellsWrath) return;
+
+            Random rand = new Random();
+            if (rand.NextDouble() < 0.07) // 7% chance
+            {
+                // Pick a random score (0-6)
+                int scoreIndex = rand.Next(7);
+                // Pick a random component type (0=Keys, 1=Scales, 2=Progressions)
+                int componentType = rand.Next(3);
+
+                switch (scoreIndex)
+                {
+                    case 0: // Moonlight
+                        if (componentType == 0) gameState.MoonlightMinorKeys++;
+                        else if (componentType == 1) gameState.MoonlightMinorScales++;
+                        else gameState.MoonlightMinorProgressions++;
+                        break;
+                    case 1: // Eroica
+                        if (componentType == 0) gameState.EroicaMinorKeys++;
+                        else if (componentType == 1) gameState.EroicaMinorScales++;
+                        else gameState.EroicaMinorProgressions++;
+                        break;
+                    case 2: // Swan Lake
+                        if (componentType == 0) gameState.SwanLakeMinorKeys++;
+                        else if (componentType == 1) gameState.SwanLakeMinorScales++;
+                        else gameState.SwanLakeMinorProgressions++;
+                        break;
+                    case 3: // La Campanella
+                        if (componentType == 0) gameState.LaCampanellaMinorKeys++;
+                        else if (componentType == 1) gameState.LaCampanellaMinorScales++;
+                        else gameState.LaCampanellaMinorProgressions++;
+                        break;
+                    case 4: // Enigma
+                        if (componentType == 0) gameState.EnigmaMinorKeys++;
+                        else if (componentType == 1) gameState.EnigmaMinorScales++;
+                        else gameState.EnigmaMinorProgressions++;
+                        break;
+                    case 5: // Fate
+                        if (componentType == 0) gameState.FateMinorKeys++;
+                        else if (componentType == 1) gameState.FateMinorScales++;
+                        else gameState.FateMinorProgressions++;
+                        break;
+                    case 6: // Ode to Joy
+                        if (componentType == 0) gameState.OdeToJoyMinorKeys++;
+                        else if (componentType == 1) gameState.OdeToJoyMinorScales++;
+                        else gameState.OdeToJoyMinorProgressions++;
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Dies Irae Duet: "Seven Seals"
+        /// Duet Ability (Toggle, 120s cooldown, 30s duration):
+        /// Each click places a seal. At 7 seals, auto-triggers a random minor craft for free.
+        /// Keeps stacking seals during duration (resets at 7 each time).
+        /// Call this from click handler when duet is active.
+        /// </summary>
+        public static void DiesIraeDuet_OnClick(GameState gameState, MainWindow mainWindow)
+        {
+            if (gameState == null || mainWindow == null) return;
+
+            // Only process if duet ability is active
+            if (!gameState.DiesIraeDuetActive || DateTime.Now > gameState.DiesIraeDuetExpiry)
+                return;
+
+            gameState.SevenSealsCounter++;
+
+            // When we hit 7 seals, trigger a random free minor craft
+            if (gameState.SevenSealsCounter >= 7)
+            {
+                gameState.SevenSealsCounter = 0;
+                TriggerRandomMinorCraft(gameState);
+                
+                // Recalculate NPS/NPC after granting minor scores
+                if (mainWindow != null)
+                {
+                    UIUpdater.UpdateUnitySymphonyUI(mainWindow, gameState);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Helper method to grant 3 random minor scores for free (for Seven Seals ability).
+        /// Picks a random score type and gives 3 of that minor score without consuming components.
+        /// </summary>
+        private static void TriggerRandomMinorCraft(GameState gameState)
+        {
+            if (gameState == null) return;
+
+            Random rand = new Random();
+            int scoreType = rand.Next(0, 7); // 0-6 for the 7 score types
+
+            switch (scoreType)
+            {
+                case 0: // Moonlight Sonata
+                    gameState.MoonlightMinorOwned += 3;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                    {
+                        gameState.NotesPerSecond += 9000; // 3000 * 3
+                    }
+                    break;
+                case 1: // Eroica
+                    gameState.EroicaMinorOwned += 3;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                    {
+                        gameState.NotesPerSecond += 24000; // 8000 * 3
+                    }
+                    break;
+                case 2: // Swan Lake
+                    gameState.SwanMinorOwned += 3;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                    {
+                        gameState.NotesPerSecond += 45000; // 15000 * 3
+                    }
+                    break;
+                case 3: // La Campanella
+                    gameState.LaCampanellaMinorOwned += 3;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                    {
+                        gameState.NotesPerSecond += 105000; // 35000 * 3
+                    }
+                    break;
+                case 4: // Enigma
+                    gameState.EnigmaMinorOwned += 3;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                    {
+                        gameState.NotesPerSecond += 225000; // 75000 * 3
+                    }
+                    break;
+                case 5: // Fate
+                    gameState.FateMinorOwned += 3;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                    {
+                        gameState.NotesPerSecond += 405000; // 135000 * 3
+                    }
+                    break;
+                case 6: // Ode to Joy
+                    gameState.OdeToJoyMinorOwned += 3;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                    {
+                        gameState.NotesPerSecond += 765000; // 255000 * 3
+                    }
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Eroica Duet: Victory March - Progress bar that fills with clicks (100 clicks).
+        /// Grants escalating rewards at 25%, 50%, 75%, and 100%.
+        /// Call this from click handler when duet is active.
+        /// </summary>
+        public static void EroicaDuet_OnClick(GameState gameState, MainWindow mainWindow)
+        {
+            if (gameState == null || mainWindow == null) return;
+
+            // Only process if duet ability is active
+            if (!gameState.EroicaDuetActive)
+                return;
+
+            gameState.VictoryMarchClicks++;
+
+            // Check for milestone rewards
+            if (gameState.VictoryMarchClicks >= 25 && !gameState.VictoryMarch25Claimed)
+            {
+                // 25%: Grant 1 random minor score (that player owns)
+                gameState.VictoryMarch25Claimed = true;
+                GrantRandomMinorScore(gameState);
+            }
+
+            if (gameState.VictoryMarchClicks >= 50 && !gameState.VictoryMarch50Claimed)
+            {
+                // 50%: Grant 1 random major score (that player owns)
+                gameState.VictoryMarch50Claimed = true;
+                GrantRandomMajorScore(gameState);
+            }
+
+            if (gameState.VictoryMarchClicks >= 75 && !gameState.VictoryMarch75Claimed)
+            {
+                // 75%: Grant +50 Melodious and Harmonious fragments
+                gameState.VictoryMarch75Claimed = true;
+                gameState.MelodiousOwned += 50;
+                gameState.HarmoniousOwned += 50;
+            }
+
+            if (gameState.VictoryMarchClicks >= 100 && !gameState.VictoryMarch100Claimed)
+            {
+                // 100%: Double all owned score values
+                gameState.VictoryMarch100Claimed = true;
+                DoubleAllScoreValues(gameState);
+                
+                // Auto-deactivate and start cooldown
+                gameState.EroicaDuetActive = false;
+                gameState.EroicaDuetCooldownExpiry = DateTime.Now.AddSeconds(300); // 5 minutes
+                gameState.VictoryMarchClicks = 0;
+                gameState.VictoryMarch25Claimed = false;
+                gameState.VictoryMarch50Claimed = false;
+                gameState.VictoryMarch75Claimed = false;
+                gameState.VictoryMarch100Claimed = false;
+            }
+
+            // Recalculate NPS/NPC after granting scores
+            if (mainWindow != null && gameState.VictoryMarchClicks >= 25)
+            {
+                UIUpdater.UpdateUnitySymphonyUI(mainWindow, gameState);
+            }
+        }
+
+        /// <summary>
+        /// Helper method to grant 1 random minor score from ones the player owns.
+        /// </summary>
+        private static void GrantRandomMinorScore(GameState gameState)
+        {
+            if (gameState == null) return;
+
+            // Find all minor scores the player owns
+            var ownedMinorScores = new System.Collections.Generic.List<int>();
+            if (gameState.MoonlightMinorOwned > 0) ownedMinorScores.Add(0);
+            if (gameState.EroicaMinorOwned > 0) ownedMinorScores.Add(1);
+            if (gameState.SwanMinorOwned > 0) ownedMinorScores.Add(2);
+            if (gameState.LaCampanellaMinorOwned > 0) ownedMinorScores.Add(3);
+            if (gameState.EnigmaMinorOwned > 0) ownedMinorScores.Add(4);
+            if (gameState.FateMinorOwned > 0) ownedMinorScores.Add(5);
+            if (gameState.OdeToJoyMinorOwned > 0) ownedMinorScores.Add(6);
+
+            if (ownedMinorScores.Count == 0) return; // No minor scores owned yet
+
+            Random rand = new Random();
+            int selectedScore = ownedMinorScores[rand.Next(ownedMinorScores.Count)];
+
+            switch (selectedScore)
+            {
+                case 0: // Moonlight
+                    gameState.MoonlightMinorOwned += 1;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                        gameState.NotesPerSecond += 3000;
+                    break;
+                case 1: // Eroica
+                    gameState.EroicaMinorOwned += 1;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                        gameState.NotesPerSecond += 8000;
+                    break;
+                case 2: // Swan Lake
+                    gameState.SwanMinorOwned += 1;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                        gameState.NotesPerSecond += 15000;
+                    break;
+                case 3: // La Campanella
+                    gameState.LaCampanellaMinorOwned += 1;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                        gameState.NotesPerSecond += 35000;
+                    break;
+                case 4: // Enigma
+                    gameState.EnigmaMinorOwned += 1;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                        gameState.NotesPerSecond += 75000;
+                    break;
+                case 5: // Fate
+                    gameState.FateMinorOwned += 1;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                        gameState.NotesPerSecond += 135000;
+                    break;
+                case 6: // Ode to Joy
+                    gameState.OdeToJoyMinorOwned += 1;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                        gameState.NotesPerSecond += 255000;
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Helper method to grant 1 random major score from ones the player owns.
+        /// </summary>
+        private static void GrantRandomMajorScore(GameState gameState)
+        {
+            if (gameState == null) return;
+
+            // Find all major scores the player owns
+            var ownedMajorScores = new System.Collections.Generic.List<int>();
+            if (gameState.MoonlightMajorOwned > 0) ownedMajorScores.Add(0);
+            if (gameState.EroicaMajorOwned > 0) ownedMajorScores.Add(1);
+            if (gameState.SwanMajorOwned > 0) ownedMajorScores.Add(2);
+            if (gameState.LaCampanellaMajorOwned > 0) ownedMajorScores.Add(3);
+            if (gameState.EnigmaMajorOwned > 0) ownedMajorScores.Add(4);
+            if (gameState.FateMajorOwned > 0) ownedMajorScores.Add(5);
+            if (gameState.OdeToJoyMajorOwned > 0) ownedMajorScores.Add(6);
+
+            if (ownedMajorScores.Count == 0) return; // No major scores owned yet
+
+            Random rand = new Random();
+            int selectedScore = ownedMajorScores[rand.Next(ownedMajorScores.Count)];
+
+            switch (selectedScore)
+            {
+                case 0: // Moonlight
+                    gameState.MoonlightMajorOwned += 1;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                        gameState.NotesPerSecond += 180000;
+                    break;
+                case 1: // Eroica
+                    gameState.EroicaMajorOwned += 1;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                        gameState.NotesPerSecond += 480000;
+                    break;
+                case 2: // Swan Lake
+                    gameState.SwanMajorOwned += 1;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                        gameState.NotesPerSecond += 900000;
+                    break;
+                case 3: // La Campanella
+                    gameState.LaCampanellaMajorOwned += 1;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                        gameState.NotesPerSecond += 2100000;
+                    break;
+                case 4: // Enigma
+                    gameState.EnigmaMajorOwned += 1;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                        gameState.NotesPerSecond += 4500000;
+                    break;
+                case 5: // Fate
+                    gameState.FateMajorOwned += 1;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                        gameState.NotesPerSecond += 8100000;
+                    break;
+                case 6: // Ode to Joy
+                    gameState.OdeToJoyMajorOwned += 1;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                        gameState.NotesPerSecond += 15300000;
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Helper method to double all owned score values (minor and major).
+        /// Recalculates NPS based on the doubled values.
+        /// </summary>
+        private static void DoubleAllScoreValues(GameState gameState)
+        {
+            if (gameState == null) return;
+
+            // Store old values to calculate the NPS increase
+            int oldMoonlightMinor = gameState.MoonlightMinorOwned;
+            int oldEroicaMinor = gameState.EroicaMinorOwned;
+            int oldSwanMinor = gameState.SwanMinorOwned;
+            int oldLaCampanellaMinor = gameState.LaCampanellaMinorOwned;
+            int oldEnigmaMinor = gameState.EnigmaMinorOwned;
+            int oldFateMinor = gameState.FateMinorOwned;
+            int oldOdeMinor = gameState.OdeToJoyMinorOwned;
+
+            int oldMoonlightMajor = gameState.MoonlightMajorOwned;
+            int oldEroicaMajor = gameState.EroicaMajorOwned;
+            int oldSwanMajor = gameState.SwanMajorOwned;
+            int oldLaCampanellaMajor = gameState.LaCampanellaMajorOwned;
+            int oldEnigmaMajor = gameState.EnigmaMajorOwned;
+            int oldFateMajor = gameState.FateMajorOwned;
+            int oldOdeMajor = gameState.OdeToJoyMajorOwned;
+
+            // Double all owned scores
+            gameState.MoonlightMinorOwned *= 2;
+            gameState.EroicaMinorOwned *= 2;
+            gameState.SwanMinorOwned *= 2;
+            gameState.LaCampanellaMinorOwned *= 2;
+            gameState.EnigmaMinorOwned *= 2;
+            gameState.FateMinorOwned *= 2;
+            gameState.OdeToJoyMinorOwned *= 2;
+
+            gameState.MoonlightMajorOwned *= 2;
+            gameState.EroicaMajorOwned *= 2;
+            gameState.SwanMajorOwned *= 2;
+            gameState.LaCampanellaMajorOwned *= 2;
+            gameState.EnigmaMajorOwned *= 2;
+            gameState.FateMajorOwned *= 2;
+            gameState.OdeToJoyMajorOwned *= 2;
+
+            // Add NPS for the doubled amounts (only add the difference)
+            if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+            {
+                gameState.NotesPerSecond += oldMoonlightMinor * 3000;
+                gameState.NotesPerSecond += oldEroicaMinor * 8000;
+                gameState.NotesPerSecond += oldSwanMinor * 15000;
+                gameState.NotesPerSecond += oldLaCampanellaMinor * 35000;
+                gameState.NotesPerSecond += oldEnigmaMinor * 75000;
+                gameState.NotesPerSecond += oldFateMinor * 135000;
+                gameState.NotesPerSecond += oldOdeMinor * 255000;
+
+                gameState.NotesPerSecond += oldMoonlightMajor * 180000;
+                gameState.NotesPerSecond += oldEroicaMajor * 480000;
+                gameState.NotesPerSecond += oldSwanMajor * 900000;
+                gameState.NotesPerSecond += oldLaCampanellaMajor * 2100000;
+                gameState.NotesPerSecond += oldEnigmaMajor * 4500000;
+                gameState.NotesPerSecond += oldFateMajor * 8100000;
+                gameState.NotesPerSecond += oldOdeMajor * 15300000;
+            }
+        }
+
+        #region Swan Lake Duet - Mirror Lake (Action Reflection)
+
+        /// <summary>
+        /// Queue an action to be reflected after 3 seconds during Mirror Lake duet
+        /// </summary>
+        public static void QueueMirrorAction(GameState gameState, string action, object data)
+        {
+            if (!gameState.SwanLakeDuetActive) return;
+            if (DateTime.Now > gameState.SwanLakeDuetExpiry) return;
+
+            // Add to queue with 3-second delay
+            DateTime executeTime = DateTime.Now.AddSeconds(3);
+            gameState.MirrorLakeQueue.Add((action, data, executeTime));
+        }
+
+        /// <summary>
+        /// Process queued Mirror Lake actions (called from background timer)
+        /// </summary>
+        public static void ProcessMirrorLakeQueue(GameState gameState)
+        {
+            if (gameState.MirrorLakeQueue.Count == 0) return;
+
+            DateTime now = DateTime.Now;
+            List<(string action, object data, DateTime executeTime)> toRemove = new();
+
+            foreach (var queuedAction in gameState.MirrorLakeQueue)
+            {
+                if (now >= queuedAction.executeTime)
+                {
+                    // Execute the reflected action
+                    ExecuteMirrorAction(gameState, queuedAction.action, queuedAction.data);
+                    toRemove.Add(queuedAction);
+                }
+            }
+
+            // Remove executed actions
+            foreach (var action in toRemove)
+            {
+                gameState.MirrorLakeQueue.Remove(action);
+            }
+        }
+
+        private static void ExecuteMirrorAction(GameState gameState, string action, object data)
+        {
+            switch (action)
+            {
+                case "Click":
+                    // Add NPC directly without re-queueing
+                    if (data is double npcValue)
+                    {
+                        MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, npcValue);
+                    }
+                    break;
+
+                case "BuyUpgrade":
+                    // Re-purchase upgrade without re-queueing
+                    if (data is (string upgradeName, double cost))
+                    {
+                        if (MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes) >= cost)
+                        {
+                            MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, -cost);
+                            // Increment the appropriate upgrade counter
+                            IncrementUpgrade(gameState, upgradeName);
+                        }
+                    }
+                    break;
+
+                case "CraftMinor":
+                    if (data is string minorScore)
+                    {
+                        CraftMinorScore(gameState, minorScore);
+                    }
+                    break;
+
+                case "CraftMajor":
+                    if (data is string majorScore)
+                    {
+                        CraftMajorScore(gameState, majorScore);
+                    }
+                    break;
+
+                case "BuyFragment":
+                    if (data is (string fragmentType, double fragmentCost))
+                    {
+                        if (MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes) >= fragmentCost)
+                        {
+                            MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, -fragmentCost);
+                            if (fragmentType == "Melodious")
+                                gameState.MelodiousOwned++;
+                            else if (fragmentType == "Harmonious")
+                                gameState.HarmoniousOwned++;
+                        }
+                    }
+                    break;
+            }
+        }
+
+        private static void IncrementUpgrade(GameState gameState, string upgradeName)
+        {
+            // Map upgrade names to their fields
+            switch (upgradeName)
+            {
+                case "Moonlight Sonata - Opus 1": gameState.ChordOwned++; break;
+                case "Moonlight Sonata - Opus 2": gameState.ScaleOwned++; break;
+                case "Moonlight Sonata - Opus 3": gameState.OrchestraOwned++; break;
+                case "Heroic - Opus 1": gameState.SymphonyOwned++; break;
+                case "Heroic - Opus 2": gameState.AriaOwned++; break;
+                case "Heroic - Opus 3": gameState.RequiemOwned++; break;
+                case "Swan Lake - Opus 1": gameState.OpusOwned++; break;
+                case "Swan Lake - Opus 2": gameState.MagnumOpusOwned++; break;
+                case "Swan Lake - Opus 3": gameState.ChordOwned++; break;
+                case "La Campanella - Opus 1": gameState.ScaleOwned++; break;
+                case "La Campanella - Opus 2": gameState.OrchestraOwned++; break;
+                case "La Campanella - Opus 3": gameState.SymphonyOwned++; break;
+                case "Enigma Variations - Opus 1": gameState.AriaOwned++; break;
+                case "Enigma Variations - Opus 2": gameState.RequiemOwned++; break;
+                case "Enigma Variations - Opus 3": gameState.OpusOwned++; break;
+                case "Fate - Opus 1": gameState.MagnumOpusOwned++; break;
+                case "Fate - Opus 2": gameState.ChordOwned++; break;
+                case "Fate - Opus 3": gameState.ScaleOwned++; break;
+                case "Ode to Joy - Opus 1": gameState.OrchestraOwned++; break;
+                case "Ode to Joy - Opus 2": gameState.SymphonyOwned++; break;
+                case "Ode to Joy - Opus 3": gameState.AriaOwned++; break;
+            }
+        }
+
+        private static void CraftMinorScore(GameState gameState, string scoreName)
+        {
+            // Check if player has fragments
+            if (gameState.MelodiousOwned < 10 || gameState.HarmoniousOwned < 20) return;
+
+            gameState.MelodiousOwned -= 10;
+            gameState.HarmoniousOwned -= 20;
+
+            // Add to owned count
+            switch (scoreName)
+            {
+                case "Moonlight Sonata": gameState.MoonlightMinorOwned++; break;
+                case "Heroic": gameState.EroicaMinorOwned++; break;
+                case "Swan Lake": gameState.SwanMinorOwned++; break;
+                case "La Campanella": gameState.LaCampanellaMinorOwned++; break;
+                case "Enigma Variations": gameState.EnigmaMinorOwned++; break;
+                case "Fate": gameState.FateMinorOwned++; break;
+                case "Ode to Joy": gameState.OdeToJoyMinorOwned++; break;
+            }
+        }
+
+        private static void CraftMajorScore(GameState gameState, string scoreName)
+        {
+            // Check if player has fragments
+            if (gameState.MelodiousOwned < 60 || gameState.HarmoniousOwned < 120) return;
+
+            gameState.MelodiousOwned -= 60;
+            gameState.HarmoniousOwned -= 120;
+
+            // Add to owned count
+            switch (scoreName)
+            {
+                case "Moonlight Sonata": gameState.MoonlightMajorOwned++; break;
+                case "Heroic": gameState.EroicaMajorOwned++; break;
+                case "Swan Lake": gameState.SwanMajorOwned++; break;
+                case "La Campanella": gameState.LaCampanellaMajorOwned++; break;
+                case "Enigma Variations": gameState.EnigmaMajorOwned++; break;
+                case "Fate": gameState.FateMajorOwned++; break;
+                case "Ode to Joy": gameState.OdeToJoyMajorOwned++; break;
+            }
+        }
+
+        #endregion
     }
 }

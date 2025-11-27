@@ -445,7 +445,7 @@ namespace MusicClicker
                 SetWeaponSlotDisplay(1, weaponName);
             }
 
-            // Enable the weapon ability flag
+            // Enable the weapon ability flag (ownership is permanent, only toggle abilities)
             switch (weaponName)
             {
                 case "EulogyOfTheMoon": _gameState.EulogyOfTheMoonAbility = true; break;
@@ -455,23 +455,17 @@ namespace MusicClicker
                 case "StarScatteredWings": _gameState.StarScatteredWingsAbility = true; break;
                 case "ThousandWingedSwan": _gameState.ThousandWingedSwanAbility = true; break;
                 case "SymphonyOfBells": _gameState.SymphonyOfBellsAbility = true; break;
-                case "RazerOfBellsChimes": _gameState.RazerOfBellsChimes = true; break;
-                case "CreatorOfMystery": _gameState.CreatorOfMystery = true; break;
-                case "Truthseeker": _gameState.Truthseeker = true; break;
-                case "AstralChainripper": _gameState.AstralChainripper = true; break;
-                case "CosmicWeaver": _gameState.CosmicWeaver = true; break;
-                case "JoyfulCatharsis": _gameState.JoyfulCatharsis = true; break;
-                case "OdeToCreation": _gameState.OdeToCreation = true; break;
-                case "SevenCircles": _gameState.SevenCircles = true; break;
-                case "HellsWrath": _gameState.HellsWrath = true; break;
-                case "CacophonicBlizzard": 
-                    _gameState.CacophonicBlizzard = true; 
-                    _gameState.CacophonicBlizzardAbility = true; 
-                    break;
-                case "TheSnowsDesire": 
-                    _gameState.TheSnowsDesire = true; 
-                    _gameState.TheSnowsDesireAbility = true; 
-                    break;
+                case "RazerOfBellsChimes": _gameState.RazerOfBellsChimesAbility = true; break;
+                case "CreatorOfMystery": _gameState.CreatorOfMysteryAbility = true; break;
+                case "Truthseeker": _gameState.TruthseekerAbility = true; break;
+                case "AstralChainripper": _gameState.AstralChainripperAbility = true; break;
+                case "CosmicWeaver": _gameState.CosmicWeaverAbility = true; break;
+                case "JoyfulCatharsis": _gameState.JoyfulCatharsisAbility = true; break;
+                case "OdeToCreation": _gameState.OdeToCreationAbility = true; break;
+                case "SevenCircles": _gameState.SevenCirclesAbility = true; break;
+                case "HellsWrath": _gameState.HellsWrathAbility = true; break;
+                case "CacophonicBlizzard": _gameState.CacophonicBlizzardAbility = true; break;
+                case "TheSnowsDesire": _gameState.TheSnowsDesireAbility = true; break;
             }
 
             // Refresh weapon drawer UI
@@ -483,7 +477,7 @@ namespace MusicClicker
             string current = slot == 1 ? _gameState.CurrentResonatedWeapon1 : _gameState.CurrentResonatedWeapon2;
             if (current == "None") return;
 
-            // Disable ability flag
+            // Disable ability flag (ownership remains permanent, only toggle abilities)
             switch (current)
             {
                 case "EulogyOfTheMoon": _gameState.EulogyOfTheMoonAbility = false; break;
@@ -493,23 +487,17 @@ namespace MusicClicker
                 case "StarScatteredWings": _gameState.StarScatteredWingsAbility = false; break;
                 case "ThousandWingedSwan": _gameState.ThousandWingedSwanAbility = false; break;
                 case "SymphonyOfBells": _gameState.SymphonyOfBellsAbility = false; break;
-                case "RazerOfBellsChimes": _gameState.RazerOfBellsChimes = false; break;
-                case "CreatorOfMystery": _gameState.CreatorOfMystery = false; break;
-                case "Truthseeker": _gameState.Truthseeker = false; break;
-                case "AstralChainripper": _gameState.AstralChainripper = false; break;
-                case "CosmicWeaver": _gameState.CosmicWeaver = false; break;
-                case "JoyfulCatharsis": _gameState.JoyfulCatharsis = false; break;
-                case "OdeToCreation": _gameState.OdeToCreation = false; break;
-                case "SevenCircles": _gameState.SevenCircles = false; break;
-                case "HellsWrath": _gameState.HellsWrath = false; break;
-                case "CacophonicBlizzard": 
-                    _gameState.CacophonicBlizzard = false; 
-                    _gameState.CacophonicBlizzardAbility = false; 
-                    break;
-                case "TheSnowsDesire": 
-                    _gameState.TheSnowsDesire = false; 
-                    _gameState.TheSnowsDesireAbility = false; 
-                    break;
+                case "RazerOfBellsChimes": _gameState.RazerOfBellsChimesAbility = false; break;
+                case "CreatorOfMystery": _gameState.CreatorOfMysteryAbility = false; break;
+                case "Truthseeker": _gameState.TruthseekerAbility = false; break;
+                case "AstralChainripper": _gameState.AstralChainripperAbility = false; break;
+                case "CosmicWeaver": _gameState.CosmicWeaverAbility = false; break;
+                case "JoyfulCatharsis": _gameState.JoyfulCatharsisAbility = false; break;
+                case "OdeToCreation": _gameState.OdeToCreationAbility = false; break;
+                case "SevenCircles": _gameState.SevenCirclesAbility = false; break;
+                case "HellsWrath": _gameState.HellsWrathAbility = false; break;
+                case "CacophonicBlizzard": _gameState.CacophonicBlizzardAbility = false; break;
+                case "TheSnowsDesire": _gameState.TheSnowsDesireAbility = false; break;
             }
 
             if (slot == 1)
@@ -583,55 +571,55 @@ namespace MusicClicker
             if ((weapon1 == "IncisorOfMoonlight" && weapon2 == "EulogyOfTheMoon") ||
                 (weapon1 == "EulogyOfTheMoon" && weapon2 == "IncisorOfMoonlight"))
             {
-                return "Moonlight Duet: Every 12th click increases all upgrade values by 1";
+                return "Moonlight Sonata - Lunar Phases: Cycles through 4 moon phases every 8 seconds (New Moon: 2x NPC, Crescent: Component drops, Full Moon: 3x NPS, Waning: Upgrades 50% off) - 40s duration, 4min cooldown";
             }
 
             if ((weapon1 == "SakurasBlossom" && weapon2 == "FuneralPrayer") ||
                 (weapon1 == "FuneralPrayer" && weapon2 == "SakurasBlossom"))
             {
-                return "Eroica Duet: If any minor score exceeds 10, double its NPS output";
+                return "Eroica - Victory March: Fill bar with 100 clicks for escalating rewards (25%: minor score, 50%: major score, 75%: +50 fragments, 100%: double all scores) - 5min cooldown";
             }
 
             if ((weapon1 == "StarScatteredWings" && weapon2 == "ThousandWingedSwan") ||
                 (weapon1 == "ThousandWingedSwan" && weapon2 == "StarScatteredWings"))
             {
-                return "Swan Lake Duet: If you own 50+ Melodious and 100+ Harmonious fragments, NPS is doubled";
+                return "Swan Lake Duet - Mirror Lake: Every action reflects after 3 seconds (20s duration, 4min cooldown)";
             }
 
             if ((weapon1 == "SymphonyOfBells" && weapon2 == "RazerOfBellsChimes") ||
                 (weapon1 == "RazerOfBellsChimes" && weapon2 == "SymphonyOfBells"))
             {
-                return "La Campanella Duet: Major crafting grants +5 minor scores of that type";
+                return "La Campanella Duet - Chime Chain: Click within 1s to extend chain. Rewards = chainLength² × NPS (25s duration, 4min cooldown)";
             }
 
             if ((weapon1 == "CreatorOfMystery" && weapon2 == "Truthseeker") ||
                 (weapon1 == "Truthseeker" && weapon2 == "CreatorOfMystery"))
             {
-                return "Enigma Duet: Effect TBD";
+                return "Enigma Duet - Cipher Wheel: Click when arrow points to segment for rewards (8 segments: notes, NPS, scores, etc.) - 25s duration, 4min cooldown";
             }
 
             if ((weapon1 == "AstralChainripper" && weapon2 == "CosmicWeaver") ||
                 (weapon1 == "CosmicWeaver" && weapon2 == "AstralChainripper"))
             {
-                return "Fate Duet: Every 45th click doubles whichever minor score is the lowest owned";
+                return "Fate Duet - Hourglass Fracture: Split time between Past (1.5x later), Present (1x now), Future (2x later) streams - 30s duration, 5min cooldown";
             }
 
             if ((weapon1 == "JoyfulCatharsis" && weapon2 == "OdeToCreation") ||
                 (weapon1 == "OdeToCreation" && weapon2 == "JoyfulCatharsis"))
             {
-                return "Ode to Joy Duet: Notes per Second becomes Notes per Half-Second (2x rate)";
+                return "Ode to Joy Duet - Orchestra Conductor: Conduct all 4 instrument sections within 5s for combo. Reward = NPS × 20 × combo count (30s duration, 5min cooldown)";
             }
 
             if ((weapon1 == "SevenCircles" && weapon2 == "HellsWrath") ||
                 (weapon1 == "HellsWrath" && weapon2 == "SevenCircles"))
             {
-                return "Dies Irae Duet: ???";
+                return "Descending Judgment - Seven Seals: Each click places a seal. At 7 seals, grants 3 random minor scores (15s duration, 3.5min cooldown)";
             }
 
             if ((weapon1 == "CacophonicBlizzard" && weapon2 == "TheSnowsDesire") ||
                 (weapon1 == "TheSnowsDesire" && weapon2 == "CacophonicBlizzard"))
             {
-                return "Winter Duet: Frozen NPS value is used as a multiplier for all clicks";
+                return "Eternal Frost - Winter Duet: Absolute Zero - Activate to convert your frozen NPS into a click multiplier. Each click extends duration by 0.5s (max +10s, 15s base duration, 5min cooldown)";
             }
 
             return "";

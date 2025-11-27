@@ -65,6 +65,54 @@
                 </Border>
             </StackPanel>
 
+            <!-- Bottom-right Duet Ability button -->
+            <Border x:Name="DuetAbilityButtonBorder"
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Bottom" 
+                    Margin="0,0,20,20" 
+                    ZIndex="500"
+                    CornerRadius="15"
+                    Width="150"
+                    Height="150"
+                    Background="#DD1a1a2e"
+                    IsVisible="False">
+                <Border.Effect>
+                    <DropShadowEffect Color="#e94560" 
+                                      BlurRadius="25" 
+                                      Opacity="0.8"
+                                      OffsetX="0"
+                                      OffsetY="0" />
+                </Border.Effect>
+                <Button x:Name="OpenDuetAbilityButton" 
+                        Background="Transparent" 
+                        BorderThickness="0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Cursor="Hand">
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="8">
+                        <TextBlock Text="⚡" 
+                                   FontSize="48" 
+                                   HorizontalAlignment="Center"
+                                   Foreground="#e94560">
+                            <TextBlock.Effect>
+                                <DropShadowEffect Color="Black" BlurRadius="8" Opacity="0.8" />
+                            </TextBlock.Effect>
+                        </TextBlock>
+                        <TextBlock Text="Duet Ability" 
+                                   FontSize="14" 
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Center"
+                                   TextAlignment="Center"
+                                   Foreground="White"
+                                   TextWrapping="Wrap">
+                            <TextBlock.Effect>
+                                <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.7" />
+                            </TextBlock.Effect>
+                        </TextBlock>
+                    </StackPanel>
+                </Button>
+            </Border>
+
             <!-- Center Content -->
             <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Grid.RowDefinitions>
@@ -311,6 +359,9 @@
         <views:SymphonicGalleryScreen x:Name="SymphonicGalleryScreen" IsVisible="False" />
         <views:ClickerCustomizeScreen x:Name="ClickerCustomizeScreen" IsVisible="False" />
         <views:BackgroundCustomizeScreen x:Name="BackgroundCustomizeScreen" IsVisible="False" />
+        
+        <!-- Duet Ability Screen - Bottom Right Corner -->
+        <views:DuetAbilityScreen x:Name="DuetAbilityScreen" IsVisible="False" ZIndex="1000" />
         
         <!-- Fullscreen black fader used for cross-screen transitions -->
         <Rectangle x:Name="ScreenFader"

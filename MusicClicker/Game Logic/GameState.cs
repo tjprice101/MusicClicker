@@ -398,6 +398,33 @@ namespace MusicClicker
         public bool _symphonyOfBellsAbility = false;
         public bool SymphonyOfBellsAbility { get => _symphonyOfBellsAbility; set => _symphonyOfBellsAbility = value; }
 
+        public bool _razerOfBellsChimesAbility = false;
+        public bool RazerOfBellsChimesAbility { get => _razerOfBellsChimesAbility; set => _razerOfBellsChimesAbility = value; }
+
+        public bool _creatorOfMysteryAbility = false;
+        public bool CreatorOfMysteryAbility { get => _creatorOfMysteryAbility; set => _creatorOfMysteryAbility = value; }
+
+        public bool _truthseekerAbility = false;
+        public bool TruthseekerAbility { get => _truthseekerAbility; set => _truthseekerAbility = value; }
+
+        public bool _astralChainripperAbility = false;
+        public bool AstralChainripperAbility { get => _astralChainripperAbility; set => _astralChainripperAbility = value; }
+
+        public bool _cosmicWeaverAbility = false;
+        public bool CosmicWeaverAbility { get => _cosmicWeaverAbility; set => _cosmicWeaverAbility = value; }
+
+        public bool _joyfulCatharsisAbility = false;
+        public bool JoyfulCatharsisAbility { get => _joyfulCatharsisAbility; set => _joyfulCatharsisAbility = value; }
+
+        public bool _odeToCreationAbility = false;
+        public bool OdeToCreationAbility { get => _odeToCreationAbility; set => _odeToCreationAbility = value; }
+
+        public bool _sevenCirclesAbility = false;
+        public bool SevenCirclesAbility { get => _sevenCirclesAbility; set => _sevenCirclesAbility = value; }
+
+        public bool _hellsWrathAbility = false;
+        public bool HellsWrathAbility { get => _hellsWrathAbility; set => _hellsWrathAbility = value; }
+
         public bool _cacophonicBlizzardAbility = false;
         public bool CacophonicBlizzardAbility { get => _cacophonicBlizzardAbility; set => _cacophonicBlizzardAbility = value; }
 
@@ -405,7 +432,6 @@ namespace MusicClicker
         public bool TheSnowsDesireAbility { get => _theSnowsDesireAbility; set => _theSnowsDesireAbility = value; }
 
         // Duet click counters
-        public int MoonlightDuetClickCounter { get; set; } = 0;
         public int FateDuetClickCounter { get; set; } = 0;
 
         // Individual weapon click counters
@@ -429,11 +455,84 @@ namespace MusicClicker
         public bool NpsFrozen { get; set; } = false;
         public double FrozenNpsValue { get; set; } = 0;
         public DateTime NpsFreezeExpiry { get; set; } = DateTime.MinValue;
+        
+        // Cacophonic Blizzard - Crystalline Shatter (every 10th click grants 10 seconds of NPS instantly)
+        public int CrystallineShatterCounter { get; set; } = 0;
+        
+        // The Snow's Desire - Blizzard's Bounty (Harmonious purchases grant +2% NPS for 30s, stacks)
+        public double BlizzardBountyNpsBonus { get; set; } = 0; // Tracks total % bonus
+        public DateTime BlizzardBountyExpiry { get; set; } = DateTime.MinValue;
+        
+        // Winter Duet: Absolute Zero
+        public bool WinterDuetActive { get; set; } = false;
+        public DateTime WinterDuetExpiry { get; set; } = DateTime.MinValue;
+        public DateTime WinterDuetCooldownExpiry { get; set; } = DateTime.MinValue;
+        public double WinterDuetExtensionTime { get; set; } = 0; // Tracks how much time has been added (max 10s)
 
-        // Dies Irae weapon mechanics
-        public int DiesIraeDuetClickCounter { get; set; } = 0;
-        public double HellsWrathNpsReduction { get; set; } = 0; // Tracks cumulative NPS lost from clicking (max 50%)
-        public DateTime LastCondemnTime { get; set; } = DateTime.MinValue; // Tracks when condemn was last used
+        // Dies Irae weapon mechanics - Descending Judgment
+        public bool DiesIraeDuetActive { get; set; } = false;
+        public DateTime DiesIraeDuetExpiry { get; set; } = DateTime.MinValue;
+        public DateTime DiesIraeDuetCooldownExpiry { get; set; } = DateTime.MinValue;
+        public int SevenSealsCounter { get; set; } = 0; // Counts clicks toward next seal trigger (resets at 7)
+
+        // Moonlight Duet: Lunar Phases
+        public bool MoonlightDuetActive { get; set; } = false;
+        public DateTime MoonlightDuetExpiry { get; set; } = DateTime.MinValue;
+        public DateTime MoonlightDuetCooldownExpiry { get; set; } = DateTime.MinValue;
+        public DateTime MoonlightPhaseChangeTime { get; set; } = DateTime.MinValue; // When current phase started
+        public int MoonlightCurrentPhase { get; set; } = 0; // 0=New Moon, 1=Crescent, 2=Full Moon, 3=Waning
+
+        // Eroica Duet: Victory March
+        public bool EroicaDuetActive { get; set; } = false;
+        public DateTime EroicaDuetCooldownExpiry { get; set; } = DateTime.MinValue;
+        public int VictoryMarchClicks { get; set; } = 0; // Progress toward 100 clicks
+        public bool VictoryMarch25Claimed { get; set; } = false;
+        public bool VictoryMarch50Claimed { get; set; } = false;
+        public bool VictoryMarch75Claimed { get; set; } = false;
+        public bool VictoryMarch100Claimed { get; set; } = false;
+
+        // Swan Lake Duet: Mirror Lake
+        public bool SwanLakeDuetActive { get; set; } = false;
+        public DateTime SwanLakeDuetExpiry { get; set; } = DateTime.MinValue;
+        public DateTime SwanLakeDuetCooldownExpiry { get; set; } = DateTime.MinValue;
+        public System.Collections.Generic.List<(string action, object data, DateTime executeTime)> MirrorLakeQueue { get; set; } = new();
+
+        // La Campanella Duet: Chime Chain
+        public bool LaCampanellaDuetActive { get; set; } = false;
+        public DateTime LaCampanellaDuetExpiry { get; set; } = DateTime.MinValue;
+        public DateTime LaCampanellaDuetCooldownExpiry { get; set; } = DateTime.MinValue;
+        public int ChimeChainLength { get; set; } = 0; // Current chain length
+        public DateTime LastChimeClickTime { get; set; } = DateTime.MinValue; // Last click time for 1-second window
+
+        // Enigma Duet: Mystery Clicks (RNG effects on click)
+        public bool EnigmaDuetActive { get; set; } = false;
+        public DateTime EnigmaDuetExpiry { get; set; } = DateTime.MinValue;
+        public DateTime EnigmaDuetCooldownExpiry { get; set; } = DateTime.MinValue;
+        public int EnigmaMysteryClickCount { get; set; } = 0; // Number of mystery effects triggered
+
+        // Fate Duet: Cosmic Dust Harvest
+        public bool FateDuetActive { get; set; } = false;
+        public DateTime FateDuetExpiry { get; set; } = DateTime.MinValue;
+        public DateTime FateDuetCooldownExpiry { get; set; } = DateTime.MinValue;
+        public int CurrentWave { get; set; } = 0; // Current wave (1-5)
+        public int BlueStardustCollected { get; set; } = 0; // Blue = instant notes
+        public int PurpleStardustCollected { get; set; } = 0; // Purple = NPS multiplier stacks
+        public int GoldStardustCollected { get; set; } = 0; // Gold = fragments + notes
+        public int RainbowStardustCollected { get; set; } = 0; // Rainbow = all × 10
+        public int CurrentSweepCount { get; set; } = 0; // Particles collected in current sweep
+        public int NebulaChainCount { get; set; } = 0; // Number of nebula chains achieved
+
+        // Ode to Joy Duet: Petal Storm Conductor
+        public bool OdeDuetActive { get; set; } = false;
+        public DateTime OdeDuetExpiry { get; set; } = DateTime.MinValue;
+        public DateTime OdeDuetCooldownExpiry { get; set; } = DateTime.MinValue;
+        public int RedPetalsCaught { get; set; } = 0; // Red petals = NPS multiplier stacks
+        public int PinkPetalsCaught { get; set; } = 0; // Pink petals = Instant notes burst
+        public int WhitePetalsCaught { get; set; } = 0; // White petals = Click power boost
+        public DateTime LastRedPetalTime { get; set; } = DateTime.MinValue; // For perfect bouquet tracking
+        public DateTime LastPinkPetalTime { get; set; } = DateTime.MinValue;
+        public DateTime LastWhitePetalTime { get; set; } = DateTime.MinValue;
+        public int PerfectBouquetCount { get; set; } = 0; // Number of perfect bouquets achieved
 
         // Currently resonated weapons (up to two slots)
         public string CurrentResonatedWeapon1 { get; set; } = "None";

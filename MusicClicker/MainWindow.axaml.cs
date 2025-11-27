@@ -255,6 +255,15 @@ namespace MusicClicker
                 TempoResonateScreen.DuetResonanceText
             );
 
+            // Initialize Duet Ability Screen
+            if (DuetAbilityScreen != null)
+            {
+                DuetAbilityScreen.Initialize(gameState, this);
+            }
+            
+            // Check if duet ability button should be visible on startup
+            UpdateDuetAbilityButtonVisibility();
+
             // Wire up button click handlers
             TempoResonateScreen.BackButtonTempoResonate.Click += BackButtonTempoResonate_Click;
             ButtonInitializer.InitializeAllButtons(this);
@@ -341,7 +350,116 @@ namespace MusicClicker
                         if (gameState.NpsFrozen && DateTime.Now > gameState.NpsFreezeExpiry)
                         {
                             gameState.NpsFrozen = false;
-                            gameState.FrozenNpsValue = 0;
+                            // Keep FrozenNpsValue for reference, don't zero it
+                        }
+
+                        // Check if Winter Duet has expired and unfreeze NPS
+                        if (gameState.WinterDuetActive && DateTime.Now > gameState.WinterDuetExpiry)
+                        {
+                            gameState.WinterDuetActive = false;
+                            gameState.NpsFrozen = false;
+                        }
+
+                        // Check if Blizzard's Bounty has expired
+                        if (gameState.BlizzardBountyNpsBonus > 0 && DateTime.Now > gameState.BlizzardBountyExpiry)
+                        {
+                            gameState.BlizzardBountyNpsBonus = 0;
+                        }
+
+                        // Check if Moonlight Duet has expired - start cooldown when it expires naturally
+                        if (gameState.MoonlightDuetActive && DateTime.Now > gameState.MoonlightDuetExpiry)
+                        {
+                            gameState.MoonlightDuetActive = false;
+                            gameState.MoonlightDuetCooldownExpiry = DateTime.Now.AddSeconds(240); // 4 minutes
+                            // Update duet screen if visible
+                            if (DuetAbilityScreen?.IsVisible == true)
+                            {
+                                DuetAbilityScreen.UpdateAbilityDisplay();
+                            }
+                        }
+
+                        // Check if Swan Lake Duet has expired - clear queue and start cooldown
+                        if (gameState.SwanLakeDuetActive && DateTime.Now > gameState.SwanLakeDuetExpiry)
+                        {
+                            gameState.SwanLakeDuetActive = false;
+                            gameState.MirrorLakeQueue.Clear();
+                            gameState.SwanLakeDuetCooldownExpiry = DateTime.Now.AddSeconds(240); // 4 minutes
+                            // Update duet screen if visible
+                            if (DuetAbilityScreen?.IsVisible == true)
+                            {
+                                DuetAbilityScreen.UpdateAbilityDisplay();
+                            }
+                        }
+
+                        // Check if La Campanella Duet has expired
+                        if (gameState.LaCampanellaDuetActive && DateTime.Now > gameState.LaCampanellaDuetExpiry)
+                        {
+                            gameState.LaCampanellaDuetActive = false;
+                            gameState.ChimeChainLength = 0;
+                            gameState.LastChimeClickTime = DateTime.MinValue;
+                            gameState.LaCampanellaDuetCooldownExpiry = DateTime.Now.AddSeconds(600); // 10 minutes
+                            if (DuetAbilityScreen?.IsVisible == true)
+                            {
+                                DuetAbilityScreen.UpdateAbilityDisplay();
+                            }
+                        }
+
+                        // Check if Enigma Duet has expired
+                        if (gameState.EnigmaDuetActive && DateTime.Now > gameState.EnigmaDuetExpiry)
+                        {
+                            gameState.EnigmaDuetActive = false;
+                            gameState.EnigmaMysteryClickCount = 0;
+                            gameState.EnigmaDuetCooldownExpiry = DateTime.Now.AddSeconds(1800); // 30 minutes
+                            if (DuetAbilityScreen?.IsVisible == true)
+                            {
+                                DuetAbilityScreen.UpdateAbilityDisplay();
+                            }
+                        }
+
+                        // Check if Fate Duet has expired
+                        if (gameState.FateDuetActive && DateTime.Now > gameState.FateDuetExpiry)
+                        {
+                            gameState.FateDuetActive = false;
+                            gameState.CurrentWave = 0;
+                            gameState.BlueStardustCollected = 0;
+                            gameState.PurpleStardustCollected = 0;
+                            gameState.GoldStardustCollected = 0;
+                            gameState.RainbowStardustCollected = 0;
+                            gameState.CurrentSweepCount = 0;
+                            gameState.NebulaChainCount = 0;
+                            gameState.FateDuetCooldownExpiry = DateTime.Now.AddSeconds(480); // 8 minutes
+                            if (DuetAbilityScreen?.IsVisible == true)
+                            {
+                                DuetAbilityScreen.UpdateAbilityDisplay();
+                            }
+                        }
+
+                        // Check if Ode Duet has expired
+                        if (gameState.OdeDuetActive && DateTime.Now > gameState.OdeDuetExpiry)
+                        {
+                            gameState.OdeDuetActive = false;
+                            gameState.RedPetalsCaught = 0;
+                            gameState.PinkPetalsCaught = 0;
+                            gameState.WhitePetalsCaught = 0;
+                            gameState.PerfectBouquetCount = 0;
+                            gameState.LastRedPetalTime = DateTime.MinValue;
+                            gameState.LastPinkPetalTime = DateTime.MinValue;
+                            gameState.LastWhitePetalTime = DateTime.MinValue;
+                            gameState.OdeDuetCooldownExpiry = DateTime.Now.AddSeconds(600); // 10 minutes
+                            if (DuetAbilityScreen?.IsVisible == true)
+                            {
+                                DuetAbilityScreen.UpdateAbilityDisplay();
+                            }
+                        }
+
+                        // Process Mirror Lake action queue
+                        MusicClicker.Armory.WeaponAbilities.ProcessMirrorLakeQueue(gameState);
+
+                        // Apply Moonlight Duet Full Moon phase (3x NPS)
+                        int moonlightPhase = MusicClicker.Armory.WeaponAbilities.MoonlightDuet_GetCurrentPhase(gameState);
+                        if (moonlightPhase == 2) // Full Moon
+                        {
+                            effectiveNps *= 3.0;
                         }
 
                         // Apply Astral Chainripper 5x NPS boost
@@ -354,6 +472,12 @@ namespace MusicClicker
                         if (gameState.RazerNpsBoostActive)
                         {
                             effectiveNps *= 1.5; // 50% increase
+                        }
+
+                        // Apply Blizzard's Bounty NPS bonus (stacking +2% per harmonious purchase)
+                        if (gameState.BlizzardBountyNpsBonus > 0)
+                        {
+                            effectiveNps *= (1.0 + gameState.BlizzardBountyNpsBonus);
                         }
 
                         // Apply Joyful Catharsis passive double NPS
@@ -373,12 +497,7 @@ namespace MusicClicker
                                 effectiveNps *= MusicClicker.Armory.WeaponAbilities.EroicaDuet_GetNpsMultiplier(gameState);
                             }
 
-                            // Swan Lake Duet: Double NPS if 50+ Melodious and 100+ Harmonious
-                            if ((gameState.CurrentResonatedWeapon1 == "StarScatteredWings" && gameState.CurrentResonatedWeapon2 == "ThousandWingedSwan") ||
-                                (gameState.CurrentResonatedWeapon1 == "ThousandWingedSwan" && gameState.CurrentResonatedWeapon2 == "StarScatteredWings"))
-                            {
-                                effectiveNps *= MusicClicker.Armory.WeaponAbilities.SwanLakeDuet_GetNpsMultiplier(gameState);
-                            }
+                            // Swan Lake Duet: No passive NPS multiplier (has Mirror Lake active ability instead)
 
                             // Ode to Joy Duet: NPS becomes NPS per half-second (double the rate)
                             if ((gameState.CurrentResonatedWeapon1 == "JoyfulCatharsis" && gameState.CurrentResonatedWeapon2 == "OdeToCreation") ||
@@ -388,14 +507,17 @@ namespace MusicClicker
                             }
                         }
 
-                        // Winter: If NPS is frozen, use frozen value instead
+                        // Winter: If NPS is frozen, STOP accumulating notes from NPS entirely
+                        // The frozen value is only used as a click multiplier, not for passive accumulation
                         if (gameState.NpsFrozen && DateTime.Now <= gameState.NpsFreezeExpiry)
                         {
-                            effectiveNps = gameState.FrozenNpsValue;
+                            // Do nothing - skip the note accumulation below
                         }
-
-                        // Advance notes by elapsedSeconds * effectiveNPS using lock-free atomic add
-                        MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, effectiveNps * elapsed);
+                        else
+                        {
+                            // Advance notes by elapsedSeconds * effectiveNPS using lock-free atomic add
+                            MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, effectiveNps * elapsed);
+                        }
                     }
                 }
                 catch { }
@@ -839,6 +961,13 @@ namespace MusicClicker
             // Start with base notes per click value
             double notesPerClick = gameState.NotesPerClick;
 
+            // Apply Moonlight Duet New Moon phase (2x NPC)
+            int moonPhase = MusicClicker.Armory.WeaponAbilities.MoonlightDuet_GetCurrentPhase(gameState);
+            if (moonPhase == 0) // New Moon
+            {
+                notesPerClick *= 2.0;
+            }
+
             // Check if Cosmic Weaver boost has expired
             if (gameState.CosmicWeaverClickBoostActive && DateTime.Now > gameState.CosmicWeaverClickBoostExpiry)
             {
@@ -888,6 +1017,24 @@ namespace MusicClicker
             // Add calculated notes to player's total
             MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, notesPerClick);
 
+            // Queue click for Mirror Lake reflection if active
+            if (gameState.SwanLakeDuetActive && DateTime.Now <= gameState.SwanLakeDuetExpiry)
+            {
+                MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "Click", notesPerClick);
+            }
+
+            // La Campanella Duet: Chime Chain click tracking
+            if (gameState.LaCampanellaDuetActive && DateTime.Now <= gameState.LaCampanellaDuetExpiry)
+            {
+                MusicClicker.Armory.WeaponAbilities.LaCampanellaDuet_OnClick(gameState);
+            }
+
+            // Enigma Duet: Cipher Wheel segment rewards
+            if (gameState.EnigmaDuetActive && DateTime.Now <= gameState.EnigmaDuetExpiry)
+            {
+                MusicClicker.Armory.WeaponAbilities.EnigmaDuet_OnClick(gameState);
+            }
+
             // Individual weapon click abilities
             if (gameState.OdeToCreation && 
                 (gameState.CurrentResonatedWeapon1 == "OdeToCreation" || gameState.CurrentResonatedWeapon2 == "OdeToCreation"))
@@ -905,18 +1052,40 @@ namespace MusicClicker
             // Check for duet resonance effects on click
             if (gameState.CurrentResonatedWeapon1 != "None" && gameState.CurrentResonatedWeapon2 != "None")
             {
-                // Moonlight Duet: Both Incisor and Eulogy equipped
-                if ((gameState.CurrentResonatedWeapon1 == "IncisorOfMoonlight" && gameState.CurrentResonatedWeapon2 == "EulogyOfTheMoon") ||
-                    (gameState.CurrentResonatedWeapon1 == "EulogyOfTheMoon" && gameState.CurrentResonatedWeapon2 == "IncisorOfMoonlight"))
+                // Fate duet now uses active ability system (Hourglass Fracture)
+                // Old passive removed
+
+                // Winter Duet: Absolute Zero duration extension on click
+                if ((gameState.CurrentResonatedWeapon1 == "CacophonicBlizzard" && gameState.CurrentResonatedWeapon2 == "TheSnowsDesire") ||
+                    (gameState.CurrentResonatedWeapon1 == "TheSnowsDesire" && gameState.CurrentResonatedWeapon2 == "CacophonicBlizzard"))
                 {
-                    MusicClicker.Armory.WeaponAbilities.MoonlightDuet_OnClick(gameState);
+                    MusicClicker.Armory.WeaponAbilities.WinterDuet_OnClick(gameState);
                 }
 
-                // Fate Duet: Both Astral Chainripper and Cosmic Weaver equipped
-                if ((gameState.CurrentResonatedWeapon1 == "AstralChainripper" && gameState.CurrentResonatedWeapon2 == "CosmicWeaver") ||
-                    (gameState.CurrentResonatedWeapon1 == "CosmicWeaver" && gameState.CurrentResonatedWeapon2 == "AstralChainripper"))
+                // Hell's Wrath: Damnation's Gift (7% chance for random minor component)
+                if (gameState.HellsWrath)
                 {
-                    MusicClicker.Armory.WeaponAbilities.FateDuet_OnClick(gameState);
+                    MusicClicker.Armory.WeaponAbilities.HellsWrath_OnClick(gameState);
+                }
+
+                // Moonlight Duet: Crescent phase component drop (10% chance)
+                if (moonPhase == 1) // Crescent
+                {
+                    MusicClicker.Armory.WeaponAbilities.MoonlightDuet_CrescentComponentDrop(gameState);
+                }
+
+                // Dies Irae Duet: Seven Seals click counter
+                if ((gameState.CurrentResonatedWeapon1 == "SevenCircles" && gameState.CurrentResonatedWeapon2 == "HellsWrath") ||
+                    (gameState.CurrentResonatedWeapon1 == "HellsWrath" && gameState.CurrentResonatedWeapon2 == "SevenCircles"))
+                {
+                    MusicClicker.Armory.WeaponAbilities.DiesIraeDuet_OnClick(gameState, this);
+                }
+
+                // Eroica Duet: Victory March progress
+                if ((gameState.CurrentResonatedWeapon1 == "SakurasBlossom" && gameState.CurrentResonatedWeapon2 == "FuneralPrayer") ||
+                    (gameState.CurrentResonatedWeapon1 == "FuneralPrayer" && gameState.CurrentResonatedWeapon2 == "SakurasBlossom"))
+                {
+                    MusicClicker.Armory.WeaponAbilities.EroicaDuet_OnClick(gameState, this);
                 }
             }
 
@@ -926,7 +1095,7 @@ namespace MusicClicker
                 DisplayedNotes = gameState.Notes;
                 DisplayedNps = gameState.NotesPerSecond;
 
-                string notesText = $"Notes: {UIUpdater.FormatNotes(gameState.Notes)}";
+                string notesText = $"Notes: {Math.Round(gameState.Notes, 1)}";
                 if (NotesText != null && NotesText.Text != notesText) NotesText.Text = notesText;
 
                 if (SaveScoresScreen?.SaveScoresNotesText != null) SaveScoresScreen.SaveScoresNotesText.Text = notesText;
@@ -982,6 +1151,8 @@ namespace MusicClicker
                 gameState.EnigmaMajorOwned += 1;
                 gameState.FateMajorOwned += 1;
                 gameState.OdeToJoyMajorOwned += 1;
+                gameState.DiesIraeOwned += 1;
+                gameState.WinterOwned += 1;
 
                 // Give one of each weapon
                 gameState.IncisorOfMoonlight = true;
@@ -1036,6 +1207,79 @@ namespace MusicClicker
                 TempoResonateScreen.IsVisible = false;
                 MainScreen.IsVisible = true;
             });
+            
+            // Update duet button visibility when returning from Tempo Resonate
+            UpdateDuetAbilityButtonVisibility();
+        }
+
+        /// <summary>
+        /// Updates the visibility of the Duet Ability button based on currently equipped weapons.
+        /// Only shows the button if a duet with cooldown abilities is equipped.
+        /// </summary>
+        public void UpdateDuetAbilityButtonVisibility()
+        {
+            if (DuetAbilityButtonBorder == null || gameState == null) return;
+
+            string weapon1 = gameState.CurrentResonatedWeapon1;
+            string weapon2 = gameState.CurrentResonatedWeapon2;
+            bool hasCooldownDuet = false;
+
+            // Check for Moonlight Duet (Lunar Phases)
+            if ((weapon1 == "IncisorOfMoonlight" && weapon2 == "EulogyOfTheMoon") ||
+                (weapon1 == "EulogyOfTheMoon" && weapon2 == "IncisorOfMoonlight"))
+            {
+                hasCooldownDuet = true;
+            }
+            // Check for Dies Irae Duet (Seven Seals)
+            else if ((weapon1 == "SevenCircles" && weapon2 == "HellsWrath") ||
+                (weapon1 == "HellsWrath" && weapon2 == "SevenCircles"))
+            {
+                hasCooldownDuet = true;
+            }
+            // Check for Winter Duet (Absolute Zero)
+            else if ((weapon1 == "CacophonicBlizzard" && weapon2 == "TheSnowsDesire") ||
+                     (weapon1 == "TheSnowsDesire" && weapon2 == "CacophonicBlizzard"))
+            {
+                hasCooldownDuet = true;
+            }
+            // Check for Eroica Duet (Victory March)
+            else if ((weapon1 == "SakurasBlossom" && weapon2 == "FuneralPrayer") ||
+                     (weapon1 == "FuneralPrayer" && weapon2 == "SakurasBlossom"))
+            {
+                hasCooldownDuet = true;
+            }
+            // Check for Swan Lake Duet (Mirror Lake)
+            else if ((weapon1 == "StarScatteredWings" && weapon2 == "ThousandWingedSwan") ||
+                     (weapon1 == "ThousandWingedSwan" && weapon2 == "StarScatteredWings"))
+            {
+                hasCooldownDuet = true;
+            }
+            // Check for La Campanella Duet (Chime Chain)
+            else if ((weapon1 == "SymphonyOfBells" && weapon2 == "RazerOfBellsChimes") ||
+                     (weapon1 == "RazerOfBellsChimes" && weapon2 == "SymphonyOfBells"))
+            {
+                hasCooldownDuet = true;
+            }
+            // Check for Enigma Duet (Cipher Wheel)
+            else if ((weapon1 == "CreatorOfMystery" && weapon2 == "Truthseeker") ||
+                     (weapon1 == "Truthseeker" && weapon2 == "CreatorOfMystery"))
+            {
+                hasCooldownDuet = true;
+            }
+            // Check for Fate Duet (Hourglass Fracture)
+            else if ((weapon1 == "AstralChainripper" && weapon2 == "CosmicWeaver") ||
+                     (weapon1 == "CosmicWeaver" && weapon2 == "AstralChainripper"))
+            {
+                hasCooldownDuet = true;
+            }
+            // Check for Ode to Joy Duet (Orchestra Conductor)
+            else if ((weapon1 == "JoyfulCatharsis" && weapon2 == "OdeToCreation") ||
+                     (weapon1 == "OdeToCreation" && weapon2 == "JoyfulCatharsis"))
+            {
+                hasCooldownDuet = true;
+            }
+
+            DuetAbilityButtonBorder.IsVisible = hasCooldownDuet;
         }
     }
 }

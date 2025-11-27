@@ -31,6 +31,10 @@ namespace MusicClicker
 
             static double RoundedCost(double baseC, double mul) => Math.Round(baseC * mul, 2);
 
+            // Apply Moonlight Duet Waning phase cost reduction (50% off)
+            int moonPhase = MusicClicker.Armory.WeaponAbilities.MoonlightDuet_GetCurrentPhase(gameState);
+            double costMultiplier = (moonPhase == 3) ? 0.5 : 1.0; // Waning phase
+
             // Helper to compute effect increase for current owned count
             static double EffectIncrease(double baseEffect, double growth, int ownedCount)
             {
@@ -38,11 +42,15 @@ namespace MusicClicker
                 return baseEffect * Math.Pow(growth, ownedCount);
             }
 
+            // Track purchases for Mirror Lake queueing
+            int purchasesMade = 0;
+            int initialOwned = owned;
+
             if (amount == double.MaxValue)
             {
                 while (true)
                 {
-                    double cost = RoundedCost(baseCost, multiplier);
+                    double cost = RoundedCost(baseCost, multiplier) * costMultiplier;
                     if (MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes) >= cost)
                     {
                         MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, -cost);
@@ -51,7 +59,10 @@ namespace MusicClicker
                         double npsInc = EffectIncrease(baseNpsEffect, npsGrowth, owned);
                         double clickInc = EffectIncrease(baseClickEffect, clickGrowth, owned);
 
-                        gameState.NotesPerSecond += npsInc;
+                        if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                        {
+                            gameState.NotesPerSecond += npsInc;
+                        }
                         gameState.NotesPerClick += clickInc;
 
                         // If any weapon abilities respond to upgrades, invoke them here.
@@ -69,6 +80,7 @@ namespace MusicClicker
                         }
 
                         owned++;
+                        purchasesMade++;
                         // increase multiplier for next purchase
                         multiplier *= 1.15;
                     }
@@ -80,7 +92,7 @@ namespace MusicClicker
                 int purchaseCount = (int)amount;
                 for (int i = 0; i < purchaseCount; i++)
                 {
-                    double cost = RoundedCost(baseCost, multiplier);
+                    double cost = RoundedCost(baseCost, multiplier) * costMultiplier;
                     if (MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes) >= cost)
                     {
                         MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, -cost);
@@ -88,7 +100,10 @@ namespace MusicClicker
                         double npsInc = EffectIncrease(baseNpsEffect, npsGrowth, owned);
                         double clickInc = EffectIncrease(baseClickEffect, clickGrowth, owned);
 
-                        gameState.NotesPerSecond += npsInc;
+                        if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                        {
+                            gameState.NotesPerSecond += npsInc;
+                        }
                         gameState.NotesPerClick += clickInc;
 
                             // Invoke weapon ability hooks if their flags are active.
@@ -106,6 +121,7 @@ namespace MusicClicker
                             }
 
                         owned++;
+                        purchasesMade++;
                         multiplier *= 1.15;
                     }
                     else break;
@@ -116,10 +132,56 @@ namespace MusicClicker
             ownedText.Text = $"Number Owned: {owned}";
             costText.Text = $"Cost: {Math.Round(baseCost * multiplier, 2)}";
 
-            window.NotesText.Text = $"Notes: {UIUpdater.FormatNotes(gameState.Notes)}";
-            window.UpgradeScreen.UpgradeNotesTextHeader.Text = $"Notes: {UIUpdater.FormatNotes(gameState.Notes)}";
+            window.NotesText.Text = $"Notes: {Math.Round(gameState.Notes, 1)}";
+            window.UpgradeScreen.UpgradeNotesTextHeader.Text = $"Notes: {Math.Round(gameState.Notes, 1)}";
+
+            // Queue upgrade purchases for Mirror Lake reflection
+            if (purchasesMade > 0 && gameState.SwanLakeDuetActive && DateTime.Now <= gameState.SwanLakeDuetExpiry)
+            {
+                // Determine upgrade name from cost text header
+                string upgradeName = DetermineUpgradeName(baseCost);
+                
+                // Queue each purchase individually with its actual cost
+                double queueMultiplier = Math.Pow(1.15, initialOwned);
+                for (int i = 0; i < purchasesMade; i++)
+                {
+                    double individualCost = RoundedCost(baseCost, queueMultiplier) * costMultiplier;
+                    MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "BuyUpgrade", (upgradeName, individualCost));
+                    queueMultiplier *= 1.15;
+                }
+            }
 
             UIUpdater.UpdateUI(window, gameState);
+        }
+
+        private static string DetermineUpgradeName(double baseCost)
+        {
+            // Map base costs to upgrade names
+            return baseCost switch
+            {
+                15 => "Moonlight Sonata - Opus 1",
+                100 => "Moonlight Sonata - Opus 2",
+                1100 => "Moonlight Sonata - Opus 3",
+                12000 => "Heroic - Opus 1",
+                130000 => "Heroic - Opus 2",
+                1400000 => "Heroic - Opus 3",
+                20000000 => "Swan Lake - Opus 1",
+                330000000 => "Swan Lake - Opus 2",
+                5100000000 => "Swan Lake - Opus 3",
+                51000000000 => "La Campanella - Opus 1",
+                560000000000 => "La Campanella - Opus 2",
+                6100000000000 => "La Campanella - Opus 3",
+                75000000000000 => "Enigma Variations - Opus 1",
+                900000000000000 => "Enigma Variations - Opus 2",
+                10000000000000000 => "Enigma Variations - Opus 3",
+                120000000000000000.0 => "Fate - Opus 1",
+                1500000000000000000.0 => "Fate - Opus 2",
+                18000000000000000000.0 => "Fate - Opus 3",
+                210000000000000000000.0 => "Ode to Joy - Opus 1",
+                2700000000000000000000.0 => "Ode to Joy - Opus 2",
+                33000000000000000000000.0 => "Ode to Joy - Opus 3",
+                _ => "Unknown"
+            };
         }
     }
 }

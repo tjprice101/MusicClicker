@@ -78,10 +78,10 @@ namespace MusicClicker.Views
             "Fate Major",
             "Ode to Joy Major",        // Required for Joy Hammer I & II
             "Ode to Joy Major",
-            "Dies Irae Major",         // Required for Dies Irae Scythe I & II
-            "Dies Irae Major",
-            "Winter Major",            // Required for Winter Bow I & II
-            "Winter Major"
+            "Dies Irae",               // Required for Dies Irae Scythe I & II (actual score)
+            "Dies Irae",
+            "Winter",                  // Required for Winter Bow I & II (actual score)
+            "Winter"
         };
 
         // Precomputed exponential base multipliers for weapon costs to avoid repeated Math.Pow calls.
@@ -174,8 +174,8 @@ namespace MusicClicker.Views
                 8 or 9 => _gameState.EnigmaMajorOwned > 0,         // Enigma weapons
                 10 or 11 => _gameState.FateMajorOwned > 0,         // Fate weapons
                 12 or 13 => _gameState.OdeToJoyMajorOwned > 0,     // Ode to Joy weapons
-                14 or 15 => false,  // Dies Irae Major - not yet implemented
-                16 or 17 => false,  // Winter Major - not yet implemented
+                14 or 15 => _gameState.DiesIraeOwned > 0,          // Dies Irae weapons
+                16 or 17 => _gameState.WinterOwned > 0,            // Winter weapons
                 _ => false
             };
         }
@@ -365,100 +365,100 @@ namespace MusicClicker.Views
                 case 0:
                     forte1 = "Forte Resonance: On upgrade purchase, increase your current notes by 5%.";
                     forte2 = "Forte Resonance: On upgrade purchase, increase your lowest owned upgrade by 2.";
-                    duet = "Duet Resonance: Every 12th click increases all upgrade values by 1.";
+                    duet = "Lunar Phases: Cycles through 4 moon phases every 8s (New Moon: 2x NPC, Crescent: Component drops, Full Moon: 3x NPS, Waning: Upgrades 50% off) - 40s duration, 4min cooldown.";
                     break;
                 case 1:
                     forte1 = "Forte Resonance: On upgrade purchase, increase your current notes by 5%.";
                     forte2 = "Forte Resonance: On upgrade purchase, increase your lowest owned upgrade by 2.";
-                    duet = "Duet Resonance: Every 12th click increases all upgrade values by 1.";
+                    duet = "Lunar Phases: Cycles through 4 moon phases every 8s (New Moon: 2x NPC, Crescent: Component drops, Full Moon: 3x NPS, Waning: Upgrades 50% off) - 40s duration, 4min cooldown.";
                     break;
 
                 // Eroica (indices 2-3)
                 case 2:
                     forte1 = "Forte Resonance: On acquisition of a score's Major sheet, gives 1 of each Minor Component.";
                     forte2 = "Forte Resonance: On acquisition of a score's Major version, divide your current notes by 2 and give 3 minor scores of your lowest owned minor score.";
-                    duet = "Duet Resonance: If any minor score exceeds 10, double its notes per second output amount (not time).";
+                    duet = "Victory March: Fill bar with 100 clicks for escalating rewards (25%: minor score, 50%: major score, 75%: +50 fragments, 100%: double all scores) - 5min cooldown.";
                     break;
                 case 3:
                     forte1 = "Forte Resonance: On acquisition of a score's Major sheet, gives 1 of each Minor Component.";
                     forte2 = "Forte Resonance: On acquisition of a score's Major version, divide your current notes by 2 and give 3 minor scores of your lowest owned minor score.";
-                    duet = "Duet Resonance: If any minor score exceeds 10, double its notes per second output amount (not time).";
+                    duet = "Victory March: Fill bar with 100 clicks for escalating rewards (25%: minor score, 50%: major score, 75%: +50 fragments, 100%: double all scores) - 5min cooldown.";
                     break;
 
                 // Swan Lake (indices 4-5)
                 case 4:
                     forte1 = "Forte Resonance: On buy of Melodious Fragment, increase your current notes by 5 times your notes per second.";
                     forte2 = "Forte Resonance: On buy of Harmonious Fragment, increase your current notes by 10 times your notes per second.";
-                    duet = "Duet Resonance: If you own 50 or more Melodious fragments and 100 or more Harmonious fragments, your notes per second is doubled until this condition is not met.";
+                    duet = "Mirror Lake: Every action is reflected and happens again after 3 seconds (clicks, crafts, upgrades, fragments) - 20s duration, 4min cooldown.";
                     break;
                 case 5:
                     forte1 = "Forte Resonance: On buy of Melodious Fragment, increase your current notes by 5 times your notes per second.";
                     forte2 = "Forte Resonance: On buy of Harmonious Fragment, increase your current notes by 10 times your notes per second.";
-                    duet = "Duet Resonance: If you own 50 or more Melodious fragments and 100 or more Harmonious fragments, your notes per second is doubled until this condition is not met.";
+                    duet = "Mirror Lake: Every action is reflected and happens again after 3 seconds (clicks, crafts, upgrades, fragments) - 20s duration, 4min cooldown.";
                     break;
 
                 // La Campanella (6-7)
                 case 6:
                     forte1 = "Forte Resonance: On craft of a minor score, give another of that minor score.";
                     forte2 = "Forte Resonance: On craft of a minor score, increase your notes per second by 50% for the next 5 seconds.";
-                    duet = "Duet Resonance: On craft of a Major score, gives 5 of its corresponding minor score.";
+                    duet = "Chime Chain: First click creates a chime. Each click within 1 second extends the chain. Chain gives length² × NPS as instant notes. Chain breaks after 1s of no clicks - 10s duration, 10min cooldown.";
                     break;
                 case 7:
                     forte1 = "Forte Resonance: On craft of a minor score, give another of that minor score.";
                     forte2 = "Forte Resonance: On craft of a minor score, increase your notes per second by 50% for the next 5 seconds.";
-                    duet = "Duet Resonance: On craft of a Major score, gives 5 of its corresponding minor score.";
+                    duet = "Chime Chain: First click creates a chime. Each click within 1 second extends the chain. Chain gives length² × NPS as instant notes. Chain breaks after 1s of no clicks - 10s duration, 10min cooldown.";
                     break;
 
-                // Enigma (8-9) - left as placeholders (user provided ???)
+                // Enigma (8-9)
                 case 8:
                 case 9:
                     forte1 = "Forte Resonance: ???";
                     forte2 = "Forte Resonance: ???";
-                    duet = "Duet Resonance: ???";
+                    duet = "Mystery Clicks: Each click triggers 1 random effect (Red: 5× NPS notes, Blue: 10% NPS boost, Green: 30 Harmonious, Yellow: 30 Melodious, Purple: +1 major per owned, Orange: +1 minor component per owned, White: +1 to 3 random minors, Black: -65% notes) - 10s duration, 30min cooldown.";
                     break;
 
                 // Fate (10-11)
                 case 10:
                     forte1 = "Forte Resonance: On Fate minor craft, quintuple your notes per second for the next 10 seconds.";
                     forte2 = "Forte Resonance: On Fate minor craft, quintuple your notes per click for the next 10 seconds.";
-                    duet = "Duet Resonance: Every 45th click doubles whichever minor score is the lowest owned.";
+                    duet = "Duet Resonance: Placeholder - not yet implemented.";
                     break;
                 case 11:
                     forte1 = "Forte Resonance: On Fate minor craft, quintuple your notes per second for the next 10 seconds.";
                     forte2 = "Forte Resonance: On Fate minor craft, quintuple your notes per click for the next 10 seconds.";
-                    duet = "Duet Resonance: Every 45th click doubles whichever minor score is the lowest owned.";
+                    duet = "Duet Resonance: Placeholder - not yet implemented.";
                     break;
 
                 // Ode to Joy (12-13)
                 case 12:
                     forte1 = "Forte Resonance: Your notes per second are doubled.";
                     forte2 = "Forte Resonance: Every 5th click makes your next click have a 33% increase in notes.";
-                    duet = "Duet Resonance: Notes per Second becomes Notes per Half-Second.";
+                    duet = "Duet Resonance: Placeholder - not yet implemented.";
                     break;
                 case 13:
                     forte1 = "Forte Resonance: Your notes per second are doubled.";
                     forte2 = "Forte Resonance: Every 5th click makes your next click have a 33% increase in notes.";
-                    duet = "Duet Resonance: Notes per Second becomes Notes per Half-Second.";
+                    duet = "Duet Resonance: Placeholder - not yet implemented.";
                     break;
 
                 // Dies Irae (14-15)
                 case 14:
                 case 15:
-                    forte1 = "Forte Resonance: ???";
-                    forte2 = "Forte Resonance: ???";
-                    duet = "Duet Resonance: ???";
+                    forte1 = "Hellfire Rebate: Minor score crafts have 33% chance to not consume components.";
+                    forte2 = "Damnation's Gift: Each click has a 7% chance to grant a random minor component.";
+                    duet = "Seven Seals: Each click places a seal. At 7 seals, grants 3 random minor scores (15s duration, 3.5min cooldown).";
                     break;
 
                 // Winter (16-17)
                 case 16:
-                    forte1 = "Forte Resonance: Every 50th click freezes your current NPS value for 8 seconds.";
-                    forte2 = "Forte Resonance: On Harmonious fragment purchase, gain notes equal to frozen NPS × 20.";
-                    duet = "Duet Resonance: Frozen NPS is used as a multiplier for all clicks.";
+                    forte1 = "Crystalline Shatter: Every 10th click grants notes equal to 10 seconds worth of your current NPS instantly.";
+                    forte2 = "Blizzard's Bounty: Each Harmonious purchase grants +2% NPS for 30 seconds (stacks additively, multiple purchases extend duration).";
+                    duet = "Duet Resonance: Activate to convert your frozen NPS into a click multiplier. Each click extends duration by 0.5s (max +10s, 15s base duration, 5min cooldown).";
                     break;
                 case 17:
-                    forte1 = "Forte Resonance: Every 50th click freezes your current NPS value for 8 seconds.";
-                    forte2 = "Forte Resonance: On Harmonious fragment purchase, gain notes equal to frozen NPS × 20.";
-                    duet = "Duet Resonance: Frozen NPS is used as a multiplier for all clicks.";
+                    forte1 = "Crystalline Shatter: Every 10th click grants notes equal to 10 seconds worth of your current NPS instantly.";
+                    forte2 = "Blizzard's Bounty: Each Harmonious purchase grants +2% NPS for 30 seconds (stacks additively, multiple purchases extend duration).";
+                    duet = "Duet Resonance: Activate to convert your frozen NPS into a click multiplier. Each click extends duration by 0.5s (max +10s, 15s base duration, 5min cooldown).";
                     break;
 
                 default:

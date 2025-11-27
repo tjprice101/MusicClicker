@@ -1,0 +1,234 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="MusicClicker.Views.OdeDuetScreen">
+
+    <Border Width="1200" Height="800"
+            Background="#DD0e0e1a"
+            CornerRadius="20"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+        
+        <Border.Effect>
+            <DropShadowEffect Color="Black" BlurRadius="40" Opacity="0.9" />
+        </Border.Effect>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!-- Title -->
+            <Border Grid.Row="0"
+                    Background="#1a1a2e"
+                    CornerRadius="20,20,0,0"
+                    Padding="30,20">
+                <TextBlock Text="Orchestra Conductor"
+                           FontSize="36"
+                           FontWeight="Bold"
+                           Foreground="#f59e0b"
+                           HorizontalAlignment="Center"
+                           TextAlignment="Center">
+                    <TextBlock.Effect>
+                        <DropShadowEffect Color="Black" BlurRadius="15" Opacity="0.9" />
+                    </TextBlock.Effect>
+                </TextBlock>
+            </Border>
+
+            <!-- Main Content Area -->
+            <Grid Grid.Row="1" Margin="40,30">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!-- Status Display -->
+                <StackPanel Grid.Row="0" Spacing="15" Margin="0,0,0,40">
+                    <TextBlock x:Name="StatusText"
+                               Text="Ready to Activate"
+                               FontSize="24"
+                               FontWeight="SemiBold"
+                               Foreground="#f59e0b"
+                               HorizontalAlignment="Center">
+                        <TextBlock.Effect>
+                            <DropShadowEffect Color="#f59e0b" BlurRadius="10" Opacity="0.6" />
+                        </TextBlock.Effect>
+                    </TextBlock>
+
+                    <TextBlock x:Name="ComboText"
+                               Text="Combos Achieved: 0"
+                               FontSize="20"
+                               Foreground="White"
+                               HorizontalAlignment="Center"
+                               FontWeight="SemiBold"
+                               Margin="0,5,0,0" />
+
+                    <TextBlock Text="Conduct all 4 sections within 5 seconds for combo!"
+                               FontSize="16"
+                               Foreground="#d4d4d4"
+                               HorizontalAlignment="Center"
+                               Margin="0,10,0,0" />
+                </StackPanel>
+
+                <!-- Instrument Buttons -->
+                <Grid Grid.Row="1" Margin="0,0,0,30">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Strings -->
+                    <Button x:Name="StringsButton"
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Width="400"
+                            Height="150"
+                            Margin="10"
+                            Background="#16213e"
+                            CornerRadius="15">
+                        <Button.Effect>
+                            <DropShadowEffect Color="Black" BlurRadius="15" Opacity="0.7" />
+                        </Button.Effect>
+                        <StackPanel Spacing="10">
+                            <TextBlock Text="🎻"
+                                       FontSize="48"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock Text="STRINGS"
+                                       FontSize="24"
+                                       FontWeight="Bold"
+                                       Foreground="White"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="StringsStatusText"
+                                       Text="Not Conducted"
+                                       FontSize="14"
+                                       Foreground="#9ca3af"
+                                       HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+
+                    <!-- Brass -->
+                    <Button x:Name="BrassButton"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Width="400"
+                            Height="150"
+                            Margin="10"
+                            Background="#16213e"
+                            CornerRadius="15">
+                        <Button.Effect>
+                            <DropShadowEffect Color="Black" BlurRadius="15" Opacity="0.7" />
+                        </Button.Effect>
+                        <StackPanel Spacing="10">
+                            <TextBlock Text="🎺"
+                                       FontSize="48"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock Text="BRASS"
+                                       FontSize="24"
+                                       FontWeight="Bold"
+                                       Foreground="White"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="BrassStatusText"
+                                       Text="Not Conducted"
+                                       FontSize="14"
+                                       Foreground="#9ca3af"
+                                       HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+
+                    <!-- Percussion -->
+                    <Button x:Name="PercussionButton"
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Width="400"
+                            Height="150"
+                            Margin="10"
+                            Background="#16213e"
+                            CornerRadius="15">
+                        <Button.Effect>
+                            <DropShadowEffect Color="Black" BlurRadius="15" Opacity="0.7" />
+                        </Button.Effect>
+                        <StackPanel Spacing="10">
+                            <TextBlock Text="🥁"
+                                       FontSize="48"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock Text="PERCUSSION"
+                                       FontSize="24"
+                                       FontWeight="Bold"
+                                       Foreground="White"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="PercussionStatusText"
+                                       Text="Not Conducted"
+                                       FontSize="14"
+                                       Foreground="#9ca3af"
+                                       HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+
+                    <!-- Woodwinds -->
+                    <Button x:Name="WoodwindsButton"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Width="400"
+                            Height="150"
+                            Margin="10"
+                            Background="#16213e"
+                            CornerRadius="15">
+                        <Button.Effect>
+                            <DropShadowEffect Color="Black" BlurRadius="15" Opacity="0.7" />
+                        </Button.Effect>
+                        <StackPanel Spacing="10">
+                            <TextBlock Text="🎷"
+                                       FontSize="48"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock Text="WOODWINDS"
+                                       FontSize="24"
+                                       FontWeight="Bold"
+                                       Foreground="White"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="WoodwindsStatusText"
+                                       Text="Not Conducted"
+                                       FontSize="14"
+                                       Foreground="#9ca3af"
+                                       HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+                </Grid>
+
+                <!-- Info Box -->
+                <Border Grid.Row="2"
+                        Background="#1a1a2e"
+                        CornerRadius="10"
+                        Padding="20">
+                    <TextBlock TextWrapping="Wrap"
+                               FontSize="14"
+                               Foreground="#d4d4d4"
+                               Text="• Click each instrument section to conduct them&#x0a;• Get all 4 sections within 5 seconds for a combo&#x0a;• Combo reward: NPS × 20 × combo count&#x0a;• Multiple combos stack for massive rewards!&#x0a;• Duration: 30 seconds | Cooldown: 5 minutes" />
+                </Border>
+            </Grid>
+
+            <!-- Close Button -->
+            <Button Grid.Row="2"
+                    x:Name="CloseButton"
+                    Content="BACK"
+                    Width="200"
+                    Height="50"
+                    FontSize="20"
+                    FontWeight="Bold"
+                    Foreground="White"
+                    Background="#16213e"
+                    HorizontalAlignment="Center"
+                    Margin="0,0,0,30"
+                    CornerRadius="10">
+                <Button.Effect>
+                    <DropShadowEffect Color="Black" BlurRadius="10" Opacity="0.7" />
+                </Button.Effect>
+            </Button>
+        </Grid>
+    </Border>
+</UserControl>
