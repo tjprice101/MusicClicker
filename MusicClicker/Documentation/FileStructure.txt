@@ -1,0 +1,250 @@
+═══════════════════════════════════════════════════════════════════════════════
+                    PROJECT STRUCTURE AND FILE ORGANIZATION
+═══════════════════════════════════════════════════════════════════════════════
+
+This document provides a comprehensive overview of the MusicClicker project structure,
+detailing what belongs in each folder and file for easy navigation and maintenance.
+
+═══════════════════════════════════════════════════════════════════════════════
+ROOT DIRECTORY
+═══════════════════════════════════════════════════════════════════════════════
+
+📁 MusicClicker/
+├── 📄 Program.cs                      - Application entry point
+├── 📄 App.axaml                       - Application-level XAML resources
+├── 📄 App.axaml.cs                    - Application code-behind
+├── 📄 MainWindow.axaml                - Main window UI definition
+├── 📄 MainWindow.axaml.cs             - Main window logic (navigation, screen transitions)
+├── 📄 app.manifest                    - Windows application manifest
+├── 📄 MusicClicker.csproj             - Project configuration file
+│
+├── 📁 Assets/                         - Images, fonts, and visual resources
+├── 📁 Documentation/                  - All documentation and guides
+├── 📁 Fonts/                          - Custom font files
+├── 📁 Game Logic/                     - Core game systems and state
+├── 📁 Helpers/                        - Utility classes and managers
+├── 📁 Save/                           - Saved game data
+├── 📁 Views/                          - All screen UI definitions
+├── 📁 bin/                            - Build output (auto-generated)
+└── 📁 obj/                            - Build intermediates (auto-generated)
+
+═══════════════════════════════════════════════════════════════════════════════
+GAME LOGIC FOLDER
+═══════════════════════════════════════════════════════════════════════════════
+
+📁 Game Logic/
+│
+├── 📄 GameState.cs                    - Core game state data structure
+│   └── Contains: All player progress variables (notes, upgrades, scores, etc.)
+│   └── Purpose: Serializable data container for save/load functionality
+│   └── Note: Plain data class - no behavior, just state storage
+│
+└── 📁 Systems/                        - Game systems and mechanics
+    │
+    ├── 📄 WeaponAbilities.cs          - Weapon ability implementations
+    │   └── Contains: All duet abilities, passive effects, cooldown logic
+    │   └── Purpose: Centralized weapon mechanics
+    │
+    ├── 📄 CarouselManager.cs          - 3D carousel navigation system
+    │   └── Contains: Carousel rotation, drag handling, position calculations
+    │   └── Purpose: Manages circular menu navigation
+    │
+    ├── 📄 PerformanceManager.cs       - Frame rate optimization
+    │   └── Contains: FPS tracking, adaptive frame rate adjustment
+    │   └── Purpose: Ensures smooth 140 FPS on capable hardware
+    │
+    ├── 📄 GameTimerManager.cs         - All game loop timers
+    │   └── Contains: Main loop, auto-save, background NPS timers
+    │   └── Purpose: Centralized timer management
+    │
+    ├── 📄 DuetAbilityDetector.cs      - Duet combination detection
+    │   └── Contains: Logic for identifying active duet pairs
+    │   └── Purpose: Simplifies duet checking throughout codebase
+    │
+    └── 📄 CustomizationManager.cs     - Visual customization system
+        └── Contains: Clicker/background image loading and application
+        └── Purpose: Manages player visual preferences
+
+═══════════════════════════════════════════════════════════════════════════════
+HELPERS FOLDER
+═══════════════════════════════════════════════════════════════════════════════
+
+📁 Helpers/
+│
+├── 📁 Managers/                       - Feature-specific managers
+│   │
+│   ├── 📄 ButtonInitializer.cs       - Initializes all screen navigation buttons
+│   │   └── Purpose: Sets up click handlers for all carousel buttons
+│   │
+│   ├── 📄 HeartOfHarmonyManager.cs   - Heart of Harmony system
+│   │   └── Purpose: Manages major fragment crafting
+│   │
+│   ├── 📄 SaveManager.cs             - Save/load functionality
+│   │   └── Purpose: Handles game state persistence to disk
+│   │
+│   ├── 📄 SaveScoresManager.cs       - Score crafting system
+│   │   └── Purpose: Manages minor fragment collection and score creation
+│   │
+│   ├── 📄 TempoResonateManager.cs    - Weapon equipping system
+│   │   └── Purpose: Handles weapon resonance and equipment
+│   │
+│   ├── 📄 UniteTheSymphonyManager.cs - Score ownership tracking
+│   │   └── Purpose: Manages crafted score inventory
+│   │
+│   └── 📄 UpgradeManager.cs          - Upgrade purchase logic
+│       └── Purpose: Handles all upgrade transactions
+│
+└── 📁 Utilities/                      - General-purpose utilities
+    │
+    ├── 📄 UIUpdater.cs                - UI refresh system
+    │   └── Purpose: Updates all screen UIs with current game state
+    │   └── Note: Optimized to avoid redundant calculations
+    │
+    ├── 📄 Progression.cs              - Unlock condition checker
+    │   └── Purpose: Determines when features become available
+    │
+    ├── 📄 ImageHelpers.cs             - Bitmap caching system
+    │   └── Purpose: Loads and caches images with LRU eviction
+    │   └── Note: Critical for performance - prevents duplicate loading
+    │
+    └── 📄 AtomicDouble.cs             - Thread-safe double operations
+        └── Purpose: Enables lock-free NPS accumulation on background thread
+
+═══════════════════════════════════════════════════════════════════════════════
+VIEWS FOLDER
+═══════════════════════════════════════════════════════════════════════════════
+
+📁 Views/
+│
+├── 📁 Progression/                    - Progression-related screens
+│   │
+│   ├── 📄 UpgradeScreen.axaml/cs      - Main upgrade purchase screen
+│   ├── 📄 FragmentationScreen.axaml/cs - Melodious/Harmonious purchases
+│   ├── 📄 SaveScoresScreen.axaml/cs   - Minor fragment collection
+│   ├── 📄 HeartOfHarmonyScreen.axaml/cs - Major fragment crafting
+│   ├── 📄 UniteTheSymphonyScreen.axaml/cs - Score crafting
+│   ├── 📄 TempoResonateScreen.axaml/cs - Weapon equipping
+│   ├── 📄 ArmoryOfForteScreen.axaml/cs - Weapon collection/info
+│   ├── 📄 DuetAbilityScreen.axaml/cs  - Duet cooldown abilities
+│   │
+│   └── 📁 Duet Screens/               - Individual duet detail screens (legacy)
+│       ├── 📄 MoonlightDuetScreen.axaml/cs
+│       ├── 📄 DiesIraeDuetScreen.axaml/cs
+│       ├── 📄 WinterDuetScreen.axaml/cs
+│       ├── 📄 EroicaDuetScreen.axaml/cs
+│       ├── 📄 SwanLakeDuetScreen.axaml/cs
+│       ├── 📄 LaCampanellaDuetScreen.axaml/cs
+│       ├── 📄 EnigmaDuetScreen.axaml/cs
+│       ├── 📄 FateDuetScreen.axaml/cs
+│       └── 📄 OdeDuetScreen.axaml/cs
+│
+├── 📁 Customization/                  - Visual customization screens
+│   │
+│   ├── 📄 ClickerCustomizeScreen.axaml/cs - Clicker button customization
+│   ├── 📄 BackgroundCustomizeScreen.axaml/cs - Background selection
+│   └── 📄 SymphonicGalleryScreen.axaml/cs - Achievement gallery
+│
+└── 📁 Events/                         - Special event screens
+    │
+    ├── 📄 EternalModulationScreen.axaml/cs - Main event hub
+    ├── 📄 WinterEventScreen.axaml/cs   - Winter event content
+    └── 📄 DiesIraeEventScreen.axaml/cs - Dies Irae event content
+
+═══════════════════════════════════════════════════════════════════════════════
+DOCUMENTATION FOLDER
+═══════════════════════════════════════════════════════════════════════════════
+
+📁 Documentation/
+│
+├── 📄 DeveloperGuide.txt              - Developer documentation
+├── 📄 UserGuide.txt                   - Player instructions
+├── 📄 FileStructure.txt               - This file
+├── 📄 AddingWeapons.txt               - Guide for adding new weapons
+├── 📄 AddingScores.txt                - Guide for adding new scores
+│
+├── 📁 Design/                         - Design documentation
+│   └── (Design notes and specifications)
+│
+└── 📁 Backups/                        - Archived code backups
+    └── (Historical code snapshots)
+
+═══════════════════════════════════════════════════════════════════════════════
+SAVE FOLDER
+═══════════════════════════════════════════════════════════════════════════════
+
+📁 Save/
+│
+├── 📄 SavedGameState                  - Player's saved game (JSON format)
+│
+└── 📁 BitmapCache/                    - Cached bitmap files
+    └── (SHA256-hashed image files for faster loading)
+    └── Note: Auto-managed, limited to 200 MB
+
+═══════════════════════════════════════════════════════════════════════════════
+ASSETS FOLDER
+═══════════════════════════════════════════════════════════════════════════════
+
+📁 Assets/
+│
+└── (All image assets: backgrounds, banners, UI elements, weapon icons)
+    └── Naming convention: Descriptive names (e.g., MoonlightBanner.png)
+    └── Note: Referenced in code using "Assets/filename.png"
+
+═══════════════════════════════════════════════════════════════════════════════
+CODE ORGANIZATION PRINCIPLES
+═══════════════════════════════════════════════════════════════════════════════
+
+1. SEPARATION OF CONCERNS
+   ✓ MainWindow.axaml.cs:   Navigation, screen transitions, UI event routing
+   ✓ Game Logic/Systems:    Game mechanics, physics, calculations
+   ✓ Helpers/Managers:      Feature-specific business logic
+   ✓ Helpers/Utilities:     Reusable general-purpose code
+   ✓ Views:                 Screen-specific UI and interactions
+
+2. PERFORMANCE-CRITICAL CODE
+   ✓ ImageHelpers.cs:       Bitmap caching (LRU eviction at 100 entries)
+   ✓ PerformanceManager.cs: Adaptive frame rate (targets 140 FPS)
+   ✓ GameTimerManager.cs:   Background thread NPS accumulation
+   ✓ AtomicDouble.cs:       Lock-free thread-safe operations
+   ✓ UIUpdater.cs:          Throttled UI updates to reduce churn
+
+3. DATA FLOW
+   GameState → Managers → UI
+   ↑                      ↓
+   └──────── SaveManager ←┘
+   
+   - GameState is the single source of truth
+   - Managers modify GameState based on player actions
+   - UI reads from GameState and displays current values
+   - SaveManager persists GameState to disk
+
+4. NAMING CONVENTIONS
+   ✓ Screens:     [Feature]Screen.axaml/cs
+   ✓ Managers:    [Feature]Manager.cs
+   ✓ Systems:     [Purpose]Manager.cs or [Feature]System.cs
+   ✓ Properties:  PascalCase with descriptive names
+   ✓ Fields:      _camelCase for private backing fields
+
+5. WHERE TO PUT NEW CODE
+   
+   NEW WEAPON ABILITY?
+   → Game Logic/Systems/WeaponAbilities.cs
+   
+   NEW SCREEN?
+   → Views/[Category]/[Name]Screen.axaml/cs
+   
+   NEW GAME MECHANIC?
+   → Game Logic/Systems/[Mechanic]Manager.cs
+   
+   NEW UI UPDATE LOGIC?
+   → Helpers/Utilities/UIUpdater.cs
+   
+   NEW SAVE DATA?
+   → Game Logic/GameState.cs (add properties)
+   
+   NEW UTILITY FUNCTION?
+   → Helpers/Utilities/[Purpose].cs
+
+═══════════════════════════════════════════════════════════════════════════════
+END OF FILE STRUCTURE DOCUMENTATION
+═══════════════════════════════════════════════════════════════════════════════

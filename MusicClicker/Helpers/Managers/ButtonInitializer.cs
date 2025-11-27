@@ -1,7 +1,6 @@
 using Avalonia.Controls;
 using System;
 using System.Threading.Tasks;
-using System;
 
 namespace MusicClicker
 {

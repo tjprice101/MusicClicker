@@ -11,6 +11,7 @@ using Avalonia;
 using System;
 using System.Collections.Concurrent;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Platform;
 
@@ -21,9 +22,11 @@ namespace MusicClicker.Helpers
     // appearance when images are scaled.
     public static class ImageHelpers
     {
-        // Simple in-memory cache to avoid repeatedly decoding the same bitmap assets.
+        // In-memory cache to avoid repeatedly decoding the same bitmap assets.
         // Key is the asset URI string (optionally with a decode width suffix).
         private static readonly ConcurrentDictionary<string, Bitmap> _bitmapCache = new();
+        private static readonly ConcurrentDictionary<string, DateTime> _bitmapCacheAccessTime = new();
+        private const int _maxMemoryCacheEntries = 100;
         
         // Directory on disk to cache raw asset files (copied from avares:// streams).
         private static readonly string _diskCacheDir = Path.Combine(Environment.CurrentDirectory, "Save", "BitmapCache");
@@ -43,7 +46,10 @@ namespace MusicClicker.Helpers
             string key = decodeWidth > 0 ? assetUri + "|w=" + decodeWidth : assetUri;
 
             if (_bitmapCache.TryGetValue(key, out var cached))
+            {
+                _bitmapCacheAccessTime[key] = DateTime.UtcNow;
                 return cached;
+            }
 
             try
             {
@@ -96,6 +102,13 @@ namespace MusicClicker.Helpers
                     }
 
                     _bitmapCache[key] = bmp;
+                    _bitmapCacheAccessTime[key] = DateTime.UtcNow;
+
+                    // Evict least recently used entries if cache is too large
+                    if (_bitmapCache.Count > _maxMemoryCacheEntries)
+                    {
+                        _ = Task.Run(() => EvictLruBitmaps());
+                    }
 
                     // Maintain cache size under limit in background
                     _ = Task.Run(() => EnsureDiskCacheLimit());
@@ -155,6 +168,31 @@ namespace MusicClicker.Helpers
             }
             catch { }
         }
+
+        // Evict least recently used bitmaps from memory cache when it exceeds limit
+        private static void EvictLruBitmaps()
+        {
+            try
+            {
+                if (_bitmapCache.Count <= _maxMemoryCacheEntries) return;
+
+                // Find entries to evict (oldest 20% of entries)
+                int toEvict = _bitmapCache.Count - _maxMemoryCacheEntries + 20;
+                var entriesToRemove = _bitmapCacheAccessTime
+                    .OrderBy(kvp => kvp.Value)
+                    .Take(toEvict)
+                    .Select(kvp => kvp.Key)
+                    .ToList();
+
+                foreach (var key in entriesToRemove)
+                {
+                    _bitmapCache.TryRemove(key, out _);
+                    _bitmapCacheAccessTime.TryRemove(key, out _);
+                }
+            }
+            catch { }
+        }
+
         // Create an Image control configured for smooth scaling.
         public static Image CreateSmoothImage(Bitmap? source, double width, double height, string? tag = null, double opacity = 1.0, bool isEnabled = true)
         {

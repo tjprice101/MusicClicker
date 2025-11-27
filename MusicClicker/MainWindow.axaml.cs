@@ -37,8 +37,6 @@ namespace MusicClicker
         // Background timer that advances Notes continuously on a threadpool thread
         private System.Timers.Timer _backgroundNpsTimer = null!;
         private System.Diagnostics.Stopwatch _bgStopwatch = null!;
-        // Accumulator (milliseconds) used to apply NotesPerSecond in discrete 1s bursts.
-        private double _npsAccumulatorMs = 0.0;
         
         // DispatcherTimer that fires every 30 seconds to auto-save the game
         private DispatcherTimer _saveTimer = null!;
@@ -108,18 +106,7 @@ namespace MusicClicker
         // List storing each carousel button along with its transform components for positioning
         private List<(Button button, TranslateTransform translate, ScaleTransform scale)> carouselButtons = null!;
 
-        // Cached per-button visual state to avoid redundant property sets each frame (reduces layout churn)
-        private struct CarouselState
-        {
-            public double X;
-            public double Y;
-            public double Scale;
-            public double Opacity;
-            public bool IsAtBottom;
-            public int ZIndex;
-        }
 
-        private CarouselState[] carouselStates = null!;
 
         /// <summary>
         /// Restores customizations (clicker image and background) from saved game state.
@@ -287,9 +274,7 @@ namespace MusicClicker
                 double elapsedSeconds = _stopwatch.Elapsed.TotalSeconds;
                 _stopwatch.Restart();
 
-                // Accumulate lightweight display updates every tick so the Notes counter
-                // feels responsive. NPS is applied as discrete 1-second bursts below
-                // using the `_npsAccumulatorMs` so it is not applied fractionally.
+                // Update display for responsive Notes counter
                 try
                 {
                     UIUpdater.UpdateNotesOnly(this, gameState);
@@ -643,8 +628,6 @@ namespace MusicClicker
             animationTimer.Start();
 
             // Calculate and apply initial positions for all buttons
-            // Initialize state cache and apply initial positions
-            carouselStates = new CarouselState[carouselButtons.Count];
             UpdateCarouselPositions();
 
             // Ensure animation tick also performs small UI animation updates for smooth visuals

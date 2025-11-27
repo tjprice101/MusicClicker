@@ -1,0 +1,487 @@
+═══════════════════════════════════════════════════════════════════════════════
+                    GUIDE: ADDING NEW WEAPONS TO MUSICCLICKER
+═══════════════════════════════════════════════════════════════════════════════
+
+This comprehensive guide walks you through every step of adding a new weapon to
+the game, including solo weapons, duet pairs, and their associated abilities.
+
+═══════════════════════════════════════════════════════════════════════════════
+STEP 1: PLAN YOUR WEAPON
+═══════════════════════════════════════════════════════════════════════════════
+
+Before coding, decide on the following:
+
+1. WEAPON BASICS
+   - Name:           e.g., "Requiem's Edge"
+   - Internal ID:    e.g., "RequiemsEdge" (no spaces, PascalCase)
+   - Associated Score: Which score unlocks it? (e.g., Moonlight, Eroica)
+   - Rarity Tier:    Minor or Major score weapon?
+
+2. WEAPON ABILITY (PASSIVE)
+   - Effect Type:    NPS multiplier? Click bonus? Special mechanic?
+   - Balance:        How powerful should it be?
+   - Conditions:     Always active? Conditional?
+   
+   EXAMPLES:
+   - "Doubles NPS when equipped"
+   - "Adds 50% click power when resonated"
+   - "Grants +10% NPS per major score owned"
+
+3. DUET ABILITY (IF APPLICABLE)
+   - Partner Weapon: Which weapon does it pair with?
+   - Duet Name:      e.g., "Eclipse Duet"
+   - Duet Effect:    Passive or active ability?
+   - Cooldown:       If active, what cooldown duration?
+   
+   EXAMPLES:
+   - Passive: "Triple NPS when both weapons equipped"
+   - Active: "10-second ability with 30-minute cooldown"
+
+═══════════════════════════════════════════════════════════════════════════════
+STEP 2: ADD WEAPON TO GAMESTATE
+═══════════════════════════════════════════════════════════════════════════════
+
+📄 File: Game Logic/GameState.cs
+
+1. ADD OWNERSHIP FLAG
+   Find the "Weapon Ownership" section (around line 450-500) and add:
+   
+   ```csharp
+   // [Your Score] Weapons
+   public bool _requiemsEdge = false;
+   public bool RequiemsEdge { get => _requiemsEdge; set => _requiemsEdge = value; }
+   ```
+   
+   Note: Use the same naming pattern as existing weapons.
+
+2. ADD ABILITY STATE VARIABLES (if needed)
+   If your weapon has temporary buffs, cooldowns, or timers:
+   
+   ```csharp
+   // RequiemsEdge ability state
+   public bool RequiemsEdgeBuffActive { get; set; } = false;
+   public DateTime RequiemsEdgeBuffExpiry { get; set; } = DateTime.MinValue;
+   public DateTime RequiemsEdgeLastUsed { get; set; } = DateTime.MinValue;
+   ```
+
+3. ADD DUET STATE (if applicable)
+   If creating a duet with cooldown ability:
+   
+   ```csharp
+   public DateTime EclipseDuetLastUsed { get; set; } = DateTime.MinValue;
+   public bool EclipseDuetActive { get; set; } = false;
+   public DateTime EclipseDuetExpiry { get; set; } = DateTime.MinValue;
+   ```
+
+═══════════════════════════════════════════════════════════════════════════════
+STEP 3: ADD WEAPON TO ARMORY SCREEN UI
+═══════════════════════════════════════════════════════════════════════════════
+
+📄 File: Views/Progression/ArmoryOfForteScreen.axaml
+
+1. FIND THE APPROPRIATE SECTION
+   Weapons are organized by score family. Locate the ScrollViewer for your score.
+   
+   Example sections:
+   - Lines 100-300: Moonlight Weapons
+   - Lines 300-500: Eroica Weapons
+   - Lines 500-700: Swan Lake Weapons
+
+2. ADD A NEW WEAPON BORDER
+   Copy an existing weapon block and modify:
+   
+   ```xml
+   <!-- Requiem's Edge -->
+   <Border Name="RequiemsEdgeBorder" 
+           BorderBrush="#8B4513" BorderThickness="3" 
+           CornerRadius="10" Padding="15" Margin="10"
+           Background="#1A1A1A" Opacity="0.5">
+       <StackPanel>
+           <TextBlock Text="Requiem's Edge" 
+                      FontSize="20" FontWeight="Bold" 
+                      Foreground="Gold" HorizontalAlignment="Center"/>
+           
+           <TextBlock Name="RequiemsEdgeDescription" 
+                      Text="Doubles NPS when equipped in either slot" 
+                      FontSize="14" Foreground="White" 
+                      TextWrapping="Wrap" Margin="0,5,0,0"/>
+           
+           <TextBlock Name="RequiemsEdgeStatus" 
+                      Text="Status: Locked" 
+                      FontSize="12" Foreground="Gray" 
+                      Margin="0,10,0,0" HorizontalAlignment="Center"/>
+       </StackPanel>
+   </Border>
+   ```
+
+3. ADJUST VISUAL STYLING
+   - BorderBrush: Color matching the weapon's theme
+   - Background: Dark background for readability
+   - Opacity: 0.5 for locked, 1.0 for unlocked (updated in code)
+
+═══════════════════════════════════════════════════════════════════════════════
+STEP 4: ADD WEAPON TO ARMORY SCREEN CODE-BEHIND
+═══════════════════════════════════════════════════════════════════════════════
+
+📄 File: Views/Progression/ArmoryOfForteScreen.axaml.cs
+
+1. ADD INITIALIZATION IN CONSTRUCTOR
+   Find the constructor and add your weapon's UI update:
+   
+   ```csharp
+   public ArmoryOfForteScreen()
+   {
+       InitializeComponent();
+       
+       // ... existing weapons ...
+       
+       // Requiem's Edge
+       if (window?.GameState != null)
+       {
+           UpdateRequiemsEdgeUI(window.GameState);
+       }
+   }
+   ```
+
+2. CREATE UPDATE METHOD
+   Add a new method to update the weapon's UI based on ownership:
+   
+   ```csharp
+   private void UpdateRequiemsEdgeUI(GameState gs)
+   {
+       if (RequiemsEdgeBorder == null) return;
+       
+       if (gs.RequiemsEdge)
+       {
+           RequiemsEdgeBorder.Opacity = 1.0;
+           RequiemsEdgeStatus.Text = "Status: Unlocked";
+           RequiemsEdgeStatus.Foreground = new SolidColorBrush(Colors.LimeGreen);
+       }
+       else
+       {
+           RequiemsEdgeBorder.Opacity = 0.5;
+           RequiemsEdgeStatus.Text = "Status: Locked";
+           RequiemsEdgeStatus.Foreground = new SolidColorBrush(Colors.Gray);
+       }
+   }
+   ```
+
+3. ADD TO REFRESH METHOD
+   Find the `Refresh()` method and add your update call:
+   
+   ```csharp
+   public void Refresh()
+   {
+       var window = MainWindow.FindMainWindow(this);
+       if (window?.GameState == null) return;
+       
+       // ... existing updates ...
+       UpdateRequiemsEdgeUI(window.GameState);
+   }
+   ```
+
+═══════════════════════════════════════════════════════════════════════════════
+STEP 5: ADD WEAPON TO TEMPO RESONATE SCREEN
+═══════════════════════════════════════════════════════════════════════════════
+
+📄 File: Views/Progression/TempoResonateScreen.axaml
+
+1. ADD TO WEAPON GRID
+   Find the Grid containing weapon buttons (around line 50-200):
+   
+   ```xml
+   <!-- Requiem's Edge -->
+   <Border Name="RequiemsEdgeWeaponBorder" Grid.Row="X" Grid.Column="Y"
+           BorderBrush="#8B4513" BorderThickness="2" CornerRadius="5"
+           Margin="5" Opacity="0.5">
+       <Button Name="RequiemsEdgeWeapon" Content="Requiem's Edge"
+               FontSize="14" Background="#2A2A2A" Foreground="Gold"
+               Click="WeaponButton_Click"/>
+   </Border>
+   ```
+   
+   Replace X and Y with appropriate grid coordinates.
+
+📄 File: Views/Progression/TempoResonateScreen.axaml.cs
+
+2. ADD TO WEAPON LIST
+   Find the weapon initialization in constructor:
+   
+   ```csharp
+   private void InitializeWeaponButtons()
+   {
+       allWeaponButtons = new List<(Button btn, Border border, string weaponId)>
+       {
+           // ... existing weapons ...
+           (RequiemsEdgeWeapon, RequiemsEdgeWeaponBorder, "RequiemsEdge"),
+       };
+   }
+   ```
+
+═══════════════════════════════════════════════════════════════════════════════
+STEP 6: IMPLEMENT WEAPON UNLOCK LOGIC
+═══════════════════════════════════════════════════════════════════════════════
+
+📄 File: Helpers/Managers/SaveScoresManager.cs (or appropriate craft handler)
+
+1. FIND THE CRAFT FUNCTION
+   Locate the function that handles crafting the associated score:
+   
+   ```csharp
+   public static void CraftMoonlightMajor(GameState gs)
+   {
+       // ... existing craft logic ...
+       
+       // Check if this is the first time crafting - unlock weapon
+       if (gs.MoonlightMajorOwned == 1)
+       {
+           gs.RequiemsEdge = true;
+           Console.WriteLine("Unlocked weapon: Requiem's Edge!");
+       }
+   }
+   ```
+
+2. ALTERNATIVE: UNLOCK VIA FRAGMENTS
+   If unlocking through fragment collection:
+   
+   ```csharp
+   if (gs.MoonlightMajorKeys >= 10 && !gs.RequiemsEdge)
+   {
+       gs.RequiemsEdge = true;
+       // Show unlock notification
+   }
+   ```
+
+═══════════════════════════════════════════════════════════════════════════════
+STEP 7: IMPLEMENT PASSIVE ABILITY
+═══════════════════════════════════════════════════════════════════════════════
+
+📄 File: Game Logic/Systems/WeaponAbilities.cs
+
+1. ADD ABILITY FUNCTION
+   Create a new static method:
+   
+   ```csharp
+   /// <summary>
+   /// Requiem's Edge passive: Doubles NPS when equipped
+   /// </summary>
+   public static double RequiemsEdge_GetNpsMultiplier(GameState gs)
+   {
+       // Check if weapon is equipped in either slot
+       if (gs.CurrentResonatedWeapon1 == "RequiemsEdge" || 
+           gs.CurrentResonatedWeapon2 == "RequiemsEdge")
+       {
+           return 2.0; // 2x multiplier
+       }
+       return 1.0; // No effect
+   }
+   ```
+
+2. INTEGRATE INTO GAME LOOP
+   📄 File: MainWindow.axaml.cs
+   
+   Find the background NPS timer (around line 400-500) and add:
+   
+   ```csharp
+   // Background NPS accumulation
+   _backgroundNpsTimer.Elapsed += (s, e) =>
+   {
+       double effectiveNps = gameState.NotesPerSecond;
+       
+       // ... existing multipliers ...
+       
+       // Apply Requiem's Edge passive
+       effectiveNps *= MusicClicker.Armory.WeaponAbilities.RequiemsEdge_GetNpsMultiplier(gameState);
+       
+       // Accumulate notes
+       MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, effectiveNps * elapsed);
+   };
+   ```
+
+═══════════════════════════════════════════════════════════════════════════════
+STEP 8: IMPLEMENT DUET ABILITY (IF APPLICABLE)
+═══════════════════════════════════════════════════════════════════════════════
+
+📄 File: Game Logic/Systems/DuetAbilityDetector.cs
+
+1. ADD DUET DETECTION
+   Find the `HasCooldownDuet` method and add:
+   
+   ```csharp
+   // Eclipse Duet (Requiem's Edge + Partner Weapon)
+   if (IsDuetPair(weapon1, weapon2, "RequiemsEdge", "PartnerWeapon"))
+       return true;
+   ```
+
+2. ADD TO DUET NAME LOOKUP
+   Find the `GetActiveDuetName` method:
+   
+   ```csharp
+   if (IsDuetPair(weapon1, weapon2, "RequiemsEdge", "PartnerWeapon"))
+       return "Eclipse Duet";
+   ```
+
+📄 File: Game Logic/Systems/WeaponAbilities.cs
+
+3. IMPLEMENT DUET EFFECT
+   
+   FOR PASSIVE DUET:
+   ```csharp
+   public static double EclipseDuet_GetNpsMultiplier(GameState gs)
+   {
+       if ((gs.CurrentResonatedWeapon1 == "RequiemsEdge" && gs.CurrentResonatedWeapon2 == "PartnerWeapon") ||
+           (gs.CurrentResonatedWeapon1 == "PartnerWeapon" && gs.CurrentResonatedWeapon2 == "RequiemsEdge"))
+       {
+           return 3.0; // Triple NPS
+       }
+       return 1.0;
+   }
+   ```
+   
+   FOR ACTIVE DUET:
+   ```csharp
+   public static void EclipseDuet_Activate(GameState gs)
+   {
+       // Check cooldown (30 minutes = 1800 seconds)
+       if ((DateTime.Now - gs.EclipseDuetLastUsed).TotalSeconds < 1800)
+           return; // Still on cooldown
+       
+       // Activate ability
+       gs.EclipseDuetActive = true;
+       gs.EclipseDuetExpiry = DateTime.Now.AddSeconds(10); // 10 second duration
+       gs.EclipseDuetLastUsed = DateTime.Now;
+       
+       Console.WriteLine("Eclipse Duet activated!");
+   }
+   
+   public static void EclipseDuet_Tick(GameState gs)
+   {
+       // Check if effect should expire
+       if (gs.EclipseDuetActive && DateTime.Now > gs.EclipseDuetExpiry)
+       {
+           gs.EclipseDuetActive = false;
+           Console.WriteLine("Eclipse Duet expired.");
+       }
+   }
+   ```
+
+4. ADD DUET ABILITY TO SCREEN
+   📄 File: Views/Progression/DuetAbilityScreen.axaml
+   
+   Copy an existing duet button block and modify for your duet.
+
+═══════════════════════════════════════════════════════════════════════════════
+STEP 9: ADD WEAPON ICON/ASSETS
+═══════════════════════════════════════════════════════════════════════════════
+
+1. CREATE WEAPON ICON
+   - Size: 256x256 pixels (will be scaled as needed)
+   - Format: PNG with transparency
+   - Name: RequiemsEdgeIcon.png
+   - Location: Assets/ folder
+
+2. UPDATE CSPROJ (if needed)
+   📄 File: MusicClicker.csproj
+   
+   The wildcard `<AvaloniaResource Include="Assets\**" />` should automatically
+   include new files. If not, add manually:
+   
+   ```xml
+   <AvaloniaResource Include="Assets\RequiemsEdgeIcon.png" />
+   ```
+
+3. REFERENCE IN UI
+   Update your weapon border in ArmoryOfForteScreen.axaml:
+   
+   ```xml
+   <Image Source="/Assets/RequiemsEdgeIcon.png" 
+          Width="64" Height="64" Margin="10"/>
+   ```
+
+═══════════════════════════════════════════════════════════════════════════════
+STEP 10: TEST YOUR WEAPON
+═══════════════════════════════════════════════════════════════════════════════
+
+TESTING CHECKLIST:
+
+□ Weapon appears in Armory screen (locked initially)
+□ Weapon unlocks after meeting condition (craft score, collect fragments, etc.)
+□ Weapon appears in Tempo Resonate screen after unlock
+□ Weapon can be equipped in Slot 1
+□ Weapon can be equipped in Slot 2
+□ Passive ability works correctly when equipped
+□ Passive ability stops when unequipped
+□ Duet detection works (if applicable)
+□ Duet ability activates (if applicable)
+□ Cooldown timer works correctly (if applicable)
+□ Weapon persists after save/load
+□ No crashes or errors in console
+
+═══════════════════════════════════════════════════════════════════════════════
+STEP 11: BALANCE TESTING
+═══════════════════════════════════════════════════════════════════════════════
+
+After implementation, test for game balance:
+
+1. NPS IMPACT
+   - Compare NPS before and after equipping
+   - Ensure multiplier is not too strong/weak for its unlock tier
+   - Test with multiple upgrades owned
+
+2. CLICK IMPACT (if applicable)
+   - Test click power scaling
+   - Ensure it doesn't trivialize progression
+
+3. DUET BALANCE (if applicable)
+   - Active ability should feel impactful but not mandatory
+   - Cooldown should be long enough to prevent spam
+   - Duration should be satisfying but not overwhelming
+
+4. PROGRESSION PACING
+   - Weapon should unlock at appropriate time in player journey
+   - Should provide meaningful power increase
+   - Should not invalidate existing strategies
+
+═══════════════════════════════════════════════════════════════════════════════
+COMMON PITFALLS TO AVOID
+═══════════════════════════════════════════════════════════════════════════════
+
+❌ MISTAKE: Forgetting to add weapon to GameState
+   → RESULT: Weapon doesn't persist after save/load
+
+❌ MISTAKE: Not updating both weapon slots
+   → RESULT: Weapon only works in one slot
+
+❌ MISTAKE: Hardcoding weapon checks everywhere
+   → FIX: Use DuetAbilityDetector for all duet checks
+
+❌ MISTAKE: Not testing with existing weapons equipped
+   → RESULT: Conflicts or unexpected interactions
+
+❌ MISTAKE: Forgetting to update UIUpdater
+   → RESULT: UI doesn't reflect weapon effects
+
+❌ MISTAKE: Making passive abilities too powerful
+   → FIX: Balance against existing weapons in same tier
+
+═══════════════════════════════════════════════════════════════════════════════
+QUICK REFERENCE: FILES TO MODIFY
+═══════════════════════════════════════════════════════════════════════════════
+
+REQUIRED CHANGES:
+✓ Game Logic/GameState.cs                 - Add ownership + state variables
+✓ Views/Progression/ArmoryOfForteScreen.axaml - Add weapon UI
+✓ Views/Progression/ArmoryOfForteScreen.axaml.cs - Add update logic
+✓ Views/Progression/TempoResonateScreen.axaml - Add equip button
+✓ Views/Progression/TempoResonateScreen.axaml.cs - Add to button list
+✓ Game Logic/Systems/WeaponAbilities.cs   - Implement ability
+
+CONDITIONAL CHANGES:
+✓ Game Logic/Systems/DuetAbilityDetector.cs - If creating duet
+✓ Views/Progression/DuetAbilityScreen.axaml - If cooldown ability
+✓ MainWindow.axaml.cs                      - If modifying NPS/click logic
+✓ Helpers/Utilities/UIUpdater.cs           - If special UI updates needed
+
+═══════════════════════════════════════════════════════════════════════════════
+END OF WEAPON ADDITION GUIDE
+═══════════════════════════════════════════════════════════════════════════════

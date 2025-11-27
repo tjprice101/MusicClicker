@@ -1,0 +1,668 @@
+═══════════════════════════════════════════════════════════════════════════════
+                GUIDE: ADDING NEW SCORES (MINOR AND MAJOR) TO MUSICCLICKER
+═══════════════════════════════════════════════════════════════════════════════
+
+This comprehensive guide covers everything needed to add a new score family to
+the game, including minor fragments, major fragments, and score crafting.
+
+═══════════════════════════════════════════════════════════════════════════════
+UNDERSTANDING THE SCORE SYSTEM
+═══════════════════════════════════════════════════════════════════════════════
+
+TERMINOLOGY REFRESHER:
+- FRAGMENTS:    Raw materials collected from clicking/upgrades
+- MINOR SCORE:  Craftable item made from minor fragments (3 types: Keys, Scales, Progressions)
+- MAJOR SCORE:  Craftable item made from major fragments (3 types: Keys, Scales, Progressions + Major Sheets)
+- SCORE FAMILY: A collection of related scores (e.g., Moonlight, Eroica, Swan Lake)
+
+FRAGMENT FLOW:
+1. Player collects fragments (minor/major keys, scales, progressions)
+2. Fragments are spent to craft scores in "Save Scores" screen
+3. Crafted scores are used in "Unite the Symphony" screen
+4. Major scores unlock weapons and special abilities
+
+═══════════════════════════════════════════════════════════════════════════════
+STEP 1: PLAN YOUR SCORE FAMILY
+═══════════════════════════════════════════════════════════════════════════════
+
+Before coding, decide on:
+
+1. SCORE BASICS
+   - Family Name:     e.g., "Requiem"
+   - Theme:           Musical style or concept
+   - Unlock Tier:     Early, mid, or late game?
+   - Fragment Colors: For UI differentiation
+
+2. MINOR SCORE COSTS
+   Standard pattern (adjust as needed):
+   - Keys Cost:        10 minor keys
+   - Scales Cost:      5 minor scales
+   - Progressions Cost: 3 minor progressions
+
+3. MAJOR SCORE COSTS
+   Standard pattern (adjust as needed):
+   - Keys Cost:        20 major keys
+   - Scales Cost:      10 major scales
+   - Progressions Cost: 5 major progressions
+   - Sheets Cost:      1 major sheet (unlocked via special method)
+
+4. ASSOCIATED WEAPONS
+   - How many weapons in this family? (typically 2-3)
+   - What are their abilities?
+   - Do they form a duet?
+
+═══════════════════════════════════════════════════════════════════════════════
+STEP 2: ADD SCORE DATA TO GAMESTATE
+═══════════════════════════════════════════════════════════════════════════════
+
+📄 File: Game Logic/GameState.cs
+
+1. ADD MINOR FRAGMENT STORAGE
+   Find the "Save Scores state - Minor fragments" section (around line 100-200):
+   
+   ```csharp
+   // Requiem Minor Fragments
+   public int _requiemMinorKeys = 0;
+   public int RequiemMinorKeys { get => _requiemMinorKeys; set => _requiemMinorKeys = value; }
+   
+   public int _requiemMinorScales = 0;
+   public int RequiemMinorScales { get => _requiemMinorScales; set => _requiemMinorScales = value; }
+   
+   public int _requiemMinorProgressions = 0;
+   public int RequiemMinorProgressions { get => _requiemMinorProgressions; set => _requiemMinorProgressions = value; }
+   ```
+
+2. ADD MAJOR SHEET STORAGE
+   Find the section with major sheets (around line 200-250):
+   
+   ```csharp
+   public int _requiemMajorSheets = 0;
+   public int RequiemMajorSheets { get => _requiemMajorSheets; set => _requiemMajorSheets = value; }
+   ```
+
+3. ADD CRAFTED SCORE OWNERSHIP
+   Find the "Craft Ownership (Unite the Symphony)" section (around line 250-350):
+   
+   ```csharp
+   // Requiem Score Ownership
+   public int _requiemMinorOwned = 0;
+   public int RequiemMinorOwned { get => _requiemMinorOwned; set => _requiemMinorOwned = value; }
+   
+   public int _requiemMajorOwned = 0;
+   public int RequiemMajorOwned { get => _requiemMajorOwned; set => _requiemMajorOwned = value; }
+   ```
+
+4. ADD ABILITY UNLOCK FLAG
+   Find the "Ability unlock flags" section (around line 350-400):
+   
+   ```csharp
+   public bool _requiemMajorAbility = false;
+   public bool RequiemMajorAbility { get => _requiemMajorAbility; set => _requiemMajorAbility = value; }
+   ```
+
+5. ADD MAJOR FRAGMENTS
+   Find the "Major fragments for Heart of Harmony" section (around line 400-500):
+   
+   ```csharp
+   // Requiem Major Fragments
+   public int _requiemMajorKeys = 0;
+   public int RequiemMajorKeys { get => _requiemMajorKeys; set => _requiemMajorKeys = value; }
+   
+   public int _requiemMajorScales = 0;
+   public int RequiemMajorScales { get => _requiemMajorScales; set => _requiemMajorScales = value; }
+   
+   public int _requiemMajorProgressions = 0;
+   public int RequiemMajorProgressions { get => _requiemMajorProgressions; set => _requiemMajorProgressions = value; }
+   ```
+
+═══════════════════════════════════════════════════════════════════════════════
+STEP 3: ADD MINOR SCORE TO "SAVE SCORES" SCREEN
+═══════════════════════════════════════════════════════════════════════════════
+
+📄 File: Views/Progression/SaveScoresScreen.axaml
+
+1. LOCATE SCORE GRID
+   Find the Grid containing score buttons (around line 50-400).
+
+2. ADD NEW TAB/SECTION
+   If adding a completely new category:
+   
+   ```xml
+   <TabItem Header="Requiem">
+       <ScrollViewer VerticalScrollBarVisibility="Auto">
+           <StackPanel Spacing="20" Margin="20">
+               
+               <!-- MINOR SCORE SECTION -->
+               <Border BorderBrush="DarkSlateGray" BorderThickness="2" 
+                       CornerRadius="8" Background="#1A1A1A" Padding="15">
+                   <StackPanel>
+                       <TextBlock Text="Requiem Minor Scores" 
+                                  FontSize="20" FontWeight="Bold" 
+                                  Foreground="LightSteelBlue" 
+                                  HorizontalAlignment="Center" Margin="0,0,0,15"/>
+                       
+                       <!-- Fragment Display -->
+                       <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
+                           <TextBlock Name="RequiemMinorKeysText" 
+                                      Text="Keys: 0" FontSize="14" Foreground="Gold"/>
+                           <TextBlock Name="RequiemMinorScalesText" 
+                                      Text="Scales: 0" FontSize="14" Foreground="LightBlue"/>
+                           <TextBlock Name="RequiemMinorProgressionsText" 
+                                      Text="Progressions: 0" FontSize="14" Foreground="LightGreen"/>
+                       </StackPanel>
+                       
+                       <!-- Craft Button -->
+                       <Button Name="CraftRequiemMinorButton" 
+                               Content="Craft Requiem Minor Score" 
+                               FontSize="16" Padding="20,10" Margin="0,15,0,0"
+                               HorizontalAlignment="Center" 
+                               Background="#2F4F4F" Foreground="White"
+                               Click="CraftRequiemMinor_Click"/>
+                       
+                       <TextBlock Name="RequiemMinorCostText" 
+                                  Text="Cost: 10 Keys, 5 Scales, 3 Progressions" 
+                                  FontSize="12" Foreground="Gray" 
+                                  HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                   </StackPanel>
+               </Border>
+               
+           </StackPanel>
+       </ScrollViewer>
+   </TabItem>
+   ```
+
+3. ADD TO EXISTING TAB
+   If adding to an existing category, simply add a new Border block inside the
+   appropriate TabItem's StackPanel.
+
+═══════════════════════════════════════════════════════════════════════════════
+STEP 4: IMPLEMENT MINOR SCORE CRAFTING LOGIC
+═══════════════════════════════════════════════════════════════════════════════
+
+📄 File: Views/Progression/SaveScoresScreen.axaml.cs
+
+1. ADD CRAFT BUTTON HANDLER
+   
+   ```csharp
+   private void CraftRequiemMinor_Click(object? sender, RoutedEventArgs e)
+   {
+       var window = MainWindow.FindMainWindow(this);
+       if (window?.GameState == null) return;
+       
+       SaveScoresManager.CraftRequiemMinor(window.GameState);
+       
+       // Refresh UI to show updated fragments
+       UIUpdater.UpdateSaveScoresUI(window, window.GameState);
+   }
+   ```
+
+📄 File: Helpers/Managers/SaveScoresManager.cs
+
+2. IMPLEMENT CRAFT FUNCTION
+   
+   ```csharp
+   /// <summary>
+   /// Crafts a Requiem Minor Score using collected minor fragments.
+   /// </summary>
+   public static void CraftRequiemMinor(GameState gs)
+   {
+       // Define costs
+       int keyCost = 10;
+       int scaleCost = 5;
+       int progressionCost = 3;
+       
+       // Check if player has enough fragments
+       if (gs.RequiemMinorKeys < keyCost)
+       {
+           Console.WriteLine("Not enough Requiem Minor Keys!");
+           return;
+       }
+       if (gs.RequiemMinorScales < scaleCost)
+       {
+           Console.WriteLine("Not enough Requiem Minor Scales!");
+           return;
+       }
+       if (gs.RequiemMinorProgressions < progressionCost)
+       {
+           Console.WriteLine("Not enough Requiem Minor Progressions!");
+           return;
+       }
+       
+       // Deduct fragments
+       gs.RequiemMinorKeys -= keyCost;
+       gs.RequiemMinorScales -= scaleCost;
+       gs.RequiemMinorProgressions -= progressionCost;
+       
+       // Award crafted score
+       gs.RequiemMinorOwned++;
+       
+       Console.WriteLine($"Crafted Requiem Minor Score! Total owned: {gs.RequiemMinorOwned}");
+   }
+   ```
+
+═══════════════════════════════════════════════════════════════════════════════
+STEP 5: ADD MAJOR SCORE TO "HEART OF HARMONY" SCREEN
+═══════════════════════════════════════════════════════════════════════════════
+
+📄 File: Views/Progression/HeartOfHarmonyScreen.axaml
+
+1. ADD MAJOR SCORE SECTION
+   
+   ```xml
+   <!-- Requiem Major Score -->
+   <Border BorderBrush="#FF6B35" BorderThickness="3" 
+           CornerRadius="10" Background="#1A1A1A" Padding="15" Margin="10">
+       <StackPanel>
+           <TextBlock Text="Requiem Major Score" 
+                      FontSize="22" FontWeight="Bold" 
+                      Foreground="Gold" HorizontalAlignment="Center"/>
+           
+           <!-- Fragment Display -->
+           <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" 
+                       Spacing="20" Margin="0,10,0,0">
+               <TextBlock Name="RequiemMajorKeysText" 
+                          Text="Major Keys: 0" FontSize="14" Foreground="Gold"/>
+               <TextBlock Name="RequiemMajorScalesText" 
+                          Text="Major Scales: 0" FontSize="14" Foreground="LightBlue"/>
+               <TextBlock Name="RequiemMajorProgressionsText" 
+                          Text="Major Progressions: 0" FontSize="14" Foreground="LightGreen"/>
+               <TextBlock Name="RequiemMajorSheetsText" 
+                          Text="Major Sheets: 0" FontSize="14" Foreground="White"/>
+           </StackPanel>
+           
+           <!-- Craft Button -->
+           <Button Name="CraftRequiemMajorButton" 
+                   Content="Craft Requiem Major Score" 
+                   FontSize="16" Padding="20,10" Margin="0,15,0,0"
+                   HorizontalAlignment="Center" 
+                   Background="#8B4513" Foreground="White"
+                   Click="CraftRequiemMajor_Click"/>
+           
+           <TextBlock Name="RequiemMajorCostText" 
+                      Text="Cost: 20 Keys, 10 Scales, 5 Progressions, 1 Sheet" 
+                      FontSize="12" Foreground="Gray" 
+                      HorizontalAlignment="Center" Margin="0,5,0,0"/>
+           
+           <!-- Ability Description -->
+           <TextBlock Name="RequiemAbilityText" 
+                      Text="Major Ability: [Describe ability here]" 
+                      FontSize="13" Foreground="LightGoldenrodYellow" 
+                      TextWrapping="Wrap" Margin="0,10,0,0"/>
+       </StackPanel>
+   </Border>
+   ```
+
+═══════════════════════════════════════════════════════════════════════════════
+STEP 6: IMPLEMENT MAJOR SCORE CRAFTING LOGIC
+═══════════════════════════════════════════════════════════════════════════════
+
+📄 File: Views/Progression/HeartOfHarmonyScreen.axaml.cs
+
+1. ADD CRAFT BUTTON HANDLER
+   
+   ```csharp
+   private void CraftRequiemMajor_Click(object? sender, RoutedEventArgs e)
+   {
+       var window = MainWindow.FindMainWindow(this);
+       if (window?.GameState == null) return;
+       
+       HeartOfHarmonyManager.CraftRequiemMajor(window.GameState);
+       
+       // Refresh UI
+       UIUpdater.UpdateHeartOfHarmonyUI(window, window.GameState);
+   }
+   ```
+
+📄 File: Helpers/Managers/HeartOfHarmonyManager.cs
+
+2. IMPLEMENT CRAFT FUNCTION
+   
+   ```csharp
+   /// <summary>
+   /// Crafts a Requiem Major Score using collected major fragments.
+   /// </summary>
+   public static void CraftRequiemMajor(GameState gs)
+   {
+       // Define costs
+       int keyCost = 20;
+       int scaleCost = 10;
+       int progressionCost = 5;
+       int sheetCost = 1;
+       
+       // Check fragments
+       if (gs.RequiemMajorKeys < keyCost ||
+           gs.RequiemMajorScales < scaleCost ||
+           gs.RequiemMajorProgressions < progressionCost ||
+           gs.RequiemMajorSheets < sheetCost)
+       {
+           Console.WriteLine("Not enough major fragments!");
+           return;
+       }
+       
+       // Deduct fragments
+       gs.RequiemMajorKeys -= keyCost;
+       gs.RequiemMajorScales -= scaleCost;
+       gs.RequiemMajorProgressions -= progressionCost;
+       gs.RequiemMajorSheets -= sheetCost;
+       
+       // Award score
+       gs.RequiemMajorOwned++;
+       
+       // Unlock ability on first craft
+       if (gs.RequiemMajorOwned == 1)
+       {
+           gs.RequiemMajorAbility = true;
+           Console.WriteLine("Unlocked Requiem Major Ability!");
+       }
+       
+       Console.WriteLine($"Crafted Requiem Major Score! Total owned: {gs.RequiemMajorOwned}");
+   }
+   ```
+
+═══════════════════════════════════════════════════════════════════════════════
+STEP 7: HOOK UP FRAGMENT GENERATION
+═══════════════════════════════════════════════════════════════════════════════
+
+📄 File: Helpers/Utilities/Progression.cs
+
+1. ADD UNLOCK CONDITIONS
+   Find the appropriate unlock tier functions and add your score:
+   
+   ```csharp
+   public static bool IsRequiemUnlocked(GameState gs)
+   {
+       // Example: Unlock after owning 100 Symphony upgrades
+       return gs.SymphonyOwned >= 100;
+   }
+   ```
+
+2. ADD TO UI VISIBILITY CHECKS
+   Update screen visibility logic to show/hide Requiem content based on unlock.
+
+📄 File: MainWindow.axaml.cs (or appropriate click handler)
+
+3. ADD FRAGMENT DROPS
+   Find the click button handler or upgrade purchase logic:
+   
+   ```csharp
+   private void ClickButton_Click(object? sender, RoutedEventArgs e)
+   {
+       // ... existing click logic ...
+       
+       // Drop Requiem fragments if unlocked
+       if (Progression.IsRequiemUnlocked(gameState))
+       {
+           // 1% chance for minor key
+           if (_random.NextDouble() < 0.01)
+           {
+               gameState.RequiemMinorKeys++;
+           }
+           
+           // 0.5% chance for minor scale
+           if (_random.NextDouble() < 0.005)
+           {
+               gameState.RequiemMinorScales++;
+           }
+           
+           // 0.1% chance for minor progression
+           if (_random.NextDouble() < 0.001)
+           {
+               gameState.RequiemMinorProgressions++;
+           }
+       }
+   }
+   ```
+
+4. ADD MAJOR FRAGMENT DROPS
+   Major fragments typically come from special actions:
+   
+   ```csharp
+   // Example: Drop major fragments from high-tier upgrades
+   private void BuyMagnumOpus()
+   {
+       // ... purchase logic ...
+       
+       if (Progression.IsRequiemUnlocked(gameState))
+       {
+           gameState.RequiemMajorKeys++;
+           gameState.RequiemMajorScales++;
+       }
+   }
+   ```
+
+═══════════════════════════════════════════════════════════════════════════════
+STEP 8: UPDATE UI REFRESH LOGIC
+═══════════════════════════════════════════════════════════════════════════════
+
+📄 File: Helpers/Utilities/UIUpdater.cs
+
+1. ADD SAVE SCORES UI UPDATE
+   Find `UpdateSaveScoresUI` method:
+   
+   ```csharp
+   public static void UpdateSaveScoresUI(MainWindow window, GameState gs)
+   {
+       // ... existing updates ...
+       
+       // Update Requiem minor fragments
+       if (window.SaveScoresScreen?.RequiemMinorKeysText != null)
+       {
+           window.SaveScoresScreen.RequiemMinorKeysText.Text = $"Keys: {gs.RequiemMinorKeys}";
+           window.SaveScoresScreen.RequiemMinorScalesText.Text = $"Scales: {gs.RequiemMinorScales}";
+           window.SaveScoresScreen.RequiemMinorProgressionsText.Text = $"Progressions: {gs.RequiemMinorProgressions}";
+           
+           // Update button state
+           bool canCraft = gs.RequiemMinorKeys >= 10 && 
+                          gs.RequiemMinorScales >= 5 && 
+                          gs.RequiemMinorProgressions >= 3;
+           window.SaveScoresScreen.CraftRequiemMinorButton.IsEnabled = canCraft;
+       }
+   }
+   ```
+
+2. ADD HEART OF HARMONY UI UPDATE
+   Find `UpdateHeartOfHarmonyUI` method:
+   
+   ```csharp
+   public static void UpdateHeartOfHarmonyUI(MainWindow window, GameState gs)
+   {
+       // ... existing updates ...
+       
+       // Update Requiem major fragments
+       if (window.HeartOfHarmonyScreen?.RequiemMajorKeysText != null)
+       {
+           window.HeartOfHarmonyScreen.RequiemMajorKeysText.Text = $"Major Keys: {gs.RequiemMajorKeys}";
+           window.HeartOfHarmonyScreen.RequiemMajorScalesText.Text = $"Major Scales: {gs.RequiemMajorScales}";
+           window.HeartOfHarmonyScreen.RequiemMajorProgressionsText.Text = $"Major Progressions: {gs.RequiemMajorProgressions}";
+           window.HeartOfHarmonyScreen.RequiemMajorSheetsText.Text = $"Major Sheets: {gs.RequiemMajorSheets}";
+           
+           // Update button state
+           bool canCraft = gs.RequiemMajorKeys >= 20 && 
+                          gs.RequiemMajorScales >= 10 && 
+                          gs.RequiemMajorProgressions >= 5 &&
+                          gs.RequiemMajorSheets >= 1;
+           window.HeartOfHarmonyScreen.CraftRequiemMajorButton.IsEnabled = canCraft;
+       }
+   }
+   ```
+
+═══════════════════════════════════════════════════════════════════════════════
+STEP 9: ADD MAJOR SHEET UNLOCK MECHANISM
+═══════════════════════════════════════════════════════════════════════════════
+
+Major Sheets are special and should be unlocked through significant milestones.
+
+OPTION 1: UNLOCK VIA MILESTONE
+```csharp
+// When player reaches certain threshold
+if (gs.RequiemMajorOwned >= 10 && gs.RequiemMajorSheets == 0)
+{
+    gs.RequiemMajorSheets = 1;
+    Console.WriteLine("Unlocked Requiem Major Sheet!");
+}
+```
+
+OPTION 2: UNLOCK VIA CRAFTING
+```csharp
+public static void CraftRequiemMinor(GameState gs)
+{
+    // ... craft logic ...
+    
+    // Every 5 minor scores grants a major sheet
+    if (gs.RequiemMinorOwned % 5 == 0)
+    {
+        gs.RequiemMajorSheets++;
+        Console.WriteLine("Awarded Requiem Major Sheet!");
+    }
+}
+```
+
+OPTION 3: UNLOCK VIA FRAGMENTS
+```csharp
+// Trade minor fragments for major sheet
+public static void ConvertToRequiemMajorSheet(GameState gs)
+{
+    int keyCost = 100;
+    int scaleCost = 50;
+    int progressionCost = 25;
+    
+    if (gs.RequiemMinorKeys >= keyCost &&
+        gs.RequiemMinorScales >= scaleCost &&
+        gs.RequiemMinorProgressions >= progressionCost)
+    {
+        gs.RequiemMinorKeys -= keyCost;
+        gs.RequiemMinorScales -= scaleCost;
+        gs.RequiemMinorProgressions -= progressionCost;
+        gs.RequiemMajorSheets++;
+        
+        Console.WriteLine("Converted fragments to Requiem Major Sheet!");
+    }
+}
+```
+
+═══════════════════════════════════════════════════════════════════════════════
+STEP 10: IMPLEMENT MAJOR SCORE ABILITY
+═══════════════════════════════════════════════════════════════════════════════
+
+📄 File: Game Logic/Systems/WeaponAbilities.cs (or create new ability file)
+
+1. CREATE ABILITY FUNCTION
+   
+   ```csharp
+   /// <summary>
+   /// Requiem Major Ability: Grants +5% NPS per major score owned
+   /// </summary>
+   public static double RequiemMajor_GetNpsMultiplier(GameState gs)
+   {
+       if (!gs.RequiemMajorAbility)
+           return 1.0; // Ability not unlocked
+       
+       // +5% per major score owned
+       double bonus = 1.0 + (gs.RequiemMajorOwned * 0.05);
+       return bonus;
+   }
+   ```
+
+2. INTEGRATE INTO GAME LOOP
+   📄 File: MainWindow.axaml.cs
+   
+   ```csharp
+   // Background NPS accumulation
+   _backgroundNpsTimer.Elapsed += (s, e) =>
+   {
+       double effectiveNps = gameState.NotesPerSecond;
+       
+       // ... existing multipliers ...
+       
+       // Apply Requiem Major ability
+       effectiveNps *= MusicClicker.Armory.WeaponAbilities.RequiemMajor_GetNpsMultiplier(gameState);
+       
+       // Accumulate notes
+       MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, effectiveNps * elapsed);
+   };
+   ```
+
+═══════════════════════════════════════════════════════════════════════════════
+STEP 11: TEST YOUR SCORE SYSTEM
+═══════════════════════════════════════════════════════════════════════════════
+
+TESTING CHECKLIST:
+
+□ Minor fragments drop when unlocked
+□ Fragment counts display correctly in UI
+□ Minor score can be crafted when enough fragments
+□ Crafting deducts correct fragment amounts
+□ Minor score ownership increments
+□ Major fragments drop from appropriate sources
+□ Major sheet unlocks at correct time
+□ Major score can be crafted when enough fragments
+□ Major ability unlocks on first major craft
+□ Major ability applies correctly to gameplay
+□ All values persist after save/load
+□ UI updates in real-time during fragment collection
+□ Buttons enable/disable based on fragment availability
+
+═══════════════════════════════════════════════════════════════════════════════
+STEP 12: BALANCE TESTING
+═══════════════════════════════════════════════════════════════════════════════
+
+1. FRAGMENT DROP RATES
+   - Test that fragments drop at reasonable rates
+   - Ensure players can progress without excessive grinding
+   - Balance minor vs major fragment rarity
+
+2. CRAFTING COSTS
+   - Verify costs feel fair for unlock tier
+   - Test progression pacing (how long to first craft?)
+   - Ensure costs scale appropriately
+
+3. ABILITY POWER LEVEL
+   - Compare major ability to existing abilities
+   - Ensure it's not overpowered for its unlock tier
+   - Test with various upgrade counts
+
+═══════════════════════════════════════════════════════════════════════════════
+QUICK REFERENCE: FILES TO MODIFY
+═══════════════════════════════════════════════════════════════════════════════
+
+REQUIRED CHANGES:
+✓ Game Logic/GameState.cs                          - All fragment/score/ability data
+✓ Views/Progression/SaveScoresScreen.axaml         - Minor score UI
+✓ Views/Progression/SaveScoresScreen.axaml.cs      - Minor craft handler
+✓ Views/Progression/HeartOfHarmonyScreen.axaml     - Major score UI
+✓ Views/Progression/HeartOfHarmonyScreen.axaml.cs  - Major craft handler
+✓ Helpers/Managers/SaveScoresManager.cs            - Minor craft logic
+✓ Helpers/Managers/HeartOfHarmonyManager.cs        - Major craft logic
+✓ Helpers/Utilities/UIUpdater.cs                   - UI refresh logic
+✓ Helpers/Utilities/Progression.cs                 - Unlock conditions
+
+CONDITIONAL CHANGES:
+✓ MainWindow.axaml.cs                              - Fragment drops, ability integration
+✓ Game Logic/Systems/WeaponAbilities.cs            - Major ability implementation
+✓ Associated weapon files                          - If unlocking weapons
+
+═══════════════════════════════════════════════════════════════════════════════
+COMMON PITFALLS TO AVOID
+═══════════════════════════════════════════════════════════════════════════════
+
+❌ MISTAKE: Forgetting major sheet unlock mechanism
+   → RESULT: Players can't craft major scores even with fragments
+
+❌ MISTAKE: Not adding to UIUpdater
+   → RESULT: Fragment counts don't update in real-time
+
+❌ MISTAKE: Inconsistent naming (Requiem vs RequiemScore)
+   → FIX: Use consistent PascalCase naming throughout
+
+❌ MISTAKE: Not testing save/load
+   → RESULT: Fragments reset or don't persist
+
+❌ MISTAKE: Making fragment drops too rare
+   → FIX: Test actual play time to gather fragments
+
+❌ MISTAKE: Forgetting to add both minor AND major versions
+   → RESULT: Incomplete score system
+
+═══════════════════════════════════════════════════════════════════════════════
+END OF SCORE ADDITION GUIDE
+═══════════════════════════════════════════════════════════════════════════════
