@@ -38,6 +38,26 @@ namespace MusicClicker
         private readonly Button _equipYesButton;
         private readonly Button _equipNoButton;
 
+        // Ordered list of all major scores (implementation order: Base → Event → Boss Fight)
+        private readonly List<string> _majorScoreOrder = new()
+        {
+            // Base Major Scores
+            "Moonlight",
+            "Eroica",
+            "Swan",
+            "LaCampanella",
+            "Enigma",
+            "Fate",
+            "OdeToJoy",
+            // Event Major Scores
+            "DiesIrae",
+            "Winter",
+            // Boss Fight Major Scores
+            "Mercury",
+            "ClairDeLune",
+            "Mars"
+        };
+
         // Mapping of score names → image asset paths
         private readonly Dictionary<string, string> _majorScoreImages = new()
         {
@@ -47,7 +67,29 @@ namespace MusicClicker
             {"LaCampanella", "avares://MusicClicker/Assets/LaCampanellaMajor2.png"},
             {"Enigma", "avares://MusicClicker/Assets/EnigmaMajor2.png"},
             {"Fate", "avares://MusicClicker/Assets/FateMajor2.png"},
-            {"OdeToJoy", "avares://MusicClicker/Assets/OdeToJoyMajor2.png"}
+            {"OdeToJoy", "avares://MusicClicker/Assets/OdeToJoyMajor2.png"},
+            {"DiesIrae", "avares://MusicClicker/Assets/DiesIraeMajor.png"},
+            {"Winter", "avares://MusicClicker/Assets/WinterMajor.png"},
+            {"Mercury", "avares://MusicClicker/Assets/MercuryMajor.jpg"},
+            {"ClairDeLune", "avares://MusicClicker/Assets/ClairDeLuneMajor.jpg"},
+            {"Mars", "avares://MusicClicker/Assets/MarsMajor.jpg"}
+        };
+
+        // Friendly display names for major scores (internal key -> UI string)
+        private readonly Dictionary<string, string> _majorScoreDisplayNames = new()
+        {
+            {"Moonlight", "Moonlight"},
+            {"Eroica", "Eroica"},
+            {"Swan", "Swan"},
+            {"LaCampanella", "La Campanella"},
+            {"Enigma", "Enigma"},
+            {"Fate", "Fate"},
+            {"OdeToJoy", "Ode to Joy"},
+            {"DiesIrae", "Dies Irae"},
+            {"Winter", "Winter"},
+            {"Mercury", "Mercury"},
+            {"ClairDeLune", "Clair de Lune"},
+            {"Mars", "Mars"}
         };
 
         // Ordered list of weapon keys (matches ArmoryOfForte screen order)
@@ -242,17 +284,21 @@ namespace MusicClicker
             _leftDrawerPanel.Children.Clear();
             _leftDrawerPanel.Orientation = Avalonia.Layout.Orientation.Vertical;
 
-            // Create entry button for each score image
-            foreach (var score in _majorScoreImages.Keys)
+            // Create entry button ONLY for owned scores, in the defined order
+            foreach (var score in _majorScoreOrder)
             {
-                // Try fetch the preloaded bitmap from the cache; if for some reason it's missing,
-                // fall back to a placeholder image. This avoids an exception and reduces repeated
-                // dictionary lookups when re-rendering the drawer.
+                // Skip if not owned
+                if (!OwnsScore(score)) continue;
+
+                // Get the image asset path
+                if (!_majorScoreImages.TryGetValue(score, out var imagePath)) continue;
+
+                // Try fetch the preloaded bitmap from the cache
                 _bitmapCache.TryGetValue(score, out var bitmap);
                 var imageSource = bitmap ?? _emptyBitmap;
 
                 // Image for button content - use helper to ensure smooth scaling and consistent settings
-                var imageControl = MusicClicker.Helpers.ImageHelpers.CreateSmoothImage(imageSource, 256, 144, score, OwnsScore(score) ? 1.0 : 0.3, OwnsScore(score));
+                var imageControl = MusicClicker.Helpers.ImageHelpers.CreateSmoothImage(imageSource, 256, 144, score, 1.0, true);
 
                 // Transparent button overlay for click handling
                 var button = new Button
@@ -263,23 +309,26 @@ namespace MusicClicker
                     BorderThickness = new Thickness(0),
                     Margin = new Thickness(5),
                     Content = imageControl,
-                    IsEnabled = OwnsScore(score)
+                    IsEnabled = true
                 };
 
+                // Capture the score name in a local variable to avoid closure issues
+                string capturedScore = score;
+                
                 // Clicking toggles equip/disable prompt
                 button.Click += (_, _) =>
                 {
-                    if (_equippedText.Text == score)
+                    if (_equippedText.Text == capturedScore)
                     {
-                        ShowDisablePrompt(score);
+                        ShowDisablePrompt(capturedScore);
                     }
                     else
                     {
-                        ShowEquipPrompt(score);
+                        ShowEquipPrompt(capturedScore);
                     }
                 };
 
-                    _leftDrawerPanel.Children.Add(button);
+                _leftDrawerPanel.Children.Add(button);
             }
         }
 
@@ -290,12 +339,16 @@ namespace MusicClicker
             _rightDrawerPanel.Children.Clear();
             _rightDrawerPanel.Orientation = Avalonia.Layout.Orientation.Vertical;
 
-                foreach (var weapon in _weaponOrder)
+            // Create entry button ONLY for owned weapons, in the defined order
+            foreach (var weapon in _weaponOrder)
             {
+                // Skip if not owned
+                if (!OwnsWeapon(weapon)) continue;
+
                 _weaponBitmapCache.TryGetValue(weapon, out var bitmap);
                 var imageSource = bitmap ?? _emptyBitmap;
 
-                var imageControl = MusicClicker.Helpers.ImageHelpers.CreateSmoothImage(imageSource, 256, 144, weapon, OwnsWeapon(weapon) ? 1.0 : 0.3, OwnsWeapon(weapon));
+                var imageControl = MusicClicker.Helpers.ImageHelpers.CreateSmoothImage(imageSource, 256, 144, weapon, 1.0, true);
 
                 var button = new Button
                 {
@@ -305,21 +358,24 @@ namespace MusicClicker
                     BorderThickness = new Thickness(0),
                     Margin = new Thickness(5),
                     Content = imageControl,
-                    IsEnabled = OwnsWeapon(weapon)
+                    IsEnabled = true
                 };
 
-                    button.Click += (_, _) =>
+                // Capture the weapon name in a local variable to avoid closure issues
+                string capturedWeapon = weapon;
+
+                button.Click += (_, _) =>
+                {
+                    // If already equipped, ask to disable; otherwise ask to equip
+                    if (_gameState.CurrentResonatedWeapon1 == capturedWeapon || _gameState.CurrentResonatedWeapon2 == capturedWeapon)
                     {
-                        // If already equipped, ask to disable; otherwise ask to equip
-                        if (_gameState.CurrentResonatedWeapon1 == weapon || _gameState.CurrentResonatedWeapon2 == weapon)
-                        {
-                            ShowWeaponDisablePrompt(weapon);
-                        }
-                        else
-                        {
-                            ShowWeaponEquipPrompt(weapon);
-                        }
-                    };
+                        ShowWeaponDisablePrompt(capturedWeapon);
+                    }
+                    else
+                    {
+                        ShowWeaponEquipPrompt(capturedWeapon);
+                    }
+                };
 
                 _rightDrawerPanel.Children.Add(button);
             }
@@ -353,16 +409,8 @@ namespace MusicClicker
 
         private void RefreshWeaponDrawer()
         {
-            if (_rightDrawerPanel == null) return;
-            foreach (var child in _rightDrawerPanel.Children)
-            {
-                if (child is Button btn && btn.Content is Image img && img.Tag is string weaponName)
-                {
-                    bool owned = OwnsWeapon(weaponName);
-                    img.Opacity = owned ? 1.0 : 0.3;
-                    btn.IsEnabled = owned;
-                }
-            }
+            // Rebuild the entire weapon drawer to reflect current ownership state
+            InitializeWeaponDrawer();
         }
 
         private void ShowWeaponEquipPrompt(string weaponName)
@@ -468,8 +516,8 @@ namespace MusicClicker
                 case "TheSnowsDesire": _gameState.TheSnowsDesireAbility = true; break;
             }
 
-            // Refresh weapon drawer UI
-            RefreshWeaponDrawer();
+            // Update duet resonance text
+            UpdateDuetResonanceText();
         }
 
         private void UnequipWeapon(int slot)
@@ -571,55 +619,55 @@ namespace MusicClicker
             if ((weapon1 == "IncisorOfMoonlight" && weapon2 == "EulogyOfTheMoon") ||
                 (weapon1 == "EulogyOfTheMoon" && weapon2 == "IncisorOfMoonlight"))
             {
-                return "Moonlight Sonata - Lunar Phases: Cycles through 4 moon phases every 8 seconds (New Moon: 2x NPC, Crescent: Component drops, Full Moon: 3x NPS, Waning: Upgrades 50% off) - 40s duration, 4min cooldown";
+                return DuetDescriptions.Compact.Moonlight;
             }
 
             if ((weapon1 == "SakurasBlossom" && weapon2 == "FuneralPrayer") ||
                 (weapon1 == "FuneralPrayer" && weapon2 == "SakurasBlossom"))
             {
-                return "Eroica - Victory March: Fill bar with 100 clicks for escalating rewards (25%: minor score, 50%: major score, 75%: +50 fragments, 100%: double all scores) - 5min cooldown";
+                return DuetDescriptions.Compact.Eroica;
             }
 
             if ((weapon1 == "StarScatteredWings" && weapon2 == "ThousandWingedSwan") ||
                 (weapon1 == "ThousandWingedSwan" && weapon2 == "StarScatteredWings"))
             {
-                return "Swan Lake Duet - Mirror Lake: Every action reflects after 3 seconds (20s duration, 4min cooldown)";
+                return DuetDescriptions.Compact.SwanLake;
             }
 
             if ((weapon1 == "SymphonyOfBells" && weapon2 == "RazerOfBellsChimes") ||
                 (weapon1 == "RazerOfBellsChimes" && weapon2 == "SymphonyOfBells"))
             {
-                return "La Campanella Duet - Chime Chain: Click within 1s to extend chain. Rewards = chainLength² × NPS (25s duration, 4min cooldown)";
+                return DuetDescriptions.Compact.LaCampanella;
             }
 
             if ((weapon1 == "CreatorOfMystery" && weapon2 == "Truthseeker") ||
                 (weapon1 == "Truthseeker" && weapon2 == "CreatorOfMystery"))
             {
-                return "Enigma Duet - Cipher Wheel: Click when arrow points to segment for rewards (8 segments: notes, NPS, scores, etc.) - 25s duration, 4min cooldown";
+                return DuetDescriptions.Compact.Enigma;
             }
 
             if ((weapon1 == "AstralChainripper" && weapon2 == "CosmicWeaver") ||
                 (weapon1 == "CosmicWeaver" && weapon2 == "AstralChainripper"))
             {
-                return "Fate Duet - Hourglass Fracture: Split time between Past (1.5x later), Present (1x now), Future (2x later) streams - 30s duration, 5min cooldown";
+                return DuetDescriptions.Compact.Fate;
             }
 
             if ((weapon1 == "JoyfulCatharsis" && weapon2 == "OdeToCreation") ||
                 (weapon1 == "OdeToCreation" && weapon2 == "JoyfulCatharsis"))
             {
-                return "Ode to Joy Duet - Orchestra Conductor: Conduct all 4 instrument sections within 5s for combo. Reward = NPS × 20 × combo count (30s duration, 5min cooldown)";
+                return DuetDescriptions.Compact.OdeToJoy;
             }
 
             if ((weapon1 == "SevenCircles" && weapon2 == "HellsWrath") ||
                 (weapon1 == "HellsWrath" && weapon2 == "SevenCircles"))
             {
-                return "Descending Judgment - Seven Seals: Each click places a seal. At 7 seals, grants 3 random minor scores (15s duration, 3.5min cooldown)";
+                return DuetDescriptions.Compact.DiesIrae;
             }
 
             if ((weapon1 == "CacophonicBlizzard" && weapon2 == "TheSnowsDesire") ||
                 (weapon1 == "TheSnowsDesire" && weapon2 == "CacophonicBlizzard"))
             {
-                return "Eternal Frost - Winter Duet: Absolute Zero - Activate to convert your frozen NPS into a click multiplier. Each click extends duration by 0.5s (max +10s, 15s base duration, 5min cooldown)";
+                return DuetDescriptions.Compact.Winter;
             }
 
             return "";
@@ -636,16 +684,8 @@ namespace MusicClicker
 
         public void RefreshDrawer()
         {
-            // Updates opacity + enabled state based on ownership
-            foreach (var child in _leftDrawerPanel.Children)
-            {
-                if (child is Button btn && btn.Content is Image img && img.Tag is string scoreName)
-                {
-                    bool owned = OwnsScore(scoreName);
-                    img.Opacity = owned ? 1.0 : 0.3;
-                    btn.IsEnabled = owned;
-                }
-            }
+            // Rebuild the entire drawer to reflect current ownership state
+            InitializeDrawer();
         }
 
         // Checks whether the player owns the specified major score
@@ -653,6 +693,7 @@ namespace MusicClicker
         {
             return score switch
             {
+                // Base Major Scores
                 "Moonlight" => _gameState.MoonlightMajorOwned > 0,
                 "Eroica" => _gameState.EroicaMajorOwned > 0,
                 "Swan" => _gameState.SwanMajorOwned > 0,
@@ -660,6 +701,13 @@ namespace MusicClicker
                 "Enigma" => _gameState.EnigmaMajorOwned > 0,
                 "Fate" => _gameState.FateMajorOwned > 0,
                 "OdeToJoy" => _gameState.OdeToJoyMajorOwned > 0,
+                // Event Major Scores
+                "DiesIrae" => _gameState.DiesIraeOwned > 0,
+                "Winter" => _gameState.WinterOwned > 0,
+                // Boss Fight Major Scores
+                "Mercury" => _gameState.MercuryMajorOwned > 0,
+                "ClairDeLune" => _gameState.ClairDeLuneMajorOwned > 0,
+                "Mars" => _gameState.MarsMajorOwned > 0,
                 _ => false
             };
         }
@@ -668,7 +716,8 @@ namespace MusicClicker
         {
             // Show prompt asking to equip a score
             _equipPromptPanel.IsVisible = true;
-            _equipPromptText.Text = $"Resonate with {scoreName}'s Tempo?";
+            var displayName = _majorScoreDisplayNames.TryGetValue(scoreName, out var name) ? name : scoreName;
+            _equipPromptText.Text = $"Resonate with {displayName}'s Tempo?";
 
             // Remove previous handlers to prevent accumulation
             _equipYesButton.Click -= EquipYesButtonHandler;
@@ -700,7 +749,8 @@ namespace MusicClicker
         {
             // Show prompt asking to disable the currently equipped score
             _equipPromptPanel.IsVisible = true;
-            _equipPromptText.Text = $"Do you want to disable {scoreName}'s resonance?";
+            var displayName = _majorScoreDisplayNames.TryGetValue(scoreName, out var name) ? name : scoreName;
+            _equipPromptText.Text = $"Do you want to disable {displayName}'s resonance?";
 
             // Remove previous handlers
             _equipYesButton.Click -= DisableYesHandler;
@@ -808,27 +858,19 @@ namespace MusicClicker
         {
             try
             {
-                // Update drawer buttons to reflect current ownership
-                RefreshDrawer();
-
-                // If a score is currently equipped but the player no longer owns it,
-                // reset to the default equipped state.
-                // Refresh weapon UI
-                RefreshWeaponDrawer();
-                // Update equipped slot displays
-                SetWeaponSlotDisplay(1, _gameState.CurrentResonatedWeapon1);
-                SetWeaponSlotDisplay(2, _gameState.CurrentResonatedWeapon2);
+                // Check if currently equipped score is still valid
+                string current = _gameState.CurrentResonatedScore ?? "None";
+                if (!string.IsNullOrEmpty(current) && current != "None" && (!_majorScoreImages.ContainsKey(current) || !OwnsScore(current)))
                 {
-                        string current = _gameState.CurrentResonatedScore ?? "None";
-                        if (!string.IsNullOrEmpty(current) && current != "None" && (!_majorScoreImages.ContainsKey(current) || !OwnsScore(current)))
-                    {
-                        // Reset equipped display to default (None)
-                        SetDefaultEquipped();
-                    }
+                    // Reset equipped display to default (None)
+                    SetDefaultEquipped();
                 }
 
-                // Refresh weapon drawer and ensure currently resonated weapons are still owned
-                RefreshWeaponDrawer();
+                // Update equipped slot displays only (don't rebuild entire drawer)
+                SetWeaponSlotDisplay(1, _gameState.CurrentResonatedWeapon1);
+                SetWeaponSlotDisplay(2, _gameState.CurrentResonatedWeapon2);
+
+                // Ensure currently resonated weapons are still owned
                 if (!string.IsNullOrEmpty(_gameState.CurrentResonatedWeapon1) && _gameState.CurrentResonatedWeapon1 != "None")
                 {
                     if (!_weaponImages.ContainsKey(_gameState.CurrentResonatedWeapon1) || !OwnsWeapon(_gameState.CurrentResonatedWeapon1))

@@ -28,6 +28,24 @@ namespace MusicClicker
             // Cache frequently used values locally to avoid repeated property access.
             double notes = gameState.Notes;
             double nps = gameState.NotesPerSecond;
+            
+            // Update Cacophonic Dreams endgame button (requires 1 trillion NPS)
+            if (window.CacophonicDreamsButton != null)
+            {
+                bool shouldBeEnabled = nps >= 1_000_000_000_000; // 1 trillion NPS
+                if (window.CacophonicDreamsButton.IsEnabled != shouldBeEnabled)
+                {
+                    window.CacophonicDreamsButton.IsEnabled = shouldBeEnabled;
+                    window.CacophonicDreamsButton.Opacity = shouldBeEnabled ? 1.0 : 0.4;
+                    
+                    // Show/hide lock overlay based on unlock status
+                    var lockOverlay = window.FindControl<Border>("CacophonicDreamsLockOverlay");
+                    if (lockOverlay != null)
+                    {
+                        lockOverlay.IsVisible = !shouldBeEnabled;
+                    }
+                }
+            }
 
             // Top-level displays (Notes / NPS) are animated separately by AnimateVisuals
             // which runs at the animation frame rate to produce smooth transitions.

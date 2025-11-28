@@ -293,6 +293,7 @@
                             </Button>
                         </Border>
 
+
                         
 
                     </Canvas>
@@ -340,6 +341,58 @@
                             Margin="0,0,0,0" />
                 </Border>
             </Grid>
+            
+            <!-- Cacophonic Dreams Button - Bottom Left Corner -->
+            <Border HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Margin="20,0,0,20"
+                    CornerRadius="4">
+                <Border.Effect>
+                    <DropShadowEffect Color="Black" BlurRadius="15" Opacity="0.7" OffsetX="0" OffsetY="0" />
+                </Border.Effect>
+                <Grid Width="320" Height="180">
+                    <Button x:Name="CacophonicDreamsButton"
+                            Width="320"
+                            Height="180"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Padding="0"
+                            IsEnabled="False"
+                            Opacity="0.4">
+                        <Image Source="avares://MusicClicker/Assets/CacophonicDreamsBUTTON.jpg"
+                               Stretch="UniformToFill" />
+                    </Button>
+                    
+                    <!-- Lock overlay -->
+                    <Border x:Name="CacophonicDreamsLockOverlay"
+                            Background="#AA000000"
+                            CornerRadius="4"
+                            Width="320"
+                            Height="180"
+                            IsVisible="True">
+                        <StackPanel Orientation="Vertical" 
+                                    HorizontalAlignment="Center" 
+                                    VerticalAlignment="Center"
+                                    Spacing="6">
+                            <TextBlock Text="🔒" 
+                                       FontSize="28" 
+                                       HorizontalAlignment="Center" 
+                                       Foreground="White" />
+                            <TextBlock Text="Needs 1 Trillion NPS" 
+                                       FontSize="14" 
+                                       FontWeight="Bold" 
+                                       HorizontalAlignment="Center" 
+                                       Foreground="White" 
+                                       TextAlignment="Center" />
+                            <TextBlock Text="to Unlock" 
+                                       FontSize="12" 
+                                       HorizontalAlignment="Center" 
+                                       Foreground="#CCFFFFFF" 
+                                       TextAlignment="Center" />
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Border>
         </Grid>
 
         <!-- Game Screens -->
@@ -350,6 +403,7 @@
         <views:HeartOfHarmonyScreen x:Name="HeartOfHarmonyScreen" IsVisible="False" />
         <views:UniteTheSymphonyScreen x:Name="UnityTheSymphonyScreen" IsVisible="False" />
         <views:ArmoryOfForteScreen x:Name="ArmoryOfForteScreen" IsVisible="False" />
+        <views:EntropicArmoryScreen x:Name="EntropicArmoryScreen" IsVisible="False" />
         <views:EternalModulationScreen x:Name="EternalModulationScreen" IsVisible="False" />
         
         <!-- Currently Active Events. Comment out any events that are not currently active in sets of 2. (Top = left and bottom = right) -->
@@ -359,9 +413,10 @@
         <views:SymphonicGalleryScreen x:Name="SymphonicGalleryScreen" IsVisible="False" />
         <views:ClickerCustomizeScreen x:Name="ClickerCustomizeScreen" IsVisible="False" />
         <views:BackgroundCustomizeScreen x:Name="BackgroundCustomizeScreen" IsVisible="False" />
+        <views:CacophonicDreamsScreen x:Name="CacophonicDreamsScreen" IsVisible="False" />
         
         <!-- Duet Ability Screen - Bottom Right Corner -->
-        <views:DuetAbilityScreen x:Name="DuetAbilityScreen" IsVisible="False" ZIndex="1000" />
+        <views:DuetAbilityScreen x:Name="DuetAbilityScreen" IsVisible="False" />
         
         <!-- Fullscreen black fader used for cross-screen transitions -->
         <Rectangle x:Name="ScreenFader"

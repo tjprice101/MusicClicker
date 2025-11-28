@@ -1,3 +1,4 @@
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Media;
@@ -48,9 +49,9 @@ namespace MusicClicker.Views
                 (weapon1 == "EulogyOfTheMoon" && weapon2 == "IncisorOfMoonlight"))
             {
                 if (DuetAbilityNameText != null)
-                    DuetAbilityNameText.Text = "Moonlight Sonata:\nLunar Phases";
+                    DuetAbilityNameText.Text = DuetDescriptions.Names.Moonlight;
                 if (DuetAbilityDescriptionText != null)
-                    DuetAbilityDescriptionText.Text = "Cycles through 4 moon phases every 8 seconds:\n• New Moon: 2x NPC\n• Crescent: Components drop (10% per click)\n• Full Moon: 3x NPS\n• Waning: Upgrades cost 50% less\n\nDuration: 40s | Cooldown: 4min";
+                    DuetAbilityDescriptionText.Text = DuetDescriptions.Full.Moonlight;
                 ApplyMoonlightTheme();
                 UpdateMoonlightStatus();
             }
@@ -59,9 +60,9 @@ namespace MusicClicker.Views
                 (weapon1 == "HellsWrath" && weapon2 == "SevenCircles"))
             {
                 if (DuetAbilityNameText != null)
-                    DuetAbilityNameText.Text = "Descending Judgment:\nSeven Seals";
+                    DuetAbilityNameText.Text = DuetDescriptions.Names.DiesIrae;
                 if (DuetAbilityDescriptionText != null)
-                    DuetAbilityDescriptionText.Text = "Each click places a seal. At 7 seals, grants 3 random minor scores without consuming components (keeps stacking during duration).\n\nDuration: 15s | Cooldown: 3.5min";
+                    DuetAbilityDescriptionText.Text = DuetDescriptions.Full.DiesIrae;
                 ApplyDiesIraeTheme();
                 UpdateDiesIraeStatus();
             }
@@ -70,9 +71,9 @@ namespace MusicClicker.Views
                      (weapon1 == "TheSnowsDesire" && weapon2 == "CacophonicBlizzard"))
             {
                 if (DuetAbilityNameText != null)
-                    DuetAbilityNameText.Text = "Eternal Frost:\nAbsolute Zero";
+                    DuetAbilityNameText.Text = DuetDescriptions.Names.Winter;
                 if (DuetAbilityDescriptionText != null)
-                    DuetAbilityDescriptionText.Text = "Activate to convert your frozen NPS into a click multiplier. Each click extends duration by 0.5s (max +10s).\n\nBase Duration: 15s | Cooldown: 5min";
+                    DuetAbilityDescriptionText.Text = DuetDescriptions.Full.Winter;
                 ApplyWinterTheme();
                 UpdateWinterStatus();
             }
@@ -81,75 +82,87 @@ namespace MusicClicker.Views
                      (weapon1 == "FuneralPrayer" && weapon2 == "SakurasBlossom"))
             {
                 if (DuetAbilityNameText != null)
-                    DuetAbilityNameText.Text = "Symphony of Heroes:\nVictory March";
+                    DuetAbilityNameText.Text = DuetDescriptions.Names.Eroica;
                 if (DuetAbilityDescriptionText != null)
-                    DuetAbilityDescriptionText.Text = "Fill the bar with 100 clicks. Escalating rewards:\n• 25%: Random minor score\n• 50%: Random major score\n• 75%: +50 Fragments\n• 100%: Double all scores\n\nCooldown: 5min";
+                    DuetAbilityDescriptionText.Text = DuetDescriptions.Full.Eroica;
                 ApplyEroicaTheme();
                 UpdateEroicaStatus();
+                // Hide other duet visuals
+                if (FateHourglassDisplay != null) FateHourglassDisplay.IsVisible = false;
+                if (OdeStaffDisplay != null) OdeStaffDisplay.IsVisible = false;
             }
             // Swan Lake Duet
             else if ((weapon1 == "StarScatteredWings" && weapon2 == "ThousandWingedSwan") ||
                      (weapon1 == "ThousandWingedSwan" && weapon2 == "StarScatteredWings"))
             {
                 if (DuetAbilityNameText != null)
-                    DuetAbilityNameText.Text = "Reflection of Grace:\nMirror Lake";
+                    DuetAbilityNameText.Text = DuetDescriptions.Names.SwanLake;
                 if (DuetAbilityDescriptionText != null)
-                    DuetAbilityDescriptionText.Text = "Every action is reflected and happens again after 3 seconds. Affects clicks, crafts, upgrades, and fragment purchases.\n\nDuration: 20s | Cooldown: 4min";
+                    DuetAbilityDescriptionText.Text = DuetDescriptions.Full.SwanLake;
                 ApplySwanLakeTheme();
                 UpdateSwanLakeStatus();
+                // Hide other duet visuals
+                if (FateHourglassDisplay != null) FateHourglassDisplay.IsVisible = false;
+                if (OdeStaffDisplay != null) OdeStaffDisplay.IsVisible = false;
+                if (VictoryMarchProgressBorder != null) VictoryMarchProgressBorder.IsVisible = false;
             }
             // La Campanella Duet
             else if ((weapon1 == "SymphonyOfBells" && weapon2 == "RazerOfBellsChimes") ||
                      (weapon1 == "RazerOfBellsChimes" && weapon2 == "SymphonyOfBells"))
             {
                 if (DuetAbilityNameText != null)
-                    DuetAbilityNameText.Text = "Bell Resonance:\nChime Chain";
+                    DuetAbilityNameText.Text = DuetDescriptions.Names.LaCampanella;
                 if (DuetAbilityDescriptionText != null)
-                    DuetAbilityDescriptionText.Text = "First click creates a chime. Each click within 1 second extends the chain. Chain gives length² × NPS as instant notes. Chain breaks after 1s of no clicks.\n\nDuration: 10s | Cooldown: 10min";
+                    DuetAbilityDescriptionText.Text = DuetDescriptions.Full.LaCampanella;
                 ApplyLaCampanellaTheme();
                 UpdateLaCampanellaStatus();
+                // Hide other duet visuals
+                if (FateHourglassDisplay != null) FateHourglassDisplay.IsVisible = false;
+                if (OdeStaffDisplay != null) OdeStaffDisplay.IsVisible = false;
+                if (VictoryMarchProgressBorder != null) VictoryMarchProgressBorder.IsVisible = false;
             }
             // Enigma Duet
             else if ((weapon1 == "CreatorOfMystery" && weapon2 == "Truthseeker") ||
                      (weapon1 == "Truthseeker" && weapon2 == "CreatorOfMystery"))
             {
                 if (DuetAbilityNameText != null)
-                    DuetAbilityNameText.Text = "Enigmatic Puzzle:\nMystery Clicks";
+                    DuetAbilityNameText.Text = DuetDescriptions.Names.Enigma;
                 if (DuetAbilityDescriptionText != null)
-                    DuetAbilityDescriptionText.Text = "Each click triggers 1 random effect out of 8 possibilities:\n\n" +
-                        "• Red: Gain instant notes equal to 5× your NPS\n" +
-                        "• Blue: Gain 10% NPS multiplier until this ability ends\n" +
-                        "• Green: Gain 30 Harmonious Fragments\n" +
-                        "• Yellow: Gain 30 Melodious Fragments\n" +
-                        "• Purple: Gain +1 major score sheet for each major score you own\n" +
-                        "• Orange: Gain +1 minor score component (Key, Scale, Progression) for each minor score you own\n" +
-                        "• White: Gain +1 owned to 3 random minor scores (best reward!)\n" +
-                        "• Black: PENALTY - Lose 65% of your current notes\n\n" +
-                        "Duration: 10s | Cooldown: 30min";
+                    DuetAbilityDescriptionText.Text = DuetDescriptions.Full.Enigma;
                 ApplyEnigmaTheme();
                 UpdateEnigmaStatus();
+                // Hide other duet visuals
+                if (FateHourglassDisplay != null) FateHourglassDisplay.IsVisible = false;
+                if (OdeStaffDisplay != null) OdeStaffDisplay.IsVisible = false;
+                if (VictoryMarchProgressBorder != null) VictoryMarchProgressBorder.IsVisible = false;
             }
             // Fate Duet
             else if ((weapon1 == "AstralChainripper" && weapon2 == "CosmicWeaver") ||
                      (weapon1 == "CosmicWeaver" && weapon2 == "AstralChainripper"))
             {
                 if (DuetAbilityNameText != null)
-                    DuetAbilityNameText.Text = "Fate Duet:\nPlaceholder";
+                    DuetAbilityNameText.Text = DuetDescriptions.Names.Fate;
                 if (DuetAbilityDescriptionText != null)
-                    DuetAbilityDescriptionText.Text = "Ability not yet implemented.\n\nDuration: TBD | Cooldown: TBD";
+                    DuetAbilityDescriptionText.Text = DuetDescriptions.Full.Fate;
                 ApplyFateTheme();
                 UpdateFateStatus();
+                // Hide other duet visuals
+                if (OdeStaffDisplay != null) OdeStaffDisplay.IsVisible = false;
+                if (VictoryMarchProgressBorder != null) VictoryMarchProgressBorder.IsVisible = false;
             }
             // Ode to Joy Duet
             else if ((weapon1 == "JoyfulCatharsis" && weapon2 == "OdeToCreation") ||
                      (weapon1 == "OdeToCreation" && weapon2 == "JoyfulCatharsis"))
             {
                 if (DuetAbilityNameText != null)
-                    DuetAbilityNameText.Text = "Ode to Joy Duet:\nPlaceholder";
+                    DuetAbilityNameText.Text = DuetDescriptions.Names.OdeToJoy;
                 if (DuetAbilityDescriptionText != null)
-                    DuetAbilityDescriptionText.Text = "Ability not yet implemented.\n\nDuration: TBD | Cooldown: TBD";
+                    DuetAbilityDescriptionText.Text = DuetDescriptions.Full.OdeToJoy;
                 ApplyOdeTheme();
                 UpdateOdeStatus();
+                // Hide other duet visuals
+                if (FateHourglassDisplay != null) FateHourglassDisplay.IsVisible = false;
+                if (VictoryMarchProgressBorder != null) VictoryMarchProgressBorder.IsVisible = false;
             }
         }
 
@@ -471,7 +484,7 @@ namespace MusicClicker.Views
 
         private void ApplyEroicaTheme()
         {
-            // Eroica: Deep red/crimson heroic theme
+            // Eroica: Deep red/crimson theme
             if (MainBorder != null)
                 MainBorder.Background = new SolidColorBrush(Color.FromArgb(221, 30, 10, 10)); // Dark red background
             
@@ -821,12 +834,15 @@ namespace MusicClicker.Views
                 double remaining = (_gameState.FateDuetExpiry - DateTime.Now).TotalSeconds;
                 if (remaining > 0)
                 {
-                    int totalDust = _gameState.BlueStardustCollected + _gameState.PurpleStardustCollected + 
-                                    _gameState.GoldStardustCollected + _gameState.RainbowStardustCollected;
-                    DuetAbilityStatusText.Text = $"Active: {remaining:F1}s | Wave {_gameState.CurrentWave}/5 | Dust: {totalDust} | Chains: {_gameState.NebulaChainCount}";
-                    DuetAbilityStatusText.Foreground = new SolidColorBrush(Color.FromRgb(100, 50, 120));
+                    string phase = _gameState.FateDuetHasFlipped ? "REPLAY" : "BANKING";
+                    int bankedActions = _gameState.HourglassActionBank.Count;
+                    DuetAbilityStatusText.Text = $"{phase}: {remaining:F1}s | Banked: {bankedActions}";
+                    DuetAbilityStatusText.Foreground = new SolidColorBrush(Color.FromRgb(200, 100, 220));
                     ActivateDuetAbilityButton.Content = "END RESONANCE";
                     ActivateDuetAbilityButton.IsEnabled = true;
+
+                    // Update hourglass visual
+                    UpdateFateHourglassDisplay();
                 }
                 else
                 {
@@ -834,6 +850,10 @@ namespace MusicClicker.Views
                     DuetAbilityStatusText.Foreground = new SolidColorBrush(Color.FromRgb(200, 100, 220));
                     ActivateDuetAbilityButton.Content = "RESONATE";
                     ActivateDuetAbilityButton.IsEnabled = true;
+
+                    // Hide hourglass visual
+                    if (FateHourglassDisplay != null)
+                        FateHourglassDisplay.IsVisible = false;
                 }
             }
             else if (_gameState.FateDuetCooldownExpiry > DateTime.Now)
@@ -842,6 +862,10 @@ namespace MusicClicker.Views
                 DuetAbilityStatusText.Text = $"Cooldown: {cooldown:F1}s";
                 DuetAbilityStatusText.Foreground = new SolidColorBrush(Color.FromRgb(150, 100, 150));
                 ActivateDuetAbilityButton.IsEnabled = false;
+
+                // Hide hourglass visual
+                if (FateHourglassDisplay != null)
+                    FateHourglassDisplay.IsVisible = false;
             }
             else
             {
@@ -849,7 +873,35 @@ namespace MusicClicker.Views
                 DuetAbilityStatusText.Foreground = new SolidColorBrush(Color.FromRgb(200, 100, 220));
                 ActivateDuetAbilityButton.Content = "RESONATE";
                 ActivateDuetAbilityButton.IsEnabled = true;
+
+                // Hide hourglass visual
+                if (FateHourglassDisplay != null)
+                    FateHourglassDisplay.IsVisible = false;
             }
+        }
+
+        private void UpdateFateHourglassDisplay()
+        {
+            if (FateHourglassDisplay == null || FatePhaseText == null || FateBankedActionsText == null) return;
+
+            FateHourglassDisplay.IsVisible = true;
+            
+            if (_gameState.FateDuetHasFlipped)
+            {
+                FatePhaseText.Text = "⚡ REPLAY PHASE ⚡";
+                FatePhaseText.Foreground = new SolidColorBrush(Color.FromRgb(255, 150, 255)); // Bright purple
+                if (FateHourglassArt != null)
+                    FateHourglassArt.Text = "⏳"; // Flipped hourglass
+            }
+            else
+            {
+                FatePhaseText.Text = "📥 BANKING PHASE";
+                FatePhaseText.Foreground = new SolidColorBrush(Color.FromRgb(200, 100, 220)); // Purple
+                if (FateHourglassArt != null)
+                    FateHourglassArt.Text = "⌛"; // Normal hourglass
+            }
+
+            FateBankedActionsText.Text = $"Actions Banked: {_gameState.HourglassActionBank.Count}";
         }
 
         private void UpdateOdeStatus()
@@ -861,11 +913,13 @@ namespace MusicClicker.Views
                 double remaining = (_gameState.OdeDuetExpiry - DateTime.Now).TotalSeconds;
                 if (remaining > 0)
                 {
-                    int totalPetals = _gameState.RedPetalsCaught + _gameState.PinkPetalsCaught + _gameState.WhitePetalsCaught;
-                    DuetAbilityStatusText.Text = $"Active: {remaining:F1}s | Petals: {totalPetals} | Bouquets: {_gameState.PerfectBouquetCount}";
-                    DuetAbilityStatusText.Foreground = new SolidColorBrush(Color.FromRgb(30, 30, 30));
+                    DuetAbilityStatusText.Text = $"Active: {remaining:F1}s | Notes: {_gameState.CrescendoNotesPlaced}/16 | Sections: {_gameState.CrescendoCompletedSections}";
+                    DuetAbilityStatusText.Foreground = new SolidColorBrush(Color.FromRgb(50, 50, 50));
                     ActivateDuetAbilityButton.Content = "END RESONANCE";
                     ActivateDuetAbilityButton.IsEnabled = true;
+
+                    // Update staff visual
+                    UpdateOdeStaffDisplay();
                 }
                 else
                 {
@@ -873,6 +927,10 @@ namespace MusicClicker.Views
                     DuetAbilityStatusText.Foreground = new SolidColorBrush(Color.FromRgb(100, 100, 100));
                     ActivateDuetAbilityButton.Content = "RESONATE";
                     ActivateDuetAbilityButton.IsEnabled = true;
+
+                    // Hide staff visual
+                    if (OdeStaffDisplay != null)
+                        OdeStaffDisplay.IsVisible = false;
                 }
             }
             else if (_gameState.OdeDuetCooldownExpiry > DateTime.Now)
@@ -881,6 +939,10 @@ namespace MusicClicker.Views
                 DuetAbilityStatusText.Text = $"Cooldown: {cooldown:F1}s";
                 DuetAbilityStatusText.Foreground = new SolidColorBrush(Color.FromRgb(150, 150, 150));
                 ActivateDuetAbilityButton.IsEnabled = false;
+
+                // Hide staff visual
+                if (OdeStaffDisplay != null)
+                    OdeStaffDisplay.IsVisible = false;
             }
             else
             {
@@ -888,6 +950,59 @@ namespace MusicClicker.Views
                 DuetAbilityStatusText.Foreground = new SolidColorBrush(Color.FromRgb(100, 100, 100));
                 ActivateDuetAbilityButton.Content = "RESONATE";
                 ActivateDuetAbilityButton.IsEnabled = true;
+
+                // Hide staff visual
+                if (OdeStaffDisplay != null)
+                    OdeStaffDisplay.IsVisible = false;
+            }
+        }
+
+        private void UpdateOdeStaffDisplay()
+        {
+            if (OdeStaffDisplay == null || OdeNotesPanel == null || OdeNotesCountText == null) return;
+
+            OdeStaffDisplay.IsVisible = true;
+            
+            // Update notes counter with completed sections
+            int noteCount = _gameState.CrescendoNotesPlaced;
+            int completedSections = _gameState.CrescendoCompletedSections;
+            OdeNotesCountText.Text = $"Notes: {noteCount} / 16 | Sections: {completedSections}";
+
+            // Add notes to staff (only if we need to add more)
+            int currentNoteElements = OdeNotesPanel.Children.Count;
+            if (noteCount > currentNoteElements)
+            {
+                Random rng = new Random();
+                for (int i = currentNoteElements; i < noteCount; i++)
+                {
+                    // Randomize vertical position (0-4 for 5 staff lines)
+                    int linePosition = rng.Next(5);
+                    double topMargin = 10 + (linePosition * 20); // Each line is 20px apart
+                    
+                    var noteBlock = new TextBlock
+                    {
+                        Text = "♪",
+                        FontSize = 24,
+                        Foreground = new SolidColorBrush(Color.FromRgb(80, 80, 80)),
+                        Margin = new Thickness(2, topMargin, 2, 0),
+                        VerticalAlignment = Avalonia.Layout.VerticalAlignment.Top,
+                        HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Left
+                    };
+
+                    // Add glow effect at milestone notes (4, 8, 12, 16)
+                    if ((i + 1) % 4 == 0)
+                    {
+                        noteBlock.Foreground = new SolidColorBrush(Color.FromRgb(255, 215, 0)); // Gold
+                        noteBlock.FontWeight = Avalonia.Media.FontWeight.Bold;
+                    }
+
+                    OdeNotesPanel.Children.Add(noteBlock);
+                }
+            }
+            else if (noteCount < currentNoteElements)
+            {
+                // Clear notes if count decreased (cycle completed and reset)
+                OdeNotesPanel.Children.Clear();
             }
         }
 
@@ -952,14 +1067,14 @@ namespace MusicClicker.Views
                 {
                     // Deactivate and start cooldown
                     _gameState.MoonlightDuetActive = false;
-                    _gameState.MoonlightDuetCooldownExpiry = DateTime.Now.AddSeconds(240); // 4 minutes
+                    _gameState.MoonlightDuetCooldownExpiry = DateTime.Now.AddSeconds(DuetDescriptions.Cooldown.Moonlight);
                     _cooldownTimer?.Start();
                 }
                 else
                 {
                     // Activate
                     _gameState.MoonlightDuetActive = true;
-                    _gameState.MoonlightDuetExpiry = DateTime.Now.AddSeconds(40);
+                    _gameState.MoonlightDuetExpiry = DateTime.Now.AddSeconds(DuetDescriptions.Duration.Moonlight);
                     _gameState.MoonlightCurrentPhase = 0; // Start with New Moon
                     _gameState.MoonlightPhaseChangeTime = DateTime.Now; // Track phase start time
                 }
@@ -972,14 +1087,14 @@ namespace MusicClicker.Views
                 {
                     // Deactivate
                     _gameState.DiesIraeDuetActive = false;
-                    _gameState.DiesIraeDuetCooldownExpiry = DateTime.Now.AddSeconds(210);
+                    _gameState.DiesIraeDuetCooldownExpiry = DateTime.Now.AddSeconds(DuetDescriptions.Cooldown.DiesIrae);
                     _gameState.SevenSealsCounter = 0;
                 }
                 else if (_gameState.DiesIraeDuetCooldownExpiry <= DateTime.Now)
                 {
                     // Activate
                     _gameState.DiesIraeDuetActive = true;
-                    _gameState.DiesIraeDuetExpiry = DateTime.Now.AddSeconds(15);
+                    _gameState.DiesIraeDuetExpiry = DateTime.Now.AddSeconds(DuetDescriptions.Duration.DiesIrae);
                     _gameState.SevenSealsCounter = 0;
                     _cooldownTimer?.Start();
                 }
@@ -992,20 +1107,20 @@ namespace MusicClicker.Views
                 {
                     // Deactivate
                     _gameState.WinterDuetActive = false;
-                    _gameState.WinterDuetCooldownExpiry = DateTime.Now.AddSeconds(300); // 5 minutes
+                    _gameState.WinterDuetCooldownExpiry = DateTime.Now.AddSeconds(DuetDescriptions.Cooldown.Winter);
                 }
                 else if (_gameState.WinterDuetCooldownExpiry <= DateTime.Now)
                 {
                     // Activate immediately and freeze NPS
                     _gameState.WinterDuetActive = true;
-                    _gameState.WinterDuetExpiry = DateTime.Now.AddSeconds(15);
+                    _gameState.WinterDuetExpiry = DateTime.Now.AddSeconds(DuetDescriptions.Duration.Winter);
                     _gameState.WinterDuetExtensionTime = 0; // Reset extension counter
-                    _gameState.WinterDuetCooldownExpiry = DateTime.Now.AddSeconds(300); // Start cooldown immediately
+                    _gameState.WinterDuetCooldownExpiry = DateTime.Now.AddSeconds(DuetDescriptions.Cooldown.Winter); // Start cooldown immediately
                     
                     // Freeze NPS immediately
                     _gameState.NpsFrozen = true;
                     _gameState.FrozenNpsValue = _gameState.NotesPerSecond;
-                    _gameState.NpsFreezeExpiry = DateTime.Now.AddSeconds(15); // Match duet duration
+                    _gameState.NpsFreezeExpiry = DateTime.Now.AddSeconds(DuetDescriptions.Duration.Winter); // Match duet duration
                     
                     _cooldownTimer?.Start();
                 }
@@ -1025,7 +1140,7 @@ namespace MusicClicker.Views
                 {
                     // Deactivate and start cooldown
                     _gameState.EroicaDuetActive = false;
-                    _gameState.EroicaDuetCooldownExpiry = DateTime.Now.AddSeconds(300); // 5 minutes
+                    _gameState.EroicaDuetCooldownExpiry = DateTime.Now.AddSeconds(DuetDescriptions.Cooldown.Eroica);
                     _gameState.VictoryMarchClicks = 0;
                     _gameState.VictoryMarch25Claimed = false;
                     _gameState.VictoryMarch50Claimed = false;
@@ -1060,14 +1175,14 @@ namespace MusicClicker.Views
                     // Deactivate, clear queue, and start cooldown
                     _gameState.SwanLakeDuetActive = false;
                     _gameState.MirrorLakeQueue.Clear();
-                    _gameState.SwanLakeDuetCooldownExpiry = DateTime.Now.AddSeconds(240); // 4 minutes
+                    _gameState.SwanLakeDuetCooldownExpiry = DateTime.Now.AddSeconds(DuetDescriptions.Cooldown.SwanLake);
                     _cooldownTimer?.Start();
                 }
                 else
                 {
                     // Activate
                     _gameState.SwanLakeDuetActive = true;
-                    _gameState.SwanLakeDuetExpiry = DateTime.Now.AddSeconds(20);
+                    _gameState.SwanLakeDuetExpiry = DateTime.Now.AddSeconds(DuetDescriptions.Duration.SwanLake);
                     _gameState.MirrorLakeQueue.Clear(); // Ensure clean start
                 }
             }
@@ -1089,14 +1204,14 @@ namespace MusicClicker.Views
                     _gameState.LaCampanellaDuetActive = false;
                     _gameState.ChimeChainLength = 0;
                     _gameState.LastChimeClickTime = DateTime.MinValue;
-                    _gameState.LaCampanellaDuetCooldownExpiry = DateTime.Now.AddSeconds(600); // 10 minutes
+                    _gameState.LaCampanellaDuetCooldownExpiry = DateTime.Now.AddSeconds(DuetDescriptions.Cooldown.LaCampanella);
                     _cooldownTimer?.Start();
                 }
                 else
                 {
                     // Activate
                     _gameState.LaCampanellaDuetActive = true;
-                    _gameState.LaCampanellaDuetExpiry = DateTime.Now.AddSeconds(10);
+                    _gameState.LaCampanellaDuetExpiry = DateTime.Now.AddSeconds(DuetDescriptions.Duration.LaCampanella);
                     _gameState.ChimeChainLength = 0;
                     _gameState.LastChimeClickTime = DateTime.MinValue;
                 }
@@ -1118,14 +1233,14 @@ namespace MusicClicker.Views
                     // Deactivate and start cooldown
                     _gameState.EnigmaDuetActive = false;
                     _gameState.EnigmaMysteryClickCount = 0;
-                    _gameState.EnigmaDuetCooldownExpiry = DateTime.Now.AddSeconds(480); // 8 minutes
+                    _gameState.EnigmaDuetCooldownExpiry = DateTime.Now.AddSeconds(DuetDescriptions.Cooldown.Enigma);
                     _cooldownTimer?.Start();
                 }
                 else
                 {
                     // Activate
                     _gameState.EnigmaDuetActive = true;
-                    _gameState.EnigmaDuetExpiry = DateTime.Now.AddSeconds(30);
+                    _gameState.EnigmaDuetExpiry = DateTime.Now.AddSeconds(DuetDescriptions.Duration.Enigma);
                     _gameState.EnigmaMysteryClickCount = 0;
                 }
             }
@@ -1134,14 +1249,69 @@ namespace MusicClicker.Views
             else if ((weapon1 == "AstralChainripper" && weapon2 == "CosmicWeaver") ||
                      (weapon1 == "CosmicWeaver" && weapon2 == "AstralChainripper"))
             {
-                // Placeholder - not yet implemented
+                // Check if on cooldown
+                if (_gameState.FateDuetCooldownExpiry > DateTime.Now)
+                {
+                    // Still on cooldown, do nothing
+                    return;
+                }
+
+                if (_gameState.FateDuetActive)
+                {
+                    // Deactivate and start cooldown
+                    _gameState.FateDuetActive = false;
+                    _gameState.FateDuetHasFlipped = false;
+                    _gameState.HourglassActionBank.Clear();
+                    _gameState.FateDuetCooldownExpiry = DateTime.Now.AddSeconds(DuetDescriptions.Cooldown.Fate);
+                    _cooldownTimer?.Start();
+                }
+                else
+                {
+                    // Activate
+                    _gameState.FateDuetActive = true;
+                    _gameState.FateDuetExpiry = DateTime.Now.AddSeconds(DuetDescriptions.Duration.Fate);
+                    _gameState.FateDuetFlipTime = DateTime.Now.AddSeconds(10); // Flip at 10s
+                    _gameState.FateDuetHasFlipped = false;
+                    _gameState.HourglassActionBank.Clear();
+                }
             }
 
             // Ode to Joy Duet
             else if ((weapon1 == "JoyfulCatharsis" && weapon2 == "OdeToCreation") ||
                      (weapon1 == "OdeToCreation" && weapon2 == "JoyfulCatharsis"))
             {
-                // Placeholder - not yet implemented
+                // Check if on cooldown
+                if (_gameState.OdeDuetCooldownExpiry > DateTime.Now)
+                {
+                    // Still on cooldown, do nothing
+                    return;
+                }
+
+                if (_gameState.OdeDuetActive)
+                {
+                    // Deactivate and start cooldown
+                    _gameState.OdeDuetActive = false;
+                    _gameState.CrescendoNotesPlaced = 0;
+                    _gameState.Crescendo4Claimed = false;
+                    _gameState.Crescendo8Claimed = false;
+                    _gameState.Crescendo12Claimed = false;
+                    _gameState.Crescendo16Claimed = false;
+                    _gameState.CrescendoCompletedSections = 0;
+                    _gameState.OdeDuetCooldownExpiry = DateTime.Now.AddSeconds(DuetDescriptions.Cooldown.OdeToJoy);
+                    _cooldownTimer?.Start();
+                }
+                else
+                {
+                    // Activate
+                    _gameState.OdeDuetActive = true;
+                    _gameState.OdeDuetExpiry = DateTime.Now.AddSeconds(DuetDescriptions.Duration.OdeToJoy);
+                    _gameState.CrescendoNotesPlaced = 0;
+                    _gameState.CrescendoCompletedSections = 0;
+                    _gameState.Crescendo4Claimed = false;
+                    _gameState.Crescendo8Claimed = false;
+                    _gameState.Crescendo12Claimed = false;
+                    _gameState.Crescendo16Claimed = false;
+                }
             }
 
             UpdateAbilityDisplay();

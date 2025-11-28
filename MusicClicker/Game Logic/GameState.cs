@@ -249,6 +249,16 @@ namespace MusicClicker
         public int _winterOwned = 0;
         public int WinterOwned { get => _winterOwned; set => _winterOwned = value; }
 
+        // Boss Fight Score Ownership (Cacophonic Dreams)
+        public int _mercuryMajorOwned = 0;
+        public int MercuryMajorOwned { get => _mercuryMajorOwned; set => _mercuryMajorOwned = value; }
+        
+        public int _clairDeLuneMajorOwned = 0;
+        public int ClairDeLuneMajorOwned { get => _clairDeLuneMajorOwned; set => _clairDeLuneMajorOwned = value; }
+        
+        public int _marsMajorOwned = 0;
+        public int MarsMajorOwned { get => _marsMajorOwned; set => _marsMajorOwned = value; }
+
         // Event Score Major Sheets
         public int _diesIraeMajorSheets = 0;
         public int DiesIraeMajorSheets { get => _diesIraeMajorSheets; set => _diesIraeMajorSheets = value; }
@@ -375,6 +385,49 @@ namespace MusicClicker
 
         public bool _symphonyOfBells = false;
         public bool SymphonyOfBells { get => _symphonyOfBells; set => _symphonyOfBells = value; }
+
+        // Entropic Armory Weapon ownership flags
+        public bool _phasesOfInfinity = false;
+        public bool PhasesOfInfinity { get => _phasesOfInfinity; set => _phasesOfInfinity = value; }
+
+        public bool _moonlitRevelation = false;
+        public bool MoonlitRevelation { get => _moonlitRevelation; set => _moonlitRevelation = value; }
+
+        public bool _rebornInSakurasEmbrace = false;
+        public bool RebornInSakurasEmbrace { get => _rebornInSakurasEmbrace; set => _rebornInSakurasEmbrace = value; }
+
+        public bool _aThousandPetals = false;
+        public bool AThousandPetals { get => _aThousandPetals; set => _aThousandPetals = value; }
+
+        public bool _swansFinality = false;
+        public bool SwansFinality { get => _swansFinality; set => _swansFinality = value; }
+
+        public bool _starPiercingSwanSong = false;
+        public bool StarPiercingSwanSong { get => _starPiercingSwanSong; set => _starPiercingSwanSong = value; }
+
+        public bool _heavensChime = false;
+        public bool HeavensChime { get => _heavensChime; set => _heavensChime = value; }
+
+        public bool _bellOfChromaticFate = false;
+        public bool BellOfChromaticFate { get => _bellOfChromaticFate; set => _bellOfChromaticFate = value; }
+
+        public bool _everBurningMystery = false;
+        public bool EverBurningMystery { get => _everBurningMystery; set => _everBurningMystery = value; }
+
+        public bool _prismaticEnigmas = false;
+        public bool PrismaticEnigmas { get => _prismaticEnigmas; set => _prismaticEnigmas = value; }
+
+        public bool _finalityOfTheCosmos = false;
+        public bool FinalityOfTheCosmos { get => _finalityOfTheCosmos; set => _finalityOfTheCosmos = value; }
+
+        public bool _destinysConductor = false;
+        public bool DestinysConductor { get => _destinysConductor; set => _destinysConductor = value; }
+
+        public bool _catharticDivination = false;
+        public bool CatharticDivination { get => _catharticDivination; set => _catharticDivination = value; }
+
+        public bool _dreamsOfHarmony = false;
+        public bool DreamsOfHarmony { get => _dreamsOfHarmony; set => _dreamsOfHarmony = value; }
 
         // Weapon ability flags (true if weapon's resonance ability is currently active)
         public bool _eulogyOfTheMoonAbility = false;
@@ -508,31 +561,29 @@ namespace MusicClicker
         public bool EnigmaDuetActive { get; set; } = false;
         public DateTime EnigmaDuetExpiry { get; set; } = DateTime.MinValue;
         public DateTime EnigmaDuetCooldownExpiry { get; set; } = DateTime.MinValue;
-        public int EnigmaMysteryClickCount { get; set; } = 0; // Number of mystery effects triggered
+        public int EnigmaMysteryClickCount { get; set; } = 0; // Track clicks during Enigma activation
 
-        // Fate Duet: Cosmic Dust Harvest
+        // Fate Duet: Hourglass Reversal
         public bool FateDuetActive { get; set; } = false;
         public DateTime FateDuetExpiry { get; set; } = DateTime.MinValue;
         public DateTime FateDuetCooldownExpiry { get; set; } = DateTime.MinValue;
-        public int CurrentWave { get; set; } = 0; // Current wave (1-5)
-        public int BlueStardustCollected { get; set; } = 0; // Blue = instant notes
-        public int PurpleStardustCollected { get; set; } = 0; // Purple = NPS multiplier stacks
-        public int GoldStardustCollected { get; set; } = 0; // Gold = fragments + notes
-        public int RainbowStardustCollected { get; set; } = 0; // Rainbow = all × 10
-        public int CurrentSweepCount { get; set; } = 0; // Particles collected in current sweep
-        public int NebulaChainCount { get; set; } = 0; // Number of nebula chains achieved
+        public DateTime FateDuetFlipTime { get; set; } = DateTime.MinValue; // When hourglass flips (10s mark)
+        public bool FateDuetHasFlipped { get; set; } = false; // Whether we're in replay phase
+        public int FateDuetClickCount { get; set; } = 0; // Number of clicks performed during banking phase
+        public System.Collections.Generic.List<(string actionType, object actionData, DateTime recordTime)> HourglassActionBank { get; set; } = new();
 
-        // Ode to Joy Duet: Petal Storm Conductor
+        // Ode to Joy Duet: Crescendo Conductor (Repeatable 16-note cycles)
         public bool OdeDuetActive { get; set; } = false;
         public DateTime OdeDuetExpiry { get; set; } = DateTime.MinValue;
         public DateTime OdeDuetCooldownExpiry { get; set; } = DateTime.MinValue;
-        public int RedPetalsCaught { get; set; } = 0; // Red petals = NPS multiplier stacks
-        public int PinkPetalsCaught { get; set; } = 0; // Pink petals = Instant notes burst
-        public int WhitePetalsCaught { get; set; } = 0; // White petals = Click power boost
-        public DateTime LastRedPetalTime { get; set; } = DateTime.MinValue; // For perfect bouquet tracking
-        public DateTime LastPinkPetalTime { get; set; } = DateTime.MinValue;
-        public DateTime LastWhitePetalTime { get; set; } = DateTime.MinValue;
-        public int PerfectBouquetCount { get; set; } = 0; // Number of perfect bouquets achieved
+        public int CrescendoNotesPlaced { get; set; } = 0; // Number of notes in current cycle (0-15, resets at 16)
+        public int CrescendoCompletedSections { get; set; } = 0; // Number of completed 16-note sections
+        public bool Crescendo4Claimed { get; set; } = false; // 4-note phrase reward claimed (per cycle)
+        public bool Crescendo8Claimed { get; set; } = false; // 8-note phrase reward claimed (per cycle)
+        public bool Crescendo12Claimed { get; set; } = false; // 12-note phrase reward claimed (per cycle)
+        public bool Crescendo16Claimed { get; set; } = false; // 16-note symphony reward claimed (per cycle)
+        public bool OdeDuetNpsBoostActive { get; set; } = false; // 5x NPS boost from completing 16 notes
+        public DateTime OdeDuetNpsBoostExpiry { get; set; } = DateTime.MinValue;
 
         // Currently resonated weapons (up to two slots)
         public string CurrentResonatedWeapon1 { get; set; } = "None";

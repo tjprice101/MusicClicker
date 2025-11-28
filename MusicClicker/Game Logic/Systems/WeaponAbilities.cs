@@ -1398,9 +1398,9 @@ namespace MusicClicker.Armory
                 case "Moonlight Sonata - Opus 1": gameState.ChordOwned++; break;
                 case "Moonlight Sonata - Opus 2": gameState.ScaleOwned++; break;
                 case "Moonlight Sonata - Opus 3": gameState.OrchestraOwned++; break;
-                case "Heroic - Opus 1": gameState.SymphonyOwned++; break;
-                case "Heroic - Opus 2": gameState.AriaOwned++; break;
-                case "Heroic - Opus 3": gameState.RequiemOwned++; break;
+                case "Eroica - Opus 1": gameState.SymphonyOwned++; break;
+                case "Eroica - Opus 2": gameState.AriaOwned++; break;
+                case "Eroica - Opus 3": gameState.RequiemOwned++; break;
                 case "Swan Lake - Opus 1": gameState.OpusOwned++; break;
                 case "Swan Lake - Opus 2": gameState.MagnumOpusOwned++; break;
                 case "Swan Lake - Opus 3": gameState.ChordOwned++; break;
@@ -1431,7 +1431,7 @@ namespace MusicClicker.Armory
             switch (scoreName)
             {
                 case "Moonlight Sonata": gameState.MoonlightMinorOwned++; break;
-                case "Heroic": gameState.EroicaMinorOwned++; break;
+                case "Eroica": gameState.EroicaMinorOwned++; break;
                 case "Swan Lake": gameState.SwanMinorOwned++; break;
                 case "La Campanella": gameState.LaCampanellaMinorOwned++; break;
                 case "Enigma Variations": gameState.EnigmaMinorOwned++; break;
@@ -1452,12 +1452,223 @@ namespace MusicClicker.Armory
             switch (scoreName)
             {
                 case "Moonlight Sonata": gameState.MoonlightMajorOwned++; break;
-                case "Heroic": gameState.EroicaMajorOwned++; break;
+                case "Eroica": gameState.EroicaMajorOwned++; break;
                 case "Swan Lake": gameState.SwanMajorOwned++; break;
                 case "La Campanella": gameState.LaCampanellaMajorOwned++; break;
                 case "Enigma Variations": gameState.EnigmaMajorOwned++; break;
                 case "Fate": gameState.FateMajorOwned++; break;
                 case "Ode to Joy": gameState.OdeToJoyMajorOwned++; break;
+            }
+        }
+
+        #endregion
+
+        #region Fate Duet: Hourglass Reversal
+
+        /// <summary>
+        /// Fate Duet: Bank an action during the banking phase (first 10 seconds)
+        /// </summary>
+        public static void FateDuet_BankAction(GameState gameState, string actionType, object actionData)
+        {
+            if (!gameState.FateDuetActive || gameState.FateDuetHasFlipped) return;
+
+            // Increment click counter if this is a click action
+            if (actionType == "Click")
+            {
+                gameState.FateDuetClickCount++;
+            }
+
+            // Add action to bank with timestamp
+            gameState.HourglassActionBank.Add((actionType, actionData, DateTime.Now));
+        }
+
+        /// <summary>
+        /// Fate Duet: Check if hourglass should flip and process replay phase
+        /// Call this every game tick
+        /// </summary>
+        public static void FateDuet_ProcessHourglass(GameState gameState)
+        {
+            if (!gameState.FateDuetActive) return;
+
+            // Check if it's time to flip (after 10 seconds)
+            if (!gameState.FateDuetHasFlipped && DateTime.Now >= gameState.FateDuetFlipTime)
+            {
+                gameState.FateDuetHasFlipped = true;
+                
+                // Use click count as multiplier (minimum 1x)
+                int multiplier = Math.Max(1, gameState.FateDuetClickCount);
+                
+                // Reverse the action bank for replay
+                gameState.HourglassActionBank.Reverse();
+                
+                // Replay all actions at (click count)× effectiveness
+                foreach (var (actionType, actionData, recordTime) in gameState.HourglassActionBank)
+                {
+                    FateDuet_ReplayAction(gameState, actionType, actionData, multiplier);
+                }
+            }
+        }
+
+        private static void FateDuet_ReplayAction(GameState gameState, string actionType, object actionData, int multiplier)
+        {
+            switch (actionType)
+            {
+                case "Click":
+                    // Dynamic multiplier based on click count
+                    double clickValue = gameState.NotesPerClick * multiplier;
+                    
+                    // Apply all standard click multipliers
+                    if (gameState.MoonlightDuetActive && MoonlightDuet_GetCurrentPhase(gameState) == 0)
+                        clickValue *= 2.0; // New Moon phase
+                    
+                    if (gameState.WinterDuetActive && gameState.NpsFrozen)
+                        clickValue *= gameState.FrozenNpsValue;
+                    
+                    if (gameState.CosmicWeaverClickBoostActive)
+                        clickValue *= 5.0;
+                    
+                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, clickValue);
+                    break;
+
+                case "BuyUpgrade":
+                    if (actionData is (string upgradeName, double cost))
+                    {
+                        double multipliedCost = cost * multiplier;
+                        if (MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes) >= multipliedCost)
+                        {
+                            MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, -multipliedCost);
+                            // Purchase upgrade (multiplier) times
+                            for (int i = 0; i < multiplier; i++)
+                            {
+                                IncrementUpgrade(gameState, upgradeName);
+                            }
+                        }
+                    }
+                    break;
+
+                case "CraftMinor":
+                    if (actionData is string minorScore)
+                    {
+                        // Craft (multiplier) times
+                        for (int i = 0; i < multiplier; i++)
+                        {
+                            CraftMinorScore(gameState, minorScore);
+                        }
+                    }
+                    break;
+
+                case "CraftMajor":
+                    if (actionData is string majorScore)
+                    {
+                        // Craft (multiplier) times
+                        for (int i = 0; i < multiplier; i++)
+                        {
+                            CraftMajorScore(gameState, majorScore);
+                        }
+                    }
+                    break;
+
+                case "BuyFragment":
+                    if (actionData is (string fragmentType, double fragmentCost))
+                    {
+                        double multipliedCost = fragmentCost * multiplier;
+                        if (MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes) >= multipliedCost)
+                        {
+                            MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, -multipliedCost);
+                            // Give (multiplier)x fragments
+                            if (fragmentType == "Melodious")
+                                gameState.MelodiousOwned += multiplier;
+                            else if (fragmentType == "Harmonious")
+                                gameState.HarmoniousOwned += multiplier;
+                        }
+                    }
+                    break;
+            }
+        }
+
+        #endregion
+
+        #region Ode to Joy Duet: Crescendo Conductor
+
+        /// <summary>
+        /// Ode to Joy Duet: Add a note to the melody and check for rewards
+        /// Repeatable: Every 16 notes completes a section and starts a new cycle
+        /// Call this on each click during the duet
+        /// </summary>
+        public static void OdeDuet_AddNote(GameState gameState)
+        {
+            if (!gameState.OdeDuetActive) return;
+
+            gameState.CrescendoNotesPlaced++;
+
+            // Check for phrase rewards within current cycle
+            if (gameState.CrescendoNotesPlaced == 4 && !gameState.Crescendo4Claimed)
+            {
+                gameState.Crescendo4Claimed = true;
+                // Reward: +25 Fragments (split evenly)
+                gameState.MelodiousOwned += 13;
+                gameState.HarmoniousOwned += 12;
+            }
+            else if (gameState.CrescendoNotesPlaced == 8 && !gameState.Crescendo8Claimed)
+            {
+                gameState.Crescendo8Claimed = true;
+                // Reward: Random minor score
+                OdeDuet_GrantRandomMinor(gameState);
+            }
+            else if (gameState.CrescendoNotesPlaced == 12 && !gameState.Crescendo12Claimed)
+            {
+                gameState.Crescendo12Claimed = true;
+                // Reward: Random major sheet
+                OdeDuet_GrantRandomMajorSheet(gameState);
+            }
+            else if (gameState.CrescendoNotesPlaced == 16 && !gameState.Crescendo16Claimed)
+            {
+                gameState.Crescendo16Claimed = true;
+                // Reward: 5x NPS boost for 15 seconds
+                gameState.OdeDuetNpsBoostActive = true;
+                gameState.OdeDuetNpsBoostExpiry = DateTime.Now.AddSeconds(15);
+                
+                // Complete the section and reset for next cycle
+                gameState.CrescendoCompletedSections++;
+                gameState.CrescendoNotesPlaced = 0;
+                gameState.Crescendo4Claimed = false;
+                gameState.Crescendo8Claimed = false;
+                gameState.Crescendo12Claimed = false;
+                gameState.Crescendo16Claimed = false;
+            }
+        }
+
+        private static void OdeDuet_GrantRandomMinor(GameState gameState)
+        {
+            Random rng = new Random();
+            int scoreType = rng.Next(7); // 0-6 for 7 score types
+
+            switch (scoreType)
+            {
+                case 0: gameState.MoonlightMinorOwned++; break;
+                case 1: gameState.EroicaMinorOwned++; break;
+                case 2: gameState.SwanMinorOwned++; break;
+                case 3: gameState.LaCampanellaMinorOwned++; break;
+                case 4: gameState.EnigmaMinorOwned++; break;
+                case 5: gameState.FateMinorOwned++; break;
+                case 6: gameState.OdeToJoyMinorOwned++; break;
+            }
+        }
+
+        private static void OdeDuet_GrantRandomMajorSheet(GameState gameState)
+        {
+            Random rng = new Random();
+            int scoreType = rng.Next(7); // 0-6 for 7 score types
+
+            switch (scoreType)
+            {
+                case 0: gameState.MoonlightMajorSheets++; break;
+                case 1: gameState.EroicaMajorSheets++; break;
+                case 2: gameState.SwanLakeMajorSheets++; break;
+                case 3: gameState.LaCampanellaMajorSheets++; break;
+                case 4: gameState.EnigmaMajorSheets++; break;
+                case 5: gameState.FateMajorSheets++; break;
+                case 6: gameState.OdeToJoyMajorSheets++; break;
             }
         }
 

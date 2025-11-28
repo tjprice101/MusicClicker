@@ -120,6 +120,93 @@
                         </TextBlock>
                     </Grid>
                 </Border>
+
+                <!-- Fate Duet: Hourglass Reversal Visual (only visible for Fate Duet) -->
+                <Border x:Name="FateHourglassDisplay"
+                        Width="380"
+                        Height="120"
+                        Background="#33200064"
+                        CornerRadius="12"
+                        Margin="0,8,0,0"
+                        IsVisible="False">
+                    <Grid>
+                        <!-- Hourglass ASCII Art -->
+                        <TextBlock x:Name="FateHourglassArt"
+                                   FontSize="48"
+                                   FontFamily="Consolas"
+                                   Foreground="#C864DC"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   Margin="20,0,0,0"
+                                   Text="⌛">
+                            <TextBlock.Effect>
+                                <DropShadowEffect Color="#FF96FF" BlurRadius="12" Opacity="0.8" />
+                            </TextBlock.Effect>
+                        </TextBlock>
+                        
+                        <!-- Phase and Counter Display -->
+                        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0">
+                            <TextBlock x:Name="FatePhaseText"
+                                       Text="BANKING PHASE"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       Foreground="#C864DC"
+                                       HorizontalAlignment="Right">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="4" Opacity="0.9" />
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock x:Name="FateBankedActionsText"
+                                       Text="Actions Banked: 0"
+                                       FontSize="14"
+                                       Foreground="#FF96FF"
+                                       HorizontalAlignment="Right"
+                                       Margin="0,4,0,0">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="4" Opacity="0.9" />
+                                </TextBlock.Effect>
+                            </TextBlock>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- Ode to Joy Duet: Musical Staff Visual (only visible for Ode Duet) -->
+                <Border x:Name="OdeStaffDisplay"
+                        Width="380"
+                        Height="140"
+                        Background="#33F0F0F0"
+                        CornerRadius="12"
+                        Margin="0,8,0,0"
+                        IsVisible="False">
+                    <Grid>
+                        <!-- Musical Staff Lines -->
+                        <Canvas Width="340" Height="80" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <!-- 5 staff lines -->
+                            <Line StartPoint="10,10" EndPoint="330,10" Stroke="#505050" StrokeThickness="2" />
+                            <Line StartPoint="10,25" EndPoint="330,25" Stroke="#505050" StrokeThickness="2" />
+                            <Line StartPoint="10,40" EndPoint="330,40" Stroke="#505050" StrokeThickness="2" />
+                            <Line StartPoint="10,55" EndPoint="330,55" Stroke="#505050" StrokeThickness="2" />
+                            <Line StartPoint="10,70" EndPoint="330,70" Stroke="#505050" StrokeThickness="2" />
+                            
+                            <!-- Notes will be added dynamically in code -->
+                            <StackPanel x:Name="OdeNotesPanel" Orientation="Horizontal" Canvas.Left="15" Canvas.Top="0" />
+                        </Canvas>
+                        
+                        <!-- Progress Text -->
+                        <TextBlock x:Name="OdeNotesCountText"
+                                   Text="Notes: 0 / 16"
+                                   FontSize="16"
+                                   FontWeight="Bold"
+                                   Foreground="#333333"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Bottom"
+                                   Margin="0,0,0,8">
+                            <TextBlock.Effect>
+                                <DropShadowEffect Color="White" BlurRadius="4" Opacity="0.9" />
+                            </TextBlock.Effect>
+                        </TextBlock>
+                    </Grid>
+                </Border>
             </StackPanel>
 
             <!-- Resonate Button -->

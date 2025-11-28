@@ -151,6 +151,19 @@ namespace MusicClicker
                 }
             }
 
+            // Bank upgrade purchases for Fate Duet Hourglass
+            if (purchasesMade > 0 && gameState.FateDuetActive && !gameState.FateDuetHasFlipped && DateTime.Now <= gameState.FateDuetExpiry)
+            {
+                string upgradeName = DetermineUpgradeName(baseCost);
+                double queueMultiplier = Math.Pow(1.15, initialOwned);
+                for (int i = 0; i < purchasesMade; i++)
+                {
+                    double individualCost = RoundedCost(baseCost, queueMultiplier) * costMultiplier;
+                    MusicClicker.Armory.WeaponAbilities.FateDuet_BankAction(gameState, "BuyUpgrade", (upgradeName, individualCost));
+                    queueMultiplier *= 1.15;
+                }
+            }
+
             UIUpdater.UpdateUI(window, gameState);
         }
 
@@ -162,9 +175,9 @@ namespace MusicClicker
                 15 => "Moonlight Sonata - Opus 1",
                 100 => "Moonlight Sonata - Opus 2",
                 1100 => "Moonlight Sonata - Opus 3",
-                12000 => "Heroic - Opus 1",
-                130000 => "Heroic - Opus 2",
-                1400000 => "Heroic - Opus 3",
+                12000 => "Eroica - Opus 1",
+                130000 => "Eroica - Opus 2",
+                1400000 => "Eroica - Opus 3",
                 20000000 => "Swan Lake - Opus 1",
                 330000000 => "Swan Lake - Opus 2",
                 5100000000 => "Swan Lake - Opus 3",

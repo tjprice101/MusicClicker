@@ -255,6 +255,7 @@ namespace MusicClicker
             TempoResonateScreen.BackButtonTempoResonate.Click += BackButtonTempoResonate_Click;
             ButtonInitializer.InitializeAllButtons(this);
             TempoResonateButton.Click += TempoResonateButton_Click;
+            CacophonicDreamsButton.Click += CacophonicDreamsButton_Click;
 
             // Create and start a DispatcherTimer that ticks frequently (every 100ms)
             // to accumulate fractional Notes based on NotesPerSecond. We use a
@@ -405,13 +406,9 @@ namespace MusicClicker
                         if (gameState.FateDuetActive && DateTime.Now > gameState.FateDuetExpiry)
                         {
                             gameState.FateDuetActive = false;
-                            gameState.CurrentWave = 0;
-                            gameState.BlueStardustCollected = 0;
-                            gameState.PurpleStardustCollected = 0;
-                            gameState.GoldStardustCollected = 0;
-                            gameState.RainbowStardustCollected = 0;
-                            gameState.CurrentSweepCount = 0;
-                            gameState.NebulaChainCount = 0;
+                            gameState.FateDuetHasFlipped = false;
+                            gameState.FateDuetClickCount = 0;
+                            gameState.HourglassActionBank.Clear();
                             gameState.FateDuetCooldownExpiry = DateTime.Now.AddSeconds(480); // 8 minutes
                             if (DuetAbilityScreen?.IsVisible == true)
                             {
@@ -422,15 +419,18 @@ namespace MusicClicker
                         // Check if Ode Duet has expired
                         if (gameState.OdeDuetActive && DateTime.Now > gameState.OdeDuetExpiry)
                         {
+                            // Grant entropic melody based on completed sections
+                            int entropicReward = gameState.CrescendoCompletedSections * 3;
+                            gameState.EntropicMelodies += entropicReward;
+                            
                             gameState.OdeDuetActive = false;
-                            gameState.RedPetalsCaught = 0;
-                            gameState.PinkPetalsCaught = 0;
-                            gameState.WhitePetalsCaught = 0;
-                            gameState.PerfectBouquetCount = 0;
-                            gameState.LastRedPetalTime = DateTime.MinValue;
-                            gameState.LastPinkPetalTime = DateTime.MinValue;
-                            gameState.LastWhitePetalTime = DateTime.MinValue;
-                            gameState.OdeDuetCooldownExpiry = DateTime.Now.AddSeconds(600); // 10 minutes
+                            gameState.CrescendoNotesPlaced = 0;
+                            gameState.CrescendoCompletedSections = 0;
+                            gameState.Crescendo4Claimed = false;
+                            gameState.Crescendo8Claimed = false;
+                            gameState.Crescendo12Claimed = false;
+                            gameState.Crescendo16Claimed = false;
+                            gameState.OdeDuetCooldownExpiry = DateTime.Now.AddSeconds(DuetDescriptions.Cooldown.OdeToJoy);
                             if (DuetAbilityScreen?.IsVisible == true)
                             {
                                 DuetAbilityScreen.UpdateAbilityDisplay();
@@ -439,6 +439,12 @@ namespace MusicClicker
 
                         // Process Mirror Lake action queue
                         MusicClicker.Armory.WeaponAbilities.ProcessMirrorLakeQueue(gameState);
+
+                        // Process Fate Duet hourglass flip and replay
+                        if (gameState.FateDuetActive)
+                        {
+                            MusicClicker.Armory.WeaponAbilities.FateDuet_ProcessHourglass(gameState);
+                        }
 
                         // Apply Moonlight Duet Full Moon phase (3x NPS)
                         int moonlightPhase = MusicClicker.Armory.WeaponAbilities.MoonlightDuet_GetCurrentPhase(gameState);
@@ -463,6 +469,16 @@ namespace MusicClicker
                         if (gameState.BlizzardBountyNpsBonus > 0)
                         {
                             effectiveNps *= (1.0 + gameState.BlizzardBountyNpsBonus);
+                        }
+
+                        // Apply Ode to Joy Duet 5x NPS boost from completing 16-note crescendo
+                        if (gameState.OdeDuetNpsBoostActive && DateTime.Now <= gameState.OdeDuetNpsBoostExpiry)
+                        {
+                            effectiveNps *= 5.0;
+                        }
+                        else if (gameState.OdeDuetNpsBoostActive && DateTime.Now > gameState.OdeDuetNpsBoostExpiry)
+                        {
+                            gameState.OdeDuetNpsBoostActive = false;
                         }
 
                         // Apply Joyful Catharsis passive double NPS
@@ -627,6 +643,11 @@ namespace MusicClicker
             animationTimer.Tick += AnimationTimer_Tick;
             animationTimer.Start();
 
+            // Initialize to ensure button 0 (Fragmentation) is centered at start
+            currentIndex = 0;
+            currentRotation = 0;
+            targetRotation = 0;
+            
             // Calculate and apply initial positions for all buttons
             UpdateCarouselPositions();
 
@@ -695,11 +716,12 @@ namespace MusicClicker
             double deltaY = currentPoint.Y - lastDragPoint.Y;
             
             // Convert vertical movement to rotation (0.25 is sensitivity multiplier)
+            // Invert the rotation direction
             double rotationDelta = deltaY * 0.25;
-            currentRotation -= rotationDelta;
+            currentRotation += rotationDelta;
             
             // Store velocity for momentum calculation when drag ends
-            dragVelocity = -rotationDelta;
+            dragVelocity = rotationDelta;
             
             // Update last position for next frame
             lastDragPoint = currentPoint;
@@ -738,7 +760,7 @@ namespace MusicClicker
             int nearestIndex = (int)Math.Round(currentRotation / angleStep) % BUTTON_COUNT;
             if (nearestIndex < 0) nearestIndex += BUTTON_COUNT; // Handle negative wrap-around
             
-            // Set target to snap to nearest button
+            // Set target to snap to nearest button - ensure exactly one button is centered
             currentIndex = nearestIndex;
             targetRotation = nearestIndex * angleStep;
             isAnimating = true; // Begin smooth animation to target
@@ -892,10 +914,12 @@ namespace MusicClicker
                 var (button, translate, scale) = carouselButtons[i];
 
                 // Calculate this button's angle relative to current rotation
+                // No offset needed - let button 0 be at angle 0, which with -cos gives max Y (bottom center)
                 double angle = (i * angleStep - currentRotation) * (Math.PI / 180.0);
 
                 // Calculate vertical position on carousel circle (cosine gives vertical component)
-                double y = -Math.Cos(angle) * RADIUS;
+                // Use +cos so that angle=0 gives y=+RADIUS (bottom center)
+                double y = Math.Cos(angle) * RADIUS;
                 
                 // Check if button is at the bottom (foreground) of carousel
                 bool isAtBottom = y > (RADIUS - 50);
@@ -1018,6 +1042,18 @@ namespace MusicClicker
                 MusicClicker.Armory.WeaponAbilities.EnigmaDuet_OnClick(gameState);
             }
 
+            // Fate Duet: Bank click during banking phase
+            if (gameState.FateDuetActive && !gameState.FateDuetHasFlipped && DateTime.Now <= gameState.FateDuetExpiry)
+            {
+                MusicClicker.Armory.WeaponAbilities.FateDuet_BankAction(gameState, "Click", notesPerClick);
+            }
+
+            // Ode to Joy Duet: Add note to crescendo
+            if (gameState.OdeDuetActive && DateTime.Now <= gameState.OdeDuetExpiry)
+            {
+                MusicClicker.Armory.WeaponAbilities.OdeDuet_AddNote(gameState);
+            }
+
             // Individual weapon click abilities
             if (gameState.OdeToCreation && 
                 (gameState.CurrentResonatedWeapon1 == "OdeToCreation" || gameState.CurrentResonatedWeapon2 == "OdeToCreation"))
@@ -1125,6 +1161,7 @@ namespace MusicClicker
             {
                 // Give large amount of notes for testing and grant majors
                 MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, 1_000_000);
+                MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notesPerSecond, 1_000_000_000_000);
 
                 // Give one of each major score type
                 gameState.MoonlightMajorOwned += 1;
@@ -1263,6 +1300,50 @@ namespace MusicClicker
             }
 
             DuetAbilityButtonBorder.IsVisible = hasCooldownDuet;
+        }
+
+        /// <summary>
+        /// Shows the Entropic Armory screen and initializes it with current game state.
+        /// </summary>
+        public void ShowEntropicArmory()
+        {
+            if (EntropicArmoryScreen != null)
+            {
+                EntropicArmoryScreen.Initialize(gameState, this);
+                EntropicArmoryScreen.IsVisible = true;
+                EntropicArmoryScreen.UpdateDisplay();
+            }
+        }
+
+        /// <summary>
+        /// Shows the Armory of Forte screen.
+        /// </summary>
+        public void ShowArmoryOfForte()
+        {
+            if (ArmoryOfForteScreen != null)
+            {
+                ArmoryOfForteScreen.IsVisible = true;
+            }
+        }
+
+        /// <summary>
+        /// Handler for Cacophonic Dreams endgame button.
+        /// Only accessible when NPS reaches or exceeds 1 trillion.
+        /// </summary>
+        public async void CacophonicDreamsButton_Click(object? sender, RoutedEventArgs e)
+        {
+            // Set up the parent window reference for the screen
+            if (CacophonicDreamsScreen != null)
+            {
+                CacophonicDreamsScreen.SetParentWindow(this);
+            }
+            
+            // Transition to the Cacophonic Dreams screen
+            await TransitionAsync(() =>
+            {
+                MainScreen.IsVisible = false;
+                CacophonicDreamsScreen.IsVisible = true;
+            });
         }
     }
 }

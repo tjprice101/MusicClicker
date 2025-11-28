@@ -1,9 +1,16 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="MusicClicker.Views.WinterEventScreen"
-             Background="Black">
+             x:Class="MusicClicker.Views.WinterEventScreen">
 
-    <Grid>
+    <Panel>
+        <!-- Background image -->
+        <Image Source="avares://MusicClicker/Assets/WinterEventBackground.jpg"
+               Stretch="UniformToFill"
+               ZIndex="0"
+               Opacity="1" />
+
+    <Grid ZIndex="1"
+          Background="#33000000">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" /> <!-- Header -->
             <RowDefinition Height="*" />    <!-- Content -->
@@ -112,4 +119,5 @@
                 Foreground="White"
                 FontSize="20" />
     </Grid>
+    </Panel>
 </UserControl>

@@ -75,6 +75,12 @@ namespace MusicClicker
                     MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMinor", "Moonlight Sonata");
                 }
 
+                // Bank for Fate Duet Hourglass
+                if (gameState.FateDuetActive && !gameState.FateDuetHasFlipped && DateTime.Now <= gameState.FateDuetExpiry)
+                {
+                    MusicClicker.Armory.WeaponAbilities.FateDuet_BankAction(gameState, "CraftMinor", "Moonlight Sonata");
+                }
+
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
                 UIUpdater.UpdateFragmentationUI(window, gameState);
             }
@@ -138,7 +144,13 @@ namespace MusicClicker
                 // Queue for Mirror Lake reflection
                 if (gameState.SwanLakeDuetActive && DateTime.Now <= gameState.SwanLakeDuetExpiry)
                 {
-                    MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMinor", "Heroic");
+                    MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMinor", "Eroica");
+                }
+
+                // Bank for Fate Duet Hourglass
+                if (gameState.FateDuetActive && !gameState.FateDuetHasFlipped && DateTime.Now <= gameState.FateDuetExpiry)
+                {
+                    MusicClicker.Armory.WeaponAbilities.FateDuet_BankAction(gameState, "CraftMinor", "Eroica");
                 }
 
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
@@ -207,6 +219,12 @@ namespace MusicClicker
                     MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMinor", "Swan Lake");
                 }
 
+                // Bank for Fate Duet Hourglass
+                if (gameState.FateDuetActive && !gameState.FateDuetHasFlipped && DateTime.Now <= gameState.FateDuetExpiry)
+                {
+                    MusicClicker.Armory.WeaponAbilities.FateDuet_BankAction(gameState, "CraftMinor", "Swan Lake");
+                }
+
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
                 UIUpdater.UpdateFragmentationUI(window, gameState);
             }
@@ -273,6 +291,12 @@ namespace MusicClicker
                     MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMinor", "La Campanella");
                 }
 
+                // Bank for Fate Duet Hourglass
+                if (gameState.FateDuetActive && !gameState.FateDuetHasFlipped && DateTime.Now <= gameState.FateDuetExpiry)
+                {
+                    MusicClicker.Armory.WeaponAbilities.FateDuet_BankAction(gameState, "CraftMinor", "La Campanella");
+                }
+
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
                 UIUpdater.UpdateFragmentationUI(window, gameState);
             }
@@ -337,6 +361,12 @@ namespace MusicClicker
                 if (gameState.SwanLakeDuetActive && DateTime.Now <= gameState.SwanLakeDuetExpiry)
                 {
                     MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMinor", "Enigma Variations");
+                }
+
+                // Bank for Fate Duet Hourglass
+                if (gameState.FateDuetActive && !gameState.FateDuetHasFlipped && DateTime.Now <= gameState.FateDuetExpiry)
+                {
+                    MusicClicker.Armory.WeaponAbilities.FateDuet_BankAction(gameState, "CraftMinor", "Enigma Variations");
                 }
 
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
@@ -479,6 +509,12 @@ namespace MusicClicker
                     MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMinor", "Ode to Joy");
                 }
 
+                // Bank for Fate Duet Hourglass
+                if (gameState.FateDuetActive && !gameState.FateDuetHasFlipped && DateTime.Now <= gameState.FateDuetExpiry)
+                {
+                    MusicClicker.Armory.WeaponAbilities.FateDuet_BankAction(gameState, "CraftMinor", "Ode to Joy");
+                }
+
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
                 UIUpdater.UpdateFragmentationUI(window, gameState);
             }
@@ -533,6 +569,12 @@ namespace MusicClicker
                     MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMajor", "Moonlight Sonata");
                 }
 
+                // Bank for Fate Duet Hourglass
+                if (gameState.FateDuetActive && !gameState.FateDuetHasFlipped && DateTime.Now <= gameState.FateDuetExpiry)
+                {
+                    MusicClicker.Armory.WeaponAbilities.FateDuet_BankAction(gameState, "CraftMajor", "Moonlight Sonata");
+                }
+
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
                 UIUpdater.UpdateFragmentationUI(window, gameState);
             }
@@ -582,7 +624,13 @@ namespace MusicClicker
                 // Queue for Mirror Lake reflection
                 if (gameState.SwanLakeDuetActive && DateTime.Now <= gameState.SwanLakeDuetExpiry)
                 {
-                    MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMajor", "Heroic");
+                    MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMajor", "Eroica");
+                }
+
+                // Bank for Fate Duet Hourglass
+                if (gameState.FateDuetActive && !gameState.FateDuetHasFlipped && DateTime.Now <= gameState.FateDuetExpiry)
+                {
+                    MusicClicker.Armory.WeaponAbilities.FateDuet_BankAction(gameState, "CraftMajor", "Eroica");
                 }
 
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
@@ -637,6 +685,12 @@ namespace MusicClicker
                     MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMajor", "Swan Lake");
                 }
 
+                // Bank for Fate Duet Hourglass
+                if (gameState.FateDuetActive && !gameState.FateDuetHasFlipped && DateTime.Now <= gameState.FateDuetExpiry)
+                {
+                    MusicClicker.Armory.WeaponAbilities.FateDuet_BankAction(gameState, "CraftMajor", "Swan Lake");
+                }
+
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
                 UIUpdater.UpdateFragmentationUI(window, gameState);
             }
@@ -687,6 +741,12 @@ namespace MusicClicker
                 if (gameState.SwanLakeDuetActive && DateTime.Now <= gameState.SwanLakeDuetExpiry)
                 {
                     MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMajor", "La Campanella");
+                }
+
+                // Bank for Fate Duet Hourglass
+                if (gameState.FateDuetActive && !gameState.FateDuetHasFlipped && DateTime.Now <= gameState.FateDuetExpiry)
+                {
+                    MusicClicker.Armory.WeaponAbilities.FateDuet_BankAction(gameState, "CraftMajor", "La Campanella");
                 }
 
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
@@ -741,6 +801,12 @@ namespace MusicClicker
                     MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMajor", "Enigma Variations");
                 }
 
+                // Bank for Fate Duet Hourglass
+                if (gameState.FateDuetActive && !gameState.FateDuetHasFlipped && DateTime.Now <= gameState.FateDuetExpiry)
+                {
+                    MusicClicker.Armory.WeaponAbilities.FateDuet_BankAction(gameState, "CraftMajor", "Enigma Variations");
+                }
+
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
                 UIUpdater.UpdateFragmentationUI(window, gameState);
             }
@@ -793,6 +859,12 @@ namespace MusicClicker
                     MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMajor", "Fate");
                 }
 
+                // Bank for Fate Duet Hourglass
+                if (gameState.FateDuetActive && !gameState.FateDuetHasFlipped && DateTime.Now <= gameState.FateDuetExpiry)
+                {
+                    MusicClicker.Armory.WeaponAbilities.FateDuet_BankAction(gameState, "CraftMajor", "Fate");
+                }
+
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
                 UIUpdater.UpdateFragmentationUI(window, gameState);
             }
@@ -843,6 +915,12 @@ namespace MusicClicker
                 if (gameState.SwanLakeDuetActive && DateTime.Now <= gameState.SwanLakeDuetExpiry)
                 {
                     MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMajor", "Ode to Joy");
+                }
+
+                // Bank for Fate Duet Hourglass
+                if (gameState.FateDuetActive && !gameState.FateDuetHasFlipped && DateTime.Now <= gameState.FateDuetExpiry)
+                {
+                    MusicClicker.Armory.WeaponAbilities.FateDuet_BankAction(gameState, "CraftMajor", "Ode to Joy");
                 }
 
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);

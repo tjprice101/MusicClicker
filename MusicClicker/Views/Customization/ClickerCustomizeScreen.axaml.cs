@@ -163,13 +163,13 @@ namespace MusicClicker.Views
                 ode ? Avalonia.Media.Colors.White : Avalonia.Media.Colors.Gray);
 
             // Option 10: Requires Dies Irae Major (event score)
-            bool dies = _gameState.DiesIraeMajorSheets > 0;
+            bool dies = _gameState.DiesIraeOwned > 0;
             ClickerOption10.IsEnabled = dies;
             ClickerOption10.Background = new Avalonia.Media.SolidColorBrush(
                 dies ? Avalonia.Media.Colors.White : Avalonia.Media.Colors.Gray);
 
             // Option 11: Requires Winter Major (event score)
-            bool winter = _gameState.WinterMajorSheets > 0;
+            bool winter = _gameState.WinterOwned > 0;
             ClickerOption11.IsEnabled = winter;
             ClickerOption11.Background = new Avalonia.Media.SolidColorBrush(
                 winter ? Avalonia.Media.Colors.White : Avalonia.Media.Colors.Gray);
@@ -212,7 +212,43 @@ namespace MusicClicker.Views
                     // Special all-majors clicker button (requires all non-event majors)
                     imageUri = "avares://MusicClicker/Assets/ALLMAJORClickerButton.png";
                     break;
-                // TODO: Add cases for options 3-16 when additional clicker images are added
+                case 3:
+                    if (!ClickerOption3.IsEnabled) return;
+                    imageUri = "avares://MusicClicker/Assets/MoonlightIcon.jpg";
+                    break;
+                case 4:
+                    if (!ClickerOption4.IsEnabled) return;
+                    imageUri = "avares://MusicClicker/Assets/EroicaIcon.jpg";
+                    break;
+                case 5:
+                    if (!ClickerOption5.IsEnabled) return;
+                    imageUri = "avares://MusicClicker/Assets/SwanLakeIcon.jpg";
+                    break;
+                case 6:
+                    if (!ClickerOption6.IsEnabled) return;
+                    imageUri = "avares://MusicClicker/Assets/LaCampanellaIcon.jpg";
+                    break;
+                case 7:
+                    if (!ClickerOption7.IsEnabled) return;
+                    imageUri = "avares://MusicClicker/Assets/EnigmaIcon.jpg";
+                    break;
+                case 8:
+                    if (!ClickerOption8.IsEnabled) return;
+                    imageUri = "avares://MusicClicker/Assets/FateIcon.jpg";
+                    break;
+                case 9:
+                    if (!ClickerOption9.IsEnabled) return;
+                    imageUri = "avares://MusicClicker/Assets/OdeToJoyIcon.png";
+                    break;
+                case 10:
+                    if (!ClickerOption10.IsEnabled) return;
+                    imageUri = "avares://MusicClicker/Assets/DiesIraeIcon.jpg";
+                    break;
+                case 11:
+                    if (!ClickerOption11.IsEnabled) return;
+                    imageUri = "avares://MusicClicker/Assets/WinterIcon.jpg";
+                    break;
+                // TODO: Add cases for options 12-16 when additional clicker images are added
                 default:
                     return; // Invalid option number
             }

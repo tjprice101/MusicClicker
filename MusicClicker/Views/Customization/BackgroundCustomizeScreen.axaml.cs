@@ -65,52 +65,73 @@ namespace MusicClicker.Views
             BackgroundOption8.Click += (s, e) => HandleBackgroundSelection(8);
             BackgroundOption9.Click += (s, e) => HandleBackgroundSelection(9);
             BackgroundOption10.Click += (s, e) => HandleBackgroundSelection(10);
+            BackgroundOption11.Click += (s, e) => HandleBackgroundSelection(11);
+            BackgroundOption12.Click += (s, e) => HandleBackgroundSelection(12);
         }
 
         /// <summary>
         /// Loads and displays thumbnail previews for background options.
-        /// Currently shows previews for options 1 and 2.
+        /// Also sets enabled/disabled states based on unlock requirements.
         /// </summary>
         private void PopulateOptionThumbnails()
         {
+            if (_gameState == null) return;
+
             try
             {
-                // Option 1: always show the app's default background asset
-                string defaultUri = "avares://MusicClicker/Assets/sacredtrevor_A_grand_musical_city_lights_everywhere_popular_shi_d84ff662-c87b-4630-9887-25228f42097b-min.png";
+                // Option 1: Default background (always unlocked)
+                BackgroundOption1.IsEnabled = true;
 
-                var defaultBmp = ImageHelpers.GetBitmap(defaultUri, 256);
-                if (defaultBmp != null)
-                {
-                    BackgroundOption1.Content = new Image
-                    {
-                        Source = defaultBmp,
-                        Stretch = Avalonia.Media.Stretch.UniformToFill
-                    };
-                }
+                // Option 2: Custom background 1 (always unlocked)
+                BackgroundOption2.IsEnabled = true;
 
-                // Option 2: custom background 1
-                var custom1Uri = "avares://MusicClicker/Assets/CustomBG1.png";
-                var custom1Bmp = ImageHelpers.GetBitmap(custom1Uri, 256);
-                if (custom1Bmp != null)
-                {
-                    BackgroundOption2.Content = new Image
-                    {
-                        Source = custom1Bmp,
-                        Stretch = Avalonia.Media.Stretch.UniformToFill
-                    };
-                }
+                // Option 3: Custom background 2 (always unlocked)
+                BackgroundOption3.IsEnabled = true;
 
-                // Option 3: custom background 2
-                var custom2Uri = "avares://MusicClicker/Assets/CustomBG2.png";
-                var custom2Bmp = ImageHelpers.GetBitmap(custom2Uri, 256);
-                if (custom2Bmp != null)
-                {
-                    BackgroundOption3.Content = new Image
-                    {
-                        Source = custom2Bmp,
-                        Stretch = Avalonia.Media.Stretch.UniformToFill
-                    };
-                }
+                // Option 4: Moonlight Sonata (requires Moonlight Major)
+                bool moonlight = _gameState.MoonlightMajorOwned > 0;
+                BackgroundOption4.IsEnabled = moonlight;
+                BackgroundOption4.Opacity = moonlight ? 1.0 : 0.5;
+
+                // Option 5: Eroica (requires Eroica Major)
+                bool eroica = _gameState.EroicaMajorOwned > 0;
+                BackgroundOption5.IsEnabled = eroica;
+                BackgroundOption5.Opacity = eroica ? 1.0 : 0.5;
+
+                // Option 6: Swan Lake (requires Swan Lake Major)
+                bool swan = _gameState.SwanMajorOwned > 0;
+                BackgroundOption6.IsEnabled = swan;
+                BackgroundOption6.Opacity = swan ? 1.0 : 0.5;
+
+                // Option 7: La Campanella (requires La Campanella Major)
+                bool campanella = _gameState.LaCampanellaMajorOwned > 0;
+                BackgroundOption7.IsEnabled = campanella;
+                BackgroundOption7.Opacity = campanella ? 1.0 : 0.5;
+
+                // Option 8: Enigma (requires Enigma Major)
+                bool enigma = _gameState.EnigmaMajorOwned > 0;
+                BackgroundOption8.IsEnabled = enigma;
+                BackgroundOption8.Opacity = enigma ? 1.0 : 0.5;
+
+                // Option 9: Fate (requires Fate Major)
+                bool fate = _gameState.FateMajorOwned > 0;
+                BackgroundOption9.IsEnabled = fate;
+                BackgroundOption9.Opacity = fate ? 1.0 : 0.5;
+
+                // Option 10: Ode to Joy (requires Ode to Joy Major)
+                bool ode = _gameState.OdeToJoyMajorOwned > 0;
+                BackgroundOption10.IsEnabled = ode;
+                BackgroundOption10.Opacity = ode ? 1.0 : 0.5;
+
+                // Option 11: Dies Irae (requires Dies Irae owned)
+                bool dies = _gameState.DiesIraeOwned > 0;
+                BackgroundOption11.IsEnabled = dies;
+                BackgroundOption11.Opacity = dies ? 1.0 : 0.5;
+
+                // Option 12: Winter (requires Winter owned)
+                bool winter = _gameState.WinterOwned > 0;
+                BackgroundOption12.IsEnabled = winter;
+                BackgroundOption12.Opacity = winter ? 1.0 : 0.5;
             }
             catch
             {
@@ -146,7 +167,43 @@ namespace MusicClicker.Views
                     // Custom background 2
                     imageUri = "avares://MusicClicker/Assets/CustomBG2.png";
                     break;
-                // TODO: Add cases for options 3-10 when additional backgrounds are added
+                case 4:
+                    // Moonlight Sonata background
+                    imageUri = "avares://MusicClicker/Assets/MoonlightCUSTOMBG.jpg";
+                    break;
+                case 5:
+                    // Eroica background
+                    imageUri = "avares://MusicClicker/Assets/EroicaCUSTOMBG.jpg";
+                    break;
+                case 6:
+                    // Swan Lake background
+                    imageUri = "avares://MusicClicker/Assets/SwanLakeCUSTOMBG.jpg";
+                    break;
+                case 7:
+                    // La Campanella background
+                    imageUri = "avares://MusicClicker/Assets/LaCampanellaCUSTOMBG.jpg";
+                    break;
+                case 8:
+                    // Enigma background
+                    imageUri = "avares://MusicClicker/Assets/EnigmaCUSTOMBG.jpg";
+                    break;
+                case 9:
+                    // Fate background
+                    imageUri = "avares://MusicClicker/Assets/FateCUSTOMBG.jpg";
+                    break;
+                case 10:
+                    // Ode to Joy background
+                    imageUri = "avares://MusicClicker/Assets/OdeToJoyCUSTOMBG.jpg";
+                    break;
+                case 11:
+                    // Dies Irae background
+                    imageUri = "avares://MusicClicker/Assets/DiesIraeCUSTOMBG.jpg";
+                    break;
+                case 12:
+                    // Winter background
+                    imageUri = "avares://MusicClicker/Assets/WinterCUSTOMBG.jpg";
+                    break;
+                // TODO: Add cases for additional backgrounds if needed
                 default:
                     return; // Invalid option number
             }

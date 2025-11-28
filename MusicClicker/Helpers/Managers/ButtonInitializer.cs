@@ -434,6 +434,12 @@ namespace MusicClicker
                         MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(window.GameState, "BuyFragment", ("Melodious", 1000.0));
                     }
                     
+                    // Bank for Fate Duet Hourglass
+                    if (window.GameState.FateDuetActive && !window.GameState.FateDuetHasFlipped && DateTime.Now <= window.GameState.FateDuetExpiry)
+                    {
+                        MusicClicker.Armory.WeaponAbilities.FateDuet_BankAction(window.GameState, "BuyFragment", ("Melodious", 1000.0));
+                    }
+                    
                     // Trigger Star-Scattered Wings ability (Swan Lake I)
                     if (window.GameState.StarScatteredWingsAbility)
                     {
@@ -454,6 +460,12 @@ namespace MusicClicker
                     if (window.GameState.SwanLakeDuetActive && DateTime.Now <= window.GameState.SwanLakeDuetExpiry)
                     {
                         MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(window.GameState, "BuyFragment", ("Harmonious", 5000.0));
+                    }
+                    
+                    // Bank for Fate Duet Hourglass
+                    if (window.GameState.FateDuetActive && !window.GameState.FateDuetHasFlipped && DateTime.Now <= window.GameState.FateDuetExpiry)
+                    {
+                        MusicClicker.Armory.WeaponAbilities.FateDuet_BankAction(window.GameState, "BuyFragment", ("Harmonious", 5000.0));
                     }
                     
                     // Trigger Thousand Winged Swan ability (Swan Lake II)

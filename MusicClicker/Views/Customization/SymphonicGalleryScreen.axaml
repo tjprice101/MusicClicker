@@ -35,50 +35,60 @@
                 
                 <!-- Clicker Button Customization -->
                 <StackPanel Spacing="15">
-                    <Button x:Name="ClickerCustomizeButton"
-                            Width="270"
-                            Height="480"
-                            Background="Black"
-                            BorderBrush="White"
-                            BorderThickness="3">
-                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="20">
-                            <!--<emoji removed: replaced with empty spacer for aesthetics>-->
-                            <TextBlock Text="" FontSize="72" HorizontalAlignment="Center" />
-                            <TextBlock Text="Customize"
-                                       FontSize="32"
-                                       Foreground="White"
-                                       HorizontalAlignment="Center"
-                                       FontWeight="Bold" />
-                            <TextBlock Text="Clicker Button"
-                                       FontSize="24"
-                                       Foreground="White"
-                                       HorizontalAlignment="Center" />
-                        </StackPanel>
-                    </Button>
+                    <Border>
+                        <Border.Effect>
+                            <DropShadowEffect Color="Black" BlurRadius="15" Opacity="0.7" OffsetX="0" OffsetY="0" />
+                        </Border.Effect>
+                        <Button x:Name="ClickerCustomizeButton"
+                                Width="270"
+                                Height="480"
+                                Background="Black"
+                                BorderBrush="White"
+                                BorderThickness="3">
+                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="20">
+                                <!--<emoji removed: replaced with empty spacer for aesthetics>-->
+                                <TextBlock Text="" FontSize="72" HorizontalAlignment="Center" />
+                                <TextBlock Text="Customize"
+                                           FontSize="32"
+                                           Foreground="White"
+                                           HorizontalAlignment="Center"
+                                           FontWeight="Bold" />
+                                <TextBlock Text="Clicker Button"
+                                           FontSize="24"
+                                           Foreground="White"
+                                           HorizontalAlignment="Center" />
+                            </StackPanel>
+                        </Button>
+                    </Border>
                 </StackPanel>
 
                 <!-- Background Customization -->
                 <StackPanel Spacing="15">
-                    <Button x:Name="BackgroundCustomizeButton"
-                            Width="270"
-                            Height="480"
-                            Background="Black"
-                            BorderBrush="White"
-                            BorderThickness="3">
-                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="20">
-                            <!--<emoji removed: replaced with empty spacer for aesthetics>-->
-                            <TextBlock Text="" FontSize="72" HorizontalAlignment="Center" />
-                            <TextBlock Text="Customize"
-                                       FontSize="32"
-                                       Foreground="White"
-                                       HorizontalAlignment="Center"
-                                       FontWeight="Bold" />
+                    <Border>
+                        <Border.Effect>
+                            <DropShadowEffect Color="Black" BlurRadius="15" Opacity="0.7" OffsetX="0" OffsetY="0" />
+                        </Border.Effect>
+                        <Button x:Name="BackgroundCustomizeButton"
+                                Width="270"
+                                Height="480"
+                                Background="Black"
+                                BorderBrush="White"
+                                BorderThickness="3">
+                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="20">
+                                <!--<emoji removed: replaced with empty spacer for aesthetics>-->
+                                <TextBlock Text="" FontSize="72" HorizontalAlignment="Center" />
+                                <TextBlock Text="Customize"
+                                           FontSize="32"
+                                           Foreground="White"
+                                           HorizontalAlignment="Center"
+                                           FontWeight="Bold" />
                             <TextBlock Text="Background"
                                        FontSize="24"
                                        Foreground="White"
                                        HorizontalAlignment="Center" />
                         </StackPanel>
                     </Button>
+                    </Border>
                 </StackPanel>
 
             </StackPanel>
