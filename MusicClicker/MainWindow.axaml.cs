@@ -66,6 +66,9 @@ namespace MusicClicker
 
         // Short timer used to debounce interaction end; when it elapses we set IsUserInteracting=false.
         private DispatcherTimer _interactionTimer = null!;
+        
+        // Track last mouse position for floating text
+        private Point _lastClickPosition;
 
         // ------------------- CAROUSEL FIELDS -------------------
         
@@ -302,6 +305,7 @@ namespace MusicClicker
                     UIUpdater.UpdateSaveScoresUI(this, gameState);
                     UIUpdater.UpdateHeartOfHarmonyUI(this, gameState);
                     UIUpdater.UpdateUnitySymphonyUI(this, gameState);
+                    GlobalTempoManager?.RefreshDrawer();
                 }
             };
             _gameLoopTimer.Start();
@@ -344,6 +348,23 @@ namespace MusicClicker
                         {
                             gameState.WinterDuetActive = false;
                             gameState.NpsFrozen = false;
+                            gameState.WinterDuetCooldownExpiry = DateTime.Now.AddSeconds(DuetDescriptions.Cooldown.Winter);
+                            if (DuetAbilityScreen?.IsVisible == true)
+                            {
+                                DuetAbilityScreen.UpdateAbilityDisplay();
+                            }
+                        }
+
+                        // Check if Dies Irae Duet has expired
+                        if (gameState.DiesIraeDuetActive && DateTime.Now > gameState.DiesIraeDuetExpiry)
+                        {
+                            gameState.DiesIraeDuetActive = false;
+                            gameState.SevenSealsCounter = 0;
+                            gameState.DiesIraeDuetCooldownExpiry = DateTime.Now.AddSeconds(DuetDescriptions.Cooldown.DiesIrae);
+                            if (DuetAbilityScreen?.IsVisible == true)
+                            {
+                                DuetAbilityScreen.UpdateAbilityDisplay();
+                            }
                         }
 
                         // Check if Blizzard's Bounty has expired
@@ -448,7 +469,9 @@ namespace MusicClicker
 
                         // Apply Moonlight Duet Full Moon phase (3x NPS)
                         int moonlightPhase = MusicClicker.Armory.WeaponAbilities.MoonlightDuet_GetCurrentPhase(gameState);
-                        if (moonlightPhase == 2) // Full Moon
+                        bool allMoonPhasesActive = MusicClicker.Armory.WeaponAbilities.MoonlightDuet_AreAllPhasesActive(gameState);
+                        
+                        if (allMoonPhasesActive || moonlightPhase == 2) // Full Moon or all phases active
                         {
                             effectiveNps *= 3.0;
                         }
@@ -615,14 +638,14 @@ namespace MusicClicker
             // Each button needs a TranslateTransform (for position) and ScaleTransform (for size)
             carouselButtons = new List<(Button, TranslateTransform, ScaleTransform)>
             {
+                GetButtonTransforms(SymphonicGalleryButton),   // Save the Scores (now first)
                 GetButtonTransforms(FragmentationButton),      // Upgrade screen
                 GetButtonTransforms(ResonanceButton),          // Resonance feature
                 GetButtonTransforms(MelodyButton),             // Melody feature
                 GetButtonTransforms(HarmonyButton),            // Harmony feature
                 GetButtonTransforms(TempoResonateButton),      // Tempo Resonate (scores)
                 GetButtonTransforms(EternalModulationButton),  // Event screen
-                GetButtonTransforms(ArmoryOfForteButton),       // Armory/weapons shop
-                GetButtonTransforms(SymphonicGalleryButton)    // Customization gallery
+                GetButtonTransforms(ArmoryOfForteButton)       // Armory/weapons shop
             };
 
             // Get the canvas that contains the carousel
@@ -960,17 +983,34 @@ namespace MusicClicker
         // ------------------- EXISTING METHODS -------------------
         
         /// <summary>
+        /// Track mouse position over click button
+        /// </summary>
+        private void ClickButton_PointerMoved(object? sender, PointerEventArgs e)
+        {
+            if (FloatingTextCanvas != null)
+            {
+                _lastClickPosition = e.GetPosition(FloatingTextCanvas);
+            }
+        }
+        
+        /// <summary>
         /// Handler for the main clicker button click.
         /// Adds notes based on notes-per-click and applies any active abilities.
         /// </summary>
         public void ClickButton_Click(object? sender, RoutedEventArgs e)
         {
+            // Cache nighttime check to avoid multiple DateTime.Now.Hour calls (performance optimization)
+            bool isNighttime = MusicClicker.Armory.WeaponAbilities.IsNighttime();
+            
             // Start with base notes per click value
             double notesPerClick = gameState.NotesPerClick;
 
+            // Cache Moonlight Duet phase checks (use read-only to avoid modifying state on every click)
+            int moonPhase = MusicClicker.Armory.WeaponAbilities.MoonlightDuet_GetCurrentPhaseReadOnly(gameState);
+            bool allMoonPhasesActive = (moonPhase != -1) && MusicClicker.Armory.WeaponAbilities.MoonlightDuet_AreAllPhasesActive(gameState);
+            
             // Apply Moonlight Duet New Moon phase (2x NPC)
-            int moonPhase = MusicClicker.Armory.WeaponAbilities.MoonlightDuet_GetCurrentPhase(gameState);
-            if (moonPhase == 0) // New Moon
+            if (allMoonPhasesActive || moonPhase == 0) // New Moon or all phases active
             {
                 notesPerClick *= 2.0;
             }
@@ -1010,6 +1050,13 @@ namespace MusicClicker
             {
                 notesPerClick += gameState.NotesPerSecond;
             }
+            
+            // Apply Incisor of Moonlight: +500% notes during nighttime (8PM-6AM)
+            if (gameState.IncisorOfMoonlightAbility && isNighttime)
+            {
+                notesPerClick *= 6.0; // +500% = 6x multiplier
+            }
+            
             // Apply Fate Major ability: every 5th click gives 30% bonus of total notes
             else if (gameState.FateMajorAbility)
             {
@@ -1021,8 +1068,24 @@ namespace MusicClicker
                 }
             }
 
+            // Funeral Prayer: Add 6x NPS bonus to notesPerClick if empowered
+            if (gameState.FuneralPrayerAbility)
+            {
+                double empoweredBonus = MusicClicker.Armory.WeaponAbilities.FuneralPrayer_GetEmpoweredClickBonus(gameState);
+                if (empoweredBonus > 0)
+                {
+                    notesPerClick += empoweredBonus;
+                }
+            }
+
             // Add calculated notes to player's total
             MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, notesPerClick);
+
+            // Funeral Prayer: Track clicks (after getting multiplier, empowered clicks don't count)
+            if (gameState.FuneralPrayerAbility)
+            {
+                MusicClicker.Armory.WeaponAbilities.FuneralPrayer_OnClick(gameState);
+            }
 
             // Queue click for Mirror Lake reflection if active
             if (gameState.SwanLakeDuetActive && DateTime.Now <= gameState.SwanLakeDuetExpiry)
@@ -1088,7 +1151,8 @@ namespace MusicClicker
                 }
 
                 // Moonlight Duet: Crescent phase component drop (10% chance)
-                if (moonPhase == 1) // Crescent
+                // Process component drop when in Crescent phase OR when all phases are active
+                if (moonPhase == 1 || allMoonPhasesActive)
                 {
                     MusicClicker.Armory.WeaponAbilities.MoonlightDuet_CrescentComponentDrop(gameState);
                 }
@@ -1108,34 +1172,62 @@ namespace MusicClicker
                 }
             }
 
-            // Immediate, lightweight UI updates so rapid clicks feel responsive.
-            try
+            // Show floating text at actual cursor position with final calculated notes per click
+            if (FloatingTextCanvas != null)
             {
-                DisplayedNotes = gameState.Notes;
-                DisplayedNps = gameState.NotesPerSecond;
-
-                string notesText = $"Notes: {Math.Round(gameState.Notes, 1)}";
-                if (NotesText != null && NotesText.Text != notesText) NotesText.Text = notesText;
-
-                if (SaveScoresScreen?.SaveScoresNotesText != null) SaveScoresScreen.SaveScoresNotesText.Text = notesText;
-                if (HeartOfHarmonyScreen?.HeartOfHarmonyNotesText != null) HeartOfHarmonyScreen.HeartOfHarmonyNotesText.Text = notesText;
-                if (UnityTheSymphonyScreen?.UnityNotesTextHeader != null) UnityTheSymphonyScreen.UnityNotesTextHeader.Text = notesText;
-                if (ArmoryOfForteScreen?.ArmoryNotesText != null) ArmoryOfForteScreen.ArmoryNotesText.Text = notesText;
+                // Determine critical hit type
+                double roll = _random.NextDouble() * 100; // 0-100
+                
+                // Apply Eulogy of the Moon: +5% critical rate during nighttime (8PM-6AM)
+                // Shift the roll down by 5 to effectively increase crit chance
+                if (gameState.EulogyOfTheMoonAbility && isNighttime)
+                {
+                    roll -= 5.0; // This increases the chance of hitting lower (crit) thresholds
+                }
+                
+                string critText;
+                Color critColor;
+                double finalNotes = notesPerClick;
+                bool hasStroke = false;
+                
+                if (roll < 0.1) // 0.1% chance - Entropic Crescendo
+                {
+                    finalNotes = notesPerClick * 1500;
+                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
+                    critText = $"Entropic Crescendo of Eternity!!! +{FormatNumber(finalNotes)}";
+                    critColor = Colors.Red;
+                    hasStroke = true;
+                }
+                else if (roll < 1.1) // 1% chance - Superior Crescendo
+                {
+                    finalNotes = notesPerClick * 5;
+                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
+                    critText = $"Superior Crescendo!!! +{FormatNumber(finalNotes)}";
+                    critColor = Color.FromRgb(255, 20, 147); // Deep pink
+                }
+                else if (roll < 6.1) // 5% chance - Critical Crescendo
+                {
+                    finalNotes = notesPerClick * 2;
+                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
+                    critText = $"Critical Crescendo!! +{FormatNumber(finalNotes)}";
+                    critColor = Color.FromRgb(255, 182, 193); // Light pink
+                }
+                else // ~94% chance - Normal click
+                {
+                    critText = $"+{FormatNumber(notesPerClick)} Notes";
+                    critColor = Colors.White;
+                }
+                
+                ShowFloatingText(_lastClickPosition, critText, critColor, hasStroke);
             }
-            catch { }
-
-            // Perform fuller UI updates immediately so clicks reflect instantly.
-            try
-            {
-                UIUpdater.UpdateNotesOnly(this, gameState);
-                UIUpdater.UpdateSaveScoresUIImmediate(this, gameState);
-                UIUpdater.UpdateFragmentationUI(this, gameState);
-                UIUpdater.UpdateHeartOfHarmonyUI(this, gameState);
-                UIUpdater.UpdateUnitySymphonyUI(this, gameState);
-                // Avoid calling the full UpdateUI on every click to reduce heavy UI churn.
-                // Full UI updates are batched in the game loop at `uiUpdateIntervalMs`.
-            }
-            catch { }
+            
+            // Update UI after click
+            UIUpdater.UpdateUI(this, gameState);
+            UIUpdater.UpdateFragmentationUI(this, gameState);
+            UIUpdater.UpdateSaveScoresUI(this, gameState);
+            UIUpdater.UpdateHeartOfHarmonyUI(this, gameState);
+            UIUpdater.UpdateUnitySymphonyUI(this, gameState);
+            GlobalTempoManager?.RefreshDrawer();
         }
 
         /// <summary>
@@ -1149,10 +1241,13 @@ namespace MusicClicker
                 UpgradeScreen.IsVisible = false;
                 MainScreen.IsVisible = true;
             });
+            
+            UIUpdater.UpdateUI(this, gameState);
+            GlobalTempoManager?.RefreshDrawer();
         }
 
         /// <summary>
-        /// Handler for keyboard input - Space key gives debug resources.
+        /// Handler for keyboard input - Space key gives debug resources, M key gives Moonlight components.
         /// Used for testing/debugging during development.
         /// </summary>
         public void MainWindow_KeyDown(object? sender, Avalonia.Input.KeyEventArgs e)
@@ -1160,8 +1255,8 @@ namespace MusicClicker
             if (e.Key == Avalonia.Input.Key.Space)
             {
                 // Give large amount of notes for testing and grant majors
-                MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, 1_000_000);
-                MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notesPerSecond, 1_000_000_000_000);
+                // MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, 1_000_000);
+                // MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notesPerSecond, 1_000_000_000_000);
 
                 // Give one of each major score type
                 gameState.MoonlightMajorOwned += 1;
@@ -1201,6 +1296,22 @@ namespace MusicClicker
                 UIUpdater.UpdateHeartOfHarmonyUI(this, gameState);
                 UIUpdater.UpdateUnitySymphonyUI(this, gameState);
             }
+            else if (e.Key == Avalonia.Input.Key.M)
+            {
+                // Give Moonlight components for testing Sakura's Blossom
+                gameState.MoonlightMinorKeys += 1;
+                gameState.MoonlightMinorScales += 1;
+                gameState.MoonlightMinorProgressions += 1;
+                gameState.MoonlightMajorKeys += 1;
+                gameState.MoonlightMajorScales += 1;
+                gameState.MoonlightMajorProgressions += 1;
+                gameState.MelodiousOwned += 10; // Minor needs 10 Melodious
+                gameState.HarmoniousOwned += 10; // Major needs 10 Harmonious
+
+                // Update UI
+                UIUpdater.UpdateUI(this, gameState);
+                UIUpdater.UpdateUnitySymphonyUI(this, gameState);
+            }
         }
 
         /// <summary>
@@ -1214,6 +1325,9 @@ namespace MusicClicker
                 MainScreen.IsVisible = false;
                 TempoResonateScreen.IsVisible = true;
             });
+            
+            // Refresh weapon and score drawers to reflect current ownership
+            GlobalTempoManager?.RefreshDrawer();
         }
 
         /// <summary>
@@ -1228,8 +1342,10 @@ namespace MusicClicker
                 MainScreen.IsVisible = true;
             });
             
-            // Update duet button visibility when returning from Tempo Resonate
+            // Update main screen UI and duet button visibility when returning
+            UIUpdater.UpdateUI(this, gameState);
             UpdateDuetAbilityButtonVisibility();
+            GlobalTempoManager?.RefreshDrawer();
         }
 
         /// <summary>
@@ -1345,5 +1461,88 @@ namespace MusicClicker
                 CacophonicDreamsScreen.IsVisible = true;
             });
         }
+        
+        // ------------------- FLOATING TEXT FEEDBACK -------------------
+        
+        /// <summary>
+        /// Shows floating text at the mouse position indicating notes gained
+        /// </summary>
+        private async void ShowFloatingText(Point position, string text, Color color, bool hasStroke = false)
+        {
+            if (FloatingTextCanvas == null) return;
+            
+            var textBlock = new TextBlock
+            {
+                Text = text,
+                FontSize = 24,
+                FontWeight = FontWeight.Bold,
+                Foreground = new SolidColorBrush(color),
+                Opacity = 1.0
+            };
+            
+            // Add drop shadow or stroke for visibility
+            if (hasStroke)
+            {
+                // White stroke effect for Entropic Crescendo
+                textBlock.Effect = new DropShadowEffect
+                {
+                    Color = Colors.White,
+                    BlurRadius = 8,
+                    Opacity = 1.0
+                };
+            }
+            else
+            {
+                textBlock.Effect = new DropShadowEffect
+                {
+                    Color = Colors.Black,
+                    BlurRadius = 4,
+                    Opacity = 0.8
+                };
+            }
+            
+            Canvas.SetLeft(textBlock, position.X);
+            Canvas.SetTop(textBlock, position.Y - 30);
+            
+            FloatingTextCanvas.Children.Add(textBlock);
+            
+            // Animate upward and fade out
+            double startY = position.Y - 30;
+            double endY = startY - 80;
+            
+            var startTime = DateTime.Now;
+            var duration = TimeSpan.FromSeconds(1.5);
+            
+            while (DateTime.Now - startTime < duration)
+            {
+                var elapsed = (DateTime.Now - startTime).TotalSeconds;
+                var progress = elapsed / duration.TotalSeconds;
+                
+                // Update position (move up)
+                Canvas.SetTop(textBlock, startY + (endY - startY) * progress);
+                
+                // Fade out
+                textBlock.Opacity = 1.0 - progress;
+                
+                await Task.Delay(16); // ~60fps
+            }
+            
+            // Remove from canvas
+            FloatingTextCanvas.Children.Remove(textBlock);
+        }
+        
+        private string FormatNumber(double value)
+        {
+            if (value >= 1_000_000_000_000)
+                return $"{value / 1_000_000_000_000:F2}T";
+            if (value >= 1_000_000_000)
+                return $"{value / 1_000_000_000:F2}B";
+            if (value >= 1_000_000)
+                return $"{value / 1_000_000:F2}M";
+            if (value >= 1_000)
+                return $"{value / 1_000:F2}K";
+            return $"{value:F0}";
+        }
     }
 }
+

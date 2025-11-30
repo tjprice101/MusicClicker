@@ -93,5 +93,31 @@ namespace MusicClicker.Helpers
 
             return totalNps;
         }
+
+        // Recalculate total NPC from all sources (upgrades)
+        public static double RecalculateNotesPerClick(GameState gameState)
+        {
+            double totalNpc = 1.0; // Base click value
+
+            // Add NPC from click-based upgrades
+            for (int i = 0; i < gameState.AriaOwned; i++)
+            {
+                totalNpc += gameState.AriaBaseClickEffect * Math.Pow(gameState.AriaClickGrowth, i);
+            }
+            for (int i = 0; i < gameState.RequiemOwned; i++)
+            {
+                totalNpc += gameState.RequiemBaseClickEffect * Math.Pow(gameState.RequiemClickGrowth, i);
+            }
+            for (int i = 0; i < gameState.OpusOwned; i++)
+            {
+                totalNpc += gameState.OpusBaseClickEffect * Math.Pow(gameState.OpusClickGrowth, i);
+            }
+            for (int i = 0; i < gameState.MagnumOpusOwned; i++)
+            {
+                totalNpc += gameState.MagnumOpusBaseClickEffect * Math.Pow(gameState.MagnumOpusClickGrowth, i);
+            }
+
+            return totalNpc;
+        }
     }
 }

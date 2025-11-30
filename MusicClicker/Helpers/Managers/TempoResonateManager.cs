@@ -42,7 +42,7 @@ namespace MusicClicker
         private readonly List<string> _majorScoreOrder = new()
         {
             // Base Major Scores
-            "Moonlight",
+            "Moonlight Sonata",
             "Eroica",
             "Swan",
             "LaCampanella",
@@ -61,7 +61,7 @@ namespace MusicClicker
         // Mapping of score names → image asset paths
         private readonly Dictionary<string, string> _majorScoreImages = new()
         {
-            {"Moonlight", "avares://MusicClicker/Assets/Music Game 16_9 Assets [978EB92]-min2.png"},
+            {"Moonlight Sonata", "avares://MusicClicker/Assets/Music Game 16_9 Assets [978EB92]-min2.png"},
             {"Eroica", "avares://MusicClicker/Assets/Music Game 16_9 Assets [04AC7F2]-min2.png"},
             {"Swan", "avares://MusicClicker/Assets/Music Game 16_9 Assets [876DEE6]-min2.png"},
             {"LaCampanella", "avares://MusicClicker/Assets/LaCampanellaMajor2.png"},
@@ -78,7 +78,7 @@ namespace MusicClicker
         // Friendly display names for major scores (internal key -> UI string)
         private readonly Dictionary<string, string> _majorScoreDisplayNames = new()
         {
-            {"Moonlight", "Moonlight"},
+            {"Moonlight", "Moonlight Sonata"},
             {"Eroica", "Eroica"},
             {"Swan", "Swan"},
             {"LaCampanella", "La Campanella"},
@@ -287,7 +287,7 @@ namespace MusicClicker
             // Create entry button ONLY for owned scores, in the defined order
             foreach (var score in _majorScoreOrder)
             {
-                // Skip if not owned
+                // Skip if not owned - only show owned scores
                 if (!OwnsScore(score)) continue;
 
                 // Get the image asset path
@@ -297,7 +297,7 @@ namespace MusicClicker
                 _bitmapCache.TryGetValue(score, out var bitmap);
                 var imageSource = bitmap ?? _emptyBitmap;
 
-                // Image for button content - use helper to ensure smooth scaling and consistent settings
+                // Full opacity for owned scores
                 var imageControl = MusicClicker.Helpers.ImageHelpers.CreateSmoothImage(imageSource, 256, 144, score, 1.0, true);
 
                 // Transparent button overlay for click handling
@@ -339,16 +339,23 @@ namespace MusicClicker
             _rightDrawerPanel.Children.Clear();
             _rightDrawerPanel.Orientation = Avalonia.Layout.Orientation.Vertical;
 
-            // Create entry button ONLY for owned weapons, in the defined order
+            // Create entry button for ALL weapons, grayed out and monochrome if not owned
             foreach (var weapon in _weaponOrder)
             {
-                // Skip if not owned
-                if (!OwnsWeapon(weapon)) continue;
+                bool isOwned = OwnsWeapon(weapon);
 
                 _weaponBitmapCache.TryGetValue(weapon, out var bitmap);
                 var imageSource = bitmap ?? _emptyBitmap;
 
-                var imageControl = MusicClicker.Helpers.ImageHelpers.CreateSmoothImage(imageSource, 256, 144, weapon, 1.0, true);
+                // If owned: full opacity (1.0), enabled. If not owned: low opacity (0.3), disabled
+                var imageControl = MusicClicker.Helpers.ImageHelpers.CreateSmoothImage(
+                    imageSource, 
+                    256, 
+                    144, 
+                    weapon, 
+                    isOwned ? 1.0 : 0.3,  // opacity
+                    isOwned                // isEnabled
+                );
 
                 var button = new Button
                 {
@@ -358,24 +365,27 @@ namespace MusicClicker
                     BorderThickness = new Thickness(0),
                     Margin = new Thickness(5),
                     Content = imageControl,
-                    IsEnabled = true
+                    IsEnabled = isOwned // Only clickable if owned
                 };
 
                 // Capture the weapon name in a local variable to avoid closure issues
                 string capturedWeapon = weapon;
 
-                button.Click += (_, _) =>
+                if (isOwned)
                 {
-                    // If already equipped, ask to disable; otherwise ask to equip
-                    if (_gameState.CurrentResonatedWeapon1 == capturedWeapon || _gameState.CurrentResonatedWeapon2 == capturedWeapon)
+                    button.Click += (_, _) =>
                     {
-                        ShowWeaponDisablePrompt(capturedWeapon);
-                    }
-                    else
-                    {
-                        ShowWeaponEquipPrompt(capturedWeapon);
-                    }
-                };
+                        // If already equipped, ask to disable; otherwise ask to equip
+                        if (_gameState.CurrentResonatedWeapon1 == capturedWeapon || _gameState.CurrentResonatedWeapon2 == capturedWeapon)
+                        {
+                            ShowWeaponDisablePrompt(capturedWeapon);
+                        }
+                        else
+                        {
+                            ShowWeaponEquipPrompt(capturedWeapon);
+                        }
+                    };
+                }
 
                 _rightDrawerPanel.Children.Add(button);
             }
@@ -686,6 +696,7 @@ namespace MusicClicker
         {
             // Rebuild the entire drawer to reflect current ownership state
             InitializeDrawer();
+            InitializeWeaponDrawer();
         }
 
         // Checks whether the player owns the specified major score
@@ -694,7 +705,7 @@ namespace MusicClicker
             return score switch
             {
                 // Base Major Scores
-                "Moonlight" => _gameState.MoonlightMajorOwned > 0,
+                "Moonlight Sonata" => _gameState.MoonlightMajorOwned > 0,
                 "Eroica" => _gameState.EroicaMajorOwned > 0,
                 "Swan" => _gameState.SwanMajorOwned > 0,
                 "LaCampanella" => _gameState.LaCampanellaMajorOwned > 0,
@@ -798,7 +809,7 @@ namespace MusicClicker
             // Enable the selected ability
             switch (scoreName)
             {
-                case "Moonlight": _gameState.MoonlightMajorAbility = true; break;
+                case "Moonlight Sonata": _gameState.MoonlightMajorAbility = true; break;
                 case "Eroica": _gameState.EroicaMajorAbility = true; break;
                 case "Swan": _gameState.SwanMajorAbility = true; break;
                 case "LaCampanella": _gameState.LaCampanellaMajorAbility = true; break;

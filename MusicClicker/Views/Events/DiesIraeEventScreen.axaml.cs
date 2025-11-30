@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using MusicClicker.Helpers;
 using System;
 
 namespace MusicClicker.Views
@@ -28,14 +29,14 @@ namespace MusicClicker.Views
 		_gameState = gameState;
 
 		double cost = (gameState.NotesPerSecond * 3) + 100;
-		SoulOfDiesIraeCostText.Text = $"{Math.Round(cost, 1)} Notes for Soul Resonance";
+		SoulOfDiesIraeCostText.Text = $"{NumberFormatter.FormatLargeNumber(cost)} Notes for Soul Resonance";
 		DiesIraeMajorOwnedText.Text = $"Major Sheets of Dies Irae Owned: {gameState.DiesIraeMajorSheets}";			if (this.FindControl<TextBlock>("NotesText") is TextBlock notes)
 			{
-				notes.Text = $"Notes: {Math.Round(gameState.Notes, 1)}";
+				notes.Text = $"Notes: {NumberFormatter.FormatLargeNumber(gameState.Notes)}";
 			}
 			if (this.FindControl<TextBlock>("NpsText") is TextBlock nps)
 			{
-				nps.Text = $"Notes Per Second: {Math.Round(gameState.NotesPerSecond, 1)}";
+				nps.Text = $"Notes Per Second: {NumberFormatter.FormatLargeNumber(gameState.NotesPerSecond)}";
 			}
 
 			try

@@ -608,6 +608,13 @@
                             </Border>
                         </StackPanel>
                     </Border>
+                    
+                    <!-- Musical Note Mechanic Overlay -->
+                    <Canvas x:Name="NoteMechanicCanvas"
+                            IsVisible="False"
+                            Background="#DD000000">
+                        <!-- Notes will be added programmatically -->
+                    </Canvas>
                 </Grid>
                 
                 <!-- Control Buttons -->

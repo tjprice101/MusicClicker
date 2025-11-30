@@ -13,6 +13,20 @@ namespace MusicClicker.Views
         private MainWindow? _mainWindow;
         private DispatcherTimer? _cooldownTimer;
 
+        // Reusable brushes and effects to avoid creating new instances every update (performance optimization)
+        private static readonly SolidColorBrush _purpleBrush = new SolidColorBrush(Color.FromRgb(138, 43, 226)); // Bright Purple
+        private static readonly SolidColorBrush _silverBrush = new SolidColorBrush(Color.FromRgb(192, 192, 220)); // Silver/moonlight
+        private static readonly SolidColorBrush _greenBrush = new SolidColorBrush(Color.FromRgb(78, 204, 163)); // Green
+        private static readonly SolidColorBrush _moonlightBlueBrush = new SolidColorBrush(Color.FromRgb(100, 120, 200)); // Moonlight blue
+        private static readonly DropShadowEffect _moonlightGlowEffect = new DropShadowEffect
+        {
+            Color = Color.FromRgb(100, 120, 200),
+            BlurRadius = 15,
+            OffsetX = 0,
+            OffsetY = 0,
+            Opacity = 0.8
+        };
+
         public DuetAbilityScreen()
         {
             InitializeComponent();
@@ -608,6 +622,9 @@ namespace MusicClicker.Views
         {
             if (_gameState == null || DuetAbilityStatusText == null || ActivateDuetAbilityButton == null) return;
 
+            // Check if all phases are active (resonating with Moonlight Sonata)
+            bool allPhasesActive = MusicClicker.Armory.WeaponAbilities.MoonlightDuet_AreAllPhasesActive(_gameState);
+            
             // Get current phase name for display
             string phaseName = _gameState.MoonlightCurrentPhase switch
             {
@@ -623,15 +640,27 @@ namespace MusicClicker.Views
                 double remaining = (_gameState.MoonlightDuetExpiry - DateTime.Now).TotalSeconds;
                 if (remaining > 0)
                 {
-                    DuetAbilityStatusText.Text = $"Active: {remaining:F1}s | Phase: {phaseName}";
-                    DuetAbilityStatusText.Foreground = new SolidColorBrush(Color.FromRgb(192, 192, 220)); // Silver
+                    // If resonating with Moonlight Sonata, show SPECIAL status
+                    if (allPhasesActive)
+                    {
+                        DuetAbilityStatusText.Text = $"SPECIAL: All Phases Active! | {remaining:F1}s";
+                        DuetAbilityStatusText.Foreground = _silverBrush;
+                        DuetAbilityStatusText.Effect = _moonlightGlowEffect;
+                    }
+                    else
+                    {
+                        DuetAbilityStatusText.Text = $"Active: {remaining:F1}s | Phase: {phaseName}";
+                        DuetAbilityStatusText.Foreground = _silverBrush;
+                        DuetAbilityStatusText.Effect = _moonlightGlowEffect;
+                    }
                     ActivateDuetAbilityButton.Content = "END RESONANCE";
                     ActivateDuetAbilityButton.IsEnabled = true;
                 }
                 else
                 {
                     DuetAbilityStatusText.Text = "Ready";
-                    DuetAbilityStatusText.Foreground = new SolidColorBrush(Color.FromRgb(78, 204, 163));
+                    DuetAbilityStatusText.Foreground = _greenBrush;
+                    DuetAbilityStatusText.Effect = null;
                     ActivateDuetAbilityButton.Content = "RESONATE";
                     ActivateDuetAbilityButton.IsEnabled = true;
                 }
@@ -640,14 +669,16 @@ namespace MusicClicker.Views
             {
                 double cooldown = (_gameState.MoonlightDuetCooldownExpiry - DateTime.Now).TotalSeconds;
                 DuetAbilityStatusText.Text = $"Cooldown: {cooldown:F1}s";
-                DuetAbilityStatusText.Foreground = new SolidColorBrush(Color.FromRgb(100, 120, 200)); // Moonlight blue
+                DuetAbilityStatusText.Foreground = _silverBrush;
+                DuetAbilityStatusText.Effect = _moonlightGlowEffect;
                 ActivateDuetAbilityButton.Content = "DISABLED";
                 ActivateDuetAbilityButton.IsEnabled = false;
             }
             else
             {
                 DuetAbilityStatusText.Text = "Ready";
-                DuetAbilityStatusText.Foreground = new SolidColorBrush(Color.FromRgb(78, 204, 163));
+                DuetAbilityStatusText.Foreground = _greenBrush;
+                DuetAbilityStatusText.Effect = null;
                 ActivateDuetAbilityButton.Content = "RESONATE";
                 ActivateDuetAbilityButton.IsEnabled = true;
             }

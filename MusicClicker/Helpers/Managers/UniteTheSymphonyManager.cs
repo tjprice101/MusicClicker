@@ -45,16 +45,11 @@ namespace MusicClicker
                 }
 
                 owned++;
-                // Only add to NPS if not frozen
-                if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
-                {
-                    gameState.NotesPerSecond += 3000;
-                }
 
                 // Trigger Symphony of Bells ability (La Campanella I)
                 if (gameState.SymphonyOfBellsAbility)
                 {
-                    MusicClicker.Armory.WeaponAbilities.SymphonyOfBells_OnMinorCraft(gameState, "moonlight");
+                    MusicClicker.Armory.WeaponAbilities.SymphonyOfBells_OnMinorCraft(gameState, "moonlight sonata");
                 }
 
                 // Trigger Razer of Bell's Chimes ability (La Campanella II)
@@ -83,6 +78,9 @@ namespace MusicClicker
 
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
                 UIUpdater.UpdateFragmentationUI(window, gameState);
+                gameState.NotesPerSecond = MusicClicker.Helpers.Progression.RecalculateNotesPerSecond(gameState);
+                gameState.NotesPerClick = MusicClicker.Helpers.Progression.RecalculateNotesPerClick(gameState);
+                UIUpdater.UpdateUI(window, gameState);
             }
 
             return canCraft;
@@ -117,11 +115,6 @@ namespace MusicClicker
                 }
 
                 owned++;
-                // Only add to NPS if not frozen
-                if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
-                {
-                    gameState.NotesPerSecond += 8000;
-                }
 
                 // Trigger Symphony of Bells ability (La Campanella I)
                 if (gameState.SymphonyOfBellsAbility)
@@ -155,12 +148,15 @@ namespace MusicClicker
 
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
                 UIUpdater.UpdateFragmentationUI(window, gameState);
+                gameState.NotesPerSecond = MusicClicker.Helpers.Progression.RecalculateNotesPerSecond(gameState);
+                gameState.NotesPerClick = MusicClicker.Helpers.Progression.RecalculateNotesPerClick(gameState);
+                UIUpdater.UpdateUI(window, gameState);
             }
 
             return canCraft;
         }
 
-        public static bool TryCraftSwanLakeMinor(MainWindow window, ref int owned)
+        public static bool TryCraftSwanMinor(MainWindow window, ref int owned)
         {
             var gameState = window.GameState;
             bool canCraft = false;
@@ -189,11 +185,6 @@ namespace MusicClicker
                 }
 
                 owned++;
-                // Only add to NPS if not frozen
-                if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
-                {
-                    gameState.NotesPerSecond += 15000;
-                }
 
                 // Trigger Symphony of Bells ability (La Campanella I)
                 if (gameState.SymphonyOfBellsAbility)
@@ -227,6 +218,9 @@ namespace MusicClicker
 
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
                 UIUpdater.UpdateFragmentationUI(window, gameState);
+                gameState.NotesPerSecond = MusicClicker.Helpers.Progression.RecalculateNotesPerSecond(gameState);
+                gameState.NotesPerClick = MusicClicker.Helpers.Progression.RecalculateNotesPerClick(gameState);
+                UIUpdater.UpdateUI(window, gameState);
             }
 
             return canCraft;
@@ -261,11 +255,6 @@ namespace MusicClicker
                 }
 
                 owned++;
-                // Only add to NPS if not frozen
-                if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
-                {
-                    gameState.NotesPerSecond += 35000;
-                }
 
                 // Trigger Symphony of Bells ability (La Campanella I)
                 if (gameState.SymphonyOfBellsAbility)
@@ -299,6 +288,9 @@ namespace MusicClicker
 
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
                 UIUpdater.UpdateFragmentationUI(window, gameState);
+                gameState.NotesPerSecond = MusicClicker.Helpers.Progression.RecalculateNotesPerSecond(gameState);
+                gameState.NotesPerClick = MusicClicker.Helpers.Progression.RecalculateNotesPerClick(gameState);
+                UIUpdater.UpdateUI(window, gameState);
             }
 
             return canCraft;
@@ -333,11 +325,6 @@ namespace MusicClicker
                 }
 
                 owned++;
-                // Only add to NPS if not frozen
-                if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
-                {
-                    gameState.NotesPerSecond += 75000;
-                }
 
                 // Trigger Symphony of Bells ability (La Campanella I)
                 if (gameState.SymphonyOfBellsAbility)
@@ -371,6 +358,9 @@ namespace MusicClicker
 
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
                 UIUpdater.UpdateFragmentationUI(window, gameState);
+                gameState.NotesPerSecond = MusicClicker.Helpers.Progression.RecalculateNotesPerSecond(gameState);
+                gameState.NotesPerClick = MusicClicker.Helpers.Progression.RecalculateNotesPerClick(gameState);
+                UIUpdater.UpdateUI(window, gameState);
             }
 
             return canCraft;
@@ -405,11 +395,6 @@ namespace MusicClicker
                 }
 
                 owned++;
-                // Only add to NPS if not frozen
-                if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
-                {
-                    gameState.NotesPerSecond += 135000;
-                }
 
                 // Trigger Symphony of Bells ability (La Campanella I)
                 if (gameState.SymphonyOfBellsAbility)
@@ -445,6 +430,9 @@ namespace MusicClicker
             {
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
                 UIUpdater.UpdateFragmentationUI(window, gameState);
+                gameState.NotesPerSecond = MusicClicker.Helpers.Progression.RecalculateNotesPerSecond(gameState);
+                gameState.NotesPerClick = MusicClicker.Helpers.Progression.RecalculateNotesPerClick(gameState);
+                UIUpdater.UpdateUI(window, gameState);
             }
 
             return canCraft;
@@ -479,11 +467,6 @@ namespace MusicClicker
                 }
 
                 owned++;
-                // Only add to NPS if not frozen
-                if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
-                {
-                    gameState.NotesPerSecond += 255000;
-                }
 
                 // Trigger Symphony of Bells ability (La Campanella I)
                 if (gameState.SymphonyOfBellsAbility)
@@ -517,6 +500,9 @@ namespace MusicClicker
 
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
                 UIUpdater.UpdateFragmentationUI(window, gameState);
+                gameState.NotesPerSecond = MusicClicker.Helpers.Progression.RecalculateNotesPerSecond(gameState);
+                gameState.NotesPerClick = MusicClicker.Helpers.Progression.RecalculateNotesPerClick(gameState);
+                UIUpdater.UpdateUI(window, gameState);
             }
 
             return canCraft;
@@ -541,21 +527,22 @@ namespace MusicClicker
 
                 owned++;
 
+                // Trigger Sakura's Blossom ability (Eroica I) - on major acquisition
+                if (gameState.SakurasBlossomAbility)
+                {
+                    MusicClicker.Armory.WeaponAbilities.SakurasBlossom_OnMajorAcquisition(gameState, "Moonlight Sonata");
+                }
+
                 // Trigger Funeral Prayer ability (Eroica II) - on major acquisition
                 if (gameState.FuneralPrayerAbility)
                 {
                     MusicClicker.Armory.WeaponAbilities.FuneralPrayer_OnMajorAcquisition(gameState);
                 }
 
-
-
+                // Trigger Triumph of Heroes passive (Eroica Major Crescendance)
                 if (gameState.EroicaMajorAbility)
                 {
-                    gameState.MoonlightMinorOwned += 2;
-                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
-                    {
-                        gameState.NotesPerSecond += 6000;
-                    }
+                    MusicClicker.Armory.WeaponAbilities.TriumphOfHeroes_OnMajorAcquisition(gameState);
                 }
 
                 canCraft = true;
@@ -577,6 +564,9 @@ namespace MusicClicker
 
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
                 UIUpdater.UpdateFragmentationUI(window, gameState);
+                gameState.NotesPerSecond = MusicClicker.Helpers.Progression.RecalculateNotesPerSecond(gameState);
+                gameState.NotesPerClick = MusicClicker.Helpers.Progression.RecalculateNotesPerClick(gameState);
+                UIUpdater.UpdateUI(window, gameState);
             }
 
             return canCraft;
@@ -599,21 +589,22 @@ namespace MusicClicker
 
                 owned++;
 
+                // Trigger Sakura's Blossom ability (Eroica I) - on major acquisition
+                if (gameState.SakurasBlossomAbility)
+                {
+                    MusicClicker.Armory.WeaponAbilities.SakurasBlossom_OnMajorAcquisition(gameState, "Eroica");
+                }
+
                 // Trigger Funeral Prayer ability (Eroica II) - on major acquisition
                 if (gameState.FuneralPrayerAbility)
                 {
                     MusicClicker.Armory.WeaponAbilities.FuneralPrayer_OnMajorAcquisition(gameState);
                 }
 
-
-
+                // Trigger Triumph of Heroes passive (Eroica Major Crescendance)
                 if (gameState.EroicaMajorAbility)
                 {
-                    gameState.EroicaMinorOwned += 2;
-                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
-                    {
-                        gameState.NotesPerSecond += 16000;
-                    }
+                    MusicClicker.Armory.WeaponAbilities.TriumphOfHeroes_OnMajorAcquisition(gameState);
                 }
 
                 canCraft = true;
@@ -635,12 +626,13 @@ namespace MusicClicker
 
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
                 UIUpdater.UpdateFragmentationUI(window, gameState);
+                UIUpdater.UpdateUI(window, gameState);
             }
 
             return canCraft;
         }
 
-        public static bool TryCraftSwanLakeMajor(MainWindow window, ref int owned)
+        public static bool TryCraftSwanMajor(MainWindow window, ref int owned)
         {
             var gameState = window.GameState;
             bool canCraft = false;
@@ -657,21 +649,22 @@ namespace MusicClicker
 
                 owned++;
 
+                // Trigger Sakura's Blossom ability (Eroica I) - on major acquisition
+                if (gameState.SakurasBlossomAbility)
+                {
+                    MusicClicker.Armory.WeaponAbilities.SakurasBlossom_OnMajorAcquisition(gameState, "Swan Lake");
+                }
+
                 // Trigger Funeral Prayer ability (Eroica II) - on major acquisition
                 if (gameState.FuneralPrayerAbility)
                 {
                     MusicClicker.Armory.WeaponAbilities.FuneralPrayer_OnMajorAcquisition(gameState);
                 }
 
-
-
+                // Trigger Triumph of Heroes passive (Eroica Major Crescendance)
                 if (gameState.EroicaMajorAbility)
                 {
-                    gameState.SwanMinorOwned += 2;
-                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
-                    {
-                        gameState.NotesPerSecond += 30000;
-                    }
+                    MusicClicker.Armory.WeaponAbilities.TriumphOfHeroes_OnMajorAcquisition(gameState);
                 }
 
                 canCraft = true;
@@ -693,6 +686,9 @@ namespace MusicClicker
 
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
                 UIUpdater.UpdateFragmentationUI(window, gameState);
+                gameState.NotesPerSecond = MusicClicker.Helpers.Progression.RecalculateNotesPerSecond(gameState);
+                gameState.NotesPerClick = MusicClicker.Helpers.Progression.RecalculateNotesPerClick(gameState);
+                UIUpdater.UpdateUI(window, gameState);
             }
 
             return canCraft;
@@ -715,21 +711,22 @@ namespace MusicClicker
 
                 owned++;
 
+                // Trigger Sakura's Blossom ability (Eroica I) - on major acquisition
+                if (gameState.SakurasBlossomAbility)
+                {
+                    MusicClicker.Armory.WeaponAbilities.SakurasBlossom_OnMajorAcquisition(gameState, "La Campanella");
+                }
+
                 // Trigger Funeral Prayer ability (Eroica II) - on major acquisition
                 if (gameState.FuneralPrayerAbility)
                 {
                     MusicClicker.Armory.WeaponAbilities.FuneralPrayer_OnMajorAcquisition(gameState);
                 }
 
-
-
+                // Trigger Triumph of Heroes passive (Eroica Major Crescendance)
                 if (gameState.EroicaMajorAbility)
                 {
-                    gameState.LaCampanellaMinorOwned += 2;
-                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
-                    {
-                        gameState.NotesPerSecond += 70000;
-                    }
+                    MusicClicker.Armory.WeaponAbilities.TriumphOfHeroes_OnMajorAcquisition(gameState);
                 }
 
                 canCraft = true;
@@ -751,6 +748,9 @@ namespace MusicClicker
 
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
                 UIUpdater.UpdateFragmentationUI(window, gameState);
+                gameState.NotesPerSecond = MusicClicker.Helpers.Progression.RecalculateNotesPerSecond(gameState);
+                gameState.NotesPerClick = MusicClicker.Helpers.Progression.RecalculateNotesPerClick(gameState);
+                UIUpdater.UpdateUI(window, gameState);
             }
 
             return canCraft;
@@ -773,21 +773,22 @@ namespace MusicClicker
 
                 owned++;
 
+                // Trigger Sakura's Blossom ability (Eroica I) - on major acquisition
+                if (gameState.SakurasBlossomAbility)
+                {
+                    MusicClicker.Armory.WeaponAbilities.SakurasBlossom_OnMajorAcquisition(gameState, "Enigma Variations");
+                }
+
                 // Trigger Funeral Prayer ability (Eroica II) - on major acquisition
                 if (gameState.FuneralPrayerAbility)
                 {
                     MusicClicker.Armory.WeaponAbilities.FuneralPrayer_OnMajorAcquisition(gameState);
                 }
 
-
-
+                // Trigger Triumph of Heroes passive (Eroica Major Crescendance)
                 if (gameState.EroicaMajorAbility)
                 {
-                    gameState.FateMinorOwned += 2;
-                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
-                    {
-                        gameState.NotesPerSecond += 150000;
-                    }
+                    MusicClicker.Armory.WeaponAbilities.TriumphOfHeroes_OnMajorAcquisition(gameState);
                 }
 
                 canCraft = true;
@@ -809,6 +810,9 @@ namespace MusicClicker
 
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
                 UIUpdater.UpdateFragmentationUI(window, gameState);
+                gameState.NotesPerSecond = MusicClicker.Helpers.Progression.RecalculateNotesPerSecond(gameState);
+                gameState.NotesPerClick = MusicClicker.Helpers.Progression.RecalculateNotesPerClick(gameState);
+                UIUpdater.UpdateUI(window, gameState);
             }
 
             return canCraft;
@@ -831,21 +835,22 @@ namespace MusicClicker
 
                 owned++;
 
+                // Trigger Sakura's Blossom ability (Eroica I) - on major acquisition
+                if (gameState.SakurasBlossomAbility)
+                {
+                    MusicClicker.Armory.WeaponAbilities.SakurasBlossom_OnMajorAcquisition(gameState, "Fate");
+                }
+
                 // Trigger Funeral Prayer ability (Eroica II) - on major acquisition
                 if (gameState.FuneralPrayerAbility)
                 {
                     MusicClicker.Armory.WeaponAbilities.FuneralPrayer_OnMajorAcquisition(gameState);
                 }
 
-
-
+                // Trigger Triumph of Heroes passive (Eroica Major Crescendance)
                 if (gameState.EroicaMajorAbility)
                 {
-                    gameState.FateMinorOwned += 2;
-                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
-                    {
-                        gameState.NotesPerSecond += 270000;
-                    }
+                    MusicClicker.Armory.WeaponAbilities.TriumphOfHeroes_OnMajorAcquisition(gameState);
                 }
 
                 canCraft = true;
@@ -867,6 +872,9 @@ namespace MusicClicker
 
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
                 UIUpdater.UpdateFragmentationUI(window, gameState);
+                gameState.NotesPerSecond = MusicClicker.Helpers.Progression.RecalculateNotesPerSecond(gameState);
+                gameState.NotesPerClick = MusicClicker.Helpers.Progression.RecalculateNotesPerClick(gameState);
+                UIUpdater.UpdateUI(window, gameState);
             }
 
             return canCraft;
@@ -889,21 +897,22 @@ namespace MusicClicker
 
                 owned++;
 
+                // Trigger Sakura's Blossom ability (Eroica I) - on major acquisition
+                if (gameState.SakurasBlossomAbility)
+                {
+                    MusicClicker.Armory.WeaponAbilities.SakurasBlossom_OnMajorAcquisition(gameState, "Ode to Joy");
+                }
+
                 // Trigger Funeral Prayer ability (Eroica II) - on major acquisition
                 if (gameState.FuneralPrayerAbility)
                 {
                     MusicClicker.Armory.WeaponAbilities.FuneralPrayer_OnMajorAcquisition(gameState);
                 }
 
-
-
+                // Trigger Triumph of Heroes passive (Eroica Major Crescendance)
                 if (gameState.EroicaMajorAbility)
                 {
-                    gameState.OdeToJoyMinorOwned += 2;
-                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
-                    {
-                        gameState.NotesPerSecond += 510000;
-                    }
+                    MusicClicker.Armory.WeaponAbilities.TriumphOfHeroes_OnMajorAcquisition(gameState);
                 }
 
                 canCraft = true;
@@ -925,6 +934,9 @@ namespace MusicClicker
 
                 UIUpdater.UpdateUnitySymphonyUI(window, gameState);
                 UIUpdater.UpdateFragmentationUI(window, gameState);
+                gameState.NotesPerSecond = MusicClicker.Helpers.Progression.RecalculateNotesPerSecond(gameState);
+                gameState.NotesPerClick = MusicClicker.Helpers.Progression.RecalculateNotesPerClick(gameState);
+                UIUpdater.UpdateUI(window, gameState);
             }
 
             return canCraft;

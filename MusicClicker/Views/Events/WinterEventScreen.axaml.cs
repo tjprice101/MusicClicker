@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using MusicClicker.Helpers;
 using System;
 
 namespace MusicClicker.Views
@@ -28,12 +29,12 @@ namespace MusicClicker.Views
 			_gameState = gameState;
 
 			double cost = (gameState.NotesPerSecond * 3) + 100;
-			SoulOfWinterCostText.Text = $"{Math.Round(cost, 1)} Notes for Soul Resonance";
+			SoulOfWinterCostText.Text = $"{NumberFormatter.FormatLargeNumber(cost)} Notes for Soul Resonance";
 			WinterMajorOwnedText.Text = $"Major Sheets of Winter Owned: {gameState.WinterMajorSheets}";
 
 			if (this.FindControl<TextBlock>("NotesText") is TextBlock notes)
 			{
-				notes.Text = $"Notes: {Math.Round(gameState.Notes, 1)}";
+				notes.Text = $"Notes: {NumberFormatter.FormatLargeNumber(gameState.Notes)}";
 			}
 
 			try

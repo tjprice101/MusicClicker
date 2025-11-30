@@ -544,6 +544,21 @@ namespace MusicClicker
         public bool VictoryMarch75Claimed { get; set; } = false;
         public bool VictoryMarch100Claimed { get; set; } = false;
 
+        // Eroica Weapon Effects
+        // Sakura's Blossom: Quintuple NPS for 20s on Major acquisition
+        public bool SakuraBlossomNpsBoostActive { get; set; } = false;
+        public DateTime SakuraBlossomNpsBoostExpiry { get; set; } = DateTime.MinValue;
+        
+        // Funeral Prayer: Prayer stacks (every 10th click, 3 stacks = empower next 15 clicks with NPC + 6x NPS)
+        public int FuneralPrayerClickCounter { get; set; } = 0;
+        public int FuneralPrayerStacks { get; set; } = 0;
+        public int FuneralPrayerEmpoweredClicks { get; set; } = 0; // Remaining empowered clicks
+        
+        // Eroica Major: Triumph of Heroes
+        public bool TriumphOfHeroesAutoClickActive { get; set; } = false;
+        public DateTime TriumphOfHeroesAutoClickExpiry { get; set; } = DateTime.MinValue;
+        public DateTime TriumphOfHeroesCooldownExpiry { get; set; } = DateTime.MinValue;
+
         // Swan Lake Duet: Mirror Lake
         public bool SwanLakeDuetActive { get; set; } = false;
         public DateTime SwanLakeDuetExpiry { get; set; } = DateTime.MinValue;

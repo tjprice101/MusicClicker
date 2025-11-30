@@ -16,8 +16,21 @@ namespace MusicClicker.Armory
     /// </summary>
     public static class WeaponAbilities
     {
+        // Static Random instance to avoid creating new instances on every call (performance optimization)
+        private static readonly Random _random = new Random();
+        
         // Keeping only the Incisor upgrade for focused development.
         // All other weapon-specific helpers were removed to simplify early development.
+
+        /// <summary>
+        /// Helper method to check if current time is nighttime (8PM - 6AM local time)
+        /// </summary>
+        public static bool IsNighttime()
+        {
+            int currentHour = DateTime.Now.Hour;
+            // Nighttime is 20:00 (8PM) to 05:59 (6AM)
+            return currentHour >= 20 || currentHour < 6;
+        }
 
         /// <summary>
         /// Incisor of Moonlight: effect described on the Armory page.
@@ -149,13 +162,18 @@ namespace MusicClicker.Armory
 
         /// <summary>
         /// Moonlight Duet: "Lunar Phases"
-        /// Duet Ability (Toggle, 4min cooldown, 40s duration):
-        /// Cycles through 4 moon phases every 8 seconds:
+        /// <summary>
+        /// Duet Ability (Toggle, 4min cooldown, 20s duration):
+        /// Cycles through 4 moon phases every 5 seconds:
         /// - New Moon (0): 2x NPC
         /// - Crescent (1): Components drop on click (10% chance per click)
         /// - Full Moon (2): 3x NPS
         /// - Waning (3): Upgrades cost 50% less
+        /// 
+        /// SPECIAL: If resonating with Moonlight Major score, all phases are active simultaneously!
+        /// 
         /// Returns the current phase (0-3) or -1 if not active.
+        /// For checking if all phases active, use MoonlightDuet_AreAllPhasesActive()
         /// </summary>
         public static int MoonlightDuet_GetCurrentPhase(GameState gameState)
         {
@@ -164,9 +182,9 @@ namespace MusicClicker.Armory
             if (!gameState.MoonlightDuetActive || DateTime.Now > gameState.MoonlightDuetExpiry)
                 return -1;
             
-            // Check if we need to advance to the next phase (every 8 seconds)
+            // Check if we need to advance to the next phase (every 5 seconds)
             double elapsedSincePhaseStart = (DateTime.Now - gameState.MoonlightPhaseChangeTime).TotalSeconds;
-            if (elapsedSincePhaseStart >= 8.0)
+            if (elapsedSincePhaseStart >= 5.0)
             {
                 // Advance to next phase
                 gameState.MoonlightCurrentPhase = (gameState.MoonlightCurrentPhase + 1) % 4;
@@ -177,58 +195,83 @@ namespace MusicClicker.Armory
         }
 
         /// <summary>
+        /// Check if all Moonlight Duet phases are active (when resonating with Moonlight Major)
+        /// Note: Only call this if GetCurrentPhase returns a valid phase (not -1) to avoid redundant checks
+        /// </summary>
+        public static bool MoonlightDuet_AreAllPhasesActive(GameState gameState)
+        {
+            if (gameState == null) return false;
+            
+            // Quick check: If not even active, return false immediately
+            if (!gameState.MoonlightDuetActive)
+                return false;
+            
+            // Check if resonating with Moonlight Sonata Major score
+            return gameState.CurrentResonatedScore == "Moonlight Sonata";
+        }
+
+        /// <summary>
+        /// Get the current moon phase without advancing it (read-only, fast check for clicks)
+        /// Returns -1 if duet is not active
+        /// </summary>
+        public static int MoonlightDuet_GetCurrentPhaseReadOnly(GameState gameState)
+        {
+            if (gameState == null) return -1;
+            if (!gameState.MoonlightDuetActive) return -1;
+            return gameState.MoonlightCurrentPhase;
+        }
+
+        /// <summary>
         /// Moonlight Duet: Handle component drop during Crescent phase (10% chance per click)
         /// </summary>
         public static void MoonlightDuet_CrescentComponentDrop(GameState gameState)
         {
             if (gameState == null) return;
             
-            Random rand = new Random();
-            if (rand.NextDouble() < 0.10) // 10% chance
-            {
-                // Pick a random score (0-6)
-                int scoreIndex = rand.Next(7);
-                // Pick a random component type (0=Keys, 1=Scales, 2=Progressions)
-                int componentType = rand.Next(3);
+            // Early return if random check fails (90% of the time) - performance optimization
+            if (_random.NextDouble() >= 0.10) return;
 
-                switch (scoreIndex)
-                {
-                    case 0: // Moonlight
-                        if (componentType == 0) gameState.MoonlightMinorKeys++;
-                        else if (componentType == 1) gameState.MoonlightMinorScales++;
-                        else gameState.MoonlightMinorProgressions++;
-                        break;
-                    case 1: // Eroica
-                        if (componentType == 0) gameState.EroicaMinorKeys++;
-                        else if (componentType == 1) gameState.EroicaMinorScales++;
-                        else gameState.EroicaMinorProgressions++;
-                        break;
-                    case 2: // Swan Lake
-                        if (componentType == 0) gameState.SwanLakeMinorKeys++;
-                        else if (componentType == 1) gameState.SwanLakeMinorScales++;
-                        else gameState.SwanLakeMinorProgressions++;
-                        break;
-                    case 3: // La Campanella
-                        if (componentType == 0) gameState.LaCampanellaMinorKeys++;
-                        else if (componentType == 1) gameState.LaCampanellaMinorScales++;
-                        else gameState.LaCampanellaMinorProgressions++;
-                        break;
-                    case 4: // Enigma
-                        if (componentType == 0) gameState.EnigmaMinorKeys++;
-                        else if (componentType == 1) gameState.EnigmaMinorScales++;
-                        else gameState.EnigmaMinorProgressions++;
-                        break;
-                    case 5: // Fate
-                        if (componentType == 0) gameState.FateMinorKeys++;
-                        else if (componentType == 1) gameState.FateMinorScales++;
-                        else gameState.FateMinorProgressions++;
-                        break;
-                    case 6: // Ode to Joy
-                        if (componentType == 0) gameState.OdeToJoyMinorKeys++;
-                        else if (componentType == 1) gameState.OdeToJoyMinorScales++;
-                        else gameState.OdeToJoyMinorProgressions++;
-                        break;
-                }
+            // Pick a random score (0-6) and component type (0=Keys, 1=Scales, 2=Progressions)
+            int scoreIndex = _random.Next(7);
+            int componentType = _random.Next(3);
+
+            switch (scoreIndex)
+            {
+                case 0: // Moonlight
+                    if (componentType == 0) gameState.MoonlightMinorKeys++;
+                    else if (componentType == 1) gameState.MoonlightMinorScales++;
+                    else gameState.MoonlightMinorProgressions++;
+                    break;
+                case 1: // Eroica
+                    if (componentType == 0) gameState.EroicaMinorKeys++;
+                    else if (componentType == 1) gameState.EroicaMinorScales++;
+                    else gameState.EroicaMinorProgressions++;
+                    break;
+                case 2: // Swan Lake
+                    if (componentType == 0) gameState.SwanLakeMinorKeys++;
+                    else if (componentType == 1) gameState.SwanLakeMinorScales++;
+                    else gameState.SwanLakeMinorProgressions++;
+                    break;
+                case 3: // La Campanella
+                    if (componentType == 0) gameState.LaCampanellaMinorKeys++;
+                    else if (componentType == 1) gameState.LaCampanellaMinorScales++;
+                    else gameState.LaCampanellaMinorProgressions++;
+                    break;
+                case 4: // Enigma
+                    if (componentType == 0) gameState.EnigmaMinorKeys++;
+                    else if (componentType == 1) gameState.EnigmaMinorScales++;
+                    else gameState.EnigmaMinorProgressions++;
+                    break;
+                case 5: // Fate
+                    if (componentType == 0) gameState.FateMinorKeys++;
+                    else if (componentType == 1) gameState.FateMinorScales++;
+                    else gameState.FateMinorProgressions++;
+                    break;
+                case 6: // Ode to Joy
+                    if (componentType == 0) gameState.OdeToJoyMinorKeys++;
+                    else if (componentType == 1) gameState.OdeToJoyMinorScales++;
+                    else gameState.OdeToJoyMinorProgressions++;
+                    break;
             }
         }
 
@@ -246,7 +289,7 @@ namespace MusicClicker.Armory
             // Add 1 to each minor component type for the given score
             switch (scoreName.ToLower())
             {
-                case "moonlight":
+                case "moonlight sonata":
                     gameState.MoonlightMinorKeys++;
                     gameState.MoonlightMinorScales++;
                     gameState.MoonlightMinorProgressions++;
@@ -371,6 +414,113 @@ namespace MusicClicker.Armory
                     }
                     break;
             }
+        }
+
+        // ==================== NEW EROICA WEAPON ABILITIES ====================
+
+        /// <summary>
+        /// Sakura's Blossom (New Effect): On Major score acquisition,
+        /// grants 5 of the corresponding Minor score.
+        /// </summary>
+        public static void SakurasBlossom_OnMajorAcquisition(GameState gameState, string scoreName)
+        {
+            if (gameState == null) return;
+            
+            // Grant 5 minor scores based on which major was crafted
+            switch (scoreName)
+            {
+                case "Moonlight Sonata":
+                    gameState.MoonlightMinorOwned += 5;
+                    break;
+                case "Eroica":
+                    gameState.EroicaMinorOwned += 5;
+                    break;
+                case "Swan Lake":
+                    gameState.SwanMinorOwned += 5;
+                    break;
+                case "La Campanella":
+                    gameState.LaCampanellaMinorOwned += 5;
+                    break;
+                case "Enigma Variations":
+                    gameState.EnigmaMinorOwned += 5;
+                    break;
+                case "Fate":
+                    gameState.FateMinorOwned += 5;
+                    break;
+                case "Ode to Joy":
+                    gameState.OdeToJoyMinorOwned += 5;
+                    break;
+            }
+            
+            // Debug output to console
+            System.Diagnostics.Debug.WriteLine($"Sakura's Blossom: Granted 5 {scoreName} Minor scores");
+        }
+
+        /// <summary>
+        /// Funeral Prayer (New Effect): Every 10th click grants a Prayer stack.
+        /// At 3 stacks, consume all to empower your next 15 clicks to add 6x NPS to each click.
+        /// Empowered clicks do not count toward the next amplification.
+        /// Call this on every click.
+        /// </summary>
+        public static void FuneralPrayer_OnClick(GameState gameState)
+        {
+            if (gameState == null) return;
+
+            // Only increment counter if not currently empowered (empowered clicks don't count)
+            if (gameState.FuneralPrayerEmpoweredClicks <= 0)
+            {
+                gameState.FuneralPrayerClickCounter++;
+
+                // Every 10th click grants a Prayer stack
+                if (gameState.FuneralPrayerClickCounter >= 10)
+                {
+                    gameState.FuneralPrayerClickCounter = 0;
+                    gameState.FuneralPrayerStacks++;
+
+                    // At 3 stacks, consume all and empower next 15 clicks
+                    if (gameState.FuneralPrayerStacks >= 3)
+                    {
+                        gameState.FuneralPrayerStacks = 0;
+                        gameState.FuneralPrayerEmpoweredClicks = 15;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Funeral Prayer: Get additional NPS bonus to add to click if empowered.
+        /// Returns 6x NPS if empowered, 0 otherwise.
+        /// </summary>
+        public static double FuneralPrayer_GetEmpoweredClickBonus(GameState gameState)
+        {
+            if (gameState == null) return 0;
+
+            if (gameState.FuneralPrayerEmpoweredClicks > 0)
+            {
+                gameState.FuneralPrayerEmpoweredClicks--;
+                // Return 6x NPS to be added to the click
+                return gameState.NotesPerSecond * 6.0;
+            }
+
+            return 0;
+        }
+
+        // ==================== EROICA MAJOR: TRIUMPH OF HEROES ====================
+
+        /// <summary>
+        /// Triumph of Heroes (Eroica Major - Passive): Every Major score acquisition
+        /// doubles your current notes.
+        /// </summary>
+        public static void TriumphOfHeroes_OnMajorAcquisition(GameState gameState)
+        {
+            if (gameState == null) return;
+
+            double currentNotes = MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes);
+            // Add current notes to itself to double the total
+            MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, currentNotes);
+            
+            // Debug output to console
+            System.Diagnostics.Debug.WriteLine($"Triumph of Heroes: Doubled notes from {currentNotes} to {currentNotes * 2}");
         }
 
         // ==================== SWAN LAKE WEAPONS (4-5) ====================
@@ -1458,6 +1608,18 @@ namespace MusicClicker.Armory
                 case "Enigma Variations": gameState.EnigmaMajorOwned++; break;
                 case "Fate": gameState.FateMajorOwned++; break;
                 case "Ode to Joy": gameState.OdeToJoyMajorOwned++; break;
+            }
+
+            // Trigger Sakura's Blossom effect if weapon ability is active
+            if (gameState.SakurasBlossomAbility)
+            {
+                SakurasBlossom_OnMajorAcquisition(gameState, scoreName);
+            }
+
+            // Trigger Triumph of Heroes effect if Eroica Major is resonated
+            if (gameState.EroicaMajorAbility)
+            {
+                TriumphOfHeroes_OnMajorAcquisition(gameState);
             }
         }
 

@@ -10,6 +10,10 @@ using Avalonia.Threading;
 using MusicClicker.Helpers;
 using System;
 using System.Linq;
+using Avalonia.Media;
+using Avalonia.Layout;
+using System.Collections.Generic;
+using Avalonia;
 
 namespace MusicClicker.Views
 {
@@ -21,6 +25,7 @@ namespace MusicClicker.Views
         private MainWindow? _parentWindow;
         private DispatcherTimer? _bossFightTimer;
         private BossFightManager.BossType? _activeBossType;
+        private Dictionary<int, Border> _noteElements = new();
         
         public CacophonicDreamsScreen()
         {
@@ -115,7 +120,7 @@ namespace MusicClicker.Views
                 else
                 {
                     MercuryOwnedText.Text = "Not Owned";
-                    MercuryOwnedText.Foreground = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Color.FromRgb(139, 0, 0)); // Dark Red
+                    MercuryOwnedText.Foreground = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Color.FromRgb(135, 206, 250)); // Light Sky Blue
                 }
             }
             
@@ -283,6 +288,12 @@ namespace MusicClicker.Views
             // Update UI
             UpdateFightUI();
             
+            // Check for note mechanic trigger
+            if (manager.CurrentFight.NoteMechanicActive && NoteMechanicCanvas != null && !NoteMechanicCanvas.IsVisible)
+            {
+                ShowNoteMechanic();
+            }
+            
             // Check win/lose conditions
             if (manager.IsFightWon())
             {
@@ -376,7 +387,8 @@ namespace MusicClicker.Views
             if (SpecialMechanicText != null)
             {
                 if (manager.CurrentFight.Type == BossFightManager.BossType.Tonality && 
-                    manager.CurrentFight.TonalityFreezeActive)
+                    manager.CurrentFight.TonalityFreezeActive &&
+                    DateTime.UtcNow < manager.CurrentFight.TonalityFreezeExpiry)
                 {
                     SpecialMechanicText.Text = "⚠️ TONALITY FROZEN! ⚠️";
                     SpecialMechanicText.IsVisible = true;
@@ -394,6 +406,7 @@ namespace MusicClicker.Views
         private void OnFightWon()
         {
             _bossFightTimer?.Stop();
+            HideNoteMechanic();
             
             var manager = BossFightManager.Instance;
             if (_activeBossType.HasValue)
@@ -443,6 +456,7 @@ namespace MusicClicker.Views
         private void OnFightLost()
         {
             _bossFightTimer?.Stop();
+            HideNoteMechanic();
             
             var manager = BossFightManager.Instance;
             if (_activeBossType.HasValue)
@@ -563,11 +577,233 @@ namespace MusicClicker.Views
             // Update UI
             UpdateFightUI();
             
+            // Check for note mechanic trigger
+            if (manager.CurrentFight != null && manager.CurrentFight.NoteMechanicActive && NoteMechanicCanvas != null)
+            {
+                ShowNoteMechanic();
+            }
+            
             // Check if boss is defeated immediately
             if (manager.IsFightWon())
             {
                 OnFightWon();
             }
+        }
+        
+        /// <summary>
+        /// Show the musical note mechanic overlay
+        /// </summary>
+        private void ShowNoteMechanic()
+        {
+            var manager = BossFightManager.Instance;
+            if (manager.CurrentFight == null || NoteMechanicCanvas == null) return;
+            
+            // Show the canvas
+            NoteMechanicCanvas.IsVisible = true;
+            NoteMechanicCanvas.Children.Clear();
+            _noteElements.Clear();
+            
+            // Wait for layout to complete, then position elements
+            Dispatcher.UIThread.Post(() =>
+            {
+                PositionNoteMechanicElements();
+            }, DispatcherPriority.Loaded);
+        }
+        
+        /// <summary>
+        /// Position note mechanic elements after layout is complete
+        /// </summary>
+        private void PositionNoteMechanicElements()
+        {
+            var manager = BossFightManager.Instance;
+            if (manager.CurrentFight == null || NoteMechanicCanvas == null) return;
+            
+            NoteMechanicCanvas.Children.Clear();
+            _noteElements.Clear();
+            
+            // Use actual canvas dimensions (with fallback if not yet measured)
+            double canvasWidth = NoteMechanicCanvas.Bounds.Width > 0 ? NoteMechanicCanvas.Bounds.Width : 1600;
+            double canvasHeight = NoteMechanicCanvas.Bounds.Height > 0 ? NoteMechanicCanvas.Bounds.Height : 800;
+            double noteSize = 80;
+            
+            // Add instruction text centered on screen
+            var instructionText = new TextBlock
+            {
+                Text = "Click the notes in order!",
+                FontSize = 48,
+                FontWeight = Avalonia.Media.FontWeight.Bold,
+                Foreground = Brushes.White,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                TextAlignment = TextAlignment.Center,
+                [Canvas.TopProperty] = (canvasHeight / 2) - 150.0, // Center vertically, offset up for notes
+                [Canvas.LeftProperty] = 0.0,
+                Width = canvasWidth
+            };
+            NoteMechanicCanvas.Children.Add(instructionText);
+            
+            // Determine note color and positions based on boss type
+            Color noteColor = manager.CurrentFight.Type switch
+            {
+                BossFightManager.BossType.Tonality => Colors.White,
+                BossFightManager.BossType.Mars => Colors.Red,
+                BossFightManager.BossType.Mercury => Color.FromRgb(0, 139, 139), // Dark Cyan
+                _ => Colors.White
+            };
+            
+            int totalNotes = manager.CurrentFight.TotalNotesRequired;
+            
+            // Spawn notes in a horizontal line centered on screen
+            double centerY = canvasHeight / 2;
+            double lineY = centerY - 50; // Position below the instruction text
+            
+            // Calculate horizontal spacing to fit all notes in a line
+            double totalWidth = 1200; // Safe visible width
+            double startX = (canvasWidth - totalWidth) / 2;
+            double spacing = totalWidth / (totalNotes + 1);
+            
+            for (int i = 0; i < totalNotes; i++)
+            {
+                double x = startX + spacing * (i + 1) - (noteSize / 2);
+                double y = lineY;
+                
+                CreateNoteButton(i, x, y, noteColor);
+            }
+        }
+        
+        /// <summary>
+        /// Create a clickable note button
+        /// </summary>
+        private void CreateNoteButton(int noteIndex, double x, double y, Color color)
+        {
+            if (NoteMechanicCanvas == null) return;
+            
+            // Create a border container for the music note
+            var noteBorder = new Border
+            {
+                Width = 80,
+                Height = 80,
+                Background = new SolidColorBrush(color),
+                BorderBrush = Brushes.Black,
+                BorderThickness = new Thickness(3),
+                CornerRadius = new CornerRadius(8),
+                [Canvas.LeftProperty] = x,
+                [Canvas.TopProperty] = y,
+                Cursor = new Avalonia.Input.Cursor(Avalonia.Input.StandardCursorType.Hand)
+            };
+            
+            // Add music note symbol (♪) with number
+            var noteStack = new StackPanel
+            {
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Center
+            };
+            
+            var musicSymbol = new TextBlock
+            {
+                Text = "♪",
+                FontSize = 40,
+                FontWeight = Avalonia.Media.FontWeight.Bold,
+                Foreground = Brushes.Black,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                TextAlignment = TextAlignment.Center
+            };
+            
+            var numberText = new TextBlock
+            {
+                Text = (noteIndex + 1).ToString(),
+                FontSize = 20,
+                FontWeight = Avalonia.Media.FontWeight.Bold,
+                Foreground = Brushes.Black,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                TextAlignment = TextAlignment.Center,
+                Margin = new Thickness(0, -5, 0, 0)
+            };
+            
+            noteStack.Children.Add(musicSymbol);
+            noteStack.Children.Add(numberText);
+            noteBorder.Child = noteStack;
+            
+            // Make the border clickable by handling pointer events
+            int capturedIndex = noteIndex;
+            noteBorder.PointerPressed += (s, e) =>
+            {
+                OnNoteClick(capturedIndex);
+                e.Handled = true;
+            };
+            
+            _noteElements[noteIndex] = noteBorder;
+            NoteMechanicCanvas.Children.Add(noteBorder);
+            
+            // Note buttons no longer have animations
+        }
+        
+        /// <summary>
+        /// Add a gentle sway animation to a note element (DISABLED)
+        /// </summary>
+        private void AddSwayAnimation(Border noteElement)
+        {
+            // Animation removed - notes now sit static
+        }
+        
+        /// <summary>
+        /// Handle clicking a note
+        /// </summary>
+        private void OnNoteClick(int noteIndex)
+        {
+            var manager = BossFightManager.Instance;
+            if (manager.CurrentFight == null) return;
+            
+            bool correctNote = manager.ProcessNoteClick(noteIndex);
+            
+            if (correctNote)
+            {
+                // Flash the background
+                FlashBackground();
+                
+                // Remove the clicked note
+                if (_noteElements.TryGetValue(noteIndex, out var noteElement))
+                {
+                    NoteMechanicCanvas?.Children.Remove(noteElement);
+                    _noteElements.Remove(noteIndex);
+                }
+                
+                // Check if all notes are done
+                if (!manager.CurrentFight.NoteMechanicActive && NoteMechanicCanvas != null)
+                {
+                    HideNoteMechanic();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Hide the note mechanic overlay
+        /// </summary>
+        private void HideNoteMechanic()
+        {
+            if (NoteMechanicCanvas != null)
+            {
+                NoteMechanicCanvas.IsVisible = false;
+                NoteMechanicCanvas.Children.Clear();
+                _noteElements.Clear();
+            }
+        }
+        
+        /// <summary>
+        /// Flash the background when a correct note is clicked
+        /// </summary>
+        private async void FlashBackground()
+        {
+            if (NoteMechanicCanvas == null) return;
+            
+            var originalBrush = NoteMechanicCanvas.Background;
+            
+            // Flash to lighter color
+            NoteMechanicCanvas.Background = new SolidColorBrush(Color.FromArgb(255, 50, 50, 50));
+            
+            await System.Threading.Tasks.Task.Delay(100);
+            
+            // Return to original
+            NoteMechanicCanvas.Background = originalBrush;
         }
         
         /// <summary>

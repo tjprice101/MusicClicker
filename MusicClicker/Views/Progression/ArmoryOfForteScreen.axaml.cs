@@ -387,25 +387,25 @@ namespace MusicClicker.Views
             {
                 // Moonlight (indices 0-1)
                 case 0:
-                    forte1 = "Forte Resonance: On upgrade purchase, increase your current notes by 5%.";
-                    forte2 = "Forte Resonance: On upgrade purchase, increase your lowest owned upgrade by 2.";
+                    forte1 = "Forte Resonance: On upgrade purchase, increase your current notes by 5%. Clicks during nighttime hours (8PM-6AM) grant +500% notes.";
+                    forte2 = "Forte Resonance: On upgrade purchase, increase your lowest owned upgrade by 2. Clicks during nighttime hours (8PM-6AM) grant +5% critical rate.";
                     duet = DuetDescriptions.Short.Moonlight;
                     break;
                 case 1:
-                    forte1 = "Forte Resonance: On upgrade purchase, increase your current notes by 5%.";
-                    forte2 = "Forte Resonance: On upgrade purchase, increase your lowest owned upgrade by 2.";
+                    forte1 = "Forte Resonance: On upgrade purchase, increase your current notes by 5%. Clicks during nighttime hours (8PM-6AM) grant +500% notes.";
+                    forte2 = "Forte Resonance: On upgrade purchase, increase your lowest owned upgrade by 2. Clicks during nighttime hours (8PM-6AM) grant +5% critical rate.";
                     duet = DuetDescriptions.Short.Moonlight;
                     break;
 
                 // Eroica (indices 2-3)
                 case 2:
-                    forte1 = "Forte Resonance: On acquisition of a score's Major sheet, gives 1 of each Minor Component.";
-                    forte2 = "Forte Resonance: On acquisition of a score's Major version, divide your current notes by 2 and give 3 minor scores of your lowest owned minor score.";
+                    forte1 = "Forte Resonance: On acquisition of a score's Major version, grants 5 of the corresponding Minor score.";
+                    forte2 = "Forte Resonance: Every 10th click grants a Prayer stack. At 3 stacks, consume all to empower your next 15 clicks to add 6x your NPS to each click. Empowered clicks don't count toward the next amplification.";
                     duet = DuetDescriptions.Short.Eroica;
                     break;
                 case 3:
-                    forte1 = "Forte Resonance: On acquisition of a score's Major sheet, gives 1 of each Minor Component.";
-                    forte2 = "Forte Resonance: On acquisition of a score's Major version, divide your current notes by 2 and give 3 minor scores of your lowest owned minor score.";
+                    forte1 = "Forte Resonance: On acquisition of a score's Major version, grants 5 of the corresponding Minor score.";
+                    forte2 = "Forte Resonance: Every 10th click grants a Prayer stack. At 3 stacks, consume all to empower your next 15 clicks to add 6x your NPS to each click. Empowered clicks don't count toward the next amplification.";
                     duet = DuetDescriptions.Short.Eroica;
                     break;
 

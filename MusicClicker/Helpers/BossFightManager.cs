@@ -38,6 +38,13 @@ namespace MusicClicker.Helpers
             public bool TonalityFreezeActive { get; set; }
             public DateTime TonalityFreezeExpiry { get; set; }
             public bool TonalityFreezeTriggered { get; set; }
+            
+            // Musical note mechanic state (triggered at 10% health)
+            public bool NoteMechanicActive { get; set; }
+            public bool NoteMechanicTriggered { get; set; }
+            public int TotalNotesRequired { get; set; }
+            public int NotesClicked { get; set; }
+            public List<int> NoteSequence { get; set; } = new();
         }
 
         private static BossFightManager? _instance;
@@ -66,7 +73,7 @@ namespace MusicClicker.Helpers
                         MaxBossHealth = 100,
                         BossHealth = 100,
                         WeakTo = new List<string> { "Swan Lake", "Ode to Joy" },
-                        ResistantTo = new List<string> { "Moonlight", "Eroica", "Enigma" },
+                        ResistantTo = new List<string> { "Moonlight Sonata", "Eroica", "Enigma" },
                         RewardName = "Mercury, \"Winged Messenger\" Major",
                         RewardChance = 0.01 // 1% drop chance
                     }
@@ -98,7 +105,7 @@ namespace MusicClicker.Helpers
                         MaxBossHealth = 100,
                         BossHealth = 100,
                         WeakTo = new List<string> { "Ode to Joy", "Fate", "Dies Irae" },
-                        ResistantTo = new List<string> { "Swan Lake", "Moonlight", "Eroica", "Enigma", "La Campanella" },
+                        ResistantTo = new List<string> { "Swan Lake", "Moonlight Sonata", "Eroica", "Enigma", "La Campanella" },
                         RewardName = "Mars Major",
                         RewardChance = 0.01 // 1% drop chance
                     }
@@ -119,6 +126,28 @@ namespace MusicClicker.Helpers
                 // Reset special mechanics
                 CurrentFight.TonalityFreezeActive = false;
                 CurrentFight.TonalityFreezeTriggered = false;
+                
+                // Reset note mechanic
+                CurrentFight.NoteMechanicActive = false;
+                CurrentFight.NoteMechanicTriggered = false;
+                CurrentFight.NotesClicked = 0;
+                CurrentFight.NoteSequence.Clear();
+                
+                // Set note count based on boss type
+                CurrentFight.TotalNotesRequired = bossType switch
+                {
+                    BossType.Tonality => 6, // 3 on each side
+                    BossType.Mars => 8,
+                    BossType.Mercury => 3,
+                    _ => 0
+                };
+                
+                // Generate random note sequence
+                var random = new Random();
+                for (int i = 0; i < CurrentFight.TotalNotesRequired; i++)
+                {
+                    CurrentFight.NoteSequence.Add(i);
+                }
             }
         }
 
@@ -180,6 +209,12 @@ namespace MusicClicker.Helpers
         public double ProcessClick(double baseNPS, double damageMultiplier)
         {
             if (CurrentFight == null || !CurrentFight.IsActive) return 0;
+            
+            // Block damage during note mechanic
+            if (CurrentFight.NoteMechanicActive)
+            {
+                return 0;
+            }
 
             // Check if Tonality freeze is active
             if (CurrentFight.Type == BossType.Tonality && CurrentFight.TonalityFreezeActive)
@@ -207,6 +242,17 @@ namespace MusicClicker.Helpers
             double damage = baseDamage * damageMultiplier * mercuryModifier * 0.03; // Much lower multiplier (was 0.15)
             
             CurrentFight.BossHealth -= damage;
+            
+            // Trigger note mechanic at 10% health
+            if (!CurrentFight.NoteMechanicTriggered && CurrentFight.BossHealth <= CurrentFight.MaxBossHealth * 0.1)
+            {
+                CurrentFight.NoteMechanicActive = true;
+                CurrentFight.NoteMechanicTriggered = true;
+                CurrentFight.NotesClicked = 0;
+                // Freeze health at 10%
+                CurrentFight.BossHealth = CurrentFight.MaxBossHealth * 0.1;
+            }
+            
             if (CurrentFight.BossHealth < 0)
             {
                 CurrentFight.BossHealth = 0;
@@ -222,6 +268,12 @@ namespace MusicClicker.Helpers
 
             // Update timer
             CurrentFight.FightTimeRemaining -= deltaTime;
+            
+            // No pushback during note mechanic
+            if (CurrentFight.NoteMechanicActive)
+            {
+                return;
+            }
 
             // Check if Tonality freeze is active
             if (CurrentFight.Type == BossType.Tonality && CurrentFight.TonalityFreezeActive)
@@ -346,6 +398,29 @@ namespace MusicClicker.Helpers
             
             Random random = new Random();
             return random.NextDouble() < CurrentFight.RewardChance;
+        }
+        
+        // Handle clicking a note during the note mechanic
+        public bool ProcessNoteClick(int noteIndex)
+        {
+            if (CurrentFight == null || !CurrentFight.NoteMechanicActive) return false;
+            
+            // Check if this is the correct next note in sequence
+            if (noteIndex == CurrentFight.NoteSequence[CurrentFight.NotesClicked])
+            {
+                CurrentFight.NotesClicked++;
+                
+                // Check if all notes have been clicked
+                if (CurrentFight.NotesClicked >= CurrentFight.TotalNotesRequired)
+                {
+                    CurrentFight.NoteMechanicActive = false;
+                    // Allow damage to continue from 10% health
+                }
+                
+                return true; // Correct note
+            }
+            
+            return false; // Wrong note
         }
     }
 }

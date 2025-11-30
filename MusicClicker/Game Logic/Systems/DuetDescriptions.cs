@@ -25,7 +25,7 @@ namespace MusicClicker
         // Duet Descriptions (Full format for DuetAbilityScreen)
         public static class Full
         {
-            public const string Moonlight = "Cycles through 4 moon phases every 8s:\n• New Moon: 2× NPC\n• Crescent: 10% component drop per click\n• Full Moon: 3× NPS\n• Waning: Upgrades 50% off\n\n40s duration | 4min cooldown";
+            public const string Moonlight = "Cycles through 4 moon phases every 5s:\n• New Moon: 2× NPC\n• Crescent: 10% component drop per click\n• Full Moon: 3× NPS\n• Waning: Upgrades 50% off\n\nSPECIAL: All phases active simultaneously when resonating with Moonlight Major!\n\n20s duration | 4min cooldown";
             
             public const string DiesIrae = "Each click places a seal. At 7 seals, grants 3 random minor scores without consuming components. Stacks during duration.\n\n15s duration | 3.5min cooldown";
             
@@ -47,7 +47,7 @@ namespace MusicClicker
         // Compact Descriptions (for TempoResonateScreen)
         public static class Compact
         {
-            public const string Moonlight = "Moonlight Sonata - Lunar Phases: Cycles through 4 moon phases every 8s (New Moon: 2× NPC, Crescent: 10% component drop per click, Full Moon: 3× NPS, Waning: Upgrades 50% off) - 40s duration, 4min cooldown";
+            public const string Moonlight = "Moonlight Sonata - Lunar Phases: Cycles through 4 moon phases every 5s (New Moon: 2× NPC, Crescent: 10% component drop per click, Full Moon: 3× NPS, Waning: Upgrades 50% off). When resonating with Moonlight Major, all phases active simultaneously! - 20s duration, 4min cooldown";
             
             public const string DiesIrae = "Descending Judgment - Seven Seals: Each click places a seal. At 7 seals, grants 3 random minor scores without consuming components. Stacks during duration (15s duration, 3.5min cooldown)";
             
@@ -69,7 +69,7 @@ namespace MusicClicker
         // Short Descriptions (for ArmoryOfForteScreen)
         public static class Short
         {
-            public const string Moonlight = "Lunar Phases: Cycles through 4 moon phases every 8s (New Moon: 2x NPC, Crescent: 10% component drop per click, Full Moon: 3x NPS, Waning: Upgrades 50% off) - 40s duration, 4min cooldown.";
+            public const string Moonlight = "Lunar Phases: Cycles through 4 moon phases every 5s (New Moon: 2x NPC, Crescent: 10% component drop per click, Full Moon: 3x NPS, Waning: Upgrades 50% off). When resonating with Moonlight Major, all phases active simultaneously! - 20s duration, 4min cooldown.";
             
             public const string DiesIrae = "Seven Seals: Each click places a seal. At 7 seals, grants 3 random minor scores without consuming components. Stacks during duration (15s duration, 3.5min cooldown).";
             
@@ -91,7 +91,7 @@ namespace MusicClicker
         // Duration Constants (in seconds)
         public static class Duration
         {
-            public const int Moonlight = 40;
+            public const int Moonlight = 20;
             public const int DiesIrae = 15;
             public const int Winter = 15;
             public const int SwanLake = 20;

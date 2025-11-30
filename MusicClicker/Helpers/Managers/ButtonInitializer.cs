@@ -320,6 +320,8 @@ namespace MusicClicker
                     window.FragmentationScreen.IsVisible = false;
                     window.MainScreen.IsVisible = true;
                 });
+                UIUpdater.UpdateUI(window, window.GameState);
+                MainWindow.GlobalTempoManager?.RefreshDrawer();
             };
 
             // Save Scores
@@ -339,6 +341,8 @@ namespace MusicClicker
                     window.SaveScoresScreen.IsVisible = false;
                     window.MainScreen.IsVisible = true;
                 });
+                UIUpdater.UpdateUI(window, window.GameState);
+                MainWindow.GlobalTempoManager?.RefreshDrawer();
             };
 
             // Heart of Harmony
@@ -358,6 +362,8 @@ namespace MusicClicker
                     window.HeartOfHarmonyScreen.IsVisible = false;
                     window.MainScreen.IsVisible = true;
                 });
+                UIUpdater.UpdateUI(window, window.GameState);
+                MainWindow.GlobalTempoManager?.RefreshDrawer();
             };
 
             // Unity the Symphony crafting menu
@@ -380,6 +386,8 @@ namespace MusicClicker
                     window.UnityTheSymphonyScreen.IsVisible = false;
                     window.MainScreen.IsVisible = true;
                 });
+                UIUpdater.UpdateUI(window, window.GameState);
+                MainWindow.GlobalTempoManager?.RefreshDrawer();
             };
 
             // Armory of Forte
@@ -634,10 +642,10 @@ namespace MusicClicker
 
             // Swan Lake crafting
             SubscribeWithAutoUpdate(window.UnityTheSymphonyScreen.SwanMinorButton, window, () =>
-                UniteTheSymphonyManager.TryCraftSwanLakeMinor(window, ref window.GameState._swanMinorOwned));
+                UniteTheSymphonyManager.TryCraftSwanMinor(window, ref window.GameState._swanMinorOwned));
 
             SubscribeWithAutoUpdate(window.UnityTheSymphonyScreen.SwanMajorButton, window, () =>
-                UniteTheSymphonyManager.TryCraftSwanLakeMajor(window, ref window.GameState._swanMajorOwned));
+                UniteTheSymphonyManager.TryCraftSwanMajor(window, ref window.GameState._swanMajorOwned));
 
             // La Campanella crafting
             SubscribeWithAutoUpdate(window.UnityTheSymphonyScreen.LaCampanellaMinorButton, window, () =>

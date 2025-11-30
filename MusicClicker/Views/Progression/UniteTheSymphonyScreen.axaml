@@ -78,7 +78,7 @@
                                 <TextBlock x:Name="MoonlightMajorOwnedText" Text="0 Owned"
                                     Foreground="White"
                                     FontSize="16" HorizontalAlignment="Center" />
-                                <TextBlock Text="Tempo Resonate Ability: Adds your current Notes per Second to your Notes per Click." Foreground="White"
+                                <TextBlock Text="Crescendance Ability: Adds your current Notes per Second to your Notes per Click. When duet is active and resonating with Moonlight Sonata, all 4 moon phases activate simultaneously!" Foreground="White"
                                     FontSize="14"
                                     HorizontalAlignment="Center" />
                                 <Button x:Name="MoonlightMajorDissolveButton" Content="Dissolve" Width="120" Height="32" HorizontalAlignment="Center" />
@@ -161,8 +161,8 @@
                                 <TextBlock x:Name="EroicaMajorOwnedText" Text="0 Owned"
                                     Foreground="White"
                                     FontSize="16" HorizontalAlignment="Center" />
-                                <TextBlock Text="Tempo Resonate Ability: Uniting a Major Score gives 2 of the corresponding Minor Score." Foreground="White"
-                                    FontSize="14"
+                                <TextBlock Text="Crescendance Ability: Triumph of Heroes - Every Major Score crafted doubles your current notes." Foreground="White"
+                                    FontSize="14" TextWrapping="Wrap" Width="190"
                                     HorizontalAlignment="Center" />
                                 <Button x:Name="EroicaMajorDissolveButton" Content="Dissolve" Width="120" Height="32" HorizontalAlignment="Center" />
                                 <TextBlock Text="(+1 Entropic Melody)" Foreground="#CCCCCC" FontSize="12" HorizontalAlignment="Center" Margin="0,2,0,0" />

@@ -5,6 +5,38 @@
         Title="Magnum Opus"
         Width="1600" Height="900">
 
+    <Window.Styles>
+        <!-- Shrink effect for all buttons except specific exclusions -->
+        <Style Selector="Button:not(#FragmentationButton):not(#ResonanceButton):not(#MelodyButton):not(#HarmonyButton):not(#TempoResonateButton):not(#EternalModulationButton):not(#ArmoryOfForteButton):not(#SymphonicGalleryButton):not(#ClickButton):not(#BackButton):not(#BackButtonSaveScores):not(#BackButtonHeartOfHarmony):not(#BackButtonFragmentation):not(#BackButtonUnitySymphony):not(#BackButtonBottom):not(#MercuryChallengeButton):not(#TonalityChallengeButton):not(#MarsChallengeButton):not(#GiveUpButton):not(#BuyChordButton):not(#BuyChordMaxButton):not(#BuyScaleButton):not(#BuyScaleMaxButton):not(#BuyOrchestraButton):not(#BuyOrchestraMaxButton):not(#BuySymphonyButton):not(#BuySymphonyMaxButton):not(#BuyAriaButton):not(#BuyAriaMaxButton):not(#BuyRequiemButton):not(#BuyRequiemMaxButton):not(#BuyOpusButton):not(#BuyOpusMaxButton):not(#BuyMagnumOpusButton):not(#BuyMagnumOpusMaxButton)">
+            <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+            <Setter Property="RenderTransform" Value="scale(1.0)"/>
+            <Setter Property="Transitions">
+                <Transitions>
+                    <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.1"/>
+                </Transitions>
+            </Setter>
+        </Style>
+        
+        <Style Selector="Button:not(#FragmentationButton):not(#ResonanceButton):not(#MelodyButton):not(#HarmonyButton):not(#TempoResonateButton):not(#EternalModulationButton):not(#ArmoryOfForteButton):not(#SymphonicGalleryButton):not(#ClickButton):not(#BackButton):not(#BackButtonSaveScores):not(#BackButtonHeartOfHarmony):not(#BackButtonFragmentation):not(#BackButtonUnitySymphony):not(#BackButtonBottom):not(#MercuryChallengeButton):not(#TonalityChallengeButton):not(#MarsChallengeButton):not(#GiveUpButton):not(#BuyChordButton):not(#BuyChordMaxButton):not(#BuyScaleButton):not(#BuyScaleMaxButton):not(#BuyOrchestraButton):not(#BuyOrchestraMaxButton):not(#BuySymphonyButton):not(#BuySymphonyMaxButton):not(#BuyAriaButton):not(#BuyAriaMaxButton):not(#BuyRequiemButton):not(#BuyRequiemMaxButton):not(#BuyOpusButton):not(#BuyOpusMaxButton):not(#BuyMagnumOpusButton):not(#BuyMagnumOpusMaxButton):pointerover">
+            <Setter Property="RenderTransform" Value="scale(0.95)"/>
+        </Style>
+        
+        <!-- ClickButton shrinks very slightly on press -->
+        <Style Selector="Button#ClickButton">
+            <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+            <Setter Property="RenderTransform" Value="scale(1.0)"/>
+            <Setter Property="Transitions">
+                <Transitions>
+                    <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.05"/>
+                </Transitions>
+            </Setter>
+        </Style>
+        
+        <Style Selector="Button#ClickButton:pressed">
+            <Setter Property="RenderTransform" Value="scale(0.98)"/>
+        </Style>
+    </Window.Styles>
+
     <Window.Background>
         <ImageBrush
             Source="avares://MusicClicker/Assets/sacredtrevor_A_grand_musical_city_lights_everywhere_popular_shi_d84ff662-c87b-4630-9887-25228f42097b-min.png"
@@ -314,11 +346,17 @@
                                 VerticalAlignment="Top"
                                 Background="Transparent"
                                 BorderThickness="0"
-                                Padding="0">
+                                Padding="0"
+                                PointerMoved="ClickButton_PointerMoved">
                             <Image Source="avares://MusicClicker/Assets/Music Game Assets [A961E2A]-min.png"
                                    Stretch="Uniform" IsHitTestVisible="False" />
                         </Button>
                     </Border>
+                    
+                    <!-- Floating text canvas for click feedback -->
+                    <Canvas x:Name="FloatingTextCanvas"
+                            IsHitTestVisible="False"
+                            ZIndex="300" />
                 </Grid>
 
                 <!-- Upgrades Button -->

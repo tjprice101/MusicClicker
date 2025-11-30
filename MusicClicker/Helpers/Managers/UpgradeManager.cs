@@ -1,5 +1,6 @@
 using Avalonia.Controls;
 using System;
+using MusicClicker.Helpers;
 
 namespace MusicClicker
 {
@@ -33,7 +34,8 @@ namespace MusicClicker
 
             // Apply Moonlight Duet Waning phase cost reduction (50% off)
             int moonPhase = MusicClicker.Armory.WeaponAbilities.MoonlightDuet_GetCurrentPhase(gameState);
-            double costMultiplier = (moonPhase == 3) ? 0.5 : 1.0; // Waning phase
+            bool allMoonPhasesActive = MusicClicker.Armory.WeaponAbilities.MoonlightDuet_AreAllPhasesActive(gameState);
+            double costMultiplier = (allMoonPhasesActive || moonPhase == 3) ? 0.5 : 1.0; // Waning phase or all phases active
 
             // Helper to compute effect increase for current owned count
             static double EffectIncrease(double baseEffect, double growth, int ownedCount)
@@ -54,16 +56,6 @@ namespace MusicClicker
                     if (MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes) >= cost)
                     {
                         MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, -cost);
-
-                        // apply effects based on current owned (before increment)
-                        double npsInc = EffectIncrease(baseNpsEffect, npsGrowth, owned);
-                        double clickInc = EffectIncrease(baseClickEffect, clickGrowth, owned);
-
-                        if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
-                        {
-                            gameState.NotesPerSecond += npsInc;
-                        }
-                        gameState.NotesPerClick += clickInc;
 
                         // If any weapon abilities respond to upgrades, invoke them here.
                         try
@@ -97,15 +89,6 @@ namespace MusicClicker
                     {
                         MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, -cost);
 
-                        double npsInc = EffectIncrease(baseNpsEffect, npsGrowth, owned);
-                        double clickInc = EffectIncrease(baseClickEffect, clickGrowth, owned);
-
-                        if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
-                        {
-                            gameState.NotesPerSecond += npsInc;
-                        }
-                        gameState.NotesPerClick += clickInc;
-
                             // Invoke weapon ability hooks if their flags are active.
                             try
                             {
@@ -130,10 +113,17 @@ namespace MusicClicker
 
             // Update UI
             ownedText.Text = $"Number Owned: {owned}";
-            costText.Text = $"Cost: {Math.Round(baseCost * multiplier, 2)}";
+            costText.Text = $"Cost: {NumberFormatter.FormatLargeNumber(baseCost * multiplier)}";
 
-            window.NotesText.Text = $"Notes: {Math.Round(gameState.Notes, 1)}";
-            window.UpgradeScreen.UpgradeNotesTextHeader.Text = $"Notes: {Math.Round(gameState.Notes, 1)}";
+            // Recalculate NPS and NPC totals from all sources
+            if (purchasesMade > 0)
+            {
+                gameState.NotesPerSecond = MusicClicker.Helpers.Progression.RecalculateNotesPerSecond(gameState);
+                gameState.NotesPerClick = MusicClicker.Helpers.Progression.RecalculateNotesPerClick(gameState);
+            }
+
+            window.NotesText.Text = $"Notes: {NumberFormatter.FormatLargeNumber(gameState.Notes)}";
+            window.UpgradeScreen.UpgradeNotesTextHeader.Text = $"Notes: {NumberFormatter.FormatLargeNumber(gameState.Notes)}";
 
             // Queue upgrade purchases for Mirror Lake reflection
             if (purchasesMade > 0 && gameState.SwanLakeDuetActive && DateTime.Now <= gameState.SwanLakeDuetExpiry)
