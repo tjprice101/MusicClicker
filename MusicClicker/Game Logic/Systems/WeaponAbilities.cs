@@ -335,9 +335,7 @@ namespace MusicClicker.Armory
         {
             if (gameState == null) return;
 
-            // Divide current notes by 2
-            double currentNotes = MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes);
-            MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, -currentNotes / 2);
+            // (Removed old behavior that halved the player's notes on major acquisition.)
 
             // Find lowest owned minor score
             int[] minorScores = new int[] {
