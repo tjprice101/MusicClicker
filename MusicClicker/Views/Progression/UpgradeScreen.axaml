@@ -28,7 +28,7 @@
                                 <TextBlock Text="Chord" FontSize="18" FontWeight="Bold" Foreground="White" />
                                 <TextBlock x:Name="ChordOwnedTextUpgrade" Text="Number Owned: 0" FontSize="14" Foreground="White" />
                                 <TextBlock x:Name="ChordCostTextUpgrade" Text="Cost: 10" FontSize="14" Foreground="White" />
-                                <TextBlock Text="Adds +5 NPS" FontSize="13" Foreground="White" />
+                                <TextBlock Text="Adds +5 Notes Per Second" FontSize="13" Foreground="White" />
                                 <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,6,0,0">
                                     <Button x:Name="BuyChordButton" Content="Buy 1" Width="90" Height="30" Background="#222" Foreground="White" />
                                     <Button x:Name="BuyChordMaxButton" Content="Buy Max" Width="100" Height="30" Background="#222" Foreground="White" />
@@ -45,7 +45,7 @@
                                 <TextBlock Text="Scale" FontSize="18" FontWeight="Bold" Foreground="White" />
                                 <TextBlock x:Name="ScaleOwnedTextUpgrade" Text="Number Owned: 0" FontSize="14" Foreground="White" />
                                 <TextBlock x:Name="ScaleCostTextUpgrade" Text="Cost: 50" FontSize="14" Foreground="White" />
-                                <TextBlock Text="Adds +25 NPS" FontSize="13" Foreground="White" />
+                                <TextBlock Text="Adds +25 Notes Per Second" FontSize="13" Foreground="White" />
                                 <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,6,0,0">
                                     <Button x:Name="BuyScaleButton" Content="Buy 1" Width="90" Height="30" Background="#222" Foreground="White" />
                                     <Button x:Name="BuyScaleMaxButton" Content="Buy Max" Width="100" Height="30" Background="#222" Foreground="White" />
@@ -62,7 +62,7 @@
                                 <TextBlock Text="Orchestra" FontSize="18" FontWeight="Bold" Foreground="White" />
                                 <TextBlock x:Name="OrchestraOwnedTextUpgrade" Text="Number Owned: 0" FontSize="14" Foreground="White" />
                                 <TextBlock x:Name="OrchestraCostTextUpgrade" Text="Cost: 100" FontSize="14" Foreground="White" />
-                                <TextBlock Text="Adds +125 NPS" FontSize="13" Foreground="White" />
+                                <TextBlock Text="Adds +125 Notes Per Second" FontSize="13" Foreground="White" />
                                 <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,6,0,0">
                                     <Button x:Name="BuyOrchestraButton" Content="Buy 1" Width="90" Height="30" Background="#222" Foreground="White" />
                                     <Button x:Name="BuyOrchestraMaxButton" Content="Buy Max" Width="100" Height="30" Background="#222" Foreground="White" />
@@ -79,7 +79,7 @@
                                 <TextBlock Text="Symphony" FontSize="18" FontWeight="Bold" Foreground="White" />
                                 <TextBlock x:Name="SymphonyOwnedTextUpgrade" Text="Number Owned: 0" FontSize="14" Foreground="White" />
                                 <TextBlock x:Name="SymphonyCostTextUpgrade" Text="Cost: 350" FontSize="14" Foreground="White" />
-                                <TextBlock Text="Adds +625 NPS" FontSize="13" Foreground="White" />
+                                <TextBlock Text="Adds +625 Notes Per Second" FontSize="13" Foreground="White" />
                                 <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,6,0,0">
                                     <Button x:Name="BuySymphonyButton" Content="Buy 1" Width="90" Height="30" Background="#222" Foreground="White" />
                                     <Button x:Name="BuySymphonyMaxButton" Content="Buy Max" Width="100" Height="30" Background="#222" Foreground="White" />

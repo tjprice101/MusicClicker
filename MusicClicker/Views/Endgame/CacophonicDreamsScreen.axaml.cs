@@ -691,7 +691,7 @@ namespace MusicClicker.Views
                 Cursor = new Avalonia.Input.Cursor(Avalonia.Input.StandardCursorType.Hand)
             };
             
-            // Add music note symbol (♪) with number
+            // Add note count display
             var noteStack = new StackPanel
             {
                 VerticalAlignment = VerticalAlignment.Center,
@@ -700,7 +700,7 @@ namespace MusicClicker.Views
             
             var musicSymbol = new TextBlock
             {
-                Text = "♪",
+                Text = "♫",
                 FontSize = 40,
                 FontWeight = Avalonia.Media.FontWeight.Bold,
                 Foreground = Brushes.Black,

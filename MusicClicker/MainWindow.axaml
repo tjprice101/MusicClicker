@@ -416,7 +416,7 @@
                                        FontSize="28" 
                                        HorizontalAlignment="Center" 
                                        Foreground="White" />
-                            <TextBlock Text="Needs 1 Trillion NPS" 
+                            <TextBlock Text="Needs 1 Trillion Notes Per Second" 
                                        FontSize="14" 
                                        FontWeight="Bold" 
                                        HorizontalAlignment="Center" 
@@ -430,6 +430,399 @@
                         </StackPanel>
                     </Border>
                 </Grid>
+            </Border>
+            
+            <!-- Crescendance Info Panel (Bottom Center) -->
+            <Border x:Name="MainScreenCrescendancePanel"
+                    Background="#DD000000"
+                    BorderBrush="Gold"
+                    BorderThickness="2"
+                    CornerRadius="8"
+                    Padding="12"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    Margin="0,0,0,80"
+                    Width="850"
+                    IsVisible="False"
+                    ZIndex="400">
+                <StackPanel Orientation="Vertical" Spacing="6">
+                    <TextBlock x:Name="MainCrescendanceTitle"
+                               Text="Crescendance: [Score Name]"
+                               FontSize="18"
+                               FontWeight="Bold"
+                               Foreground="Gold"
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,4" />
+                    
+                    <TextBlock x:Name="MainCrescendanceInfoText"
+                               Text="Crescendance information will appear here."
+                               FontSize="14"
+                               Foreground="White"
+                               TextWrapping="Wrap"
+                               TextAlignment="Center"
+                               MaxWidth="700" />
+                    
+                    <!-- Swan Lake Feather Display -->
+                    <StackPanel x:Name="MainSwanFeatherPanel"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                Spacing="15"
+                                Margin="0,6,0,0"
+                                IsVisible="False">
+                        <StackPanel Orientation="Vertical" Spacing="3">
+                            <TextBlock Text="Revered Feathers"
+                                       Foreground="LightBlue"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainReveredFeatherCount"
+                                       Text="0 / 5"
+                                       Foreground="White"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center" />
+                            <Button x:Name="MainConsumeReveredButton"
+                                    Content="Consume (+ 20% Notes)"
+                                    FontSize="11"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Vertical" Spacing="3">
+                            <TextBlock Text="Chromatic Feathers"
+                                       Foreground="Violet"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainChromaticFeatherCount"
+                                       Text="0 / 10"
+                                       Foreground="White"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center" />
+                            <Button x:Name="MainConsumeChromaticButton"
+                                    Content="Consume (+2 All Minors)"
+                                    FontSize="11"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Vertical" Spacing="3">
+                            <TextBlock Text="Polyphonic Feathers"
+                                       Foreground="Gold"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainPolyphonicFeatherCount"
+                                       Text="0"
+                                       Foreground="White"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center" />
+                            <Button x:Name="MainConsumePolyphonicButton"
+                                    Content="Consume (+250 Entropic +75% Notes)"
+                                    FontSize="11"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                        </StackPanel>
+                    </StackPanel>
+                    
+                    <!-- Moonlight Sonata Stack Display -->
+                    <StackPanel x:Name="MainMoonlightStackPanel"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                Spacing="25"
+                                Margin="0,6,0,0"
+                                IsVisible="False">
+                        <StackPanel Orientation="Vertical" Spacing="3">
+                            <TextBlock Text="Moonbeam Resonance"
+                                       Foreground="LightBlue"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainMoonbeamResonanceCount"
+                                       Text="0 / 5"
+                                       Foreground="White"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock Text="(Auto-consumes at 5 stacks)"
+                                       Foreground="Gray"
+                                       FontSize="10"
+                                       HorizontalAlignment="Center" />
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Vertical" Spacing="3">
+                            <TextBlock Text="Harmonizing Moonlight"
+                                       Foreground="Gold"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainHarmonizingMoonlightCount"
+                                       Text="0"
+                                       Foreground="White"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock Text="(Consumed by Eulogy weapon)"
+                                       Foreground="Gray"
+                                       FontSize="10"
+                                       HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </StackPanel>
+                    
+                    <!-- La Campanella Stack Display -->
+                    <StackPanel x:Name="MainLaCampanellaStackPanel"
+                                Orientation="Vertical"
+                                HorizontalAlignment="Center"
+                                Spacing="8"
+                                Margin="0,6,0,0"
+                                IsVisible="False">
+                        <StackPanel Orientation="Horizontal" Spacing="3" HorizontalAlignment="Center">
+                            <TextBlock Text="Grandiose Bell:"
+                                       Foreground="Gold"
+                                       FontSize="12" />
+                            <TextBlock x:Name="MainGrandioseBellStage"
+                                       Text="Intact"
+                                       Foreground="White"
+                                       FontSize="12"
+                                       FontWeight="Bold" />
+                        </StackPanel>
+                        <ProgressBar x:Name="MainGrandioseBellProgress"
+                                     Minimum="0"
+                                     Maximum="60"
+                                     Value="0"
+                                     Height="8"
+                                     Width="200" />
+                        <Button x:Name="MainMendBellButton"
+                                Content="Mend Bell"
+                                Click="MainMendBellButton_Click"
+                                FontSize="11"
+                                Padding="8,4"
+                                IsEnabled="False" />
+                        <StackPanel Orientation="Horizontal" Spacing="3" HorizontalAlignment="Center">
+                            <TextBlock Text="Deafening Chime:"
+                                       Foreground="Violet"
+                                       FontSize="11" />
+                            <TextBlock x:Name="MainDeafeningChimeCount"
+                                       Text="0"
+                                       Foreground="White"
+                                       FontSize="11"
+                                       FontWeight="Bold" />
+                        </StackPanel>
+                    </StackPanel>
+                    
+                    <!-- Enigma Stack Display -->
+                    <StackPanel x:Name="MainEnigmaStackPanel"
+                                Orientation="Vertical"
+                                HorizontalAlignment="Center"
+                                Spacing="8"
+                                Margin="0,6,0,0"
+                                IsVisible="False">
+                        <StackPanel Orientation="Horizontal" Spacing="3" HorizontalAlignment="Center">
+                            <TextBlock Text="Resonate Mystery:"
+                                       Foreground="Violet"
+                                       FontSize="12" />
+                            <TextBlock x:Name="MainResonateMysteryCount"
+                                       Text="0"
+                                       Foreground="White"
+                                       FontSize="14"
+                                       FontWeight="Bold" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="5" HorizontalAlignment="Center">
+                            <Button x:Name="MainEnigmaConsumeNotesButton"
+                                    Content="+50% Notes"
+                                    Click="MainEnigmaConsumeNotesButton_Click"
+                                    FontSize="10"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                            <Button x:Name="MainEnigmaConsumeEntropicButton"
+                                    Content="+50 Entropic"
+                                    Click="MainEnigmaConsumeEntropicButton_Click"
+                                    FontSize="10"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                            <Button x:Name="MainEnigmaConsumeMinorButton"
+                                    Content="+1 Random Minor"
+                                    Click="MainEnigmaConsumeMinorButton_Click"
+                                    FontSize="10"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                        </StackPanel>
+                        <Button x:Name="MainEnigmaConsumeAllButton"
+                                Content="Consume All (10+) for Bulk Bonus"
+                                Click="MainEnigmaConsumeAllButton_Click"
+                                FontSize="11"
+                                Padding="8,4"
+                                IsEnabled="False" />
+                    </StackPanel>
+                    
+                    <!-- Fate Stack Display -->
+                    <StackPanel x:Name="MainFateStackPanel"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                Spacing="20"
+                                Margin="0,6,0,0"
+                                IsVisible="False">
+                        <StackPanel Orientation="Vertical" Spacing="3">
+                            <TextBlock Text="Cosmic Modulation"
+                                       Foreground="Cyan"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainCosmicModulationCount"
+                                       Text="0"
+                                       Foreground="White"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center" />
+                            <StackPanel Orientation="Horizontal" Spacing="3" HorizontalAlignment="Center">
+                                <TextBlock Text="Tier:"
+                                           Foreground="Gray"
+                                           FontSize="10" />
+                                <TextBlock x:Name="MainCosmicModulationTier"
+                                           Text="0"
+                                           Foreground="Gold"
+                                           FontSize="10"
+                                           FontWeight="Bold" />
+                            </StackPanel>
+                            <Button x:Name="MainConsumeCosmicButton"
+                                    Content="Consume for Entropic"
+                                    Click="MainConsumeCosmicButton_Click"
+                                    FontSize="10"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Vertical" Spacing="3">
+                            <TextBlock Text="Symphony of the Stars"
+                                       Foreground="Gold"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainSymphonyStarsCount"
+                                       Text="0"
+                                       Foreground="White"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock Text="(1 per 5 Cosmic)"
+                                       Foreground="Gray"
+                                       FontSize="9"
+                                       HorizontalAlignment="Center" />
+                            <Button x:Name="MainConsumeSymphonyButton"
+                                    Content="Consume (+3 Lowest Minor)"
+                                    Click="MainConsumeSymphonyButton_Click"
+                                    FontSize="10"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                        </StackPanel>
+                    </StackPanel>
+                    
+                    <!-- Eroica Stack Display -->
+                    <StackPanel x:Name="MainEroicaStackPanel"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                Spacing="20"
+                                Margin="0,6,0,0"
+                                IsVisible="False">
+                        <StackPanel Orientation="Vertical" Spacing="3">
+                            <TextBlock Text="Heroic Resolve"
+                                       Foreground="LightBlue"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainHeroicResolveCount"
+                                       Text="0"
+                                       Foreground="White"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center" />
+                            <Button x:Name="MainConsumeHeroicResolveButton"
+                                    Content="Consume (+1 Catharsis, -25% Notes)"
+                                    Click="MainConsumeHeroicResolveButton_Click"
+                                    FontSize="10"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Vertical" Spacing="3">
+                            <TextBlock Text="Symphonic Catharsis"
+                                       Foreground="Gold"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainSymphonicCatharsisCount"
+                                       Text="0"
+                                       Foreground="White"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center" />
+                            <Button x:Name="MainConsumeCatharsisButton"
+                                    Content="Consume (10s double Notes Per Click +10% critical hit chance)"
+                                    Click="MainConsumeCatharsisButton_Click"
+                                    FontSize="10"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                        </StackPanel>
+                        
+                        <StackPanel x:Name="MainTestamentPanel"
+                                    Orientation="Vertical" Spacing="3"
+                                    IsVisible="False">
+                            <TextBlock Text="Testament of Harmony"
+                                       Foreground="Violet"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainTestamentCount"
+                                       Text="0"
+                                       Foreground="White"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center" />
+                            <Button x:Name="MainConsumeTestamentButton"
+                                    Content="Consume (+100 Melodic/Harmonic)"
+                                    Click="MainConsumeTestamentButton_Click"
+                                    FontSize="10"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                        </StackPanel>
+                    </StackPanel>
+                    
+                    <!-- Dies Irae Stack Display -->
+                    <StackPanel x:Name="MainDiesIraeStackPanel"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                Spacing="20"
+                                Margin="0,6,0,0"
+                                IsVisible="False">
+                        <StackPanel Orientation="Vertical" Spacing="3">
+                            <TextBlock Text="Burning Hatred"
+                                       Foreground="OrangeRed"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainBurningHatredCount"
+                                       Text="0 / 50"
+                                       Foreground="White"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock Text="(Gain 1 per click until 50)"
+                                       Foreground="Gray"
+                                       FontSize="9"
+                                       HorizontalAlignment="Center" />
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Vertical" Spacing="3">
+                            <TextBlock Text="Discordant Malice"
+                                       Foreground="DarkViolet"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainDiscordantMaliceCount"
+                                       Text="0"
+                                       Foreground="White"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center" />
+                            <Button x:Name="MainConsumeDiscordantButton"
+                                    Content="Consume (Multiply notes by stacks)"
+                                    Click="MainConsumeDiscordantButton_Click"
+                                    FontSize="10"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
             </Border>
         </Grid>
 

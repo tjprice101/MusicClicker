@@ -77,7 +77,7 @@
                                            Foreground="White"
                                            HorizontalAlignment="Center"
                                            TextWrapping="Wrap" />
-                                <TextBlock Text="Recommended NPS: 1 Trillion" 
+                                <TextBlock Text="Recommended Notes Per Second: 1 Trillion" 
                                            FontSize="13" 
                                            Foreground="#FFAA00"
                                            HorizontalAlignment="Center" />
@@ -226,7 +226,7 @@
                                            Foreground="White"
                                            HorizontalAlignment="Center"
                                            TextWrapping="Wrap" />
-                                <TextBlock Text="Recommended NPS: 100 Trillion" 
+                                <TextBlock Text="Recommended Notes Per Second: 100 Trillion" 
                                            FontSize="13" 
                                            Foreground="#FFAA00"
                                            HorizontalAlignment="Center" />
@@ -375,7 +375,7 @@
                                            Foreground="White"
                                            HorizontalAlignment="Center"
                                            TextWrapping="Wrap" />
-                                <TextBlock Text="Recommended NPS: 1 Quadrillion" 
+                                <TextBlock Text="Recommended Notes Per Second: 1 Quadrillion" 
                                            FontSize="13" 
                                            Foreground="#FFAA00"
                                            HorizontalAlignment="Center" />

@@ -4,8 +4,10 @@ using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using Avalonia;
 using Avalonia.Threading;
+using Avalonia.Input;
 using System;
 using System.Collections.Generic;
+using MusicClicker.Views;
 
 namespace MusicClicker
 {
@@ -14,6 +16,7 @@ namespace MusicClicker
         private bool _disposed = false;
 
         // UI references
+        private readonly TempoResonateScreen? _screen;
         private readonly StackPanel _leftDrawerPanel;
         private readonly Border _equippedDisplay;
         private readonly TextBlock _equippedText;
@@ -24,16 +27,31 @@ namespace MusicClicker
         private readonly Border? _equippedWeaponDisplay2;
         private readonly TextBlock? _equippedWeaponText2;
         private readonly TextBlock? _duetResonanceText;
-
-        // Duet color oscillation state
-        private readonly DispatcherTimer _duetColorTimer;
-        private bool _duetColorToggle = false;
+        
+        // Themed panel references for dynamic coloring
+        private Border? _leftPanelBorder;
+        private Border? _leftPanelHeader;
+        private TextBlock? _leftPanelHeaderText;
+        private Border? _rightPanelBorder;
+        private Border? _rightPanelHeader;
+        private TextBlock? _rightPanelHeaderText;
+        
+        // Performance optimization: cache last known state to avoid redundant updates
+        private string _lastEquippedScore = "";
+        private string _lastWeapon1 = "";
+        private string _lastWeapon2 = "";
+        private int _tickCounter = 0;
+        
+        // Cache image controls to avoid recreating them on every refresh
+        private readonly Dictionary<string, Image> _scoreImageCache = new();
+        private readonly Dictionary<string, Image> _weaponImageCache = new();
+        private bool _drawersInitialized = false;
 
         // Game state reference
         private readonly GameState _gameState;
 
         // Equip/disable prompt UI
-        private readonly StackPanel _equipPromptPanel;
+        private readonly Border _equipPromptPanel;
         private readonly TextBlock _equipPromptText;
         private readonly Button _equipYesButton;
         private readonly Button _equipNoButton;
@@ -78,11 +96,11 @@ namespace MusicClicker
         // Friendly display names for major scores (internal key -> UI string)
         private readonly Dictionary<string, string> _majorScoreDisplayNames = new()
         {
-            {"Moonlight", "Moonlight Sonata"},
+            {"Moonlight Sonata", "Moonlight Sonata"},
             {"Eroica", "Eroica"},
-            {"Swan", "Swan"},
+            {"Swan", "Swan Lake"},
             {"LaCampanella", "La Campanella"},
-            {"Enigma", "Enigma"},
+            {"Enigma", "Enigma Variations"},
             {"Fate", "Fate"},
             {"OdeToJoy", "Ode to Joy"},
             {"DiesIrae", "Dies Irae"},
@@ -172,11 +190,13 @@ namespace MusicClicker
 
         public TempoResonateManager(
             StackPanel leftDrawerPanel, Border equippedDisplay, TextBlock equippedText, GameState gameState,
-            StackPanel equipPromptPanel, TextBlock equipPromptText, Button equipYesButton, Button equipNoButton,
+            Border equipPromptPanel, TextBlock equipPromptText, Button equipYesButton, Button equipNoButton,
             StackPanel? rightDrawerPanel = null, Border? equippedWeaponDisplay1 = null, TextBlock? equippedWeaponText1 = null,
-            Border? equippedWeaponDisplay2 = null, TextBlock? equippedWeaponText2 = null, TextBlock? duetResonanceText = null)
+            Border? equippedWeaponDisplay2 = null, TextBlock? equippedWeaponText2 = null, TextBlock? duetResonanceText = null,
+            TempoResonateScreen? screen = null)
         {
             // Store UI and game state references
+            _screen = screen;
             _leftDrawerPanel = leftDrawerPanel;
             _equippedDisplay = equippedDisplay;
             _equippedText = equippedText;
@@ -193,21 +213,26 @@ namespace MusicClicker
             _equipYesButton = equipYesButton;
             _equipNoButton = equipNoButton;
 
-            // Initialize duet color oscillation timer
-            _duetColorTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(500) };
-            _duetColorTimer.Tick += (s, e) =>
+            // Get themed panel references for dynamic coloring
+            if (_screen != null)
             {
-                _duetColorToggle = !_duetColorToggle;
-                UpdateDuetTextColor();
-            };
-            _duetColorTimer.Start();
+                _leftPanelBorder = _screen.FindControl<Border>("LeftPanelBorder");
+                _leftPanelHeader = _screen.FindControl<Border>("LeftPanelHeader");
+                _leftPanelHeaderText = _screen.FindControl<TextBlock>("LeftPanelHeaderText");
+                _rightPanelBorder = _screen.FindControl<Border>("RightPanelBorder");
+                _rightPanelHeader = _screen.FindControl<Border>("RightPanelHeader");
+                _rightPanelHeaderText = _screen.FindControl<TextBlock>("RightPanelHeaderText");
+            }
 
             // Load images, populate drawer, and set initial equipped state
             LoadBitmaps();
             InitializeDrawer();
             InitializeWeaponDrawer();
             RestoreSavedState();
+            UpdateThemeColors(); // Set initial theme
         }
+        
+        // Removed SetupDropZones - all drag-and-drop functionality removed
 
         private void LoadBitmaps()
         {
@@ -257,6 +282,19 @@ namespace MusicClicker
                 // If saved score is invalid or not owned, default to None
                 SetDefaultEquipped();
             }
+            
+            // Restore equipped weapons
+            var weapon1 = _gameState.CurrentResonatedWeapon1;
+            var weapon2 = _gameState.CurrentResonatedWeapon2;
+            if (!string.IsNullOrEmpty(weapon1) && weapon1 != "None")
+                SetWeaponSlotDisplay(1, weapon1);
+            else
+                SetWeaponSlotDisplay(1, "None");
+                
+            if (!string.IsNullOrEmpty(weapon2) && weapon2 != "None")
+                SetWeaponSlotDisplay(2, weapon2);
+            else
+                SetWeaponSlotDisplay(2, "None");
         }
 
         private void SetDefaultEquipped()
@@ -265,14 +303,18 @@ namespace MusicClicker
             _equippedText.Text = "None";
             _equippedBitmap = _emptyBitmap;
 
-            // Update the equipped display image
+            // Update the equipped display image with 16:9 dimensions
             _equippedDisplay.Child = new Image
             {
-                Source = _equippedBitmap,
-                Width = 384,
-                Height = 216,
-                Stretch = Stretch.UniformToFill
+                Source = _emptyBitmap,
+                Width = 480,
+                Height = 270,
+                Stretch = Stretch.Uniform
             };
+            
+            // Initialize weapon slots with empty images
+            SetWeaponSlotDisplay(1, "None");
+            SetWeaponSlotDisplay(2, "None");
 
             // Update GameState
             _gameState.CurrentResonatedScore = "None";
@@ -297,28 +339,29 @@ namespace MusicClicker
                 _bitmapCache.TryGetValue(score, out var bitmap);
                 var imageSource = bitmap ?? _emptyBitmap;
 
-                // Full opacity for owned scores
-                var imageControl = MusicClicker.Helpers.ImageHelpers.CreateSmoothImage(imageSource, 256, 144, score, 1.0, true);
-
-                // Transparent button overlay for click handling
-                var button = new Button
+                // Create draggable image (no button wrapper needed)
+                var imageControl = new Image
                 {
+                    Source = imageSource,
                     Width = 256,
                     Height = 144,
-                    Background = Brushes.Transparent,
-                    BorderThickness = new Thickness(0),
+                    Stretch = Stretch.UniformToFill,
                     Margin = new Thickness(5),
-                    Content = imageControl,
-                    IsEnabled = true
+                    Tag = score,
+                    Cursor = new Avalonia.Input.Cursor(Avalonia.Input.StandardCursorType.Hand),
+                    UseLayoutRounding = true
                 };
+                
+                // Apply high quality rendering
+                RenderOptions.SetBitmapInterpolationMode(imageControl, BitmapInterpolationMode.HighQuality);
 
-                // Capture the score name in a local variable to avoid closure issues
+                // Capture the score name
                 string capturedScore = score;
                 
-                // Clicking toggles equip/disable prompt
-                button.Click += (_, _) =>
+                // Click to equip/unequip (single click for responsiveness)
+                imageControl.Tapped += (_, _) =>
                 {
-                    if (_equippedText.Text == capturedScore)
+                    if (_equippedText.Text == GetScoreDisplayName(capturedScore))
                     {
                         ShowDisablePrompt(capturedScore);
                     }
@@ -328,7 +371,10 @@ namespace MusicClicker
                     }
                 };
 
-                _leftDrawerPanel.Children.Add(button);
+                _leftDrawerPanel.Children.Add(imageControl);
+                
+                // Register tooltip for this score
+                _screen?.RegisterTooltipItem(imageControl, ScoreToDisplayName(score));
             }
         }
 
@@ -338,8 +384,25 @@ namespace MusicClicker
 
             _rightDrawerPanel.Children.Clear();
             _rightDrawerPanel.Orientation = Avalonia.Layout.Orientation.Vertical;
+            
+            // If already initialized and images are cached, reuse them
+            if (_drawersInitialized && _weaponImageCache.Count > 0)
+            {
+                foreach (var weapon in _weaponOrder)
+                {
+                    if (_weaponImageCache.TryGetValue(weapon, out var cachedImage))
+                    {
+                        // Update opacity based on current ownership
+                        bool isOwned = OwnsWeapon(weapon);
+                        cachedImage.Opacity = isOwned ? 1.0 : 0.3;
+                        cachedImage.IsEnabled = isOwned;
+                        _rightDrawerPanel.Children.Add(cachedImage);
+                    }
+                }
+                return;
+            }
 
-            // Create entry button for ALL weapons, grayed out and monochrome if not owned
+            // Create entry for ALL weapons, grayed out and monochrome if not owned
             foreach (var weapon in _weaponOrder)
             {
                 bool isOwned = OwnsWeapon(weapon);
@@ -347,35 +410,32 @@ namespace MusicClicker
                 _weaponBitmapCache.TryGetValue(weapon, out var bitmap);
                 var imageSource = bitmap ?? _emptyBitmap;
 
-                // If owned: full opacity (1.0), enabled. If not owned: low opacity (0.3), disabled
-                var imageControl = MusicClicker.Helpers.ImageHelpers.CreateSmoothImage(
-                    imageSource, 
-                    256, 
-                    144, 
-                    weapon, 
-                    isOwned ? 1.0 : 0.3,  // opacity
-                    isOwned                // isEnabled
-                );
-
-                var button = new Button
+                // Create draggable image (no button wrapper)
+                var imageControl = new Image
                 {
+                    Source = imageSource,
                     Width = 256,
                     Height = 144,
-                    Background = Brushes.Transparent,
-                    BorderThickness = new Thickness(0),
+                    Stretch = Stretch.UniformToFill,
                     Margin = new Thickness(5),
-                    Content = imageControl,
-                    IsEnabled = isOwned // Only clickable if owned
+                    Tag = weapon,
+                    Opacity = isOwned ? 1.0 : 0.3,
+                    IsEnabled = isOwned,
+                    Cursor = isOwned ? new Avalonia.Input.Cursor(Avalonia.Input.StandardCursorType.Hand) : Avalonia.Input.Cursor.Default,
+                    UseLayoutRounding = true
                 };
+                
+                // Apply high quality rendering
+                RenderOptions.SetBitmapInterpolationMode(imageControl, BitmapInterpolationMode.HighQuality);
 
-                // Capture the weapon name in a local variable to avoid closure issues
+                // Capture the weapon name
                 string capturedWeapon = weapon;
 
                 if (isOwned)
                 {
-                    button.Click += (_, _) =>
+                    // Click to equip/unequip (single click for responsiveness)
+                    imageControl.Tapped += (_, _) =>
                     {
-                        // If already equipped, ask to disable; otherwise ask to equip
                         if (_gameState.CurrentResonatedWeapon1 == capturedWeapon || _gameState.CurrentResonatedWeapon2 == capturedWeapon)
                         {
                             ShowWeaponDisablePrompt(capturedWeapon);
@@ -386,8 +446,14 @@ namespace MusicClicker
                         }
                     };
                 }
+                
+                // Cache the weapon image
+                _weaponImageCache[weapon] = imageControl;
 
-                _rightDrawerPanel.Children.Add(button);
+                _rightDrawerPanel.Children.Add(imageControl);
+                
+                // Register tooltip for this weapon
+                _screen?.RegisterTooltipItem(imageControl, WeaponToDisplayName(weapon));
             }
         }
 
@@ -435,6 +501,7 @@ namespace MusicClicker
 
             void WeaponEquipYesHandler(object? s, Avalonia.Interactivity.RoutedEventArgs e)
             {
+                e.Handled = true;
                 EquipWeapon(weaponName);
                 _equipPromptPanel.IsVisible = false;
                 _equipYesButton.Click -= WeaponEquipYesHandler;
@@ -443,6 +510,7 @@ namespace MusicClicker
 
             void WeaponEquipNoHandler(object? s, Avalonia.Interactivity.RoutedEventArgs e)
             {
+                e.Handled = true;
                 _equipPromptPanel.IsVisible = false;
                 _equipYesButton.Click -= WeaponEquipYesHandler;
                 _equipNoButton.Click -= WeaponEquipNoHandler;
@@ -464,6 +532,7 @@ namespace MusicClicker
 
             void WeaponDisableYesHandler(object? s, Avalonia.Interactivity.RoutedEventArgs e)
             {
+                e.Handled = true;
                 if (_gameState.CurrentResonatedWeapon1 == weaponName) UnequipWeapon(1);
                 if (_gameState.CurrentResonatedWeapon2 == weaponName) UnequipWeapon(2);
                 _equipPromptPanel.IsVisible = false;
@@ -473,6 +542,7 @@ namespace MusicClicker
 
             void WeaponDisableNoHandler(object? s, Avalonia.Interactivity.RoutedEventArgs e)
             {
+                e.Handled = true;
                 _equipPromptPanel.IsVisible = false;
                 _equipYesButton.Click -= WeaponDisableYesHandler;
                 _equipNoButton.Click -= WeaponDisableNoHandler;
@@ -581,19 +651,22 @@ namespace MusicClicker
             if (weaponName == "None")
             {
                 targetText.Text = "Weapon Slot " + slot;
-                targetBorder.Child = new Image { Source = _emptyBitmap, Width = targetBorder.Width, Height = targetBorder.Height, Stretch = Stretch.UniformToFill };
+                targetBorder.Child = new Image { Source = _emptyBitmap, Width = 320, Height = 180, Stretch = Stretch.Uniform };
                 return;
             }
 
+            // Set the display name
+            targetText.Text = _weaponDisplayNames.TryGetValue(weaponName, out var disp) ? disp : weaponName;
+
+            // Get the weapon bitmap and create the image
             if (_weaponBitmapCache.TryGetValue(weaponName, out var bmp))
             {
-                targetBorder.Child = MusicClicker.Helpers.ImageHelpers.CreateSmoothImage(bmp, (int)targetBorder.Width, (int)targetBorder.Height, null, 1.0, true);
-                targetText.Text = _weaponDisplayNames.TryGetValue(weaponName, out var disp) ? disp : weaponName;
+                targetBorder.Child = MusicClicker.Helpers.ImageHelpers.CreateSmoothImage(bmp, 320, 180, null, 1.0, true);
             }
             else
             {
-                targetText.Text = _weaponDisplayNames.TryGetValue(weaponName, out var disp2) ? disp2 : weaponName;
-                targetBorder.Child = new Image { Source = _emptyBitmap, Width = targetBorder.Width, Height = targetBorder.Height, Stretch = Stretch.UniformToFill };
+                // Fallback to empty image if bitmap not found
+                targetBorder.Child = new Image { Source = _emptyBitmap, Width = 320, Height = 180, Stretch = Stretch.Uniform };
             }
 
             // Update duet resonance text
@@ -614,7 +687,7 @@ namespace MusicClicker
             {
                 _duetResonanceText.Text = duetText;
                 _duetResonanceText.IsVisible = true;
-                UpdateDuetTextColor();
+                UpdateThemeColors();
             }
             else
             {
@@ -683,17 +756,120 @@ namespace MusicClicker
             return "";
         }
 
-        private void UpdateDuetTextColor()
+        private void UpdateThemeColors()
         {
-            if (_duetResonanceText == null || !_duetResonanceText.IsVisible) return;
+            // Update panel colors based on currently equipped score
+            string equipped = _gameState.CurrentResonatedScore;
+            
+            // Define color themes for each score
+            var theme = equipped switch
+            {
+                "Moonlight Sonata" => new { // Light blue and Purple
+                    LeftBg = "#DD87CEEB", LeftBorder = "#9966CCFF", LeftHeaderBg = "#BB99DDFF",
+                    LeftHeaderText = "#EEEEEEFF", RightBg = "#DD9966CC", RightBorder = "#66B3D9FF",
+                    RightHeaderBg = "#BB8855BB", RightHeaderText = "#F0F0F0FF", DuetText = "#CC99FFFF"
+                },
+                "Eroica" => new { // Red-ish pink and Black
+                    LeftBg = "#DDFF6B8A", LeftBorder = "#000000FF", LeftHeaderBg = "#BBFF8899",
+                    LeftHeaderText = "#000000FF", RightBg = "#DD000000", RightBorder = "#FF5577FF",
+                    RightHeaderBg = "#BB1A0A0A", RightHeaderText = "#FF99BBFF", DuetText = "#FF88AAFF"
+                },
+                "Swan Lake" => new { // White and Dark pink
+                    LeftBg = "#DDFAFAFAF", LeftBorder = "#C71585FF", LeftHeaderBg = "#BBFFFFFFF",
+                    LeftHeaderText = "#8B008BFF", RightBg = "#DDC71585", RightBorder = "#EEEEEEFF",
+                    RightHeaderBg = "#BBB22A6D", RightHeaderText = "#FFFFFFFF", DuetText = "#FF88CCFF"
+                },
+                "La Campanella" => new { // White and Orange
+                    LeftBg = "#DDFAFAFAF", LeftBorder = "#FFA500FF", LeftHeaderBg = "#BBFFFFFFF",
+                    LeftHeaderText = "#FF8800FF", RightBg = "#DDFFA500", RightBorder = "#EEEEEEFF",
+                    RightHeaderBg = "#BBFF9933", RightHeaderText = "#FFFFFFFF", DuetText = "#FFAA66FF"
+                },
+                "Enigma Variations" => new { // Black and Dark purple
+                    LeftBg = "#DD000000", LeftBorder = "#663399FF", LeftHeaderBg = "#BB1A1A1A",
+                    LeftHeaderText = "#9966AAFF", RightBg = "#DD663399", RightBorder = "#000000FF",
+                    RightHeaderBg = "#BB552288", RightHeaderText = "#EEEEEEFF", DuetText = "#9977CCFF"
+                },
+                "Fate" => new { // Black and Scarlet-ish purple
+                    LeftBg = "#DD000000", LeftBorder = "#A0206FFF", LeftHeaderBg = "#BB1A0A0A",
+                    LeftHeaderText = "#C94B9AFF", RightBg = "#DDA0206F", RightBorder = "#000000FF",
+                    RightHeaderBg = "#BB8B1A5E", RightHeaderText = "#EEEEEEFF", DuetText = "#D946A0FF"
+                },
+                "Ode to Joy" => new { // White and Light pink
+                    LeftBg = "#DDFAFAFAF", LeftBorder = "#FFB6C1FF", LeftHeaderBg = "#BBFFFFFFF",
+                    LeftHeaderText = "#FF99AAFF", RightBg = "#DDFFB6C1", RightBorder = "#EEEEEEFF",
+                    RightHeaderBg = "#BBFFCCDD", RightHeaderText = "#333333FF", DuetText = "#FFBBDDFF"
+                },
+                "Dies Irae" => new { // Black and Orange
+                    LeftBg = "#DD000000", LeftBorder = "#FFA500FF", LeftHeaderBg = "#BB1A1A1A",
+                    LeftHeaderText = "#FFBB66FF", RightBg = "#DDFFA500", RightBorder = "#000000FF",
+                    RightHeaderBg = "#BBFF9933", RightHeaderText = "#000000FF", DuetText = "#FFAA44FF"
+                },
+                "Winter" => new { // White and Light blue
+                    LeftBg = "#DDFAFAFAF", LeftBorder = "#ADD8E6FF", LeftHeaderBg = "#BBFFFFFFF",
+                    LeftHeaderText = "#4682B4FF", RightBg = "#DDADD8E6", RightBorder = "#EEEEEEFF",
+                    RightHeaderBg = "#BB99CCEE", RightHeaderText = "#FFFFFFFF", DuetText = "#AAE6FFFF"
+                },
+                _ => new { // Default (no score equipped)
+                    LeftBg = "#DD1A1A1A", LeftBorder = "#666666", LeftHeaderBg = "#BB2A2A2A",
+                    LeftHeaderText = "#AAAAAA", RightBg = "#DD1A1A1A", RightBorder = "#666666",
+                    RightHeaderBg = "#BB2A2A2A", RightHeaderText = "#AAAAAA", DuetText = "#FFFFFF"
+                }
+            };
 
-            _duetResonanceText.Foreground = _duetColorToggle 
-                ? new SolidColorBrush(Color.FromRgb(255, 192, 203))  // Pink
-                : Brushes.White;
+            // Apply theme colors
+            if (_leftPanelBorder != null)
+                _leftPanelBorder.Background = new SolidColorBrush(Color.Parse(theme.LeftBg));
+            if (_leftPanelBorder != null)
+                _leftPanelBorder.BorderBrush = new SolidColorBrush(Color.Parse(theme.LeftBorder));
+            if (_leftPanelHeader != null)
+                _leftPanelHeader.Background = new SolidColorBrush(Color.Parse(theme.LeftHeaderBg));
+            if (_leftPanelHeaderText != null)
+                _leftPanelHeaderText.Foreground = new SolidColorBrush(Color.Parse(theme.LeftHeaderText));
+                
+            if (_rightPanelBorder != null)
+                _rightPanelBorder.Background = new SolidColorBrush(Color.Parse(theme.RightBg));
+            if (_rightPanelBorder != null)
+                _rightPanelBorder.BorderBrush = new SolidColorBrush(Color.Parse(theme.RightBorder));
+            if (_rightPanelHeader != null)
+                _rightPanelHeader.Background = new SolidColorBrush(Color.Parse(theme.RightHeaderBg));
+            if (_rightPanelHeaderText != null)
+                _rightPanelHeaderText.Foreground = new SolidColorBrush(Color.Parse(theme.RightHeaderText));
+                
+            // Update duet text color (static, no flashing)
+            if (_duetResonanceText != null && _duetResonanceText.IsVisible)
+                _duetResonanceText.Foreground = new SolidColorBrush(Color.Parse(theme.DuetText));
+        }
+
+        private void ThemePromptButtons(string scoreName)
+        {
+            // Theme the prompt buttons based on the score's aesthetic
+            var (yesColor, noColor, yesBorder, noBorder) = scoreName switch
+            {
+                "Moonlight Sonata" => ("#6633DDFF", "#CC6633FF", "#9966FFFF", "#FF8855FF"), // Purple/Orange
+                "Eroica" => ("#CC4488FF", "#884444FF", "#FF66AAFF", "#AA6666FF"), // Pink/Dark red
+                "Swan" => ("#4488FFFF", "#8844FFFF", "#66AAFFFF", "#AA66FFFF"), // Blue/Purple
+                "LaCampanella" => ("#FFAA22FF", "#AA55CCFF", "#FFCC66FF", "#CC77EEFF"), // Orange/Purple
+                "Enigma" => ("#338855FF", "#663399FF", "#55AA77FF", "#8855BBFF"), // Dark green/Dark purple
+                "Fate" => ("#CC2244FF", "#442222FF", "#FF4466FF", "#664444FF"), // Scarlet red/Dark red
+                "OdeToJoy" => ("#FF66AAFF", "#CC4488FF", "#FF88CCFF", "#FF66AAFF"), // Pink/Pink
+                "DiesIrae" => ("#FF8833FF", "#664422FF", "#FFAA66FF", "#886644FF"), // Orange/Dark orange
+                "Winter" => ("#66AAFFFF", "#4488CCFF", "#88CCFFFF", "#66AAEEFF"), // Light blue/Blue
+                _ => ("#22AA22FF", "#AA2222FF", "#44FF44FF", "#FF4444FF") // Default green/red
+            };
+
+            _equipYesButton.Background = new SolidColorBrush(Color.Parse(yesColor));
+            _equipYesButton.BorderBrush = new SolidColorBrush(Color.Parse(yesBorder));
+            _equipNoButton.Background = new SolidColorBrush(Color.Parse(noColor));
+            _equipNoButton.BorderBrush = new SolidColorBrush(Color.Parse(noBorder));
         }
 
         public void RefreshDrawer()
         {
+            // Clear caches to rebuild with new ownership state
+            _scoreImageCache.Clear();
+            _weaponImageCache.Clear();
+            _drawersInitialized = false;
+            
             // Rebuild the entire drawer to reflect current ownership state
             InitializeDrawer();
             InitializeWeaponDrawer();
@@ -730,24 +906,23 @@ namespace MusicClicker
             var displayName = _majorScoreDisplayNames.TryGetValue(scoreName, out var name) ? name : scoreName;
             _equipPromptText.Text = $"Resonate with {displayName}'s Tempo?";
 
-            // Remove previous handlers to prevent accumulation
-            _equipYesButton.Click -= EquipYesButtonHandler;
-            _equipNoButton.Click -= EquipNoButtonHandler;
+            // Theme the prompt buttons based on score
+            ThemePromptButtons(scoreName);
 
             // Local handlers capture the score name
             void EquipYesButtonHandler(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
             {
+                e.Handled = true;
                 EquipScore(scoreName);
                 _equipPromptPanel.IsVisible = false;
-
                 _equipYesButton.Click -= EquipYesButtonHandler;
                 _equipNoButton.Click -= EquipNoButtonHandler;
             }
 
             void EquipNoButtonHandler(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
             {
+                e.Handled = true;
                 _equipPromptPanel.IsVisible = false;
-
                 _equipYesButton.Click -= EquipYesButtonHandler;
                 _equipNoButton.Click -= EquipNoButtonHandler;
             }
@@ -763,24 +938,23 @@ namespace MusicClicker
             var displayName = _majorScoreDisplayNames.TryGetValue(scoreName, out var name) ? name : scoreName;
             _equipPromptText.Text = $"Do you want to disable {displayName}'s resonance?";
 
-            // Remove previous handlers
-            _equipYesButton.Click -= DisableYesHandler;
-            _equipNoButton.Click -= DisableNoHandler;
+            // Theme the prompt buttons based on score
+            ThemePromptButtons(scoreName);
 
             // Local handlers
             void DisableYesHandler(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
             {
+                e.Handled = true;
                 UnequipScore();
                 _equipPromptPanel.IsVisible = false;
-
                 _equipYesButton.Click -= DisableYesHandler;
                 _equipNoButton.Click -= DisableNoHandler;
             }
 
             void DisableNoHandler(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
             {
+                e.Handled = true;
                 _equipPromptPanel.IsVisible = false;
-
                 _equipYesButton.Click -= DisableYesHandler;
                 _equipNoButton.Click -= DisableNoHandler;
             }
@@ -791,11 +965,25 @@ namespace MusicClicker
 
         private void EquipScore(string scoreName, bool saveToState = true)
         {
-            // Set new equipped score text + bitmap
-            _equippedText.Text = scoreName;
+            // Set new equipped score text + bitmap (use full display name)
+            _equippedText.Text = GetScoreDisplayName(scoreName);
             _equippedBitmap = _bitmapCache[scoreName];
 
-            _equippedDisplay.Child = MusicClicker.Helpers.ImageHelpers.CreateSmoothImage(_equippedBitmap, 384, 216, null, 1.0, true);
+            // Create 16:9 image (480x270 fills the Viewbox container)
+            var scoreImage = MusicClicker.Helpers.ImageHelpers.CreateSmoothImage(_equippedBitmap, 480, 270, null, 1.0, true);
+            
+            // Add click-to-unequip functionality (single click)
+            scoreImage.Tapped += (s, e) =>
+            {
+                if (_gameState.CurrentResonatedScore != "None")
+                {
+                    ShowDisablePrompt(_gameState.CurrentResonatedScore);
+                }
+                e.Handled = true;
+            };
+            scoreImage.Cursor = new Avalonia.Input.Cursor(Avalonia.Input.StandardCursorType.Hand);
+            
+            _equippedDisplay.Child = scoreImage;
 
             // Disable all major ability flags
             _gameState.MoonlightMajorAbility = false;
@@ -823,6 +1011,9 @@ namespace MusicClicker
             {
                 _gameState.CurrentResonatedScore = scoreName;
             }
+            
+            // Update UI theme colors based on equipped score
+            UpdateThemeColors();
         }
 
         private void UnequipScore()
@@ -833,10 +1024,10 @@ namespace MusicClicker
 
             _equippedDisplay.Child = new Image
             {
-                Source = _equippedBitmap,
-                Width = 384,
-                Height = 216,
-                Stretch = Stretch.UniformToFill
+                Source = _emptyBitmap,
+                Width = 480,
+                Height = 270,
+                Stretch = Stretch.Uniform
             };
 
             // Disable all major abilities
@@ -850,6 +1041,38 @@ namespace MusicClicker
 
             // Save to GameState
             _gameState.CurrentResonatedScore = "None";
+            
+            // Update UI theme to default colors
+            UpdateThemeColors();
+        }
+
+        // Helper methods to convert internal names to display names for tooltips
+        private string ScoreToDisplayName(string internalName)
+        {
+            // Internal names already have correct display format
+            return internalName;
+        }
+
+        private string WeaponToDisplayName(string internalName)
+        {
+            return internalName switch
+            {
+                "IncisorOfMoonlight" => "Incisor of Moonlight",
+                "EulogyOfTheMoon" => "Eulogy of the Moon",
+                "SakurasBlossom" => "Sakura's Blossom",
+                "FuneralPrayer" => "Funeral Prayer",
+                "StarScatteredWings" => "Star-Scattered Wings",
+                "ThousandWingedSwan" => "Thousand Winged Swan",
+                "SymphonyOfBells" => "Symphony of Bells",
+                "RazerOfBellsChimes" => "Razer of Bell's Chimes",
+                "CreatorOfMystery" => "Creator of Mystery",
+                "Truthseeker" => "Truthseeker",
+                "AstralChainripper" => "Astral Chainripper",
+                "CosmicWeaver" => "Cosmic Weaver",
+                "JoyfulCatharsis" => "Joyful Catharsis",
+                "OdeToCreation" => "Ode to Creation",
+                _ => internalName
+            };
         }
 
         public void Dispose()
@@ -857,7 +1080,6 @@ namespace MusicClicker
             // Destructor-safe cleanup pattern
             if (_disposed) return;
             _disposed = true;
-            _duetColorTimer?.Stop();
             GC.SuppressFinalize(this);
         }
 
@@ -865,39 +1087,59 @@ namespace MusicClicker
         // ensure the currently equipped score is still valid (owned). If the
         // equipped score is no longer owned, it will be reset to the default
         // display so the tempo-resonate image doesn't show a non-owned score.
+
         public void TickUpdate()
         {
             try
             {
-                // Check if currently equipped score is still valid
-                string current = _gameState.CurrentResonatedScore ?? "None";
-                if (!string.IsNullOrEmpty(current) && current != "None" && (!_majorScoreImages.ContainsKey(current) || !OwnsScore(current)))
+                // Only do checks every 30 ticks to significantly reduce overhead
+                _tickCounter++;
+                if (_tickCounter % 30 != 0) return;
+                
+                string currentScore = _gameState.CurrentResonatedScore ?? "None";
+                string currentWeapon1 = _gameState.CurrentResonatedWeapon1 ?? "None";
+                string currentWeapon2 = _gameState.CurrentResonatedWeapon2 ?? "None";
+                
+                // Only update if something changed
+                if (currentScore != _lastEquippedScore)
                 {
-                    // Reset equipped display to default (None)
-                    SetDefaultEquipped();
-                }
-
-                // Update equipped slot displays only (don't rebuild entire drawer)
-                SetWeaponSlotDisplay(1, _gameState.CurrentResonatedWeapon1);
-                SetWeaponSlotDisplay(2, _gameState.CurrentResonatedWeapon2);
-
-                // Ensure currently resonated weapons are still owned
-                if (!string.IsNullOrEmpty(_gameState.CurrentResonatedWeapon1) && _gameState.CurrentResonatedWeapon1 != "None")
-                {
-                    if (!_weaponImages.ContainsKey(_gameState.CurrentResonatedWeapon1) || !OwnsWeapon(_gameState.CurrentResonatedWeapon1))
+                    _lastEquippedScore = currentScore;
+                    if (!string.IsNullOrEmpty(currentScore) && currentScore != "None" && (!_majorScoreImages.ContainsKey(currentScore) || !OwnsScore(currentScore)))
                     {
-                        UnequipWeapon(1);
+                        SetDefaultEquipped();
+                    }
+                    UpdateThemeColors();
+                }
+                
+                // Only update weapon displays if they changed
+                if (currentWeapon1 != _lastWeapon1)
+                {
+                    _lastWeapon1 = currentWeapon1;
+                    SetWeaponSlotDisplay(1, currentWeapon1);
+                    if (!string.IsNullOrEmpty(currentWeapon1) && currentWeapon1 != "None")
+                    {
+                        if (!_weaponImages.ContainsKey(currentWeapon1) || !OwnsWeapon(currentWeapon1))
+                            UnequipWeapon(1);
                     }
                 }
-                if (!string.IsNullOrEmpty(_gameState.CurrentResonatedWeapon2) && _gameState.CurrentResonatedWeapon2 != "None")
+                
+                if (currentWeapon2 != _lastWeapon2)
                 {
-                    if (!_weaponImages.ContainsKey(_gameState.CurrentResonatedWeapon2) || !OwnsWeapon(_gameState.CurrentResonatedWeapon2))
+                    _lastWeapon2 = currentWeapon2;
+                    SetWeaponSlotDisplay(2, currentWeapon2);
+                    if (!string.IsNullOrEmpty(currentWeapon2) && currentWeapon2 != "None")
                     {
-                        UnequipWeapon(2);
+                        if (!_weaponImages.ContainsKey(currentWeapon2) || !OwnsWeapon(currentWeapon2))
+                            UnequipWeapon(2);
                     }
                 }
             }
             catch { }
+        }
+        
+        private string GetScoreDisplayName(string scoreKey)
+        {
+            return _majorScoreDisplayNames.TryGetValue(scoreKey, out var displayName) ? displayName : scoreKey;
         }
     }
 }

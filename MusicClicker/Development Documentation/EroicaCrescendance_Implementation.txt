@@ -1,0 +1,33 @@
+EROICA CRESCENDANCE SYSTEM - IMPLEMENTATION PLAN
+================================================
+
+STACK NAMES:
+- "Heroic Resolve" - gained every time a minor score is crafted
+- "Symphonic Catharsis" - consume Heroic Resolve + 25% notes to gain this
+- "Testament of Harmony" - Funeral Prayer bond effect stack
+
+MECHANICS:
+1. Crescendance (Eroica Major):
+   - Every minor craft → +1 Heroic Resolve
+   - Consume 1 Heroic Resolve + 25% current notes → +1 Symphonic Catharsis
+   - Consume Symphonic Catharsis → 10s of double NPC + 10% crit chance
+
+2. Sakura's Blossom (Eroica I):
+   - Passive "Ascending Harmony": Every upgrade bought → +3 to lowest owned upgrade
+   - Crescendance Bond "Crimson Requiem": On Catharsis consumption → next 30 clicks get special crit
+     - Crit value: +Notes equal to (NPS * NPC)
+     - Visual: Deep black text with crimson outline
+
+3. Funeral Prayer (Eroica II):
+   - Passive "Melodic Ascension": Every upgrade bought → +2 to lowest owned minor score
+   - Crescendance Bond "Testament of Harmony": Each Heroic Resolve consumed → +1 Testament
+     - Consume Testament → +100 Melodic and Harmonic Fragments
+
+IMPLEMENTATION FILES:
+- GameState.cs: Add new fields for stacks, buffs, counters
+- WeaponAbilities.cs: Add crescendance methods
+- MainWindow.axaml.cs: Hook up click handlers and UI updates
+- MainWindow.axaml: Add UI panels for crescendance display
+- GameDescriptions.cs: Update weapon descriptions with new ability names
+- UniteTheSymphonyManager.cs: Hook minor craft to trigger Heroic Resolve
+- UpgradeManager.cs: Hook upgrade purchases to trigger weapon passives

@@ -39,15 +39,13 @@ namespace MusicClicker.Views
 				nps.Text = $"Notes Per Second: {NumberFormatter.FormatLargeNumber(gameState.NotesPerSecond)}";
 			}
 
-			try
-			{
-				DiesIraeMajorOwnedRightText.Text = $"Number Owned: {gameState.DiesIraeOwned}";
-				DiesIraeCrescendanceText.Text = "Crescendance Ability: <placeholder>";
-			}
-			catch { }
+		try
+		{
+			DiesIraeMajorOwnedRightText.Text = $"Number Owned: {gameState.DiesIraeOwned}";
+			DiesIraeCrescendanceText.Text = "Descending Judgment: Each click places a seal. At 7 seals, grants 3 random minor scores without consuming components.";
 		}
-
-	private void SoulOfDiesIraeButton_Click(object? sender, RoutedEventArgs e)
+		catch { }
+	}	private void SoulOfDiesIraeButton_Click(object? sender, RoutedEventArgs e)
 	{
 		var current = this.Parent;
 		while (current != null && current is not Window) current = current.Parent;

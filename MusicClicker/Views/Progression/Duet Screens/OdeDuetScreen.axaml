@@ -96,8 +96,9 @@
                             <DropShadowEffect Color="Black" BlurRadius="15" Opacity="0.7" />
                         </Button.Effect>
                         <StackPanel Spacing="10">
-                            <TextBlock Text="🎻"
-                                       FontSize="48"
+                            <TextBlock Text="STRINGS"
+                                       FontSize="36"
+                                       FontWeight="Bold"
                                        HorizontalAlignment="Center" />
                             <TextBlock Text="STRINGS"
                                        FontSize="24"
@@ -125,8 +126,9 @@
                             <DropShadowEffect Color="Black" BlurRadius="15" Opacity="0.7" />
                         </Button.Effect>
                         <StackPanel Spacing="10">
-                            <TextBlock Text="🎺"
-                                       FontSize="48"
+                            <TextBlock Text="BRASS"
+                                       FontSize="36"
+                                       FontWeight="Bold"
                                        HorizontalAlignment="Center" />
                             <TextBlock Text="BRASS"
                                        FontSize="24"
@@ -183,8 +185,9 @@
                             <DropShadowEffect Color="Black" BlurRadius="15" Opacity="0.7" />
                         </Button.Effect>
                         <StackPanel Spacing="10">
-                            <TextBlock Text="🎷"
-                                       FontSize="48"
+                            <TextBlock Text="WOODWINDS"
+                                       FontSize="36"
+                                       FontWeight="Bold"
                                        HorizontalAlignment="Center" />
                             <TextBlock Text="WOODWINDS"
                                        FontSize="24"
@@ -208,7 +211,7 @@
                     <TextBlock TextWrapping="Wrap"
                                FontSize="14"
                                Foreground="#d4d4d4"
-                               Text="• Click each instrument section to conduct them&#x0a;• Get all 4 sections within 5 seconds for a combo&#x0a;• Combo reward: NPS × 20 × combo count&#x0a;• Multiple combos stack for massive rewards!&#x0a;• Duration: 30 seconds | Cooldown: 5 minutes" />
+                               Text="• Click each instrument section to conduct them&#x0a;• Get all 4 sections within 5 seconds for a combo&#x0a;• Combo reward: Notes Per Second × 20 × combo count&#x0a;• Multiple combos stack for massive rewards!&#x0a;• Duration: 30 seconds | Cooldown: 5 minutes" />
                 </Border>
             </Grid>
 

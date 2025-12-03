@@ -37,15 +37,13 @@ namespace MusicClicker.Views
 				notes.Text = $"Notes: {NumberFormatter.FormatLargeNumber(gameState.Notes)}";
 			}
 
-			try
-			{
-				WinterMajorOwnedRightText.Text = $"Number Owned: {gameState.WinterOwned}";
-				WinterCrescendanceText.Text = "Crescendance Ability: <placeholder>";
-			}
-			catch { }
+		try
+		{
+			WinterMajorOwnedRightText.Text = $"Number Owned: {gameState.WinterOwned}";
+			WinterCrescendanceText.Text = "Eternal Frost: Converts frozen Notes Per Second into click multiplier. Each click extends duration by 0.5 seconds (max +10 seconds).";
 		}
-
-		private void SoulOfWinterButton_Click(object? sender, RoutedEventArgs e)
+		catch { }
+	}		private void SoulOfWinterButton_Click(object? sender, RoutedEventArgs e)
 		{
 			var current = this.Parent;
 			while (current != null && current is not Window) current = current.Parent;

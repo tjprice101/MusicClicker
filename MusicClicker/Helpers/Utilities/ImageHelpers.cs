@@ -206,7 +206,8 @@ namespace MusicClicker.Helpers
                 Tag = tag,
                 Opacity = opacity,
                 IsEnabled = isEnabled,
-                UseLayoutRounding = true
+                UseLayoutRounding = true,
+                IsHitTestVisible = false  // Prevent image from blocking parent button events
             };
 
             // Set the bitmap interpolation mode to high quality where available.

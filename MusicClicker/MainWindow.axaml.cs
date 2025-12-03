@@ -242,7 +242,8 @@ namespace MusicClicker
                 TempoResonateScreen.EquippedWeaponText1,
                 TempoResonateScreen.EquippedWeaponDisplay2,
                 TempoResonateScreen.EquippedWeaponText2,
-                TempoResonateScreen.DuetResonanceText
+                TempoResonateScreen.DuetResonanceText,
+                TempoResonateScreen  // Pass the screen for tooltip registration
             );
 
             // Initialize Duet Ability Screen
@@ -259,6 +260,14 @@ namespace MusicClicker
             ButtonInitializer.InitializeAllButtons(this);
             TempoResonateButton.Click += TempoResonateButton_Click;
             CacophonicDreamsButton.Click += CacophonicDreamsButton_Click;
+            
+            // Wire up main screen crescendance consume buttons
+            if (MainConsumeReveredButton != null)
+                MainConsumeReveredButton.Click += (s, e) => MusicClicker.Armory.WeaponAbilities.SwanLake_ConsumeReveredFeathers(gameState);
+            if (MainConsumeChromaticButton != null)
+                MainConsumeChromaticButton.Click += (s, e) => MusicClicker.Armory.WeaponAbilities.SwanLake_ConsumeChromaticFeathers(gameState);
+            if (MainConsumePolyphonicButton != null)
+                MainConsumePolyphonicButton.Click += (s, e) => MusicClicker.Armory.WeaponAbilities.SwanLake_ConsumePolyphonicFeather(gameState);
 
             // Create and start a DispatcherTimer that ticks frequently (every 100ms)
             // to accumulate fractional Notes based on NotesPerSecond. We use a
@@ -293,6 +302,13 @@ namespace MusicClicker
                         GlobalTempoManager.TickUpdate();
                 }
                 catch { }
+                
+                // Update main screen crescendance panel
+                try
+                {
+                    UpdateMainScreenCrescendancePanel();
+                }
+                catch { }
 
                 // Accumulate time and only run UI updates at the configured rate
                 uiAccumulatorMs += elapsedSeconds * 1000.0;
@@ -323,12 +339,6 @@ namespace MusicClicker
                     if (gameState != null && gameState.NotesPerSecond != 0)
                     {
                         double effectiveNps = gameState.NotesPerSecond;
-
-                        // Check if Razer boost has expired
-                        if (gameState.RazerNpsBoostActive && DateTime.Now > gameState.RazerNpsBoostExpiry)
-                        {
-                            gameState.RazerNpsBoostActive = false;
-                        }
 
                         // Check if Astral Chainripper boost has expired
                         if (gameState.AstralChainripperNpsBoostActive && DateTime.Now > gameState.AstralChainripperNpsBoostExpiry)
@@ -385,11 +395,11 @@ namespace MusicClicker
                             }
                         }
 
-                        // Check if Swan Lake Duet has expired - clear queue and start cooldown
+                        // Check if Swan Lake Duet has expired and start cooldown
                         if (gameState.SwanLakeDuetActive && DateTime.Now > gameState.SwanLakeDuetExpiry)
                         {
                             gameState.SwanLakeDuetActive = false;
-                            gameState.MirrorLakeQueue.Clear();
+                            gameState.SwanLakeDuetClickCounter = 0; // Reset click counter
                             gameState.SwanLakeDuetCooldownExpiry = DateTime.Now.AddSeconds(240); // 4 minutes
                             // Update duet screen if visible
                             if (DuetAbilityScreen?.IsVisible == true)
@@ -458,8 +468,7 @@ namespace MusicClicker
                             }
                         }
 
-                        // Process Mirror Lake action queue
-                        MusicClicker.Armory.WeaponAbilities.ProcessMirrorLakeQueue(gameState);
+                        // Swan Lake Duet: No background processing needed (all handled in click handler)
 
                         // Process Fate Duet hourglass flip and replay
                         if (gameState.FateDuetActive)
@@ -480,12 +489,6 @@ namespace MusicClicker
                         if (gameState.AstralChainripperNpsBoostActive)
                         {
                             effectiveNps *= 5.0;
-                        }
-
-                        // Apply Razer of Bell's Chimes temporary 50% NPS boost
-                        if (gameState.RazerNpsBoostActive)
-                        {
-                            effectiveNps *= 1.5; // 50% increase
                         }
 
                         // Apply Blizzard's Bounty NPS bonus (stacking +2% per harmonious purchase)
@@ -521,7 +524,7 @@ namespace MusicClicker
                                 effectiveNps *= MusicClicker.Armory.WeaponAbilities.EroicaDuet_GetNpsMultiplier(gameState);
                             }
 
-                            // Swan Lake Duet: No passive NPS multiplier (has Mirror Lake active ability instead)
+                            // Swan Lake Duet: No passive NPS multiplier (has Feather Cascade active ability instead)
 
                             // Ode to Joy Duet: NPS becomes NPS per half-second (double the rate)
                             if ((gameState.CurrentResonatedWeapon1 == "JoyfulCatharsis" && gameState.CurrentResonatedWeapon2 == "OdeToCreation") ||
@@ -1015,16 +1018,16 @@ namespace MusicClicker
                 notesPerClick *= 2.0;
             }
 
-            // Check if Cosmic Weaver boost has expired
-            if (gameState.CosmicWeaverClickBoostActive && DateTime.Now > gameState.CosmicWeaverClickBoostExpiry)
+            // Check if Eroica Symphonic Catharsis buff has expired
+            if (gameState.SymphonicCatharsisActive && DateTime.Now > gameState.SymphonicCatharsisExpiry)
             {
-                gameState.CosmicWeaverClickBoostActive = false;
+                gameState.SymphonicCatharsisActive = false;
             }
 
-            // Apply Cosmic Weaver 5x click boost if active
-            if (gameState.CosmicWeaverClickBoostActive)
+            // Eroica Symphonic Catharsis: Double NPC for 10s
+            if (gameState.SymphonicCatharsisActive)
             {
-                notesPerClick *= 5.0;
+                notesPerClick *= 2.0;
             }
 
             // Check Ode to Creation bonus first (before applying notes)
@@ -1087,10 +1090,10 @@ namespace MusicClicker
                 MusicClicker.Armory.WeaponAbilities.FuneralPrayer_OnClick(gameState);
             }
 
-            // Queue click for Mirror Lake reflection if active
+            // Swan Lake Duet: Feather Cascade - grant feathers and note bonuses
             if (gameState.SwanLakeDuetActive && DateTime.Now <= gameState.SwanLakeDuetExpiry)
             {
-                MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "Click", notesPerClick);
+                MusicClicker.Armory.WeaponAbilities.SwanLakeDuet_OnClick(gameState);
             }
 
             // La Campanella Duet: Chime Chain click tracking
@@ -1129,6 +1132,54 @@ namespace MusicClicker
                 (gameState.CurrentResonatedWeapon1 == "CacophonicBlizzard" || gameState.CurrentResonatedWeapon2 == "CacophonicBlizzard"))
             {
                 MusicClicker.Armory.WeaponAbilities.CacophonicBlizzard_OnClick(gameState);
+            }
+
+            // Swan Lake Crescendance: Feather collection on clicks
+            if (gameState.CurrentResonatedScore == "Swan")
+            {
+                MusicClicker.Armory.WeaponAbilities.SwanLakeCrescendance_OnClick(gameState);
+            }
+            
+            // Moonlight Sonata Crescendance: Moonbeam Resonance stacks (every 20th click at night)
+            if (gameState.CurrentResonatedScore == "Moonlight" && isNighttime)
+            {
+                MusicClicker.Armory.WeaponAbilities.MoonlightCrescendance_OnClick(gameState, this);
+            }
+            
+            // La Campanella Crescendance: Grandiose Bell click tracking
+            if (gameState.CurrentResonatedScore == "LaCampanella")
+            {
+                MusicClicker.Armory.WeaponAbilities.LaCampanellaCrescendance_OnClick(gameState, this);
+            }
+            
+            // Enigma Crescendance: Resonate Mystery stacks (every 10th click, +25th when active)
+            if (gameState.CurrentResonatedScore == "Enigma")
+            {
+                MusicClicker.Armory.WeaponAbilities.EnigmaCrescendance_OnClick(gameState, this);
+            }
+            
+            // Fate Crescendance: Cosmic Modulation stacks (every 5th click + 10% notes)
+            if (gameState.CurrentResonatedScore == "Fate")
+            {
+                MusicClicker.Armory.WeaponAbilities.FateCrescendance_OnClick(gameState, this);
+            }
+            
+            // Ode to Joy Crescendance: Petal tracking
+            if (gameState.CurrentResonatedScore == "OdeToJoy")
+            {
+                MusicClicker.Armory.WeaponAbilities.OdeToJoyCrescendance_OnClick(gameState, this);
+            }
+            
+            // Dies Irae Crescendance: Burning Hatred stacks
+            if (gameState.CurrentResonatedScore == "DiesIrae")
+            {
+                MusicClicker.Armory.WeaponAbilities.DiesIraeCrescendance_OnClick(gameState, this);
+            }
+
+            // Swan Lake Weapon: Star-Scattered Wings passive (every 10th click grants fragments)
+            if ((gameState.CurrentResonatedWeapon1 == "StarScatteredWings" || gameState.CurrentResonatedWeapon2 == "StarScatteredWings"))
+            {
+                MusicClicker.Armory.WeaponAbilities.StarScatteredWings_OnClick(gameState);
             }
 
             // Check for duet resonance effects on click
@@ -1178,6 +1229,12 @@ namespace MusicClicker
                 // Determine critical hit type
                 double roll = _random.NextDouble() * 100; // 0-100
                 
+                // Apply Eroica Symphonic Catharsis: +10% critical chance
+                if (gameState.SymphonicCatharsisActive)
+                {
+                    roll -= 10.0;
+                }
+
                 // Apply Eulogy of the Moon: +5% critical rate during nighttime (8PM-6AM)
                 // Shift the roll down by 5 to effectively increase crit chance
                 if (gameState.EulogyOfTheMoonAbility && isNighttime)
@@ -1190,7 +1247,17 @@ namespace MusicClicker
                 double finalNotes = notesPerClick;
                 bool hasStroke = false;
                 
-                if (roll < 0.1) // 0.1% chance - Entropic Crescendo
+                // Crescendance Bond - Sakura's Blossom: Crimson Requiem (priority check)
+                if (gameState.CrimsonRequiemClicksRemaining > 0)
+                {
+                    gameState.CrimsonRequiemClicksRemaining--;
+                    finalNotes = notesPerClick + (gameState.NotesPerSecond * gameState.NotesPerClick);
+                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
+                    critText = $"Crimson Requiem!!! +{FormatNumber(finalNotes)}";
+                    critColor = Colors.Black; // Deep black text with crimson outline
+                    hasStroke = true;
+                }
+                else if (roll < 0.1) // 0.1% chance - Entropic Crescendo
                 {
                     finalNotes = notesPerClick * 1500;
                     MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
@@ -1384,7 +1451,7 @@ namespace MusicClicker
             {
                 hasCooldownDuet = true;
             }
-            // Check for Swan Lake Duet (Mirror Lake)
+            // Check for Swan Lake Duet (Feather Cascade)
             else if ((weapon1 == "StarScatteredWings" && weapon2 == "ThousandWingedSwan") ||
                      (weapon1 == "ThousandWingedSwan" && weapon2 == "StarScatteredWings"))
             {
@@ -1483,13 +1550,26 @@ namespace MusicClicker
             // Add drop shadow or stroke for visibility
             if (hasStroke)
             {
-                // White stroke effect for Entropic Crescendo
-                textBlock.Effect = new DropShadowEffect
+                // Crimson outline for Crimson Requiem (black text)
+                if (color == Colors.Black)
                 {
-                    Color = Colors.White,
-                    BlurRadius = 8,
-                    Opacity = 1.0
-                };
+                    textBlock.Effect = new DropShadowEffect
+                    {
+                        Color = Color.FromRgb(220, 20, 60), // Crimson
+                        BlurRadius = 8,
+                        Opacity = 1.0
+                    };
+                }
+                // White stroke effect for other stroked crits (like Entropic Crescendo)
+                else
+                {
+                    textBlock.Effect = new DropShadowEffect
+                    {
+                        Color = Colors.White,
+                        BlurRadius = 8,
+                        Opacity = 1.0
+                    };
+                }
             }
             else
             {
@@ -1543,6 +1623,479 @@ namespace MusicClicker
                 return $"{value / 1_000:F2}K";
             return $"{value:F0}";
         }
+        
+        /// <summary>
+        /// Updates Swan Lake feather display on main screen
+        /// </summary>
+        private void UpdateMainSwanLakeCrescendanceInfo()
+        {
+            if (MainCrescendanceTitle != null)
+                MainCrescendanceTitle.Text = "Swan Lake Crescendance";
+                
+            if (MainCrescendanceInfoText != null)
+                MainCrescendanceInfoText.Text = "Three Feather System: Collect Revered, Chromatic, and Polyphonic feathers. Consume them for powerful bonuses!";
+                
+            // Hide all other panels
+            if (MainMoonlightStackPanel != null) MainMoonlightStackPanel.IsVisible = false;
+            if (MainLaCampanellaStackPanel != null) MainLaCampanellaStackPanel.IsVisible = false;
+            if (MainEnigmaStackPanel != null) MainEnigmaStackPanel.IsVisible = false;
+            if (MainFateStackPanel != null) MainFateStackPanel.IsVisible = false;
+            if (MainEroicaStackPanel != null) MainEroicaStackPanel.IsVisible = false;
+            if (MainDiesIraeStackPanel != null) MainDiesIraeStackPanel.IsVisible = false;
+                
+            if (MainSwanFeatherPanel != null)
+                MainSwanFeatherPanel.IsVisible = true;
+                
+            // Update feather counts
+            if (MainReveredFeatherCount != null)
+                MainReveredFeatherCount.Text = $"{gameState.ReveredFeathers} / 5";
+                
+            if (MainChromaticFeatherCount != null)
+                MainChromaticFeatherCount.Text = $"{gameState.ChromaticFeathers} / 10";
+                
+            if (MainPolyphonicFeatherCount != null)
+                MainPolyphonicFeatherCount.Text = gameState.PolyphonicFeathers.ToString();
+                
+            // Enable/disable consume buttons
+            if (MainConsumeReveredButton != null)
+                MainConsumeReveredButton.IsEnabled = gameState.ReveredFeathers >= 5;
+                
+            if (MainConsumeChromaticButton != null)
+                MainConsumeChromaticButton.IsEnabled = gameState.ChromaticFeathers >= 10;
+                
+            if (MainConsumePolyphonicButton != null)
+                MainConsumePolyphonicButton.IsEnabled = gameState.PolyphonicFeathers >= 1;
+        }
+        
+        /// <summary>
+        /// Updates Moonlight Sonata stack display on main screen
+        /// </summary>
+        private void UpdateMainMoonlightCrescendanceInfo()
+        {
+            if (MainCrescendanceTitle != null)
+                MainCrescendanceTitle.Text = "Moonlight Sonata: Eclipse of the Nocturne";
+                
+            if (MainCrescendanceInfoText != null)
+                MainCrescendanceInfoText.Text = "Every 20th click at night (8PM-6AM): Gain Moonbeam Resonance. At 5 stacks: +250% notes + 1 Harmonizing Moonlight.";
+                
+            // Hide all other panels
+            if (MainSwanFeatherPanel != null) MainSwanFeatherPanel.IsVisible = false;
+            if (MainLaCampanellaStackPanel != null) MainLaCampanellaStackPanel.IsVisible = false;
+            if (MainEnigmaStackPanel != null) MainEnigmaStackPanel.IsVisible = false;
+            if (MainFateStackPanel != null) MainFateStackPanel.IsVisible = false;
+            if (MainEroicaStackPanel != null) MainEroicaStackPanel.IsVisible = false;
+            if (MainDiesIraeStackPanel != null) MainDiesIraeStackPanel.IsVisible = false;
+                
+            if (MainMoonlightStackPanel != null)
+                MainMoonlightStackPanel.IsVisible = true;
+                
+            // Update stack counts
+            if (MainMoonbeamResonanceCount != null)
+                MainMoonbeamResonanceCount.Text = $"{gameState.MoonbeamResonanceStacks} / 5";
+                
+            if (MainHarmonizingMoonlightCount != null)
+                MainHarmonizingMoonlightCount.Text = gameState.HarmonizingMoonlightStacks.ToString();
+        }
+        
+        /// <summary>
+        /// Updates La Campanella crescendance info (Grandiose Bell)
+        /// </summary>
+        private void UpdateMainLaCampanellaCrescendanceInfo()
+        {
+            if (MainCrescendanceTitle != null)
+                MainCrescendanceTitle.Text = "La Campanella: Grandiose Bell";
+                
+            if (MainCrescendanceInfoText != null)
+                MainCrescendanceInfoText.Text = "Grandiose Bell cracks at 20/40/60 clicks. Mend for rewards: Crescending (+2 minors), Radiant (5 entropic crits), Harmonizing (double notes).";
+                
+            // Hide all other panels
+            if (MainSwanFeatherPanel != null) MainSwanFeatherPanel.IsVisible = false;
+            if (MainMoonlightStackPanel != null) MainMoonlightStackPanel.IsVisible = false;
+            if (MainEnigmaStackPanel != null) MainEnigmaStackPanel.IsVisible = false;
+            if (MainFateStackPanel != null) MainFateStackPanel.IsVisible = false;
+            if (MainEroicaStackPanel != null) MainEroicaStackPanel.IsVisible = false;
+            if (MainDiesIraeStackPanel != null) MainDiesIraeStackPanel.IsVisible = false;
+                
+            if (MainLaCampanellaStackPanel != null)
+                MainLaCampanellaStackPanel.IsVisible = true;
+                
+            // Update bell stage text
+            string stageText = gameState.GrandioseBellStage switch
+            {
+                1 => "Crescending",
+                2 => "Radiant",
+                3 => "Harmonizing",
+                _ => "Intact"
+            };
+            
+            if (MainGrandioseBellStage != null)
+                MainGrandioseBellStage.Text = stageText;
+                
+            if (MainGrandioseBellProgress != null)
+                MainGrandioseBellProgress.Value = gameState.GrandioseBellClickCounter;
+                
+            if (MainMendBellButton != null)
+                MainMendBellButton.IsEnabled = gameState.GrandioseBellStage > 0;
+                
+            if (MainDeafeningChimeCount != null)
+                MainDeafeningChimeCount.Text = gameState.DeafeningChimeStacks.ToString();
+        }
+        
+        /// <summary>
+        /// Placeholder for Enigma crescendance info (mystery stacks)
+        /// </summary>
+        /// <summary>
+        /// Updates Enigma crescendance info (Resonate Mystery)
+        /// </summary>
+        private void UpdateMainEnigmaCrescendanceInfo()
+        {
+            if (MainCrescendanceTitle != null)
+                MainCrescendanceTitle.Text = "Enigma Variations: Resonate Mystery";
+                
+            if (MainCrescendanceInfoText != null)
+                MainCrescendanceInfoText.Text = "Every 10th/25th click: Gain Resonate Mystery. Consume for: +50% notes, +50 entropic, or +1 random minor. Bulk consume 10+ for massive bonus.";
+                
+            // Hide all other panels
+            if (MainSwanFeatherPanel != null) MainSwanFeatherPanel.IsVisible = false;
+            if (MainMoonlightStackPanel != null) MainMoonlightStackPanel.IsVisible = false;
+            if (MainLaCampanellaStackPanel != null) MainLaCampanellaStackPanel.IsVisible = false;
+            if (MainFateStackPanel != null) MainFateStackPanel.IsVisible = false;
+            if (MainEroicaStackPanel != null) MainEroicaStackPanel.IsVisible = false;
+            if (MainDiesIraeStackPanel != null) MainDiesIraeStackPanel.IsVisible = false;
+                
+            if (MainEnigmaStackPanel != null)
+                MainEnigmaStackPanel.IsVisible = true;
+                
+            // Update stack count
+            if (MainResonateMysteryCount != null)
+                MainResonateMysteryCount.Text = gameState.ResonateMysteryStacks.ToString();
+                
+            // Enable/disable consume buttons
+            bool hasStacks = gameState.ResonateMysteryStacks >= 1;
+            bool hasBulk = gameState.ResonateMysteryStacks >= 10;
+            
+            if (MainEnigmaConsumeNotesButton != null)
+                MainEnigmaConsumeNotesButton.IsEnabled = hasStacks;
+                
+            if (MainEnigmaConsumeEntropicButton != null)
+                MainEnigmaConsumeEntropicButton.IsEnabled = hasStacks;
+                
+            if (MainEnigmaConsumeMinorButton != null)
+                MainEnigmaConsumeMinorButton.IsEnabled = hasStacks;
+                
+            if (MainEnigmaConsumeAllButton != null)
+                MainEnigmaConsumeAllButton.IsEnabled = hasBulk;
+        }
+        
+        /// <summary>
+        /// Updates Fate crescendance info (Cosmic Modulation)
+        /// </summary>
+        private void UpdateMainFateCrescendanceInfo()
+        {
+            if (MainCrescendanceTitle != null)
+                MainCrescendanceTitle.Text = "Fate: Cosmic Modulation";
+                
+            if (MainCrescendanceInfoText != null)
+                MainCrescendanceInfoText.Text = "Every 5th click: +1 Cosmic Modulation + 10% notes. Tiers grant escalating effects. Every 5 Cosmic: +1 Symphony of the Stars.";
+                
+            // Hide all other panels
+            if (MainSwanFeatherPanel != null) MainSwanFeatherPanel.IsVisible = false;
+            if (MainMoonlightStackPanel != null) MainMoonlightStackPanel.IsVisible = false;
+            if (MainLaCampanellaStackPanel != null) MainLaCampanellaStackPanel.IsVisible = false;
+            if (MainEnigmaStackPanel != null) MainEnigmaStackPanel.IsVisible = false;
+            if (MainEroicaStackPanel != null) MainEroicaStackPanel.IsVisible = false;
+            if (MainDiesIraeStackPanel != null) MainDiesIraeStackPanel.IsVisible = false;
+                
+            if (MainFateStackPanel != null)
+                MainFateStackPanel.IsVisible = true;
+                
+            // Update Cosmic Modulation
+            if (MainCosmicModulationCount != null)
+                MainCosmicModulationCount.Text = gameState.CosmicModulationStacks.ToString();
+                
+            // Calculate tier
+            int tier = gameState.CosmicModulationStacks / 5;
+            if (MainCosmicModulationTier != null)
+                MainCosmicModulationTier.Text = tier.ToString();
+                
+            if (MainConsumeCosmicButton != null)
+                MainConsumeCosmicButton.IsEnabled = gameState.CosmicModulationStacks >= 1;
+                
+            // Update Symphony of the Stars
+            if (MainSymphonyStarsCount != null)
+                MainSymphonyStarsCount.Text = gameState.SymphonyOfTheStarsStacks.ToString();
+                
+            if (MainConsumeSymphonyButton != null)
+                MainConsumeSymphonyButton.IsEnabled = gameState.SymphonyOfTheStarsStacks >= 1;
+        }
+        
+        /// <summary>
+        /// Updates Eroica crescendance info (Heroic Resolve, Symphonic Catharsis, Testament of Harmony)
+        /// </summary>
+        private void UpdateMainEroicaCrescendanceInfo()
+        {
+            if (MainCrescendanceTitle != null)
+                MainCrescendanceTitle.Text = "Eroica: Heroic Resolve";
+                
+            if (MainCrescendanceInfoText != null)
+                MainCrescendanceInfoText.Text = "Every minor craft: +1 Heroic Resolve. Consume with 25% notes for Symphonic Catharsis (10s double NPC +10% crit). Funeral Prayer grants Testament.";
+                
+            // Hide all other panels
+            if (MainSwanFeatherPanel != null) MainSwanFeatherPanel.IsVisible = false;
+            if (MainMoonlightStackPanel != null) MainMoonlightStackPanel.IsVisible = false;
+            if (MainLaCampanellaStackPanel != null) MainLaCampanellaStackPanel.IsVisible = false;
+            if (MainEnigmaStackPanel != null) MainEnigmaStackPanel.IsVisible = false;
+            if (MainFateStackPanel != null) MainFateStackPanel.IsVisible = false;
+            if (MainDiesIraeStackPanel != null) MainDiesIraeStackPanel.IsVisible = false;
+                
+            if (MainEroicaStackPanel != null)
+                MainEroicaStackPanel.IsVisible = true;
+                
+            // Update Heroic Resolve count
+            if (MainHeroicResolveCount != null)
+                MainHeroicResolveCount.Text = gameState.HeroicResolveStacks.ToString();
+                
+            if (MainConsumeHeroicResolveButton != null)
+            {
+                double currentNotes = MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes);
+                MainConsumeHeroicResolveButton.IsEnabled = gameState.HeroicResolveStacks >= 1 && currentNotes > 0;
+            }
+                
+            // Update Symphonic Catharsis count
+            if (MainSymphonicCatharsisCount != null)
+                MainSymphonicCatharsisCount.Text = gameState.SymphonicCatharsisStacks.ToString();
+                
+            if (MainConsumeCatharsisButton != null)
+                MainConsumeCatharsisButton.IsEnabled = gameState.SymphonicCatharsisStacks >= 1;
+                
+            // Show Testament panel if Funeral Prayer is equipped
+            bool showTestament = gameState.FuneralPrayer && 
+                (gameState.CurrentResonatedWeapon1 == "FuneralPrayer" || gameState.CurrentResonatedWeapon2 == "FuneralPrayer");
+                
+            if (MainTestamentPanel != null)
+                MainTestamentPanel.IsVisible = showTestament;
+                
+            if (showTestament)
+            {
+                if (MainTestamentCount != null)
+                    MainTestamentCount.Text = gameState.TestamentOfHarmonyStacks.ToString();
+                    
+                if (MainConsumeTestamentButton != null)
+                    MainConsumeTestamentButton.IsEnabled = gameState.TestamentOfHarmonyStacks >= 1;
+            }
+        }
+        
+        /// <summary>
+        /// Updates Dies Irae crescendance info (Burning Hatred, Discordant Malice)
+        /// </summary>
+        private void UpdateMainDiesIraeCrescendanceInfo()
+        {
+            if (MainCrescendanceTitle != null)
+                MainCrescendanceTitle.Text = "Dies Irae: Wrath of the Damned";
+                
+            if (MainCrescendanceInfoText != null)
+                MainCrescendanceInfoText.Text = "Every click: +1 Burning Hatred (max 50), then Discordant Malice. Consume Malice to multiply notes by stack count.";
+                
+            // Hide all other panels
+            if (MainSwanFeatherPanel != null) MainSwanFeatherPanel.IsVisible = false;
+            if (MainMoonlightStackPanel != null) MainMoonlightStackPanel.IsVisible = false;
+            if (MainLaCampanellaStackPanel != null) MainLaCampanellaStackPanel.IsVisible = false;
+            if (MainEnigmaStackPanel != null) MainEnigmaStackPanel.IsVisible = false;
+            if (MainFateStackPanel != null) MainFateStackPanel.IsVisible = false;
+            if (MainEroicaStackPanel != null) MainEroicaStackPanel.IsVisible = false;
+                
+            if (MainDiesIraeStackPanel != null)
+                MainDiesIraeStackPanel.IsVisible = true;
+                
+            // Update Burning Hatred count
+            if (MainBurningHatredCount != null)
+                MainBurningHatredCount.Text = $"{gameState.BurningHatredStacks} / 50";
+                
+            // Update Discordant Malice count
+            if (MainDiscordantMaliceCount != null)
+                MainDiscordantMaliceCount.Text = gameState.DiscordantMaliceStacks.ToString();
+                
+            if (MainConsumeDiscordantButton != null)
+                MainConsumeDiscordantButton.IsEnabled = gameState.DiscordantMaliceStacks >= 1;
+        }
+        
+        private void UpdateMainScreenCrescendancePanel()
+        {
+            if (MainScreenCrescendancePanel == null) return;
+            
+            // Only show if we have a resonated score
+            if (string.IsNullOrEmpty(gameState.CurrentResonatedScore) || gameState.CurrentResonatedScore == "None")
+            {
+                MainScreenCrescendancePanel.IsVisible = false;
+                return;
+            }
+            
+            // Show panel and update content based on score
+            MainScreenCrescendancePanel.IsVisible = true;
+            
+            if (gameState.CurrentResonatedScore == "Moonlight Sonata")
+            {
+                UpdateMainMoonlightCrescendanceInfo();
+            }
+            else if (gameState.CurrentResonatedScore == "Swan")
+            {
+                UpdateMainSwanLakeCrescendanceInfo();
+            }
+            else if (gameState.CurrentResonatedScore == "Eroica")
+            {
+                UpdateMainEroicaCrescendanceInfo();
+            }
+            else if (gameState.CurrentResonatedScore == "LaCampanella")
+            {
+                UpdateMainLaCampanellaCrescendanceInfo();
+            }
+            else if (gameState.CurrentResonatedScore == "Enigma")
+            {
+                UpdateMainEnigmaCrescendanceInfo();
+            }
+            else if (gameState.CurrentResonatedScore == "Fate")
+            {
+                UpdateMainFateCrescendanceInfo();
+            }
+            else if (gameState.CurrentResonatedScore == "DiesIrae")
+            {
+                UpdateMainDiesIraeCrescendanceInfo();
+            }
+            else
+            {
+                // No crescendance system for this score yet (OdeToJoy, Winter)
+                MainScreenCrescendancePanel.IsVisible = false;
+            }
+        }
+        
+        #region Crescendance Button Click Handlers
+        
+        // Swan Lake Handlers
+        private void MainConsumeReveredButton_Click(object? sender, RoutedEventArgs e)
+        {
+            MusicClicker.Armory.WeaponAbilities.SwanLake_ConsumeReveredFeathers(gameState);
+            UpdateMainSwanLakeCrescendanceInfo();
+            UIUpdater.UpdateUI(this, gameState);
+        }
+        
+        private void MainConsumeChromaticButton_Click(object? sender, RoutedEventArgs e)
+        {
+            MusicClicker.Armory.WeaponAbilities.SwanLake_ConsumeChromaticFeathers(gameState);
+            UpdateMainSwanLakeCrescendanceInfo();
+            UIUpdater.UpdateUI(this, gameState);
+        }
+        
+        private void MainConsumePolyphonicButton_Click(object? sender, RoutedEventArgs e)
+        {
+            MusicClicker.Armory.WeaponAbilities.SwanLake_ConsumePolyphonicFeather(gameState);
+            UpdateMainSwanLakeCrescendanceInfo();
+            UIUpdater.UpdateUI(this, gameState);
+        }
+        
+        // Eroica Handlers
+        private void MainConsumeHeroicResolveButton_Click(object? sender, RoutedEventArgs e)
+        {
+            MusicClicker.Armory.WeaponAbilities.EroicaCrescendance_ConsumeForCatharsis(gameState);
+            UpdateMainEroicaCrescendanceInfo();
+            UIUpdater.UpdateUI(this, gameState);
+        }
+        
+        private void MainConsumeCatharsisButton_Click(object? sender, RoutedEventArgs e)
+        {
+            MusicClicker.Armory.WeaponAbilities.EroicaCrescendance_ConsumeCatharsis(gameState);
+            UpdateMainEroicaCrescendanceInfo();
+            UIUpdater.UpdateUI(this, gameState);
+        }
+        
+        private void MainConsumeTestamentButton_Click(object? sender, RoutedEventArgs e)
+        {
+            MusicClicker.Armory.WeaponAbilities.FuneralPrayer_ConsumeTestament(gameState);
+            UpdateMainEroicaCrescendanceInfo();
+            UIUpdater.UpdateUI(this, gameState);
+        }
+        
+        // La Campanella Handlers
+
+        private void MainMendBellButton_Click(object? sender, RoutedEventArgs e)
+        {
+            MusicClicker.Armory.WeaponAbilities.LaCampanella_MendBell(gameState, this);
+            UpdateMainLaCampanellaCrescendanceInfo();
+            UIUpdater.UpdateUI(this, gameState);
+        }
+        
+        // Enigma Handlers
+        /// <summary>
+        /// Consume Resonate Mystery for +50% notes
+        /// </summary>
+        private void MainEnigmaConsumeNotesButton_Click(object? sender, RoutedEventArgs e)
+        {
+            MusicClicker.Armory.WeaponAbilities.Enigma_ConsumeStack(gameState, "Notes");
+            UpdateMainEnigmaCrescendanceInfo();
+            UIUpdater.UpdateUI(this, gameState);
+        }
+        
+        /// <summary>
+        /// Consume Resonate Mystery for +50 entropic melodies
+        /// </summary>
+        private void MainEnigmaConsumeEntropicButton_Click(object? sender, RoutedEventArgs e)
+        {
+            MusicClicker.Armory.WeaponAbilities.Enigma_ConsumeStack(gameState, "Entropic");
+            UpdateMainEnigmaCrescendanceInfo();
+            UIUpdater.UpdateUI(this, gameState);
+        }
+        
+        /// <summary>
+        /// Consume Resonate Mystery for +1 random minor
+        /// </summary>
+        private void MainEnigmaConsumeMinorButton_Click(object? sender, RoutedEventArgs e)
+        {
+            MusicClicker.Armory.WeaponAbilities.Enigma_ConsumeStack(gameState, "Minor");
+            UpdateMainEnigmaCrescendanceInfo();
+            UIUpdater.UpdateUI(this, gameState);
+        }
+        
+        /// <summary>
+        /// Consume all Resonate Mystery stacks (10+) for bulk bonus
+        /// </summary>
+        private void MainEnigmaConsumeAllButton_Click(object? sender, RoutedEventArgs e)
+        {
+            MusicClicker.Armory.WeaponAbilities.Enigma_ConsumeAllStacks(gameState);
+            UpdateMainEnigmaCrescendanceInfo();
+            UIUpdater.UpdateUI(this, gameState);
+        }
+        
+        // Fate Handlers
+        /// <summary>
+        /// Consume Cosmic Modulation stacks for Entropic Melodies
+        /// </summary>
+        private void MainConsumeCosmicButton_Click(object? sender, RoutedEventArgs e)
+        {
+            // Consume all stacks for 15 entropic each
+            int stackCount = gameState.CosmicModulationStacks;
+            MusicClicker.Armory.WeaponAbilities.Fate_ConsumeStacksForMelodies(gameState, stackCount);
+            UpdateMainFateCrescendanceInfo();
+            UIUpdater.UpdateUI(this, gameState);
+        }
+        
+        /// <summary>
+        /// Consume Symphony of the Stars for +3 to lowest minor
+        /// </summary>
+        private void MainConsumeSymphonyButton_Click(object? sender, RoutedEventArgs e)
+        {
+            MusicClicker.Armory.WeaponAbilities.Fate_ConsumeSymphonyStack(gameState);
+            UpdateMainFateCrescendanceInfo();
+            UIUpdater.UpdateUI(this, gameState);
+        }
+        
+        // Dies Irae Handlers
+        private void MainConsumeDiscordantButton_Click(object? sender, RoutedEventArgs e)
+        {
+            MusicClicker.Armory.WeaponAbilities.DiesIrae_ConsumeDiscordantMalice(gameState);
+            UpdateMainDiesIraeCrescendanceInfo();
+            UIUpdater.UpdateUI(this, gameState);
+        }
+        
+        #endregion
     }
 }
 

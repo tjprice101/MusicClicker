@@ -102,7 +102,9 @@
                            FontSize="18"
                            Foreground="#CCCCCC"
                            HorizontalAlignment="Center"
-                           TextAlignment="Center" />
+                           TextAlignment="Center"
+                           TextWrapping="Wrap"
+                           MaxWidth="525" />
             </StackPanel>
 
         </StackPanel>

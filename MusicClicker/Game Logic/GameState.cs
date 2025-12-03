@@ -493,8 +493,6 @@ namespace MusicClicker
         // Fate weapon temporary boosts
         public bool AstralChainripperNpsBoostActive { get; set; } = false;
         public DateTime AstralChainripperNpsBoostExpiry { get; set; } = DateTime.MinValue;
-        public bool CosmicWeaverClickBoostActive { get; set; } = false;
-        public DateTime CosmicWeaverClickBoostExpiry { get; set; } = DateTime.MinValue;
 
         // Razer of Bell's Chimes temporary NPS boost
         public bool RazerNpsBoostActive { get; set; } = false;
@@ -544,15 +542,25 @@ namespace MusicClicker
         public bool VictoryMarch75Claimed { get; set; } = false;
         public bool VictoryMarch100Claimed { get; set; } = false;
 
-        // Eroica Weapon Effects
-        // Sakura's Blossom: Quintuple NPS for 20s on Major acquisition
-        public bool SakuraBlossomNpsBoostActive { get; set; } = false;
-        public DateTime SakuraBlossomNpsBoostExpiry { get; set; } = DateTime.MinValue;
+        // ==================== EROICA CRESCENDANCE ====================
+        // Eroica Major Crescendance: Heroic Resolve → Symphonic Catharsis
+        public int HeroicResolveStacks { get; set; } = 0;
+        public int SymphonicCatharsisStacks { get; set; } = 0;
         
-        // Funeral Prayer: Prayer stacks (every 10th click, 3 stacks = empower next 15 clicks with NPC + 6x NPS)
+        // Symphonic Catharsis buff: 10s double NPC + 10% crit
+        public bool SymphonicCatharsisActive { get; set; } = false;
+        public DateTime SymphonicCatharsisExpiry { get; set; } = DateTime.MinValue;
+        
+        // Crescendance Bond - Sakura's Blossom: Crimson Requiem
+        public int CrimsonRequiemClicksRemaining { get; set; } = 0;
+        
+        // Crescendance Bond - Funeral Prayer: Testament of Harmony
+        public int TestamentOfHarmonyStacks { get; set; } = 0;
+        
+        // Funeral Prayer Forte Resonance: Prayer stacks and empowered clicks
         public int FuneralPrayerClickCounter { get; set; } = 0;
         public int FuneralPrayerStacks { get; set; } = 0;
-        public int FuneralPrayerEmpoweredClicks { get; set; } = 0; // Remaining empowered clicks
+        public int FuneralPrayerEmpoweredClicksRemaining { get; set; } = 0;
         
         // Eroica Major: Triumph of Heroes
         public bool TriumphOfHeroesAutoClickActive { get; set; } = false;
@@ -564,6 +572,63 @@ namespace MusicClicker
         public DateTime SwanLakeDuetExpiry { get; set; } = DateTime.MinValue;
         public DateTime SwanLakeDuetCooldownExpiry { get; set; } = DateTime.MinValue;
         public System.Collections.Generic.List<(string action, object data, DateTime executeTime)> MirrorLakeQueue { get; set; } = new();
+        public int SwanLakeDuetClickCounter { get; set; } = 0; // Tracks clicks during duet for feather grants
+        
+        // Swan Lake Crescendance: Feather System
+        public int ReveredFeathers { get; set; } = 0; // Common feathers (5 stacks → +20% notes)
+        public int ChromaticFeathers { get; set; } = 0; // Rare feathers (10 stacks → 2 of every minor)
+        public int PolyphonicFeathers { get; set; } = 0; // Epic feathers (1 stack → 250 entropic + 75% notes)
+        public int SwanLakeClickCounter { get; set; } = 0; // Tracks clicks for feather drop intervals
+        
+        // Moonlight Sonata Crescendance: Eclipse of the Nocturne
+        public int MoonbeamResonanceStacks { get; set; } = 0; // Stacks gained every 20th click at night (5 stacks → +250% notes + 1 Harmonizing Moonlight)
+        public int HarmonizingMoonlightStacks { get; set; } = 0; // Consumed by Eulogy weapon for 3 Moonbeam stacks + components
+        public int MoonlightCrescendanceClickCounter { get; set; } = 0; // Tracks clicks toward next Moonbeam Resonance (every 20th click at night)
+        
+        // La Campanella Crescendance: Grandiose Bell
+        public int GrandioseBellClickCounter { get; set; } = 0; // Counts clicks toward crack thresholds (20/40/60)
+        public int GrandioseBellStage { get; set; } = 0; // 0=intact, 1=Crescending(20), 2=Radiant(40), 3=Harmonizing(60)
+        public int DeafeningChimeStacks { get; set; } = 0; // Stacks from Radiant mend, consumed on Harmonizing mend for doubling
+        public DateTime DeafeningChimeExpiry { get; set; } = DateTime.MinValue; // Expiry for Deafening Chime stacks
+        public int LaCampanellaEntropicCritClicks { get; set; } = 0; // Remaining entropic crit clicks from Radiant mend
+        
+        // Enigma Crescendance: Resonate Mystery
+        public int ResonateMysteryStacks { get; set; } = 0; // Every 10th click (+25th when crescendance active)
+        public int EnigmaClickCounter { get; set; } = 0; // Tracks clicks for 10th/25th intervals
+        public int EnigmaPassiveClickCounter { get; set; } = 0; // Creator of Mystery: every 3rd click ±25% notes
+        
+        // Fate Crescendance: Cosmic Modulation
+        public int CosmicModulationStacks { get; set; } = 0; // Every 5th click grants +1 stack + 10% notes
+        public int SymphonyOfTheStarsStacks { get; set; } = 0; // Secondary stacks (1 per 5 Cosmic Modulation)
+        public int FateClickCounter { get; set; } = 0; // Tracks every-5th-click intervals
+        public DateTime FateCraftNpsBoostExpiry { get; set; } = DateTime.MinValue; // 5x NPS boost from Fate minor craft
+        
+        // Ode to Joy Crescendance: Petals of Harmony and Melody
+        public int PetalsOfHarmony { get; set; } = 0; // Gained on minor craft
+        public int PetalsOfMelody { get; set; } = 0; // Gained on major craft
+        public int OdeToLifeStacks { get; set; } = 0; // Combined petals + entropic
+        public int EntropicCritClicksRemaining { get; set; } = 0; // From consuming Petal of Melody
+        public DateTime EntropicCritExpiry { get; set; } = DateTime.MinValue; // Tracks 10s duration per petal
+        public int JoyfulCatharsisClickCounter { get; set; } = 0; // Every 50th click for entropic melodies
+        public bool OdeToCreationDoubleActive { get; set; } = false; // Doubled passive after Ode to Life consume
+        public DateTime OdeToCreationDoubleExpiry { get; set; } = DateTime.MinValue; // 25s duration
+        public DateTime JoyfulCatharsisNpsBoostExpiry { get; set; } = DateTime.MinValue; // 5s NPS boost on petal gain
+        
+        // Dies Irae Crescendance: Burning Hatred and Discordant Malice
+        public int BurningHatredStacks { get; set; } = 0; // Every click before 50
+        public int DiscordantMaliceStacks { get; set; } = 0; // Every click after 50 Burning Hatred
+        public int DissonantOblivionStacks { get; set; } = 0; // Consume 5 Burning Hatred
+        public int SymphonyOfHellClicks { get; set; } = 0; // Remaining clicks for Symphony of Hell's Retribution
+        public int WrathfulSealStacks { get; set; } = 0; // Gained from Symphony of Hell crits (Seven Circles)
+        public int SealBreakingMelodyClicks { get; set; } = 0; // Remaining clicks for Seal-breaking Melody
+        public int HellsWrathClickCounter { get; set; } = 0; // Every 50th click for passive
+        
+        // Star-Scattered Wings (Swan I) passive tracking
+        public int StarScatteredWingsClickCounter { get; set; } = 0; // Every 10th click grants fragments
+        
+        // Thousand Winged Swan (Swan II) - Polyphonic NPS boost
+        public bool ThousandWingedSwanNpsBoostActive { get; set; } = false;
+        public DateTime ThousandWingedSwanNpsBoostExpiry { get; set; } = DateTime.MinValue;
 
         // La Campanella Duet: Chime Chain
         public bool LaCampanellaDuetActive { get; set; } = false;

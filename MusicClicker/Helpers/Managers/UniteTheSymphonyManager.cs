@@ -56,8 +56,18 @@ namespace MusicClicker
                 if (gameState.RazerOfBellsChimes && 
                     (gameState.CurrentResonatedWeapon1 == "RazerOfBellsChimes" || gameState.CurrentResonatedWeapon2 == "RazerOfBellsChimes"))
                 {
-                    MusicClicker.Armory.WeaponAbilities.RazerOfBellsChimes_OnMinorCraft(gameState);
+                    MusicClicker.Armory.WeaponAbilities.RazerOfBellsChimes_OnMinorCraft(gameState, "moonlight sonata");
                 }
+
+                // Trigger Cosmic Weaver ability (Fate II)
+                if (gameState.CosmicWeaverAbility && 
+                    (gameState.CurrentResonatedWeapon1 == "CosmicWeaver" || gameState.CurrentResonatedWeapon2 == "CosmicWeaver"))
+                {
+                    MusicClicker.Armory.WeaponAbilities.CosmicWeaver_OnMinorCraft(gameState, "moonlight sonata");
+                }
+
+                // Trigger Eroica Crescendance: Heroic Resolve
+                MusicClicker.Armory.WeaponAbilities.EroicaCrescendance_OnMinorCraft(gameState);
 
                 canCraft = true;
             }
@@ -126,7 +136,14 @@ namespace MusicClicker
                 if (gameState.RazerOfBellsChimes && 
                     (gameState.CurrentResonatedWeapon1 == "RazerOfBellsChimes" || gameState.CurrentResonatedWeapon2 == "RazerOfBellsChimes"))
                 {
-                    MusicClicker.Armory.WeaponAbilities.RazerOfBellsChimes_OnMinorCraft(gameState);
+                    MusicClicker.Armory.WeaponAbilities.RazerOfBellsChimes_OnMinorCraft(gameState, "eroica");
+                }
+
+                // Trigger Cosmic Weaver ability (Fate II)
+                if (gameState.CosmicWeaverAbility && 
+                    (gameState.CurrentResonatedWeapon1 == "CosmicWeaver" || gameState.CurrentResonatedWeapon2 == "CosmicWeaver"))
+                {
+                    MusicClicker.Armory.WeaponAbilities.CosmicWeaver_OnMinorCraft(gameState, "eroica");
                 }
 
                 canCraft = true;
@@ -196,7 +213,14 @@ namespace MusicClicker
                 if (gameState.RazerOfBellsChimes && 
                     (gameState.CurrentResonatedWeapon1 == "RazerOfBellsChimes" || gameState.CurrentResonatedWeapon2 == "RazerOfBellsChimes"))
                 {
-                    MusicClicker.Armory.WeaponAbilities.RazerOfBellsChimes_OnMinorCraft(gameState);
+                    MusicClicker.Armory.WeaponAbilities.RazerOfBellsChimes_OnMinorCraft(gameState, "swanlake");
+                }
+
+                // Trigger Cosmic Weaver ability (Fate II)
+                if (gameState.CosmicWeaverAbility && 
+                    (gameState.CurrentResonatedWeapon1 == "CosmicWeaver" || gameState.CurrentResonatedWeapon2 == "CosmicWeaver"))
+                {
+                    MusicClicker.Armory.WeaponAbilities.CosmicWeaver_OnMinorCraft(gameState, "swanlake");
                 }
 
                 canCraft = true;
@@ -266,7 +290,14 @@ namespace MusicClicker
                 if (gameState.RazerOfBellsChimes && 
                     (gameState.CurrentResonatedWeapon1 == "RazerOfBellsChimes" || gameState.CurrentResonatedWeapon2 == "RazerOfBellsChimes"))
                 {
-                    MusicClicker.Armory.WeaponAbilities.RazerOfBellsChimes_OnMinorCraft(gameState);
+                    MusicClicker.Armory.WeaponAbilities.RazerOfBellsChimes_OnMinorCraft(gameState, "lacampanella");
+                }
+
+                // Trigger Cosmic Weaver ability (Fate II)
+                if (gameState.CosmicWeaverAbility && 
+                    (gameState.CurrentResonatedWeapon1 == "CosmicWeaver" || gameState.CurrentResonatedWeapon2 == "CosmicWeaver"))
+                {
+                    MusicClicker.Armory.WeaponAbilities.CosmicWeaver_OnMinorCraft(gameState, "lacampanella");
                 }
 
                 canCraft = true;
@@ -336,7 +367,14 @@ namespace MusicClicker
                 if (gameState.RazerOfBellsChimes && 
                     (gameState.CurrentResonatedWeapon1 == "RazerOfBellsChimes" || gameState.CurrentResonatedWeapon2 == "RazerOfBellsChimes"))
                 {
-                    MusicClicker.Armory.WeaponAbilities.RazerOfBellsChimes_OnMinorCraft(gameState);
+                    MusicClicker.Armory.WeaponAbilities.RazerOfBellsChimes_OnMinorCraft(gameState, "enigma");
+                }
+
+                // Trigger Cosmic Weaver ability (Fate II)
+                if (gameState.CosmicWeaverAbility && 
+                    (gameState.CurrentResonatedWeapon1 == "CosmicWeaver" || gameState.CurrentResonatedWeapon2 == "CosmicWeaver"))
+                {
+                    MusicClicker.Armory.WeaponAbilities.CosmicWeaver_OnMinorCraft(gameState, "enigma");
                 }
 
                 canCraft = true;
@@ -406,21 +444,28 @@ namespace MusicClicker
                 if (gameState.RazerOfBellsChimes && 
                     (gameState.CurrentResonatedWeapon1 == "RazerOfBellsChimes" || gameState.CurrentResonatedWeapon2 == "RazerOfBellsChimes"))
                 {
-                    MusicClicker.Armory.WeaponAbilities.RazerOfBellsChimes_OnMinorCraft(gameState);
+                    MusicClicker.Armory.WeaponAbilities.RazerOfBellsChimes_OnMinorCraft(gameState, "fate");
+                }
+
+                // Trigger Cosmic Weaver ability (Fate II)
+                if (gameState.CosmicWeaverAbility && 
+                    (gameState.CurrentResonatedWeapon1 == "CosmicWeaver" || gameState.CurrentResonatedWeapon2 == "CosmicWeaver"))
+                {
+                    MusicClicker.Armory.WeaponAbilities.CosmicWeaver_OnMinorCraft(gameState, "fate");
                 }
 
                 // Trigger Astral Chainripper ability (Fate I)
-                if (gameState.AstralChainripper && 
+                if (gameState.AstralChainripperAbility && 
                     (gameState.CurrentResonatedWeapon1 == "AstralChainripper" || gameState.CurrentResonatedWeapon2 == "AstralChainripper"))
                 {
                     MusicClicker.Armory.WeaponAbilities.AstralChainripper_OnFateMinorCraft(gameState);
                 }
 
                 // Trigger Cosmic Weaver ability (Fate II)
-                if (gameState.CosmicWeaver && 
+                if (gameState.CosmicWeaverAbility && 
                     (gameState.CurrentResonatedWeapon1 == "CosmicWeaver" || gameState.CurrentResonatedWeapon2 == "CosmicWeaver"))
                 {
-                    MusicClicker.Armory.WeaponAbilities.CosmicWeaver_OnFateMinorCraft(gameState);
+                    MusicClicker.Armory.WeaponAbilities.CosmicWeaver_OnMinorCraft(gameState, "fate");
                 }
 
                 canCraft = true;
@@ -478,7 +523,14 @@ namespace MusicClicker
                 if (gameState.RazerOfBellsChimes && 
                     (gameState.CurrentResonatedWeapon1 == "RazerOfBellsChimes" || gameState.CurrentResonatedWeapon2 == "RazerOfBellsChimes"))
                 {
-                    MusicClicker.Armory.WeaponAbilities.RazerOfBellsChimes_OnMinorCraft(gameState);
+                    MusicClicker.Armory.WeaponAbilities.RazerOfBellsChimes_OnMinorCraft(gameState, "odetojoy");
+                }
+
+                // Trigger Cosmic Weaver ability (Fate II)
+                if (gameState.CosmicWeaverAbility && 
+                    (gameState.CurrentResonatedWeapon1 == "CosmicWeaver" || gameState.CurrentResonatedWeapon2 == "CosmicWeaver"))
+                {
+                    MusicClicker.Armory.WeaponAbilities.CosmicWeaver_OnMinorCraft(gameState, "odetojoy");
                 }
 
                 canCraft = true;
@@ -530,7 +582,7 @@ namespace MusicClicker
                 // Trigger Sakura's Blossom ability (Eroica I) - on major acquisition
                 if (gameState.SakurasBlossomAbility)
                 {
-                    MusicClicker.Armory.WeaponAbilities.SakurasBlossom_OnMajorAcquisition(gameState, "Moonlight Sonata");
+                    MusicClicker.Armory.WeaponAbilities.SakurasBlossom_OnMajorSheetAcquired(gameState, "Moonlight Sonata");
                 }
 
                 // Trigger Funeral Prayer ability (Eroica II) - on major acquisition
@@ -592,7 +644,7 @@ namespace MusicClicker
                 // Trigger Sakura's Blossom ability (Eroica I) - on major acquisition
                 if (gameState.SakurasBlossomAbility)
                 {
-                    MusicClicker.Armory.WeaponAbilities.SakurasBlossom_OnMajorAcquisition(gameState, "Eroica");
+                    MusicClicker.Armory.WeaponAbilities.SakurasBlossom_OnMajorSheetAcquired(gameState, "Eroica");
                 }
 
                 // Trigger Funeral Prayer ability (Eroica II) - on major acquisition
@@ -652,7 +704,7 @@ namespace MusicClicker
                 // Trigger Sakura's Blossom ability (Eroica I) - on major acquisition
                 if (gameState.SakurasBlossomAbility)
                 {
-                    MusicClicker.Armory.WeaponAbilities.SakurasBlossom_OnMajorAcquisition(gameState, "Swan Lake");
+                    MusicClicker.Armory.WeaponAbilities.SakurasBlossom_OnMajorSheetAcquired(gameState, "Swan Lake");
                 }
 
                 // Trigger Funeral Prayer ability (Eroica II) - on major acquisition
@@ -714,7 +766,7 @@ namespace MusicClicker
                 // Trigger Sakura's Blossom ability (Eroica I) - on major acquisition
                 if (gameState.SakurasBlossomAbility)
                 {
-                    MusicClicker.Armory.WeaponAbilities.SakurasBlossom_OnMajorAcquisition(gameState, "La Campanella");
+                    MusicClicker.Armory.WeaponAbilities.SakurasBlossom_OnMajorSheetAcquired(gameState, "La Campanella");
                 }
 
                 // Trigger Funeral Prayer ability (Eroica II) - on major acquisition
@@ -776,7 +828,7 @@ namespace MusicClicker
                 // Trigger Sakura's Blossom ability (Eroica I) - on major acquisition
                 if (gameState.SakurasBlossomAbility)
                 {
-                    MusicClicker.Armory.WeaponAbilities.SakurasBlossom_OnMajorAcquisition(gameState, "Enigma Variations");
+                    MusicClicker.Armory.WeaponAbilities.SakurasBlossom_OnMajorSheetAcquired(gameState, "Enigma Variations");
                 }
 
                 // Trigger Funeral Prayer ability (Eroica II) - on major acquisition
@@ -838,7 +890,7 @@ namespace MusicClicker
                 // Trigger Sakura's Blossom ability (Eroica I) - on major acquisition
                 if (gameState.SakurasBlossomAbility)
                 {
-                    MusicClicker.Armory.WeaponAbilities.SakurasBlossom_OnMajorAcquisition(gameState, "Fate");
+                    MusicClicker.Armory.WeaponAbilities.SakurasBlossom_OnMajorSheetAcquired(gameState, "Fate");
                 }
 
                 // Trigger Funeral Prayer ability (Eroica II) - on major acquisition
@@ -900,7 +952,7 @@ namespace MusicClicker
                 // Trigger Sakura's Blossom ability (Eroica I) - on major acquisition
                 if (gameState.SakurasBlossomAbility)
                 {
-                    MusicClicker.Armory.WeaponAbilities.SakurasBlossom_OnMajorAcquisition(gameState, "Ode to Joy");
+                    MusicClicker.Armory.WeaponAbilities.SakurasBlossom_OnMajorSheetAcquired(gameState, "Ode to Joy");
                 }
 
                 // Trigger Funeral Prayer ability (Eroica II) - on major acquisition

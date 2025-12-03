@@ -922,7 +922,7 @@ namespace MusicClicker.Views
                 FatePhaseText.Text = "⚡ REPLAY PHASE ⚡";
                 FatePhaseText.Foreground = new SolidColorBrush(Color.FromRgb(255, 150, 255)); // Bright purple
                 if (FateHourglassArt != null)
-                    FateHourglassArt.Text = "⏳"; // Flipped hourglass
+                    FateHourglassArt.Text = ""; // Hourglass symbol removed
             }
             else
             {
@@ -1012,7 +1012,7 @@ namespace MusicClicker.Views
                     
                     var noteBlock = new TextBlock
                     {
-                        Text = "♪",
+                        Text = "•",
                         FontSize = 24,
                         Foreground = new SolidColorBrush(Color.FromRgb(80, 80, 80)),
                         Margin = new Thickness(2, topMargin, 2, 0),

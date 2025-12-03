@@ -1,0 +1,256 @@
+================================================================================
+TEMPO RESONATE SCREEN - UI ENHANCEMENT CHANGELOG
+================================================================================
+Date: December 1, 2025
+Version: Enhanced UI with Tooltip System
+================================================================================
+
+OVERVIEW:
+Complete redesign of the Tempo Resonate screen with enhanced aesthetics, 
+ergonomic improvements, and a new hover tooltip system for displaying weapon 
+and score descriptions.
+
+================================================================================
+1. NEW UI LAYOUT STRUCTURE
+================================================================================
+
+Grid-Based 4-Row Layout:
+  Row 0 (80px):   Header with gold border and title "⚡ TEMPO RESONATE ⚡"
+  Row 1 (*):      Main Content - 3-column layout (Scores | Equipment | Weapons)
+  Row 2 (Auto):   Crescendance Info Panel (compact, integrated)
+  Row 3 (70px):   Bottom Navigation (Back button)
+
+Main Content - 3 Columns:
+  Left (340px):   Major Scores drawer
+                  - Blue theme (#DD1A1A2E background, #4466AAFF border)
+                  - "📜 MAJOR SCORES" header
+                  - ScrollViewer for score list
+                  
+  Center (*):     Equipment Display
+                  - Larger score card display (Grid.Row height="2*")
+                  - Dual weapon slots (Grid.Row height="1.2*" each)
+                  - Equipment prompt at top (green YES/red NO buttons)
+                  - Click-to-unequip hints on equipped items
+                  
+  Right (340px):  Weapons drawer (Armory of Forte)
+                  - Orange theme (#DD2E1A1A background, #FFAA44 border)
+                  - "⚔️ ARMORY OF FORTE" header
+                  - ScrollViewer for weapon list
+
+================================================================================
+2. VISUAL ENHANCEMENTS
+================================================================================
+
+Color Coding:
+  - Header: Gold (#FFD700 text, #FFD700 border)
+  - Major Scores Panel: Blue theme (cool, scholarly aesthetic)
+  - Weapons Panel: Orange theme (warm, combat aesthetic)
+  - Equipped Items: Gold borders with DropShadowEffect glow
+  - Equipment Prompt: Green YES (#22AA22) / Red NO (#AA2222)
+
+Effects:
+  - DropShadowEffect on headers (gold glow, blur 15)
+  - DropShadowEffect on panel headers (color-matched glow)
+  - DropShadowEffect on equipped items (gold glow, blur 10)
+  - Gradient backgrounds on score/weapon cards
+  - Border glow effects for visual hierarchy
+
+Typography:
+  - Larger fonts for headers (24-26pt)
+  - Clear size hierarchy (16pt → 14pt → 12pt)
+  - Playfair Display font family maintained throughout
+
+================================================================================
+3. TOOLTIP SYSTEM
+================================================================================
+
+New Components:
+  - DescriptionTooltipPanel (Border, ZIndex="1000")
+  - TooltipTitle (TextBlock, 18pt bold)
+  - TooltipDescription (TextBlock, 14pt in ScrollViewer)
+  - Positioned at center of screen, above all other elements
+  - MaxWidth="450", MaxHeight="300" for readability
+
+Implementation Files:
+  - TempoResonateDescriptions.cs: Centralized description database
+    * MajorScores class: All 7 major score descriptions
+    * Weapons class: All 14 weapon descriptions
+    * GetDescription(): Lookup method by item name
+    
+  - TempoResonateScreen.axaml.cs: Tooltip event handling
+    * InitializeTooltips(): Gets panel references, hides on startup
+    * AttachTooltipHandlers(): Registers PointerEnter/Exit events
+    * ShowTooltip(): Displays description for hovered item
+    * HideTooltip(): Hides tooltip panel
+    * RegisterTooltipItem(): Public method for manager to register items
+    
+  - TempoResonateManager.cs: Tooltip registration integration
+    * Added _screen field reference
+    * Added screen parameter to constructor
+    * Calls RegisterTooltipItem() when adding score/weapon buttons
+    * Helper methods: ScoreToDisplayName(), WeaponToDisplayName()
+
+Description Format:
+  Each description includes:
+  - Emoji icon and name
+  - "Passive:" section explaining base mechanics
+  - "Crescendance:" section (for major scores) explaining special effects
+  - "Unlock:" requirements (for major scores)
+  - "Nighttime Bonus:" (for Moonlight weapons)
+  - "Requires:" prerequisite major score (for all weapons)
+
+================================================================================
+4. ERGONOMIC IMPROVEMENTS
+================================================================================
+
+Better Visual Hierarchy:
+  - Color-coded panels instantly distinguish scores vs weapons
+  - Larger center display emphasizes currently equipped items
+  - Clear labels: "[Weapon 1]" and "[Weapon 2]" in slots
+  - "[Click to Unequip]" hint on equipped score
+  
+Improved Spacing:
+  - Generous margins and padding (10-20px)
+  - Card-based layout with clear borders
+  - ScrollViewers for long lists (no overflow)
+  
+Accessibility:
+  - High contrast borders and text
+  - Glow effects for focus/emphasis
+  - Tooltip max size prevents overflow
+  - Responsive center column adapts to window size
+
+Equipment Management:
+  - Equipment prompt at top of center column (easy to find)
+  - Large YES/NO buttons (easy to click)
+  - Equipped items highlighted with gold borders
+  - Unequip by clicking equipped item directly
+  - Clear visual feedback for owned vs unowned items
+
+================================================================================
+5. TECHNICAL DETAILS
+================================================================================
+
+Files Modified:
+  ✓ TempoResonateScreen.axaml (complete redesign)
+  ✓ TempoResonateScreen.axaml.cs (added tooltip functionality)
+  ✓ TempoResonateManager.cs (added screen reference, tooltip registration)
+  ✓ MainWindow.axaml.cs (pass screen to manager constructor)
+
+Files Created:
+  ✓ TempoResonateDescriptions.cs (description database)
+
+Type Changes:
+  - EquipPromptPanel: Changed from StackPanel to Border (matches new UI)
+  - Updated TempoResonateManager constructor signature
+
+Build Status:
+  ✓ Project compiles successfully
+  ✓ 0 errors
+  ✓ 15 pre-existing warnings (nullability, not related to changes)
+
+================================================================================
+6. PRESERVED FUNCTIONALITY
+================================================================================
+
+All existing functionality maintained:
+  ✓ Score equipping/unequipping
+  ✓ Weapon equipping/unequipping (dual slots)
+  ✓ Equipment prompt system
+  ✓ Duet resonance text display
+  ✓ Crescendance info panel (Swan Lake feathers, etc.)
+  ✓ Consume button functionality
+  ✓ Ownership checks (grayed out unowned items)
+  ✓ Visual state updates on tick
+
+================================================================================
+7. DESCRIPTION DATABASE CONTENT
+================================================================================
+
+Major Scores (7 total):
+  - Moonlight Sonata: 3× NPS, Lunar Resonance crescendance
+  - Eroica: Double notes on major acquisition, Heroic Momentum
+  - Swan Lake: Feather collection system (Revered/Chromatic/Polyphonic)
+  - La Campanella: Resonant Bells (every 25th click), Bell Cascade
+  - Enigma Variations: Mystery Stacks (+5% per stack)
+  - Fate: Every 5th click +30% notes, Cosmic Modulation
+  - Ode to Joy: 2× NPS, Jubilant Harmony (+25% all effects)
+
+Weapons (14 total):
+  Moonlight:
+    - Incisor of Moonlight: +5% notes on upgrade, +500% NPC at night
+    - Eulogy of the Moon: Buy 2 lowest upgrades free, +5% crit at night
+  
+  Eroica:
+    - Sakura's Blossom: +5 minors on major acquisition, +1 all components
+    - Funeral Prayer: Every 10th click → Prayer stack → Empowered clicks
+  
+  Swan Lake:
+    - Star-Scattered Wings: Every 10th click → fragments, feather bonuses
+    - Thousand Winged Swan: +50% notes on acquisition, NPS→NPC boost
+  
+  La Campanella:
+    - Symphony of Bells: Duplicate minor on craft
+    - Razer of Bell's Chimes: +50% NPS for 5s on craft (stacks)
+  
+  Enigma:
+    - Creator of Mystery: Every 100 clicks → Mystery stack (+3% production)
+    - Truthseeker: +10% fragments on major acquisition
+  
+  Fate:
+    - Astral Chainripper: 5× NPS for 10s on Fate minor craft
+    - Cosmic Weaver: 5× NPC for 10s on Fate minor craft
+  
+  Ode to Joy:
+    - Joyful Catharsis: Permanent 2× NPS (stacks with major for 4× total)
+    - Ode to Creation: Every 5th click → +33% notes bonus
+
+================================================================================
+8. TESTING RECOMMENDATIONS
+================================================================================
+
+Visual Testing:
+  □ Verify layout displays correctly at different window sizes
+  □ Check color themes render properly (blue/orange panels)
+  □ Confirm DropShadowEffects display (header glow, border glow)
+  □ Test ScrollViewer functionality with many items
+
+Tooltip Testing:
+  □ Hover over each major score → description appears
+  □ Hover over each weapon → description appears
+  □ Move mouse away → tooltip disappears
+  □ Verify tooltip stays on-screen (doesn't overflow)
+  □ Check description formatting (line breaks, emojis)
+
+Functionality Testing:
+  □ Equip/unequip major scores
+  □ Equip/unequip weapons (both slots)
+  □ Test equipment prompt (YES/NO buttons)
+  □ Verify crescendance panel updates
+  □ Test consume buttons (Swan Lake feathers)
+  □ Confirm duet resonance text updates
+
+Edge Cases:
+  □ Test with no items owned (all grayed out)
+  □ Test with all items owned
+  □ Test with one weapon slot filled
+  □ Test with both weapon slots filled
+  □ Test unequipping when prompt is visible
+
+================================================================================
+9. FUTURE ENHANCEMENTS
+================================================================================
+
+Potential Additions:
+  - Animated tooltips (fade in/out transitions)
+  - Keyboard navigation (Tab to cycle, Enter to equip)
+  - Tooltip position follows mouse cursor
+  - Rich text formatting in descriptions (bold, italic, colors)
+  - Item comparison (show stat differences on hover)
+  - Filter/search functionality for large lists
+  - Sort options (alphabetical, unlock order, type)
+  - Preview mode (see item without equipping)
+
+================================================================================
+END OF CHANGELOG
+================================================================================

@@ -11,3 +11,7 @@ obj/
 # Ignore save data and runtime cache created by the game
 Save/
 Save/**
+
+# Test simulations and test files
+TestSimulations/
+TestSimulations/**

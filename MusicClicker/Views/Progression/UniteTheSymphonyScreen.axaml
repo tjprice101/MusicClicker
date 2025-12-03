@@ -38,7 +38,7 @@
                                 <TextBlock x:Name="MoonlightMinorOwnedText" Text="0 Owned"
                                     Foreground="White"
                                     FontSize="16" HorizontalAlignment="Center" />
-                                <TextBlock Text="Adds 3,000 NPS" Foreground="White" FontSize="14"
+                                <TextBlock Text="Adds 3,000 Notes Per Second" Foreground="White" FontSize="14"
                                     HorizontalAlignment="Center" />
                             </StackPanel>
 
@@ -82,7 +82,7 @@
                                     FontSize="14"
                                     HorizontalAlignment="Center" />
                                 <Button x:Name="MoonlightMajorDissolveButton" Content="Dissolve" Width="120" Height="32" HorizontalAlignment="Center" />
-                                <TextBlock Text="(+1 Entropic Melody)" Foreground="#CCCCCC" FontSize="12" HorizontalAlignment="Center" Margin="0,2,0,0" />
+                                <TextBlock Text="(+10 Entropic Melodies)" Foreground="#CCCCCC" FontSize="12" HorizontalAlignment="Center" Margin="0,2,0,0" />
                             </StackPanel>
 
                             <Button x:Name="MoonlightMajorButton" Grid.Column="1" Margin="5"
@@ -121,7 +121,7 @@
                                 <TextBlock x:Name="EroicaMinorOwnedText" Text="0 Owned"
                                     Foreground="White"
                                     FontSize="16" HorizontalAlignment="Center" />
-                                <TextBlock Text="Adds 8,000 NPS" Foreground="White" FontSize="14"
+                                <TextBlock Text="Adds 8,000 Notes Per Second" Foreground="White" FontSize="14"
                                     HorizontalAlignment="Center" />
                             </StackPanel>
 
@@ -165,7 +165,7 @@
                                     FontSize="14" TextWrapping="Wrap" Width="190"
                                     HorizontalAlignment="Center" />
                                 <Button x:Name="EroicaMajorDissolveButton" Content="Dissolve" Width="120" Height="32" HorizontalAlignment="Center" />
-                                <TextBlock Text="(+1 Entropic Melody)" Foreground="#CCCCCC" FontSize="12" HorizontalAlignment="Center" Margin="0,2,0,0" />
+                                <TextBlock Text="(+20 Entropic Melodies)" Foreground="#CCCCCC" FontSize="12" HorizontalAlignment="Center" Margin="0,2,0,0" />
                             </StackPanel>
 
                             <Button x:Name="EroicaMajorButton" Grid.Column="1" Margin="5"
@@ -204,7 +204,7 @@
                                 <TextBlock x:Name="SwanMinorOwnedText" Text="0 Owned"
                                     Foreground="White"
                                     FontSize="16" HorizontalAlignment="Center" />
-                                <TextBlock Text="Adds 15,000 NPS" Foreground="White" FontSize="14"
+                                <TextBlock Text="Adds 15,000 Notes Per Second" Foreground="White" FontSize="14"
                                     HorizontalAlignment="Center" />
                             </StackPanel>
 
@@ -248,7 +248,7 @@
                                     FontSize="14"
                                     HorizontalAlignment="Center" />
                                 <Button x:Name="SwanMajorDissolveButton" Content="Dissolve" Width="120" Height="32" HorizontalAlignment="Center" />
-                                <TextBlock Text="(+1 Entropic Melody)" Foreground="#CCCCCC" FontSize="12" HorizontalAlignment="Center" Margin="0,2,0,0" />
+                                <TextBlock Text="(+40 Entropic Melodies)" Foreground="#CCCCCC" FontSize="12" HorizontalAlignment="Center" Margin="0,2,0,0" />
                             </StackPanel>
 
                             <Button x:Name="SwanMajorButton" Grid.Column="1" Margin="5" Width="384"
@@ -287,7 +287,7 @@
                                 <TextBlock x:Name="LaCampanellaMinorOwnedText" Text="0 Owned"
                                     Foreground="White"
                                     FontSize="16" HorizontalAlignment="Center" />
-                                <TextBlock Text="Adds 35,000 NPS" Foreground="White" FontSize="14"
+                                <TextBlock Text="Adds 35,000 Notes Per Second" Foreground="White" FontSize="14"
                                     HorizontalAlignment="Center" />
                             </StackPanel>
 
@@ -330,7 +330,7 @@
                                     FontSize="14"
                                     HorizontalAlignment="Center" />
                                 <Button x:Name="LaCampanellaMajorDissolveButton" Content="Dissolve" Width="120" Height="32" HorizontalAlignment="Center" />
-                                <TextBlock Text="(+1 Entropic Melody)" Foreground="#CCCCCC" FontSize="12" HorizontalAlignment="Center" Margin="0,2,0,0" />
+                                <TextBlock Text="(+80 Entropic Melodies)" Foreground="#CCCCCC" FontSize="12" HorizontalAlignment="Center" Margin="0,2,0,0" />
                             </StackPanel>
 
                             <Button x:Name="LaCampanellaMajorButton" Grid.Column="1" Margin="5"
@@ -368,7 +368,7 @@
                                 <TextBlock x:Name="EnigmaMinorOwnedText" Text="0 Owned"
                                     Foreground="White"
                                     FontSize="16" HorizontalAlignment="Center" />
-                                <TextBlock Text="Adds 75,000 NPS" Foreground="White" FontSize="14"
+                                <TextBlock Text="Adds 75,000 Notes Per Second" Foreground="White" FontSize="14"
                                     HorizontalAlignment="Center" />
                             </StackPanel>
 
@@ -412,7 +412,7 @@
                                     FontSize="14"
                                     HorizontalAlignment="Center" />
                                 <Button x:Name="EnigmaMajorDissolveButton" Content="Dissolve" Width="120" Height="32" HorizontalAlignment="Center" />
-                                <TextBlock Text="(+1 Entropic Melody)" Foreground="#CCCCCC" FontSize="12" HorizontalAlignment="Center" Margin="0,2,0,0" />
+                                <TextBlock Text="(+160 Entropic Melodies)" Foreground="#CCCCCC" FontSize="12" HorizontalAlignment="Center" Margin="0,2,0,0" />
                             </StackPanel>
 
                             <Button x:Name="EnigmaMajorButton" Grid.Column="1" Margin="5"
@@ -450,7 +450,7 @@
                                 <TextBlock x:Name="FateMinorOwnedText" Text="0 Owned"
                                     Foreground="White"
                                     FontSize="16" HorizontalAlignment="Center" />
-                                <TextBlock Text="Adds 135,000 NPS" Foreground="White" FontSize="14"
+                                <TextBlock Text="Adds 135,000 Notes Per Second" Foreground="White" FontSize="14"
                                     HorizontalAlignment="Center" />
                             </StackPanel>
 
@@ -493,7 +493,7 @@
                                     FontSize="14"
                                     HorizontalAlignment="Center" />
                                 <Button x:Name="FateMajorDissolveButton" Content="Dissolve" Width="120" Height="32" HorizontalAlignment="Center" />
-                                <TextBlock Text="(+1 Entropic Melody)" Foreground="#CCCCCC" FontSize="12" HorizontalAlignment="Center" Margin="0,2,0,0" />
+                                <TextBlock Text="(+320 Entropic Melodies)" Foreground="#CCCCCC" FontSize="12" HorizontalAlignment="Center" Margin="0,2,0,0" />
                             </StackPanel>
 
                             <Button x:Name="FateMajorButton" Grid.Column="1" Margin="5" Width="384"
@@ -531,7 +531,7 @@
                                 <TextBlock x:Name="OdeToJoyMinorOwnedText" Text="0 Owned"
                                     Foreground="White"
                                     FontSize="16" HorizontalAlignment="Center" />
-                                <TextBlock Text="Adds 255,000 NPS" Foreground="White" FontSize="14"
+                                <TextBlock Text="Adds 255,000 Notes Per Second" Foreground="White" FontSize="14"
                                     HorizontalAlignment="Center" />
                             </StackPanel>
 
@@ -574,7 +574,7 @@
                                     FontSize="14"
                                     HorizontalAlignment="Center" />
                                 <Button x:Name="OdeToJoyMajorDissolveButton" Content="Dissolve" Width="120" Height="32" HorizontalAlignment="Center" />
-                                <TextBlock Text="(+1 Entropic Melody)" Foreground="#CCCCCC" FontSize="12" HorizontalAlignment="Center" Margin="0,2,0,0" />
+                                <TextBlock Text="(+640 Entropic Melodies)" Foreground="#CCCCCC" FontSize="12" HorizontalAlignment="Center" Margin="0,2,0,0" />
                             </StackPanel>
 
                             <Button x:Name="OdeToJoyMajorButton" Grid.Column="1" Margin="5"

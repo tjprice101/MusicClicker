@@ -65,6 +65,15 @@ namespace MusicClicker
 
                             if (gameState.EulogyOfTheMoonAbility)
                                 MusicClicker.Armory.WeaponAbilities.EulogyOfTheMoon_OnUpgradePurchase(gameState);
+
+                            // Eroica Weapon Passives
+                            if (gameState.SakurasBlossom && 
+                                (gameState.CurrentResonatedWeapon1 == "SakurasBlossom" || gameState.CurrentResonatedWeapon2 == "SakurasBlossom"))
+                                MusicClicker.Armory.WeaponAbilities.SakurasBlossom_OnUpgradePurchase(gameState);
+
+                            if (gameState.FuneralPrayer && 
+                                (gameState.CurrentResonatedWeapon1 == "FuneralPrayer" || gameState.CurrentResonatedWeapon2 == "FuneralPrayer"))
+                                MusicClicker.Armory.WeaponAbilities.FuneralPrayer_OnUpgradePurchase(gameState);
                         }
                         catch (Exception)
                         {
@@ -97,6 +106,15 @@ namespace MusicClicker
 
                                 if (gameState.EulogyOfTheMoonAbility)
                                     MusicClicker.Armory.WeaponAbilities.EulogyOfTheMoon_OnUpgradePurchase(gameState);
+
+                                // Eroica Weapon Passives
+                                if (gameState.SakurasBlossom && 
+                                    (gameState.CurrentResonatedWeapon1 == "SakurasBlossom" || gameState.CurrentResonatedWeapon2 == "SakurasBlossom"))
+                                    MusicClicker.Armory.WeaponAbilities.SakurasBlossom_OnUpgradePurchase(gameState);
+
+                                if (gameState.FuneralPrayer && 
+                                    (gameState.CurrentResonatedWeapon1 == "FuneralPrayer" || gameState.CurrentResonatedWeapon2 == "FuneralPrayer"))
+                                    MusicClicker.Armory.WeaponAbilities.FuneralPrayer_OnUpgradePurchase(gameState);
                             }
                             catch (Exception)
                             {

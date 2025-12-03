@@ -57,7 +57,7 @@
                         </TextBlock.Effect>
                     </TextBlock>
 
-                    <TextBlock Text="Split your NPS between 3 parallel timelines:"
+                    <TextBlock Text="Split your Notes Per Second between 3 parallel timelines:"
                                FontSize="18"
                                Foreground="White"
                                HorizontalAlignment="Center"
@@ -104,7 +104,7 @@
                                        FontSize="20"
                                        Foreground="#10b981"
                                        FontWeight="SemiBold" />
-                            <TextBlock Text="Grants notes immediately as NPS flows. Safe and reliable - perfect for steady income."
+                            <TextBlock Text="Grants notes immediately as Notes Per Second flows. Safe and reliable - perfect for steady income."
                                        FontSize="13"
                                        Foreground="#d4d4d4"
                                        TextWrapping="Wrap" />
@@ -165,7 +165,7 @@
                     <TextBlock TextWrapping="Wrap"
                                FontSize="14"
                                Foreground="#d4d4d4"
-                               Text="• Click percentage buttons to allocate NPS (can change anytime during duration!)&#x0a;• Past: Generates fragments over time (good for crafting materials)&#x0a;• Present: Instant notes (safe and steady)&#x0a;• Future: Scales multiplier with allocation (high risk, high reward!)&#x0a;• Duration: 30 seconds | Cooldown: 5 minutes" />
+                               Text="• Click percentage buttons to allocate Notes Per Second (can change anytime during duration!)&#x0a;• Past: Generates fragments over time (good for crafting materials)&#x0a;• Present: Instant notes (safe and steady)&#x0a;• Future: Scales multiplier with allocation (high risk, high reward!)&#x0a;• Duration: 30 seconds | Cooldown: 5 minutes" />
                 </Border>
             </Grid>
 

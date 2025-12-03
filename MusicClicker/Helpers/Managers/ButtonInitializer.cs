@@ -448,11 +448,7 @@ namespace MusicClicker
                         MusicClicker.Armory.WeaponAbilities.FateDuet_BankAction(window.GameState, "BuyFragment", ("Melodious", 1000.0));
                     }
                     
-                    // Trigger Star-Scattered Wings ability (Swan Lake I)
-                    if (window.GameState.StarScatteredWingsAbility)
-                    {
-                        MusicClicker.Armory.WeaponAbilities.StarScatteredWings_OnMelodiousPurchase(window.GameState);
-                    }
+                    // Star-Scattered Wings passive now handled through click tracking (every 10th click grants fragments)
                 }
             });
 
@@ -476,11 +472,7 @@ namespace MusicClicker
                         MusicClicker.Armory.WeaponAbilities.FateDuet_BankAction(window.GameState, "BuyFragment", ("Harmonious", 5000.0));
                     }
                     
-                    // Trigger Thousand Winged Swan ability (Swan Lake II)
-                    if (window.GameState.ThousandWingedSwanAbility)
-                    {
-                        MusicClicker.Armory.WeaponAbilities.ThousandWingedSwan_OnHarmoniousPurchase(window.GameState);
-                    }
+                    // Thousand Winged Swan passive now handled through score acquisition (not fragment purchase)
 
                     // Trigger The Snow's Desire ability (Winter II)
                     if (window.GameState.TheSnowsDesireAbility)

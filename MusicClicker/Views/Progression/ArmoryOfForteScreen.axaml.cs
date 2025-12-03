@@ -378,125 +378,34 @@ namespace MusicClicker.Views
                 buttonTextBlock.Text = _weaponNames[weaponIndex];
             }
 
-            // Prepare resonance strings based on the weapon category (grouped by pairs)
-            string forte1 = "";
-            string forte2 = "";
-            string duet = "";
-
-            switch (weaponIndex)
+            // Get descriptions from central GameDescriptions
+            // Determine which weapon in the pair we are (first or second)
+            int pairStart = weaponIndex % 2 == 0 ? weaponIndex : weaponIndex - 1;
+            bool isFirstInPair = (weaponIndex % 2) == 0;
+            
+            string weaponName1 = _weaponNames[pairStart];
+            string weaponName2 = pairStart + 1 < _weaponNames.Length ? _weaponNames[pairStart + 1] : "";
+            
+            string forte1 = GameDescriptions.GetForteDescription(weaponName1);
+            string forte2 = !string.IsNullOrEmpty(weaponName2) ? GameDescriptions.GetForteDescription(weaponName2) : "";
+            
+            // Get duet description based on weapon pair
+            string duet = (pairStart / 2) switch
             {
-                // Moonlight (indices 0-1)
-                case 0:
-                    forte1 = "Forte Resonance: On upgrade purchase, increase your current notes by 5%. Clicks during nighttime hours (8PM-6AM) grant +500% notes.";
-                    forte2 = "Forte Resonance: On upgrade purchase, increase your lowest owned upgrade by 2. Clicks during nighttime hours (8PM-6AM) grant +5% critical rate.";
-                    duet = DuetDescriptions.Short.Moonlight;
-                    break;
-                case 1:
-                    forte1 = "Forte Resonance: On upgrade purchase, increase your current notes by 5%. Clicks during nighttime hours (8PM-6AM) grant +500% notes.";
-                    forte2 = "Forte Resonance: On upgrade purchase, increase your lowest owned upgrade by 2. Clicks during nighttime hours (8PM-6AM) grant +5% critical rate.";
-                    duet = DuetDescriptions.Short.Moonlight;
-                    break;
-
-                // Eroica (indices 2-3)
-                case 2:
-                    forte1 = "Forte Resonance: On acquisition of a score's Major version, grants 5 of the corresponding Minor score.";
-                    forte2 = "Forte Resonance: Every 10th click grants a Prayer stack. At 3 stacks, consume all to empower your next 15 clicks to add 6x your NPS to each click. Empowered clicks don't count toward the next amplification.";
-                    duet = DuetDescriptions.Short.Eroica;
-                    break;
-                case 3:
-                    forte1 = "Forte Resonance: On acquisition of a score's Major version, grants 5 of the corresponding Minor score.";
-                    forte2 = "Forte Resonance: Every 10th click grants a Prayer stack. At 3 stacks, consume all to empower your next 15 clicks to add 6x your NPS to each click. Empowered clicks don't count toward the next amplification.";
-                    duet = DuetDescriptions.Short.Eroica;
-                    break;
-
-                // Swan Lake (indices 4-5)
-                case 4:
-                    forte1 = "Forte Resonance: On buy of Melodious Fragment, increase your current notes by 5 times your notes per second.";
-                    forte2 = "Forte Resonance: On buy of Harmonious Fragment, increase your current notes by 10 times your notes per second.";
-                    duet = DuetDescriptions.Short.SwanLake;
-                    break;
-                case 5:
-                    forte1 = "Forte Resonance: On buy of Melodious Fragment, increase your current notes by 5 times your notes per second.";
-                    forte2 = "Forte Resonance: On buy of Harmonious Fragment, increase your current notes by 10 times your notes per second.";
-                    duet = DuetDescriptions.Short.SwanLake;
-                    break;
-
-                // La Campanella (6-7)
-                case 6:
-                    forte1 = "Forte Resonance: On craft of a minor score, give another of that minor score.";
-                    forte2 = "Forte Resonance: On craft of a minor score, increase your notes per second by 50% for the next 5 seconds.";
-                    duet = DuetDescriptions.Short.LaCampanella;
-                    break;
-                case 7:
-                    forte1 = "Forte Resonance: On craft of a minor score, give another of that minor score.";
-                    forte2 = "Forte Resonance: On craft of a minor score, increase your notes per second by 50% for the next 5 seconds.";
-                    duet = DuetDescriptions.Short.LaCampanella;
-                    break;
-
-                // Enigma (8-9)
-                case 8:
-                case 9:
-                    forte1 = "Forte Resonance: ???";
-                    forte2 = "Forte Resonance: ???";
-                    duet = DuetDescriptions.Short.Enigma;
-                    break;
-
-                // Fate (10-11)
-                case 10:
-                    forte1 = "Forte Resonance: On Fate minor craft, quintuple your notes per second for the next 10 seconds.";
-                    forte2 = "Forte Resonance: On Fate minor craft, quintuple your notes per click for the next 10 seconds.";
-                    duet = DuetDescriptions.Short.Fate;
-                    break;
-                case 11:
-                    forte1 = "Forte Resonance: On Fate minor craft, quintuple your notes per second for the next 10 seconds.";
-                    forte2 = "Forte Resonance: On Fate minor craft, quintuple your notes per click for the next 10 seconds.";
-                    duet = DuetDescriptions.Short.Fate;
-                    break;
-
-                // Ode to Joy (12-13)
-                case 12:
-                    forte1 = "Forte Resonance: Your notes per second are doubled.";
-                    forte2 = "Forte Resonance: Every 5th click makes your next click have a 33% increase in notes.";
-                    duet = DuetDescriptions.Short.OdeToJoy;
-                    break;
-                case 13:
-                    forte1 = "Forte Resonance: Your notes per second are doubled.";
-                    forte2 = "Forte Resonance: Every 5th click makes your next click have a 33% increase in notes.";
-                    duet = DuetDescriptions.Short.OdeToJoy;
-                    break;
-
-                // Dies Irae (14-15)
-                case 14:
-                case 15:
-                    forte1 = "Hellfire Rebate: Minor score crafts have 33% chance to not consume components.";
-                    forte2 = "Damnation's Gift: Each click has a 7% chance to grant a random minor component.";
-                    duet = DuetDescriptions.Short.DiesIrae;
-                    break;
-
-                // Winter (16-17)
-                case 16:
-                    forte1 = "Crystalline Shatter: Every 10th click grants notes equal to 10 seconds worth of your current NPS instantly.";
-                    forte2 = "Blizzard's Bounty: Each Harmonious purchase grants +2% NPS for 30 seconds (stacks additively, multiple purchases extend duration).";
-                    duet = DuetDescriptions.Short.Winter;
-                    break;
-                case 17:
-                    forte1 = "Crystalline Shatter: Every 10th click grants notes equal to 10 seconds worth of your current NPS instantly.";
-                    forte2 = "Blizzard's Bounty: Each Harmonious purchase grants +2% NPS for 30 seconds (stacks additively, multiple purchases extend duration).";
-                    duet = DuetDescriptions.Short.Winter;
-                    break;
-
-                default:
-                    forte1 = "Forte Resonance: <placeholder>";
-                    forte2 = "Forte Resonance: <placeholder>";
-                    duet = "Duet Resonance: <placeholder>";
-                    break;
-            }
+                0 => DuetDescriptions.Short.Moonlight,    // Moonlight (0-1)
+                1 => DuetDescriptions.Short.Eroica,       // Eroica (2-3)
+                2 => DuetDescriptions.Short.SwanLake,     // Swan Lake (4-5)
+                3 => DuetDescriptions.Short.LaCampanella, // La Campanella (6-7)
+                4 => DuetDescriptions.Short.Enigma,       // Enigma (8-9)
+                5 => DuetDescriptions.Short.Fate,         // Fate (10-11)
+                6 => DuetDescriptions.Short.OdeToJoy,     // Ode to Joy (12-13)
+                7 => DuetDescriptions.Short.DiesIrae,     // Dies Irae (14-15)
+                8 => DuetDescriptions.Short.Winter,       // Winter (16-17)
+                _ => "Duet Resonance: <placeholder>"
+            };
 
             // Determine whether both weapons of this pair are owned (duet active)
-            int pairStart = weaponIndex % 2 == 0 ? weaponIndex : weaponIndex - 1;
             bool duetActive = IsWeaponOwned(pairStart) && (pairStart + 1 < _weaponNames.Length) && IsWeaponOwned(pairStart + 1);
-            // Whether this weapon is the first in its pair (used to choose which forte line to show)
-            bool isFirstInPair = (weaponIndex % 2) == 0;
 
                 if (isUnlocked)
                 {

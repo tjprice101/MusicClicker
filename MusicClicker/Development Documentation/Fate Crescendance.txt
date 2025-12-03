@@ -1,0 +1,88 @@
+Fate — Crescendance
+
+Overview
+- This document defines the Fate Crescendance ability and the "Cosmic Modulation" stacking mechanic. Fate's system rewards periodic clicking with stacks that provide progressive power tiers, plus interactions with two Fate weapons (Astral Chainripper and Cosmic Weaver) and duet behavior.
+
+Core Mechanic: Cosmic Modulation
+- Mechanic: Every 5th click grants 1 stack of "Cosmic Modulation" and immediately increases current Notes by +10%.
+- Stacks are cumulative and can be consumed at any time for Entropic Melodies, or left to scale through tier thresholds which change player state.
+
+Stack Tiers & Effects
+- Tier 1 (1 to 4 stacks):
+  - All clicks are treated as "Entropic crit level" (guaranteed critical effects on clicks). This applies while stacks are in this range.
+- Tier 2 (5 to 9 stacks):
+  - Your Notes Per Second (NPS) is doubled while you have 5–9 stacks.
+- Tier 3 (10 to 14 stacks):
+  - All of your clicks are criticals at minimum (i.e., guaranteed baseline crits; this is a stronger or more consistent crit behavior than Tier 1).
+
+Consumption
+- You can consume any number of Cosmic Modulation stacks to immediately gain Entropic Melodies:
+  - Entropic Melodies gained = stacksConsumed * 15.
+- Bulk consumption resets the consumed stacks and yields the corresponding melody payout.
+
+Astral Chainripper (Fate I) — weapon interactions
+- While Fate Crescendance is active:
+  - For every 5 Cosmic Modulation stacks gained, award +1 stack of a secondary standing called "Symphony of the Stars".
+  - "Symphony of the Stars" stacks are stored and can be consumed at any time to increase your lowest owned minor score by +3 (useful for balancing collections).
+- Passive (Always Active):
+  - On Fate minor craft, quintuple your NPS for the next 10 seconds (instant temporary boost). This is the weapon's crafting-triggered passive.
+
+Cosmic Weaver (Fate II) — weapon interactions
+- While Fate Crescendance is active:
+  - Each stack of "Symphony of the Stars" consumed grants your next 5 clicks guaranteed Entropic crit (per stack consumed — multiple stacks can queue multiple 5-click windows or extend duration depending on implementation choice).
+- Passive (Always Active):
+  - On Fate minor craft, quintuple your NPS for the next 10 seconds (same as Astral Chainripper's crafting passive).
+
+Duet Effect (Fate)
+- Keep the current Fate Duet behavior as-is.
+- Additional Duet behavior (while the Duet ability is active only):
+  - Every 10 clicks during the Duet grants 1 stack of "Symphony of the Stars" and 1 stack of "Cosmic Modulation".
+  - Note: This additional grant can be affected by any duet reversal mechanics in the game (e.g., if the Duet reverses rewards, it may double or invert the stacks granted). Implement the duet-only grants so they are subject to duet-specific multipliers/reversals.
+
+Examples & Play Patterns
+- Rapid accrual: Click consistently — every 5th click gives +10% Notes and +1 Cosmic Modulation. At 5 stacks you gain doubled NPS; at 10 stacks you shift into stronger guaranteed crits. Consume stacks when you need Entropic Melodies or to trigger Symphony of the Stars conversion.
+- Weapon synergy: With Astral Chainripper, every 5 stacks also increments Symphony stacks, letting you bank "minor increases" to apply strategically. With Cosmic Weaver, consuming those Symphony stacks converts into reliable click crit windows.
+- Craft-trigger synergy: Both Fate weapons quintuple NPS on minor craft, allowing players to time crafts to amplify click windows or accelerate stack accumulation.
+
+UI / UX Suggestions
+- Display:
+  - `Cosmic Modulation` counter visible on Fate weapon panel and in the top HUD when Fate is equipped or Crescendance is active.
+  - `Symphony of the Stars` counter shown separately (small star icon) with a tooltip describing "Consume to increase lowest owned minor by +3".
+- Feedback:
+  - On every 5th click, show a floating +10% Notes text and an incrementing stack animation for Cosmic Modulation.
+  - When thresholds are crossed (5, 10 stacks), show a minor HUD flash indicating "NPS doubled" or "Guaranteed Crits Active".
+  - On consuming stacks, animate Entropic Melodies flying into the melody counter.
+
+Suggested GameState fields (implementation-ready)
+- `int CosmicModulationStacks` — counts current stacks (persisted in GameState).
+- `int SymphonyOfTheStarsStacks` — secondary stacks awarded per 5 Cosmic stacks.
+- `int FateClickCounter` — used to detect every-5th-click intervals (if you prefer a separate counter vs modulus arithmetic).
+- `DateTime? CosmicModulationLastGain` — optional timestamp for expiry/decay logic.
+
+Implementation Roadmap (developer steps)
+1) Add counters to `GameState` for `CosmicModulationStacks`, `SymphonyOfTheStarsStacks`, and `FateClickCounter`.
+2) Hook the main click handler to increment `FateClickCounter` when Fate Crescendance is active/when Fate is equipped; every 5th click:
+   - Increase `CosmicModulationStacks` by 1.
+   - Apply immediate +10% current Notes (atomic add).
+   - If `CosmicModulationStacks` mod 5 == 0, increment `SymphonyOfTheStarsStacks` by 1 (when Astral Chainripper active).
+3) Implement stack consumption handlers:
+   - `Fate_ConsumeStacksForMelodies(GameState, stacksToConsume)` → give stacksToConsume * 15 Entropic Melodies and decrement stacks.
+   - `Fate_ConsumeSymphonyStack(GameState)` → increase lowest owned minor by +3.
+4) Implement weapon interactions in `WeaponAbilities.cs`: when a minor craft occurs, set temporary NPS quintuple boost flags/expiry for 10s.
+5) Update Duet click handlers to add the duet-only every-10-click grants when duet is active.
+6) Add UI elements and HUD feedback in `Views` and `UIUpdater`.
+7) Playtest and tune stack thresholds, melody payout, and passive/craft-trigger values.
+
+Balancing & Safety Notes
+- Doubling NPS and quintuple NPS buffs are powerful; ensure they are temporary and have clear expiries. Consider cooldowns or small caps on stacking.
+- Symphony-of-the-Stars conversion (lowest minor +3) is strong — ensure it isn't exploited by repeatedly boosting the same minimal minor; consider a cooldown or cap per minute.
+- Duet interaction that grants both stacks every 10 clicks can quickly accelerate progression; confirm it's gated by duet duration and cooldowns as required.
+
+Open Questions
+- Should `CosmicModulationStacks` decay over time if not used? (Recommendation: optional expiry after e.g., 10 minutes.)
+- Should the duo weapon NPS boost on minor craft stack or refresh the timer? (Recommendation: allow refresh but not additive stacking beyond a safe max multiplier.)
+
+File location & name
+- File created as `Development Documentation/Fate Crescendance.txt` next to other Crescendance docs.
+
+— End of Fate Crescendance spec —
