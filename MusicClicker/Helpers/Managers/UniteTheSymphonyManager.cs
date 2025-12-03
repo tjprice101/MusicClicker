@@ -44,6 +44,22 @@ namespace MusicClicker
                     }
                 }
 
+                // Check Eulogy of the Moon refund (25% normally, 50% during nighttime)
+                if (gameState.EulogyOfTheMoon && 
+                    (gameState.CurrentResonatedWeapon1 == "EulogyOfTheMoon" || gameState.CurrentResonatedWeapon2 == "EulogyOfTheMoon"))
+                {
+                    bool isNighttime = MusicClicker.Armory.WeaponAbilities.IsNighttime();
+                    double refundChance = isNighttime ? 0.50 : 0.25;
+                    var random = new Random();
+                    if (random.NextDouble() < refundChance)
+                    {
+                        gameState.MoonlightMinorKeys++;
+                        gameState.MoonlightMinorScales++;
+                        gameState.MoonlightMinorProgressions++;
+                        gameState.MelodiousOwned += 10;
+                    }
+                }
+
                 owned++;
 
                 // Trigger Symphony of Bells ability (La Campanella I)
@@ -116,6 +132,22 @@ namespace MusicClicker
                     (gameState.CurrentResonatedWeapon1 == "SevenCircles" || gameState.CurrentResonatedWeapon2 == "SevenCircles"))
                 {
                     if (MusicClicker.Armory.WeaponAbilities.SevenCircles_CheckMinorCraftRefund())
+                    {
+                        gameState.EroicaMinorKeys++;
+                        gameState.EroicaMinorScales++;
+                        gameState.EroicaMinorProgressions++;
+                        gameState.MelodiousOwned += 15;
+                    }
+                }
+
+                // Check Eulogy of the Moon refund (25% normally, 50% during nighttime)
+                if (gameState.EulogyOfTheMoon && 
+                    (gameState.CurrentResonatedWeapon1 == "EulogyOfTheMoon" || gameState.CurrentResonatedWeapon2 == "EulogyOfTheMoon"))
+                {
+                    bool isNighttime = MusicClicker.Armory.WeaponAbilities.IsNighttime();
+                    double refundChance = isNighttime ? 0.50 : 0.25;
+                    var random = new Random();
+                    if (random.NextDouble() < refundChance)
                     {
                         gameState.EroicaMinorKeys++;
                         gameState.EroicaMinorScales++;
@@ -201,6 +233,22 @@ namespace MusicClicker
                     }
                 }
 
+                // Check Eulogy of the Moon refund (25% normally, 50% during nighttime)
+                if (gameState.EulogyOfTheMoon && 
+                    (gameState.CurrentResonatedWeapon1 == "EulogyOfTheMoon" || gameState.CurrentResonatedWeapon2 == "EulogyOfTheMoon"))
+                {
+                    bool isNighttime = MusicClicker.Armory.WeaponAbilities.IsNighttime();
+                    double refundChance = isNighttime ? 0.50 : 0.25;
+                    var random = new Random();
+                    if (random.NextDouble() < refundChance)
+                    {
+                        gameState.SwanLakeMinorKeys++;
+                        gameState.SwanLakeMinorScales++;
+                        gameState.SwanLakeMinorProgressions++;
+                        gameState.MelodiousOwned += 20;
+                    }
+                }
+
                 owned++;
 
                 // Trigger Symphony of Bells ability (La Campanella I)
@@ -270,6 +318,22 @@ namespace MusicClicker
                     (gameState.CurrentResonatedWeapon1 == "SevenCircles" || gameState.CurrentResonatedWeapon2 == "SevenCircles"))
                 {
                     if (MusicClicker.Armory.WeaponAbilities.SevenCircles_CheckMinorCraftRefund())
+                    {
+                        gameState.LaCampanellaMinorKeys++;
+                        gameState.LaCampanellaMinorScales++;
+                        gameState.LaCampanellaMinorProgressions++;
+                        gameState.MelodiousOwned += 25;
+                    }
+                }
+
+                // Check Eulogy of the Moon refund (25% normally, 50% during nighttime)
+                if (gameState.EulogyOfTheMoon && 
+                    (gameState.CurrentResonatedWeapon1 == "EulogyOfTheMoon" || gameState.CurrentResonatedWeapon2 == "EulogyOfTheMoon"))
+                {
+                    bool isNighttime = MusicClicker.Armory.WeaponAbilities.IsNighttime();
+                    double refundChance = isNighttime ? 0.50 : 0.25;
+                    var random = new Random();
+                    if (random.NextDouble() < refundChance)
                     {
                         gameState.LaCampanellaMinorKeys++;
                         gameState.LaCampanellaMinorScales++;
@@ -355,6 +419,22 @@ namespace MusicClicker
                     }
                 }
 
+                // Check Eulogy of the Moon refund (25% normally, 50% during nighttime)
+                if (gameState.EulogyOfTheMoon && 
+                    (gameState.CurrentResonatedWeapon1 == "EulogyOfTheMoon" || gameState.CurrentResonatedWeapon2 == "EulogyOfTheMoon"))
+                {
+                    bool isNighttime = MusicClicker.Armory.WeaponAbilities.IsNighttime();
+                    double refundChance = isNighttime ? 0.50 : 0.25;
+                    var random = new Random();
+                    if (random.NextDouble() < refundChance)
+                    {
+                        gameState.EnigmaMinorKeys++;
+                        gameState.EnigmaMinorScales++;
+                        gameState.EnigmaMinorProgressions++;
+                        gameState.MelodiousOwned += 30;
+                    }
+                }
+
                 owned++;
 
                 // Trigger Symphony of Bells ability (La Campanella I)
@@ -429,6 +509,22 @@ namespace MusicClicker
                         gameState.FateMinorScales++;
                         gameState.FateMinorProgressions++;
                         gameState.MelodiousOwned += 35;
+                    }
+                }
+
+                // Check Eulogy of the Moon refund (25% normally, 50% during nighttime)
+                if (gameState.EulogyOfTheMoon && 
+                    (gameState.CurrentResonatedWeapon1 == "EulogyOfTheMoon" || gameState.CurrentResonatedWeapon2 == "EulogyOfTheMoon"))
+                {
+                    bool isNighttime = MusicClicker.Armory.WeaponAbilities.IsNighttime();
+                    double refundChance = isNighttime ? 0.50 : 0.25;
+                    var random = new Random();
+                    if (random.NextDouble() < refundChance)
+                    {
+                        gameState.FateMinorKeys++;
+                        gameState.FateMinorScales++;
+                        gameState.FateMinorProgressions++;
+                        gameState.HarmoniousOwned += 10;
                     }
                 }
 
@@ -508,6 +604,22 @@ namespace MusicClicker
                         gameState.OdeToJoyMinorScales++;
                         gameState.OdeToJoyMinorProgressions++;
                         gameState.MelodiousOwned += 40;
+                    }
+                }
+
+                // Check Eulogy of the Moon refund (25% normally, 50% during nighttime)
+                if (gameState.EulogyOfTheMoon && 
+                    (gameState.CurrentResonatedWeapon1 == "EulogyOfTheMoon" || gameState.CurrentResonatedWeapon2 == "EulogyOfTheMoon"))
+                {
+                    bool isNighttime = MusicClicker.Armory.WeaponAbilities.IsNighttime();
+                    double refundChance = isNighttime ? 0.50 : 0.25;
+                    var random = new Random();
+                    if (random.NextDouble() < refundChance)
+                    {
+                        gameState.OdeToJoyMinorKeys++;
+                        gameState.OdeToJoyMinorScales++;
+                        gameState.OdeToJoyMinorProgressions++;
+                        gameState.HarmoniousOwned += 15;
                     }
                 }
 

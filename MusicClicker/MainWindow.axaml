@@ -45,403 +45,362 @@
 
     <Grid>
         <!-- Main Screen -->
-        <Grid x:Name="MainScreen">
-            <!-- Top-left Save button -->
-<StackPanel HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Orientation="Vertical"
-            Spacing="6"
-            Margin="12,12,0,0"
-            Panel.ZIndex="500">
+        <Grid x:Name="MainScreen" ZIndex="1">
+            <!-- Grid Structure -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="120" />     <!-- Top Bar -->
+                <RowDefinition Height="40" />      <!-- Spacer to lower panels -->
+                <RowDefinition Height="*" />       <!-- Main Content Area -->
+                <RowDefinition Height="Auto" />    <!-- Crescendance Panel -->
+                <RowDefinition Height="155" />     <!-- Bottom Button Bar -->
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="280" />   <!-- Left Panel (slightly wider) -->
+                <ColumnDefinition Width="*" />     <!-- Center Area -->
+                <ColumnDefinition Width="280" />   <!-- Right Panel (slightly wider) -->
+            </Grid.ColumnDefinitions>
 
-    <Border CornerRadius="4">
-        <Border.Effect>
-            <DropShadowEffect Color="Black" 
-                              BlurRadius="15" 
-                              Opacity="0.7"
-                              OffsetX="0"
-                              OffsetY="0" />
-        </Border.Effect>
-        <Button x:Name="TopSaveButton"
-                Width="250"     
-                Height="140"  
-                Background="Transparent"
-                BorderThickness="0"
-                Padding="0">
-            <Image Source="avares://MusicClicker/Assets/SaveIcon.png"
-                   Stretch="Uniform" IsHitTestVisible="False" />
-        </Button>
-    </Border>
+            <!-- ==================== TOP BAR (Row 0, All Columns) ==================== -->
+            <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" 
+                    Background="#66000000" 
+                    CornerRadius="8" 
+                    Margin="12,12,12,0"
+                    BorderBrush="#FFFF69B4"
+                    BorderThickness="3">
+                <Grid Margin="12,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
-    <TextBlock x:Name="SaveStatusText"
-               Text=""
-               Foreground="White"
-               FontSize="14"
-               HorizontalAlignment="Left" />
-</StackPanel>
-
-
-            <!-- Top-right Upgrades button (image) -->
-            <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal" Spacing="8" Margin="0,12,12,0" Panel.ZIndex="500">
-                <Border CornerRadius="4">
-                    <Border.Effect>
-                        <DropShadowEffect Color="Black" 
-                                          BlurRadius="15" 
-                                          Opacity="0.7"
-                                          OffsetX="0"
-                                          OffsetY="0" />
-                    </Border.Effect>
-                    <Button x:Name="TopOpenUpgradesButton" Width="250" Height="140" Background="Transparent" BorderThickness="0" Padding="0">
-                        <Image Source="avares://MusicClicker/Assets/UpgradeMenu.png" Stretch="UniformToFill" Width="250" Height="140" IsHitTestVisible="False" />
-                    </Button>
-                </Border>
-            </StackPanel>
-
-            <!-- Bottom-right Duet Ability button -->
-            <Border x:Name="DuetAbilityButtonBorder"
-                    HorizontalAlignment="Right" 
-                    VerticalAlignment="Bottom" 
-                    Margin="0,0,20,20" 
-                    ZIndex="500"
-                    CornerRadius="15"
-                    Width="150"
-                    Height="150"
-                    Background="#DD1a1a2e"
-                    IsVisible="False">
-                <Border.Effect>
-                    <DropShadowEffect Color="#e94560" 
-                                      BlurRadius="25" 
-                                      Opacity="0.8"
-                                      OffsetX="0"
-                                      OffsetY="0" />
-                </Border.Effect>
-                <Button x:Name="OpenDuetAbilityButton" 
-                        Background="Transparent" 
-                        BorderThickness="0"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        Cursor="Hand">
-                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="8">
-                        <TextBlock Text="⚡" 
-                                   FontSize="48" 
-                                   HorizontalAlignment="Center"
-                                   Foreground="#e94560">
-                            <TextBlock.Effect>
-                                <DropShadowEffect Color="Black" BlurRadius="8" Opacity="0.8" />
-                            </TextBlock.Effect>
-                        </TextBlock>
-                        <TextBlock Text="Duet Ability" 
-                                   FontSize="14" 
-                                   FontWeight="Bold"
-                                   HorizontalAlignment="Center"
-                                   TextAlignment="Center"
+                    <!-- Save Button (Left) -->
+                    <StackPanel Grid.Column="0" Orientation="Vertical" Spacing="4">
+                        <Border CornerRadius="8">
+                            <Border.Effect>
+                                <DropShadowEffect Color="Black" BlurRadius="12" Opacity="0.7" OffsetX="0" OffsetY="0" />
+                            </Border.Effect>
+                            <Button x:Name="TopSaveButton"
+                                    Width="170"
+                                    Height="85"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Padding="0">
+                                <Image Source="avares://MusicClicker/Assets/SaveIcon.png"
+                                       Stretch="Uniform" IsHitTestVisible="False" />
+                            </Button>
+                        </Border>
+                        <TextBlock x:Name="SaveStatusText"
+                                   Text=""
                                    Foreground="White"
-                                   TextWrapping="Wrap">
-                            <TextBlock.Effect>
-                                <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.7" />
-                            </TextBlock.Effect>
-                        </TextBlock>
+                                   FontSize="12"
+                                   FontWeight="SemiBold"
+                                   HorizontalAlignment="Center" />
                     </StackPanel>
-                </Button>
-            </Border>
 
-            <!-- Center Content -->
-            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" /> <!-- Title and Notes -->
-                    <RowDefinition Height="Auto" /> <!-- Click Button with Carousel -->
-                    <RowDefinition Height="Auto" /> <!-- Upgrades Button -->
-                </Grid.RowDefinitions>
+                    <!-- Stats Display (Center) -->
+                    <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="6">
+                        <TextBlock Text="Magnum Opus"
+                                   FontSize="24"
+                                   Foreground="#FFFF69B4"
+                                   HorizontalAlignment="Center"
+                                   FontWeight="Bold" />
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="20">
+                            <TextBlock x:Name="NotesText"
+                                       Text="Notes: 0"
+                                       FontSize="18"
+                                       FontWeight="SemiBold"
+                                       Foreground="White" />
+                            <TextBlock x:Name="NpsText"
+                                       Text="NPS: 0"
+                                       FontSize="18"
+                                       FontWeight="SemiBold"
+                                       Foreground="White" />
+                        </StackPanel>
+                    </StackPanel>
 
-                <!-- Title and Notes -->
-                <StackPanel Grid.Row="0" HorizontalAlignment="Center" Spacing="10" Margin="0,0,0,30">
-                    <TextBlock Text="Magnum Opus"
-                               FontSize="36"
-                               Foreground="White"
-                               HorizontalAlignment="Center"
-                               FontWeight="Bold" />
-                    <TextBlock x:Name="NotesText"
-                               Text="Notes: 0"
-                               FontSize="28"
-                               Foreground="White"
-                               HorizontalAlignment="Center" />
-                    <TextBlock x:Name="NpsText"
-                               Text="Notes Per Second: 0"
-                               FontSize="22"
-                               Foreground="White"
-                               HorizontalAlignment="Center" />
-                </StackPanel>
-
-                <!-- Main Click Button with Carousel Behind It -->
-                <Grid Grid.Row="1"
-                      Width="1400"
-                      Height="1400"
-                      HorizontalAlignment="Center"
-                      VerticalAlignment="Center"
-                      Margin="0,-150,0,0">
-
-                    <!-- Carousel Canvas (Behind) -->
-                    <Canvas x:Name="CarouselCanvas"
-                            Width="1400"
-                            Height="1400"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            ClipToBounds="False"
-                            Background="Transparent">
-
-                        <!-- Button 0: Fragmentation -->
-                        <Border Canvas.Left="503" Canvas.Top="100" CornerRadius="4">
-                            <Border.Effect>
-                                <DropShadowEffect Color="Black" 
-                                                  BlurRadius="15" 
-                                                  Opacity="0.7"
-                                                  OffsetX="0"
-                                                  OffsetY="0" />
-                            </Border.Effect>
-                            <Button x:Name="FragmentationButton"
-                                    Width="374"
-                                    Height="213">
-                                <Image Source="avares://MusicClicker/Assets/Fragmentation Button-min.png"
-                                       Stretch="UniformToFill" />
-                            </Button>
-                        </Border>
-
-                        <!-- Button 1: Resonance -->
-                        <Border Canvas.Left="503" Canvas.Top="100" CornerRadius="4">
-                            <Border.Effect>
-                                <DropShadowEffect Color="Black" 
-                                                  BlurRadius="15" 
-                                                  Opacity="0.7"
-                                                  OffsetX="0"
-                                                  OffsetY="0" />
-                            </Border.Effect>
-                            <Button x:Name="ResonanceButton"
-                                    Width="374"
-                                    Height="213">
-                                <Image Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [C690BBF]-min.png"
-                                       Stretch="UniformToFill" />
-                            </Button>
-                        </Border>
-
-                        <!-- Button 2: Melody -->
-                        <Border Canvas.Left="503" Canvas.Top="100" CornerRadius="4">
-                            <Border.Effect>
-                                <DropShadowEffect Color="Black" 
-                                                  BlurRadius="15" 
-                                                  Opacity="0.7"
-                                                  OffsetX="0"
-                                                  OffsetY="0" />
-                            </Border.Effect>
-                            <Button x:Name="MelodyButton"
-                                    Width="374"
-                                    Height="213">
-                                <Image Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [2299EA4]-min.png"
-                                       Stretch="UniformToFill" />
-                            </Button>
-                        </Border>
-
-                        <!-- Button 3: Harmony -->
-                        <Border Canvas.Left="503" Canvas.Top="100" CornerRadius="4">
-                            <Border.Effect>
-                                <DropShadowEffect Color="Black" 
-                                                  BlurRadius="15" 
-                                                  Opacity="0.7"
-                                                  OffsetX="0"
-                                                  OffsetY="0" />
-                            </Border.Effect>
-                            <Button x:Name="HarmonyButton"
-                                    Width="374"
-                                    Height="213">
-                                <Image Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [5A28B4B]-min.png"
-                                       Stretch="UniformToFill" />
-                            </Button>
-                        </Border>
-
-                        <!-- Button 4: Tempo Resonate -->
-                        <Border Canvas.Left="503" Canvas.Top="100" CornerRadius="4">
-                            <Border.Effect>
-                                <DropShadowEffect Color="Black" 
-                                                  BlurRadius="15" 
-                                                  Opacity="0.7"
-                                                  OffsetX="0"
-                                                  OffsetY="0" />
-                            </Border.Effect>
-                            <Button x:Name="TempoResonateButton"
-                                    Width="374"
-                                    Height="213">
-                                <Image Source="avares://MusicClicker/Assets/TempoResonate.png"
-                                       Stretch="UniformToFill" />
-                            </Button>
-                        </Border>
-
-                        <!-- Button 5: Eternal Modulation -->
-                        <Border Canvas.Left="503" Canvas.Top="100" CornerRadius="4">
-                            <Border.Effect>
-                                <DropShadowEffect Color="Black" 
-                                                  BlurRadius="15" 
-                                                  Opacity="0.7"
-                                                  OffsetX="0"
-                                                  OffsetY="0" />
-                            </Border.Effect>
-                            <Button x:Name="EternalModulationButton"
-                                    Width="374"
-                                    Height="213">
-                                <Image Source="avares://MusicClicker/Assets/EternalModulation.png"
-                                       Stretch="UniformToFill" />
-                            </Button>
-                        </Border>
-
-                        <!-- Button 6: Armory of Forte -->
-                        <Border Canvas.Left="503" Canvas.Top="100" CornerRadius="4">
-                            <Border.Effect>
-                                <DropShadowEffect Color="Black" 
-                                                  BlurRadius="15" 
-                                                  Opacity="0.7"
-                                                  OffsetX="0"
-                                                  OffsetY="0" />
-                            </Border.Effect>
-                                <Button x:Name="ArmoryOfForteButton"
-                                    Width="374"
-                                    Height="213">
-                                <Image Source="avares://MusicClicker/Assets/ArmoryofForte.png"
-                                       Stretch="UniformToFill" />
-                            </Button>
-                        </Border>
-
-                        <!-- Button 7: Symphonic Gallery -->
-                        <Border Canvas.Left="503" Canvas.Top="100" CornerRadius="4">
-                            <Border.Effect>
-                                <DropShadowEffect Color="Black" 
-                                                  BlurRadius="15" 
-                                                  Opacity="0.7"
-                                                  OffsetX="0"
-                                                  OffsetY="0" />
-                            </Border.Effect>
-                            <Button x:Name="SymphonicGalleryButton"
-                                    Width="374"
-                                    Height="213">
-                                <Image Source="avares://MusicClicker/Assets/SymphonicGallery.png"
-                                       Stretch="UniformToFill" />
-                            </Button>
-                        </Border>
-
-
-                        
-
-                    </Canvas>
-
-                    <!-- Main Click Button (with shadow like carousel buttons) -->
-                    <Border HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,180,0,0" CornerRadius="110" ZIndex="200">
+                    <!-- Upgrades Button (Right) -->
+                    <Border Grid.Column="2" CornerRadius="8">
                         <Border.Effect>
-                            <DropShadowEffect Color="Black" 
-                                              BlurRadius="15" 
-                                              Opacity="0.7"
-                                              OffsetX="0"
-                                              OffsetY="0" />
+                            <DropShadowEffect Color="Black" BlurRadius="12" Opacity="0.7" OffsetX="0" OffsetY="0" />
                         </Border.Effect>
-                        <Button x:Name="ClickButton"
-                                Width="220"
-                                Height="220"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Top"
-                                Background="Transparent"
-                                BorderThickness="0"
-                                Padding="0"
-                                PointerMoved="ClickButton_PointerMoved">
-                            <Image Source="avares://MusicClicker/Assets/Music Game Assets [A961E2A]-min.png"
-                                   Stretch="Uniform" IsHitTestVisible="False" />
+                        <Button x:Name="TopOpenUpgradesButton" 
+                                Width="170" 
+                                Height="85" 
+                                Background="Transparent" 
+                                BorderThickness="0" 
+                                Padding="0">
+                            <Image Source="avares://MusicClicker/Assets/UpgradeMenu.png" 
+                                   Stretch="Uniform" 
+                                   IsHitTestVisible="False" />
                         </Button>
                     </Border>
-                    
-                    <!-- Floating text canvas for click feedback -->
-                    <Canvas x:Name="FloatingTextCanvas"
-                            IsHitTestVisible="False"
-                            ZIndex="300" />
                 </Grid>
+            </Border>
 
-                <!-- Upgrades Button -->
-                <Border Grid.Row="2" HorizontalAlignment="Center" Margin="0,30,0,0" CornerRadius="4">
+            <!-- ==================== LEFT PANEL (Row 2, Column 0) ==================== -->
+            <Border Grid.Row="2" Grid.Column="0" 
+                    Background="#66000000"
+                    BorderBrush="#FFFF69B4"
+                    BorderThickness="3"
+                    CornerRadius="8"
+                    Margin="12,8,6,8"
+                    ZIndex="2">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Spacing="6" Margin="10">
+                        <!-- Fragmentation Button -->
+                        <Button x:Name="FragmentationButton"
+                                Width="231"
+                                Height="130"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Padding="0">
+                            <Image Source="avares://MusicClicker/Assets/Fragmentation Button-min.png"
+                                   Stretch="Uniform" />
+                        </Button>
+
+                        <!-- Resonance Button -->
+                        <Button x:Name="ResonanceButton"
+                                Width="231"
+                                Height="130"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Padding="0">
+                            <Image Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [C690BBF]-min.png"
+                                   Stretch="Uniform" />
+                        </Button>
+
+                        <!-- Melody Button -->
+                        <Button x:Name="MelodyButton"
+                                Width="231"
+                                Height="130"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Padding="0">
+                            <Image Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [2299EA4]-min.png"
+                                   Stretch="Uniform" />
+                        </Button>
+
+                        <!-- Harmony Button -->
+                        <Button x:Name="HarmonyButton"
+                                Width="231"
+                                Height="130"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Padding="0">
+                            <Image Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [5A28B4B]-min.png"
+                                   Stretch="Uniform" />
+                        </Button>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+
+            <!-- ==================== CENTER AREA (Row 2, Column 1) ==================== -->
+            <Grid Grid.Row="2" Grid.Column="1" Margin="6,8">
+                <!-- Click Button -->
+                <Border HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="75">
                     <Border.Effect>
-                        <DropShadowEffect Color="Black" 
-                                          BlurRadius="15" 
-                                          Opacity="0.7"
-                                          OffsetX="0"
-                                          OffsetY="0" />
+                        <DropShadowEffect Color="Black" BlurRadius="15" Opacity="0.7" OffsetX="0" OffsetY="0" />
                     </Border.Effect>
-                    <Button x:Name="OpenUpgradesButton"
-                            Content="Upgrades"
-                            Width="250"
-                            Height="140"
-                            Background="#55000000"
-                            Foreground="White"
-                            FontSize="20"
-                            HorizontalAlignment="Center"
-                            Margin="0,0,0,0" />
-                </Border>
-            </Grid>
-            
-            <!-- Cacophonic Dreams Button - Bottom Left Corner -->
-            <Border HorizontalAlignment="Left"
-                    VerticalAlignment="Bottom"
-                    Margin="20,0,0,20"
-                    CornerRadius="4">
-                <Border.Effect>
-                    <DropShadowEffect Color="Black" BlurRadius="15" Opacity="0.7" OffsetX="0" OffsetY="0" />
-                </Border.Effect>
-                <Grid Width="320" Height="180">
-                    <Button x:Name="CacophonicDreamsButton"
-                            Width="320"
-                            Height="180"
+                    <Button x:Name="ClickButton"
+                            Width="220"
+                            Height="220"
                             Background="Transparent"
                             BorderThickness="0"
                             Padding="0"
-                            IsEnabled="False"
-                            Opacity="0.4">
-                        <Image Source="avares://MusicClicker/Assets/CacophonicDreamsBUTTON.jpg"
-                               Stretch="UniformToFill" />
+                            PointerMoved="ClickButton_PointerMoved">
+                        <Image Source="avares://MusicClicker/Assets/Music Game Assets [A961E2A]-min.png"
+                               Stretch="Uniform" IsHitTestVisible="False" />
                     </Button>
-                    
-                    <!-- Lock overlay -->
-                    <Border x:Name="CacophonicDreamsLockOverlay"
-                            Background="#AA000000"
-                            CornerRadius="4"
-                            Width="320"
-                            Height="180"
-                            IsVisible="True">
-                        <StackPanel Orientation="Vertical" 
-                                    HorizontalAlignment="Center" 
-                                    VerticalAlignment="Center"
-                                    Spacing="6">
-                            <TextBlock Text="🔒" 
-                                       FontSize="28" 
-                                       HorizontalAlignment="Center" 
-                                       Foreground="White" />
-                            <TextBlock Text="Needs 1 Trillion Notes Per Second" 
-                                       FontSize="14" 
-                                       FontWeight="Bold" 
-                                       HorizontalAlignment="Center" 
-                                       Foreground="White" 
-                                       TextAlignment="Center" />
-                            <TextBlock Text="to Unlock" 
-                                       FontSize="12" 
-                                       HorizontalAlignment="Center" 
-                                       Foreground="#CCFFFFFF" 
-                                       TextAlignment="Center" />
-                        </StackPanel>
-                    </Border>
-                </Grid>
+                </Border>
+                
+                <!-- Floating text canvas for click feedback -->
+                <Canvas x:Name="FloatingTextCanvas"
+                        IsHitTestVisible="False"
+                        ZIndex="300" />
+            </Grid>
+
+            <!-- ==================== RIGHT PANEL (Row 2, Column 2) ==================== -->
+            <Border Grid.Row="2" Grid.Column="2"
+                    Background="#66000000"
+                    BorderBrush="#FFFF69B4"
+                    BorderThickness="3"
+                    CornerRadius="8"
+                    Margin="6,8,12,8"
+                    ZIndex="2">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Spacing="6" Margin="10">
+                        <!-- Duet Ability Button -->
+                        <Border x:Name="DuetAbilityButtonBorder"
+                                CornerRadius="8"
+                                Background="#DD1a1a2e"
+                                IsVisible="False">
+                            <Border.Effect>
+                                <DropShadowEffect Color="#e94560" BlurRadius="25" Opacity="0.8" OffsetX="0" OffsetY="0" />
+                            </Border.Effect>
+                            <Button x:Name="OpenDuetAbilityButton" 
+                                    Width="147"
+                                    Height="147"
+                                    Background="Transparent" 
+                                    BorderThickness="0"
+                                    Cursor="Hand">
+                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="6">
+                                    <TextBlock Text="⚡" 
+                                               FontSize="46" 
+                                               HorizontalAlignment="Center"
+                                               Foreground="#e94560">
+                                        <TextBlock.Effect>
+                                            <DropShadowEffect Color="Black" BlurRadius="8" Opacity="0.8" />
+                                        </TextBlock.Effect>
+                                    </TextBlock>
+                                    <TextBlock Text="Duet Ability" 
+                                               FontSize="13" 
+                                               FontWeight="Bold"
+                                               HorizontalAlignment="Center"
+                                               TextAlignment="Center"
+                                               Foreground="White"
+                                               TextWrapping="Wrap">
+                                        <TextBlock.Effect>
+                                            <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.7" />
+                                        </TextBlock.Effect>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Button>
+                        </Border>
+
+                        <!-- Tempo Resonate Button -->
+                        <Button x:Name="TempoResonateButton"
+                                Width="231"
+                                Height="130"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Padding="0">
+                            <Image Source="avares://MusicClicker/Assets/TempoResonate.png"
+                                   Stretch="Uniform" />
+                        </Button>
+
+                        <!-- Eternal Modulation Button -->
+                        <Button x:Name="EternalModulationButton"
+                                Width="231"
+                                Height="130"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Padding="0">
+                            <Image Source="avares://MusicClicker/Assets/EternalModulation.png"
+                                   Stretch="Uniform" />
+                        </Button>
+                    </StackPanel>
+                </ScrollViewer>
             </Border>
-            
-            <!-- Crescendance Info Panel (Bottom Center) -->
+
+            <!-- ==================== BOTTOM BAR (Row 4, All Columns) ==================== -->
+            <Border Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3"
+                    Background="#66000000"
+                    BorderBrush="#FFFF69B4"
+                    BorderThickness="3"
+                    CornerRadius="8"
+                    Margin="12,0,12,12">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="15" Margin="10">
+                    <!-- Cacophonic Dreams Button -->
+                    <Border CornerRadius="6">
+                        <Border.Effect>
+                            <DropShadowEffect Color="Black" BlurRadius="12" Opacity="0.8" OffsetX="0" OffsetY="0" />
+                        </Border.Effect>
+                        <Grid Width="240" Height="135">
+                            <Button x:Name="CacophonicDreamsButton"
+                                    Width="240"
+                                    Height="135"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Padding="0"
+                                    IsEnabled="False"
+                                    Opacity="0.4">
+                                <Image Source="avares://MusicClicker/Assets/CacophonicDreamsBUTTON.jpg"
+                                       Stretch="UniformToFill" />
+                            </Button>
+                            
+                            <!-- Lock overlay -->
+                            <Border x:Name="CacophonicDreamsLockOverlay"
+                                    Background="#AA000000"
+                                    CornerRadius="6"
+                                    Width="240"
+                                    Height="135"
+                                    IsVisible="True">
+                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="1">
+                                    <TextBlock Text="🔒" FontSize="16" HorizontalAlignment="Center" Foreground="White" />
+                                    <TextBlock x:Name="CacophonicDreamsLockText"
+                                               Text="Locked"
+                                               Foreground="White"
+                                               FontSize="9"
+                                               HorizontalAlignment="Center" />
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </Border>
+
+                    <!-- Armory of Forte Button -->
+                    <Border CornerRadius="6">
+                        <Border.Effect>
+                            <DropShadowEffect Color="Black" BlurRadius="12" Opacity="0.8" OffsetX="0" OffsetY="0" />
+                        </Border.Effect>
+                        <Button x:Name="ArmoryOfForteButton"
+                                Width="240"
+                                Height="135"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Padding="0">
+                            <Image Source="avares://MusicClicker/Assets/ArmoryofForte.png"
+                                   Stretch="Uniform" />
+                        </Button>
+                    </Border>
+
+                    <!-- Symphonic Gallery Button -->
+                    <Border CornerRadius="6">
+                        <Border.Effect>
+                            <DropShadowEffect Color="Black" BlurRadius="12" Opacity="0.8" OffsetX="0" OffsetY="0" />
+                        </Border.Effect>
+                        <Button x:Name="SymphonicGalleryButton"
+                                Width="240"
+                                Height="135"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Padding="0">
+                            <Image Source="avares://MusicClicker/Assets/SymphonicGallery.png"
+                                   Stretch="Uniform" />
+                        </Button>
+                    </Border>
+
+                    <!-- Fragmentation (Bottom) Button -->
+                    <Border CornerRadius="6">
+                        <Border.Effect>
+                            <DropShadowEffect Color="Black" BlurRadius="12" Opacity="0.8" OffsetX="0" OffsetY="0" />
+                        </Border.Effect>
+                        <Button x:Name="BottomFragmentationButton"
+                                Width="240"
+                                Height="135"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Padding="0">
+                            <Image Source="avares://MusicClicker/Assets/Fragmentation Button-min.png"
+                                   Stretch="Uniform" />
+                        </Button>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <!-- Hidden OpenUpgradesButton for backward compatibility -->
+            <Button x:Name="OpenUpgradesButton" IsVisible="False" Width="0" Height="0" />
+
+            <!-- ==================== CRESCENDANCE PANEL (Row 3, All Columns) ==================== -->
             <Border x:Name="MainScreenCrescendancePanel"
+                    Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3"
                     Background="#DD000000"
-                    BorderBrush="Gold"
-                    BorderThickness="2"
+                    BorderBrush="#FFFF69B4"
+                    BorderThickness="3"
                     CornerRadius="8"
                     Padding="12"
                     HorizontalAlignment="Center"
-                    VerticalAlignment="Bottom"
-                    Margin="0,0,0,80"
+                    Margin="0,0,0,12"
                     Width="850"
                     IsVisible="False"
                     ZIndex="400">
@@ -450,9 +409,13 @@
                                Text="Crescendance: [Score Name]"
                                FontSize="18"
                                FontWeight="Bold"
-                               Foreground="Gold"
+                               Foreground="White"
                                HorizontalAlignment="Center"
-                               Margin="0,0,0,4" />
+                               Margin="0,0,0,4">
+                        <TextBlock.Effect>
+                            <DropShadowEffect Color="Black" BlurRadius="8" Opacity="0.9" />
+                        </TextBlock.Effect>
+                    </TextBlock>
                     
                     <TextBlock x:Name="MainCrescendanceInfoText"
                                Text="Crescendance information will appear here."
@@ -460,7 +423,11 @@
                                Foreground="White"
                                TextWrapping="Wrap"
                                TextAlignment="Center"
-                               MaxWidth="700" />
+                               MaxWidth="700">
+                        <TextBlock.Effect>
+                            <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.7" />
+                        </TextBlock.Effect>
+                    </TextBlock>
                     
                     <!-- Swan Lake Feather Display -->
                     <StackPanel x:Name="MainSwanFeatherPanel"
@@ -542,7 +509,7 @@
                                        FontSize="16"
                                        FontWeight="Bold"
                                        HorizontalAlignment="Center" />
-                            <TextBlock Text="(Auto-consumes at 5 stacks)"
+                            <TextBlock Text="(Auto-consumes at 8 stacks)"
                                        Foreground="Gray"
                                        FontSize="10"
                                        HorizontalAlignment="Center" />
@@ -563,6 +530,17 @@
                                        Foreground="Gray"
                                        FontSize="10"
                                        HorizontalAlignment="Center" />
+                            <Button x:Name="ConsumeHarmonizingMoonlightButton"
+                                    Content="Consume (1 Harmonizing → 3 Moonbeam + Components)"
+                                    HorizontalAlignment="Center"
+                                    Padding="8,4"
+                                    Margin="0,4,0,0"
+                                    Background="#e94560"
+                                    Foreground="White"
+                                    FontSize="11"
+                                    CornerRadius="8"
+                                    IsVisible="False"
+                                    Click="ConsumeHarmonizingMoonlight_Click" />
                         </StackPanel>
                     </StackPanel>
                     

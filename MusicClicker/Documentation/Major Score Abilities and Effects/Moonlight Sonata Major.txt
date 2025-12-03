@@ -1,0 +1,95 @@
+===========================================
+MOONLIGHT SONATA MAJOR - ABILITIES & EFFECTS
+===========================================
+
+Flavor Text:
+"Beneath the silent moon, shadows dance with luminous grace—nightfall becomes your sanctuary."
+
+CRESCENDANCE: Eclipse of the Nocturne
+---------------------------------------
+Requirements:
+• Moonlight Sonata Major must be resonated
+• Active during nighttime (8PM-6AM system time)
+
+Mechanics:
+• Every 20th click during nighttime: Gain 1 "Moonbeam Resonance" stack
+• At 8 stacks: Auto-consumes all stacks for:
+  - +100% of current notes (doubles your total notes)
+  - +1 "Harmonizing Moonlight" stack
+
+Harmonizing Moonlight:
+• Can be consumed via Eulogy of the Moon weapon
+• Consume 1 stack → 3 Moonbeam Resonance + components for lowest minor
+• If Moonbeam reaches 8+ from consume: auto-converts to another Harmonizing + bonus notes
+
+WEAPON SYNERGIES
+---------------------------------------
+
+Incisor of Moonlight (Weapon I):
+• Passive - Moonlight Strike (while equipped):
+  - Every 4th click: +3% bonus of current notes
+  - During nighttime (8PM-6AM): +10% bonus instead
+  
+• Crescendance Bond - Piercing Radiance:
+  - When Moonbeam Resonance stack is gained: +10% of current notes
+  - Requires: Moonlight Major resonated + Incisor equipped
+
+Eulogy of the Moon (Weapon II):
+• Passive - Nocturnal Refund (while equipped):
+  - Minor craft refund chance: 25% (50% during nighttime)
+  - Refunds all materials (Keys, Scales, Progressions, Fragments)
+  
+• Crescendance Bond - Requiem of Renewal:
+  - Consume 1 Harmonizing Moonlight:
+    → 3 Moonbeam Resonance stacks
+    → +1 of each component for lowest owned minor
+  - Requires: Moonlight Major resonated + Eulogy equipped
+  - Manual button on main screen when stacks available
+
+DUET ABILITY: Lunar Phases (Incisor + Eulogy)
+---------------------------------------
+Cycles through moon phases granting different bonuses:
+• New Moon: 2× NPC
+• Crescent Moon: 10% component drop chance on clicks
+• Full Moon: 3× NPS
+• Waning Moon: 50% upgrade cost discount
+
+Special Effect:
+• If Moonlight Sonata Major is resonated: ALL phases activate simultaneously!
+
+Duration: 20 seconds
+Cooldown: 4 minutes
+
+BALANCE CHANGES (Latest)
+---------------------------------------
+Version 1.2 - Scaling Adjustments:
+• Moonbeam Resonance: Reduced from +250% → +100% notes
+• Incisor passive: Reduced from +5%/+20% → +3%/+10%
+• Incisor crescendance: Reduced from +20% → +10% per stack
+
+Reason: Moonlight effects were exponentially scaling and becoming too powerful
+in late-game scenarios, overshadowing other major scores.
+
+STRATEGY TIPS
+---------------------------------------
+1. Best used during nighttime (8PM-6AM) for maximum benefit
+2. Incisor for aggressive clicking strategies with nighttime bonuses
+3. Eulogy for resource generation and refunds
+4. Duet ability becomes extremely powerful with Major resonated
+5. Use Harmonizing Moonlight strategically - save for when you need
+   specific minor components
+
+PROGRESSION NOTES
+---------------------------------------
+Early Game:
+• Crescendance requires nighttime patience
+• Focus on getting Incisor weapon for passive bonuses
+
+Mid Game:
+• Incisor passive becomes noticeable with higher note totals
+• Eulogy refunds help accelerate minor score acquisition
+
+Late Game:
+• Duet ability with all phases active is extremely powerful
+• Crescendance stacking creates significant note multiplication
+• Pair with other major abilities for combo effects

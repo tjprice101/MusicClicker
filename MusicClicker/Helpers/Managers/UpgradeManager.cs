@@ -74,6 +74,10 @@ namespace MusicClicker
                             if (gameState.FuneralPrayer && 
                                 (gameState.CurrentResonatedWeapon1 == "FuneralPrayer" || gameState.CurrentResonatedWeapon2 == "FuneralPrayer"))
                                 MusicClicker.Armory.WeaponAbilities.FuneralPrayer_OnUpgradePurchase(gameState);
+
+                            // Enigma Weapon Passive - Truthseeker: Revelation Burst
+                            if (gameState.TruthseekerAbility)
+                                MusicClicker.Armory.WeaponAbilities.Truthseeker_OnUpgradePurchase(gameState);
                         }
                         catch (Exception)
                         {
@@ -115,6 +119,10 @@ namespace MusicClicker
                                 if (gameState.FuneralPrayer && 
                                     (gameState.CurrentResonatedWeapon1 == "FuneralPrayer" || gameState.CurrentResonatedWeapon2 == "FuneralPrayer"))
                                     MusicClicker.Armory.WeaponAbilities.FuneralPrayer_OnUpgradePurchase(gameState);
+
+                                // Enigma Weapon Passive - Truthseeker: Revelation Burst
+                                if (gameState.TruthseekerAbility)
+                                    MusicClicker.Armory.WeaponAbilities.Truthseeker_OnUpgradePurchase(gameState);
                             }
                             catch (Exception)
                             {

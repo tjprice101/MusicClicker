@@ -2,22 +2,19 @@
 
 ## MOONLIGHT SONATA
 
-### Major Score Abilities
-- [ ] Major ability doubles all Moonlight-themed bonuses and effects
-- [ ] Verify doubling works during nighttime hours (8PM-6AM)
-
 ### Crescendance: Eclipse of the Nocturne
 - [ ] Every 20th click during nighttime (8PM-6AM) grants 1 Moonbeam Resonance stack
 - [ ] No Moonbeam Resonance stacks gained during daytime (6AM-8PM)
-- [ ] At 5 Moonbeam Resonance stacks, auto-consume triggers
-- [ ] Auto-consume grants +250% of current notes
+- [ ] At 8 Moonbeam Resonance stacks, auto-consume triggers
+- [ ] Auto-consume grants +100% of current notes
 - [ ] Auto-consume grants 1 Harmonizing Moonlight stack
+- [ ] Auto-consume reduces Moonbeam stacks by 8 (not to 0)
 - [ ] Both weapon crescendance bonds are empowered when conditions met
 
 ### Incisor of Moonlight Weapon
-- [ ] Passive: Every 4th click grants +5% notes (daytime)
-- [ ] Passive: Every 4th click grants +20% notes (nighttime 8PM-6AM)
-- [ ] Crescendance Bond (Piercing Radiance): Each Moonbeam Resonance stack gained grants +20% additional notes
+- [ ] Passive: Every 4th click grants +3% notes (daytime)
+- [ ] Passive: Every 4th click grants +10% notes (nighttime 8PM-6AM)
+- [ ] Crescendance Bond (Piercing Radiance): Each Moonbeam Resonance stack gained grants +10% additional notes
 - [ ] Crescendance Bond requires: Moonlight Major resonated + Incisor equipped
 - [ ] Duet (Lunar Phases): New Moon phase grants 2× NPC
 - [ ] Duet: Crescent phase grants 10% component drop per click
@@ -75,7 +72,7 @@
 
 ## SWAN LAKE
 
-### Crescendance: Three Feather System
+### Crescendance: Wings of Transcendence
 - [ ] Revered Feathers: Every 10 clicks has 5% chance to grant 1 feather
 - [ ] Revered Feathers: Consume 5 for +20% notes
 - [ ] Chromatic Feathers: Every 15 clicks has 5% chance to grant 1 feather
@@ -136,18 +133,18 @@
 
 ### Crescendance: Resonate Mystery
 - [ ] Every 10th click grants +1 Resonate Mystery stack
-- [ ] With Creator of Mystery weapon: Every 25th click grants +1 additional stack
+- [ ] With Creator of Mystery weapon: Every 15th click grants +1 additional stack
 - [ ] Consume 1 stack grants +50% of current notes
 - [ ] Consume 1 stack grants +50 Entropic Melodies
 - [ ] Consume 1 stack grants +1 random owned minor
-- [ ] With Truthseeker weapon bond: Each consumption also grants 1 random owned minor
+- [ ] With Truthseeker weapon bond: For every 2 stacks consumed, grants 1 random owned minor
 - [ ] Bulk consume (10+ stacks): Grants +25% notes per stack consumed
-- [ ] Bulk consume: Truthseeker bonus minors still apply per stack
+- [ ] Bulk consume: Truthseeker bonus (1 minor per 2 stacks) still applies
 
 ### Creator of Mystery Weapon
 - [ ] Passive (Chaotic Flux): Every 3rd click triggers ±25% notes
 - [ ] Passive: 60% chance positive, 40% chance negative
-- [ ] Crescendance Bond (Accelerated Mystery): Every 25th click grants +1 additional Resonate Mystery stack
+- [ ] Crescendance Bond (Accelerated Mystery): Every 15th click grants +1 additional Resonate Mystery stack
 - [ ] Crescendance Bond requires: Enigma Major resonated + Creator equipped
 - [ ] Duet (Mystery Clicks): Red effect grants 5× NPS as instant notes
 - [ ] Duet: Blue effect grants +10% NPS boost
@@ -160,8 +157,8 @@
 - [ ] Duet: 10 second duration, 30 minute cooldown
 
 ### Truthseeker Weapon
-- [ ] Passive (Revelation Burst): On Major acquisition, grants +10% of total fragments (Melodious & Harmonious)
-- [ ] Crescendance Bond (Knowledge Harvest): Each Resonate Mystery consumed grants +1 random owned minor
+- [ ] Passive (Revelation Burst): On upgrade purchase, grants +5 Resonant Mystery stacks
+- [ ] Crescendance Bond (Knowledge Harvest): For every 2 Resonate Mystery stacks consumed, grants +1 random owned minor
 - [ ] Crescendance Bond requires: Enigma Major resonated + Truthseeker equipped
 - [ ] Duet (Mystery Clicks): Same as Creator - all 8 random effects tested
 
@@ -170,10 +167,10 @@
 ## FATE (SYMPHONY NO. 5)
 
 ### Crescendance: Cosmic Modulation
-- [ ] Every 5th click grants +1 Cosmic Modulation stack
-- [ ] Every 5th click grants +10% notes bonus
+- [ ] Every 8th click grants +1 Cosmic Modulation stack
+- [ ] Every 8th click grants +10% notes bonus
 - [ ] Tiers activate at every 5 stacks (5, 10, 15, 20, etc.) with escalating passive effects
-- [ ] Consume all Cosmic Modulation grants +15 Entropic Melodies per stack
+- [ ] Consume Cosmic Modulation grants +15 Entropic Melodies per stack consumed
 - [ ] Astral Chainripper bond: Every 5 stacks gained grants +1 Symphony of the Stars
 - [ ] Symphony of the Stars: Consume 1 stack grants +3 to lowest owned minor score
 - [ ] Cosmic Weaver bond: Each Symphony consumed grants next 5 clicks as guaranteed entropic crits
@@ -210,9 +207,9 @@
 - [ ] Crescendance Bond: Effect stacks with multiple petals gained
 - [ ] Crescendance Bond requires: Ode to Joy Major resonated + Joyful Catharsis equipped
 - [ ] Duet (Crescendo Conductor): 4 notes grants +25 fragments
-- [ ] Duet: 8 notes grants random minor score
-- [ ] Duet: 12 notes grants random major sheet
-- [ ] Duet: 16 notes grants 5× NPS for 15s (repeatable/stackable)
+- [ ] Duet: 8 notes grants +5 Petals of Harmony
+- [ ] Duet: 12 notes grants +5 Petals of Melody
+- [ ] Duet: 16 notes grants +1 Ode to Life (repeatable/stackable)
 - [ ] Duet: On expiry, grants +3 Entropic Melodies per completed 4-note section
 - [ ] Duet: 20 second duration, 10 minute cooldown
 

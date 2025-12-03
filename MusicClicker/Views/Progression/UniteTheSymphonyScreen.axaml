@@ -161,7 +161,7 @@
                                 <TextBlock x:Name="EroicaMajorOwnedText" Text="0 Owned"
                                     Foreground="White"
                                     FontSize="16" HorizontalAlignment="Center" />
-                                <TextBlock Text="Crescendance Ability: Triumph of Heroes - Every Major Score crafted doubles your current notes." Foreground="White"
+                                <TextBlock Text="Crescendance Ability: Symphony of Triumph - Every minor craft grants +1 Heroic Resolve. Consume for Symphonic Catharsis buff." Foreground="White"
                                     FontSize="14" TextWrapping="Wrap" Width="190"
                                     HorizontalAlignment="Center" />
                                 <Button x:Name="EroicaMajorDissolveButton" Content="Dissolve" Width="120" Height="32" HorizontalAlignment="Center" />

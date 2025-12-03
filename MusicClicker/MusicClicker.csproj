@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- Exclude Unit Tests folder from main project -->
+    <Compile Remove="Unit Tests\**" />
+    <EmbeddedResource Remove="Unit Tests\**" />
+    <None Remove="Unit Tests\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <!-- Existing Assets -->
     <AvaloniaResource Include="Assets\**\*.*" />
     <AvaloniaResource Include="Fonts\**\*.ttf" />

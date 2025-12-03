@@ -70,46 +70,10 @@ namespace MusicClicker
         // Track last mouse position for floating text
         private Point _lastClickPosition;
 
-        // ------------------- CAROUSEL FIELDS -------------------
-        
-        // Index of the currently selected button in the carousel (0-7)
-        private int currentIndex = 0;
-        
-        // The target rotation angle the carousel is animating towards
-        private double targetRotation = 0;
-        
-        // The current rotation angle of the carousel
-        private double currentRotation = 0;
-        
-        // Flag indicating whether the carousel is currently animating to a target position
-        private bool isAnimating = false;
-        
-        // The radius of the circular carousel path in pixels
-        private const double RADIUS = 350;
-        
-        // Total number of buttons in the carousel (8 different game screens)
-        private const int BUTTON_COUNT = 8;
-        // Target frame rate for animations (frames per second). Start higher for smoother visuals.
-        private int _frameRate = 144;
 
-        // Animation timer: fires at `_frameRate` to produce smooth carousel animation
-        private DispatcherTimer animationTimer = null!;
-
-        // Animation performance tracking for adaptive framerate
-        private System.Diagnostics.Stopwatch _animTickStopwatch = new System.Diagnostics.Stopwatch();
-        private double _animAverageMs = 0.0;
-        private int _animSamples = 0;
-        
-        // Fields for implementing drag-to-rotate functionality
-        private bool isDragging = false;              // Whether user is currently dragging
-        private Point lastDragPoint;                  // Last recorded mouse/touch position
-        private double dragVelocity = 0;              // Current velocity of drag motion
-        private double dragMomentum = 0;              // Momentum after drag release (for inertia effect)
-        
-        // List storing each carousel button along with its transform components for positioning
-        private List<(Button button, TranslateTransform translate, ScaleTransform scale)> carouselButtons = null!;
-
-
+        // Carousel removed: buttons are static in the grid-based layout.
+        // Previous carousel fields and animation logic were removed to prevent
+        // runtime transforms that relocated buttons from their panel positions.
 
         /// <summary>
         /// Restores customizations (clicker image and background) from saved game state.
@@ -224,8 +188,7 @@ namespace MusicClicker
             DisplayedNotes = gameState.Notes;
             DisplayedNps = gameState.NotesPerSecond;
 
-            // Set up the carousel UI (circular button navigation system)
-            InitializeCarousel();
+            // Carousel removed: no initialization required for grid layout.
 
             // Initialize the Tempo Resonate system (musical score management)
             GlobalTempoManager = new TempoResonateManager(
@@ -287,7 +250,15 @@ namespace MusicClicker
                 double elapsedSeconds = _stopwatch.Elapsed.TotalSeconds;
                 _stopwatch.Restart();
 
-                // Update display for responsive Notes counter
+                // Drive animation-driven visuals (smooth Notes/NPS) so HUD shows
+                // the up-to-date game values even when UI updates are throttled.
+                try
+                {
+                    UIUpdater.AnimateVisuals(this, gameState, elapsedSeconds);
+                }
+                catch { }
+
+                // Update lightweight notes-only text frequently for responsiveness
                 try
                 {
                     UIUpdater.UpdateNotesOnly(this, gameState);
@@ -629,168 +600,9 @@ namespace MusicClicker
             try { await Dispatcher.UIThread.InvokeAsync(() => fader.Opacity = targetOpacity); } catch { }
         }
 
-        // ------------------- CAROUSEL INITIALIZATION -------------------
-        
-        /// <summary>
-        /// Sets up the carousel system with all 8 navigation buttons.
-        /// Initializes transforms, drag handlers, and animation timer.
-        /// </summary>
-        private void InitializeCarousel()
-        {
-            // Create list of all carousel buttons with their transform components
-            // Each button needs a TranslateTransform (for position) and ScaleTransform (for size)
-            carouselButtons = new List<(Button, TranslateTransform, ScaleTransform)>
-            {
-                GetButtonTransforms(SymphonicGalleryButton),   // Save the Scores (now first)
-                GetButtonTransforms(FragmentationButton),      // Upgrade screen
-                GetButtonTransforms(ResonanceButton),          // Resonance feature
-                GetButtonTransforms(MelodyButton),             // Melody feature
-                GetButtonTransforms(HarmonyButton),            // Harmony feature
-                GetButtonTransforms(TempoResonateButton),      // Tempo Resonate (scores)
-                GetButtonTransforms(EternalModulationButton),  // Event screen
-                GetButtonTransforms(ArmoryOfForteButton)       // Armory/weapons shop
-            };
-
-            // Get the canvas that contains the carousel
-            var canvas = this.FindControl<Canvas>("CarouselCanvas");
-            if (canvas != null)
-            {
-                // Register mouse/touch event handlers for drag functionality
-                canvas.PointerPressed += CarouselCanvas_PointerPressed;   // Drag start
-                canvas.PointerMoved += CarouselCanvas_PointerMoved;       // Drag move
-                canvas.PointerReleased += CarouselCanvas_PointerReleased; // Drag end
-            }
-
-            // Create animation timer that fires at the target _frameRate (adaptive)
-            animationTimer = new DispatcherTimer
-            {
-                Interval = TimeSpan.FromMilliseconds(1000.0 / _frameRate)
-            };
-            animationTimer.Tick += AnimationTimer_Tick;
-            animationTimer.Start();
-
-            // Initialize to ensure button 0 (Fragmentation) is centered at start
-            currentIndex = 0;
-            currentRotation = 0;
-            targetRotation = 0;
-            
-            // Calculate and apply initial positions for all buttons
-            UpdateCarouselPositions();
-
-            // Ensure animation tick also performs small UI animation updates for smooth visuals
-            // (AnimateVisuals will be called at FRAME_RATE from AnimationTimer_Tick)
-        }
-
-        /// <summary>
-        /// Gets or creates the transform components for a carousel button.
-        /// Each button needs a TranslateTransform for position and ScaleTransform for size.
-        /// </summary>
-        private (Button, TranslateTransform, ScaleTransform) GetButtonTransforms(Button button)
-        {
-            // Try to get existing transforms
-            var transformGroup = button.RenderTransform as TransformGroup;
-            if (transformGroup != null && transformGroup.Children.Count >= 2)
-            {
-                var translate = transformGroup.Children[0] as TranslateTransform;
-                var scale = transformGroup.Children[1] as ScaleTransform;
-                
-                // If valid transforms exist, return them
-                if (translate != null && scale != null)
-                {
-                    return (button, translate, scale);
-                }
-            }
-            
-            // No valid transforms found - create new ones
-            var newTranslate = new TranslateTransform();
-            var newScale = new ScaleTransform { ScaleX = 1, ScaleY = 1 };
-            var newTransformGroup = new TransformGroup();
-            newTransformGroup.Children.Add(newTranslate);
-            newTransformGroup.Children.Add(newScale);
-            button.RenderTransform = newTransformGroup;
-            
-            return (button, newTranslate, newScale);
-        }
-
-        // ------------------- DRAG HANDLERS -------------------
-        
-        /// <summary>
-        /// Called when user presses mouse/touch on the carousel canvas.
-        /// Initiates drag mode and records starting position.
-        /// </summary>
-        private void CarouselCanvas_PointerPressed(object? sender, PointerPressedEventArgs e)
-        {
-            isDragging = true;                              // Enable drag mode
-            lastDragPoint = e.GetPosition(sender as Control); // Record starting position
-            dragVelocity = 0;                               // Reset velocity
-            dragMomentum = 0;                               // Reset momentum
-            isAnimating = false;                            // Stop any ongoing animation
-        }
-
-        /// <summary>
-        /// Called when user moves mouse/touch while dragging.
-        /// Rotates the carousel based on vertical drag distance.
-        /// </summary>
-        private void CarouselCanvas_PointerMoved(object? sender, PointerEventArgs e)
-        {
-            if (!isDragging) return; // Only process if actively dragging
-
-            // Get current pointer position
-            var currentPoint = e.GetPosition(sender as Control);
-            
-            // Calculate vertical distance moved since last update
-            double deltaY = currentPoint.Y - lastDragPoint.Y;
-            
-            // Convert vertical movement to rotation (0.25 is sensitivity multiplier)
-            // Invert the rotation direction
-            double rotationDelta = deltaY * 0.25;
-            currentRotation += rotationDelta;
-            
-            // Store velocity for momentum calculation when drag ends
-            dragVelocity = rotationDelta;
-            
-            // Update last position for next frame
-            lastDragPoint = currentPoint;
-        }
-
-        /// <summary>
-        /// Called when user releases mouse/touch after dragging.
-        /// Applies momentum and initiates snap-to-nearest animation.
-        /// </summary>
-        private void CarouselCanvas_PointerReleased(object? sender, PointerReleasedEventArgs e)
-        {
-            if (!isDragging) return; // Only process if was dragging
-            
-            isDragging = false; // Exit drag mode
-            
-            // Apply momentum based on final drag velocity (2.0 is momentum multiplier)
-            dragMomentum = dragVelocity * 2.0;
-            
-            // If momentum is very low, immediately snap to nearest button
-            if (Math.Abs(dragMomentum) < 1.0)
-            {
-                SnapToNearest();
-            }
-        }
-
-        /// <summary>
-        /// Snaps the carousel to the nearest button position.
-        /// Called after drag ends or when momentum decays to near-zero.
-        /// </summary>
-        private void SnapToNearest()
-        {
-            // Calculate angle between each button (360° / 8 buttons = 45°)
-            double angleStep = 360.0 / BUTTON_COUNT;
-            
-            // Find which button is closest to current rotation
-            int nearestIndex = (int)Math.Round(currentRotation / angleStep) % BUTTON_COUNT;
-            if (nearestIndex < 0) nearestIndex += BUTTON_COUNT; // Handle negative wrap-around
-            
-            // Set target to snap to nearest button - ensure exactly one button is centered
-            currentIndex = nearestIndex;
-            targetRotation = nearestIndex * angleStep;
-            isAnimating = true; // Begin smooth animation to target
-        }
+        // Carousel logic removed: buttons are static in the grid-based layout.
+        // All initialization, transforms, drag handlers and animation were removed
+        // to prevent runtime repositioning of UI elements.
 
         // ---- Interaction event handlers to suppress heavy UI updates while user scrolls/drags ----
 
@@ -833,155 +645,7 @@ namespace MusicClicker
             catch { }
         }
 
-        // ------------------- CAROUSEL METHODS -------------------
-        
-        /// <summary>
-        /// Rotates the carousel by one position in the specified direction.
-        /// </summary>
-        /// <param name="direction">1 for clockwise, -1 for counter-clockwise</param>
-        private void RotateCarousel(int direction)
-        {
-            if (isAnimating) return; // Don't interrupt ongoing animation
-
-            // Update current index with wrap-around (0-7)
-            currentIndex = (currentIndex + direction + BUTTON_COUNT) % BUTTON_COUNT;
-            
-            // Calculate target rotation angle
-            double angleStep = 360.0 / BUTTON_COUNT;
-            targetRotation = currentIndex * angleStep;
-            
-            isAnimating = true; // Begin smooth animation to new position
-        }
-
-        /// <summary>
-        /// Animation tick handler called at the configured `FRAME_RATE` (e.g., 120 times per second).
-        /// Handles momentum physics and smooth interpolation to target position.
-        /// </summary>
-        private void AnimationTimer_Tick(object? sender, EventArgs e)
-        {
-            // Handle momentum after drag release
-            if (!isDragging && Math.Abs(dragMomentum) > 0.1)
-            {
-                // Apply momentum to rotation
-                currentRotation += dragMomentum;
-                
-                // Decay momentum (0.92 = 92% remaining each frame, creates friction effect)
-                dragMomentum *= 0.92;
-                
-                // When momentum is very low, snap to nearest button
-                if (Math.Abs(dragMomentum) < 0.5)
-                {
-                    dragMomentum = 0;
-                    SnapToNearest();
-                }
-            }
-            // Handle smooth animation to target position
-            else if (isAnimating)
-            {
-                // Calculate angle difference to target
-                double diff = targetRotation - currentRotation;
-                
-                // Handle wrap-around for shortest path (e.g., 350° to 10° should go forward, not backward 340°)
-                if (diff > 180) diff -= 360;
-                if (diff < -180) diff += 360;
-                
-                // Move 15% of remaining distance each frame (creates ease-out effect)
-                currentRotation += diff * 0.15;
-                
-                // When very close to target, snap exactly and stop animating
-                if (Math.Abs(diff) < 0.5)
-                {
-                    currentRotation = targetRotation;
-                    isAnimating = false;
-                }
-            }
-            
-            // Update visual positions of all buttons based on current rotation
-            UpdateCarouselPositions();
-
-            // Run lightweight visual smoothing for key UI elements (notes counter, NPS, etc.)
-            _animTickStopwatch.Restart();
-            try
-            {
-                UIUpdater.AnimateVisuals(this, gameState, 1.0 / _frameRate);
-            }
-            catch { }
-            _animTickStopwatch.Stop();
-
-            // Update moving average of tick duration and adapt _frameRate downward if ticks are
-            // taking too long. This helps lower-end machines avoid overload and reduce jitter.
-            double ms = _animTickStopwatch.Elapsed.TotalMilliseconds;
-            _animSamples++;
-            if (_animSamples > 120) _animSamples = 120; // keep sample window bounded
-            _animAverageMs = (_animAverageMs * (_animSamples - 1) + ms) / _animSamples;
-
-            // If average tick time exceeds expected interval by a factor, reduce frame rate.
-            double expectedMs = 1000.0 / _frameRate;
-            if (_animAverageMs > expectedMs * 1.8 && _frameRate > 30)
-            {
-                // reduce frame rate to relieve CPU, but not lower than 30
-                _frameRate = Math.Max(30, _frameRate / 2);
-                animationTimer.Interval = TimeSpan.FromMilliseconds(1000.0 / _frameRate);
-            }
-        }
-
-        /// <summary>
-        /// Calculates and applies 3D carousel positions for all buttons.
-        /// Creates illusion of depth using scale, opacity, and positioning.
-        /// </summary>
-        private void UpdateCarouselPositions()
-        {
-            double angleStep = 360.0 / BUTTON_COUNT;    // Angle between buttons (45°)
-            double horizontalOffset = 15;                // Slight offset for visual balance
-
-            // Update each button's position and appearance
-            for (int i = 0; i < carouselButtons.Count; i++)
-            {
-                var (button, translate, scale) = carouselButtons[i];
-
-                // Calculate this button's angle relative to current rotation
-                // No offset needed - let button 0 be at angle 0, which with -cos gives max Y (bottom center)
-                double angle = (i * angleStep - currentRotation) * (Math.PI / 180.0);
-
-                // Calculate vertical position on carousel circle (cosine gives vertical component)
-                // Use +cos so that angle=0 gives y=+RADIUS (bottom center)
-                double y = Math.Cos(angle) * RADIUS;
-                
-                // Check if button is at the bottom (foreground) of carousel
-                bool isAtBottom = y > (RADIUS - 50);
-
-                // Calculate opacity: buttons fade out as they move to back
-                // Higher y value = closer to front = more opacity
-                double opacity = Math.Max(0, (y + 100) / (RADIUS + 100));
-
-                // Calculate scale: buttons at back are smaller (depth effect)
-                // t is normalized position from back (0) to front (1)
-                double t = (RADIUS - y) / (2 * RADIUS);
-                double scaleValue = 0.9 - 0.4 * t;  // Range from 0.5 (back) to 0.9 (front)
-
-                // Calculate horizontal offset (sine gives horizontal component)
-                double centerOffset = Math.Sin(angle) * RADIUS;
-
-                // Apply spacing multiplier to spread buttons more when at sides
-                // Use squared cosine via multiplication to avoid Math.Pow overhead
-                double cos = Math.Cos(angle);
-                double spacingMultiplier = 1.0 + 1.2 * (cos * cos);
-                double x = centerOffset * spacingMultiplier + horizontalOffset;
-
-                // Apply calculated transforms
-                translate.X = x;                    // Horizontal position
-                translate.Y = y;                    // Vertical position
-                scale.ScaleX = scaleValue;          // Width scaling
-                scale.ScaleY = scaleValue;          // Height scaling
-                button.Opacity = opacity;           // Transparency
-                
-                // Only allow clicks on front button (high opacity, at bottom)
-                button.IsHitTestVisible = isAtBottom && opacity > 0.8;
-                
-                // Set z-index so closer buttons render on top
-                button.ZIndex = isAtBottom ? 50 : (int)(-y);
-            }
-        }
+        // Carousel methods removed: animation and position updates are no longer used.
 
         // ------------------- EXISTING METHODS -------------------
         
@@ -1047,30 +711,22 @@ namespace MusicClicker
                     notesPerClick *= winterMultiplier;
                 }
             }
-
-            // Apply Moonlight Major ability: adds notes-per-second to each click
-            if (gameState.MoonlightMajorAbility)
-            {
-                notesPerClick += gameState.NotesPerSecond;
-            }
             
-            // Apply Incisor of Moonlight: +500% notes during nighttime (8PM-6AM)
-            if (gameState.IncisorOfMoonlightAbility && isNighttime)
+            // Apply Incisor of Moonlight passive: Every 4th click bonus (while equipped)
+            if (gameState.IncisorOfMoonlight && 
+                (gameState.CurrentResonatedWeapon1 == "IncisorOfMoonlight" || gameState.CurrentResonatedWeapon2 == "IncisorOfMoonlight"))
             {
-                notesPerClick *= 6.0; // +500% = 6x multiplier
-            }
-            
-            // Apply Fate Major ability: every 5th click gives 30% bonus of total notes
-            else if (gameState.FateMajorAbility)
-            {
-                gameState.FateCounter++;
-                if (gameState.FateCounter == 5)
+                gameState.IncisorClickCounter++;
+                if (gameState.IncisorClickCounter >= 4)
                 {
-                    gameState.FateCounter = 0;
-                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, (gameState.Notes * 0.30));
+                    gameState.IncisorClickCounter = 0;
+                    double currentNotes = MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes);
+                    double bonusPercent = isNighttime ? 0.10 : 0.03; // +10% at night, +3% normally
+                    double bonus = currentNotes * bonusPercent;
+                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, bonus);
                 }
             }
-
+            
             // Funeral Prayer: Add 6x NPS bonus to notesPerClick if empowered
             if (gameState.FuneralPrayerAbility)
             {
@@ -1079,6 +735,13 @@ namespace MusicClicker
                 {
                     notesPerClick += empoweredBonus;
                 }
+            }
+
+            // Thousand Winged Swan: Add NPS-to-NPC boost (2x NPS)
+            double swanNpsBoost = MusicClicker.Armory.WeaponAbilities.ThousandWingedSwan_GetNpcBoost(gameState);
+            if (swanNpsBoost > 0)
+            {
+                notesPerClick += swanNpsBoost;
             }
 
             // Add calculated notes to player's total
@@ -1141,7 +804,8 @@ namespace MusicClicker
             }
             
             // Moonlight Sonata Crescendance: Moonbeam Resonance stacks (every 20th click at night)
-            if (gameState.CurrentResonatedScore == "Moonlight" && isNighttime)
+            // Use canonical internal name set by TempoResonateManager (`"Moonlight Sonata"`).
+            if (gameState.CurrentResonatedScore == "Moonlight Sonata" && isNighttime)
             {
                 MusicClicker.Armory.WeaponAbilities.MoonlightCrescendance_OnClick(gameState, this);
             }
@@ -1152,13 +816,13 @@ namespace MusicClicker
                 MusicClicker.Armory.WeaponAbilities.LaCampanellaCrescendance_OnClick(gameState, this);
             }
             
-            // Enigma Crescendance: Resonate Mystery stacks (every 10th click, +25th when active)
+            // Enigma Crescendance: Resonate Mystery stacks (every 10th click, +15th with Creator)
             if (gameState.CurrentResonatedScore == "Enigma")
             {
                 MusicClicker.Armory.WeaponAbilities.EnigmaCrescendance_OnClick(gameState, this);
             }
             
-            // Fate Crescendance: Cosmic Modulation stacks (every 5th click + 10% notes)
+            // Fate Crescendance: Cosmic Modulation stacks (every 8th click + 10% notes)
             if (gameState.CurrentResonatedScore == "Fate")
             {
                 MusicClicker.Armory.WeaponAbilities.FateCrescendance_OnClick(gameState, this);
@@ -1247,14 +911,29 @@ namespace MusicClicker
                 double finalNotes = notesPerClick;
                 bool hasStroke = false;
                 
+                // Crescendance Bond - Thousand Winged Swan: Dawn of Swan's Glory (highest priority)
+                if (gameState.ThousandWingedSwanNpsBoostActive && DateTime.Now <= gameState.ThousandWingedSwanNpsBoostExpiry)
+                {
+                    critText = $"Dawn of the Swan's Glory!!! +{FormatNumber(notesPerClick)}";
+                    critColor = Colors.White; // White text
+                    hasStroke = true; // Will get pink outline
+                }
+                // Forte Resonance - Funeral Prayer: Prayer of Valor
+                else if (gameState.FuneralPrayerEmpoweredClicksRemaining > 0)
+                {
+                    // Display special crit for Prayer of Valor empowered clicks
+                    critText = $"Retribution of the Symphonic Sakura!!! +{FormatNumber(notesPerClick)}";
+                    critColor = Color.FromRgb(199, 21, 133); // Dark pink (MediumVioletRed)
+                    hasStroke = true;
+                }
                 // Crescendance Bond - Sakura's Blossom: Crimson Requiem (priority check)
-                if (gameState.CrimsonRequiemClicksRemaining > 0)
+                else if (gameState.CrimsonRequiemClicksRemaining > 0)
                 {
                     gameState.CrimsonRequiemClicksRemaining--;
                     finalNotes = notesPerClick + (gameState.NotesPerSecond * gameState.NotesPerClick);
                     MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
-                    critText = $"Crimson Requiem!!! +{FormatNumber(finalNotes)}";
-                    critColor = Colors.Black; // Deep black text with crimson outline
+                    critText = $"Blossom's Blooming in Crimson Light!!! +{FormatNumber(finalNotes)}";
+                    critColor = Color.FromRgb(250, 128, 114); // Salmon-red
                     hasStroke = true;
                 }
                 else if (roll < 0.1) // 0.1% chance - Entropic Crescendo
@@ -1510,6 +1189,35 @@ namespace MusicClicker
         }
 
         /// <summary>
+        /// Handler for Eulogy of the Moon: Consume Harmonizing Moonlight stacks
+        /// </summary>
+        public void ConsumeHarmonizingMoonlight_Click(object? sender, RoutedEventArgs e)
+        {
+            if (gameState == null) return;
+
+            // Check if Eulogy is equipped
+            bool eulogyEquipped = gameState.CurrentResonatedWeapon1 == "EulogyOfTheMoon" || 
+                                  gameState.CurrentResonatedWeapon2 == "EulogyOfTheMoon";
+            
+            if (!eulogyEquipped)
+            {
+                return; // Button shouldn't be visible if not equipped, but safety check
+            }
+
+            // Check if there are stacks to consume
+            if (gameState.HarmonizingMoonlightStacks <= 0)
+            {
+                return;
+            }
+
+            // Consume the stack
+            MusicClicker.Armory.WeaponAbilities.EulogyOfTheMoon_ConsumeHarmonizingMoonlight(gameState);
+            
+            // Update UI
+            UIUpdater.UpdateUI(this, gameState);
+        }
+
+        /// <summary>
         /// Handler for Cacophonic Dreams endgame button.
         /// Only accessible when NPS reaches or exceeds 1 trillion.
         /// </summary>
@@ -1550,8 +1258,28 @@ namespace MusicClicker
             // Add drop shadow or stroke for visibility
             if (hasStroke)
             {
-                // Crimson outline for Crimson Requiem (black text)
-                if (color == Colors.Black)
+                // White text gets pink outline (Dawn of Swan's Glory)
+                if (color == Colors.White)
+                {
+                    textBlock.Effect = new DropShadowEffect
+                    {
+                        Color = Color.FromRgb(255, 192, 203), // Pink
+                        BlurRadius = 8,
+                        Opacity = 1.0
+                    };
+                }
+                // Salmon-red or dark pink text gets black outline
+                else if (color.R == 250 || color.R == 199) // Salmon-red or dark pink
+                {
+                    textBlock.Effect = new DropShadowEffect
+                    {
+                        Color = Colors.Black,
+                        BlurRadius = 8,
+                        Opacity = 1.0
+                    };
+                }
+                // Black text gets crimson outline (legacy for other effects)
+                else if (color == Colors.Black)
                 {
                     textBlock.Effect = new DropShadowEffect
                     {
@@ -1630,10 +1358,10 @@ namespace MusicClicker
         private void UpdateMainSwanLakeCrescendanceInfo()
         {
             if (MainCrescendanceTitle != null)
-                MainCrescendanceTitle.Text = "Swan Lake Crescendance";
+                MainCrescendanceTitle.Text = "Swan Lake: Wings of Transcendence";
                 
             if (MainCrescendanceInfoText != null)
-                MainCrescendanceInfoText.Text = "Three Feather System: Collect Revered, Chromatic, and Polyphonic feathers. Consume them for powerful bonuses!";
+                MainCrescendanceInfoText.Text = "Collect Revered, Chromatic, and Polyphonic feathers. Consume them for powerful bonuses!";
                 
             // Hide all other panels
             if (MainMoonlightStackPanel != null) MainMoonlightStackPanel.IsVisible = false;
@@ -1676,7 +1404,7 @@ namespace MusicClicker
                 MainCrescendanceTitle.Text = "Moonlight Sonata: Eclipse of the Nocturne";
                 
             if (MainCrescendanceInfoText != null)
-                MainCrescendanceInfoText.Text = "Every 20th click at night (8PM-6AM): Gain Moonbeam Resonance. At 5 stacks: +250% notes + 1 Harmonizing Moonlight.";
+                MainCrescendanceInfoText.Text = "Every 20th click at night (8PM-6AM): Gain Moonbeam Resonance. At 8 stacks: +100% notes + 1 Harmonizing Moonlight.";
                 
             // Hide all other panels
             if (MainSwanFeatherPanel != null) MainSwanFeatherPanel.IsVisible = false;
@@ -1695,6 +1423,15 @@ namespace MusicClicker
                 
             if (MainHarmonizingMoonlightCount != null)
                 MainHarmonizingMoonlightCount.Text = gameState.HarmonizingMoonlightStacks.ToString();
+                
+            // Show/hide Eulogy consume button
+            if (ConsumeHarmonizingMoonlightButton != null)
+            {
+                bool eulogyEquipped = gameState.CurrentResonatedWeapon1 == "EulogyOfTheMoon" || 
+                                      gameState.CurrentResonatedWeapon2 == "EulogyOfTheMoon";
+                bool hasStacks = gameState.HarmonizingMoonlightStacks > 0;
+                ConsumeHarmonizingMoonlightButton.IsVisible = eulogyEquipped && hasStacks;
+            }
         }
         
         /// <summary>
@@ -1706,7 +1443,7 @@ namespace MusicClicker
                 MainCrescendanceTitle.Text = "La Campanella: Grandiose Bell";
                 
             if (MainCrescendanceInfoText != null)
-                MainCrescendanceInfoText.Text = "Grandiose Bell cracks at 20/40/60 clicks. Mend for rewards: Crescending (+2 minors), Radiant (5 entropic crits), Harmonizing (double notes).";
+                MainCrescendanceInfoText.Text = "Grandiose Bell cracks at 20/40/60 clicks (+10% notes each crack). Mend for rewards: Crescending (+2 minors), Radiant (+5 Deafening Chime), Harmonizing (2^stacks notes multiplier, max 6 stacks = 64×).";
                 
             // Hide all other panels
             if (MainSwanFeatherPanel != null) MainSwanFeatherPanel.IsVisible = false;
@@ -1835,10 +1572,10 @@ namespace MusicClicker
         private void UpdateMainEroicaCrescendanceInfo()
         {
             if (MainCrescendanceTitle != null)
-                MainCrescendanceTitle.Text = "Eroica: Heroic Resolve";
+                MainCrescendanceTitle.Text = "Eroica: Symphony of Triumph";
                 
             if (MainCrescendanceInfoText != null)
-                MainCrescendanceInfoText.Text = "Every minor craft: +1 Heroic Resolve. Consume with 25% notes for Symphonic Catharsis (10s double NPC +10% crit). Funeral Prayer grants Testament.";
+                MainCrescendanceInfoText.Text = "Symphony of Triumph: Every minor craft: +1 Heroic Resolve. Consume with 25% notes for Symphonic Catharsis (10s double NPC +10% crit). Sakura grants 30 Blossom's Blooming crits.";
                 
             // Hide all other panels
             if (MainSwanFeatherPanel != null) MainSwanFeatherPanel.IsVisible = false;
@@ -1891,7 +1628,7 @@ namespace MusicClicker
         private void UpdateMainDiesIraeCrescendanceInfo()
         {
             if (MainCrescendanceTitle != null)
-                MainCrescendanceTitle.Text = "Dies Irae: Wrath of the Damned";
+                MainCrescendanceTitle.Text = "Dies Irae: Symphony of Hell's Retribution";
                 
             if (MainCrescendanceInfoText != null)
                 MainCrescendanceInfoText.Text = "Every click: +1 Burning Hatred (max 50), then Discordant Malice. Consume Malice to multiply notes by stack count.";

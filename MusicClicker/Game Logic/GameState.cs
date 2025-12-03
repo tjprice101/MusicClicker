@@ -581,9 +581,10 @@ namespace MusicClicker
         public int SwanLakeClickCounter { get; set; } = 0; // Tracks clicks for feather drop intervals
         
         // Moonlight Sonata Crescendance: Eclipse of the Nocturne
-        public int MoonbeamResonanceStacks { get; set; } = 0; // Stacks gained every 20th click at night (5 stacks → +250% notes + 1 Harmonizing Moonlight)
+        public int MoonbeamResonanceStacks { get; set; } = 0; // Stacks gained every 20th click at night (8 stacks → +100% notes + 1 Harmonizing Moonlight)
         public int HarmonizingMoonlightStacks { get; set; } = 0; // Consumed by Eulogy weapon for 3 Moonbeam stacks + components
         public int MoonlightCrescendanceClickCounter { get; set; } = 0; // Tracks clicks toward next Moonbeam Resonance (every 20th click at night)
+        public int IncisorClickCounter { get; set; } = 0; // Tracks every 4th click for Incisor of Moonlight passive
         
         // La Campanella Crescendance: Grandiose Bell
         public int GrandioseBellClickCounter { get; set; } = 0; // Counts clicks toward crack thresholds (20/40/60)

@@ -313,6 +313,18 @@ namespace MusicClicker
                     UIUpdater.UpdateFragmentationUI(window, window.GameState);
                 });
             };
+            
+            // Bottom Fragmentation Button (duplicate for bottom bar)
+            window.BottomFragmentationButton.Click += async (s, e) =>
+            {
+                await window.TransitionAsync(() =>
+                {
+                    window.MainScreen.IsVisible = false;
+                    window.FragmentationScreen.IsVisible = true;
+                    UIUpdater.UpdateFragmentationUI(window, window.GameState);
+                });
+            };
+            
             window.FragmentationScreen.BackButtonFragmentation.Click += async (s, e) =>
             {
                 await window.TransitionAsync(() =>

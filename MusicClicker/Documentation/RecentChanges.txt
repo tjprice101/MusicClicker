@@ -2,6 +2,59 @@
                             RECENT CHANGES LOG
 ═══════════════════════════════════════════════════════════════════════════════
 
+Date: December 3, 2025
+Session: Major Score Ability Updates (Swan Lake, La Campanella, Enigma, Fate, Ode to Joy)
+Objective: Balance and refine major score mechanics based on design review
+
+═══════════════════════════════════════════════════════════════════════════════
+MAJOR SCORE UPDATES
+═══════════════════════════════════════════════════════════════════════════════
+
+SWAN LAKE:
+- Renamed crescendance "Three Feather Symphony" → "Wings of Transcendance"
+- Updated feather drop rates: Revered 20%, Chromatic 10%, Polyphonic 5%
+- Implemented "Dawn of the Swan's Glory" critical hit (white text, pink outline)
+- Added Thousand Winged Swan NPS boost (2× NPS for 10s on Polyphonic consume)
+- Updated all descriptions across GameDescriptions.cs, weapon tooltips, and UI
+
+LA CAMPANELLA:
+- Added "Bell's Fortune" major ability: +10% notes on every bell crack
+- Updated Razer weapon bond: Entropic melodies = click count × 2 (max 250)
+- Changed Deafening Chime mechanics: 3 stacks per entropic crit click
+- Updated Radiant mend to only grant Deafening Chime stacks (no entropic crits)
+- Clarified all bell mechanics and consumption effects
+
+ENIGMA VARIATIONS:
+- Removed old major ability entirely
+- Updated Creator of Mystery: Every 25th → 15th click for mystery stacks
+- Reworked Truthseeker passive: Fragments → +5 Resonant Mystery stacks on upgrade
+- Nerfed Truthseeker bond: 1 minor per stack → 1 per 2 stacks consumed
+- Updated Mystery Clicks duet: Red 15× → 5×, Blue 2× → +10% additive
+- Added Truthseeker_OnUpgradePurchase() method with hooks in UpgradeManager
+
+FATE (SYMPHONY NO. 5):
+- Removed "Destiny's Hand" major ability (old every 5th click 30% bonus)
+- Updated Cosmic Modulation: Every 5th → 8th click for stack generation
+- All other mechanics unchanged (tiers, Symphony of Stars, consumption)
+- Cleaned up all descriptions and documentation
+
+ODE TO JOY (SYMPHONY NO. 9):
+- Removed "Joyful Harmony" major ability
+- Updated Crescendo Conductor duet rewards:
+  - 8 notes: Random minor → +5 Petals of Harmony
+  - 12 notes: Random major sheet → +5 Petals of Melody
+  - 16 notes: 5× NPS for 15s → +1 Ode to Life
+- All duet rewards now grant petal resources instead of direct scores/buffs
+- Updated all descriptions and testing documentation
+
+DOCUMENTATION ENHANCEMENTS:
+- Added unique flavor text to all major score documentation files
+- Flavor text provides thematic introduction for each major score
+- Removed "Mechanics" label from Dies Irae (unnecessary descriptor)
+- Cleaned up all major score files for consistency
+
+═══════════════════════════════════════════════════════════════════════════════
+
 Date: November 27, 2025
 Session: Performance Optimization & Code Modularization
 Objective: Achieve 140 FPS performance and improve code organization

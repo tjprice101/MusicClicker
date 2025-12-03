@@ -14,68 +14,84 @@ namespace MusicClicker
         
         public static class MajorScores
         {
-            public const string MoonlightSonata = @"Moonlight Sonata Major
+            public const string MoonlightSonata = @"Moonlight Sonata
 
-Major Ability:
-Doubles the power of all Moonlight-themed bonuses and effects.
+""Beneath the silent moon, shadows dance with luminous grace—nightfall becomes your sanctuary.""
 
 Crescendance: Eclipse of the Nocturne
 • Every 20th click during nighttime (8PM-6AM): Gain 1 stack of ""Moonbeam Resonance""
-• At 5 stacks: Auto-consume for +250% of current notes and 1 ""Harmonizing Moonlight"" stack
+• At 8 stacks: Auto-consume for +100% of current notes and 1 ""Harmonizing Moonlight"" stack
 • Empowers both Moonlight weapons with unique crescendance abilities";
 
             public const string Eroica = @"Eroica (Symphony No. 3)
 
-Major Ability:
-Minor scores beyond the 10th grant double NPS each.
+""A hero's triumph echoes through eternity, where crimson sakura blooms amidst symphonic glory.""
 
-Crescendance: Heroic Momentum
+Crescendance: Symphony of Triumph
 • Every minor craft: +1 Heroic Resolve stack
 • Consume 1 Heroic Resolve + 25% notes: +1 Symphonic Catharsis stack
 • Consume Symphonic Catharsis: 10s of double NPC + 10% crit chance
-• Triggers Sakura weapon bond (Crimson Requiem: 30 clicks with bonus = NPC + (NPS × NPC) each)
+• Triggers Sakura weapon bond (Crimson Requiem: 30 'Blossom's Blooming in Crimson Light' crits with bonus = NPC + (NPS × NPC))
 • Triggers Funeral Prayer weapon bond (Testament of Harmony: +1 stack, consume for 100 Melodious + 100 Harmonious fragments)";
 
             public const string SwanLake = @"Swan Lake
 
-Crescendance: Three Feather System
-• Revered Feathers (every 10 clicks, 5%): Consume 5 for +20% notes
-• Chromatic Feathers (every 15 clicks, 5%): Consume 10 for +2 all minors
-• Polyphonic Feathers (every 30 clicks, 5%): Consume 1 for +250 entropic +75% notes";
+""Through graceful wings, fortune's feathers descend—each one a promise of transcendent beauty.""
+
+Crescendance: Wings of Transcendence
+• Revered Feathers (every 10 clicks, 20%): Consume 5 for +20% notes
+• Chromatic Feathers (every 15 clicks, 10%): Consume 10 for +2 all minors
+• Polyphonic Feathers (every 30 clicks, 5%): Consume 1 for +250 entropic +75% notes
+• Wings of Velocity weapon bond: Polyphonic feather → 10s of +NPS to NPC (2x multiplier)
+• Star Scattered Wings weapon bond: Any feather → +1 Scattered Starlight stack (max 5)";
 
             public const string LaCampanella = @"La Campanella
+
+""Each chime resonates with destiny; as the bell cracks, fortune rings eternal.""
+
+Major Ability: Bell's Fortune
+• Grants +10% bonus notes whenever the Grandiose Bell cracks (at 20/40/60 clicks)
+• Passive effect - always active when La Campanella Major owned
 
 Crescendance: Grandiose Bell
 • Bell cracks at 20/40/60 clicks, advancing stage (Intact → Crescending → Radiant → Harmonizing)
 • Mend to collect rewards:
   - Crescending: +2 random owned minors
-  - Radiant: Next 5 clicks are entropic crits + 5 Deafening Chime stacks
-  - Harmonizing: Consume all Deafening Chime for 2^stacks multiplier to notes
+  - Radiant: +5 Deafening Chime stacks (2-minute expiry)
+  - Harmonizing: Consume all Deafening Chime for 2^stacks multiplier to notes (max 6 stacks = 64× multiplier)
+• Deafening Chime: Gained from Radiant mend (5 stacks) or entropic crit clicks (3 stacks per crit)
 • Symphony weapon bond: +75% notes when bell cracks
-• Razer weapon bond: Mend grants entropic melodies equal to click count (max 250)";
+• Razer weapon bond: Mend grants entropic melodies = click count × 2 (max 250)";
 
             public const string EnigmaVariations = @"Enigma Variations
 
+""Within the veil of mystery lies infinite possibility—each riddle a key to untold power.""
+
 Crescendance: Resonate Mystery
 • Every 10th click: +1 Resonate Mystery stack
-• Every 25th click: +1 additional Resonate Mystery stack (with Creator of Mystery weapon)
+• Every 15th click (with Creator of Mystery): +1 additional Resonate Mystery stack
 • Consume 1 stack for:
   - +50% of current notes
   - +50 Entropic Melodies
-  - +1 random owned minor (Truthseeker weapon bond grants 1 random minor per consumption)
-• Bulk consume (10+ stacks): +25% notes per stack consumed + Truthseeker bonus minors";
+  - +1 random owned minor
+• Bulk consume (10+ stacks): +25% notes per stack consumed
+• Truthseeker weapon bond: +1 random minor per 2 stacks consumed";
 
             public const string Fate = @"Fate (Symphony No. 5)
 
+""The stars themselves bend to your will, weaving cosmic threads into a tapestry of destiny.""
+
 Crescendance: Cosmic Modulation
-• Every 5th click: +1 Cosmic Modulation stack + 10% notes bonus
+• Every 8th click: +1 Cosmic Modulation stack + 10% notes bonus
 • Tiers (every 5 stacks): Grant escalating passive effects
-• Consume all Cosmic Modulation: +15 Entropic Melodies per stack
+• Consume Cosmic Modulation: +15 Entropic Melodies per stack consumed
 • Astral Chainripper weapon bond: Every 5 stacks gained → +1 Symphony of the Stars
 • Symphony of the Stars: Consume 1 stack for +3 to lowest owned minor score
 • Cosmic Weaver weapon bond: Each Symphony consumed → next 5 clicks are guaranteed entropic crits";
 
             public const string OdeToJoy = @"Ode to Joy (Symphony No. 9)
+
+""From petals of harmony and melody, life itself blooms—a symphony of boundless celebration.""
 
 Crescendance: Petals of Life
 • Minor craft: +1 Petal of Harmony
@@ -83,9 +99,16 @@ Crescendance: Petals of Life
 • Consume Harmony: +250 Entropic Melodies
 • Consume Melody: +10s full entropic crits (stackable)
 • Combine (1 Harmony + 1 Melody + 50 Entropic): 1 Ode to Life
-• Consume Ode to Life: Double all owned minors";
+• Consume Ode to Life: Double all owned minors
+• Joyful Catharsis bond: Every petal gained → double NPS for 5s
+• Ode to Creation bond: On Ode to Life consume → double petal generation for 25s";
 
             public const string DiesIrae = @"Dies Irae
+
+""Wrath incarnate—where burning hatred forges an infernal symphony of unstoppable retribution.""
+
+Major Ability:
+Clicks build infernal power that multiplies damage.
 
 Crescendance: Symphony of Hell's Retribution
 • Every click: +1 Burning Hatred (up to 50), then +1 Discordant Malice
@@ -95,6 +118,9 @@ Crescendance: Symphony of Hell's Retribution
 • Hell crit formula: NPC × NPS × Burning Hatred stacks";
 
             public const string Winter = @"Winter
+
+Major Ability:
+Converts NPS into click power when frozen.
 
 Crescendance: Eternal Frost
 Freezes NPS and converts it into click multiplier. Clicks extend duration.";
@@ -110,13 +136,13 @@ Freezes NPS and converts it into click multiplier. Clicks extend duration.";
             public const string IncisorOfMoonlight = @"Incisor of Moonlight
 
 Passive: Moonlight Strike (while equipped)
-Every 4th click grants bonus notes based on current total. Doubles during nighttime (8PM-6AM).
-• +5% bonus notes of current total (+20% at night)
+Every 4th click grants bonus notes based on current total. Stronger during nighttime (8PM-6AM).
+• +3% bonus notes of current total (+10% at night)
 • Trigger: Every 4th click
 
 Crescendance Bond: Piercing Radiance
 Moonbeam Resonance stacks amplify your note gains when using Moonlight Sonata Major.
-• Each stack gained: +20% additional notes of current notes
+• Each stack gained: +10% additional notes of current notes
 • Requires: Moonlight Sonata Major resonated + Incisor equipped
 
 Duet (with Eulogy): Lunar Phases
@@ -145,13 +171,13 @@ Cycles through moon phases granting different bonuses. With Moonlight Major, all
             public const string SakurasBlossom = @"Sakura's Blossom
 
 Forte Resonance: Heroic Bounty (while equipped)
-Acquiring Majors (upgrades) rewards you with crafting materials for that score type.
-• On Major acquisition: +1 of each component (Keys, Scales, Progressions) for that Major
-• Trigger: When purchasing upgrades
+Acquiring Majors (from Unite the Symphony screen) rewards you with crafting materials for that score type.
+• On Major craft: +1 of each component (Keys, Scales, Progressions) for that Major
+• Trigger: Crafting major scores
 
 Crescendance Bond: Crimson Requiem
-Consuming Symphonic Catharsis triggers a special burst where clicks are supercharged.
-• Next 30 clicks: Bonus notes = NPC + (NPS × NPC) each
+Consuming Symphonic Catharsis triggers a special burst where clicks become powerful crits.
+• Next 30 clicks: 'Blossom's Blooming in Crimson Light' damage = NPC + (NPS × NPC) each
 • Requires: Eroica Major resonated + Sakura equipped
 • Trigger: When Symphonic Catharsis is consumed
 
@@ -165,7 +191,7 @@ Fill a 100-click bar to earn escalating rewards, culminating in doubling all sco
 Forte Resonance: Prayer of Valor (while equipped)
 Build Prayer stacks through clicking, then unleash them for massively boosted clicks.
 • Every 10th click: +1 Prayer stack
-• At 3 stacks: Next 15 clicks gain +6× NPS each
+• At 3 stacks: Next 15 clicks gain +6× NPS as 'Retribution of the Symphonic Sakura' crits
 • Trigger: Every 10th click
 
 Crescendance Bond: Testament of Harmony
@@ -200,6 +226,7 @@ Forte Resonance: Wings of Fortune (while equipped)
 Immediate note boost when acquired. Polyphonic feathers temporarily convert NPS to NPC.
 • On acquisition: +50% notes instantly (one-time)
 • Polyphonic feather consumed: 10s of NPS-to-NPC boost (adds 2× NPS to NPC)
+• Crit Display: ""Dawn of the Swan's Glory"" (white text, pink outline)
 • Trigger: On weapon acquisition, Polyphonic feather consumption
 
 Duet (with Star-Scattered Wings): Feather Cascade
@@ -219,7 +246,8 @@ Crafting minor scores creates duplicates, doubling your gain.
 Crescendance Bond: Resonant Crack Bonus
 Grandiose Bell cracking releases burst damage as instant notes.
 • When bell cracks (20/40/60 clicks): +75% notes instantly
-• Requires: La Campanella Major resonated + Symphony equipped
+• Stacks with major ability's +10% crack bonus
+• Requires: La Campanella crescendance active + Symphony equipped
 • Trigger: Bell crack events
 
 Duet (with Razer of Bell's Chimes): Chime Chain
@@ -237,8 +265,8 @@ Crafting minor scores refunds some materials, reducing resource costs.
 
 Crescendance Bond: Entropic Resonance
 Mending the Grandiose Bell converts accumulated clicks into Entropic Melodies.
-• On bell mend: Gain Entropic Melodies = click count (max 250)
-• Requires: La Campanella Major resonated + Razer equipped
+• On bell mend (any stage): Gain Entropic Melodies = click count × 2 (max 250)
+• Requires: La Campanella crescendance active + Razer equipped
 • Trigger: Mend bell action
 
 Duet (with Symphony of Bells): Chime Chain
@@ -257,32 +285,33 @@ Clicks randomly add or subtract notes, favoring positive outcomes.
 
 Crescendance Bond: Accelerated Mystery
 Additional mystery stack generation from frequent clicking accelerates your power growth.
-• Every 25th click: +1 additional Resonate Mystery stack (on top of base every-10th)
+• Every 15th click: +1 additional Resonate Mystery stack (on top of base every-10th)
 • Requires: Enigma Major resonated + Creator equipped
-• Trigger: Every 25th click
+• Trigger: Every 15th click
 
 Duet (with Truthseeker): Mystery Clicks
 Each click triggers a random powerful effect - risk and reward in every tap!
-• Red: 5× NPS notes | Blue: 10% NPS boost | Green: 30 Harmonious | Yellow: 30 Melodious
+• Red: 5× NPS notes | Blue: +10% NPS boost | Green: 30 Harmonious | Yellow: 30 Melodious
 • Purple: +1 major per owned | Orange: +1 component per owned minor | White: +1-3 random minors | Black: -65% notes
 • Duration: 10s | Cooldown: 30min";
 
             public const string Truthseeker = @"Truthseeker
 
 Passive: Revelation Burst (while equipped)
-Acquiring Majors (upgrades) reveals hidden knowledge, granting extra fragments.
-• On Major acquisition: +10% of total fragments
-• Trigger: When purchasing upgrades
+Acquiring upgrades reveals hidden knowledge, granting mystery stacks.
+• On upgrade purchase: +5 Resonant Mystery stacks
+• Trigger: When purchasing any upgrade (Chord, Scale, Orchestra, etc.)
 
 Crescendance Bond: Knowledge Harvest
 Every mystery you solve grants additional minor scores, building your collection.
-• Each Resonate Mystery consumed: +1 random owned minor score
+• For every 2 Resonate Mystery stacks consumed: +1 random owned minor score
+• Works with both single consume and bulk consume
 • Requires: Enigma Major resonated + Truthseeker equipped
 • Trigger: Resonate Mystery consumption
 
 Duet (with Creator of Mystery): Mystery Clicks
 Each click triggers a random powerful effect - risk and reward in every tap!
-• Red: 5× NPS notes | Blue: 10% NPS boost | Green: 30 Harmonious | Yellow: 30 Melodious
+• Red: 5× NPS notes | Blue: +10% NPS boost | Green: 30 Harmonious | Yellow: 30 Melodious
 • Purple: +1 major per owned | Orange: +1 component per owned minor | White: +1-3 random minors | Black: -65% notes
 • Duration: 10s | Cooldown: 30min";
 
@@ -372,12 +401,12 @@ Build musical melodies through clicking, earning escalating rewards and entropic
         public static class ForteResonance
         {
             // Moonlight
-            public const string IncisorOfMoonlight = "Passive: Moonlight Strike - Every 4th click grants +5% bonus notes (+20% during nighttime 8PM-6AM). Crescendance Bond: Piercing Radiance - Each Moonbeam Resonance stack gained grants +20% additional notes of current notes.";
+            public const string IncisorOfMoonlight = "Passive: Moonlight Strike - Every 4th click grants +3% bonus notes (+10% during nighttime 8PM-6AM). Crescendance Bond: Piercing Radiance - Each Moonbeam Resonance stack gained grants +10% additional notes of current notes.";
             public const string EulogyOfTheMoon = "Passive: Nocturnal Refund - On minor score craft: 25% chance to refund all materials (50% during nighttime 8PM-6AM). Crescendance Bond: Requiem of Renewal - Consume 1 Harmonizing Moonlight stack to gain 3 Moonbeam Resonance stacks plus components.";
             
             // Eroica
-            public const string SakurasBlossom = "Forte Resonance: Heroic Bounty - On Major (upgrade) acquisition, grants 1 of each component type (Keys, Scales, Progressions) for that Major score. Crescendance Bond: Crimson Requiem - When Symphonic Catharsis is consumed, next 30 clicks gain bonus notes.";
-            public const string FuneralPrayer = "Forte Resonance: Prayer of Valor - Every 10th click grants 1 Prayer stack. At 3 Prayer stacks: next 15 clicks each gain +6× Notes Per Second. Crescendance Bond: Testament of Harmony - When Symphonic Catharsis is consumed, grants +1 Testament of Harmony (consume for +100 Melodious + 100 Harmonious Fragments).";
+            public const string SakurasBlossom = "Forte Resonance: Heroic Bounty - On Major craft (Unite the Symphony screen), grants 1 of each component type (Keys, Scales, Progressions) for that Major score. Crescendance Bond: Crimson Requiem - When Symphonic Catharsis is consumed, next 30 clicks are 'Blossom's Blooming in Crimson Light' crits (NPC + NPS × NPC).";
+            public const string FuneralPrayer = "Forte Resonance: Prayer of Valor - Every 10th click grants 1 Prayer stack. At 3 Prayer stacks: next 15 clicks each gain +6× Notes Per Second as 'Retribution of the Symphonic Sakura' crits. Crescendance Bond: Testament of Harmony - When Symphonic Catharsis is consumed, grants +1 Testament of Harmony (consume for +100 Melodious + 100 Harmonious Fragments).";
             
             // Swan Lake
             public const string StarScatteredWings = "Forte Resonance: Stellar Fragment Rain - Every 10th click grants +5 Melodious Fragments and +5 Harmonious Fragments. Feather acquisitions grant +2 components to random owned minor score.";
@@ -385,15 +414,15 @@ Build musical melodies through clicking, earning escalating rewards and entropic
             
             // La Campanella
             public const string SymphonyOfBells = "Passive: Harmonic Duplication - On minor score craft: duplicate that minor score (+1 extra copy). Crescendance Bond: Resonant Crack Bonus - When Grandiose Bell cracks (at 20/40/60 clicks): instantly gain +75% notes.";
-            public const string RazerOfBellsChimes = "Passive: Component Echo - On minor score craft: refund 2 random components for that minor. Crescendance Bond: Entropic Resonance - On Grandiose Bell mend: gain Entropic Melodies equal to click count (maximum 250).";
-            
-            // Enigma
-            public const string CreatorOfMystery = "Passive: Chaotic Flux - Every 3rd click: randomly +25% or -25% notes (60% chance positive). Crescendance Bond: Accelerated Mystery - Every 25th click: gain +1 additional Resonate Mystery stack (on top of base every-10th).";
-            public const string Truthseeker = "Passive: Revelation Burst - On Major (upgrade) acquisition: gain +10% of total fragments. Crescendance Bond: Knowledge Harvest - Each Resonate Mystery stack consumed: gain +1 random owned minor score.";
+            public const string RazerOfBellsChimes = "Passive: Component Echo - On minor score craft: refund 2 random components for that minor. Crescendance Bond: Entropic Resonance - On Grandiose Bell mend: gain Entropic Melodies equal to click count × 2 (maximum 250).";
             
             // Fate
             public const string AstralChainripper = "Passive: Temporal Surge - On Fate minor score craft: multiply Notes Per Second by 5× for 10 seconds. Crescendance Bond: Stellar Convergence - Every 5 Cosmic Modulation stacks gained: automatically grants +1 Symphony of the Stars stack.";
-            public const string CosmicWeaver = "Passive: Harmonic Multiplication - On any minor score craft: If you own 1+ of that major score, gain +3 of that major score. Crescendance Bond: Entropic Starfall - Each Symphony of the Stars stack consumed: next 5 clicks are guaranteed Entropic Melody critical hits.";
+            public const string CosmicWeaver = "Passive: Harmonic Multiplication - On any minor craft: If you own 1+ of that major, gain +3 of that major score. Crescendance Bond: Entropic Starfall - Each Symphony of the Stars consumed: Next 5 clicks are guaranteed Entropic Melody critical hits.";
+            
+            // Enigma
+            public const string CreatorOfMystery = "Passive: Chaotic Flux - Every 3rd click: randomly +25% or -25% notes (60% chance positive). Crescendance Bond: Accelerated Mystery - Every 15th click: gain +1 additional Resonate Mystery stack (on top of base every-10th).";
+            public const string Truthseeker = "Passive: Revelation Burst - On upgrade purchase: gain +5 Resonant Mystery stacks. Crescendance Bond: Knowledge Harvest - For every 2 Resonate Mystery stacks consumed: gain +1 random owned minor score.";
             
             // Ode to Joy
             public const string JoyfulCatharsis = "Passive: Harmonic Entropy - Every 50th click: gain Entropic Melodies equal to (critical notes gotten × 3). Crescendance Bond: Euphoric Resonance - Every time you gain any Petal: double Notes Per Second for 5 seconds (effect stacks).";
@@ -420,7 +449,7 @@ Build musical melodies through clicking, earning escalating rewards and entropic
                 public const string DiesIrae = "Descending Judgment:\nSeven Seals";
                 public const string Winter = "Eternal Frost:\nAbsolute Zero";
                 public const string Eroica = "Symphony of Heroes:\nVictory March";
-                public const string SwanLake = "Swan Lake Crescendance:\nFeather Cascade";
+                public const string SwanLake = "Wings of Transcendence:\nFeather Cascade";
                 public const string LaCampanella = "Bell Resonance:\nChime Chain";
                 public const string Enigma = "Enigmatic Puzzle:\nMystery Clicks";
                 public const string Fate = "Threads of Destiny:\nHourglass Reversal";
@@ -437,7 +466,7 @@ Build musical melodies through clicking, earning escalating rewards and entropic
                 public const string LaCampanella = "Click to create chimes. Clicking within 1 second extends chain. Chain reward equals (chain length)² × Notes Per Second as instant notes. Chain breaks after 1 second of no clicks.\n\n10 second duration | 10 minute cooldown";
                 public const string Enigma = "Each click triggers 1 random effect:\nRed: 5× Notes Per Second as instant notes | Blue: +10% Notes Per Second boost | Green: +30 Harmonious Fragments | Yellow: +30 Melodious Fragments | Purple: +1 major score per owned type | Orange: +1 minor component per owned minor type | White: +1 to 3 random minor scores | Black: -65% current notes\n\n10 second duration | 30 minute cooldown";
                 public const string Fate = "All actions performed during the first 10 seconds will be replayed during the last 10 seconds at X× effectiveness, where X equals the number of clicks you performed during the first half.\n\nDuration: 20 seconds | Cooldown: 8 minutes";
-                public const string OdeToJoy = "Build 16-note melodies by clicking (repeatable). Every 16 notes resets counter and grants rewards:\n• 4 notes: +25 Melodious and Harmonious Fragments\n• 8 notes: Random minor score\n• 12 notes: Random major score sheet\n• 16 notes: 5× Notes Per Second for 15 seconds\nOn ability expiry: +3 Entropic Melodies per completed 4-note section\n\n20 second duration | 10 minute cooldown";
+                public const string OdeToJoy = "Build 16-note melodies by clicking (repeatable). Every 16 notes resets counter and grants rewards:\n• 4 notes: +25 Melodious and Harmonious Fragments\n• 8 notes: +5 Petals of Harmony\n• 12 notes: +5 Petals of Melody\n• 16 notes: +1 Ode to Life\nOn ability expiry: +3 Entropic Melodies per completed 4-note section\n\n20 second duration | 10 minute cooldown";
             }
 
             public static class Short
@@ -450,7 +479,7 @@ Build musical melodies through clicking, earning escalating rewards and entropic
                 public const string LaCampanella = "Chime Chain: First click creates a chime. Each click within 1 second extends the chain. Chain gives length² × Notes Per Second as instant notes. Chain breaks after 1 second of no clicks - 10 second duration, 10 minute cooldown.";
                 public const string Enigma = "Mystery Clicks: Each click triggers 1 random effect (Red: 5× Notes Per Second notes, Blue: 10% Notes Per Second boost, Green: 30 Harmonious Fragments, Yellow: 30 Melodious Fragments, Purple: +1 major per owned, Orange: +1 minor component per owned, White: +1 to 3 random minors, Black: -65% notes) - 10 second duration, 30 minute cooldown.";
                 public const string Fate = "Hourglass Reversal: All actions during first 10 seconds replay during last 10 seconds at X× effectiveness where X = clicks performed (20 second duration, 8 minute cooldown).";
-                public const string OdeToJoy = "Crescendo Conductor: Build 16-note melodies (repeatable/stackable). Rewards at 4/8/12/16 notes (+25 fragments, minor score, major sheet, 5× Notes Per Second for 15 seconds). On expiry: +3 Entropic Melodies per completed section - 20 second duration, 10 minute cooldown.";
+                public const string OdeToJoy = "Crescendo Conductor: Build 16-note melodies (repeatable/stackable). Rewards at 4/8/12/16 notes (+25 fragments, +5 Petals of Harmony, +5 Petals of Melody, +1 Ode to Life). On expiry: +3 Entropic Melodies per completed section - 20 second duration, 10 minute cooldown.";
             }
 
             // Duration and cooldown constants

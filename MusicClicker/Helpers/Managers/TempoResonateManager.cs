@@ -1049,8 +1049,23 @@ namespace MusicClicker
         // Helper methods to convert internal names to display names for tooltips
         private string ScoreToDisplayName(string internalName)
         {
-            // Internal names already have correct display format
-            return internalName;
+            // Map internal names to display names that match GameDescriptions keys
+            return internalName switch
+            {
+                "Moonlight Sonata" => "Moonlight Sonata",
+                "Eroica" => "Eroica",
+                "Swan" => "Swan Lake",
+                "LaCampanella" => "La Campanella",
+                "Enigma" => "Enigma Variations",
+                "Fate" => "Fate",
+                "OdeToJoy" => "Ode to Joy",
+                "DiesIrae" => "Dies Irae",
+                "Winter" => "Winter",
+                "Mercury" => "Mercury",
+                "ClairDeLune" => "Clair de Lune",
+                "Mars" => "Mars",
+                _ => internalName // Fallback to original name
+            };
         }
 
         private string WeaponToDisplayName(string internalName)

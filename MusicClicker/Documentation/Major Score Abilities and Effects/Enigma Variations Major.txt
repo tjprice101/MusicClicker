@@ -1,0 +1,130 @@
+===========================================
+ENIGMA VARIATIONS MAJOR - ABILITIES & EFFECTS
+===========================================
+
+Flavor Text:
+"Within the veil of mystery lies infinite possibility—each riddle a key to untold power."
+
+CRESCENDANCE: Resonate Mystery
+---------------------------------------
+Requirements:
+• Enigma Variations Major must be resonated
+
+Mechanics:
+• Every 10th click: +1 Resonant Mystery stack
+• Every 15th click (with Creator of Mystery): +1 additional Resonant Mystery stack
+  (Total: 2 stacks when both triggers align)
+
+Consumption Options:
+• Single Stack Consume (choice of effect):
+  - +50% current notes
+  - +50 Entropic Melodies
+  - +1 random owned minor score
+  
+• Bulk Consume (10+ stacks):
+  - +25% current notes per stack consumed
+  - All stacks consumed at once
+  - Truthseeker weapon bond grants +1 random minor per 2 stacks consumed
+
+WEAPON SYNERGIES
+---------------------------------------
+
+Creator of Mystery (Weapon I):
+• Passive - Mystery of Chaos' Flux (while equipped):
+  - Every 3rd click: Randomly ±25% notes
+  - 60% chance positive (+25% notes)
+  - 40% chance negative (-25% notes)
+  - High risk, high reward mechanic
+  
+• Crescendance Bond - Accelerated Mystery:
+  - Every 15th click: +1 additional Resonant Mystery stack
+  - Stacks with base every-10th generation
+  - Requires: Enigma Major resonated + Creator equipped
+  - When triggers align (30th click): grants 2 stacks total
+
+Truthseeker (Weapon II):
+• Passive - Revelation Burst (while equipped):
+  - On upgrade purchase: gain +5 Resonant Mystery stacks
+  - Accelerates mystery stack generation through progression
+  - Passive effect, requires equipped
+  
+• Crescendance Bond - Knowledge Harvest:
+  - For every 2 Resonant Mystery stacks consumed: +1 random owned minor
+  - Applies to both single and bulk consumption
+  - Requires: Enigma Major resonated + Truthseeker equipped
+  - Example: Consume 10 stacks = 5 random minors granted
+
+DUET ABILITY: Mystery Clicks (Creator + Truthseeker)
+---------------------------------------
+Click-based resource generation system:
+• Clicks grant random Red or Blue mystery clicks (50/50 chance)
+• Red Mystery Click Effect: +5× current NPS as notes
+• Blue Mystery Click Effect: +10% NPS (stacks additively, permanent)
+• Duration: 30 seconds
+• Cooldown: 3 minutes
+
+STRATEGY TIPS
+---------------------------------------
+1. Stack 10+ Resonate Mystery before bulk consuming for better value
+2. Truthseeker makes bulk consume powerful (+1 minor per 2 stacks)
+3. Creator of Mystery passive is risky - monitor note total
+4. Mystery Clicks Red effect provides instant burst, Blue provides long-term growth
+5. Save Mystery Clicks for active clicking sessions to maximize both effects
+6. Truthseeker passive grants mystery stacks on every upgrade purchase
+
+PROGRESSION NOTES
+---------------------------------------
+Early Game:
+• Resonate Mystery generation is slow (every 10 clicks)
+• Single consume for immediate needs (+50% notes or entropic)
+• Mystery Clicks duet provides simple Red/Blue choice
+
+Mid Game:
+• Creator weapon accelerates stack generation (every 15th click bonus)
+• Truthseeker bulk consume generates minors efficiently (1 per 2 stacks)
+• Truthseeker passive grants +5 stacks on every upgrade purchase
+• Mystery Clicks becomes more valuable with higher NPS
+
+Late Game:
+• Bulk consume with Truthseeker = steady minor score growth
+• 20+ stack bulk consume grants 10 random minors
+• Blue Mystery Clicks stack for massive permanent NPS increases
+• Chaotic Flux ±25% becomes less risky with larger note pools
+
+SYNERGY RECOMMENDATIONS
+---------------------------------------
+Best Paired With:
+• Eroica: Bulk consume minors + Victory March doubling = exponential
+• Ode to Joy: Mystery-generated minors trigger Petal of Harmony
+• La Campanella: Symphony duplication doubles mystery-granted minors
+
+Avoid Pairing With:
+• Swan Lake: Both RNG-dependent - inconsistent combo
+• Moonlight: Nighttime restriction conflicts with 10-click cadence
+
+BALANCE NOTES
+---------------------------------------
+Version 1.2 - Bulk Consume Nerf:
+• Reduced bulk consume from +75% → +25% notes per stack
+• Reason: 75% per stack created exponential scaling issues
+• Truthseeker bonus unchanged (still +1 minor per stack)
+
+Version 1.0 - Initial Implementation:
+• Mystery Clicks Black effect originally -50%, increased to -65% for risk balance
+• Creator Chaotic Flux originally 50/50 distribution, adjusted to 60/40 positive bias
+
+ADVANCED TECHNIQUES
+---------------------------------------
+Stack Management:
+• Single consume at <10 stacks for immediate needs
+• Bulk consume at 10-20 stacks for optimal value
+• With Truthseeker: 20-stack bulk = 20 random minors + (20 × 25% notes)
+
+Risk Mitigation:
+• Creator Chaotic Flux averages to +5% per 3 clicks over time (60% × 25% - 40% × 25%)
+• Mystery Clicks: Click slowly to limit Black exposure (only 10s duration)
+• Save game before using Mystery Clicks if risk-averse
+
+Purple Effect Optimization:
+• Purple grants +1 per owned major type (can grant 7+ majors in late game)
+• Use Mystery Clicks when you own many major types for maximum value

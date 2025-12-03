@@ -721,19 +721,12 @@ namespace MusicClicker.Armory
         // ==================== EROICA MAJOR: TRIUMPH OF HEROES ====================
 
         /// <summary>
-        /// Triumph of Heroes (Eroica Major - Passive): Every Major score acquisition
-        /// doubles your current notes.
+        /// Eroica Major Ability: Removed - no longer has passive major acquisition effect
         /// </summary>
         public static void TriumphOfHeroes_OnMajorAcquisition(GameState gameState)
         {
-            if (gameState == null) return;
-
-            double currentNotes = MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes);
-            // Add current notes to itself to double the total
-            MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, currentNotes);
-            
-            // Debug output to console
-            System.Diagnostics.Debug.WriteLine($"Triumph of Heroes: Doubled notes from {currentNotes} to {currentNotes * 2}");
+            // Functionality removed - Eroica Major Ability no longer doubles notes on acquisition
+            return;
         }
 
         // ==================== SWAN LAKE WEAPONS (4-5) ====================
@@ -1088,10 +1081,10 @@ namespace MusicClicker.Armory
                 }
             }
             
-            // Check for Chromatic (every 15 clicks, 5% chance)
+            // Check for Chromatic (every 15 clicks, 10% chance)
             if (gameState.SwanLakeClickCounter % 15 == 0)
             {
-                if (_random.NextDouble() < 0.05)
+                if (_random.NextDouble() < 0.10)
                 {
                     gameState.ChromaticFeathers++;
                     // Trigger weapon effects
@@ -1101,10 +1094,10 @@ namespace MusicClicker.Armory
                 }
             }
             
-            // Check for Revered (every 10 clicks, 5% chance)
+            // Check for Revered (every 10 clicks, 20% chance)
             if (gameState.SwanLakeClickCounter % 10 == 0)
             {
-                if (_random.NextDouble() < 0.05)
+                if (_random.NextDouble() < 0.20)
                 {
                     gameState.ReveredFeathers++;
                     // Trigger weapon effects
@@ -1244,13 +1237,13 @@ namespace MusicClicker.Armory
             
             switch (effect)
             {
-                case 0: // Red - +15× NPS
-                    gameState.Notes += gameState.NotesPerSecond * 15;
+                case 0: // Red - 5× NPS as instant notes
+                    gameState.Notes += gameState.NotesPerSecond * 5;
                     break;
-                case 1: // Blue - 2x NPS boost until ability ends
+                case 1: // Blue - +10% NPS boost (additive)
                     if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
                     {
-                        gameState.NotesPerSecond *= 2.0;
+                        gameState.NotesPerSecond += gameState.NotesPerSecond * 0.10;
                     }
                     break;
                 case 2: // Green - +30 Harmonious Fragments
@@ -2306,21 +2299,20 @@ namespace MusicClicker.Armory
             else if (gameState.CrescendoNotesPlaced == 8 && !gameState.Crescendo8Claimed)
             {
                 gameState.Crescendo8Claimed = true;
-                // Reward: Random minor score
-                OdeDuet_GrantRandomMinor(gameState);
+                // Reward: +5 Petals of Harmony
+                gameState.PetalsOfHarmony += 5;
             }
             else if (gameState.CrescendoNotesPlaced == 12 && !gameState.Crescendo12Claimed)
             {
                 gameState.Crescendo12Claimed = true;
-                // Reward: Random major sheet
-                OdeDuet_GrantRandomMajorSheet(gameState);
+                // Reward: +5 Petals of Melody
+                gameState.PetalsOfMelody += 5;
             }
             else if (gameState.CrescendoNotesPlaced == 16 && !gameState.Crescendo16Claimed)
             {
                 gameState.Crescendo16Claimed = true;
-                // Reward: 5x NPS boost for 15 seconds
-                gameState.OdeDuetNpsBoostActive = true;
-                gameState.OdeDuetNpsBoostExpiry = DateTime.Now.AddSeconds(15);
+                // Reward: +1 Ode to Life
+                gameState.OdeToLifeStacks++;
                 
                 // Complete the section and reset for next cycle
                 gameState.CrescendoCompletedSections++;
@@ -2372,7 +2364,7 @@ namespace MusicClicker.Armory
         
         /// <summary>
         /// Moonlight Crescendance: Track clicks at night, grant Moonbeam Resonance every 20th click
-        /// Auto-consume at 5 stacks for +250% notes and 1 Harmonizing Moonlight stack
+        /// Auto-consume at 8 stacks for +100% notes and 1 Harmonizing Moonlight stack
         /// </summary>
         public static void MoonlightCrescendance_OnClick(GameState gameState, MainWindow mainWindow)
         {
@@ -2385,20 +2377,20 @@ namespace MusicClicker.Armory
                 gameState.MoonlightCrescendanceClickCounter = 0;
                 gameState.MoonbeamResonanceStacks++;
                 
-                // Incisor of Moonlight crescendance ability: +20% notes per stack gained
+                // Incisor of Moonlight crescendance ability: +10% notes per stack gained
                 if (gameState.IncisorOfMoonlightAbility)
                 {
                     double currentNotes = MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes);
-                    double bonus = currentNotes * 0.20;
+                    double bonus = currentNotes * 0.10;
                     MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, bonus);
                 }
                 
-                // Auto-consume at 5 stacks
-                if (gameState.MoonbeamResonanceStacks >= 5)
+                // Auto-consume at 8 stacks
+                if (gameState.MoonbeamResonanceStacks >= 8)
                 {
-                    gameState.MoonbeamResonanceStacks = 0;
+                    gameState.MoonbeamResonanceStacks -= 8;
                     double currentNotes = MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes);
-                    double bonus = currentNotes * 2.50; // +250%
+                    double bonus = currentNotes * 1.00; // +100% (doubled notes)
                     MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, bonus);
                     gameState.HarmonizingMoonlightStacks++;
                 }
@@ -2414,6 +2406,18 @@ namespace MusicClicker.Armory
             
             gameState.HarmonizingMoonlightStacks--;
             gameState.MoonbeamResonanceStacks += 3;
+            
+            // Check if Moonbeam stacks overflow (>= 8), convert to Harmonizing
+            while (gameState.MoonbeamResonanceStacks >= 8)
+            {
+                gameState.MoonbeamResonanceStacks -= 8;
+                gameState.HarmonizingMoonlightStacks++;
+                
+                // Also grant the +100% notes bonus
+                double currentNotes = MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes);
+                double bonus = currentNotes * 1.00;
+                MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, bonus);
+            }
             
             // Give +1 of each component to lowest owned minor
             int lowestMinorIndex = GetLowestOwnedMinorIndex(gameState);
@@ -2440,20 +2444,30 @@ namespace MusicClicker.Armory
             else if (gameState.GrandioseBellClickCounter >= 20)
                 gameState.GrandioseBellStage = 1; // Crescending
             
-            // Symphony of Bells: +75% notes on crack
-            if (gameState.SymphonyOfBellsAbility && 
-                (gameState.GrandioseBellClickCounter == 20 || gameState.GrandioseBellClickCounter == 40 || gameState.GrandioseBellClickCounter == 60))
+            bool bellCracked = (gameState.GrandioseBellClickCounter == 20 || gameState.GrandioseBellClickCounter == 40 || gameState.GrandioseBellClickCounter == 60);
+            
+            // Major Ability: Bell's Fortune - +10% notes on crack (if La Campanella Major owned)
+            if (gameState.LaCampanellaMajorOwned > 0 && bellCracked)
+            {
+                double currentNotes = MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes);
+                double bonus = currentNotes * 0.10;
+                MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, bonus);
+            }
+            
+            // Symphony of Bells: +75% notes on crack (stacks with major ability)
+            if (gameState.SymphonyOfBellsAbility && bellCracked)
             {
                 double currentNotes = MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes);
                 double bonus = currentNotes * 0.75;
                 MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, bonus);
             }
             
-            // Handle entropic crit clicks from Radiant mend
+            // Handle entropic crit clicks from Radiant mend - each grants 3 Deafening Chime stacks
             if (gameState.LaCampanellaEntropicCritClicks > 0)
             {
                 gameState.LaCampanellaEntropicCritClicks--;
-                gameState.DeafeningChimeStacks++;
+                gameState.DeafeningChimeStacks += 3;
+                gameState.DeafeningChimeExpiry = DateTime.Now.AddMinutes(2); // Reset expiry on each crit
                 // Note: The entropic crit effect would be applied in the main click handler
             }
         }
@@ -2482,16 +2496,16 @@ namespace MusicClicker.Armory
                     }
                 }
             }
-            else if (gameState.GrandioseBellStage == 2) // Radiant: 5 entropic crit clicks + 5 Deafening Chime
+            else if (gameState.GrandioseBellStage == 2) // Radiant: +5 Deafening Chime stacks (2-minute expiry)
             {
-                gameState.LaCampanellaEntropicCritClicks = 5;
-                gameState.DeafeningChimeExpiry = DateTime.Now.AddMinutes(10);
+                gameState.DeafeningChimeStacks += 5;
+                gameState.DeafeningChimeExpiry = DateTime.Now.AddMinutes(2);
             }
             else if (gameState.GrandioseBellStage == 3) // Harmonizing: Consume Deafening Chime for doubling
             {
                 if (gameState.DeafeningChimeStacks > 0)
                 {
-                    int stacksToConsume = Math.Min(gameState.DeafeningChimeStacks, 6); // Cap at 6
+                    int stacksToConsume = Math.Min(gameState.DeafeningChimeStacks, 6); // Cap at 6 for optimal 64× multiplier
                     double multiplier = Math.Pow(2, stacksToConsume) - 1; // -1 because we're adding, not setting
                     double currentNotes = MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes);
                     MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, currentNotes * multiplier);
@@ -2499,10 +2513,10 @@ namespace MusicClicker.Armory
                 }
             }
             
-            // Razer of Bells Chimes: Grant entropic melodies = click count
+            // Razer of Bells Chimes: Grant entropic melodies = click count × 2 (max 250)
             if (gameState.RazerOfBellsChimesAbility)
             {
-                int entropicGrant = Math.Min(gameState.GrandioseBellClickCounter, 250); // Cap at 250
+                int entropicGrant = Math.Min(gameState.GrandioseBellClickCounter * 2, 250); // Double click count, cap at 250
                 gameState.EntropicMelodies += entropicGrant;
             }
             
@@ -2516,7 +2530,7 @@ namespace MusicClicker.Armory
         #region Enigma Crescendance: Resonate Mystery
         
         /// <summary>
-        /// Enigma Crescendance: Grant Resonate Mystery stacks every 10th/25th click
+        /// Enigma Crescendance: Grant Resonate Mystery stacks every 10th/15th click
         /// Creator of Mystery: Every 3rd click ±25% notes
         /// </summary>
         public static void EnigmaCrescendance_OnClick(GameState gameState, MainWindow mainWindow)
@@ -2529,8 +2543,8 @@ namespace MusicClicker.Armory
                 gameState.ResonateMysteryStacks++;
             }
             
-            // Every 25th click grants additional stack when crescendance active
-            if (gameState.EnigmaClickCounter % 25 == 0)
+            // Every 15th click grants additional stack when Creator of Mystery equipped
+            if (gameState.CreatorOfMysteryAbility && gameState.EnigmaClickCounter % 15 == 0)
             {
                 gameState.ResonateMysteryStacks++;
             }
@@ -2586,7 +2600,7 @@ namespace MusicClicker.Armory
                     break;
             }
             
-            // Truthseeker: Grant random minor per stack consumed
+            // Truthseeker: Grant 1 random minor per 2 stacks consumed
             if (gameState.TruthseekerAbility)
             {
                 int randomMinor2 = _random.Next(7);
@@ -2615,10 +2629,11 @@ namespace MusicClicker.Armory
             double bonus = currentNotes * (0.25 * stackCount); // Reduced from 75% to 25% per stack
             MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, bonus);
             
-            // Truthseeker: Grant minor per stack consumed
+            // Truthseeker: Grant 1 minor per 2 stacks consumed
             if (gameState.TruthseekerAbility)
             {
-                for (int i = 0; i < stackCount; i++)
+                int minorsToGrant = stackCount / 2; // Integer division - 1 minor per 2 stacks
+                for (int i = 0; i < minorsToGrant; i++)
                 {
                     int randomMinor = _random.Next(7);
                     switch (randomMinor)
@@ -2637,19 +2652,28 @@ namespace MusicClicker.Armory
             gameState.ResonateMysteryStacks = 0;
         }
         
+        /// <summary>
+        /// Truthseeker Passive: Revelation Burst - On upgrade purchase, grant 5 Resonant Mystery stacks
+        /// </summary>
+        public static void Truthseeker_OnUpgradePurchase(GameState gameState)
+        {
+            if (gameState == null) return;
+            gameState.ResonateMysteryStacks += 5;
+        }
+        
         #endregion
         
         #region Fate Crescendance: Cosmic Modulation
         
         /// <summary>
-        /// Fate Crescendance: Every 5th click grants stack + 10% notes
+        /// Fate Crescendance: Every 8th click grants stack + 10% notes
         /// Tier effects: 1-4 entropic crits, 5-9 double NPS, 10+ guaranteed crits
         /// </summary>
         public static void FateCrescendance_OnClick(GameState gameState, MainWindow mainWindow)
         {
             gameState.FateClickCounter++;
             
-            if (gameState.FateClickCounter >= 5)
+            if (gameState.FateClickCounter >= 8)
             {
                 gameState.FateClickCounter = 0;
                 gameState.CosmicModulationStacks++;
