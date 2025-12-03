@@ -1,0 +1,274 @@
+═══════════════════════════════════════════════════════════════════════════════
+                    MAIN SCREEN UI LAYOUT IDEAS
+═══════════════════════════════════════════════════════════════════════════════
+
+Current Button Inventory:
+- Save (top-left)
+- Upgrades (top-right)
+- Click Button (center)
+- Fragmentation, Resonance, Melody, Harmony (left carousel)
+- Tempo Resonate, Eternal Modulation (right side)
+- Duet Ability (bottom-right)
+- Arsenal of Forte, Symphonic Gallery, Fragmentation (bottom carousel)
+- Cacophonic Dreams (bottom-left unlock)
+- Crescendance Panel (bottom center, dynamic)
+
+═══════════════════════════════════════════════════════════════════════════════
+OPTION 1: CARD-BASED GRID LAYOUT
+═══════════════════════════════════════════════════════════════════════════════
+
+Concept: Organize buttons into functional zones using a clear grid structure
+
+Layout:
+┌─────────────────────────────────────────────────────────┐
+│ [Save]              STATS AREA           [Upgrades]     │
+│                   Notes / NPS / etc                     │
+├─────────────────────────────────────────────────────────┤
+│                                                         │
+│  LEFT PANEL            [CLICK BUTTON]      RIGHT PANEL  │
+│  ┌──────────┐           (Center)          ┌──────────┐ │
+│  │Fragmen-  │                             │ Duet     │ │
+│  │tation    │                             │ Ability  │ │
+│  ├──────────┤                             ├──────────┤ │
+│  │Resonance │                             │ Tempo    │ │
+│  ├──────────┤                             │ Resonate │ │
+│  │Melody    │                             ├──────────┤ │
+│  ├──────────┤                             │ Eternal  │ │
+│  │Harmony   │                             │ Modulat. │ │
+│  └──────────┘                             └──────────┘ │
+│                                                         │
+├─────────────────────────────────────────────────────────┤
+│         [Crescendance Panel - Full Width]               │
+├─────────────────────────────────────────────────────────┤
+│ [Cacoph.    [Arsenal]  [Gallery]  [Fragmentation]      │
+│  Dreams]                                                │
+└─────────────────────────────────────────────────────────┘
+
+Benefits:
+- Clear separation of progression (left) vs power (right) buttons
+- Click button remains central and large
+- Bottom carousel easily accessible
+- Stats always visible at top
+
+═══════════════════════════════════════════════════════════════════════════════
+OPTION 2: SIDEBAR NAVIGATION
+═══════════════════════════════════════════════════════════════════════════════
+
+Concept: Vertical sidebar on left with all navigation, maximizes click area
+
+Layout:
+┌────┬────────────────────────────────────────────────────┐
+│SAVE│              STATS HEADER                [Upgrades]│
+├────┼────────────────────────────────────────────────────┤
+│ F  │                                                    │
+│ R  │                                                    │
+│ A  │                                                    │
+│ G  │          [LARGE CLICK BUTTON]                     │
+│    │                                                    │
+│ R  │                                                    │
+│ E  │  [Duet]  [Tempo]  [Eternal]  (Horizontal icons)   │
+│ S  │                                                    │
+│    │                                                    │
+│ M  │                                                    │
+│ E  │                                                    │
+│ L  │         [Crescendance Panel]                      │
+│    │                                                    │
+│ H  ├────────────────────────────────────────────────────┤
+│ A  │ [Cacoph] [Arsenal] [Gallery] [Fragmentation]      │
+│ R  │                                                    │
+└────┴────────────────────────────────────────────────────┘
+
+Benefits:
+- Maximum screen real estate for click button
+- All navigation in one predictable location
+- Clean, modern sidebar aesthetic
+- Easy mouse movement (all buttons in vertical line)
+
+═══════════════════════════════════════════════════════════════════════════════
+OPTION 3: TOP NAVIGATION BAR
+═══════════════════════════════════════════════════════════════════════════════
+
+Concept: All navigation buttons across top, clean workspace below
+
+Layout:
+┌─────────────────────────────────────────────────────────┐
+│[Save][Frag][Res][Mel][Har][Tempo][Duet][Eternal][Upgr] │
+├─────────────────────────────────────────────────────────┤
+│                      STATS ROW                          │
+│           Notes / NPS / Fragments / etc                 │
+├─────────────────────────────────────────────────────────┤
+│                                                         │
+│                                                         │
+│                                                         │
+│              [LARGE CLICK BUTTON]                       │
+│                   (Center)                              │
+│                                                         │
+│                                                         │
+│                                                         │
+├─────────────────────────────────────────────────────────┤
+│         [Crescendance Panel - Full Width]               │
+├─────────────────────────────────────────────────────────┤
+│  [Cacoph.]  [Arsenal]  [Gallery]  [Fragmentation]      │
+└─────────────────────────────────────────────────────────┘
+
+Benefits:
+- Compact, efficient use of space
+- Familiar top-nav pattern (like web browsers)
+- Huge central area for clicking
+- Stats immediately visible below nav
+
+═══════════════════════════════════════════════════════════════════════════════
+OPTION 4: CORNER ANCHORED (MINIMAL)
+═══════════════════════════════════════════════════════════════════════════════
+
+Concept: Buttons only in corners, maximum unobstructed view
+
+Layout:
+┌─────────────────────────────────────────────────────────┐
+│[Save]                                         [Upgrades]│
+│[Frag]                                           [Duet]  │
+│[Res]                 STATS                     [Tempo]  │
+│[Mel]          Notes / NPS / etc                [Eternal]│
+│[Har]                                                    │
+│                                                         │
+│                                                         │
+│                  [CLICK BUTTON]                         │
+│                    (Center)                             │
+│                                                         │
+│                                                         │
+│              [Crescendance Panel]                       │
+│                                                         │
+│[Cacoph]                                                 │
+└────────────[Arsenal][Gallery][Frag]────────────────────┘
+
+Benefits:
+- Extremely clean, minimal look
+- No visual clutter
+- Easy corner-to-center mouse movements
+- Background imagery visible
+
+═══════════════════════════════════════════════════════════════════════════════
+OPTION 5: FLOATING ACTION PANELS
+═══════════════════════════════════════════════════════════════════════════════
+
+Concept: Buttons grouped by function in distinct bordered panels
+
+Layout:
+┌─────────────────────────────────────────────────────────┐
+│ ╔═══════╗           STATS              ╔═══════╗       │
+│ ║ Save  ║      Notes / NPS / etc       ║Upgrad ║       │
+│ ╚═══════╝                              ╚═══════╝       │
+├─────────────────────────────────────────────────────────┤
+│                                                         │
+│ ╔═══════════╗                          ╔═══════════╗   │
+│ ║ Progression                          ║  Powers   ║   │
+│ ║ -----------                          ║ ---------  ║   │
+│ ║ Frag       ║   [CLICK BUTTON]        ║ Duet      ║   │
+│ ║ Resonance  ║                         ║ Tempo     ║   │
+│ ║ Melody     ║                         ║ Eternal   ║   │
+│ ║ Harmony    ║                         ║           ║   │
+│ ╚═══════════╝                          ╚═══════════╝   │
+│                                                         │
+├─────────────────────────────────────────────────────────┤
+│              [Crescendance Panel]                       │
+├─────────────────────────────────────────────────────────┤
+│  ╔═══════════════════════════════════════════════╗     │
+│  ║ [Cacoph] [Arsenal] [Gallery] [Fragmentation] ║     │
+│  ╚═══════════════════════════════════════════════╝     │
+└─────────────────────────────────────────────────────────┘
+
+Benefits:
+- Clear visual grouping (progression vs power features)
+- Panel headers can label button groups
+- Professional, organized appearance
+- Easy to understand hierarchy
+
+═══════════════════════════════════════════════════════════════════════════════
+RECOMMENDED APPROACH: HYBRID CARD GRID (OPTION 1 ENHANCED)
+═══════════════════════════════════════════════════════════════════════════════
+
+Specific Implementation Suggestions:
+
+1. TOP BAR (80px tall)
+   - Save button (left corner)
+   - Stats display (center) - Notes, NPS, Fragments
+   - Upgrades button (right corner)
+
+2. LEFT PANEL (200px wide, vertically stacked)
+   - Fragmentation (top)
+   - Resonance
+   - Melody
+   - Harmony (bottom)
+
+3. RIGHT PANEL (200px wide, vertically stacked)
+   - Duet Ability (top)
+   - Tempo Resonate
+   - Eternal Modulation (bottom)
+
+4. CENTER AREA
+   - Large click button (400x400px minimum)
+   - Maximum space for clicking
+   - Centered vertically and horizontally
+
+5. CRESCENDANCE PANEL
+   - Full width panel (850px wide)
+   - 80px from bottom edge
+   - Appears above bottom carousel
+
+6. BOTTOM BAR
+   - Cacophonic Dreams (left side)
+   - Arsenal of Forte (center-left)
+   - Symphonic Gallery (center)
+   - Fragmentation (center-right)
+
+═══════════════════════════════════════════════════════════════════════════════
+VISUAL ENHANCEMENT GUIDELINES (SIMPLE)
+═══════════════════════════════════════════════════════════════════════════════
+
+Color/Border Enhancements:
+- Panel borders: 2-3px solid, #AA000000 (subtle black)
+- Panel backgrounds: #55000000 (semi-transparent dark)
+- Consistent spacing: 12-15px margins between all elements
+- Button consistency: Same size within each panel
+
+Layout Best Practices:
+- All panels should have CornerRadius="8" for modern look
+- Use consistent Padding="12" inside all panels
+- Maintain symmetry (left panel width = right panel width)
+- Keep vertical spacing uniform (15px between stacked buttons)
+
+Ergonomic Considerations:
+- Maximum mouse travel: 200-400px from click button to any feature
+- Related buttons grouped together
+- Most-used features (click, stats) central and always visible
+- Bottom carousel never covered by other UI elements
+- Crescendance panel appears only when relevant (doesn't clutter)
+
+═══════════════════════════════════════════════════════════════════════════════
+IMPLEMENTATION PRIORITIES
+═══════════════════════════════════════════════════════════════════════════════
+
+Phase 1 - Core Structure:
+1. Reposition left panel buttons into vertical stack
+2. Reposition right panel buttons into vertical stack
+3. Ensure click button stays centered
+4. Move stats to top center
+
+Phase 2 - Bottom Organization:
+1. Align bottom carousel buttons horizontally
+2. Position Cacophonic Dreams on far left
+3. Verify crescendance panel clears all buttons
+
+Phase 3 - Visual Polish:
+1. Add consistent borders to panels
+2. Set uniform spacing/margins
+3. Ensure all buttons same size within panels
+4. Test with different window sizes
+
+Phase 4 - Testing:
+1. Verify no overlaps at 1600x900 resolution
+2. Test clickability of all buttons
+3. Confirm stats always visible
+4. Validate crescendance panel positioning
+
+═══════════════════════════════════════════════════════════════════════════════
