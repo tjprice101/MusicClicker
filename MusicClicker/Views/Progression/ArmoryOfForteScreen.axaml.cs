@@ -268,6 +268,7 @@ namespace MusicClicker.Views
                 {
                     MusicClicker.Helpers.AtomicDouble.Add(ref _gameState._notes, -cost);
                     SetWeaponOwned(weaponIndex, true);
+                    
                     // Refresh UI to show purchase
                     UpdateUI(_gameState);
                 }

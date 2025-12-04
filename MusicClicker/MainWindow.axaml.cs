@@ -731,20 +731,24 @@ namespace MusicClicker
             }
             
             // Funeral Prayer: Add 6x NPS bonus to notesPerClick if empowered
+            bool funeralPrayerEmpoweredThisClick = false;
             if (gameState.FuneralPrayerAbility)
             {
                 double empoweredBonus = MusicClicker.Armory.WeaponAbilities.FuneralPrayer_GetEmpoweredClickBonus(gameState);
                 if (empoweredBonus > 0)
                 {
                     notesPerClick += empoweredBonus;
+                    funeralPrayerEmpoweredThisClick = true;
                 }
             }
 
             // Thousand Winged Swan: Add NPS-to-NPC boost (2x NPS)
+            bool thousandWingedSwanBoostActive = false;
             double swanNpsBoost = MusicClicker.Armory.WeaponAbilities.ThousandWingedSwan_GetNpcBoost(gameState);
             if (swanNpsBoost > 0)
             {
                 notesPerClick += swanNpsBoost;
+                thousandWingedSwanBoostActive = true;
             }
 
             // Add calculated notes to player's total
@@ -914,6 +918,7 @@ namespace MusicClicker
                 Color critColor;
                 double finalNotes = notesPerClick;
                 bool hasStroke = false;
+                Color strokeColor = Colors.Black; // Default stroke color
                 
                 // ==================== SPECIAL CLICK EFFECT PRIORITY SYSTEM ====================
                 // Priority Order (highest to lowest value):
@@ -953,13 +958,13 @@ namespace MusicClicker
                     hasStroke = true;
                 }
                 // 4. Priority comparison: Crimson Requiem vs Funeral Prayer Empowered (use highest value)
-                else if (gameState.CrimsonRequiemClicksRemaining > 0 || gameState.FuneralPrayerEmpoweredClicksRemaining > 0)
+                else if (gameState.CrimsonRequiemClicksRemaining > 0 || funeralPrayerEmpoweredThisClick)
                 {
                     // Calculate values for comparison
                     double crimsonValue = gameState.CrimsonRequiemClicksRemaining > 0 
                         ? (notesPerClick + (gameState.NotesPerSecond * gameState.NotesPerClick)) 
                         : 0;
-                    double funeralValue = gameState.FuneralPrayerEmpoweredClicksRemaining > 0 
+                    double funeralValue = funeralPrayerEmpoweredThisClick 
                         ? notesPerClick // Already includes NPS * 6 from empowered bonus
                         : 0;
                     
@@ -982,7 +987,15 @@ namespace MusicClicker
                         hasStroke = true;
                     }
                 }
-                // 5. Ode to Joy: Entropic Crit Clicks from Petal of Melody (1500x multiplier)
+                // 5. Thousand Winged Swan: Dawn of the Swan's Glory (NPS-to-NPC boost active)
+                else if (thousandWingedSwanBoostActive)
+                {
+                    critText = $"Dawn of the Swan's Glory!!! +{FormatNumber(notesPerClick)}";
+                    critColor = Colors.White; // White text
+                    hasStroke = true;
+                    strokeColor = Color.FromRgb(255, 192, 203); // Pink outline
+                }
+                // 6. Ode to Joy: Entropic Crit Clicks from Petal of Melody (1500x multiplier)
                 else if (gameState.EntropicCritClicksRemaining > 0 && DateTime.Now <= gameState.EntropicCritExpiry)
                 {
                     gameState.EntropicCritClicksRemaining--;
@@ -992,7 +1005,7 @@ namespace MusicClicker
                     critColor = Color.FromRgb(255, 105, 180); // Hot pink
                     hasStroke = true;
                 }
-                // 6. La Campanella: Entropic Crit Clicks from Radiant mend (1500x multiplier)
+                // 7. La Campanella: Entropic Crit Clicks from Radiant mend (1500x multiplier)
                 else if (gameState.LaCampanellaEntropicCritClicks > 0)
                 {
                     gameState.LaCampanellaEntropicCritClicks--;
@@ -1002,7 +1015,7 @@ namespace MusicClicker
                     critColor = Color.FromRgb(218, 165, 32); // Golden rod
                     hasStroke = true;
                 }
-                // 7. Random Entropic Crescendo (0.1% chance, 1500x multiplier)
+                // 8. Random Entropic Crescendo (0.1% chance, 1500x multiplier)
                 else if (roll < 0.1)
                 {
                     finalNotes = notesPerClick * 1500;
@@ -1011,7 +1024,7 @@ namespace MusicClicker
                     critColor = Colors.Red;
                     hasStroke = true;
                 }
-                // 8. Random Superior Crescendo (1% chance, 5x multiplier)
+                // 9. Random Superior Crescendo (1% chance, 5x multiplier)
                 else if (roll < 1.1)
                 {
                     finalNotes = notesPerClick * 5;
@@ -1019,7 +1032,7 @@ namespace MusicClicker
                     critText = $"Superior Crescendo!!! +{FormatNumber(finalNotes)}";
                     critColor = Color.FromRgb(255, 20, 147); // Deep pink
                 }
-                // 9. Random Critical Crescendo (5% chance, 2x multiplier)
+                // 10. Random Critical Crescendo (5% chance, 2x multiplier)
                 else if (roll < 6.1)
                 {
                     finalNotes = notesPerClick * 2;
@@ -1027,14 +1040,14 @@ namespace MusicClicker
                     critText = $"Critical Crescendo!! +{FormatNumber(finalNotes)}";
                     critColor = Color.FromRgb(255, 182, 193); // Light pink
                 }
-                // 10. Normal click
+                // 11. Normal click
                 else
                 {
                     critText = $"+{FormatNumber(notesPerClick)} Notes";
                     critColor = Colors.White;
                 }
                 
-                ShowFloatingText(_lastClickPosition, critText, critColor, hasStroke);
+                ShowFloatingText(_lastClickPosition, critText, critColor, hasStroke, strokeColor);
             }
             
             // Update UI after click
@@ -1312,7 +1325,7 @@ namespace MusicClicker
         /// <summary>
         /// Shows floating text at the mouse position indicating notes gained
         /// </summary>
-        private async void ShowFloatingText(Point position, string text, Color color, bool hasStroke = false)
+        private async void ShowFloatingText(Point position, string text, Color color, bool hasStroke = false, Color? strokeColor = null)
         {
             if (FloatingTextCanvas == null) return;
             
@@ -1328,8 +1341,18 @@ namespace MusicClicker
             // Add drop shadow or stroke for visibility
             if (hasStroke)
             {
-                // White text gets pink outline (Dawn of Swan's Glory)
-                if (color == Colors.White)
+                // Use provided stroke color if specified
+                if (strokeColor.HasValue)
+                {
+                    textBlock.Effect = new DropShadowEffect
+                    {
+                        Color = strokeColor.Value,
+                        BlurRadius = 8,
+                        Opacity = 1.0
+                    };
+                }
+                // White text gets pink outline (Dawn of Swan's Glory) - legacy fallback
+                else if (color == Colors.White)
                 {
                     textBlock.Effect = new DropShadowEffect
                     {
@@ -1645,7 +1668,7 @@ namespace MusicClicker
                 MainCrescendanceTitle.Text = "Eroica: Symphony of Triumph";
                 
             if (MainCrescendanceInfoText != null)
-                MainCrescendanceInfoText.Text = "Symphony of Triumph: Every minor craft: +1 Heroic Resolve. Consume with 25% notes for Symphonic Catharsis (10s double NPC +10% crit). Sakura grants 30 Blossom's Blooming crits.";
+                MainCrescendanceInfoText.Text = "Symphony of Triumph: Every minor craft: +1 Heroic Resolve. Consume with 25% notes for Symphonic Catharsis (10s double NPC +10% crit).";
                 
             // Hide all other panels
             if (MainSwanFeatherPanel != null) MainSwanFeatherPanel.IsVisible = false;

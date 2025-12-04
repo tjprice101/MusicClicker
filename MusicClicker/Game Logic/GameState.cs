@@ -567,13 +567,6 @@ namespace MusicClicker
         public DateTime TriumphOfHeroesAutoClickExpiry { get; set; } = DateTime.MinValue;
         public DateTime TriumphOfHeroesCooldownExpiry { get; set; } = DateTime.MinValue;
 
-        // Swan Lake Duet: Mirror Lake
-        public bool SwanLakeDuetActive { get; set; } = false;
-        public DateTime SwanLakeDuetExpiry { get; set; } = DateTime.MinValue;
-        public DateTime SwanLakeDuetCooldownExpiry { get; set; } = DateTime.MinValue;
-        public System.Collections.Generic.List<(string action, object data, DateTime executeTime)> MirrorLakeQueue { get; set; } = new();
-        public int SwanLakeDuetClickCounter { get; set; } = 0; // Tracks clicks during duet for feather grants
-        
         // Swan Lake Crescendance: Feather System
         public int ReveredFeathers { get; set; } = 0; // Common feathers (5 stacks → +20% notes)
         public int ChromaticFeathers { get; set; } = 0; // Rare feathers (10 stacks → 2 of every minor)

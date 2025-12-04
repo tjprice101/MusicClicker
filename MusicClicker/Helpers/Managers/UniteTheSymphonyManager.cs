@@ -62,6 +62,9 @@ namespace MusicClicker
 
                 owned++;
 
+                // Trigger Thousand Winged Swan passive (Swan Lake II)
+                MusicClicker.Armory.WeaponAbilities.ThousandWingedSwan_OnMinorAcquisition(gameState);
+
                 // Trigger Symphony of Bells ability (La Campanella I)
                 if (gameState.SymphonyOfBellsAbility)
                 {
@@ -157,6 +160,9 @@ namespace MusicClicker
                 }
 
                 owned++;
+
+                // Trigger Thousand Winged Swan passive (Swan Lake II)
+                MusicClicker.Armory.WeaponAbilities.ThousandWingedSwan_OnMinorAcquisition(gameState);
 
                 // Trigger Symphony of Bells ability (La Campanella I)
                 if (gameState.SymphonyOfBellsAbility)
@@ -254,6 +260,9 @@ namespace MusicClicker
 
                 owned++;
 
+                // Trigger Thousand Winged Swan passive (Swan Lake II)
+                MusicClicker.Armory.WeaponAbilities.ThousandWingedSwan_OnMinorAcquisition(gameState);
+
                 // Trigger Symphony of Bells ability (La Campanella I)
                 if (gameState.SymphonyOfBellsAbility)
                 {
@@ -349,6 +358,9 @@ namespace MusicClicker
                 }
 
                 owned++;
+
+                // Trigger Thousand Winged Swan passive (Swan Lake II)
+                MusicClicker.Armory.WeaponAbilities.ThousandWingedSwan_OnMinorAcquisition(gameState);
 
                 // Trigger Symphony of Bells ability (La Campanella I)
                 if (gameState.SymphonyOfBellsAbility)
@@ -446,6 +458,9 @@ namespace MusicClicker
 
                 owned++;
 
+                // Trigger Thousand Winged Swan passive (Swan Lake II)
+                MusicClicker.Armory.WeaponAbilities.ThousandWingedSwan_OnMinorAcquisition(gameState);
+
                 // Trigger Symphony of Bells ability (La Campanella I)
                 if (gameState.SymphonyOfBellsAbility)
                 {
@@ -541,6 +556,9 @@ namespace MusicClicker
                 }
 
                 owned++;
+
+                // Trigger Thousand Winged Swan passive (Swan Lake II)
+                MusicClicker.Armory.WeaponAbilities.ThousandWingedSwan_OnMinorAcquisition(gameState);
 
                 // Trigger Symphony of Bells ability (La Campanella I)
                 if (gameState.SymphonyOfBellsAbility)
@@ -639,6 +657,9 @@ namespace MusicClicker
                 }
 
                 owned++;
+
+                // Trigger Thousand Winged Swan passive (Swan Lake II)
+                MusicClicker.Armory.WeaponAbilities.ThousandWingedSwan_OnMinorAcquisition(gameState);
 
                 // Trigger Symphony of Bells ability (La Campanella I)
                 if (gameState.SymphonyOfBellsAbility)

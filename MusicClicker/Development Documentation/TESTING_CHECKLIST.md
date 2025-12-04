@@ -36,33 +36,33 @@
 ## EROICA (SYMPHONY NO. 3)
 
 ### Crescendance: Symphony of Triumph
-- [ ] Every minor craft grants +1 Heroic Resolve stack
-- [ ] Can consume 1 Heroic Resolve + 25% notes for +1 Symphonic Catharsis stack
-- [ ] Consume Symphonic Catharsis: Grants 10s of double NPC
-- [ ] Consume Symphonic Catharsis: Grants 10s of +10% critical hit chance
-- [ ] Triggers Sakura weapon bond (Crimson Requiem) when conditions met
-- [ ] Triggers Funeral Prayer weapon bond (Testament of Harmony) when conditions met
+- [x] Every minor craft grants +1 Heroic Resolve stack
+- [x] Can consume 1 Heroic Resolve + 25% notes for +1 Symphonic Catharsis stack
+- [x] Consume Symphonic Catharsis: Grants 10s of double NPC
+- [x] Consume Symphonic Catharsis: Grants 10s of +10% critical hit chance
+- [x] Triggers Sakura weapon bond (Crimson Requiem) when conditions met
+- [x] Triggers Funeral Prayer weapon bond (Testament of Harmony) when conditions met
 
 ### Sakura's Blossom Weapon
-- [ ] Forte Resonance (Heroic Bounty): On Major acquisition, grants +1 of each component (Keys, Scales, Progressions)
-- [ ] Components granted match the Major's score type
-- [ ] Crescendance Bond (Crimson Requiem): Consuming Symphonic Catharsis triggers special burst
-- [ ] Crescendance Bond: Next 30 clicks grant bonus = NPC + (NPS × NPC) each
-- [ ] Crescendance Bond requires: Eroica Major resonated + Sakura equipped
-- [ ] Duet (Victory March): 100-click progress bar fills correctly
-- [ ] Duet: 25% progress grants random minor score
-- [ ] Duet: 50% progress grants random major score
-- [ ] Duet: 75% progress grants +50 fragments (Melodious & Harmonious)
-- [ ] Duet: 100% progress doubles all owned scores
-- [ ] Duet: 5 minute cooldown
+- [x] Forte Resonance (Heroic Bounty): On Major acquisition, grants +1 of each component (Keys, Scales, Progressions)
+- [x] Components granted match the Major's score type
+- [x] Crescendance Bond (Crimson Requiem): Consuming Symphonic Catharsis triggers special burst
+- [x] Crescendance Bond: Next 30 clicks grant bonus = NPC + (NPS × NPC) each
+- [x] Crescendance Bond requires: Eroica Major resonated + Sakura equipped
+- [x] Duet (Victory March): 100-click progress bar fills correctly
+- [x] Duet: 25% progress grants random minor score
+- [x] Duet: 50% progress grants random major score
+- [x] Duet: 75% progress grants +50 fragments (Melodious & Harmonious)
+- [x] Duet: 100% progress doubles all owned scores
+- [x] Duet: 5 minute cooldown
 
 ### Funeral Prayer Weapon
-- [ ] Forte Resonance (Prayer of Valor): Every 10th click grants +1 Prayer stack
-- [ ] Forte Resonance: At 3 Prayer stacks, next 15 clicks gain +6× NPS each
-- [ ] Crescendance Bond (Testament of Harmony): Consuming Symphonic Catharsis grants +1 Testament stack
-- [ ] Crescendance Bond: Consume 1 Testament grants +100 Melodious + 100 Harmonious Fragments
-- [ ] Crescendance Bond requires: Eroica Major resonated + Funeral Prayer equipped
-- [ ] Duet (Victory March): Same as Sakura - all milestones tested
+- [x] Forte Resonance (Prayer of Valor): Every 10th click grants +1 Prayer stack
+- [x] Forte Resonance: At 3 Prayer stacks, next 15 clicks gain +6× NPS each
+- [x] Crescendance Bond (Testament of Harmony): Consuming Symphonic Catharsis grants +1 Testament stack
+- [x] Crescendance Bond: Consume 1 Testament grants +100 Melodious + 100 Harmonious Fragments
+- [x] Crescendance Bond requires: Eroica Major resonated + Funeral Prayer equipped
+- [x] Duet (Victory March): Same as Sakura - all milestones tested
 
 ---
 

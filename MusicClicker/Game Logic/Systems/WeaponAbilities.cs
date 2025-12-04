@@ -800,26 +800,26 @@ namespace MusicClicker.Armory
         }
 
         /// <summary>
-        /// Thousand Winged Swan (Swan II): On acquisition of minor/major score or weapon, increase notes by +50% (passive).
-        /// When Swan Lake Crescendance is active: whenever you obtain a Polyphonic Feather,
-        /// for the next 10 seconds your NPS is added to your NPC at double rate (NPC += NPS * 2).
+        /// Thousand Winged Swan (Swan II) - Passive: Wings of Fortune
+        /// On minor score acquisition, grants +100 Entropic Melodies while equipped.
         /// </summary>
-        public static void ThousandWingedSwan_OnScoreAcquisition(GameState gameState)
+        public static void ThousandWingedSwan_OnMinorAcquisition(GameState gameState)
         {
             if (gameState == null) return;
-            double currentNotes = MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes);
-            double bonus = currentNotes * 0.50;
-            MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, bonus);
+            if (!gameState.ThousandWingedSwanAbility) return; // Must be equipped
+            gameState.EntropicMelodies += 100;
         }
         
         /// <summary>
-        /// Thousand Winged Swan active effect: on obtaining Polyphonic feather during Crescendance,
+        /// Thousand Winged Swan Crescendance Bond: Wings of Velocity
+        /// When Polyphonic feather is CONSUMED during Crescendance,
         /// activate 10-second NPS-to-NPC boost (NPC += NPS * 2).
         /// </summary>
-        public static void ThousandWingedSwan_OnPolyphonicFeatherObtained(GameState gameState)
+        public static void ThousandWingedSwan_OnPolyphonicFeatherConsumed(GameState gameState)
         {
             if (gameState == null) return;
-            if (!gameState.SwanMajorAbility) return; // Requires Crescendance active
+            if (!gameState.SwanMajorAbility) return; // Requires Swan Lake crescendance active
+            if (!gameState.ThousandWingedSwanAbility) return; // Requires weapon equipped
             
             gameState.ThousandWingedSwanNpsBoostActive = true;
             gameState.ThousandWingedSwanNpsBoostExpiry = DateTime.Now.AddSeconds(10);
@@ -1081,42 +1081,30 @@ namespace MusicClicker.Armory
             
             gameState.SwanLakeClickCounter++;
             
-            // Check for Polyphonic first (every 30 clicks, 5% chance)
-            if (gameState.SwanLakeClickCounter % 30 == 0)
-            {
-                if (_random.NextDouble() < 0.05)
-                {
-                    gameState.PolyphonicFeathers++;
-                    // Trigger weapon effects
-                    if (gameState.ThousandWingedSwanAbility)
-                        ThousandWingedSwan_OnPolyphonicFeatherObtained(gameState);
-                    return; // Only one feather per click
-                }
-            }
-            
-            // Check for Chromatic (every 15 clicks, 10% chance)
-            if (gameState.SwanLakeClickCounter % 15 == 0)
-            {
-                if (_random.NextDouble() < 0.10)
-                {
-                    gameState.ChromaticFeathers++;
-                    // Trigger weapon effects
-                    if (gameState.StarScatteredWingsAbility)
-                        StarScatteredWings_OnFeatherObtained(gameState, "Chromatic");
-                    return;
-                }
-            }
-            
-            // Check for Revered (every 10 clicks, 20% chance)
+            // Check for Polyphonic first (every 10 clicks, guaranteed)
             if (gameState.SwanLakeClickCounter % 10 == 0)
             {
-                if (_random.NextDouble() < 0.20)
-                {
-                    gameState.ReveredFeathers++;
-                    // Trigger weapon effects
-                    if (gameState.StarScatteredWingsAbility)
-                        StarScatteredWings_OnFeatherObtained(gameState, "Revered");
-                }
+                gameState.PolyphonicFeathers++;
+                return; // Only one feather per click
+            }
+            
+            // Check for Chromatic (every 5 clicks, guaranteed)
+            if (gameState.SwanLakeClickCounter % 5 == 0)
+            {
+                gameState.ChromaticFeathers++;
+                // Trigger weapon effects
+                if (gameState.StarScatteredWingsAbility)
+                    StarScatteredWings_OnFeatherObtained(gameState, "Chromatic");
+                return;
+            }
+            
+            // Check for Revered (every 2 clicks, guaranteed)
+            if (gameState.SwanLakeClickCounter % 2 == 0)
+            {
+                gameState.ReveredFeathers++;
+                // Trigger weapon effects
+                if (gameState.StarScatteredWingsAbility)
+                    StarScatteredWings_OnFeatherObtained(gameState, "Revered");
             }
         }
         
@@ -1150,47 +1138,62 @@ namespace MusicClicker.Armory
                 gameState.MoonlightMinorOwned += 2;
                 if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
                     gameState.NotesPerSecond += 6000; // 3000 * 2
+                ThousandWingedSwan_OnMinorAcquisition(gameState);
+                ThousandWingedSwan_OnMinorAcquisition(gameState);
             }
             if (gameState.EroicaMinorOwned > 0)
             {
                 gameState.EroicaMinorOwned += 2;
                 if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
                     gameState.NotesPerSecond += 16000; // 8000 * 2
+                ThousandWingedSwan_OnMinorAcquisition(gameState);
+                ThousandWingedSwan_OnMinorAcquisition(gameState);
             }
             if (gameState.SwanMinorOwned > 0)
             {
                 gameState.SwanMinorOwned += 2;
                 if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
                     gameState.NotesPerSecond += 30000; // 15000 * 2
+                ThousandWingedSwan_OnMinorAcquisition(gameState);
+                ThousandWingedSwan_OnMinorAcquisition(gameState);
             }
             if (gameState.LaCampanellaMinorOwned > 0)
             {
                 gameState.LaCampanellaMinorOwned += 2;
                 if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
                     gameState.NotesPerSecond += 70000; // 35000 * 2
+                ThousandWingedSwan_OnMinorAcquisition(gameState);
+                ThousandWingedSwan_OnMinorAcquisition(gameState);
             }
             if (gameState.EnigmaMinorOwned > 0)
             {
                 gameState.EnigmaMinorOwned += 2;
                 if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
                     gameState.NotesPerSecond += 150000; // 75000 * 2
+                ThousandWingedSwan_OnMinorAcquisition(gameState);
+                ThousandWingedSwan_OnMinorAcquisition(gameState);
             }
             if (gameState.FateMinorOwned > 0)
             {
                 gameState.FateMinorOwned += 2;
                 if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
                     gameState.NotesPerSecond += 270000; // 135000 * 2
+                ThousandWingedSwan_OnMinorAcquisition(gameState);
+                ThousandWingedSwan_OnMinorAcquisition(gameState);
             }
             if (gameState.OdeToJoyMinorOwned > 0)
             {
                 gameState.OdeToJoyMinorOwned += 2;
                 if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
                     gameState.NotesPerSecond += 510000; // 255000 * 2
+                ThousandWingedSwan_OnMinorAcquisition(gameState);
+                ThousandWingedSwan_OnMinorAcquisition(gameState);
             }
         }
         
         /// <summary>
         /// Consume Polyphonic Feather (1 stack → +250 entropic melodies + 75% current notes)
+        /// Triggers Thousand Winged Swan Crescendance Bond if equipped.
         /// </summary>
         public static void SwanLake_ConsumePolyphonicFeather(GameState gameState)
         {
@@ -1203,6 +1206,13 @@ namespace MusicClicker.Armory
             double currentNotes = MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes);
             double bonus = currentNotes * 0.75;
             MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, bonus);
+            
+            // Trigger Thousand Winged Swan Crescendance Bond if weapon is equipped
+            if (gameState.ThousandWingedSwan && 
+                (gameState.CurrentResonatedWeapon1 == "ThousandWingedSwan" || gameState.CurrentResonatedWeapon2 == "ThousandWingedSwan"))
+            {
+                ThousandWingedSwan_OnPolyphonicFeatherConsumed(gameState);
+            }
         }
         
         // Swan Lake Duet passive removed - replaced by Mirror Lake active ability
@@ -1312,6 +1322,7 @@ namespace MusicClicker.Armory
                     for (int i = 0; i < 3; i++)
                     {
                         minorScoreOwned[random.Next(minorScoreOwned.Count)]();
+                        ThousandWingedSwan_OnMinorAcquisition(gameState);
                     }
                     break;
                 case 7: // Black - Penalty (Lose 65% of current notes)
@@ -1785,36 +1796,43 @@ namespace MusicClicker.Armory
                     gameState.MoonlightMinorOwned += 1;
                     if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
                         gameState.NotesPerSecond += 3000;
+                    ThousandWingedSwan_OnMinorAcquisition(gameState);
                     break;
                 case 1: // Eroica
                     gameState.EroicaMinorOwned += 1;
                     if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
                         gameState.NotesPerSecond += 8000;
+                    ThousandWingedSwan_OnMinorAcquisition(gameState);
                     break;
                 case 2: // Swan Lake
                     gameState.SwanMinorOwned += 1;
                     if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
                         gameState.NotesPerSecond += 15000;
+                    ThousandWingedSwan_OnMinorAcquisition(gameState);
                     break;
                 case 3: // La Campanella
                     gameState.LaCampanellaMinorOwned += 1;
                     if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
                         gameState.NotesPerSecond += 35000;
+                    ThousandWingedSwan_OnMinorAcquisition(gameState);
                     break;
                 case 4: // Enigma
                     gameState.EnigmaMinorOwned += 1;
                     if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
                         gameState.NotesPerSecond += 75000;
+                    ThousandWingedSwan_OnMinorAcquisition(gameState);
                     break;
                 case 5: // Fate
                     gameState.FateMinorOwned += 1;
                     if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
                         gameState.NotesPerSecond += 135000;
+                    ThousandWingedSwan_OnMinorAcquisition(gameState);
                     break;
                 case 6: // Ode to Joy
                     gameState.OdeToJoyMinorOwned += 1;
                     if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
                         gameState.NotesPerSecond += 255000;
+                    ThousandWingedSwan_OnMinorAcquisition(gameState);
                     break;
             }
         }
@@ -2121,13 +2139,13 @@ namespace MusicClicker.Armory
             // Add to owned count
             switch (scoreName)
             {
-                case "Moonlight Sonata": gameState.MoonlightMinorOwned++; break;
-                case "Eroica": gameState.EroicaMinorOwned++; break;
-                case "Swan Lake": gameState.SwanMinorOwned++; break;
-                case "La Campanella": gameState.LaCampanellaMinorOwned++; break;
-                case "Enigma Variations": gameState.EnigmaMinorOwned++; break;
-                case "Fate": gameState.FateMinorOwned++; break;
-                case "Ode to Joy": gameState.OdeToJoyMinorOwned++; break;
+                case "Moonlight Sonata": gameState.MoonlightMinorOwned++; ThousandWingedSwan_OnMinorAcquisition(gameState); break;
+                case "Eroica": gameState.EroicaMinorOwned++; ThousandWingedSwan_OnMinorAcquisition(gameState); break;
+                case "Swan Lake": gameState.SwanMinorOwned++; ThousandWingedSwan_OnMinorAcquisition(gameState); break;
+                case "La Campanella": gameState.LaCampanellaMinorOwned++; ThousandWingedSwan_OnMinorAcquisition(gameState); break;
+                case "Enigma Variations": gameState.EnigmaMinorOwned++; ThousandWingedSwan_OnMinorAcquisition(gameState); break;
+                case "Fate": gameState.FateMinorOwned++; ThousandWingedSwan_OnMinorAcquisition(gameState); break;
+                case "Ode to Joy": gameState.OdeToJoyMinorOwned++; ThousandWingedSwan_OnMinorAcquisition(gameState); break;
             }
         }
 

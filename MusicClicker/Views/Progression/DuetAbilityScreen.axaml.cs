@@ -750,8 +750,8 @@ namespace MusicClicker.Views
                 double remaining = (_gameState.SwanLakeDuetExpiry - DateTime.Now).TotalSeconds;
                 if (remaining > 0)
                 {
-                    int queuedActions = _gameState.MirrorLakeQueue.Count;
-                    DuetAbilityStatusText.Text = $"Active: {remaining:F1}s | Queued: {queuedActions}";
+                    int clickCount = _gameState.SwanLakeDuetClickCounter;
+                    DuetAbilityStatusText.Text = $"Active: {remaining:F1}s | Clicks: {clickCount}/10";
                     DuetAbilityStatusText.Foreground = new SolidColorBrush(Color.FromRgb(70, 70, 90)); // Dark grey
                     ActivateDuetAbilityButton.Content = "END RESONANCE";
                     ActivateDuetAbilityButton.IsEnabled = true;
@@ -1204,9 +1204,9 @@ namespace MusicClicker.Views
                 
                 if (_gameState.SwanLakeDuetActive)
                 {
-                    // Deactivate, clear queue, and start cooldown
+                    // Deactivate and start cooldown
                     _gameState.SwanLakeDuetActive = false;
-                    _gameState.MirrorLakeQueue.Clear();
+                    _gameState.SwanLakeDuetClickCounter = 0;
                     _gameState.SwanLakeDuetCooldownExpiry = DateTime.Now.AddSeconds(DuetDescriptions.Cooldown.SwanLake);
                     _cooldownTimer?.Start();
                 }
@@ -1215,7 +1215,7 @@ namespace MusicClicker.Views
                     // Activate
                     _gameState.SwanLakeDuetActive = true;
                     _gameState.SwanLakeDuetExpiry = DateTime.Now.AddSeconds(DuetDescriptions.Duration.SwanLake);
-                    _gameState.MirrorLakeQueue.Clear(); // Ensure clean start
+                    _gameState.SwanLakeDuetClickCounter = 0; // Reset click counter
                 }
             }
 

@@ -513,7 +513,7 @@
                                        FontWeight="Bold"
                                        HorizontalAlignment="Center" />
                             <Button x:Name="MainConsumePolyphonicButton"
-                                    Content="Consume (+250 Entropic +75% Notes)"
+                                    Content="Consume (+250 Entropic Melodies +75% Notes)"
                                     FontSize="11"
                                     Padding="6,3"
                                     IsEnabled="False" />
@@ -757,7 +757,7 @@
                                        FontWeight="Bold"
                                        HorizontalAlignment="Center" />
                             <Button x:Name="MainConsumeCatharsisButton"
-                                    Content="Consume (10s double Notes Per Click +10% critical hit chance)"
+                                    Content="Consume (10s double NPC +10% crit)"
                                     Click="MainConsumeCatharsisButton_Click"
                                     FontSize="10"
                                     Padding="6,3"

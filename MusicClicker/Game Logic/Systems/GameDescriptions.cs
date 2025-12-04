@@ -30,18 +30,16 @@ Crescendance: Eclipse of the Nocturne
 Crescendance: Symphony of Triumph
 • Every minor craft: +1 Heroic Resolve stack
 • Consume 1 Heroic Resolve + 25% notes: +1 Symphonic Catharsis stack
-• Consume Symphonic Catharsis: 10s of double NPC + 10% crit chance (stackable - each consumption adds 10s)
-• Triggers Sakura weapon bond (Crimson Requiem: 30 'Blossom's Blooming in Crimson Light' crits with bonus = NPC + (NPS × NPC))
-• Triggers Funeral Prayer weapon bond (Testament of Harmony: +1 stack, consume for 100 Melodious + 100 Harmonious fragments + NPS×10 notes)";
+• Consume Symphonic Catharsis: 10s of double NPC + 10% crit chance (stackable - each consumption adds 10s)";
 
             public const string SwanLake = @"Swan Lake
 
 ""Through graceful wings, fortune's feathers descend—each one a promise of transcendent beauty.""
 
 Crescendance: Wings of Transcendence
-• Revered Feathers (every 10 clicks, 20%): Consume 5 for +20% notes
-• Chromatic Feathers (every 15 clicks, 10%): Consume 10 for +2 all minors
-• Polyphonic Feathers (every 30 clicks, 5%): Consume 1 for +250 entropic +75% notes
+• Revered Feathers (every 2 clicks): Consume 5 for +20% notes
+• Chromatic Feathers (every 5 clicks): Consume 10 for +2 all owned minors
+• Polyphonic Feathers (every 10 clicks): Consume 1 for +250 Entropic Melodies +75% notes
 • Wings of Velocity weapon bond: Polyphonic feather → 10s of +NPS to NPC (2x multiplier)
 • Star Scattered Wings weapon bond: Any feather → +1 Scattered Starlight stack (max 5)";
 
@@ -209,10 +207,15 @@ Fill a 100-click bar to earn escalating rewards, culminating in doubling all sco
             public const string StarScatteredWings = @"Star-Scattered Wings
 
 Forte Resonance: Stellar Fragment Rain (while equipped)
-Regular clicks generate crafting fragments. Feather collection grants bonus components.
+Regular clicks generate crafting fragments independent of feather system.
 • Every 10th click: +5 Melodious & +5 Harmonious Fragments
-• Feather bonus: +2 components to random owned minor when feathers drop
-• Trigger: Every 10th click, feather acquisitions
+• Trigger: Every 10th click
+
+Crescendance Bond: Stellar Component Rain (while equipped)
+Feather acquisitions during Crescendance grant bonus components.
+• When Revered or Chromatic Feather obtained: +2 to all components of random owned minor
+• Requires: Swan Lake Major resonated + Star-Scattered Wings equipped
+• Trigger: Revered/Chromatic feather acquisition
 
 Duet (with Thousand Winged Swan): Feather Cascade
 First clicks rain all feather types, with milestone clicks granting note bonuses.
@@ -222,12 +225,17 @@ First clicks rain all feather types, with milestone clicks granting note bonuses
 
             public const string ThousandWingedSwan = @"Thousand Winged Swan
 
-Forte Resonance: Wings of Fortune (while equipped)
-Immediate note boost when acquired. Polyphonic feathers temporarily convert NPS to NPC.
-• On acquisition: +50% notes instantly (one-time)
-• Polyphonic feather consumed: 10s of NPS-to-NPC boost (adds 2× NPS to NPC)
-• Crit Display: ""Dawn of the Swan's Glory"" (white text, pink outline)
-• Trigger: On weapon acquisition, Polyphonic feather consumption
+Passive: Wings of Fortune (while equipped)
+Minor score acquisitions generate an entropic symphony.
+• On minor score acquisition: +100 Entropic Melodies
+• Trigger: Every minor score acquisition (crafting, Victory March, etc.)
+
+Crescendance Bond: Wings of Velocity (while equipped)
+Polyphonic feather consumption creates powerful burst clicking windows.
+• When Polyphonic feather consumed: 10s of NPS-to-NPC boost (adds 2× NPS to NPC)
+• Crit Display: ""Dawn of the Swan's Glory"" (white text with pink outline)
+• Requires: Swan Lake Major resonated + Thousand Winged equipped
+• Trigger: Polyphonic feather consumption
 
 Duet (with Star-Scattered Wings): Feather Cascade
 First clicks rain all feather types, with milestone clicks granting note bonuses.
@@ -409,8 +417,8 @@ Build musical melodies through clicking, earning escalating rewards and entropic
             public const string FuneralPrayer = "Passive: Prayer of Valor - Every 10th click grants 1 Prayer stack. At 3 Prayer stacks: next 15 clicks each gain +6× Notes Per Second as 'Retribution of the Symphonic Sakura' crits.\n\nCrescendance Bond: Testament of Harmony - When Symphonic Catharsis is consumed (stackable), grants +1 Testament of Harmony (consume for +100 Melodious + 100 Harmonious Fragments + NPS×10 notes).\n\nDuet: Victory March - Fill 100-click bar for escalating rewards. 5min cooldown.";
             
             // Swan Lake
-            public const string StarScatteredWings = "Passive: Stellar Fragment Rain - Every 10th click grants +5 Melodious Fragments and +5 Harmonious Fragments. Feather acquisitions grant +2 components to random owned minor score.\n\nCrescendance Bond: Scattered Starlight - Any feather gained grants +1 Scattered Starlight stack (max 5). At 5 stacks, auto-consumes for NPC boost.\n\nDuet: Feather Cascade - First 10 clicks grant feathers. 20s duration, 4min cooldown.";
-            public const string ThousandWingedSwan = "Passive: Wings of Velocity - On minor craft, grants +5% NPS boost (stacks, max 10 stacks = +50%). Stacks decay by 1 every 30 seconds.\n\nCrescendance Bond: Velocity Burst - When Polyphonic Feather is consumed: gain 10 seconds of Notes Per Second-to-Notes Per Click boost (adds 2× NPS to NPC).\n\nDuet: Feather Cascade - First 10 clicks grant feathers. 20s duration, 4min cooldown.";
+            public const string StarScatteredWings = "Passive: Stellar Fragment Rain - Every 10th click grants +5 Melodious and +5 Harmonious Fragments.\n\nCrescendance Bond: Stellar Component Rain - When Revered or Chromatic Feather obtained during Crescendance: grants +2 components to random owned minor score.\n\nDuet: Feather Cascade - First 10 clicks grant all feather types, with milestone clicks granting note bonuses. 20s duration, 4min cooldown.";
+            public const string ThousandWingedSwan = "Passive: Wings of Fortune - Every minor score acquisition grants +100 Entropic Melodies.\n\nCrescendance Bond: Wings of Velocity - When Polyphonic Feather consumed: 10s of NPS-to-NPC boost (adds 2× NPS to NPC).\n\nDuet: Feather Cascade - First 10 clicks grant all feather types, with milestone clicks granting note bonuses. 20s duration, 4min cooldown.";
             
             // La Campanella
             public const string SymphonyOfBells = "Passive: Harmonic Duplication - On minor score craft: duplicate that minor score (+1 extra copy).\n\nCrescendance Bond: Resonant Crack Bonus - When Grandiose Bell cracks (at 20/40/60 clicks): instantly gain +75% notes.\n\nDuet: Chime Chain - Build click chains within 1s windows for exponential rewards. 10s duration, 10min cooldown.";
