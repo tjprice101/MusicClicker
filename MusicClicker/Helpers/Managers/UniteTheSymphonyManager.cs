@@ -178,6 +178,9 @@ namespace MusicClicker
                     MusicClicker.Armory.WeaponAbilities.CosmicWeaver_OnMinorCraft(gameState, "eroica");
                 }
 
+                // Trigger Eroica Crescendance: Heroic Resolve
+                MusicClicker.Armory.WeaponAbilities.EroicaCrescendance_OnMinorCraft(gameState);
+
                 canCraft = true;
             }
 
@@ -270,6 +273,9 @@ namespace MusicClicker
                 {
                     MusicClicker.Armory.WeaponAbilities.CosmicWeaver_OnMinorCraft(gameState, "swanlake");
                 }
+
+                // Trigger Eroica Crescendance: Heroic Resolve
+                MusicClicker.Armory.WeaponAbilities.EroicaCrescendance_OnMinorCraft(gameState);
 
                 canCraft = true;
             }
@@ -364,6 +370,9 @@ namespace MusicClicker
                     MusicClicker.Armory.WeaponAbilities.CosmicWeaver_OnMinorCraft(gameState, "lacampanella");
                 }
 
+                // Trigger Eroica Crescendance: Heroic Resolve
+                MusicClicker.Armory.WeaponAbilities.EroicaCrescendance_OnMinorCraft(gameState);
+
                 canCraft = true;
             }
 
@@ -456,6 +465,9 @@ namespace MusicClicker
                 {
                     MusicClicker.Armory.WeaponAbilities.CosmicWeaver_OnMinorCraft(gameState, "enigma");
                 }
+
+                // Trigger Eroica Crescendance: Heroic Resolve
+                MusicClicker.Armory.WeaponAbilities.EroicaCrescendance_OnMinorCraft(gameState);
 
                 canCraft = true;
             }
@@ -564,6 +576,9 @@ namespace MusicClicker
                     MusicClicker.Armory.WeaponAbilities.CosmicWeaver_OnMinorCraft(gameState, "fate");
                 }
 
+                // Trigger Eroica Crescendance: Heroic Resolve
+                MusicClicker.Armory.WeaponAbilities.EroicaCrescendance_OnMinorCraft(gameState);
+
                 canCraft = true;
             }
 
@@ -644,6 +659,9 @@ namespace MusicClicker
                 {
                     MusicClicker.Armory.WeaponAbilities.CosmicWeaver_OnMinorCraft(gameState, "odetojoy");
                 }
+
+                // Trigger Eroica Crescendance: Heroic Resolve
+                MusicClicker.Armory.WeaponAbilities.EroicaCrescendance_OnMinorCraft(gameState);
 
                 canCraft = true;
             }

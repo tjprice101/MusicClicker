@@ -76,7 +76,7 @@ Cooldown: 8 minutes
 
 STRATEGY TIPS
 ---------------------------------------
-1. Every 5th click grants stack - extremely consistent generation
+1. Every 8th click grants stack - consistent generation
 2. Don't consume Cosmic stacks unless you need entropic melodies
 3. Tier 3 (10+ stacks) provides guaranteed crits - very powerful
 4. Symphony of the Stars best used on lowest minor for balanced growth

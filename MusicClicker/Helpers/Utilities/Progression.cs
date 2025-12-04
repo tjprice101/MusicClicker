@@ -82,14 +82,7 @@ namespace MusicClicker.Helpers
             totalNps += gameState.FateMinorOwned * 135000;
             totalNps += gameState.OdeToJoyMinorOwned * 255000;
 
-            // Add NPS from major scores
-            totalNps += gameState.MoonlightMajorOwned * 6000;
-            totalNps += gameState.EroicaMajorOwned * 16000;
-            totalNps += gameState.SwanMajorOwned * 30000;
-            totalNps += gameState.LaCampanellaMajorOwned * 70000;
-            totalNps += gameState.EnigmaMajorOwned * 150000;
-            totalNps += gameState.FateMajorOwned * 270000;
-            totalNps += gameState.OdeToJoyMajorOwned * 510000;
+            // Major scores do not provide base NPS - they only provide Crescendance abilities
 
             return totalNps;
         }

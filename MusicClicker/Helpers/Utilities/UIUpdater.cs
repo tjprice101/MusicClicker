@@ -66,30 +66,38 @@ namespace MusicClicker
                 window.UpgradeScreen.OpusOwnedTextUpgrade.Text = $"Number Owned: {gameState.OpusOwned}";
                 window.UpgradeScreen.MagnumOpusOwnedTextUpgrade.Text = $"Number Owned: {gameState.MagnumOpusOwned}";
 
-                // Compute each upgrade's cost once using Math.Pow per slot (still necessary to compute
-                // the exponential), but avoid calling Math.Round twice for the same value.
                 // Apply Moonlight Duet Waning phase cost reduction (50% off)
                 int moonPhase = MusicClicker.Armory.WeaponAbilities.MoonlightDuet_GetCurrentPhase(gameState);
                 bool allMoonPhasesActive = MusicClicker.Armory.WeaponAbilities.MoonlightDuet_AreAllPhasesActive(gameState);
                 double costMultiplier = (allMoonPhasesActive || moonPhase == 3) ? 0.5 : 1.0; // Waning phase or all phases active
                 
-                double chordCost = Math.Round(gameState.ChordBaseCost * Math.Pow(1.15, gameState.ChordOwned) * costMultiplier, 2);
-                double scaleCost = Math.Round(gameState.ScaleBaseCost * Math.Pow(1.15, gameState.ScaleOwned) * costMultiplier, 2);
-                double orchestraCost = Math.Round(gameState.OrchestraBaseCost * Math.Pow(1.15, gameState.OrchestraOwned) * costMultiplier, 2);
-                double symphonyCost = Math.Round(gameState.SymphonyBaseCost * Math.Pow(1.15, gameState.SymphonyOwned) * costMultiplier, 2);
-                double ariaCost = Math.Round(gameState.AriaBaseCost * Math.Pow(1.15, gameState.AriaOwned) * costMultiplier, 2);
-                double requiemCost = Math.Round(gameState.RequiemBaseCost * Math.Pow(1.15, gameState.RequiemOwned) * costMultiplier, 2);
-                double opusCost = Math.Round(gameState.OpusBaseCost * Math.Pow(1.15, gameState.OpusOwned) * costMultiplier, 2);
-                double magnumCost = Math.Round(gameState.MagnumOpusBaseCost * Math.Pow(1.15, gameState.MagnumOpusOwned) * costMultiplier, 2);
+                // Use cached costs to avoid expensive Math.Pow calculations every frame (performance optimization)
+                // Cache is invalidated (set to 0) when purchases are made in UpgradeManager
+                if (gameState.CachedChordCost == 0)
+                    gameState.CachedChordCost = Math.Round(gameState.ChordBaseCost * Math.Pow(1.15, gameState.ChordOwned) * costMultiplier, 2);
+                if (gameState.CachedScaleCost == 0)
+                    gameState.CachedScaleCost = Math.Round(gameState.ScaleBaseCost * Math.Pow(1.15, gameState.ScaleOwned) * costMultiplier, 2);
+                if (gameState.CachedOrchestraCost == 0)
+                    gameState.CachedOrchestraCost = Math.Round(gameState.OrchestraBaseCost * Math.Pow(1.15, gameState.OrchestraOwned) * costMultiplier, 2);
+                if (gameState.CachedSymphonyCost == 0)
+                    gameState.CachedSymphonyCost = Math.Round(gameState.SymphonyBaseCost * Math.Pow(1.15, gameState.SymphonyOwned) * costMultiplier, 2);
+                if (gameState.CachedAriaCost == 0)
+                    gameState.CachedAriaCost = Math.Round(gameState.AriaBaseCost * Math.Pow(1.15, gameState.AriaOwned) * costMultiplier, 2);
+                if (gameState.CachedRequiemCost == 0)
+                    gameState.CachedRequiemCost = Math.Round(gameState.RequiemBaseCost * Math.Pow(1.15, gameState.RequiemOwned) * costMultiplier, 2);
+                if (gameState.CachedOpusCost == 0)
+                    gameState.CachedOpusCost = Math.Round(gameState.OpusBaseCost * Math.Pow(1.15, gameState.OpusOwned) * costMultiplier, 2);
+                if (gameState.CachedMagnumOpusCost == 0)
+                    gameState.CachedMagnumOpusCost = Math.Round(gameState.MagnumOpusBaseCost * Math.Pow(1.15, gameState.MagnumOpusOwned) * costMultiplier, 2);
 
-                window.UpgradeScreen.ChordCostTextUpgrade.Text = $"Cost: {NumberFormatter.FormatLargeNumber(chordCost)}";
-                window.UpgradeScreen.ScaleCostTextUpgrade.Text = $"Cost: {NumberFormatter.FormatLargeNumber(scaleCost)}";
-                window.UpgradeScreen.OrchestraCostTextUpgrade.Text = $"Cost: {NumberFormatter.FormatLargeNumber(orchestraCost)}";
-                window.UpgradeScreen.SymphonyCostTextUpgrade.Text = $"Cost: {NumberFormatter.FormatLargeNumber(symphonyCost)}";
-                window.UpgradeScreen.AriaCostTextUpgrade.Text = $"Cost: {NumberFormatter.FormatLargeNumber(ariaCost)}";
-                window.UpgradeScreen.RequiemCostTextUpgrade.Text = $"Cost: {NumberFormatter.FormatLargeNumber(requiemCost)}";
-                window.UpgradeScreen.OpusCostTextUpgrade.Text = $"Cost: {NumberFormatter.FormatLargeNumber(opusCost)}";
-                window.UpgradeScreen.MagnumOpusCostTextUpgrade.Text = $"Cost: {NumberFormatter.FormatLargeNumber(magnumCost)}";
+                window.UpgradeScreen.ChordCostTextUpgrade.Text = $"Cost: {NumberFormatter.FormatLargeNumber(gameState.CachedChordCost)}";
+                window.UpgradeScreen.ScaleCostTextUpgrade.Text = $"Cost: {NumberFormatter.FormatLargeNumber(gameState.CachedScaleCost)}";
+                window.UpgradeScreen.OrchestraCostTextUpgrade.Text = $"Cost: {NumberFormatter.FormatLargeNumber(gameState.CachedOrchestraCost)}";
+                window.UpgradeScreen.SymphonyCostTextUpgrade.Text = $"Cost: {NumberFormatter.FormatLargeNumber(gameState.CachedSymphonyCost)}";
+                window.UpgradeScreen.AriaCostTextUpgrade.Text = $"Cost: {NumberFormatter.FormatLargeNumber(gameState.CachedAriaCost)}";
+                window.UpgradeScreen.RequiemCostTextUpgrade.Text = $"Cost: {NumberFormatter.FormatLargeNumber(gameState.CachedRequiemCost)}";
+                window.UpgradeScreen.OpusCostTextUpgrade.Text = $"Cost: {NumberFormatter.FormatLargeNumber(gameState.CachedOpusCost)}";
+                window.UpgradeScreen.MagnumOpusCostTextUpgrade.Text = $"Cost: {NumberFormatter.FormatLargeNumber(gameState.CachedMagnumOpusCost)}";
             }
         }
 
@@ -257,6 +265,38 @@ namespace MusicClicker
             {
                 if (window.ArmoryOfForteScreen.ArmoryNotesText.Text != notesText)
                     window.ArmoryOfForteScreen.ArmoryNotesText.Text = notesText;
+            }
+            
+            // Update Prayer Stacks display (Funeral Prayer)
+            if (window.PrayerStacksDisplayBorder != null && window.PrayerStacksText != null)
+            {
+                bool shouldShowPrayer = gameState.FuneralPrayerAbility;
+                if (window.PrayerStacksDisplayBorder.IsVisible != shouldShowPrayer)
+                    window.PrayerStacksDisplayBorder.IsVisible = shouldShowPrayer;
+                    
+                if (shouldShowPrayer)
+                {
+                    string prayerText = $"{gameState.FuneralPrayerStacks} / 3";
+                    if (window.PrayerStacksText.Text != prayerText)
+                        window.PrayerStacksText.Text = prayerText;
+                }
+            }
+            
+            // Update Symphonic Catharsis timer display (Eroica Crescendance)
+            if (window.MainCatharsisTimerText != null)
+            {
+                bool catharsisActive = gameState.SymphonicCatharsisActive && gameState.SymphonicCatharsisExpiry > DateTime.Now;
+                if (window.MainCatharsisTimerText.IsVisible != catharsisActive)
+                    window.MainCatharsisTimerText.IsVisible = catharsisActive;
+                    
+                if (catharsisActive)
+                {
+                    TimeSpan remaining = gameState.SymphonicCatharsisExpiry - DateTime.Now;
+                    int remainingSeconds = (int)Math.Ceiling(remaining.TotalSeconds);
+                    string timerText = $"Active: {remainingSeconds}s";
+                    if (window.MainCatharsisTimerText.Text != timerText)
+                        window.MainCatharsisTimerText.Text = timerText;
+                }
             }
         }
 

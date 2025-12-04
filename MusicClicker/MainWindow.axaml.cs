@@ -41,8 +41,8 @@ namespace MusicClicker
         // DispatcherTimer that fires every 30 seconds to auto-save the game
         private DispatcherTimer _saveTimer = null!;
         
-        // Random number generator for any randomized game mechanics
-        private Random _random = new Random();
+        // Random number generator for any randomized game mechanics (public for reuse in DuetAbilityScreen - performance optimization)
+        public Random _random = new Random();
         
         // The core game state object containing all player progress data
         private GameState gameState;
@@ -305,6 +305,9 @@ namespace MusicClicker
             {
                 try
                 {
+                    // Cache DateTime.Now once per tick to avoid 30+ system calls (performance optimization)
+                    DateTime now = DateTime.Now;
+                    
                     double elapsed = _bgStopwatch.Elapsed.TotalSeconds;
                     _bgStopwatch.Restart();
                     if (gameState != null && gameState.NotesPerSecond != 0)
@@ -312,24 +315,24 @@ namespace MusicClicker
                         double effectiveNps = gameState.NotesPerSecond;
 
                         // Check if Astral Chainripper boost has expired
-                        if (gameState.AstralChainripperNpsBoostActive && DateTime.Now > gameState.AstralChainripperNpsBoostExpiry)
+                        if (gameState.AstralChainripperNpsBoostActive && now > gameState.AstralChainripperNpsBoostExpiry)
                         {
                             gameState.AstralChainripperNpsBoostActive = false;
                         }
 
                         // Check if NPS freeze has expired
-                        if (gameState.NpsFrozen && DateTime.Now > gameState.NpsFreezeExpiry)
+                        if (gameState.NpsFrozen && now > gameState.NpsFreezeExpiry)
                         {
                             gameState.NpsFrozen = false;
                             // Keep FrozenNpsValue for reference, don't zero it
                         }
 
                         // Check if Winter Duet has expired and unfreeze NPS
-                        if (gameState.WinterDuetActive && DateTime.Now > gameState.WinterDuetExpiry)
+                        if (gameState.WinterDuetActive && now > gameState.WinterDuetExpiry)
                         {
                             gameState.WinterDuetActive = false;
                             gameState.NpsFrozen = false;
-                            gameState.WinterDuetCooldownExpiry = DateTime.Now.AddSeconds(DuetDescriptions.Cooldown.Winter);
+                            gameState.WinterDuetCooldownExpiry = now.AddSeconds(DuetDescriptions.Cooldown.Winter);
                             if (DuetAbilityScreen?.IsVisible == true)
                             {
                                 DuetAbilityScreen.UpdateAbilityDisplay();
@@ -337,11 +340,11 @@ namespace MusicClicker
                         }
 
                         // Check if Dies Irae Duet has expired
-                        if (gameState.DiesIraeDuetActive && DateTime.Now > gameState.DiesIraeDuetExpiry)
+                        if (gameState.DiesIraeDuetActive && now > gameState.DiesIraeDuetExpiry)
                         {
                             gameState.DiesIraeDuetActive = false;
                             gameState.SevenSealsCounter = 0;
-                            gameState.DiesIraeDuetCooldownExpiry = DateTime.Now.AddSeconds(DuetDescriptions.Cooldown.DiesIrae);
+                            gameState.DiesIraeDuetCooldownExpiry = now.AddSeconds(DuetDescriptions.Cooldown.DiesIrae);
                             if (DuetAbilityScreen?.IsVisible == true)
                             {
                                 DuetAbilityScreen.UpdateAbilityDisplay();
@@ -349,16 +352,16 @@ namespace MusicClicker
                         }
 
                         // Check if Blizzard's Bounty has expired
-                        if (gameState.BlizzardBountyNpsBonus > 0 && DateTime.Now > gameState.BlizzardBountyExpiry)
+                        if (gameState.BlizzardBountyNpsBonus > 0 && now > gameState.BlizzardBountyExpiry)
                         {
                             gameState.BlizzardBountyNpsBonus = 0;
                         }
 
                         // Check if Moonlight Duet has expired - start cooldown when it expires naturally
-                        if (gameState.MoonlightDuetActive && DateTime.Now > gameState.MoonlightDuetExpiry)
+                        if (gameState.MoonlightDuetActive && now > gameState.MoonlightDuetExpiry)
                         {
                             gameState.MoonlightDuetActive = false;
-                            gameState.MoonlightDuetCooldownExpiry = DateTime.Now.AddSeconds(240); // 4 minutes
+                            gameState.MoonlightDuetCooldownExpiry = now.AddSeconds(240); // 4 minutes
                             // Update duet screen if visible
                             if (DuetAbilityScreen?.IsVisible == true)
                             {
@@ -367,11 +370,11 @@ namespace MusicClicker
                         }
 
                         // Check if Swan Lake Duet has expired and start cooldown
-                        if (gameState.SwanLakeDuetActive && DateTime.Now > gameState.SwanLakeDuetExpiry)
+                        if (gameState.SwanLakeDuetActive && now > gameState.SwanLakeDuetExpiry)
                         {
                             gameState.SwanLakeDuetActive = false;
                             gameState.SwanLakeDuetClickCounter = 0; // Reset click counter
-                            gameState.SwanLakeDuetCooldownExpiry = DateTime.Now.AddSeconds(240); // 4 minutes
+                            gameState.SwanLakeDuetCooldownExpiry = now.AddSeconds(240); // 4 minutes
                             // Update duet screen if visible
                             if (DuetAbilityScreen?.IsVisible == true)
                             {
@@ -380,12 +383,12 @@ namespace MusicClicker
                         }
 
                         // Check if La Campanella Duet has expired
-                        if (gameState.LaCampanellaDuetActive && DateTime.Now > gameState.LaCampanellaDuetExpiry)
+                        if (gameState.LaCampanellaDuetActive && now > gameState.LaCampanellaDuetExpiry)
                         {
                             gameState.LaCampanellaDuetActive = false;
                             gameState.ChimeChainLength = 0;
                             gameState.LastChimeClickTime = DateTime.MinValue;
-                            gameState.LaCampanellaDuetCooldownExpiry = DateTime.Now.AddSeconds(600); // 10 minutes
+                            gameState.LaCampanellaDuetCooldownExpiry = now.AddSeconds(600); // 10 minutes
                             if (DuetAbilityScreen?.IsVisible == true)
                             {
                                 DuetAbilityScreen.UpdateAbilityDisplay();
@@ -393,11 +396,11 @@ namespace MusicClicker
                         }
 
                         // Check if Enigma Duet has expired
-                        if (gameState.EnigmaDuetActive && DateTime.Now > gameState.EnigmaDuetExpiry)
+                        if (gameState.EnigmaDuetActive && now > gameState.EnigmaDuetExpiry)
                         {
                             gameState.EnigmaDuetActive = false;
                             gameState.EnigmaMysteryClickCount = 0;
-                            gameState.EnigmaDuetCooldownExpiry = DateTime.Now.AddSeconds(1800); // 30 minutes
+                            gameState.EnigmaDuetCooldownExpiry = now.AddSeconds(1800); // 30 minutes
                             if (DuetAbilityScreen?.IsVisible == true)
                             {
                                 DuetAbilityScreen.UpdateAbilityDisplay();
@@ -405,13 +408,13 @@ namespace MusicClicker
                         }
 
                         // Check if Fate Duet has expired
-                        if (gameState.FateDuetActive && DateTime.Now > gameState.FateDuetExpiry)
+                        if (gameState.FateDuetActive && now > gameState.FateDuetExpiry)
                         {
                             gameState.FateDuetActive = false;
                             gameState.FateDuetHasFlipped = false;
                             gameState.FateDuetClickCount = 0;
                             gameState.HourglassActionBank.Clear();
-                            gameState.FateDuetCooldownExpiry = DateTime.Now.AddSeconds(480); // 8 minutes
+                            gameState.FateDuetCooldownExpiry = now.AddSeconds(480); // 8 minutes
                             if (DuetAbilityScreen?.IsVisible == true)
                             {
                                 DuetAbilityScreen.UpdateAbilityDisplay();
@@ -419,7 +422,7 @@ namespace MusicClicker
                         }
 
                         // Check if Ode Duet has expired
-                        if (gameState.OdeDuetActive && DateTime.Now > gameState.OdeDuetExpiry)
+                        if (gameState.OdeDuetActive && now > gameState.OdeDuetExpiry)
                         {
                             // Grant entropic melody based on completed sections
                             int entropicReward = gameState.CrescendoCompletedSections * 3;
@@ -432,7 +435,7 @@ namespace MusicClicker
                             gameState.Crescendo8Claimed = false;
                             gameState.Crescendo12Claimed = false;
                             gameState.Crescendo16Claimed = false;
-                            gameState.OdeDuetCooldownExpiry = DateTime.Now.AddSeconds(DuetDescriptions.Cooldown.OdeToJoy);
+                            gameState.OdeDuetCooldownExpiry = now.AddSeconds(DuetDescriptions.Cooldown.OdeToJoy);
                             if (DuetAbilityScreen?.IsVisible == true)
                             {
                                 DuetAbilityScreen.UpdateAbilityDisplay();
@@ -469,11 +472,11 @@ namespace MusicClicker
                         }
 
                         // Apply Ode to Joy Duet 5x NPS boost from completing 16-note crescendo
-                        if (gameState.OdeDuetNpsBoostActive && DateTime.Now <= gameState.OdeDuetNpsBoostExpiry)
+                        if (gameState.OdeDuetNpsBoostActive && now <= gameState.OdeDuetNpsBoostExpiry)
                         {
                             effectiveNps *= 5.0;
                         }
-                        else if (gameState.OdeDuetNpsBoostActive && DateTime.Now > gameState.OdeDuetNpsBoostExpiry)
+                        else if (gameState.OdeDuetNpsBoostActive && now > gameState.OdeDuetNpsBoostExpiry)
                         {
                             gameState.OdeDuetNpsBoostActive = false;
                         }
@@ -507,7 +510,7 @@ namespace MusicClicker
 
                         // Winter: If NPS is frozen, STOP accumulating notes from NPS entirely
                         // The frozen value is only used as a click multiplier, not for passive accumulation
-                        if (gameState.NpsFrozen && DateTime.Now <= gameState.NpsFreezeExpiry)
+                        if (gameState.NpsFrozen && now <= gameState.NpsFreezeExpiry)
                         {
                             // Do nothing - skip the note accumulation below
                         }
@@ -721,7 +724,7 @@ namespace MusicClicker
                 {
                     gameState.IncisorClickCounter = 0;
                     double currentNotes = MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes);
-                    double bonusPercent = isNighttime ? 0.10 : 0.03; // +10% at night, +3% normally
+                    double bonusPercent = isNighttime ? 0.05 : 0.01; // +5% at night, +1% normally
                     double bonus = currentNotes * bonusPercent;
                     MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, bonus);
                 }
@@ -747,8 +750,9 @@ namespace MusicClicker
             // Add calculated notes to player's total
             MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, notesPerClick);
 
-            // Funeral Prayer: Track clicks (after getting multiplier, empowered clicks don't count)
-            if (gameState.FuneralPrayerAbility)
+            // Funeral Prayer: Track clicks (only if not currently using empowered clicks)
+            // Self-contained rule: Empowered clicks don't build more Prayer stacks
+            if (gameState.FuneralPrayerAbility && gameState.FuneralPrayerEmpoweredClicksRemaining == 0)
             {
                 MusicClicker.Armory.WeaponAbilities.FuneralPrayer_OnClick(gameState);
             }
@@ -911,32 +915,95 @@ namespace MusicClicker
                 double finalNotes = notesPerClick;
                 bool hasStroke = false;
                 
-                // Crescendance Bond - Thousand Winged Swan: Dawn of Swan's Glory (highest priority)
+                // ==================== SPECIAL CLICK EFFECT PRIORITY SYSTEM ====================
+                // Priority Order (highest to lowest value):
+                // 1. Dawn of Swan's Glory (display-only, unique)
+                // 2. Symphony of Hell's Retribution (Dies Irae, value-based)
+                // 3. Seal-breaking Melody (Dies Irae, value-based)
+                // 4. Crimson Requiem vs Funeral Prayer Empowered (highest value)
+                // 5. Entropic Crit Clicks (Ode to Joy Petal of Melody, 1500x)
+                // 6. La Campanella Entropic Crit Clicks (1500x)
+                // 7. Random Entropic (0.1%, 1500x)
+                // 8. Random Superior (1%, 5x)
+                // 9. Random Critical (5%, 2x)
+                // 10. Normal click
+                
+                // 1. Crescendance Bond - Thousand Winged Swan: Dawn of Swan's Glory (absolute highest priority - display only)
                 if (gameState.ThousandWingedSwanNpsBoostActive && DateTime.Now <= gameState.ThousandWingedSwanNpsBoostExpiry)
                 {
                     critText = $"Dawn of the Swan's Glory!!! +{FormatNumber(notesPerClick)}";
                     critColor = Colors.White; // White text
                     hasStroke = true; // Will get pink outline
                 }
-                // Forte Resonance - Funeral Prayer: Prayer of Valor
-                else if (gameState.FuneralPrayerEmpoweredClicksRemaining > 0)
+                // 2. Dies Irae: Symphony of Hell's Retribution (20 special clicks)
+                else if (gameState.SymphonyOfHellClicks > 0)
                 {
-                    // Display special crit for Prayer of Valor empowered clicks
-                    critText = $"Retribution of the Symphonic Sakura!!! +{FormatNumber(notesPerClick)}";
-                    critColor = Color.FromRgb(199, 21, 133); // Dark pink (MediumVioletRed)
+                    gameState.SymphonyOfHellClicks--;
+                    // These are special empowered clicks - value depends on Dies Irae mechanics
+                    critText = $"Symphony of Hell's Retribution!!! +{FormatNumber(notesPerClick)}";
+                    critColor = Color.FromRgb(139, 0, 0); // Dark red
                     hasStroke = true;
                 }
-                // Crescendance Bond - Sakura's Blossom: Crimson Requiem (priority check)
-                else if (gameState.CrimsonRequiemClicksRemaining > 0)
+                // 3. Dies Irae: Seal-breaking Melody (5 special clicks)
+                else if (gameState.SealBreakingMelodyClicks > 0)
                 {
-                    gameState.CrimsonRequiemClicksRemaining--;
-                    finalNotes = notesPerClick + (gameState.NotesPerSecond * gameState.NotesPerClick);
+                    gameState.SealBreakingMelodyClicks--;
+                    critText = $"Seal-breaking Melody!!! +{FormatNumber(notesPerClick)}";
+                    critColor = Color.FromRgb(178, 34, 34); // Fire brick red
+                    hasStroke = true;
+                }
+                // 4. Priority comparison: Crimson Requiem vs Funeral Prayer Empowered (use highest value)
+                else if (gameState.CrimsonRequiemClicksRemaining > 0 || gameState.FuneralPrayerEmpoweredClicksRemaining > 0)
+                {
+                    // Calculate values for comparison
+                    double crimsonValue = gameState.CrimsonRequiemClicksRemaining > 0 
+                        ? (notesPerClick + (gameState.NotesPerSecond * gameState.NotesPerClick)) 
+                        : 0;
+                    double funeralValue = gameState.FuneralPrayerEmpoweredClicksRemaining > 0 
+                        ? notesPerClick // Already includes NPS * 6 from empowered bonus
+                        : 0;
+                    
+                    // Show the effect with highest value (Crimson Requiem if tied or higher)
+                    if (crimsonValue >= funeralValue && crimsonValue > 0)
+                    {
+                        // Crescendance Bond - Sakura's Blossom: Crimson Requiem
+                        gameState.CrimsonRequiemClicksRemaining--;
+                        finalNotes = notesPerClick + (gameState.NotesPerSecond * gameState.NotesPerClick);
+                        MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
+                        critText = $"Blossom's Blooming in Crimson Light!!! +{FormatNumber(finalNotes)}";
+                        critColor = Color.FromRgb(250, 128, 114); // Salmon-red
+                        hasStroke = true;
+                    }
+                    else
+                    {
+                        // Forte Resonance - Funeral Prayer: Prayer of Valor
+                        critText = $"Retribution of the Symphonic Sakura!!! +{FormatNumber(notesPerClick)}";
+                        critColor = Color.FromRgb(199, 21, 133); // Dark pink (MediumVioletRed)
+                        hasStroke = true;
+                    }
+                }
+                // 5. Ode to Joy: Entropic Crit Clicks from Petal of Melody (1500x multiplier)
+                else if (gameState.EntropicCritClicksRemaining > 0 && DateTime.Now <= gameState.EntropicCritExpiry)
+                {
+                    gameState.EntropicCritClicksRemaining--;
+                    finalNotes = notesPerClick * 1500;
                     MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
-                    critText = $"Blossom's Blooming in Crimson Light!!! +{FormatNumber(finalNotes)}";
-                    critColor = Color.FromRgb(250, 128, 114); // Salmon-red
+                    critText = $"Petal's Entropic Bloom!!! +{FormatNumber(finalNotes)}";
+                    critColor = Color.FromRgb(255, 105, 180); // Hot pink
                     hasStroke = true;
                 }
-                else if (roll < 0.1) // 0.1% chance - Entropic Crescendo
+                // 6. La Campanella: Entropic Crit Clicks from Radiant mend (1500x multiplier)
+                else if (gameState.LaCampanellaEntropicCritClicks > 0)
+                {
+                    gameState.LaCampanellaEntropicCritClicks--;
+                    finalNotes = notesPerClick * 1500;
+                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
+                    critText = $"Bell's Deafening Entropic Chime!!! +{FormatNumber(finalNotes)}";
+                    critColor = Color.FromRgb(218, 165, 32); // Golden rod
+                    hasStroke = true;
+                }
+                // 7. Random Entropic Crescendo (0.1% chance, 1500x multiplier)
+                else if (roll < 0.1)
                 {
                     finalNotes = notesPerClick * 1500;
                     MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
@@ -944,21 +1011,24 @@ namespace MusicClicker
                     critColor = Colors.Red;
                     hasStroke = true;
                 }
-                else if (roll < 1.1) // 1% chance - Superior Crescendo
+                // 8. Random Superior Crescendo (1% chance, 5x multiplier)
+                else if (roll < 1.1)
                 {
                     finalNotes = notesPerClick * 5;
                     MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
                     critText = $"Superior Crescendo!!! +{FormatNumber(finalNotes)}";
                     critColor = Color.FromRgb(255, 20, 147); // Deep pink
                 }
-                else if (roll < 6.1) // 5% chance - Critical Crescendo
+                // 9. Random Critical Crescendo (5% chance, 2x multiplier)
+                else if (roll < 6.1)
                 {
                     finalNotes = notesPerClick * 2;
                     MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
                     critText = $"Critical Crescendo!! +{FormatNumber(finalNotes)}";
                     critColor = Color.FromRgb(255, 182, 193); // Light pink
                 }
-                else // ~94% chance - Normal click
+                // 10. Normal click
+                else
                 {
                     critText = $"+{FormatNumber(notesPerClick)} Notes";
                     critColor = Colors.White;
@@ -1419,7 +1489,7 @@ namespace MusicClicker
                 
             // Update stack counts
             if (MainMoonbeamResonanceCount != null)
-                MainMoonbeamResonanceCount.Text = $"{gameState.MoonbeamResonanceStacks} / 5";
+                MainMoonbeamResonanceCount.Text = $"{gameState.MoonbeamResonanceStacks} / 8";
                 
             if (MainHarmonizingMoonlightCount != null)
                 MainHarmonizingMoonlightCount.Text = gameState.HarmonizingMoonlightStacks.ToString();
@@ -1490,7 +1560,7 @@ namespace MusicClicker
                 MainCrescendanceTitle.Text = "Enigma Variations: Resonate Mystery";
                 
             if (MainCrescendanceInfoText != null)
-                MainCrescendanceInfoText.Text = "Every 10th/25th click: Gain Resonate Mystery. Consume for: +50% notes, +50 entropic, or +1 random minor. Bulk consume 10+ for massive bonus.";
+                MainCrescendanceInfoText.Text = "Every 10th/15th click: Gain Resonate Mystery. Consume for: +50% notes, +50 entropic, or +1 random minor. Bulk consume 10+ for massive bonus.";
                 
             // Hide all other panels
             if (MainSwanFeatherPanel != null) MainSwanFeatherPanel.IsVisible = false;
@@ -1533,7 +1603,7 @@ namespace MusicClicker
                 MainCrescendanceTitle.Text = "Fate: Cosmic Modulation";
                 
             if (MainCrescendanceInfoText != null)
-                MainCrescendanceInfoText.Text = "Every 5th click: +1 Cosmic Modulation + 10% notes. Tiers grant escalating effects. Every 5 Cosmic: +1 Symphony of the Stars.";
+                MainCrescendanceInfoText.Text = "Every 8th click: +1 Cosmic Modulation + 10% notes. Tiers grant escalating effects. Every 5 Cosmic: +1 Symphony of the Stars.";
                 
             // Hide all other panels
             if (MainSwanFeatherPanel != null) MainSwanFeatherPanel.IsVisible = false;

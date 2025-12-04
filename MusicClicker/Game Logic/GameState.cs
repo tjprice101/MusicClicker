@@ -599,7 +599,7 @@ namespace MusicClicker
         public int EnigmaPassiveClickCounter { get; set; } = 0; // Creator of Mystery: every 3rd click ±25% notes
         
         // Fate Crescendance: Cosmic Modulation
-        public int CosmicModulationStacks { get; set; } = 0; // Every 5th click grants +1 stack + 10% notes
+        public int CosmicModulationStacks { get; set; } = 0; // Every 8th click grants +1 stack + 10% notes
         public int SymphonyOfTheStarsStacks { get; set; } = 0; // Secondary stacks (1 per 5 Cosmic Modulation)
         public int FateClickCounter { get; set; } = 0; // Tracks every-5th-click intervals
         public DateTime FateCraftNpsBoostExpiry { get; set; } = DateTime.MinValue; // 5x NPS boost from Fate minor craft
@@ -708,5 +708,16 @@ namespace MusicClicker
         public string CurrentClickerImage { get; set; } = "avares://MusicClicker/Assets/Music Game Assets [A961E2A]-min.png";
         public string CurrentBackgroundImage { get; set; } = "avares://MusicClicker/Assets/sacredtrevor_A_grand_musical_city_lights_everywhere_popular_shi_d84ff662-c87b-4630-9887-25228f42097b-min.png";
         public string CurrentResonatedScore { get; set; } = "None";
+
+        // Cached upgrade costs for performance optimization (avoids recalculating Math.Pow every frame)
+        // These are invalidated when purchases are made
+        public double CachedChordCost { get; set; } = 0;
+        public double CachedScaleCost { get; set; } = 0;
+        public double CachedOrchestraCost { get; set; } = 0;
+        public double CachedSymphonyCost { get; set; } = 0;
+        public double CachedAriaCost { get; set; } = 0;
+        public double CachedRequiemCost { get; set; } = 0;
+        public double CachedOpusCost { get; set; } = 0;
+        public double CachedMagnumOpusCost { get; set; } = 0;
     }
 }

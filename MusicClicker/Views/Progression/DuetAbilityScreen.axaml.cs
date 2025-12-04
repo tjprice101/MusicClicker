@@ -1003,7 +1003,8 @@ namespace MusicClicker.Views
             int currentNoteElements = OdeNotesPanel.Children.Count;
             if (noteCount > currentNoteElements)
             {
-                Random rng = new Random();
+                // Reuse MainWindow's Random instance for performance (avoid creating new instance)
+                Random rng = _mainWindow?._random ?? new Random();
                 for (int i = currentNoteElements; i < noteCount; i++)
                 {
                     // Randomize vertical position (0-4 for 5 staff lines)

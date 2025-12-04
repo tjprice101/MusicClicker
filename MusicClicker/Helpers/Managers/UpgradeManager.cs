@@ -146,6 +146,16 @@ namespace MusicClicker
             {
                 gameState.NotesPerSecond = MusicClicker.Helpers.Progression.RecalculateNotesPerSecond(gameState);
                 gameState.NotesPerClick = MusicClicker.Helpers.Progression.RecalculateNotesPerClick(gameState);
+                
+                // Invalidate cached upgrade costs so they recalculate on next UI update (performance optimization)
+                gameState.CachedChordCost = 0;
+                gameState.CachedScaleCost = 0;
+                gameState.CachedOrchestraCost = 0;
+                gameState.CachedSymphonyCost = 0;
+                gameState.CachedAriaCost = 0;
+                gameState.CachedRequiemCost = 0;
+                gameState.CachedOpusCost = 0;
+                gameState.CachedMagnumOpusCost = 0;
             }
 
             window.NotesText.Text = $"Notes: {NumberFormatter.FormatLargeNumber(gameState.Notes)}";

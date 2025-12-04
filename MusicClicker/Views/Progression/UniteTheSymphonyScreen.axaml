@@ -78,8 +78,8 @@
                                 <TextBlock x:Name="MoonlightMajorOwnedText" Text="0 Owned"
                                     Foreground="White"
                                     FontSize="16" HorizontalAlignment="Center" />
-                                <TextBlock Text="Crescendance Ability: Adds your current Notes per Second to your Notes per Click. When duet is active and resonating with Moonlight Sonata, all 4 moon phases activate simultaneously!" Foreground="White"
-                                    FontSize="14"
+                                <TextBlock Text="Crescendance Ability: Eclipse of the Nocturne - Every 20th click at night grants Moonbeam Resonance. 8 stacks auto-consume for +100% notes and Harmonizing Moonlight." Foreground="White"
+                                    FontSize="14" TextWrapping="Wrap" Width="190"
                                     HorizontalAlignment="Center" />
                                 <Button x:Name="MoonlightMajorDissolveButton" Content="Dissolve" Width="120" Height="32" HorizontalAlignment="Center" />
                                 <TextBlock Text="(+10 Entropic Melodies)" Foreground="#CCCCCC" FontSize="12" HorizontalAlignment="Center" Margin="0,2,0,0" />
@@ -244,8 +244,8 @@
                                 <TextBlock x:Name="SwanMajorOwnedText" Text="0 Owned"
                                     Foreground="White"
                                     FontSize="16" HorizontalAlignment="Center" />
-                                <TextBlock Text="Crescendance Ability" Foreground="White"
-                                    FontSize="14"
+                                <TextBlock Text="Crescendance Ability: Wings of Transcendence - Revered/Chromatic/Polyphonic Feathers grant bonuses. Weapon bonds multiply effects." Foreground="White"
+                                    FontSize="14" TextWrapping="Wrap" Width="190"
                                     HorizontalAlignment="Center" />
                                 <Button x:Name="SwanMajorDissolveButton" Content="Dissolve" Width="120" Height="32" HorizontalAlignment="Center" />
                                 <TextBlock Text="(+40 Entropic Melodies)" Foreground="#CCCCCC" FontSize="12" HorizontalAlignment="Center" Margin="0,2,0,0" />
@@ -326,8 +326,8 @@
                                 <TextBlock x:Name="LaCampanellaMajorOwnedText" Text="0 Owned"
                                     Foreground="White"
                                     FontSize="16" HorizontalAlignment="Center" />
-                                <TextBlock Text="Tempo Resonate Ability: Notes Per Second updates every .5 seconds." Foreground="White"
-                                    FontSize="14"
+                                <TextBlock Text="Crescendance Ability: Grandiose Bell - Bell cracks at 20/40/60 clicks. Mend for bonuses. Deafening Chime stacks multiply notes." Foreground="White"
+                                    FontSize="14" TextWrapping="Wrap" Width="190"
                                     HorizontalAlignment="Center" />
                                 <Button x:Name="LaCampanellaMajorDissolveButton" Content="Dissolve" Width="120" Height="32" HorizontalAlignment="Center" />
                                 <TextBlock Text="(+80 Entropic Melodies)" Foreground="#CCCCCC" FontSize="12" HorizontalAlignment="Center" Margin="0,2,0,0" />
@@ -408,8 +408,8 @@
                                 <TextBlock x:Name="EnigmaMajorOwnedText" Text="0 Owned"
                                     Foreground="White"
                                     FontSize="16" HorizontalAlignment="Center" />
-                                <TextBlock Text="Tempo Resonate Ability: ???" Foreground="White"
-                                    FontSize="14"
+                                <TextBlock Text="Crescendance Ability: Resonate Mystery - Every 10th/15th click grants stacks. Consume for notes, entropic, and minors. Bulk consume bonus." Foreground="White"
+                                    FontSize="14" TextWrapping="Wrap" Width="190"
                                     HorizontalAlignment="Center" />
                                 <Button x:Name="EnigmaMajorDissolveButton" Content="Dissolve" Width="120" Height="32" HorizontalAlignment="Center" />
                                 <TextBlock Text="(+160 Entropic Melodies)" Foreground="#CCCCCC" FontSize="12" HorizontalAlignment="Center" Margin="0,2,0,0" />
@@ -489,8 +489,8 @@
                                 <TextBlock x:Name="FateMajorOwnedText" Text="0 Owned"
                                     Foreground="White"
                                     FontSize="16" HorizontalAlignment="Center" />
-                                <TextBlock Text="Tempo Resonate Ability: Every 5th click on the main menu button increases your current amount of notes by 10%." Foreground="White"
-                                    FontSize="14"
+                                <TextBlock Text="Crescendance Ability: Cosmic Modulation - Every 8th click grants +1 stack and +10% notes. Tiers give passives. Consume for entropic melodies." Foreground="White"
+                                    FontSize="14" TextWrapping="Wrap" Width="190"
                                     HorizontalAlignment="Center" />
                                 <Button x:Name="FateMajorDissolveButton" Content="Dissolve" Width="120" Height="32" HorizontalAlignment="Center" />
                                 <TextBlock Text="(+320 Entropic Melodies)" Foreground="#CCCCCC" FontSize="12" HorizontalAlignment="Center" Margin="0,2,0,0" />
@@ -570,8 +570,8 @@
                                 <TextBlock x:Name="OdeToJoyMajorOwnedText" Text="0 Owned"
                                     Foreground="White"
                                     FontSize="16" HorizontalAlignment="Center" />
-                                <TextBlock Text="Tempo Resonate Ability: Guarantees 1 major sheet on each click in the Save the Souls menu." Foreground="White"
-                                    FontSize="14"
+                                <TextBlock Text="Crescendance Ability: Petals of Life - Crafts grant Harmony/Melody petals. Combine for Ode to Life to double all minors." Foreground="White"
+                                    FontSize="14" TextWrapping="Wrap" Width="190"
                                     HorizontalAlignment="Center" />
                                 <Button x:Name="OdeToJoyMajorDissolveButton" Content="Dissolve" Width="120" Height="32" HorizontalAlignment="Center" />
                                 <TextBlock Text="(+640 Entropic Melodies)" Foreground="#CCCCCC" FontSize="12" HorizontalAlignment="Center" Margin="0,2,0,0" />

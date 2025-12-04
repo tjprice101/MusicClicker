@@ -52,6 +52,16 @@ DOCUMENTATION ENHANCEMENTS:
 - Flavor text provides thematic introduction for each major score
 - Removed "Mechanics" label from Dies Irae (unnecessary descriptor)
 - Cleaned up all major score files for consistency
+- Added flavor text to GameDescriptions.cs for Tempo Resonate tooltips
+
+UI AND DISPLAY CORRECTIONS:
+- Fixed Moonlight Moonbeam Resonance display: 0/5 → 0/8
+- Fixed Enigma crescendance info: "Every 10th/25th" → "Every 10th/15th"
+- Fixed Fate crescendance info: "Every 5th" → "Every 8th"
+- Fixed Fate Unite the Symphony tooltip: "Every 5th" → "Every 8th"
+- Updated GameState.cs comment for Cosmic Modulation
+- Fixed Fate documentation strategy tips
+- Corrected Ode to Creation method comment in WeaponAbilities.cs
 
 ═══════════════════════════════════════════════════════════════════════════════
 

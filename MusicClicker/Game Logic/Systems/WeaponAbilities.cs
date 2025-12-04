@@ -454,6 +454,7 @@ namespace MusicClicker.Armory
 
         /// <summary>
         /// Eroica Crescendance: Consume Symphonic Catharsis for 10s of double NPC + 10% crit chance.
+        /// Effect is stackable - each consumption adds 10s to the timer.
         /// Crescendance Bond - Sakura's Blossom: Triggers Crimson Requiem (30 special crits).
         /// </summary>
         public static bool EroicaCrescendance_ConsumeCatharsis(GameState gameState)
@@ -465,9 +466,18 @@ namespace MusicClicker.Armory
             // Consume stack
             gameState.SymphonicCatharsisStacks--;
 
-            // Activate buff: 10s double NPC + 10% crit
+            // Activate buff: 10s double NPC + 10% crit (stackable - adds 10s to existing timer)
             gameState.SymphonicCatharsisActive = true;
-            gameState.SymphonicCatharsisExpiry = DateTime.Now.AddSeconds(10);
+            if (gameState.SymphonicCatharsisExpiry > DateTime.Now)
+            {
+                // Already active - add 10 seconds to existing timer (stackable)
+                gameState.SymphonicCatharsisExpiry = gameState.SymphonicCatharsisExpiry.AddSeconds(10);
+            }
+            else
+            {
+                // Not active or expired - start new 10s timer
+                gameState.SymphonicCatharsisExpiry = DateTime.Now.AddSeconds(10);
+            }
 
             // Crescendance Bond - Sakura's Blossom: Crimson Requiem
             if (gameState.SakurasBlossom && 
@@ -488,7 +498,7 @@ namespace MusicClicker.Armory
         }
 
         /// <summary>
-        /// Crescendance Bond - Funeral Prayer: Consume Testament of Harmony for +100 Melodic and Harmonic Fragments.
+        /// Crescendance Bond - Funeral Prayer: Consume Testament of Harmony for +100 Melodic and Harmonic Fragments + NPS*10 notes bonus.
         /// </summary>
         public static bool FuneralPrayer_ConsumeTestament(GameState gameState)
         {
@@ -498,6 +508,10 @@ namespace MusicClicker.Armory
             gameState.TestamentOfHarmonyStacks--;
             gameState.MelodiousOwned += 100;
             gameState.HarmoniousOwned += 100;
+            
+            // Add bonus notes equal to NPS * 10
+            double bonusNotes = gameState.NotesPerSecond * 10;
+            MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, bonusNotes);
 
             return true;
         }
@@ -1012,8 +1026,7 @@ namespace MusicClicker.Armory
         // (No method needed - passive multiplier)
 
         /// <summary>
-        /// Ode to Creation (Ode to Joy II): Every 5th click makes your next click
-        /// have a 33% increase in notes.
+        /// Ode to Creation: Every 20th click generates a random petal
         /// </summary>
         public static void OdeToCreation_OnClick(GameState gameState)
         {
