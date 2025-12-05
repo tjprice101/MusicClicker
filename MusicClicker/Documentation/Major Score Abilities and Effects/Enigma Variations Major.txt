@@ -18,7 +18,7 @@ Mechanics:
 Consumption Options:
 • Single Stack Consume (choice of effect):
   - +50% current notes
-  - +50 Entropic Melodies
+  - +17 Entropic Melodies
   - +1 random owned minor score
   
 • Bulk Consume (10+ stacks):

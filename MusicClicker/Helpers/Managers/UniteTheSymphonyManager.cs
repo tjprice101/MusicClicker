@@ -68,14 +68,13 @@ namespace MusicClicker
                 // Trigger Symphony of Bells ability (La Campanella I)
                 if (gameState.SymphonyOfBellsAbility)
                 {
-                    MusicClicker.Armory.WeaponAbilities.SymphonyOfBells_OnMinorCraft(gameState, "moonlight sonata");
+                    MusicClicker.Armory.WeaponAbilities.SymphonyOfBells_OnMinorCraft(gameState, "moonlight");
                 }
 
                 // Trigger Razer of Bell's Chimes ability (La Campanella II)
-                if (gameState.RazerOfBellsChimes && 
-                    (gameState.CurrentResonatedWeapon1 == "RazerOfBellsChimes" || gameState.CurrentResonatedWeapon2 == "RazerOfBellsChimes"))
+                if (gameState.RazerOfBellsChimesAbility)
                 {
-                    MusicClicker.Armory.WeaponAbilities.RazerOfBellsChimes_OnMinorCraft(gameState, "moonlight sonata");
+                    MusicClicker.Armory.WeaponAbilities.RazerOfBellsChimes_OnMinorCraft(gameState, "moonlight");
                 }
 
                 // Trigger Cosmic Weaver ability (Fate II)
@@ -88,17 +87,14 @@ namespace MusicClicker
                 // Trigger Eroica Crescendance: Heroic Resolve
                 MusicClicker.Armory.WeaponAbilities.EroicaCrescendance_OnMinorCraft(gameState);
 
+                // Trigger Ode to Joy Crescendance: Petal of Harmony
+                MusicClicker.Armory.WeaponAbilities.OdeToJoy_OnMinorCraft(gameState);
+
                 canCraft = true;
             }
 
             if (canCraft)
             {
-                // Queue for Mirror Lake reflection
-                if (gameState.SwanLakeDuetActive && DateTime.Now <= gameState.SwanLakeDuetExpiry)
-                {
-                    MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMinor", "Moonlight Sonata");
-                }
-
                 // Bank for Fate Duet Hourglass
                 if (gameState.FateDuetActive && !gameState.FateDuetHasFlipped && DateTime.Now <= gameState.FateDuetExpiry)
                 {
@@ -171,8 +167,7 @@ namespace MusicClicker
                 }
 
                 // Trigger Razer of Bell's Chimes ability (La Campanella II)
-                if (gameState.RazerOfBellsChimes && 
-                    (gameState.CurrentResonatedWeapon1 == "RazerOfBellsChimes" || gameState.CurrentResonatedWeapon2 == "RazerOfBellsChimes"))
+                if (gameState.RazerOfBellsChimesAbility)
                 {
                     MusicClicker.Armory.WeaponAbilities.RazerOfBellsChimes_OnMinorCraft(gameState, "eroica");
                 }
@@ -187,17 +182,14 @@ namespace MusicClicker
                 // Trigger Eroica Crescendance: Heroic Resolve
                 MusicClicker.Armory.WeaponAbilities.EroicaCrescendance_OnMinorCraft(gameState);
 
+                // Trigger Ode to Joy Crescendance: Petal of Harmony
+                MusicClicker.Armory.WeaponAbilities.OdeToJoy_OnMinorCraft(gameState);
+
                 canCraft = true;
             }
 
             if (canCraft)
             {
-                // Queue for Mirror Lake reflection
-                if (gameState.SwanLakeDuetActive && DateTime.Now <= gameState.SwanLakeDuetExpiry)
-                {
-                    MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMinor", "Eroica");
-                }
-
                 // Bank for Fate Duet Hourglass
                 if (gameState.FateDuetActive && !gameState.FateDuetHasFlipped && DateTime.Now <= gameState.FateDuetExpiry)
                 {
@@ -270,8 +262,7 @@ namespace MusicClicker
                 }
 
                 // Trigger Razer of Bell's Chimes ability (La Campanella II)
-                if (gameState.RazerOfBellsChimes && 
-                    (gameState.CurrentResonatedWeapon1 == "RazerOfBellsChimes" || gameState.CurrentResonatedWeapon2 == "RazerOfBellsChimes"))
+                if (gameState.RazerOfBellsChimesAbility)
                 {
                     MusicClicker.Armory.WeaponAbilities.RazerOfBellsChimes_OnMinorCraft(gameState, "swanlake");
                 }
@@ -286,17 +277,14 @@ namespace MusicClicker
                 // Trigger Eroica Crescendance: Heroic Resolve
                 MusicClicker.Armory.WeaponAbilities.EroicaCrescendance_OnMinorCraft(gameState);
 
+                // Trigger Ode to Joy Crescendance: Petal of Harmony
+                MusicClicker.Armory.WeaponAbilities.OdeToJoy_OnMinorCraft(gameState);
+
                 canCraft = true;
             }
 
             if (canCraft)
             {
-                // Queue for Mirror Lake reflection
-                if (gameState.SwanLakeDuetActive && DateTime.Now <= gameState.SwanLakeDuetExpiry)
-                {
-                    MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMinor", "Swan Lake");
-                }
-
                 // Bank for Fate Duet Hourglass
                 if (gameState.FateDuetActive && !gameState.FateDuetHasFlipped && DateTime.Now <= gameState.FateDuetExpiry)
                 {
@@ -369,8 +357,7 @@ namespace MusicClicker
                 }
 
                 // Trigger Razer of Bell's Chimes ability (La Campanella II)
-                if (gameState.RazerOfBellsChimes && 
-                    (gameState.CurrentResonatedWeapon1 == "RazerOfBellsChimes" || gameState.CurrentResonatedWeapon2 == "RazerOfBellsChimes"))
+                if (gameState.RazerOfBellsChimesAbility)
                 {
                     MusicClicker.Armory.WeaponAbilities.RazerOfBellsChimes_OnMinorCraft(gameState, "lacampanella");
                 }
@@ -385,17 +372,14 @@ namespace MusicClicker
                 // Trigger Eroica Crescendance: Heroic Resolve
                 MusicClicker.Armory.WeaponAbilities.EroicaCrescendance_OnMinorCraft(gameState);
 
+                // Trigger Ode to Joy Crescendance: Petal of Harmony
+                MusicClicker.Armory.WeaponAbilities.OdeToJoy_OnMinorCraft(gameState);
+
                 canCraft = true;
             }
 
             if (canCraft)
             {
-                // Queue for Mirror Lake reflection
-                if (gameState.SwanLakeDuetActive && DateTime.Now <= gameState.SwanLakeDuetExpiry)
-                {
-                    MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMinor", "La Campanella");
-                }
-
                 // Bank for Fate Duet Hourglass
                 if (gameState.FateDuetActive && !gameState.FateDuetHasFlipped && DateTime.Now <= gameState.FateDuetExpiry)
                 {
@@ -468,8 +452,7 @@ namespace MusicClicker
                 }
 
                 // Trigger Razer of Bell's Chimes ability (La Campanella II)
-                if (gameState.RazerOfBellsChimes && 
-                    (gameState.CurrentResonatedWeapon1 == "RazerOfBellsChimes" || gameState.CurrentResonatedWeapon2 == "RazerOfBellsChimes"))
+                if (gameState.RazerOfBellsChimesAbility)
                 {
                     MusicClicker.Armory.WeaponAbilities.RazerOfBellsChimes_OnMinorCraft(gameState, "enigma");
                 }
@@ -484,17 +467,14 @@ namespace MusicClicker
                 // Trigger Eroica Crescendance: Heroic Resolve
                 MusicClicker.Armory.WeaponAbilities.EroicaCrescendance_OnMinorCraft(gameState);
 
+                // Trigger Ode to Joy Crescendance: Petal of Harmony
+                MusicClicker.Armory.WeaponAbilities.OdeToJoy_OnMinorCraft(gameState);
+
                 canCraft = true;
             }
 
             if (canCraft)
             {
-                // Queue for Mirror Lake reflection
-                if (gameState.SwanLakeDuetActive && DateTime.Now <= gameState.SwanLakeDuetExpiry)
-                {
-                    MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMinor", "Enigma Variations");
-                }
-
                 // Bank for Fate Duet Hourglass
                 if (gameState.FateDuetActive && !gameState.FateDuetHasFlipped && DateTime.Now <= gameState.FateDuetExpiry)
                 {
@@ -567,8 +547,7 @@ namespace MusicClicker
                 }
 
                 // Trigger Razer of Bell's Chimes ability (La Campanella II)
-                if (gameState.RazerOfBellsChimes && 
-                    (gameState.CurrentResonatedWeapon1 == "RazerOfBellsChimes" || gameState.CurrentResonatedWeapon2 == "RazerOfBellsChimes"))
+                if (gameState.RazerOfBellsChimesAbility)
                 {
                     MusicClicker.Armory.WeaponAbilities.RazerOfBellsChimes_OnMinorCraft(gameState, "fate");
                 }
@@ -596,6 +575,9 @@ namespace MusicClicker
 
                 // Trigger Eroica Crescendance: Heroic Resolve
                 MusicClicker.Armory.WeaponAbilities.EroicaCrescendance_OnMinorCraft(gameState);
+
+                // Trigger Ode to Joy Crescendance: Petal of Harmony
+                MusicClicker.Armory.WeaponAbilities.OdeToJoy_OnMinorCraft(gameState);
 
                 canCraft = true;
             }
@@ -668,8 +650,7 @@ namespace MusicClicker
                 }
 
                 // Trigger Razer of Bell's Chimes ability (La Campanella II)
-                if (gameState.RazerOfBellsChimes && 
-                    (gameState.CurrentResonatedWeapon1 == "RazerOfBellsChimes" || gameState.CurrentResonatedWeapon2 == "RazerOfBellsChimes"))
+                if (gameState.RazerOfBellsChimesAbility)
                 {
                     MusicClicker.Armory.WeaponAbilities.RazerOfBellsChimes_OnMinorCraft(gameState, "odetojoy");
                 }
@@ -684,17 +665,14 @@ namespace MusicClicker
                 // Trigger Eroica Crescendance: Heroic Resolve
                 MusicClicker.Armory.WeaponAbilities.EroicaCrescendance_OnMinorCraft(gameState);
 
+                // Trigger Ode to Joy Crescendance: Petal of Harmony
+                MusicClicker.Armory.WeaponAbilities.OdeToJoy_OnMinorCraft(gameState);
+
                 canCraft = true;
             }
 
             if (canCraft)
             {
-                // Queue for Mirror Lake reflection
-                if (gameState.SwanLakeDuetActive && DateTime.Now <= gameState.SwanLakeDuetExpiry)
-                {
-                    MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMinor", "Ode to Joy");
-                }
-
                 // Bank for Fate Duet Hourglass
                 if (gameState.FateDuetActive && !gameState.FateDuetHasFlipped && DateTime.Now <= gameState.FateDuetExpiry)
                 {
@@ -706,6 +684,12 @@ namespace MusicClicker
                 gameState.NotesPerSecond = MusicClicker.Helpers.Progression.RecalculateNotesPerSecond(gameState);
                 gameState.NotesPerClick = MusicClicker.Helpers.Progression.RecalculateNotesPerClick(gameState);
                 UIUpdater.UpdateUI(window, gameState);
+                
+                // Update crescendance panel if Ode to Joy is resonated
+                if (gameState.CurrentResonatedScore == "OdeToJoy")
+                {
+                    window.UpdateMainScreenCrescendancePanel();
+                }
             }
 
             return canCraft;
@@ -748,17 +732,14 @@ namespace MusicClicker
                     MusicClicker.Armory.WeaponAbilities.TriumphOfHeroes_OnMajorAcquisition(gameState);
                 }
 
+                // Trigger Ode to Joy Crescendance: Petal of Melody
+                MusicClicker.Armory.WeaponAbilities.OdeToJoy_OnMajorCraft(gameState);
+
                 canCraft = true;
             }
 
             if (canCraft)
             {
-                // Queue for Mirror Lake reflection
-                if (gameState.SwanLakeDuetActive && DateTime.Now <= gameState.SwanLakeDuetExpiry)
-                {
-                    MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMajor", "Moonlight Sonata");
-                }
-
                 // Bank for Fate Duet Hourglass
                 if (gameState.FateDuetActive && !gameState.FateDuetHasFlipped && DateTime.Now <= gameState.FateDuetExpiry)
                 {
@@ -810,17 +791,14 @@ namespace MusicClicker
                     MusicClicker.Armory.WeaponAbilities.TriumphOfHeroes_OnMajorAcquisition(gameState);
                 }
 
+                // Trigger Ode to Joy Crescendance: Petal of Melody
+                MusicClicker.Armory.WeaponAbilities.OdeToJoy_OnMajorCraft(gameState);
+
                 canCraft = true;
             }
 
             if (canCraft)
             {
-                // Queue for Mirror Lake reflection
-                if (gameState.SwanLakeDuetActive && DateTime.Now <= gameState.SwanLakeDuetExpiry)
-                {
-                    MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMajor", "Eroica");
-                }
-
                 // Bank for Fate Duet Hourglass
                 if (gameState.FateDuetActive && !gameState.FateDuetHasFlipped && DateTime.Now <= gameState.FateDuetExpiry)
                 {
@@ -870,17 +848,14 @@ namespace MusicClicker
                     MusicClicker.Armory.WeaponAbilities.TriumphOfHeroes_OnMajorAcquisition(gameState);
                 }
 
+                // Trigger Ode to Joy Crescendance: Petal of Melody
+                MusicClicker.Armory.WeaponAbilities.OdeToJoy_OnMajorCraft(gameState);
+
                 canCraft = true;
             }
 
             if (canCraft)
             {
-                // Queue for Mirror Lake reflection
-                if (gameState.SwanLakeDuetActive && DateTime.Now <= gameState.SwanLakeDuetExpiry)
-                {
-                    MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMajor", "Swan Lake");
-                }
-
                 // Bank for Fate Duet Hourglass
                 if (gameState.FateDuetActive && !gameState.FateDuetHasFlipped && DateTime.Now <= gameState.FateDuetExpiry)
                 {
@@ -932,17 +907,14 @@ namespace MusicClicker
                     MusicClicker.Armory.WeaponAbilities.TriumphOfHeroes_OnMajorAcquisition(gameState);
                 }
 
+                // Trigger Ode to Joy Crescendance: Petal of Melody
+                MusicClicker.Armory.WeaponAbilities.OdeToJoy_OnMajorCraft(gameState);
+
                 canCraft = true;
             }
 
             if (canCraft)
             {
-                // Queue for Mirror Lake reflection
-                if (gameState.SwanLakeDuetActive && DateTime.Now <= gameState.SwanLakeDuetExpiry)
-                {
-                    MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMajor", "La Campanella");
-                }
-
                 // Bank for Fate Duet Hourglass
                 if (gameState.FateDuetActive && !gameState.FateDuetHasFlipped && DateTime.Now <= gameState.FateDuetExpiry)
                 {
@@ -999,12 +971,6 @@ namespace MusicClicker
 
             if (canCraft)
             {
-                // Queue for Mirror Lake reflection
-                if (gameState.SwanLakeDuetActive && DateTime.Now <= gameState.SwanLakeDuetExpiry)
-                {
-                    MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMajor", "Enigma Variations");
-                }
-
                 // Bank for Fate Duet Hourglass
                 if (gameState.FateDuetActive && !gameState.FateDuetHasFlipped && DateTime.Now <= gameState.FateDuetExpiry)
                 {
@@ -1056,17 +1022,14 @@ namespace MusicClicker
                     MusicClicker.Armory.WeaponAbilities.TriumphOfHeroes_OnMajorAcquisition(gameState);
                 }
 
+                // Trigger Ode to Joy Crescendance: Petal of Melody
+                MusicClicker.Armory.WeaponAbilities.OdeToJoy_OnMajorCraft(gameState);
+
                 canCraft = true;
             }
 
             if (canCraft)
             {
-                // Queue for Mirror Lake reflection
-                if (gameState.SwanLakeDuetActive && DateTime.Now <= gameState.SwanLakeDuetExpiry)
-                {
-                    MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMajor", "Fate");
-                }
-
                 // Bank for Fate Duet Hourglass
                 if (gameState.FateDuetActive && !gameState.FateDuetHasFlipped && DateTime.Now <= gameState.FateDuetExpiry)
                 {
@@ -1118,17 +1081,14 @@ namespace MusicClicker
                     MusicClicker.Armory.WeaponAbilities.TriumphOfHeroes_OnMajorAcquisition(gameState);
                 }
 
+                // Trigger Ode to Joy Crescendance: Petal of Melody
+                MusicClicker.Armory.WeaponAbilities.OdeToJoy_OnMajorCraft(gameState);
+
                 canCraft = true;
             }
 
             if (canCraft)
             {
-                // Queue for Mirror Lake reflection
-                if (gameState.SwanLakeDuetActive && DateTime.Now <= gameState.SwanLakeDuetExpiry)
-                {
-                    MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "CraftMajor", "Ode to Joy");
-                }
-
                 // Bank for Fate Duet Hourglass
                 if (gameState.FateDuetActive && !gameState.FateDuetHasFlipped && DateTime.Now <= gameState.FateDuetExpiry)
                 {
@@ -1140,6 +1100,12 @@ namespace MusicClicker
                 gameState.NotesPerSecond = MusicClicker.Helpers.Progression.RecalculateNotesPerSecond(gameState);
                 gameState.NotesPerClick = MusicClicker.Helpers.Progression.RecalculateNotesPerClick(gameState);
                 UIUpdater.UpdateUI(window, gameState);
+                
+                // Update crescendance panel if Ode to Joy is resonated
+                if (gameState.CurrentResonatedScore == "OdeToJoy")
+                {
+                    window.UpdateMainScreenCrescendancePanel();
+                }
             }
 
             return canCraft;

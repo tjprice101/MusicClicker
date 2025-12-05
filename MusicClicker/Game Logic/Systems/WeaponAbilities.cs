@@ -801,19 +801,20 @@ namespace MusicClicker.Armory
 
         /// <summary>
         /// Thousand Winged Swan (Swan II) - Passive: Wings of Fortune
-        /// On minor score acquisition, grants +100 Entropic Melodies while equipped.
+        /// On minor score acquisition, grants +33 Entropic Melodies while equipped.
         /// </summary>
         public static void ThousandWingedSwan_OnMinorAcquisition(GameState gameState)
         {
             if (gameState == null) return;
             if (!gameState.ThousandWingedSwanAbility) return; // Must be equipped
-            gameState.EntropicMelodies += 100;
+            gameState.EntropicMelodies += 33;
         }
         
         /// <summary>
         /// Thousand Winged Swan Crescendance Bond: Wings of Velocity
         /// When Polyphonic feather is CONSUMED during Crescendance,
-        /// activate 10-second NPS-to-NPC boost (NPC += NPS * 2).
+        /// Thousand Winged Swan Crescendance Bond: Replaces NPC with NPS × 10^feathers.
+        /// Max 8 stacks affect multiplier. Can still consume beyond 8 but won't increase stacks or refresh 7s timer.
         /// </summary>
         public static void ThousandWingedSwan_OnPolyphonicFeatherConsumed(GameState gameState)
         {
@@ -821,13 +822,26 @@ namespace MusicClicker.Armory
             if (!gameState.SwanMajorAbility) return; // Requires Swan Lake crescendance active
             if (!gameState.ThousandWingedSwanAbility) return; // Requires weapon equipped
             
-            gameState.ThousandWingedSwanNpsBoostActive = true;
-            gameState.ThousandWingedSwanNpsBoostExpiry = DateTime.Now.AddSeconds(10);
+            // Can consume unlimited feathers, but only first 8 affect the multiplier
+            if (gameState.ThousandWingedSwanFeathersConsumed < 8)
+            {
+                // Add one feather to the stack
+                gameState.ThousandWingedSwanFeathersConsumed++;
+            }
+            // If already at 8, feather is consumed but doesn't increase stack or refresh timer
+            
+            // Activate boost and set/refresh 7s duration (only if not at max)
+            if (gameState.ThousandWingedSwanFeathersConsumed <= 8)
+            {
+                gameState.ThousandWingedSwanNpsBoostActive = true;
+                gameState.ThousandWingedSwanNpsBoostExpiry = DateTime.Now.AddSeconds(7);
+            }
         }
         
         /// <summary>
         /// Get Thousand Winged Swan NPC boost value if active.
-        /// Returns NPS * 2 to add to NPC, or 0 if boost is not active.
+        /// Returns NPS × 10^stacks which REPLACES the base NPC value.
+        /// Resets feather stack count when duration expires.
         /// </summary>
         public static double ThousandWingedSwan_GetNpcBoost(GameState gameState)
         {
@@ -836,9 +850,16 @@ namespace MusicClicker.Armory
             if (DateTime.Now > gameState.ThousandWingedSwanNpsBoostExpiry)
             {
                 gameState.ThousandWingedSwanNpsBoostActive = false;
+                gameState.ThousandWingedSwanFeathersConsumed = 0; // Reset stack count
                 return 0;
             }
-            return gameState.NotesPerSecond * 2.0;
+            
+            // Formula: NPS × 10^feathersConsumed (replaces NPC entirely)
+            int stacks = gameState.ThousandWingedSwanFeathersConsumed;
+            if (stacks == 0) return 0;
+            
+            double multiplier = Math.Pow(10, stacks);
+            return gameState.NotesPerSecond * multiplier;
         }
 
         // ==================== LA CAMPANELLA WEAPONS (6-7) ====================
@@ -1030,13 +1051,48 @@ namespace MusicClicker.Armory
         /// </summary>
         public static void OdeToCreation_OnClick(GameState gameState)
         {
-            if (gameState == null) return;
+            if (gameState == null || !gameState.OdeToCreationAbility) return;
 
             gameState.OdeToCreationClickCounter++;
-            if (gameState.OdeToCreationClickCounter >= 5)
+            int threshold = gameState.OdeToCreationDoubleActive ? 10 : 20; // Doubled = half the clicks
+            
+            if (gameState.OdeToCreationClickCounter >= threshold)
             {
                 gameState.OdeToCreationClickCounter = 0;
-                gameState.OdeToCreationNextClickBonus = true;
+                
+                // Grant random petal
+                if (_random.NextDouble() < 0.5)
+                {
+                    gameState.PetalsOfHarmony++;
+                }
+                else
+                {
+                    gameState.PetalsOfMelody++;
+                }
+                
+                // Joyful Catharsis bond: Double NPS for 5s on petal gain (only if Ode to Joy is resonated)
+                if (gameState.OdeToJoyMajorAbility && gameState.JoyfulCatharsisAbility)
+                {
+                    gameState.JoyfulCatharsisNpsBoostExpiry = DateTime.Now.AddSeconds(5);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Joyful Catharsis: Every 50th click grants Entropic Melodies based on crits
+        /// </summary>
+        public static void JoyfulCatharsis_OnClick(GameState gameState)
+        {
+            if (gameState == null || !gameState.JoyfulCatharsisAbility) return;
+
+            gameState.JoyfulCatharsisClickCounter++;
+            if (gameState.JoyfulCatharsisClickCounter >= 50)
+            {
+                gameState.JoyfulCatharsisClickCounter = 0;
+                // TODO: Track critical hits and grant critCount × 3 Entropic Melodies
+                // For now, grant a fixed amount based on typical crit rate
+                // Assuming ~10% crit rate: 50 clicks × 0.10 = 5 crits × 3 = 15 Entropic
+                gameState.EntropicMelodies += 15;
             }
         }
 
@@ -1069,9 +1125,9 @@ namespace MusicClicker.Armory
         
         /// <summary>
         /// Swan Lake Crescendance: Check for feather drops on click.
-        /// Every 10th click: 5% chance for Revered Feather
-        /// Every 15th click: 5% chance for Chromatic Feather
-        /// Every 30th click: 5% chance for Polyphonic Feather
+        /// Every 2nd click: Revered Feather
+        /// Every 8th click: Chromatic Feather
+        /// Every 15th click: Polyphonic Feather
         /// Evaluate highest rarity first to avoid multiple simultaneous grants.
         /// </summary>
         public static void SwanLakeCrescendance_OnClick(GameState gameState)
@@ -1081,15 +1137,15 @@ namespace MusicClicker.Armory
             
             gameState.SwanLakeClickCounter++;
             
-            // Check for Polyphonic first (every 10 clicks, guaranteed)
-            if (gameState.SwanLakeClickCounter % 10 == 0)
+            // Check for Polyphonic first (every 15 clicks, guaranteed)
+            if (gameState.SwanLakeClickCounter % 15 == 0)
             {
                 gameState.PolyphonicFeathers++;
                 return; // Only one feather per click
             }
             
-            // Check for Chromatic (every 5 clicks, guaranteed)
-            if (gameState.SwanLakeClickCounter % 5 == 0)
+            // Check for Chromatic (every 8 clicks, guaranteed)
+            if (gameState.SwanLakeClickCounter % 8 == 0)
             {
                 gameState.ChromaticFeathers++;
                 // Trigger weapon effects
@@ -1192,7 +1248,7 @@ namespace MusicClicker.Armory
         }
         
         /// <summary>
-        /// Consume Polyphonic Feather (1 stack → +250 entropic melodies + 75% current notes)
+        /// Consume Polyphonic Feather (1 stack → +83 entropic melodies + 75% current notes)
         /// Triggers Thousand Winged Swan Crescendance Bond if equipped.
         /// </summary>
         public static void SwanLake_ConsumePolyphonicFeather(GameState gameState)
@@ -1201,14 +1257,14 @@ namespace MusicClicker.Armory
             if (gameState.PolyphonicFeathers < 1) return;
             
             gameState.PolyphonicFeathers--;
-            gameState.EntropicMelodies += 250;
+            gameState.EntropicMelodies += 83;
             
             double currentNotes = MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes);
             double bonus = currentNotes * 0.75;
             MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, bonus);
             
             // Trigger Thousand Winged Swan Crescendance Bond if weapon is equipped
-            if (gameState.ThousandWingedSwan && 
+            if (gameState.ThousandWingedSwanAbility && 
                 (gameState.CurrentResonatedWeapon1 == "ThousandWingedSwan" || gameState.CurrentResonatedWeapon2 == "ThousandWingedSwan"))
             {
                 ThousandWingedSwan_OnPolyphonicFeatherConsumed(gameState);
@@ -1560,7 +1616,7 @@ namespace MusicClicker.Armory
         public static void HellsWrath_OnClick(GameState gameState)
         {
             if (gameState == null) return;
-            if (!gameState.HellsWrath) return;
+            if (!gameState.HellsWrathAbility) return;
 
             Random rand = new Random();
             if (rand.NextDouble() < 0.07) // 7% chance
@@ -2002,102 +2058,6 @@ namespace MusicClicker.Armory
                 }
             }
         }
-        
-        /// <summary>
-        /// (Legacy) Queue an action to be reflected after 3 seconds during Mirror Lake duet
-        /// Kept for backward compatibility but not used in new Swan Lake Duet.
-        /// </summary>
-        public static void QueueMirrorAction(GameState gameState, string action, object data)
-        {
-            if (!gameState.SwanLakeDuetActive) return;
-            if (DateTime.Now > gameState.SwanLakeDuetExpiry) return;
-
-            // Add to queue with 3-second delay
-            DateTime executeTime = DateTime.Now.AddSeconds(3);
-            gameState.MirrorLakeQueue.Add((action, data, executeTime));
-        }
-
-        /// <summary>
-        /// Process queued Mirror Lake actions (called from background timer)
-        /// </summary>
-        public static void ProcessMirrorLakeQueue(GameState gameState)
-        {
-            if (gameState.MirrorLakeQueue.Count == 0) return;
-
-            DateTime now = DateTime.Now;
-            List<(string action, object data, DateTime executeTime)> toRemove = new();
-
-            foreach (var queuedAction in gameState.MirrorLakeQueue)
-            {
-                if (now >= queuedAction.executeTime)
-                {
-                    // Execute the reflected action
-                    ExecuteMirrorAction(gameState, queuedAction.action, queuedAction.data);
-                    toRemove.Add(queuedAction);
-                }
-            }
-
-            // Remove executed actions
-            foreach (var action in toRemove)
-            {
-                gameState.MirrorLakeQueue.Remove(action);
-            }
-        }
-
-        private static void ExecuteMirrorAction(GameState gameState, string action, object data)
-        {
-            switch (action)
-            {
-                case "Click":
-                    // Add NPC directly without re-queueing
-                    if (data is double npcValue)
-                    {
-                        MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, npcValue);
-                    }
-                    break;
-
-                case "BuyUpgrade":
-                    // Re-purchase upgrade without re-queueing
-                    if (data is (string upgradeName, double cost))
-                    {
-                        if (MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes) >= cost)
-                        {
-                            MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, -cost);
-                            // Increment the appropriate upgrade counter
-                            IncrementUpgrade(gameState, upgradeName);
-                        }
-                    }
-                    break;
-
-                case "CraftMinor":
-                    if (data is string minorScore)
-                    {
-                        CraftMinorScore(gameState, minorScore);
-                    }
-                    break;
-
-                case "CraftMajor":
-                    if (data is string majorScore)
-                    {
-                        CraftMajorScore(gameState, majorScore);
-                    }
-                    break;
-
-                case "BuyFragment":
-                    if (data is (string fragmentType, double fragmentCost))
-                    {
-                        if (MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes) >= fragmentCost)
-                        {
-                            MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, -fragmentCost);
-                            if (fragmentType == "Melodious")
-                                gameState.MelodiousOwned++;
-                            else if (fragmentType == "Harmonious")
-                                gameState.HarmoniousOwned++;
-                        }
-                    }
-                    break;
-            }
-        }
 
         private static void IncrementUpgrade(GameState gameState, string upgradeName)
         {
@@ -2332,18 +2292,48 @@ namespace MusicClicker.Armory
                 gameState.Crescendo8Claimed = true;
                 // Reward: +5 Petals of Harmony
                 gameState.PetalsOfHarmony += 5;
+                
+                // Trigger Joyful Catharsis NPS boost (5 petals gained, each adds 5s)
+                if (gameState.JoyfulCatharsisAbility)
+                {
+                    DateTime now = DateTime.Now;
+                    DateTime currentExpiry = gameState.JoyfulCatharsisNpsBoostExpiry > now 
+                        ? gameState.JoyfulCatharsisNpsBoostExpiry 
+                        : now;
+                    gameState.JoyfulCatharsisNpsBoostExpiry = currentExpiry.AddSeconds(25); // 5 petals × 5s each
+                }
             }
             else if (gameState.CrescendoNotesPlaced == 12 && !gameState.Crescendo12Claimed)
             {
                 gameState.Crescendo12Claimed = true;
                 // Reward: +5 Petals of Melody
                 gameState.PetalsOfMelody += 5;
+                
+                // Trigger Joyful Catharsis NPS boost (5 petals gained, each adds 5s)
+                if (gameState.JoyfulCatharsisAbility)
+                {
+                    DateTime now = DateTime.Now;
+                    DateTime currentExpiry = gameState.JoyfulCatharsisNpsBoostExpiry > now 
+                        ? gameState.JoyfulCatharsisNpsBoostExpiry 
+                        : now;
+                    gameState.JoyfulCatharsisNpsBoostExpiry = currentExpiry.AddSeconds(25); // 5 petals × 5s each
+                }
             }
             else if (gameState.CrescendoNotesPlaced == 16 && !gameState.Crescendo16Claimed)
             {
                 gameState.Crescendo16Claimed = true;
                 // Reward: +1 Ode to Life
                 gameState.OdeToLifeStacks++;
+                
+                // Trigger Joyful Catharsis NPS boost (1 petal gained)
+                if (gameState.JoyfulCatharsisAbility)
+                {
+                    DateTime now = DateTime.Now;
+                    DateTime currentExpiry = gameState.JoyfulCatharsisNpsBoostExpiry > now 
+                        ? gameState.JoyfulCatharsisNpsBoostExpiry 
+                        : now;
+                    gameState.JoyfulCatharsisNpsBoostExpiry = currentExpiry.AddSeconds(5); // 1 petal × 5s
+                }
                 
                 // Complete the section and reset for next cycle
                 gameState.CrescendoCompletedSections++;
@@ -2430,10 +2420,13 @@ namespace MusicClicker.Armory
         
         /// <summary>
         /// Eulogy of the Moon crescendance ability: Consume 1 Harmonizing Moonlight for 3 Moonbeam + components
+        /// Requires: Moonlight Sonata Major resonated + Eulogy equipped
         /// </summary>
         public static void EulogyOfTheMoon_ConsumeHarmonizingMoonlight(GameState gameState)
         {
             if (gameState.HarmonizingMoonlightStacks <= 0) return;
+            if (!gameState.MoonlightMajorAbility) return; // Requires Moonlight crescendance active
+            if (!gameState.EulogyOfTheMoonAbility) return; // Requires Eulogy equipped
             
             gameState.HarmonizingMoonlightStacks--;
             gameState.MoonbeamResonanceStacks += 3;
@@ -2477,29 +2470,21 @@ namespace MusicClicker.Armory
             
             bool bellCracked = (gameState.GrandioseBellClickCounter == 20 || gameState.GrandioseBellClickCounter == 40 || gameState.GrandioseBellClickCounter == 60);
             
-            // Major Ability: Bell's Fortune - +10% notes on crack (if La Campanella Major owned)
+            // Major Ability: Bell's Fortune - +5% notes on crack (if La Campanella Major owned)
             if (gameState.LaCampanellaMajorOwned > 0 && bellCracked)
             {
                 double currentNotes = MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes);
-                double bonus = currentNotes * 0.10;
+                double bonus = currentNotes * 0.05;
                 MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, bonus);
             }
             
-            // Symphony of Bells: +75% notes on crack (stacks with major ability)
+            // Symphony of Bells: +1 Deafening Chime on crack (max 15)
             if (gameState.SymphonyOfBellsAbility && bellCracked)
             {
-                double currentNotes = MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes);
-                double bonus = currentNotes * 0.75;
-                MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, bonus);
-            }
-            
-            // Handle entropic crit clicks from Radiant mend - each grants 3 Deafening Chime stacks
-            if (gameState.LaCampanellaEntropicCritClicks > 0)
-            {
-                gameState.LaCampanellaEntropicCritClicks--;
-                gameState.DeafeningChimeStacks += 3;
-                gameState.DeafeningChimeExpiry = DateTime.Now.AddMinutes(2); // Reset expiry on each crit
-                // Note: The entropic crit effect would be applied in the main click handler
+                if (gameState.DeafeningChimeStacks < 15)
+                {
+                    gameState.DeafeningChimeStacks++;
+                }
             }
         }
         
@@ -2512,43 +2497,84 @@ namespace MusicClicker.Armory
             
             if (gameState.GrandioseBellStage == 1) // Crescending: +2 random owned minors
             {
+                // Build list of owned minors
+                var ownedMinors = new System.Collections.Generic.List<int>();
+                if (gameState.MoonlightMinorOwned > 0) ownedMinors.Add(0);
+                if (gameState.EroicaMinorOwned > 0) ownedMinors.Add(1);
+                if (gameState.SwanMinorOwned > 0) ownedMinors.Add(2);
+                if (gameState.LaCampanellaMinorOwned > 0) ownedMinors.Add(3);
+                if (gameState.EnigmaMinorOwned > 0) ownedMinors.Add(4);
+                if (gameState.FateMinorOwned > 0) ownedMinors.Add(5);
+                if (gameState.OdeToJoyMinorOwned > 0) ownedMinors.Add(6);
+                
+                // Grant +2 random owned minors
                 for (int i = 0; i < 2; i++)
                 {
-                    int randomMinor = _random.Next(7);
-                    switch (randomMinor)
+                    if (ownedMinors.Count == 0) break; // No owned minors
+                    
+                    int randomIndex = _random.Next(ownedMinors.Count);
+                    int selectedMinor = ownedMinors[randomIndex];
+                    
+                    switch (selectedMinor)
                     {
-                        case 0: if (gameState.MoonlightMinorOwned > 0) gameState.MoonlightMinorOwned++; break;
-                        case 1: if (gameState.EroicaMinorOwned > 0) gameState.EroicaMinorOwned++; break;
-                        case 2: if (gameState.SwanMinorOwned > 0) gameState.SwanMinorOwned++; break;
-                        case 3: if (gameState.LaCampanellaMinorOwned > 0) gameState.LaCampanellaMinorOwned++; break;
-                        case 4: if (gameState.EnigmaMinorOwned > 0) gameState.EnigmaMinorOwned++; break;
-                        case 5: if (gameState.FateMinorOwned > 0) gameState.FateMinorOwned++; break;
-                        case 6: if (gameState.OdeToJoyMinorOwned > 0) gameState.OdeToJoyMinorOwned++; break;
+                        case 0: 
+                            gameState.MoonlightMinorOwned++;
+                            if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                                gameState.NotesPerSecond += 3000;
+                            break;
+                        case 1: 
+                            gameState.EroicaMinorOwned++;
+                            if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                                gameState.NotesPerSecond += 8000;
+                            break;
+                        case 2: 
+                            gameState.SwanMinorOwned++;
+                            if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                                gameState.NotesPerSecond += 15000;
+                            break;
+                        case 3: 
+                            gameState.LaCampanellaMinorOwned++;
+                            if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                                gameState.NotesPerSecond += 35000;
+                            break;
+                        case 4: 
+                            gameState.EnigmaMinorOwned++;
+                            if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                                gameState.NotesPerSecond += 75000;
+                            break;
+                        case 5: 
+                            gameState.FateMinorOwned++;
+                            if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                                gameState.NotesPerSecond += 135000;
+                            break;
+                        case 6: 
+                            gameState.OdeToJoyMinorOwned++;
+                            if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                                gameState.NotesPerSecond += 255000;
+                            break;
                     }
                 }
             }
-            else if (gameState.GrandioseBellStage == 2) // Radiant: +5 Deafening Chime stacks (2-minute expiry)
+            else if (gameState.GrandioseBellStage == 2) // Radiant: +5 Deafening Chime stacks (max 15)
             {
-                gameState.DeafeningChimeStacks += 5;
-                gameState.DeafeningChimeExpiry = DateTime.Now.AddMinutes(2);
+                int stacksToAdd = Math.Min(5, 15 - gameState.DeafeningChimeStacks);
+                gameState.DeafeningChimeStacks += stacksToAdd;
+                
+                // Razer of Bells Chimes: +50 Entropic when mended at Radiant crack
+                if (gameState.RazerOfBellsChimesAbility)
+                {
+                    gameState.EntropicMelodies += 50;
+                }
             }
-            else if (gameState.GrandioseBellStage == 3) // Harmonizing: Consume Deafening Chime for doubling
+            else if (gameState.GrandioseBellStage == 3) // Harmonizing: Consume Deafening Chime for notes
             {
                 if (gameState.DeafeningChimeStacks > 0)
                 {
-                    int stacksToConsume = Math.Min(gameState.DeafeningChimeStacks, 6); // Cap at 6 for optimal 64× multiplier
-                    double multiplier = Math.Pow(2, stacksToConsume) - 1; // -1 because we're adding, not setting
-                    double currentNotes = MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes);
-                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, currentNotes * multiplier);
-                    gameState.DeafeningChimeStacks -= stacksToConsume;
+                    int stacksToConsume = gameState.DeafeningChimeStacks; // Use all stacks
+                    double notesGained = stacksToConsume * gameState.NotesPerSecond;
+                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, notesGained);
+                    gameState.DeafeningChimeStacks = 0; // Consume all stacks
                 }
-            }
-            
-            // Razer of Bells Chimes: Grant entropic melodies = click count × 2 (max 250)
-            if (gameState.RazerOfBellsChimesAbility)
-            {
-                int entropicGrant = Math.Min(gameState.GrandioseBellClickCounter * 2, 250); // Double click count, cap at 250
-                gameState.EntropicMelodies += entropicGrant;
             }
             
             // Reset bell
@@ -2558,10 +2584,10 @@ namespace MusicClicker.Armory
         
         #endregion
         
-        #region Enigma Crescendance: Resonate Mystery
+        #region Enigma Crescendance: Resonant Mystery
         
         /// <summary>
-        /// Enigma Crescendance: Grant Resonate Mystery stacks every 10th/15th click
+        /// Enigma Crescendance: Grant Resonant Mystery stacks every 10th/15th click
         /// Creator of Mystery: Every 3rd click ±25% notes
         /// </summary>
         public static void EnigmaCrescendance_OnClick(GameState gameState, MainWindow mainWindow)
@@ -2599,7 +2625,7 @@ namespace MusicClicker.Armory
         }
         
         /// <summary>
-        /// Consume a single Resonate Mystery stack for chosen effect
+        /// Consume a single Resonant Mystery stack for chosen effect
         /// </summary>
         public static void Enigma_ConsumeStack(GameState gameState, string effectChoice)
         {
@@ -2614,42 +2640,137 @@ namespace MusicClicker.Armory
                     MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, currentNotes * 0.50);
                     break;
                 case "Entropic":
-                    gameState.EntropicMelodies += 50;
+                    gameState.EntropicMelodies += 17;
                     break;
                 case "Minor":
-                    int randomMinor = _random.Next(7);
-                    switch (randomMinor)
+                    // Build list of owned minors
+                    var ownedMinors = new System.Collections.Generic.List<int>();
+                    if (gameState.MoonlightMinorOwned > 0) ownedMinors.Add(0);
+                    if (gameState.EroicaMinorOwned > 0) ownedMinors.Add(1);
+                    if (gameState.SwanMinorOwned > 0) ownedMinors.Add(2);
+                    if (gameState.LaCampanellaMinorOwned > 0) ownedMinors.Add(3);
+                    if (gameState.EnigmaMinorOwned > 0) ownedMinors.Add(4);
+                    if (gameState.FateMinorOwned > 0) ownedMinors.Add(5);
+                    if (gameState.OdeToJoyMinorOwned > 0) ownedMinors.Add(6);
+                    
+                    if (ownedMinors.Count > 0)
                     {
-                        case 0: if (gameState.MoonlightMinorOwned > 0) gameState.MoonlightMinorOwned++; break;
-                        case 1: if (gameState.EroicaMinorOwned > 0) gameState.EroicaMinorOwned++; break;
-                        case 2: if (gameState.SwanMinorOwned > 0) gameState.SwanMinorOwned++; break;
-                        case 3: if (gameState.LaCampanellaMinorOwned > 0) gameState.LaCampanellaMinorOwned++; break;
-                        case 4: if (gameState.EnigmaMinorOwned > 0) gameState.EnigmaMinorOwned++; break;
-                        case 5: if (gameState.FateMinorOwned > 0) gameState.FateMinorOwned++; break;
-                        case 6: if (gameState.OdeToJoyMinorOwned > 0) gameState.OdeToJoyMinorOwned++; break;
+                        int randomIndex = _random.Next(ownedMinors.Count);
+                        int selectedMinor = ownedMinors[randomIndex];
+                        
+                        switch (selectedMinor)
+                        {
+                            case 0: 
+                                gameState.MoonlightMinorOwned++;
+                                if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                                    gameState.NotesPerSecond += 3000;
+                                break;
+                            case 1: 
+                                gameState.EroicaMinorOwned++;
+                                if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                                    gameState.NotesPerSecond += 8000;
+                                break;
+                            case 2: 
+                                gameState.SwanMinorOwned++;
+                                if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                                    gameState.NotesPerSecond += 15000;
+                                break;
+                            case 3: 
+                                gameState.LaCampanellaMinorOwned++;
+                                if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                                    gameState.NotesPerSecond += 35000;
+                                break;
+                            case 4: 
+                                gameState.EnigmaMinorOwned++;
+                                if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                                    gameState.NotesPerSecond += 75000;
+                                break;
+                            case 5: 
+                                gameState.FateMinorOwned++;
+                                if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                                    gameState.NotesPerSecond += 135000;
+                                break;
+                            case 6: 
+                                gameState.OdeToJoyMinorOwned++;
+                                if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                                    gameState.NotesPerSecond += 255000;
+                                break;
+                        }
                     }
                     break;
             }
             
-            // Truthseeker: Grant 1 random minor per 2 stacks consumed
+            // Truthseeker Crescendance Bond: Knowledge Harvest - Grant 1 random owned minor per 2 stacks consumed
+            // Track total single consumptions to determine when to grant minor
             if (gameState.TruthseekerAbility)
             {
-                int randomMinor2 = _random.Next(7);
-                switch (randomMinor2)
+                gameState.TruthseekerSingleConsumeCount++;
+                
+                // Grant 1 minor for every 2 consumptions
+                if (gameState.TruthseekerSingleConsumeCount >= 2)
                 {
-                    case 0: if (gameState.MoonlightMinorOwned > 0) gameState.MoonlightMinorOwned++; break;
-                    case 1: if (gameState.EroicaMinorOwned > 0) gameState.EroicaMinorOwned++; break;
-                    case 2: if (gameState.SwanMinorOwned > 0) gameState.SwanMinorOwned++; break;
-                    case 3: if (gameState.LaCampanellaMinorOwned > 0) gameState.LaCampanellaMinorOwned++; break;
-                    case 4: if (gameState.EnigmaMinorOwned > 0) gameState.EnigmaMinorOwned++; break;
-                    case 5: if (gameState.FateMinorOwned > 0) gameState.FateMinorOwned++; break;
-                    case 6: if (gameState.OdeToJoyMinorOwned > 0) gameState.OdeToJoyMinorOwned++; break;
+                    gameState.TruthseekerSingleConsumeCount -= 2;
+                    
+                    // Build list of owned minors
+                    var ownedMinors2 = new System.Collections.Generic.List<int>();
+                    if (gameState.MoonlightMinorOwned > 0) ownedMinors2.Add(0);
+                    if (gameState.EroicaMinorOwned > 0) ownedMinors2.Add(1);
+                    if (gameState.SwanMinorOwned > 0) ownedMinors2.Add(2);
+                    if (gameState.LaCampanellaMinorOwned > 0) ownedMinors2.Add(3);
+                    if (gameState.EnigmaMinorOwned > 0) ownedMinors2.Add(4);
+                    if (gameState.FateMinorOwned > 0) ownedMinors2.Add(5);
+                    if (gameState.OdeToJoyMinorOwned > 0) ownedMinors2.Add(6);
+                    
+                    if (ownedMinors2.Count > 0)
+                    {
+                        int randomIndex2 = _random.Next(ownedMinors2.Count);
+                        int selectedMinor2 = ownedMinors2[randomIndex2];
+                        
+                        switch (selectedMinor2)
+                        {
+                            case 0: 
+                                gameState.MoonlightMinorOwned++;
+                                if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                                    gameState.NotesPerSecond += 3000;
+                                break;
+                            case 1: 
+                                gameState.EroicaMinorOwned++;
+                                if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                                    gameState.NotesPerSecond += 8000;
+                                break;
+                            case 2: 
+                                gameState.SwanMinorOwned++;
+                                if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                                    gameState.NotesPerSecond += 15000;
+                                break;
+                            case 3: 
+                                gameState.LaCampanellaMinorOwned++;
+                                if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                                    gameState.NotesPerSecond += 35000;
+                                break;
+                            case 4: 
+                                gameState.EnigmaMinorOwned++;
+                                if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                                    gameState.NotesPerSecond += 75000;
+                                break;
+                            case 5: 
+                                gameState.FateMinorOwned++;
+                                if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                                    gameState.NotesPerSecond += 135000;
+                                break;
+                            case 6: 
+                                gameState.OdeToJoyMinorOwned++;
+                                if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                                    gameState.NotesPerSecond += 255000;
+                                break;
+                        }
+                    }
                 }
             }
         }
         
         /// <summary>
-        /// Consume all Resonate Mystery stacks (10+) for bulk bonus
+        /// Consume all Resonant Mystery stacks (10+) for bulk bonus
         /// </summary>
         public static void Enigma_ConsumeAllStacks(GameState gameState)
         {
@@ -2660,22 +2781,65 @@ namespace MusicClicker.Armory
             double bonus = currentNotes * (0.25 * stackCount); // Reduced from 75% to 25% per stack
             MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, bonus);
             
-            // Truthseeker: Grant 1 minor per 2 stacks consumed
+            // Truthseeker: Grant 1 random owned minor per 2 stacks consumed
             if (gameState.TruthseekerAbility)
             {
                 int minorsToGrant = stackCount / 2; // Integer division - 1 minor per 2 stacks
                 for (int i = 0; i < minorsToGrant; i++)
                 {
-                    int randomMinor = _random.Next(7);
-                    switch (randomMinor)
+                    // Build list of owned minors
+                    var ownedMinors = new System.Collections.Generic.List<int>();
+                    if (gameState.MoonlightMinorOwned > 0) ownedMinors.Add(0);
+                    if (gameState.EroicaMinorOwned > 0) ownedMinors.Add(1);
+                    if (gameState.SwanMinorOwned > 0) ownedMinors.Add(2);
+                    if (gameState.LaCampanellaMinorOwned > 0) ownedMinors.Add(3);
+                    if (gameState.EnigmaMinorOwned > 0) ownedMinors.Add(4);
+                    if (gameState.FateMinorOwned > 0) ownedMinors.Add(5);
+                    if (gameState.OdeToJoyMinorOwned > 0) ownedMinors.Add(6);
+                    
+                    if (ownedMinors.Count > 0)
                     {
-                        case 0: if (gameState.MoonlightMinorOwned > 0) gameState.MoonlightMinorOwned++; break;
-                        case 1: if (gameState.EroicaMinorOwned > 0) gameState.EroicaMinorOwned++; break;
-                        case 2: if (gameState.SwanMinorOwned > 0) gameState.SwanMinorOwned++; break;
-                        case 3: if (gameState.LaCampanellaMinorOwned > 0) gameState.LaCampanellaMinorOwned++; break;
-                        case 4: if (gameState.EnigmaMinorOwned > 0) gameState.EnigmaMinorOwned++; break;
-                        case 5: if (gameState.FateMinorOwned > 0) gameState.FateMinorOwned++; break;
-                        case 6: if (gameState.OdeToJoyMinorOwned > 0) gameState.OdeToJoyMinorOwned++; break;
+                        int randomIndex = _random.Next(ownedMinors.Count);
+                        int selectedMinor = ownedMinors[randomIndex];
+                        
+                        switch (selectedMinor)
+                        {
+                            case 0: 
+                                gameState.MoonlightMinorOwned++;
+                                if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                                    gameState.NotesPerSecond += 3000;
+                                break;
+                            case 1: 
+                                gameState.EroicaMinorOwned++;
+                                if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                                    gameState.NotesPerSecond += 8000;
+                                break;
+                            case 2: 
+                                gameState.SwanMinorOwned++;
+                                if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                                    gameState.NotesPerSecond += 15000;
+                                break;
+                            case 3: 
+                                gameState.LaCampanellaMinorOwned++;
+                                if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                                    gameState.NotesPerSecond += 35000;
+                                break;
+                            case 4: 
+                                gameState.EnigmaMinorOwned++;
+                                if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                                    gameState.NotesPerSecond += 75000;
+                                break;
+                            case 5: 
+                                gameState.FateMinorOwned++;
+                                if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                                    gameState.NotesPerSecond += 135000;
+                                break;
+                            case 6: 
+                                gameState.OdeToJoyMinorOwned++;
+                                if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                                    gameState.NotesPerSecond += 255000;
+                                break;
+                        }
                     }
                 }
             }
@@ -2698,7 +2862,7 @@ namespace MusicClicker.Armory
         
         /// <summary>
         /// Fate Crescendance: Every 8th click grants stack + 10% notes
-        /// Tier effects: 1-4 entropic crits, 5-9 double NPS, 10+ guaranteed crits
+        /// Tier effects (cumulative): T1 +5 Entropic, T2 +5 Melodious/Harmonious, T3 +1 Stellar per stack, T4 Symphony on consume, T5 guaranteed Entropic Crescendo
         /// </summary>
         public static void FateCrescendance_OnClick(GameState gameState, MainWindow mainWindow)
         {
@@ -2713,6 +2877,12 @@ namespace MusicClicker.Armory
                 double currentNotes = MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes);
                 MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, currentNotes * 0.10);
                 
+                // Tier 3: Each Cosmic stack gained grants +1 Stellar Cascade crit
+                if (gameState.CosmicModulationStacks >= 3)
+                {
+                    gameState.CosmicWeaverEntropicCritClicks += 1;
+                }
+                
                 // Astral Chainripper: Every 5 Cosmic stacks grants 1 Symphony stack
                 if (gameState.AstralChainripperAbility && gameState.CosmicModulationStacks % 5 == 0)
                 {
@@ -2722,19 +2892,27 @@ namespace MusicClicker.Armory
         }
         
         /// <summary>
-        /// Consume Cosmic Modulation stacks for Entropic Melodies (15 per stack)
+        /// Consume Cosmic Modulation stacks for Entropic Melodies (5 per stack)
+        /// Tier 4: Also grants Symphony of the Stars (stacks consumed ÷ 2)
         /// </summary>
         public static void Fate_ConsumeStacksForMelodies(GameState gameState, int stackCount)
         {
             if (gameState.CosmicModulationStacks < stackCount) return;
             
+            int cosmicTierBeforeConsume = gameState.CosmicModulationStacks;
             gameState.CosmicModulationStacks -= stackCount;
-            gameState.EntropicMelodies += stackCount * 15;
+            gameState.EntropicMelodies += stackCount * 5;
+            
+            // Tier 4: Consuming stacks grants Symphony of the Stars (stacks consumed ÷ 2)
+            if (cosmicTierBeforeConsume >= 4)
+            {
+                gameState.SymphonyOfTheStarsStacks += stackCount / 2;
+            }
         }
         
         /// <summary>
         /// Consume 1 Symphony of the Stars stack to increase lowest minor by +3
-        /// Cosmic Weaver: Also grants 5 entropic crit clicks per stack
+        /// Cosmic Weaver: Also grants 5 Stellar Cascade crit clicks per stack (1700× multiplier)
         /// </summary>
         public static void Fate_ConsumeSymphonyStack(GameState gameState)
         {
@@ -2746,19 +2924,47 @@ namespace MusicClicker.Armory
             int lowestMinorIndex = GetLowestOwnedMinorIndex(gameState);
             switch (lowestMinorIndex)
             {
-                case 0: gameState.MoonlightMinorOwned += 3; break;
-                case 1: gameState.EroicaMinorOwned += 3; break;
-                case 2: gameState.SwanMinorOwned += 3; break;
-                case 3: gameState.LaCampanellaMinorOwned += 3; break;
-                case 4: gameState.EnigmaMinorOwned += 3; break;
-                case 5: gameState.FateMinorOwned += 3; break;
-                case 6: gameState.OdeToJoyMinorOwned += 3; break;
+                case 0: 
+                    gameState.MoonlightMinorOwned += 3;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                        gameState.NotesPerSecond += 9000; // 3000 * 3
+                    break;
+                case 1: 
+                    gameState.EroicaMinorOwned += 3;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                        gameState.NotesPerSecond += 24000; // 8000 * 3
+                    break;
+                case 2: 
+                    gameState.SwanMinorOwned += 3;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                        gameState.NotesPerSecond += 45000; // 15000 * 3
+                    break;
+                case 3: 
+                    gameState.LaCampanellaMinorOwned += 3;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                        gameState.NotesPerSecond += 105000; // 35000 * 3
+                    break;
+                case 4: 
+                    gameState.EnigmaMinorOwned += 3;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                        gameState.NotesPerSecond += 225000; // 75000 * 3
+                    break;
+                case 5: 
+                    gameState.FateMinorOwned += 3;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                        gameState.NotesPerSecond += 405000; // 135000 * 3
+                    break;
+                case 6: 
+                    gameState.OdeToJoyMinorOwned += 3;
+                    if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
+                        gameState.NotesPerSecond += 765000; // 255000 * 3
+                    break;
             }
             
-            // Cosmic Weaver: Grant 5 entropic crit clicks
+            // Cosmic Weaver: Grant 5 Stellar Cascade crit clicks
             if (gameState.CosmicWeaverAbility)
             {
-                gameState.LaCampanellaEntropicCritClicks += 5; // Reusing this counter for entropic crits
+                gameState.CosmicWeaverEntropicCritClicks += 5;
             }
         }
         
@@ -2842,49 +3048,14 @@ namespace MusicClicker.Armory
         #region Ode to Joy Crescendance: Petals of Harmony and Melody
         
         /// <summary>
-        /// Ode to Joy Crescendance: Click tracking for weapon passives
+        /// Ode to Joy Crescendance: Click tracking for weapon bonds (only when Ode to Joy is resonated)
+        /// Weapon passives are handled separately in their own OnClick functions
         /// </summary>
         public static void OdeToJoyCrescendance_OnClick(GameState gameState, MainWindow mainWindow)
         {
-            // Joyful Catharsis passive: Every 50th click
-            if (gameState.JoyfulCatharsisAbility)
-            {
-                gameState.JoyfulCatharsisClickCounter++;
-                if (gameState.JoyfulCatharsisClickCounter >= 50)
-                {
-                    gameState.JoyfulCatharsisClickCounter = 0;
-                    // Grant entropic melodies based on critical notes * 3
-                    // This will be calculated in the main click handler based on actual crits
-                }
-            }
-            
-            // Ode to Creation passive: Every 20th click for random petal
-            if (gameState.OdeToCreationAbility)
-            {
-                gameState.OdeToCreationClickCounter++;
-                int threshold = gameState.OdeToCreationDoubleActive ? 10 : 20; // Doubled = half the clicks
-                
-                if (gameState.OdeToCreationClickCounter >= threshold)
-                {
-                    gameState.OdeToCreationClickCounter = 0;
-                    
-                    // Grant random petal
-                    if (_random.NextDouble() < 0.5)
-                    {
-                        gameState.PetalsOfHarmony++;
-                    }
-                    else
-                    {
-                        gameState.PetalsOfMelody++;
-                    }
-                    
-                    // Joyful Catharsis: Double NPS for 5s on petal gain
-                    if (gameState.JoyfulCatharsisAbility)
-                    {
-                        gameState.JoyfulCatharsisNpsBoostExpiry = DateTime.Now.AddSeconds(5);
-                    }
-                }
-            }
+            // Crescendance bonds only work when Ode to Joy Major is resonated
+            // Weapon passives (50th click, 20th click) work regardless of resonated score
+            // and are called from MainWindow separately
         }
         
         /// <summary>
@@ -2892,6 +3063,8 @@ namespace MusicClicker.Armory
         /// </summary>
         public static void OdeToJoy_OnMinorCraft(GameState gameState)
         {
+            if (!gameState.OdeToJoyMajorAbility) return;
+            
             gameState.PetalsOfHarmony++;
             
             // Joyful Catharsis: Double NPS for 5s
@@ -2906,6 +3079,8 @@ namespace MusicClicker.Armory
         /// </summary>
         public static void OdeToJoy_OnMajorCraft(GameState gameState)
         {
+            if (!gameState.OdeToJoyMajorAbility) return;
+            
             gameState.PetalsOfMelody++;
             
             // Joyful Catharsis: Double NPS for 5s
@@ -2916,18 +3091,18 @@ namespace MusicClicker.Armory
         }
         
         /// <summary>
-        /// Consume Petal of Harmony for +250 Entropic Melodies
+        /// Consume Petal of Harmony for +83 Entropic Melodies
         /// </summary>
         public static void OdeToJoy_ConsumePetalOfHarmony(GameState gameState)
         {
             if (gameState.PetalsOfHarmony <= 0) return;
             
             gameState.PetalsOfHarmony--;
-            gameState.EntropicMelodies += 250;
+            gameState.EntropicMelodies += 83;
         }
         
         /// <summary>
-        /// Consume Petal of Melody for +10s full entropic crits (stackable)
+        /// Consume Petal of Melody for +10s of guaranteed Entropic Crescendo of Eternity critical hits (stackable)
         /// </summary>
         public static void OdeToJoy_ConsumePetalOfMelody(GameState gameState)
         {
@@ -2935,8 +3110,8 @@ namespace MusicClicker.Armory
             
             gameState.PetalsOfMelody--;
             gameState.EntropicCritExpiry = gameState.EntropicCritExpiry > DateTime.Now 
-                ? gameState.EntropicCritExpiry.AddSeconds(10)
-                : DateTime.Now.AddSeconds(10);
+                ? gameState.EntropicCritExpiry.AddSeconds(5)
+                : DateTime.Now.AddSeconds(5);
         }
         
         /// <summary>
@@ -2944,12 +3119,12 @@ namespace MusicClicker.Armory
         /// </summary>
         public static void OdeToJoy_CombineForOdeToLife(GameState gameState)
         {
-            if (gameState.PetalsOfHarmony < 1 || gameState.PetalsOfMelody < 1 || gameState.EntropicMelodies < 50)
+            if (gameState.PetalsOfHarmony < 1 || gameState.PetalsOfMelody < 1 || gameState.EntropicMelodies < 17)
                 return;
             
             gameState.PetalsOfHarmony--;
             gameState.PetalsOfMelody--;
-            gameState.EntropicMelodies -= 50;
+            gameState.EntropicMelodies -= 17;
             gameState.OdeToLifeStacks++;
         }
         
@@ -2981,32 +3156,32 @@ namespace MusicClicker.Armory
         
         #endregion
         
-        #region Dies Irae Crescendance: Burning Hatred and Discordant Malice
+        #region Dies Irae Crescendance: Dissonant Hatred and Discordant Malice
         
         /// <summary>
-        /// Dies Irae Crescendance: Every click gives Burning Hatred (up to 50), then Discordant Malice
+        /// Dies Irae Crescendance: Every click gives Dissonant Hatred (up to 50), then Discordant Malice
         /// </summary>
         public static void DiesIraeCrescendance_OnClick(GameState gameState, MainWindow mainWindow)
         {
-            if (gameState.BurningHatredStacks < 50)
+            if (gameState.DissonantHatredStacks < 50)
             {
-                gameState.BurningHatredStacks++;
+                gameState.DissonantHatredStacks++;
             }
             else
             {
                 gameState.DiscordantMaliceStacks++;
             }
             
-            // Hell's Wrath passive: Every 50th click
+            // Hell's Wrath passive: Every 20th click
             if (gameState.HellsWrathAbility)
             {
                 gameState.HellsWrathClickCounter++;
-                if (gameState.HellsWrathClickCounter >= 50)
+                if (gameState.HellsWrathClickCounter >= 20)
                 {
                     gameState.HellsWrathClickCounter = 0;
                     
                     // Add +2 to 2 lowest owned minors
-                    int[] minorCounts = {
+                    long[] minorCounts = {
                         gameState.MoonlightMinorOwned,
                         gameState.EroicaMinorOwned,
                         gameState.SwanMinorOwned,
@@ -3018,7 +3193,7 @@ namespace MusicClicker.Armory
                     
                     // Find two lowest
                     int lowest1 = -1, lowest2 = -1;
-                    int lowestCount1 = int.MaxValue, lowestCount2 = int.MaxValue;
+                    long lowestCount1 = long.MaxValue, lowestCount2 = long.MaxValue;
                     
                     for (int i = 0; i < minorCounts.Length; i++)
                     {
@@ -3068,36 +3243,48 @@ namespace MusicClicker.Armory
         }
         
         /// <summary>
-        /// Consume 5 Burning Hatred for 1 Dissonant Oblivion
+        /// Consume 5 Dissonant Hatred for 1 Cacophonic Oblivion
         /// </summary>
-        public static void DiesIrae_ConsumeBurningHatred(GameState gameState)
+        public static void DiesIrae_ConsumeDissonantHatred(GameState gameState)
         {
-            if (gameState.BurningHatredStacks < 5) return;
+            if (gameState.DissonantHatredStacks < 5) return;
             
-            gameState.BurningHatredStacks -= 5;
-            gameState.DissonantOblivionStacks++;
+            gameState.DissonantHatredStacks -= 5;
+            gameState.CacophonicOblivionStacks++;
         }
         
         /// <summary>
-        /// Consume Discordant Malice for entropic melodies
+        /// Consume Discordant Malice for entropic melodies (X = current Dissonant Hatred stacks)
         /// </summary>
         public static void DiesIrae_ConsumeDiscordantMalice(GameState gameState)
         {
             if (gameState.DiscordantMaliceStacks <= 0) return;
             
             gameState.DiscordantMaliceStacks--;
-            gameState.EntropicMelodies += gameState.BurningHatredStacks; // X = current Burning Hatred
+            gameState.EntropicMelodies += gameState.DissonantHatredStacks; // +X Entropic where X = current Dissonant Hatred
         }
         
         /// <summary>
-        /// Consume Dissonant Oblivion for Symphony of Hell's Retribution (20 clicks)
+        /// Consume ALL Discordant Malice stacks for entropic melodies (X = current Dissonant Hatred per stack)
         /// </summary>
-        public static void DiesIrae_ConsumeDissonantOblivion(GameState gameState)
+        public static void DiesIrae_ConsumeAllDiscordantMalice(GameState gameState)
         {
-            if (gameState.DissonantOblivionStacks <= 0) return;
+            if (gameState.DiscordantMaliceStacks <= 0) return;
             
-            gameState.DissonantOblivionStacks--;
-            gameState.SymphonyOfHellClicks = 20;
+            int stacksToConsume = gameState.DiscordantMaliceStacks;
+            gameState.DiscordantMaliceStacks = 0;
+            gameState.EntropicMelodies += stacksToConsume * gameState.DissonantHatredStacks; // +X Entropic per stack
+        }
+        
+        /// <summary>
+        /// Consume Cacophonic Oblivion for 'Symphony of Hell's Retribution' crits (20 clicks)
+        /// </summary>
+        public static void DiesIrae_ConsumeCacophonicOblivion(GameState gameState)
+        {
+            if (gameState.CacophonicOblivionStacks <= 0) return;
+            
+            gameState.CacophonicOblivionStacks--;
+            gameState.SymphonyOfHellClicks += 20; // Stacks if multiple consumed
         }
         
         /// <summary>
@@ -3108,7 +3295,20 @@ namespace MusicClicker.Armory
             if (gameState.WrathfulSealStacks <= 0) return;
             
             gameState.WrathfulSealStacks--;
-            gameState.SealBreakingMelodyClicks = 5;
+            gameState.SealBreakingMelodyClicks += 5; // Stacks if multiple consumed
+        }
+        
+        /// <summary>
+        /// Dies Irae Duet: Consume 15 or more Wrathful Seals for 5 note-doubling clicks
+        /// </summary>
+        public static void DiesIrae_ConsumeDuetWrathfulSeals(GameState gameState)
+        {
+            // Can only consume 15+ Wrathful Seals during active duet
+            if (!gameState.DiesIraeDuetActive) return;
+            if (gameState.WrathfulSealStacks < 15) return;
+            
+            gameState.WrathfulSealStacks -= 15;
+            gameState.DiesIraeDuetNoteDoublingClicks = 5;
         }
         
         #endregion

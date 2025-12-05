@@ -200,47 +200,47 @@ namespace MusicClicker
         public int FateCounter { get => _fateCounter; set => _fateCounter = value; }
 
         // Craft Ownership (Unite the Symphony) - Regular Scores
-        public int _moonlightMinorOwned = 0;
-        public int MoonlightMinorOwned { get => _moonlightMinorOwned; set => _moonlightMinorOwned = value; }
+        public long _moonlightMinorOwned = 0;
+        public long MoonlightMinorOwned { get => _moonlightMinorOwned; set => _moonlightMinorOwned = value; }
         
-        public int _moonlightMajorOwned = 0;
-        public int MoonlightMajorOwned { get => _moonlightMajorOwned; set => _moonlightMajorOwned = value; }
+        public long _moonlightMajorOwned = 0;
+        public long MoonlightMajorOwned { get => _moonlightMajorOwned; set => _moonlightMajorOwned = value; }
         
-        public int _eroicaMinorOwned = 0;
-        public int EroicaMinorOwned { get => _eroicaMinorOwned; set => _eroicaMinorOwned = value; }
+        public long _eroicaMinorOwned = 0;
+        public long EroicaMinorOwned { get => _eroicaMinorOwned; set => _eroicaMinorOwned = value; }
         
-        public int _eroicaMajorOwned = 0;
-        public int EroicaMajorOwned { get => _eroicaMajorOwned; set => _eroicaMajorOwned = value; }
+        public long _eroicaMajorOwned = 0;
+        public long EroicaMajorOwned { get => _eroicaMajorOwned; set => _eroicaMajorOwned = value; }
         
-        public int _swanMinorOwned = 0;
-        public int SwanMinorOwned { get => _swanMinorOwned; set => _swanMinorOwned = value; }
+        public long _swanMinorOwned = 0;
+        public long SwanMinorOwned { get => _swanMinorOwned; set => _swanMinorOwned = value; }
         
-        public int _swanMajorOwned = 0;
-        public int SwanMajorOwned { get => _swanMajorOwned; set => _swanMajorOwned = value; }
+        public long _swanMajorOwned = 0;
+        public long SwanMajorOwned { get => _swanMajorOwned; set => _swanMajorOwned = value; }
         
-        public int _laCampanellaMinorOwned = 0;
-        public int LaCampanellaMinorOwned { get => _laCampanellaMinorOwned; set => _laCampanellaMinorOwned = value; }
+        public long _laCampanellaMinorOwned = 0;
+        public long LaCampanellaMinorOwned { get => _laCampanellaMinorOwned; set => _laCampanellaMinorOwned = value; }
         
-        public int _laCampanellaMajorOwned = 0;
-        public int LaCampanellaMajorOwned { get => _laCampanellaMajorOwned; set => _laCampanellaMajorOwned = value; }
+        public long _laCampanellaMajorOwned = 0;
+        public long LaCampanellaMajorOwned { get => _laCampanellaMajorOwned; set => _laCampanellaMajorOwned = value; }
         
-        public int _enigmaMinorOwned = 0;
-        public int EnigmaMinorOwned { get => _enigmaMinorOwned; set => _enigmaMinorOwned = value; }
+        public long _enigmaMinorOwned = 0;
+        public long EnigmaMinorOwned { get => _enigmaMinorOwned; set => _enigmaMinorOwned = value; }
         
-        public int _enigmaMajorOwned = 0;
-        public int EnigmaMajorOwned { get => _enigmaMajorOwned; set => _enigmaMajorOwned = value; }
+        public long _enigmaMajorOwned = 0;
+        public long EnigmaMajorOwned { get => _enigmaMajorOwned; set => _enigmaMajorOwned = value; }
         
-        public int _fateMinorOwned = 0;
-        public int FateMinorOwned { get => _fateMinorOwned; set => _fateMinorOwned = value; }
+        public long _fateMinorOwned = 0;
+        public long FateMinorOwned { get => _fateMinorOwned; set => _fateMinorOwned = value; }
         
-        public int _fateMajorOwned = 0;
-        public int FateMajorOwned { get => _fateMajorOwned; set => _fateMajorOwned = value; }
+        public long _fateMajorOwned = 0;
+        public long FateMajorOwned { get => _fateMajorOwned; set => _fateMajorOwned = value; }
         
-        public int _odeToJoyMinorOwned = 0;
-        public int OdeToJoyMinorOwned { get => _odeToJoyMinorOwned; set => _odeToJoyMinorOwned = value; }
+        public long _odeToJoyMinorOwned = 0;
+        public long OdeToJoyMinorOwned { get => _odeToJoyMinorOwned; set => _odeToJoyMinorOwned = value; }
         
-        public int _odeToJoyMajorOwned = 0;
-        public int OdeToJoyMajorOwned { get => _odeToJoyMajorOwned; set => _odeToJoyMajorOwned = value; }
+        public long _odeToJoyMajorOwned = 0;
+        public long OdeToJoyMajorOwned { get => _odeToJoyMajorOwned; set => _odeToJoyMajorOwned = value; }
 
         // Event Score Ownership (no minor/major distinction)
         public int _diesIraeOwned = 0;
@@ -567,10 +567,16 @@ namespace MusicClicker
         public DateTime TriumphOfHeroesAutoClickExpiry { get; set; } = DateTime.MinValue;
         public DateTime TriumphOfHeroesCooldownExpiry { get; set; } = DateTime.MinValue;
 
+        // Swan Lake Duet: Feather Cascade
+        public bool SwanLakeDuetActive { get; set; } = false;
+        public DateTime SwanLakeDuetExpiry { get; set; } = DateTime.MinValue;
+        public DateTime SwanLakeDuetCooldownExpiry { get; set; } = DateTime.MinValue;
+        public int SwanLakeDuetClickCounter { get; set; } = 0; // Tracks clicks during duet for feather grants
+        
         // Swan Lake Crescendance: Feather System
         public int ReveredFeathers { get; set; } = 0; // Common feathers (5 stacks → +20% notes)
         public int ChromaticFeathers { get; set; } = 0; // Rare feathers (10 stacks → 2 of every minor)
-        public int PolyphonicFeathers { get; set; } = 0; // Epic feathers (1 stack → 250 entropic + 75% notes)
+        public int PolyphonicFeathers { get; set; } = 0; // Epic feathers (1 stack → 83 entropic + 75% notes)
         public int SwanLakeClickCounter { get; set; } = 0; // Tracks clicks for feather drop intervals
         
         // Moonlight Sonata Crescendance: Eclipse of the Nocturne
@@ -582,14 +588,15 @@ namespace MusicClicker
         // La Campanella Crescendance: Grandiose Bell
         public int GrandioseBellClickCounter { get; set; } = 0; // Counts clicks toward crack thresholds (20/40/60)
         public int GrandioseBellStage { get; set; } = 0; // 0=intact, 1=Crescending(20), 2=Radiant(40), 3=Harmonizing(60)
-        public int DeafeningChimeStacks { get; set; } = 0; // Stacks from Radiant mend, consumed on Harmonizing mend for doubling
+        public int DeafeningChimeStacks { get; set; } = 0; // Stacks from Radiant mend (max 15), consumed on Harmonizing mend for notes = stacks × NPS
         public DateTime DeafeningChimeExpiry { get; set; } = DateTime.MinValue; // Expiry for Deafening Chime stacks
-        public int LaCampanellaEntropicCritClicks { get; set; } = 0; // Remaining entropic crit clicks from Radiant mend
+        public int CosmicWeaverEntropicCritClicks { get; set; } = 0; // Remaining Stellar Cascade crit clicks from Cosmic Weaver's Symphony consume (5 per Symphony) or Tier 3 Cosmic Modulation (+1 per stack gained)
         
-        // Enigma Crescendance: Resonate Mystery
-        public int ResonateMysteryStacks { get; set; } = 0; // Every 10th click (+25th when crescendance active)
+        // Enigma Crescendance: Resonant Mystery
+        public int ResonateMysteryStacks { get; set; } = 0; // Every 10th click (+15th when crescendance active)
         public int EnigmaClickCounter { get; set; } = 0; // Tracks clicks for 10th/25th intervals
         public int EnigmaPassiveClickCounter { get; set; } = 0; // Creator of Mystery: every 3rd click ±25% notes
+        public int TruthseekerSingleConsumeCount { get; set; } = 0; // Truthseeker: Track single mystery consumptions for "1 minor per 2 consumed"
         
         // Fate Crescendance: Cosmic Modulation
         public int CosmicModulationStacks { get; set; } = 0; // Every 8th click grants +1 stack + 10% notes
@@ -608,14 +615,15 @@ namespace MusicClicker
         public DateTime OdeToCreationDoubleExpiry { get; set; } = DateTime.MinValue; // 25s duration
         public DateTime JoyfulCatharsisNpsBoostExpiry { get; set; } = DateTime.MinValue; // 5s NPS boost on petal gain
         
-        // Dies Irae Crescendance: Burning Hatred and Discordant Malice
-        public int BurningHatredStacks { get; set; } = 0; // Every click before 50
-        public int DiscordantMaliceStacks { get; set; } = 0; // Every click after 50 Burning Hatred
-        public int DissonantOblivionStacks { get; set; } = 0; // Consume 5 Burning Hatred
-        public int SymphonyOfHellClicks { get; set; } = 0; // Remaining clicks for Symphony of Hell's Retribution
-        public int WrathfulSealStacks { get; set; } = 0; // Gained from Symphony of Hell crits (Seven Circles)
+        // Dies Irae Crescendance: Dissonant Hatred and Discordant Malice
+        public int DissonantHatredStacks { get; set; } = 0; // Every click before 50
+        public int DiscordantMaliceStacks { get; set; } = 0; // Every click after 50 Dissonant Hatred
+        public int CacophonicOblivionStacks { get; set; } = 0; // Consume 5 Dissonant Hatred
+        public int SymphonyOfHellClicks { get; set; } = 0; // Remaining clicks for 'Symphony of Hell's Retribution' crit
+        public int WrathfulSealStacks { get; set; } = 0; // Gained from Symphony of Hell's Retribution crits (Seven Circles)
         public int SealBreakingMelodyClicks { get; set; } = 0; // Remaining clicks for Seal-breaking Melody
-        public int HellsWrathClickCounter { get; set; } = 0; // Every 50th click for passive
+        public int HellsWrathClickCounter { get; set; } = 0; // Every 20th click for passive
+        public int DiesIraeDuetNoteDoublingClicks { get; set; } = 0; // Remaining clicks that double notes (from 15+ Wrathful Seals)
         
         // Star-Scattered Wings (Swan I) passive tracking
         public int StarScatteredWingsClickCounter { get; set; } = 0; // Every 10th click grants fragments
@@ -623,6 +631,7 @@ namespace MusicClicker
         // Thousand Winged Swan (Swan II) - Polyphonic NPS boost
         public bool ThousandWingedSwanNpsBoostActive { get; set; } = false;
         public DateTime ThousandWingedSwanNpsBoostExpiry { get; set; } = DateTime.MinValue;
+        public int ThousandWingedSwanFeathersConsumed { get; set; } = 0; // Stacks 1-10, resets on expiry
 
         // La Campanella Duet: Chime Chain
         public bool LaCampanellaDuetActive { get; set; } = false;

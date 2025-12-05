@@ -1086,6 +1086,8 @@ namespace MusicClicker
                 "CosmicWeaver" => "Cosmic Weaver",
                 "JoyfulCatharsis" => "Joyful Catharsis",
                 "OdeToCreation" => "Ode to Creation",
+                "SevenCircles" => "Seven Circles",
+                "HellsWrath" => "Hell's Wrath",
                 _ => internalName
             };
         }

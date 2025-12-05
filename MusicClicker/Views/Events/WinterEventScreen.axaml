@@ -10,7 +10,7 @@
                Opacity="1" />
 
     <Grid ZIndex="1"
-          Background="#33000000">
+          Background="#66000000">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" /> <!-- Header -->
             <RowDefinition Height="*" />    <!-- Content -->
@@ -50,7 +50,7 @@
                         Width="525"
                         Height="295"
                         Background="Transparent"
-                        BorderBrush="White"
+                        BorderBrush="#FFFF69B4"
                         BorderThickness="3"
                         HorizontalAlignment="Center">
                     <Image Source="avares://MusicClicker/Assets/SoulOfWinter.png"
@@ -81,7 +81,7 @@
                         Width="525"
                         Height="295"
                         Background="Transparent"
-                        BorderBrush="White"
+                        BorderBrush="#FFFF69B4"
                         BorderThickness="3"
                         HorizontalAlignment="Center">
                     <Image Source="avares://MusicClicker/Assets/WinterMajor.png"
@@ -105,6 +105,30 @@
                            TextAlignment="Center"
                            TextWrapping="Wrap"
                            MaxWidth="525" />
+                           
+                <!-- Timer Displays -->
+                <StackPanel Spacing="5" HorizontalAlignment="Center">
+                    <TextBlock x:Name="NpsFreezeTimerText"
+                               Text=""
+                               Foreground="#FF00FF00"
+                               FontSize="14"
+                               IsVisible="False"
+                               HorizontalAlignment="Center">
+                        <TextBlock.Effect>
+                            <DropShadowEffect Color="#FF00FF00" BlurRadius="8" />
+                        </TextBlock.Effect>
+                    </TextBlock>
+                    <TextBlock x:Name="BlizzardBountyTimerText"
+                               Text=""
+                               Foreground="#FF00FF00"
+                               FontSize="14"
+                               IsVisible="False"
+                               HorizontalAlignment="Center">
+                        <TextBlock.Effect>
+                            <DropShadowEffect Color="#FF00FF00" BlurRadius="8" />
+                        </TextBlock.Effect>
+                    </TextBlock>
+                </StackPanel>
             </StackPanel>
 
         </StackPanel>

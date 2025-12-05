@@ -21,14 +21,14 @@ Requirements:
 • Swan Lake Major must be resonated
 
 Mechanics:
-• Revered Feathers (every 10 clicks, 20% chance):
+• Revered Feathers (every 2 clicks):
   - Consume 5 stacks → +20% current notes
   
-• Chromatic Feathers (every 15 clicks, 10% chance):
+• Chromatic Feathers (every 8 clicks):
   - Consume 10 stacks → +2 of every owned minor score
   
-• Polyphonic Feathers (every 30 clicks, 5% chance):
-  - Consume 1 stack → +250 Entropic Melodies + 75% current notes
+• Polyphonic Feathers (every 15 clicks):
+  - Consume 1 stack → +83 Entropic Melodies + 75% current notes
 
 Feather Priority:
 • Polyphonic checked first (highest priority)
@@ -77,8 +77,8 @@ Cooldown: 4 minutes
 
 STRATEGY TIPS
 ---------------------------------------
-1. RNG-dependent: 5% feather chance means patience required
-2. Revered is easiest to stack (every 10 clicks vs 15/30)
+1. Feathers drop on consistent intervals (every 2/8/15 clicks)
+2. Revered is easiest to stack (every 2 clicks vs 8/15)
 3. Save Polyphonic for critical moments - most powerful feather
 4. Chromatic best used mid-game for minor score acceleration
 5. Feather Cascade duet = instant 30 feathers total
@@ -92,13 +92,13 @@ Early Game:
 • Star-Scattered fragments help with early upgrades
 
 Mid Game:
-• Chromatic feathers accelerate minor score collection significantly
+• Chromatic feathers accelerate minor score collection (every 8 clicks)
 • Feather Cascade becomes available - use strategically
 • Thousand Winged acquisition bonus provides nice one-time boost
 
 Late Game:
-• Polyphonic feathers with NPS-to-NPC boost create massive burst windows
-• Feather Cascade generates 250-2500 Entropic Melodies instantly
+• Polyphonic feathers (every 15 clicks) with NPS-to-NPC boost create massive burst windows
+• Feather Cascade generates 83-830 Entropic Melodies instantly
 • Combine Chromatic consumption (+2 all minors) with Ode to Joy doubling effects
 • RNG feather drops become more forgiving with higher click frequency
 

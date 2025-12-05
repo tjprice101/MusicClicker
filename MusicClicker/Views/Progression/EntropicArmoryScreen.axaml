@@ -12,7 +12,7 @@
 
         <!-- Main content on top -->
         <Grid ZIndex="1"
-              Background="#33000000">
+              Background="#66000000">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />

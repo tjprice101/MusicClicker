@@ -38,39 +38,35 @@ Crescendance: Symphony of Triumph
 
 Crescendance: Wings of Transcendence
 • Revered Feathers (every 2 clicks): Consume 5 for +20% notes
-• Chromatic Feathers (every 5 clicks): Consume 10 for +2 all owned minors
-• Polyphonic Feathers (every 10 clicks): Consume 1 for +250 Entropic Melodies +75% notes
-• Wings of Velocity weapon bond: Polyphonic feather → 10s of +NPS to NPC (2x multiplier)
+• Chromatic Feathers (every 8 clicks): Consume 10 for +2 all owned minors
+• Polyphonic Feathers (every 15 clicks): Consume 1 for +83 Entropic Melodies +75% notes
+• Wings of Velocity weapon bond: Polyphonic feather → 7s of NPC = NPS × 10^stacks (max 8)
 • Star Scattered Wings weapon bond: Any feather → +1 Scattered Starlight stack (max 5)";
 
             public const string LaCampanella = @"La Campanella
 
 ""Each chime resonates with destiny; as the bell cracks, fortune rings eternal.""
 
-Major Ability: Bell's Fortune
-• Grants +10% bonus notes whenever the Grandiose Bell cracks (at 20/40/60 clicks)
-• Passive effect - always active when La Campanella Major owned
-
 Crescendance: Grandiose Bell
 • Bell cracks at 20/40/60 clicks, advancing stage (Intact → Crescending → Radiant → Harmonizing)
 • Mend to collect rewards:
   - Crescending: +2 random owned minors
-  - Radiant: +5 Deafening Chime stacks (2-minute expiry)
-  - Harmonizing: Consume all Deafening Chime for 2^stacks multiplier to notes (max 6 stacks = 64× multiplier)
-• Deafening Chime: Gained from Radiant mend (5 stacks) or entropic crit clicks (3 stacks per crit)
-• Symphony weapon bond: +75% notes when bell cracks
-• Razer weapon bond: Mend grants entropic melodies = click count × 2 (max 250)";
+  - Radiant: +5 Deafening Chime stacks
+  - Harmonizing: Consume all Deafening Chime to gain notes = stacks × NPS
+• Deafening Chime: Max 15 stacks. Gained from Radiant mend (5 stacks) or Entropic Crescendo of Eternity critical hits (3 stacks per crit)
+• Symphony weapon bond: +1 Deafening Chime when bell cracks
+• Razer weapon bond: +2% critical click rate when equipped";
 
             public const string EnigmaVariations = @"Enigma Variations
 
 ""Within the veil of mystery lies infinite possibility—each riddle a key to untold power.""
 
-Crescendance: Resonate Mystery
-• Every 10th click: +1 Resonate Mystery stack
-• Every 15th click (with Creator of Mystery): +1 additional Resonate Mystery stack
+Crescendance: Resonant Mystery
+• Every 10th click: +1 Resonant Mystery stack
+• Every 15th click (with Creator of Mystery): +1 additional Resonant Mystery stack
 • Consume 1 stack for:
   - +50% of current notes
-  - +50 Entropic Melodies
+  - +17 Entropic Melodies
   - +1 random owned minor
 • Bulk consume (10+ stacks): +25% notes per stack consumed
 • Truthseeker weapon bond: +1 random minor per 2 stacks consumed";
@@ -81,11 +77,13 @@ Crescendance: Resonate Mystery
 
 Crescendance: Cosmic Modulation
 • Every 8th click: +1 Cosmic Modulation stack + 10% notes bonus
-• Tiers (every 5 stacks): Grant escalating passive effects
-• Consume Cosmic Modulation: +15 Entropic Melodies per stack consumed
-• Astral Chainripper weapon bond: Every 5 stacks gained → +1 Symphony of the Stars
-• Symphony of the Stars: Consume 1 stack for +3 to lowest owned minor score
-• Cosmic Weaver weapon bond: Each Symphony consumed → next 5 clicks are guaranteed entropic crits";
+• Tier Effects (cumulative):
+  - Tier 1 (1+ stacks): Every click grants +5 Entropic Melodies
+  - Tier 2 (2+ stacks): Every click grants +5 Melodious and Harmonious Fragments
+  - Tier 3 (3+ stacks): Each Cosmic stack gained grants +1 Stellar Cascade critical click
+  - Tier 4 (4+ stacks): Consuming Cosmic stacks grants Symphony of the Stars (stacks consumed ÷ 2)
+  - Tier 5 (5+ stacks): Guaranteed Entropic Crescendo of Eternity on every click
+• Consume Cosmic Modulation: +5 Entropic Melodies per stack consumed";
 
             public const string OdeToJoy = @"Ode to Joy (Symphony No. 9)
 
@@ -94,26 +92,29 @@ Crescendance: Cosmic Modulation
 Crescendance: Petals of Life
 • Minor craft: +1 Petal of Harmony
 • Major craft: +1 Petal of Melody
-• Consume Harmony: +250 Entropic Melodies
-• Consume Melody: +10s full entropic crits (stackable)
-• Combine (1 Harmony + 1 Melody + 50 Entropic): 1 Ode to Life
+• Consume Harmony: +83 Entropic Melodies
+• Consume Melody: +5s of guaranteed Entropic Crescendo of Eternity critical hits (stackable)
+• Combine (1 Harmony + 1 Melody + 17 Entropic): 1 Ode to Life
 • Consume Ode to Life: Double all owned minors
 • Joyful Catharsis bond: Every petal gained → double NPS for 5s
 • Ode to Creation bond: On Ode to Life consume → double petal generation for 25s";
 
             public const string DiesIrae = @"Dies Irae
 
-""Wrath incarnate—where burning hatred forges an infernal symphony of unstoppable retribution.""
+""Wrath incarnate—where dissonant hatred forges an infernal symphony of unstoppable retribution.""
 
 Major Ability:
 Clicks build infernal power that multiplies damage.
 
 Crescendance: Symphony of Hell's Retribution
-• Every click: +1 Burning Hatred (up to 50), then +1 Discordant Malice
-• Consume 5 Burning Hatred: +1 Dissonant Oblivion
-• Consume Discordant Malice: +X Entropic (X = Burning Hatred stacks)
-• Consume Dissonant Oblivion: Next 20 clicks are Symphony of Hell's Retribution
-• Hell crit formula: NPC × NPS × Burning Hatred stacks";
+• Every click: +1 Dissonant Hatred (up to 50), then +1 Discordant Malice
+• Consume 5 Dissonant Hatred: +1 Cacophonic Oblivion
+• Consume Discordant Malice: +X Entropic (X = current Dissonant Hatred stacks)
+• Consume Cacophonic Oblivion: +20 Symphony of Hell's Retribution crits (STACKS)
+• Hell crit formula: NPC × NPS × Dissonant Hatred stacks
+• Seven Circles bond: Symphony crits grant Wrathful Seals
+• Consume Wrathful Seal: +5 Seal-breaking Melody crits (STACKS, DOUBLE Symphony damage)
+• Hell's Wrath bond: Symphony/Seal-breaking crits grant +50 Entropic each";
 
             public const string Winter = @"Winter
 
@@ -133,273 +134,143 @@ Freezes NPS and converts it into click multiplier. Clicks extend duration.";
             // Moonlight Weapons
             public const string IncisorOfMoonlight = @"Incisor of Moonlight
 
-Passive: Moonlight Strike (while equipped)
-Every 4th click grants bonus notes based on current total. Stronger during nighttime (8PM-6AM).
-• +1% bonus notes of current total (+5% at night)
-• Trigger: Every 4th click
+Passive: Moonlight Strike - Every 4th click grants +1% bonus notes (+5% during nighttime 8PM-6AM).
 
-Crescendance Bond: Piercing Radiance
-Moonbeam Resonance stacks amplify your note gains when using Moonlight Sonata Major.
-• Each stack gained: +10% additional notes of current notes
-• Requires: Moonlight Sonata Major resonated + Incisor equipped
+Crescendance Bond: Piercing Radiance - Each Moonbeam Resonance stack gained grants +10% additional notes of current notes.
 
-Duet (with Eulogy): Lunar Phases
-Cycles through moon phases granting different bonuses. With Moonlight Major, all phases activate simultaneously!
-• New Moon: 2× NPC | Crescent: 10% component drop | Full Moon: 3× NPS | Waning: 50% upgrade discount
-• Duration: 20s | Cooldown: 4min";
+Duet: Lunar Phases - Cycles through moon phases granting bonuses. All phases active with Moonlight Major resonated. 20s duration, 4min cooldown.";
 
             public const string EulogyOfTheMoon = @"Eulogy of the Moon
 
-Passive: Nocturnal Refund (while equipped)
-Crafting minor scores has a chance to refund all materials. Stronger during nighttime.
-• 25% refund chance (50% during nighttime 8PM-6AM)
-• Trigger: On minor score craft
+Passive: Nocturnal Refund - On minor score craft: 25% chance to refund all materials (50% during nighttime 8PM-6AM).
 
-Crescendance Bond: Requiem of Renewal
-Convert Harmonizing Moonlight stacks into Moonbeam Resonance plus crafting materials.
-• Consume 1 Harmonizing Moonlight: Gain 3 Moonbeam Resonance + 1 of each component for lowest owned minor
-• Requires: Moonlight Sonata Major resonated + Eulogy equipped
+Crescendance Bond: Requiem of Renewal - Consume 1 Harmonizing Moonlight stack to gain 3 Moonbeam Resonance stacks plus components.
 
-Duet (with Incisor): Lunar Phases
-Cycles through moon phases granting different bonuses. With Moonlight Major, all phases activate simultaneously!
-• New Moon: 2× NPC | Crescent: 10% component drop | Full Moon: 3× NPS | Waning: 50% upgrade discount
-• Duration: 20s | Cooldown: 4min";
+Duet: Lunar Phases - Cycles through moon phases granting bonuses. All phases active with Moonlight Major resonated. 20s duration, 4min cooldown.";
 
             // Eroica Weapons
             public const string SakurasBlossom = @"Sakura's Blossom
 
-Passive: Heroic Bounty (while equipped)
-Crafting Majors grants components for the associated minor scores.
-• On Major craft: +1 of each component (Keys, Scales, Progressions) for that score's minor
-• Trigger: Crafting major scores
+Passive: Heroic Bounty - On Major craft (Unite the Symphony screen), grants 1 of each component type (Keys, Scales, Progressions) for that score's associated minor.
 
-Crescendance Bond: Crimson Requiem
-Consuming Symphonic Catharsis (stackable) triggers a special burst where clicks become powerful crits.
-• Next 30 clicks: 'Blossom's Blooming in Crimson Light' damage = NPC + (NPS × NPC) each
-• Requires: Eroica Major resonated + Sakura equipped
-• Trigger: When Symphonic Catharsis is consumed
+Crescendance Bond: Crimson Requiem - When Symphonic Catharsis is consumed (stackable), next 30 clicks are 'Blossom's Blooming in Crimson Light' crits (NPC + NPS × NPC).
 
-Duet (with Funeral Prayer): Victory March
-Fill a 100-click bar to earn escalating rewards, culminating in doubling all scores!
-• 25%: Random minor | 50%: Random major | 75%: +50 fragments | 100%: Double all scores
-• Cooldown: 5min";
+Duet: Victory March - Fill 100-click bar for escalating rewards. 5min cooldown.";
 
             public const string FuneralPrayer = @"Funeral Prayer
 
-Passive: Prayer of Valor (while equipped)
-Build Prayer stacks through clicking, then unleash them for massively boosted clicks.
-• Every 10th click: +1 Prayer stack
-• At 3 stacks: Next 15 clicks gain +6× NPS as 'Retribution of the Symphonic Sakura' crits
-• Trigger: Every 10th click
+Passive: Prayer of Valor - Every 10th click grants 1 Prayer stack. At 3 Prayer stacks: next 15 clicks each gain +6× Notes Per Second as 'Retribution of the Symphonic Sakura' crits.
 
-Crescendance Bond: Testament of Harmony
-Consuming Symphonic Catharsis grants Testament stacks that can be redeemed for fragments and bonus notes.
-• When Symphonic Catharsis consumed: +1 Testament of Harmony
-• Consume 1 Testament: +100 Melodious + 100 Harmonious Fragments + NPS×10 bonus notes
-• Requires: Eroica Major resonated + Funeral Prayer equipped
+Crescendance Bond: Testament of Harmony - When Symphonic Catharsis is consumed (stackable), grants +1 Testament of Harmony (consume for +100 Melodious + 100 Harmonious Fragments + NPS×10 notes).
 
-Duet (with Sakura's Blossom): Victory March
-Fill a 100-click bar to earn escalating rewards, culminating in doubling all scores!
-• 25%: Random minor | 50%: Random major | 75%: +50 fragments | 100%: Double all scores
-• Cooldown: 5min";
+Duet: Victory March - Fill 100-click bar for escalating rewards. 5min cooldown.";
 
             // Swan Lake Weapons
             public const string StarScatteredWings = @"Star-Scattered Wings
 
-Forte Resonance: Stellar Fragment Rain (while equipped)
-Regular clicks generate crafting fragments independent of feather system.
-• Every 10th click: +5 Melodious & +5 Harmonious Fragments
-• Trigger: Every 10th click
+Passive: Stellar Fragment Rain - Every 10th click grants +5 Melodious and +5 Harmonious Fragments.
 
-Crescendance Bond: Stellar Component Rain (while equipped)
-Feather acquisitions during Crescendance grant bonus components.
-• When Revered or Chromatic Feather obtained: +2 to all components of random owned minor
-• Requires: Swan Lake Major resonated + Star-Scattered Wings equipped
-• Trigger: Revered/Chromatic feather acquisition
+Crescendance Bond: Stellar Component Rain - When Revered or Chromatic Feather obtained during Crescendance: grants +2 components to random owned minor score.
 
-Duet (with Thousand Winged Swan): Feather Cascade
-First clicks rain all feather types, with milestone clicks granting note bonuses.
-• First 10 clicks: Each grants 1 Revered, 1 Chromatic, 1 Polyphonic Feather
-• Every 5th click (5th & 10th): +25% notes bonus
-• Duration: 20s | Cooldown: 4min";
+Duet: Feather Cascade - First 10 clicks grant all feather types, with milestone clicks granting note bonuses. 20s duration, 4min cooldown.";
 
             public const string ThousandWingedSwan = @"Thousand Winged Swan
 
-Passive: Wings of Fortune (while equipped)
-Minor score acquisitions generate an entropic symphony.
-• On minor score acquisition: +100 Entropic Melodies
-• Trigger: Every minor score acquisition (crafting, Victory March, etc.)
+Passive: Wings of Fortune - Every minor score acquisition grants +33 Entropic Melodies.
 
-Crescendance Bond: Wings of Velocity (while equipped)
-Polyphonic feather consumption creates powerful burst clicking windows.
-• When Polyphonic feather consumed: 10s of NPS-to-NPC boost (adds 2× NPS to NPC)
-• Crit Display: ""Dawn of the Swan's Glory"" (white text with pink outline)
-• Requires: Swan Lake Major resonated + Thousand Winged equipped
-• Trigger: Polyphonic feather consumption
+Crescendance Bond: Wings of Velocity - Polyphonic Feather consumption replaces NPC with NPS × 10^stacks (max 8 stacks). 7s duration. Dark pink outline.
 
-Duet (with Star-Scattered Wings): Feather Cascade
-First clicks rain all feather types, with milestone clicks granting note bonuses.
-• First 10 clicks: Each grants 1 Revered, 1 Chromatic, 1 Polyphonic Feather
-• Every 5th click (5th & 10th): +25% notes bonus
-• Duration: 20s | Cooldown: 4min";
+Duet: Feather Cascade - First 10 clicks grant all feather types, with milestone clicks granting note bonuses. 20s duration, 4min cooldown.";
 
             // La Campanella Weapons
             public const string SymphonyOfBells = @"Symphony of Bells
 
-Passive: Harmonic Duplication (while equipped)
-Crafting minor scores creates duplicates, doubling your gain.
-• On minor craft: Duplicate that minor (+1 extra copy)
-• Trigger: Every minor score craft
+Passive: Harmonic Duplication - On minor score craft: duplicate that minor score (+1 extra copy).
 
-Crescendance Bond: Resonant Crack Bonus
-Grandiose Bell cracking releases burst damage as instant notes.
-• When bell cracks (20/40/60 clicks): +75% notes instantly
-• Stacks with major ability's +10% crack bonus
-• Requires: La Campanella crescendance active + Symphony equipped
-• Trigger: Bell crack events
+Crescendance Bond: Resonant Crack Bonus - When Grandiose Bell cracks (at 20/40/60 clicks): gain +1 Deafening Chime stack (max 15).
 
-Duet (with Razer of Bell's Chimes): Chime Chain
-Build click chains within 1-second windows for exponentially scaling note rewards!
-• Reward: (chain length)² × NPS as instant notes
-• Chain breaks after 1s without clicking
-• Duration: 10s | Cooldown: 10min";
+Duet: Chime Chain - Build click chains within 1s windows for exponential rewards. 10s duration, 10min cooldown.";
 
             public const string RazerOfBellsChimes = @"Razer of Bell's Chimes
 
-Passive: Component Echo (while equipped)
-Crafting minor scores refunds some materials, reducing resource costs.
-• On minor craft: Refund 2 random components for that minor
-• Trigger: Every minor score craft
+Passive: Component Echo - On minor score craft: refund 2 random components for that minor.
 
-Crescendance Bond: Entropic Resonance
-Mending the Grandiose Bell converts accumulated clicks into Entropic Melodies.
-• On bell mend (any stage): Gain Entropic Melodies = click count × 2 (max 250)
-• Requires: La Campanella crescendance active + Razer equipped
-• Trigger: Mend bell action
+Crescendance Bond: Precision Chimes - While equipped: +2% critical click rate.
 
-Duet (with Symphony of Bells): Chime Chain
-Build click chains within 1-second windows for exponentially scaling note rewards!
-• Reward: (chain length)² × NPS as instant notes
-• Chain breaks after 1s without clicking
-• Duration: 10s | Cooldown: 10min";
+Duet: Chime Chain - Build click chains within 1s windows for exponential rewards. 10s duration, 10min cooldown.";
 
             // Enigma Weapons  
             public const string CreatorOfMystery = @"Creator of Mystery
 
-Passive: Chaotic Flux (while equipped)
-Clicks randomly add or subtract notes, favoring positive outcomes.
-• Every 3rd click: ±25% notes (60% chance positive, 40% chance negative)
-• Trigger: Every 3rd click
+Passive: Chaotic Flux - Every 3rd click: ±25% notes (60% chance positive, 40% chance negative).
 
-Crescendance Bond: Accelerated Mystery
-Additional mystery stack generation from frequent clicking accelerates your power growth.
-• Every 15th click: +1 additional Resonate Mystery stack (on top of base every-10th)
-• Requires: Enigma Major resonated + Creator equipped
-• Trigger: Every 15th click
+Crescendance Bond: Accelerated Mystery - Every 15th click: gain +1 additional Resonant Mystery stack (on top of base every-10th).
 
-Duet (with Truthseeker): Mystery Clicks
-Each click triggers a random powerful effect - risk and reward in every tap!
-• Red: 5× NPS notes | Blue: +10% NPS boost | Green: 30 Harmonious | Yellow: 30 Melodious
-• Purple: +1 major per owned | Orange: +1 component per owned minor | White: +1-3 random minors | Black: -65% notes
-• Duration: 10s | Cooldown: 30min";
+Duet: Mystery Clicks - Each click triggers random powerful effect. 10s duration, 30min cooldown.";
 
             public const string Truthseeker = @"Truthseeker
 
-Passive: Revelation Burst (while equipped)
-Acquiring upgrades reveals hidden knowledge, granting mystery stacks.
-• On upgrade purchase: +5 Resonant Mystery stacks
-• Trigger: When purchasing any upgrade (Chord, Scale, Orchestra, etc.)
+Passive: Revelation Burst - On upgrade purchase: gain +5 Resonant Mystery stacks.
 
-Crescendance Bond: Knowledge Harvest
-Every mystery you solve grants additional minor scores, building your collection.
-• For every 2 Resonate Mystery stacks consumed: +1 random owned minor score
-• Works with both single consume and bulk consume
-• Requires: Enigma Major resonated + Truthseeker equipped
-• Trigger: Resonate Mystery consumption
+Crescendance Bond: Knowledge Harvest - For every 2 Resonant Mystery stacks consumed: gain +1 random owned minor score.
 
-Duet (with Creator of Mystery): Mystery Clicks
-Each click triggers a random powerful effect - risk and reward in every tap!
-• Red: 5× NPS notes | Blue: +10% NPS boost | Green: 30 Harmonious | Yellow: 30 Melodious
-• Purple: +1 major per owned | Orange: +1 component per owned minor | White: +1-3 random minors | Black: -65% notes
-• Duration: 10s | Cooldown: 30min";
+Duet: Mystery Clicks - Each click triggers random powerful effect. 10s duration, 30min cooldown.";
 
             // Fate Weapons
             public const string AstralChainripper = @"Astral Chainripper
 
-Passive: Temporal Surge (while equipped)
-Crafting Fate minors triggers a temporal surge, massively boosting NPS temporarily.
-• On Fate minor craft: 5× NPS for 10s
-• Trigger: Crafting Fate minor scores
+Passive: Temporal Surge - On Fate minor craft: 5× Notes Per Second for 10 seconds.
 
-Crescendance Bond: Stellar Convergence
-Cosmic Modulation stacks converge into Symphony of the Stars at regular intervals.
-• Every 5 Cosmic Modulation stacks gained: +1 Symphony of the Stars
-• Requires: Fate Major resonated + Astral Chainripper equipped
-• Trigger: Gaining Cosmic Modulation stacks
+Crescendance Bond: Stellar Convergence - Every 5 Cosmic Modulation stacks gained: automatically grants +1 Symphony of the Stars stack.
 
-Duet (with Cosmic Weaver): Hourglass Reversal
-Actions in the first half replay in the second half, multiplied by your click count!
-• First 10s: Bank all actions
-• Last 10s: Replay at X× effectiveness (X = number of clicks performed)
-• Duration: 20s | Cooldown: 8min";
+Duet: Hourglass Reversal - First 10s banks actions, last 10s replays at X× effectiveness (X = clicks during banking phase). 20s duration, 8min cooldown.";
 
             public const string CosmicWeaver = @"Cosmic Weaver
 
-Passive: Harmonic Multiplication (while equipped)
-Crafting minors when you own their major score grants bonus major scores.
-• On any minor craft: If you own 1+ of that major, gain +3 of that major score
-• Trigger: Crafting minor scores
+Passive: Harmonic Multiplication - On minor craft: If you own +1 of that major, gain +3 of that major score.
 
-Crescendance Bond: Entropic Starfall
-Symphony consumption triggers guaranteed critical streaks for massive burst damage.
-• Each Symphony of the Stars consumed: Next 5 clicks are guaranteed entropic crits
-• Requires: Fate Major resonated + Cosmic Weaver equipped
-• Trigger: Symphony of the Stars consumption
+Crescendance Bond: Stellar Cascade - Each Symphony of the Stars consumed: Next 5 clicks are guaranteed Stellar Cascade critical hits (1700× multiplier).
 
-Duet (with Astral Chainripper): Hourglass Reversal
-Actions in the first half replay in the second half, multiplied by your click count!
-• First 10s: Bank all actions
-• Last 10s: Replay at X× effectiveness (X = number of clicks performed)
-• Duration: 20s | Cooldown: 8min";
+Duet: Hourglass Reversal - First 10s banks actions, last 10s replays at X× effectiveness (X = clicks during banking phase). 20s duration, 8min cooldown.";
 
             // Ode to Joy Weapons
             public const string JoyfulCatharsis = @"Joyful Catharsis
 
-Passive: Harmonic Entropy (while equipped)
-Frequent clicks build up entropic energy, released based on your critical performance.
-• Every 50th click: +X Entropic Melodies (X = critical notes gotten × 3)
-• Trigger: Every 50th click
+Passive: Harmonic Entropy - Every 50th click: +15 Entropic Melodies.
 
-Crescendance Bond: Euphoric Resonance
-Gaining Petals of Life creates euphoric bursts that temporarily double your passive income.
-• Every time you gain any Petal: Double NPS for 5s (effect stacks with multiple petals)
-• Requires: Ode to Joy Major resonated + Joyful Catharsis equipped
-• Trigger: Petal acquisition
+Crescendance Bond: Euphoric Resonance - Every time you gain any Petal: double Notes Per Second for 5 seconds (effect stacks).
 
-Duet (with Ode to Creation): Crescendo Conductor
-Build musical melodies through clicking, earning escalating rewards and entropic bonuses!
-• 4 notes: +25 fragments | 8 notes: Random minor | 12 notes: Major sheet | 16 notes: 5× NPS for 15s (repeatable)
-• On expiry: +3 Entropic Melody per completed 4-note section
-• Duration: 20s | Cooldown: 10min";
+Duet: Crescendo Conductor - Build melodies for escalating rewards. 20s duration, 10min cooldown.";
 
             public const string OdeToCreation = @"Ode to Creation
 
-Passive: Rhythmic Genesis (while equipped)
-Regular clicking creates Petals of Life randomly, fueling the Crescendance system.
-• Every 20th click: Generate random Petal of Harmony or Petal of Melody
-• Trigger: Every 20th click
+Passive: Life Genesis - Every 20th click: generate random Petal (50% Harmony, 50% Melody).
 
-Crescendance Bond: Life Amplification
-Consuming Ode to Life supercharges petal generation for a limited time.
-• On Ode to Life consume: Double passive effect for 25s (generates petals every 10th click instead)
-• Requires: Ode to Joy Major resonated + Ode to Creation equipped
-• Trigger: Ode to Life consumption
+Crescendance Bond: Life Amplification - When Ode to Life is consumed: double petal generation for 25 seconds (generates petals every 10th click instead).
 
-Duet (with Joyful Catharsis): Crescendo Conductor
-Build musical melodies through clicking, earning escalating rewards and entropic bonuses!
-• 4 notes: +25 fragments | 8 notes: Random minor | 12 notes: Major sheet | 16 notes: 5× NPS for 15s (repeatable)
-• On expiry: +3 Entropic Melody per completed 4-note section
-• Duration: 20s | Cooldown: 10min";
+Duet: Crescendo Conductor - Build melodies for escalating rewards. 20s duration, 10min cooldown.";
+
+            // Dies Irae Weapons
+            public const string SevenCircles = @"Seven Circles
+
+Passive: Wrathful Amplification - Every critical hit in the game (all types) grants +20% of your current notes as bonus notes.
+
+Crescendance Bond: Seal Resonance - 'Symphony of Hell's Retribution' crits grant +1 Wrathful Seal. Consume Wrathful Seals for 'Seal-breaking Melody of Oblivion' crits:
+• Each Wrathful Seal consumed: +5 Seal-breaking crits (STACKS)
+• Seal-breaking damage: 2 × NPC × NPS × Dissonant Hatred (DOUBLE Symphony of Hell's Retribution power)
+• Effects stack if multiple Seals consumed
+
+Duet: Infernal Symphony - During duet, Seal-breaking crits also grant +1 Wrathful Seal. Consume 15+ Wrathful Seals for next 5 clicks that double your current notes. 20s duration, 10min cooldown.";
+
+            public const string HellsWrath = @"Hell's Wrath
+
+Passive: Infernal Bounty - Every 20th click grants +2 to your 2 lowest owned minor scores (tied lowest scores chosen randomly).
+
+Crescendance Bond: Entropic Fury - Dies Irae crits grant Entropic Melodies:
+• Each 'Symphony of Hell's Retribution' crit: +50 Entropic Melodies
+• Each 'Seal-breaking Melody of Oblivion' crit: +50 Entropic Melodies
+
+Duet: Infernal Symphony - During duet, Seal-breaking crits also grant +1 Wrathful Seal. Consume 15+ Wrathful Seals for next 5 clicks that double your current notes. 20s duration, 10min cooldown.";
         }
 
         // ============================================================
@@ -418,27 +289,27 @@ Build musical melodies through clicking, earning escalating rewards and entropic
             
             // Swan Lake
             public const string StarScatteredWings = "Passive: Stellar Fragment Rain - Every 10th click grants +5 Melodious and +5 Harmonious Fragments.\n\nCrescendance Bond: Stellar Component Rain - When Revered or Chromatic Feather obtained during Crescendance: grants +2 components to random owned minor score.\n\nDuet: Feather Cascade - First 10 clicks grant all feather types, with milestone clicks granting note bonuses. 20s duration, 4min cooldown.";
-            public const string ThousandWingedSwan = "Passive: Wings of Fortune - Every minor score acquisition grants +100 Entropic Melodies.\n\nCrescendance Bond: Wings of Velocity - When Polyphonic Feather consumed: 10s of NPS-to-NPC boost (adds 2× NPS to NPC).\n\nDuet: Feather Cascade - First 10 clicks grant all feather types, with milestone clicks granting note bonuses. 20s duration, 4min cooldown.";
+            public const string ThousandWingedSwan = "Passive: Wings of Fortune - Every minor score acquisition grants +33 Entropic Melodies.\n\nCrescendance Bond: Wings of Velocity - Polyphonic Feather consumption replaces NPC with NPS × 10^stacks (max 8 stacks). 7s duration. Dark pink outline.\n\nDuet: Feather Cascade - First 10 clicks grant all feather types, with milestone clicks granting note bonuses. 20s duration, 4min cooldown.";
             
             // La Campanella
             public const string SymphonyOfBells = "Passive: Harmonic Duplication - On minor score craft: duplicate that minor score (+1 extra copy).\n\nCrescendance Bond: Resonant Crack Bonus - When Grandiose Bell cracks (at 20/40/60 clicks): instantly gain +75% notes.\n\nDuet: Chime Chain - Build click chains within 1s windows for exponential rewards. 10s duration, 10min cooldown.";
-            public const string RazerOfBellsChimes = "Passive: Component Echo - On minor score craft: refund 2 random components for that minor.\n\nCrescendance Bond: Entropic Resonance - On Grandiose Bell mend: gain Entropic Melodies equal to click count × 2 (maximum 250).\n\nDuet: Chime Chain - Build click chains within 1s windows for exponential rewards. 10s duration, 10min cooldown.";
+            public const string RazerOfBellsChimes = "Passive: Component Echo - On minor score craft: refund 2 random components for that minor.\n\nCrescendance Bond: Entropic Resonance - On Grandiose Bell mend: gain Entropic Melodies equal to click count × 2/3 (maximum 83).\n\nDuet: Chime Chain - Build click chains within 1s windows for exponential rewards. 10s duration, 10min cooldown.";
             
             // Fate
-            public const string AstralChainripper = "Passive: Cosmic Rend - Every 8th click grants bonus notes = NPC × (owned Fate majors).\n\nCrescendance Bond: Stellar Convergence - Every 5 Cosmic Modulation stacks gained: automatically grants +1 Symphony of the Stars stack.\n\nDuet: Hourglass Reversal - First 10s banks actions, last 10s replays at X× effectiveness. 20s duration, 8min cooldown.";
-            public const string CosmicWeaver = "Passive: Fate's Weave - On major craft: gain +3 of that major score type.\n\nCrescendance Bond: Entropic Starfall - Each Symphony of the Stars consumed: Next 5 clicks are guaranteed Entropic Melody critical hits.\n\nDuet: Hourglass Reversal - First 10s banks actions, last 10s replays at X× effectiveness. 20s duration, 8min cooldown.";
+            public const string AstralChainripper = "Passive: Temporal Surge - On Fate minor craft: 5× Notes Per Second for 10 seconds.\n\nCrescendance Bond: Stellar Convergence - Every 5 Cosmic Modulation stacks gained: automatically grants +1 Symphony of the Stars stack.\n• Symphony of the Stars: Consume 1 stack for +3 to lowest owned minor score.\n\nDuet: Hourglass Reversal - First 10s banks actions, last 10s replays at X× effectiveness (X = clicks during banking phase). 20s duration, 8min cooldown.";
+            public const string CosmicWeaver = "Passive: Harmonic Multiplication - On minor craft: If you own +1 of that major, gain +3 of that major score.\n\nCrescendance Bond: Stellar Cascade - Each Symphony of the Stars consumed: Grants 5 stackable Stellar Cascade critical clicks (1700× multiplier).\n\nDuet: Hourglass Reversal - First 10s banks actions, last 10s replays at X× effectiveness (X = clicks during banking phase). 20s duration, 8min cooldown.";
             
             // Enigma
-            public const string CreatorOfMystery = "Passive: Enigmatic Shift - On minor craft: 50% chance to shift that craft to a different random minor.\n\nCrescendance Bond: Accelerated Mystery - Every 15th click: gain +1 additional Resonate Mystery stack (on top of base every-10th).\n\nDuet: Mystery Clicks - Each click triggers random powerful effect. 10s duration, 30min cooldown.";
-            public const string Truthseeker = "Passive: Revelation Burst - On upgrade purchase: gain +5 Resonate Mystery stacks.\n\nCrescendance Bond: Knowledge Harvest - For every 2 Resonate Mystery stacks consumed: gain +1 random owned minor score.\n\nDuet: Mystery Clicks - Each click triggers random powerful effect. 10s duration, 30min cooldown.";
+            public const string CreatorOfMystery = "Passive: Chaotic Flux - Every 3rd click: ±25% notes (60% chance positive, 40% chance negative).\n\nCrescendance Bond: Accelerated Mystery - Every 15th click: gain +1 additional Resonant Mystery stack (on top of base every-10th).\n\nDuet: Mystery Clicks - Each click triggers random powerful effect. 10s duration, 30min cooldown.";
+            public const string Truthseeker = "Passive: Revelation Burst - On upgrade purchase: gain +5 Resonant Mystery stacks.\n\nCrescendance Bond: Knowledge Harvest - For every 2 Resonant Mystery stacks consumed: gain +1 random owned minor score.\n\nDuet: Mystery Clicks - Each click triggers random powerful effect. 10s duration, 30min cooldown.";
             
             // Ode to Joy
-            public const string JoyfulCatharsis = "Passive: Euphoric Surge - On major craft: grants bonus notes = 10× NPS.\n\nCrescendance Bond: Euphoric Resonance - Every time you gain any Petal: double Notes Per Second for 5 seconds (effect stacks).\n\nDuet: Crescendo Conductor - Build melodies for escalating rewards. 20s duration, 10min cooldown.";
+            public const string JoyfulCatharsis = "Passive: Harmonic Entropy - Every 50th click: +15 Entropic Melodies.\n\nCrescendance Bond: Euphoric Resonance - Every time you gain any Petal: double Notes Per Second for 5 seconds (effect stacks).\n\nDuet: Crescendo Conductor - Build melodies for escalating rewards. 20s duration, 10min cooldown.";
             public const string OdeToCreation = "Passive: Life Genesis - Every 20th click: generate random Petal (50% Harmony, 50% Melody).\n\nCrescendance Bond: Life Amplification - When Ode to Life is consumed: double petal generation for 25 seconds (generates petals every 10th click instead).\n\nDuet: Crescendo Conductor - Build melodies for escalating rewards. 20s duration, 10min cooldown.";
             
             // Dies Irae
-            public const string SevenCircles = "Passive: Infernal Descent - On minor craft: advances circle (1-7). At Circle 7, next click deals bonus = NPC × (total owned minors). Resets after Circle 7 bonus.\n\nCrescendance Bond: TBD\n\nDuet: Seven Seals - Each click places seal. At 7 seals: 3 random minors without components. 15s duration, 3.5min cooldown.";
-            public const string HellsWrath = "Passive: Wrathful Embers - Every 5th click: grants +5 Burning Hatred stacks.\n\nCrescendance Bond: TBD\n\nDuet: Seven Seals - Each click places seal. At 7 seals: 3 random minors without components. 15s duration, 3.5min cooldown.";
+            public const string SevenCircles = "Passive: Wrathful Amplification - Every critical hit (all types) grants +20% of your current notes as bonus notes.\n\nCrescendance Bond: Seal Resonance - 'Symphony of Hell's Retribution' crits grant +1 Wrathful Seal. Consume Seals for next 5 clicks as 'Seal-breaking Melody of Oblivion' (DOUBLE Symphony damage: 2 × NPC × NPS × Dissonant Hatred). Effect stacks if multiple Seals consumed.\n\nDuet: Infernal Symphony - Seal-breaking crits grant +1 Wrathful Seal. Consume 15+ Seals for next 5 note-doubling clicks. 20s duration, 10min cooldown.";
+            public const string HellsWrath = "Passive: Infernal Bounty - Every 20th click grants +2 to your 2 lowest owned minor scores (tied lowest chosen randomly).\n\nCrescendance Bond: Entropic Fury - Dies Irae crits grant Entropic Melodies:\n• Symphony of Hell's Retribution: +50 Entropic\n• Seal-breaking Melody of Oblivion: +50 Entropic\n\nDuet: Infernal Symphony - For 10 seconds, every click is a guaranteed Seal-breaking crit that returns +1 Wrathful Seal. During duet, consume 15+ Seals for next 5 note-doubling clicks. 10s duration, 10min cooldown.";
             
             // Winter
             public const string CacophonicBlizzard = "Passive: TBD\n\nCrescendance Bond: TBD\n\nDuet: Absolute Zero - Freezes NPS and converts to click multiplier. 15s duration, 5min cooldown.";
@@ -454,7 +325,7 @@ Build musical melodies through clicking, earning escalating rewards and entropic
             public static class Names
             {
                 public const string Moonlight = "Moonlight Sonata:\nLunar Phases";
-                public const string DiesIrae = "Descending Judgment:\nSeven Seals";
+                public const string DiesIrae = "Damnation Requiem:\nInfernal Symphony";
                 public const string Winter = "Eternal Frost:\nAbsolute Zero";
                 public const string Eroica = "Symphony of Heroes:\nVictory March";
                 public const string SwanLake = "Wings of Transcendence:\nFeather Cascade";
@@ -467,7 +338,7 @@ Build musical melodies through clicking, earning escalating rewards and entropic
             public static class Full
             {
                 public const string Moonlight = "Cycles through 4 moon phases every 5 seconds:\n• New Moon: 2× Notes Per Click\n• Crescent: 10% component drop chance per click\n• Full Moon: 3× Notes Per Second\n• Waning: Upgrades cost 50% less\n\nSPECIAL: All phases active simultaneously when resonating with Moonlight Sonata Major!\n\n20 second duration | 4 minute cooldown";
-                public const string DiesIrae = "Each click places a seal. At 7 seals placed, grants 3 random minor scores without consuming components. Effect stacks during duration.\n\n15 second duration | 3.5 minute cooldown";
+                public const string DiesIrae = "For 10 seconds, every click is a guaranteed Seal-breaking Melody of Oblivion critical hit that returns +1 Wrathful Seal.\n\nDuring the duet, when you have 15+ Wrathful Seals, you can consume them to grant your next 5 clicks the power to double your current notes.\n\n10 second duration | 10 minute cooldown";
                 public const string Winter = "Converts frozen Notes Per Second into click multiplier. Each click extends duration by 0.5 seconds (maximum +10 seconds total extension).\n\n15 second base duration | 5 minute cooldown";
                 public const string Eroica = "Fill progress bar with 100 clicks:\n• 25% progress: Random minor score\n• 50% progress: Random major score\n• 75% progress: +50 Melodious and Harmonious Fragments\n• 100% complete: Double all owned scores\n\n5 minute cooldown";
                 public const string SwanLake = "Each of your first 10 clicks grants 1 Revered Feather, 1 Chromatic Feather, and 1 Polyphonic Feather. Every 5th click (5th and 10th) increases current notes by +25%.\n\n20 second duration | 4 minute cooldown";
@@ -480,7 +351,7 @@ Build musical melodies through clicking, earning escalating rewards and entropic
             public static class Short
             {
                 public const string Moonlight = "Lunar Phases: Cycles through 4 moon phases every 5 seconds (New Moon: 2× Notes Per Click, Crescent: 10% component drop per click, Full Moon: 3× Notes Per Second, Waning: Upgrades 50% off). When resonating with Moonlight Major, all phases active simultaneously! - 20 second duration, 4 minute cooldown.";
-                public const string DiesIrae = "Seven Seals: Each click places a seal. At 7 seals, grants 3 random minor scores without consuming components. Stacks during duration (15 second duration, 3.5 minute cooldown).";
+                public const string DiesIrae = "Infernal Symphony: For 10 seconds, every click is a guaranteed Seal-breaking Melody crit that returns +1 Wrathful Seal. During duet, consume 15+ Wrathful Seals for next 5 clicks that double your current notes (10 second duration, 10 minute cooldown).";
                 public const string Winter = "Duet Resonance: Activate to convert your frozen Notes Per Second into a click multiplier. Each click extends duration by 0.5 seconds (max +10 seconds, 15 second base duration, 5 minute cooldown).";
                 public const string Eroica = "Victory March: Fill bar with 100 clicks for escalating rewards (25%: minor score, 50%: major score, 75%: +50 fragments, 100%: double all scores) - 5 minute cooldown.";
                 public const string SwanLake = "Feather Cascade: Each of your first 10 clicks grants 1 of each feather (Revered, Chromatic, Polyphonic). Every 5th click grants +25% notes - 20 second duration, 4 minute cooldown.";
@@ -494,7 +365,7 @@ Build musical melodies through clicking, earning escalating rewards and entropic
             public static class Duration
             {
                 public const int Moonlight = 20;
-                public const int DiesIrae = 15;
+                public const int DiesIrae = 10;
                 public const int Winter = 15;
                 public const int SwanLake = 20;
                 public const int LaCampanella = 10;
@@ -506,7 +377,7 @@ Build musical melodies through clicking, earning escalating rewards and entropic
             public static class Cooldown
             {
                 public const int Moonlight = 240;      // 4 minutes
-                public const int DiesIrae = 210;       // 3.5 minutes
+                public const int DiesIrae = 600;       // 10 minutes
                 public const int Winter = 300;         // 5 minutes
                 public const int Eroica = 300;         // 5 minutes
                 public const int SwanLake = 240;       // 4 minutes
@@ -562,6 +433,8 @@ Build musical melodies through clicking, earning escalating rewards and entropic
                 "Cosmic Weaver" => Weapons.CosmicWeaver,
                 "Joyful Catharsis" => Weapons.JoyfulCatharsis,
                 "Ode to Creation" => Weapons.OdeToCreation,
+                "Seven Circles" => Weapons.SevenCircles,
+                "Hell's Wrath" => Weapons.HellsWrath,
                 _ => $"No description available for: {weaponName}"
             };
         }

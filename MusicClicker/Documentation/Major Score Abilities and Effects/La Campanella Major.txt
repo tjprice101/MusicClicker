@@ -31,11 +31,11 @@ Bell cracks at 20, 40, and 60 clicks, advancing to next stage.
 
 Mending Rewards:
 • Crescending (Stage 1): +2 random owned minor scores
-• Radiant (Stage 2): Next 5 clicks are entropic crits + 5 Deafening Chime stacks 
+• Radiant (Stage 2): Next 5 clicks are Entropic Crescendo of Eternity critical hits + 5 Deafening Chime stacks 
 • Harmonizing (Stage 3): Consume all Deafening Chime for 2^stacks multiplier to notes
 
 Deafening Chime Mechanics:
-• Gained from Radiant mend (5 stacks) or entropic crit clicks (3 stacks)
+• Gained from Radiant mend (5 stacks) or Entropic Crescendo of Eternity critical hits (3 stacks)
 • Max effective stacks for Harmonizing mend: 6 (2^6 = 64× multiplier)
 • Stacks have 2-minute expiry timer
 • Can stack from multiple Radiant mends before Harmonizing consumption
@@ -63,9 +63,9 @@ Razer of Bell's Chimes (Weapon II):
   
 • Crescendance Bond - Entropic Resonance:
   - On Grandiose Bell mend (any stage):
-    → Gain Entropic Melodies = click count * 2 (max 250)
+    → Gain Entropic Melodies = click count × 2/3 (max 83)
   - Requires: La Campanella Major resonated + Razer equipped
-  - Maximum 250 Entropic per mend even if 60+ clicks
+  - Maximum 83 Entropic per mend even if 60+ clicks
 
 DUET ABILITY: Chime Chain (Symphony + Razer)
 ---------------------------------------
@@ -99,7 +99,7 @@ Early Game:
 • Component Echo reduces crafting costs
 
 Mid Game:
-• Radiant mends provide reliable entropic crit windows
+• Radiant mends provide reliable Entropic Crescendo of Eternity critical hit windows
 • Deafening Chime stacking becomes viable strategy
 • Resonant Crack Bonus provides consistent note boosts every 20 clicks
 
@@ -136,6 +136,6 @@ Deafening Chime Stacking:
 4. Remaining 4 stacks persist for next cycle
 
 Entropic Maximization:
-• With Razer equipped, always mend at 60+ clicks for 250 Entropic
-• Radiant mends also grant 5 entropic crit clicks (via Deafening)
+• With Razer equipped, always mend at 60+ clicks for 83 Entropic
+• Radiant mends also grant 5 Entropic Crescendo of Eternity critical hit clicks (via Deafening)
 • Combine with Fate/Enigma for entropic synergy

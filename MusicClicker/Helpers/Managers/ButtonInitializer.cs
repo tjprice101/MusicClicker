@@ -448,12 +448,6 @@ namespace MusicClicker
                     MusicClicker.Helpers.AtomicDouble.Add(ref window.GameState._notes, -1000);
                     window.GameState.MelodiousOwned++;
                     
-                    // Queue for Mirror Lake reflection
-                    if (window.GameState.SwanLakeDuetActive && DateTime.Now <= window.GameState.SwanLakeDuetExpiry)
-                    {
-                        MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(window.GameState, "BuyFragment", ("Melodious", 1000.0));
-                    }
-                    
                     // Bank for Fate Duet Hourglass
                     if (window.GameState.FateDuetActive && !window.GameState.FateDuetHasFlipped && DateTime.Now <= window.GameState.FateDuetExpiry)
                     {
@@ -471,12 +465,6 @@ namespace MusicClicker
                 {
                     MusicClicker.Helpers.AtomicDouble.Add(ref window.GameState._notes, -5000);
                     window.GameState.HarmoniousOwned++;
-                    
-                    // Queue for Mirror Lake reflection
-                    if (window.GameState.SwanLakeDuetActive && DateTime.Now <= window.GameState.SwanLakeDuetExpiry)
-                    {
-                        MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(window.GameState, "BuyFragment", ("Harmonious", 5000.0));
-                    }
                     
                     // Bank for Fate Duet Hourglass
                     if (window.GameState.FateDuetActive && !window.GameState.FateDuetHasFlipped && DateTime.Now <= window.GameState.FateDuetExpiry)

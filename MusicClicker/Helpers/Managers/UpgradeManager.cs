@@ -166,15 +166,6 @@ namespace MusicClicker
             {
                 // Determine upgrade name from cost text header
                 string upgradeName = DetermineUpgradeName(baseCost);
-                
-                // Queue each purchase individually with its actual cost
-                double queueMultiplier = Math.Pow(1.15, initialOwned);
-                for (int i = 0; i < purchasesMade; i++)
-                {
-                    double individualCost = RoundedCost(baseCost, queueMultiplier) * costMultiplier;
-                    MusicClicker.Armory.WeaponAbilities.QueueMirrorAction(gameState, "BuyUpgrade", (upgradeName, individualCost));
-                    queueMultiplier *= 1.15;
-                }
             }
 
             // Bank upgrade purchases for Fate Duet Hourglass

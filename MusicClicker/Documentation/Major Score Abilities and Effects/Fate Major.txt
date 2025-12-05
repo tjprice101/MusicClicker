@@ -15,19 +15,19 @@ Mechanics:
 • Immediate +10% note bonus per stack gained
 
 Tier System (every 5 stacks):
-• Tier 1 (1-4 stacks): Increased entropic crit chance
+• Tier 1 (1-4 stacks): Increased Entropic Crescendo of Eternity critical hit chance
 • Tier 2 (5-9 stacks): Double NPS passive effect
 • Tier 3 (10+ stacks): Guaranteed Crescending crits on clicks
 
 Consumption:
-• Consume stacks for Entropic Melodies (+15 per stack consumed)
+• Consume stacks for Entropic Melodies (+5 per stack consumed)
 • Can consume any amount (1-all stacks)
 • Consuming removes tier benefits
 
 Symphony of the Stars:
 • Special resource generated via Astral Chainripper weapon bond
 • Consume 1 Symphony: +3 to lowest owned minor score
-• Cosmic Weaver bond: Also grants 5 guaranteed entropic crit clicks
+• Cosmic Weaver bond: Also grants 5 guaranteed Entropic Crescendo of Eternity critical hit clicks
 
 WEAPON SYNERGIES
 ---------------------------------------
@@ -97,7 +97,7 @@ Mid Game:
 • Hourglass Reversal becomes available - powerful burst tool
 
 Late Game:
-• Tier 3 (10+ stacks) = all clicks are entropic crits
+• Tier 3 (10+ stacks) = all clicks are Entropic Crescendo of Eternity critical hits
 • Symphony stacks can reach 10+ for massive minor boosts
 • Entropic Starfall grants 5 guaranteed crits per Symphony (50+ crits possible)
 • Hourglass Reversal with 50+ click multiplier = exponential replay
@@ -107,7 +107,7 @@ SYNERGY RECOMMENDATIONS
 Best Paired With:
 • Eroica: Cosmic Modulation Tier 3 + Crimson Requiem = guaranteed crit burst
 • La Campanella: Guaranteed crits accelerate Deafening Chime stacking
-• Ode to Joy: Entropic crits trigger Joyful Catharsis passive
+• Ode to Joy: Entropic Crescendo of Eternity critical hits trigger Joyful Catharsis passive
 
 Avoid Pairing With:
 • Winter: NPS freeze negates Tier 2 double NPS benefit
@@ -130,7 +130,7 @@ Cosmic Stack Management:
 Symphony Optimization:
 • Save Symphony stacks for critical moments
 • With Cosmic Weaver: Consume all Symphonies before major clicking session
-• 5 Symphonies = 25 guaranteed entropic crits (5 per Symphony)
+• 5 Symphonies = 25 guaranteed Entropic Crescendo of Eternity critical hits (5 per Symphony)
 
 Hourglass Strategy:
 • First 10s: Click speed determines multiplier - use click speed buffs
@@ -139,6 +139,6 @@ Hourglass Strategy:
 • Optimal: 30-50 clicks in first 10s for 30-50× replay multiplier
 
 Tier Exploitation:
-• Tier 3 (10+ stacks) makes every click an entropic crit
+• Tier 3 (10+ stacks) makes every click an Entropic Crescendo of Eternity critical hit
 • Pair with Eroica Crimson Requiem for 30 guaranteed entropic burst clicks
 • Pair with La Campanella bell progression for entropic Deafening stacks

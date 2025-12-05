@@ -42,7 +42,7 @@ namespace MusicClicker.Views
 		try
 		{
 			DiesIraeMajorOwnedRightText.Text = $"Number Owned: {gameState.DiesIraeOwned}";
-			DiesIraeCrescendanceText.Text = "Descending Judgment: Each click places a seal. At 7 seals, grants 3 random minor scores without consuming components.";
+			DiesIraeCrescendanceText.Text = "Damnation Requiem: Every click grants +1 Dissonant Hatred (max 50), then Discordant Malice. Combine 5 Dissonant → 1 Cacophonic Oblivion. Consume Cacophonic for 20 stacking 'Symphony of Hell's Retribution' crits (NPC × NPS × Dissonant Hatred). Consume Wrathful Seals for 5 stacking 'Seal-breaking Melody' crits (DOUBLE Symphony damage).";
 		}
 		catch { }
 	}	private void SoulOfDiesIraeButton_Click(object? sender, RoutedEventArgs e)

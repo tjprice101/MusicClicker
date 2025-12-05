@@ -408,7 +408,7 @@
                                 <TextBlock x:Name="EnigmaMajorOwnedText" Text="0 Owned"
                                     Foreground="White"
                                     FontSize="16" HorizontalAlignment="Center" />
-                                <TextBlock Text="Crescendance Ability: Resonate Mystery - Every 10th/15th click grants stacks. Consume for notes, entropic, and minors. Bulk consume bonus." Foreground="White"
+                                <TextBlock Text="Crescendance Ability: Resonant Mystery - Every 10th/15th click grants stacks. Consume for notes, entropic, and minors. Bulk consume (10+): +25% notes per stack." Foreground="White"
                                     FontSize="14" TextWrapping="Wrap" Width="190"
                                     HorizontalAlignment="Center" />
                                 <Button x:Name="EnigmaMajorDissolveButton" Content="Dissolve" Width="120" Height="32" HorizontalAlignment="Center" />

@@ -19,9 +19,9 @@ SWAN LAKE:
 
 LA CAMPANELLA:
 - Added "Bell's Fortune" major ability: +10% notes on every bell crack
-- Updated Razer weapon bond: Entropic melodies = click count × 2 (max 250)
-- Changed Deafening Chime mechanics: 3 stacks per entropic crit click
-- Updated Radiant mend to only grant Deafening Chime stacks (no entropic crits)
+- Updated Razer weapon bond: Entropic melodies = click count × 2/3 (max 83)
+- Changed Deafening Chime mechanics: 3 stacks per Entropic Crescendo of Eternity critical hit click
+- Updated Radiant mend to only grant Deafening Chime stacks (no Entropic Crescendo of Eternity critical hits)
 - Clarified all bell mechanics and consumption effects
 
 ENIGMA VARIATIONS:

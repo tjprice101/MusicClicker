@@ -58,29 +58,53 @@ namespace MusicClicker.Helpers
             // Add NPS from upgrades
             for (int i = 0; i < gameState.ChordOwned; i++)
             {
-                totalNps += gameState.ChordBaseNpsEffect * Math.Pow(gameState.ChordNpsGrowth, i);
+                double npsToAdd = gameState.ChordBaseNpsEffect * Math.Pow(gameState.ChordNpsGrowth, i);
+                if (double.IsInfinity(npsToAdd) || double.IsNaN(npsToAdd))
+                    break;
+                totalNps += npsToAdd;
             }
             for (int i = 0; i < gameState.ScaleOwned; i++)
             {
-                totalNps += gameState.ScaleBaseNpsEffect * Math.Pow(gameState.ScaleNpsGrowth, i);
+                double npsToAdd = gameState.ScaleBaseNpsEffect * Math.Pow(gameState.ScaleNpsGrowth, i);
+                if (double.IsInfinity(npsToAdd) || double.IsNaN(npsToAdd))
+                    break;
+                totalNps += npsToAdd;
             }
             for (int i = 0; i < gameState.OrchestraOwned; i++)
             {
-                totalNps += gameState.OrchestraBaseNpsEffect * Math.Pow(gameState.OrchestraNpsGrowth, i);
+                double npsToAdd = gameState.OrchestraBaseNpsEffect * Math.Pow(gameState.OrchestraNpsGrowth, i);
+                if (double.IsInfinity(npsToAdd) || double.IsNaN(npsToAdd))
+                    break;
+                totalNps += npsToAdd;
             }
             for (int i = 0; i < gameState.SymphonyOwned; i++)
             {
-                totalNps += gameState.SymphonyBaseNpsEffect * Math.Pow(gameState.SymphonyNpsGrowth, i);
+                double npsToAdd = gameState.SymphonyBaseNpsEffect * Math.Pow(gameState.SymphonyNpsGrowth, i);
+                if (double.IsInfinity(npsToAdd) || double.IsNaN(npsToAdd))
+                    break;
+                totalNps += npsToAdd;
             }
 
-            // Add NPS from minor scores
-            totalNps += gameState.MoonlightMinorOwned * 3000;
-            totalNps += gameState.EroicaMinorOwned * 8000;
-            totalNps += gameState.SwanMinorOwned * 15000;
-            totalNps += gameState.LaCampanellaMinorOwned * 35000;
-            totalNps += gameState.EnigmaMinorOwned * 75000;
-            totalNps += gameState.FateMinorOwned * 135000;
-            totalNps += gameState.OdeToJoyMinorOwned * 255000;
+            // Add NPS from minor scores with overflow protection
+            double moonlightNps = (double)gameState.MoonlightMinorOwned * 3000.0;
+            double eroicaNps = (double)gameState.EroicaMinorOwned * 8000.0;
+            double swanNps = (double)gameState.SwanMinorOwned * 15000.0;
+            double laCampanellaNps = (double)gameState.LaCampanellaMinorOwned * 35000.0;
+            double enigmaNps = (double)gameState.EnigmaMinorOwned * 75000.0;
+            double fateNps = (double)gameState.FateMinorOwned * 135000.0;
+            double odeToJoyNps = (double)gameState.OdeToJoyMinorOwned * 255000.0;
+
+            totalNps += moonlightNps;
+            totalNps += eroicaNps;
+            totalNps += swanNps;
+            totalNps += laCampanellaNps;
+            totalNps += enigmaNps;
+            totalNps += fateNps;
+            totalNps += odeToJoyNps;
+
+            // Cap at double.MaxValue to prevent overflow
+            if (double.IsInfinity(totalNps) || double.IsNaN(totalNps) || totalNps < 0)
+                return double.MaxValue / 2; // Use half of max to leave room for multipliers
 
             // Major scores do not provide base NPS - they only provide Crescendance abilities
 

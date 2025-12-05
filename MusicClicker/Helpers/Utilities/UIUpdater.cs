@@ -30,6 +30,12 @@ namespace MusicClicker
             double notes = gameState.Notes;
             double nps = gameState.NotesPerSecond;
             
+            // Astral Chainripper: Display 5x NPS when active
+            if (gameState.AstralChainripperNpsBoostActive && DateTime.Now <= gameState.AstralChainripperNpsBoostExpiry)
+            {
+                nps *= 5;
+            }
+            
             // Update Cacophonic Dreams endgame button (requires 1 trillion NPS)
             if (window.CacophonicDreamsButton != null)
             {
@@ -178,7 +184,21 @@ namespace MusicClicker
             // Assign displayed values directly so the HUD reflects discrete changes
             // (e.g., NPS bursts) immediately without smoothing between updates.
             window.DisplayedNotes = gameState.Notes;
-            window.DisplayedNps = gameState.NotesPerSecond;
+            
+            // Calculate displayed NPS (multiply by 5 if Astral Chainripper boost is active)
+            double displayNps = gameState.NotesPerSecond;
+            if (gameState.AstralChainripperNpsBoostActive && DateTime.Now <= gameState.AstralChainripperNpsBoostExpiry)
+            {
+                displayNps *= 5;
+            }
+            
+            // Joyful Catharsis: Double NPS for 5s on petal gain
+            if (gameState.JoyfulCatharsisAbility && DateTime.Now <= gameState.JoyfulCatharsisNpsBoostExpiry)
+            {
+                displayNps *= 2;
+            }
+            
+            window.DisplayedNps = displayNps;
 
             // Update top-level HUD texts if changed enough to be visible
             // Avoid changing text properties while the user is interacting to prevent layout

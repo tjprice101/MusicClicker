@@ -10,7 +10,7 @@
                Opacity="1" />
 
     <Grid ZIndex="1"
-          Background="#33000000">
+          Background="#66000000">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" /> <!-- Header -->
             <RowDefinition Height="*" />    <!-- Content -->
@@ -50,7 +50,7 @@
                         Width="525"
                         Height="295"
                         Background="Transparent"
-                        BorderBrush="White"
+                        BorderBrush="#FFFF69B4"
                         BorderThickness="3"
                         HorizontalAlignment="Center">
                     <Image Source="avares://MusicClicker/Assets/SoulOfDiesIrae.png"
@@ -81,7 +81,7 @@
                         Width="525"
                         Height="295"
                         Background="Transparent"
-                        BorderBrush="White"
+                        BorderBrush="#FFFF69B4"
                         BorderThickness="3"
                         HorizontalAlignment="Center">
                     <Image Source="avares://MusicClicker/Assets/DiesIraeMajor.png"

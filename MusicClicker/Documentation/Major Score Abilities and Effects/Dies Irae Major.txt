@@ -20,24 +20,24 @@ Requirements:
 • Dies Irae Major must be resonated
 
 Stack Mechanics:
-• Every click: +1 Burning Hatred (up to 50 cap)
-• After 50 Burning Hatred: Additional clicks grant +1 Discordant Malice instead
+• Every click: +1 Dissonant Hatred (up to 50 cap)
+• After 50 Dissonant Hatred: Additional clicks grant +1 Discordant Malice instead
 • No cap on Discordant Malice stacks
 
-Burning Hatred Consumption:
-• Consume 5 Burning Hatred: +1 Dissonant Oblivion stack
-• Reduces Burning Hatred by 5 per Oblivion gained
+Dissonant Hatred Consumption:
+• Consume 5 Dissonant Hatred: +1 Cacophonic Oblivion stack
+• Reduces Dissonant Hatred by 5 per Oblivion gained
 • Manual conversion via button
 
 Discordant Malice Consumption:
 • Consume stacks for Entropic Melodies
-• Entropic gained = X (X = current Burning Hatred stacks)
-• Example: 30 Burning Hatred, consume 5 Malice = 150 Entropic (30 × 5)
+• Entropic gained = X (X = current Dissonant Hatred stacks)
+• Example: 30 Dissonant Hatred, consume 5 Malice = 150 Entropic (30 × 5)
 
-Dissonant Oblivion Consumption:
+Cacophonic Oblivion Consumption:
 • Consume 1 Oblivion: Next 20 clicks are "Symphony of Hell's Retribution" crits
-• Hell crit formula: NPC × NPS × Burning Hatred stacks
-• Extremely powerful with high Burning Hatred and NPS
+• Hell crit formula: NPC × NPS × Dissonant Hatred stacks
+• Extremely powerful with high Dissonant Hatred and NPS
 
 WEAPON SYNERGIES
 ---------------------------------------
@@ -60,10 +60,7 @@ Hell's Wrath (Weapon II):
   - Passive minor generation from clicking
   - Helps balance minor score collection
   
-• Crescendance Bond - Entropic Fury:
-  - Symphony of Hell's Retribution crits: +200 Entropic Melodies per crit
-  - Requires: Dies Irae Major resonated + Hell's Wrath equipped
-  - Combines with base Oblivion consumption for massive entropic gain
+• Crescendance Bond: TBD (Not Yet Implemented)
 
 DUET ABILITY: (Not Yet Implemented)
 ---------------------------------------
@@ -71,23 +68,23 @@ Dies Irae duet ability is planned but not yet implemented in current version.
 
 STRATEGY TIPS
 ---------------------------------------
-1. Build Burning Hatred to 50 before consuming for Oblivion
-2. Dissonant Oblivion crits scale with BOTH NPC and NPS - maximize both
-3. Save Oblivion consumes for when you have high Burning Hatred (30-50)
-4. Discordant Malice consumption scales with Burning Hatred - strategic timing
+1. Build Dissonant Hatred to 50 before consuming for Oblivion
+2. Cacophonic Oblivion crits scale with BOTH NPC and NPS - maximize both
+3. Save Oblivion consumes for when you have high Dissonant Hatred (30-50)
+4. Discordant Malice consumption scales with Dissonant Hatred - strategic timing
 5. Hell's Wrath provides passive minors - equip for long clicking sessions
 6. Seven Circles crit bonus stacks multiplicatively - extremely powerful
 
 PROGRESSION NOTES
 ---------------------------------------
 Early Game:
-• Burning Hatred builds slowly (1 per click to 50 cap)
+• Dissonant Hatred builds slowly (1 per click to 50 cap)
 • Focus on building to 50 before first Oblivion conversion
 • Wrathful Amplification provides consistent +20% per crit
 
 Mid Game:
-• Discordant Malice stacking begins after 50 Burning Hatred
-• Oblivion crits become viable (NPC × NPS × Burning Hatred)
+• Discordant Malice stacking begins after 50 Dissonant Hatred
+• Oblivion crits become viable (NPC × NPS × Dissonant Hatred)
 • Infernal Bounty minors help progression
 • Entropic Fury generates massive entropic from Oblivion crits
 
@@ -111,28 +108,28 @@ Avoid Pairing With:
 BALANCE NOTES
 ---------------------------------------
 Version 1.0 - Initial Implementation:
-• Burning Hatred capped at 50 to prevent infinite scaling
+• Dissonant Hatred capped at 50 to prevent infinite scaling
 • Hell crit formula (NPC × NPS × Hatred) provides exponential late-game power
 • Wrathful Seal and Seal-breaking mechanics add strategic depth
 
 ADVANCED TECHNIQUES
 ---------------------------------------
 Hatred Management:
-• Optimal: Maintain 40-50 Burning Hatred at all times
+• Optimal: Maintain 40-50 Dissonant Hatred at all times
 • Convert to Oblivion in increments of 5 (consume 5 Hatred per Oblivion)
-• Never let Burning Hatred drop below 30 (reduces Hell crit effectiveness)
+• Never let Dissonant Hatred drop below 30 (reduces Hell crit effectiveness)
 
 Oblivion Timing:
 • Save Oblivion for high NPS moments (Fate Tier 2, Moonlight Full Moon, etc.)
-• Hell crit formula: NPC × NPS × Burning Hatred
+• Hell crit formula: NPC × NPS × Dissonant Hatred
 • Example: 1000 NPC × 10,000 NPS × 50 Hatred = 500,000,000 per crit
 • 20 Hell crits from 1 Oblivion = 10,000,000,000 total damage
 
 Discordant Malice Strategy:
 • Let Malice stacks accumulate to 10+ before consuming
-• Entropic gain = Malice consumed × Burning Hatred
-• Example: 10 Malice × 50 Hatred = 500 Entropic Melodies
-• Only consume when Burning Hatred is maxed (50)
+• Entropic gain = Malice consumed × Dissonant Hatred
+• Example: 10 Malice × 50 Hatred = 167 Entropic Melodies
+• Only consume when Dissonant Hatred is maxed (50)
 
 Wrathful Seal Exploitation:
 • Each Hell crit grants +1 Wrathful Seal (20 crits = 20 Seals)
@@ -149,8 +146,8 @@ NPC/NPS Maximization:
 
 CRITICAL WARNINGS
 ---------------------------------------
-1. DO NOT consume all Burning Hatred - maintain 30+ for Hell crit effectiveness
-2. Dissonant Oblivion is most powerful resource - use strategically
-3. Discordant Malice consumption worthless if Burning Hatred is low
+1. DO NOT consume all Dissonant Hatred - maintain 30+ for Hell crit effectiveness
+2. Cacophonic Oblivion is most powerful resource - use strategically
+3. Discordant Malice consumption worthless if Dissonant Hatred is low
 4. Seven Circles Wrathful Amplification is multiplicative - prioritize crits
 5. Hell's Wrath Entropic Fury can generate 4000+ entropic from 1 Oblivion (20 crits × 200)

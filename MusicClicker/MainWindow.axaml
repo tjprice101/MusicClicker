@@ -513,10 +513,18 @@
                                        FontWeight="Bold"
                                        HorizontalAlignment="Center" />
                             <Button x:Name="MainConsumePolyphonicButton"
-                                    Content="Consume (+250 Entropic Melodies +75% Notes)"
+                                    Content="Consume (+83 Entropic Melodies +75% Notes)"
                                     FontSize="11"
                                     Padding="6,3"
                                     IsEnabled="False" />
+                            <TextBlock x:Name="MainThousandWingTimerText"
+                                       Text=""
+                                       Foreground="#C71585"
+                                       FontSize="13"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center"
+                                       Margin="0,2,0,0"
+                                       IsVisible="False" />
                         </StackPanel>
                     </StackPanel>
                     
@@ -612,6 +620,16 @@
                                        FontSize="11"
                                        FontWeight="Bold" />
                         </StackPanel>
+                        <TextBlock x:Name="MainDeafeningChimeTimerText"
+                                   Text=""
+                                   Foreground="#FF00FF00"
+                                   FontSize="11"
+                                   IsVisible="False"
+                                   HorizontalAlignment="Center">
+                            <TextBlock.Effect>
+                                <DropShadowEffect Color="#FF00FF00" BlurRadius="8" />
+                            </TextBlock.Effect>
+                        </TextBlock>
                     </StackPanel>
                     
                     <!-- Enigma Stack Display -->
@@ -622,7 +640,7 @@
                                 Margin="0,6,0,0"
                                 IsVisible="False">
                         <StackPanel Orientation="Horizontal" Spacing="3" HorizontalAlignment="Center">
-                            <TextBlock Text="Resonate Mystery:"
+                            <TextBlock Text="Resonant Mystery:"
                                        Foreground="Violet"
                                        FontSize="12" />
                             <TextBlock x:Name="MainResonateMysteryCount"
@@ -639,7 +657,7 @@
                                     Padding="6,3"
                                     IsEnabled="False" />
                             <Button x:Name="MainEnigmaConsumeEntropicButton"
-                                    Content="+50 Entropic"
+                                    Content="+17 Entropic"
                                     Click="MainEnigmaConsumeEntropicButton_Click"
                                     FontSize="10"
                                     Padding="6,3"
@@ -652,7 +670,7 @@
                                     IsEnabled="False" />
                         </StackPanel>
                         <Button x:Name="MainEnigmaConsumeAllButton"
-                                Content="Consume All (10+) for Bulk Bonus"
+                                Content="Consume All (10+): +25% Notes per Stack"
                                 Click="MainEnigmaConsumeAllButton_Click"
                                 FontSize="11"
                                 Padding="8,4"
@@ -706,16 +724,47 @@
                                        FontSize="16"
                                        FontWeight="Bold"
                                        HorizontalAlignment="Center" />
-                            <TextBlock Text="(1 per 5 Cosmic)"
-                                       Foreground="Gray"
-                                       FontSize="9"
-                                       HorizontalAlignment="Center" />
+                            <StackPanel Orientation="Horizontal" Spacing="3" HorizontalAlignment="Center">
+                                <TextBlock Text="(1 per 5 Cosmic)"
+                                           Foreground="Gray"
+                                           FontSize="9" />
+                                <TextBlock x:Name="MainSymphonyStarsNote"
+                                           Text="- Requires Astral Chainripper"
+                                           Foreground="Orange"
+                                           FontSize="9" />
+                            </StackPanel>
+                            <TextBlock x:Name="MainAstralChainripperTimerText"
+                                       Text=""
+                                       Foreground="#FF00FF00"
+                                       FontSize="10"
+                                       IsVisible="False"
+                                       HorizontalAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="#FF00FF00" BlurRadius="8" />
+                                </TextBlock.Effect>
+                            </TextBlock>
                             <Button x:Name="MainConsumeSymphonyButton"
                                     Content="Consume (+3 Lowest Minor)"
                                     Click="MainConsumeSymphonyButton_Click"
                                     FontSize="10"
                                     Padding="6,3"
                                     IsEnabled="False" />
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Spacing="3">
+                            <TextBlock Text="Fate Craft NPS Boost"
+                                       Foreground="Cyan"
+                                       FontSize="10"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainFateCraftTimerText"
+                                       Text=""
+                                       Foreground="#FF00FF00"
+                                       FontSize="10"
+                                       IsVisible="False"
+                                       HorizontalAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="#FF00FF00" BlurRadius="8" />
+                                </TextBlock.Effect>
+                            </TextBlock>
                         </StackPanel>
                     </StackPanel>
                     
@@ -798,28 +847,134 @@
                         </StackPanel>
                     </StackPanel>
                     
+                    <!-- Ode to Joy Stack Display -->
+                    <StackPanel x:Name="MainOdeToJoyStackPanel"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                Spacing="15"
+                                Margin="0,6,0,0"
+                                IsVisible="False">
+                        <StackPanel Orientation="Vertical" Spacing="3">
+                            <TextBlock Text="Petals of Harmony"
+                                       Foreground="LightBlue"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainPetalsOfHarmonyCount"
+                                       Text="0"
+                                       Foreground="White"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center" />
+                            <Button x:Name="MainConsumeHarmonyPetalButton"
+                                    Content="Consume (+83 Entropic)"
+                                    Click="MainConsumeHarmonyPetalButton_Click"
+                                    FontSize="11"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Vertical" Spacing="3">
+                            <TextBlock Text="Petals of Melody"
+                                       Foreground="Violet"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainPetalsOfMelodyCount"
+                                       Text="0"
+                                       Foreground="White"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainEntropicCritTimer"
+                                       Text=""
+                                       Foreground="Red"
+                                       FontSize="11"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center" />
+                            <Button x:Name="MainConsumeMelodyPetalButton"
+                                    Content="Consume (+5s Full Crits)"
+                                    Click="MainConsumeMelodyPetalButton_Click"
+                                    FontSize="11"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Vertical" Spacing="3">
+                            <TextBlock Text="Ode to Life"
+                                       Foreground="Gold"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainOdeToLifeCount"
+                                       Text="0"
+                                       Foreground="White"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainOdeToCreationDoubleTimerText"
+                                       Text=""
+                                       Foreground="#FF00FF00"
+                                       FontSize="10"
+                                       IsVisible="False"
+                                       HorizontalAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="#FF00FF00" BlurRadius="8" />
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <Button x:Name="MainCombineForOdeToLifeButton"
+                                    Content="Combine (1H + 1M + 17E)"
+                                    Click="MainCombineForOdeToLifeButton_Click"
+                                    FontSize="10"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                            <Button x:Name="MainConsumeOdeToLifeButton"
+                                    Content="Consume (2× All Minors)"
+                                    Click="MainConsumeOdeToLifeButton_Click"
+                                    FontSize="11"
+                                    Padding="6,3"
+                                    Margin="0,2,0,0"
+                                    IsEnabled="False" />
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Spacing="3">
+                            <TextBlock Text="Joyful Catharsis"
+                                       Foreground="LightGreen"
+                                       FontSize="10"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainJoyfulCatharsisTimerText"
+                                       Text=""
+                                       Foreground="#FF00FF00"
+                                       FontSize="10"
+                                       IsVisible="False"
+                                       HorizontalAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="#FF00FF00" BlurRadius="8" />
+                                </TextBlock.Effect>
+                            </TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                    
                     <!-- Dies Irae Stack Display -->
                     <StackPanel x:Name="MainDiesIraeStackPanel"
                                 Orientation="Horizontal"
                                 HorizontalAlignment="Center"
-                                Spacing="20"
+                                Spacing="15"
                                 Margin="0,6,0,0"
                                 IsVisible="False">
                         <StackPanel Orientation="Vertical" Spacing="3">
-                            <TextBlock Text="Burning Hatred"
+                            <TextBlock Text="Dissonant Hatred"
                                        Foreground="OrangeRed"
                                        FontSize="12"
                                        HorizontalAlignment="Center" />
-                            <TextBlock x:Name="MainBurningHatredCount"
+                            <TextBlock x:Name="MainDissonantHatredCount"
                                        Text="0 / 50"
                                        Foreground="White"
                                        FontSize="16"
                                        FontWeight="Bold"
                                        HorizontalAlignment="Center" />
-                            <TextBlock Text="(Gain 1 per click until 50)"
-                                       Foreground="Gray"
-                                       FontSize="9"
-                                       HorizontalAlignment="Center" />
+                            <Button x:Name="MainConsumeDissonantHatredButton"
+                                    Content="Consume 5 (+1 Oblivion)"
+                                    Click="MainConsumeDissonantHatredButton_Click"
+                                    FontSize="10"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
                         </StackPanel>
                         
                         <StackPanel Orientation="Vertical" Spacing="3">
@@ -834,11 +989,73 @@
                                        FontWeight="Bold"
                                        HorizontalAlignment="Center" />
                             <Button x:Name="MainConsumeDiscordantButton"
-                                    Content="Consume (Multiply notes by stacks)"
+                                    Content="Consume (+X Entropic)"
                                     Click="MainConsumeDiscordantButton_Click"
                                     FontSize="10"
                                     Padding="6,3"
                                     IsEnabled="False" />
+                            <Button x:Name="MainConsumeAllDiscordantButton"
+                                    Content="Consume All"
+                                    Click="MainConsumeAllDiscordantButton_Click"
+                                    FontSize="9"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Vertical" Spacing="3">
+                            <TextBlock Text="Cacophonic Oblivion"
+                                       Foreground="DarkRed"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainCacophonicOblivionCount"
+                                       Text="0"
+                                       Foreground="White"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center" />
+                            <Button x:Name="MainConsumeCacophonicOblivionButton"
+                                    Content="Consume (20 Symphony Crits)"
+                                    Click="MainConsumeCacophonicOblivionButton_Click"
+                                    FontSize="10"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Vertical" Spacing="3">
+                            <TextBlock Text="Wrathful Seal"
+                                       Foreground="Gold"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainWrathfulSealCount"
+                                       Text="0"
+                                       Foreground="White"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center" />
+                            <Button x:Name="MainConsumeWrathfulSealButton"
+                                    Content="Consume (5 Seal-breaking)"
+                                    Click="MainConsumeWrathfulSealButton_Click"
+                                    FontSize="9"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                            <Button x:Name="MainDiesIraeDuetButton"
+                                    Content="Duet: 15 Seals (5 Doublings)"
+                                    Click="MainDiesIraeDuetButton_Click"
+                                    FontSize="9"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                            <!-- Duet Timer -->
+                            <TextBlock x:Name="MainDiesIraeTimerText"
+                                       Text=""
+                                       Foreground="#FF00FF00"
+                                       FontSize="10"
+                                       IsVisible="False"
+                                       HorizontalAlignment="Center"
+                                       Margin="0,3,0,0">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="#FF00FF00" BlurRadius="8" />
+                                </TextBlock.Effect>
+                            </TextBlock>
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>

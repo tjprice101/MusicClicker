@@ -67,183 +67,187 @@
 ---
 
 ## SWAN LAKE
-
-### Crescendance: Wings of Transcendence
-- [ ] Revered Feathers: Every 10 clicks has 5% chance to grant 1 feather
 ## SWAN LAKE
 
 ### Crescendance: Wings of Transcendence
-- [ ] Revered Feathers: Every 10 clicks has 20% chance to grant 1 feather
-- [ ] Revered Feathers: Consume 5 for +20% notes
-- [ ] Chromatic Feathers: Every 15 clicks has 10% chance to grant 1 feather
-- [ ] Chromatic Feathers: Consume 10 for +2 all minor scores
+- [x] Revered Feathers: Every 2 clicks grants 1 feather
+- [x] Revered Feathers: Consume 5 for +20% notes
+- [x] Chromatic Feathers: Every 8 clicks grants 1 feather
+- [x] Chromatic Feathers: Consume 10 for +2 all minor scores
+- [x] Polyphonic Feathers: Every 15 clicks grants 1 feather
+- [x] Polyphonic Feathers: Consume 1 for +83 Entropic Melodies +75% notes
 ### Star-Scattered Wings Weapon
-- [ ] Passive: On craft (any score), gain 1-3 random feathers
-- [ ] Crescendance Bond (Scattered Starlight): Any feather gained grants +1 Scattered Starlight stack (max 5)
-- [ ] Crescendance Bond: At 5 stacks, auto-consumes for NPC boost (scales with owned Swan majors)
-- [ ] Crescendance Bond requires: Swan Lake Major resonated + Star-Scattered Wings equipped
-- [ ] Duet (Feather Cascade): First 10 clicks each grant 1 of each feather type (Revered, Chromatic, Polyphonic)
-- [ ] Duet: 5th click grants +25% notes bonus
-- [ ] Duet: 10th click grants +25% notes bonus
-- [ ] Duet: 20 second duration, 4 minute cooldown
+- [x] Passive: Every 10th click grants +5 Harmonious and +5 Melodious Fragments
+- [x] Crescendance Bond (Scattered Starlight): Any feather gained grants +1 Scattered Starlight stack (max 5)
+- [x] Crescendance Bond: At 5 stacks, auto-consumes for NPC boost (scales with owned Swan majors)
+- [x] Crescendance Bond requires: Swan Lake Major resonated + Star-Scattered Wings equipped
+- [x] Duet (Feather Cascade): First 10 clicks each grant 1 of each feather type (Revered, Chromatic, Polyphonic)
+- [x] Duet: 5th click grants +25% notes bonus
+- [x] Duet: 10th click grants +25% notes bonus
+- [x] Duet: 20 second duration, 4 minute cooldown
 
 ### Thousand Winged Swan Weapon
-- [ ] Passive (Wings of Velocity): On minor craft, grants +5% NPS boost (stacks, max 10 stacks = +50%)
-- [ ] Passive: Stacks decay by 1 every 30 seconds
-- [ ] Crescendance Bond (Velocity Burst): Polyphonic feather consumed grants 10s of +NPS to NPC
-- [ ] Crescendance Bond: NPS-to-NPC adds 2× NPS to NPC during 10s window
-- [ ] Crescendance Bond requires: Swan Lake Major resonated + Thousand Winged Swan equipped
+- [x] Passive (Wings of Fortune): Every minor acquisition grants +33 Entropic Melodies
+- [x] Crescendance Bond (Wings of Velocity): Polyphonic feather consumed grants 7s of NPC = NPS × 10^stacks (max 8)
+- [x] Crescendance Bond requires: Swan Lake Major resonated + Thousand Winged Swan equipped
+- [x] Duet (Feather Cascade): Same as Star-Scattered Wings - all milestones tested
 ## LA CAMPANELLA
 
 ### Major Ability: Bell's Fortune
-- [ ] Grants +10% bonus notes whenever Grandiose Bell cracks (at 20/40/60 clicks)
-- [ ] Passive effect - always active when La Campanella Major owned
+- [x] Grants +5% bonus notes whenever Grandiose Bell cracks (at 20/40/60 clicks)
+- [x] Passive effect - always active when La Campanella Major owned
 
 ### Crescendance: Grandiose Bell
-- [ ] Bell cracks at 20 clicks (Intact → Crescending)
-- [ ] Bell cracks at 40 clicks (Crescending → Radiant)
-- [ ] Bell cracks at 60 clicks (Radiant → Harmonizing)
-- [ ] Mend at Crescending stage: Grants +2 random owned minors
-- [ ] Mend at Radiant stage: Grants 5 Deafening Chime stacks (2-minute expiry)
-- [ ] Mend at Harmonizing stage: Consumes all Deafening Chime stacks
-- [ ] Mend at Harmonizing stage: Multiplies notes by 2^(Deafening Chime stacks), max 6 stacks = 64× multiplier
-- [ ] Deafening Chime gained from Radiant mend (5 stacks) or entropic crit clicks (3 stacks per crit)
-- [ ] Symphony weapon bond: +75% notes when bell cracks (if equipped)
-- [ ] Razer weapon bond: Mend grants entropic melodies = click count × 2, max 250 (if equipped)
-- [ ] Mend at Radiant stage: Next 5 clicks are entropic crits
-- [ ] Mend at Radiant stage: Grants 5 Deafening Chime stacks
-- [ ] Mend at Harmonizing stage: Consumes all Deafening Chime stacks
-- [ ] Mend at Harmonizing stage: Multiplies notes by 2^(Deafening Chime stacks)
-- [ ] Symphony weapon bond: +75% notes when bell cracks (if equipped)
-- [ ] Razer weapon bond: Mend grants entropic melodies = click count, max 250 (if equipped)
+- [x] Bell cracks at 20 clicks (Intact → Crescending)
+- [x] Bell cracks at 40 clicks (Crescending → Radiant)
+- [x] Bell cracks at 60 clicks (Radiant → Harmonizing)
+- [x] Mend at Crescending stage: Grants +2 random owned minors
+- [x] Mend at Radiant stage: Grants 5 Deafening Chime stacks (max 15 cap)
+- [x] Mend at Harmonizing stage: Consumes all Deafening Chime stacks
+- [x] Mend at Harmonizing stage: Grants notes = stacks × NPS
+- [x] Deafening Chime gained from Radiant mend (5 stacks) or Entropic Crescendo of Eternity critical hits (3 stacks per crit)
+- [x] Deafening Chime max cap of 15 stacks enforced
+- [x] Symphony weapon bond: +1 Deafening Chime stack when bell cracks (if equipped)
+- [x] Razer weapon bond: +2% critical click rate when equipped
+- [x] Razer weapon bond: +50 Entropic Melodies when mended at Radiant stage
 
 ### Symphony of Bells Weapon
-- [ ] Passive (Harmonic Duplication): On minor craft, duplicates that minor (+1 extra copy)
-- [ ] Crescendance Bond (Resonant Crack Bonus): Bell crack grants +75% notes instantly
-- [ ] Crescendance Bond requires: La Campanella Major resonated + Symphony equipped
-- [ ] Duet (Chime Chain): Click chains build within 1-second windows
-- [ ] Duet: Reward = (chain length)² × NPS as instant notes
-- [ ] Duet: Chain breaks after 1 second without clicking
-- [ ] Duet: 10 second duration, 10 minute cooldown
+- [x] Passive (Harmonic Duplication): On minor craft, duplicates that minor (+1 extra copy)
+- [x] Crescendance Bond (Resonant Crack Bonus): Bell crack grants +1 Deafening Chime stack (max 15)
+- [x] Crescendance Bond requires: La Campanella Major resonated + Symphony equipped
+- [x] Duet (Chime Chain): Click chains build within 1-second windows
+- [x] Duet: Reward = (chain length)² × NPS as instant notes
+- [x] Duet: Chain breaks after 1 second without clicking
+- [x] Duet: 10 second duration, 10 minute cooldown
 
 ### Razer of Bell's Chimes Weapon
-## ENIGMA VARIATIONS
-
-### Crescendance: Resonate Mystery
-- [ ] Every 10th click grants +1 Resonate Mystery stack
-- [ ] With Creator of Mystery weapon: Every 15th click grants +1 additional stack
-- [ ] Consume 1 stack grants +50% of current notes
-- [ ] Consume 1 stack grants +50 Entropic Melodies
-- [ ] Consume 1 stack grants +1 random owned minor
-- [ ] Bulk consume (10+ stacks): Grants +25% notes per stack consumed
-- [ ] Truthseeker weapon bond: +1 random minor per 2 stacks consumed
-- [ ] Every 10th click grants +1 Resonate Mystery stack
-- [ ] With Creator of Mystery weapon: Every 15th click grants +1 additional stack
-- [ ] Consume 1 stack grants +50% of current notes
-- [ ] Consume 1 stack grants +50 Entropic Melodies
-- [ ] Consume 1 stack grants +1 random owned minor
-- [ ] With Truthseeker weapon bond: For every 2 stacks consumed, grants 1 random owned minor
-### Creator of Mystery Weapon
-- [ ] Passive (Enigmatic Shift): On minor craft, 50% chance to shift that craft to a different random minor
-- [ ] Crescendance Bond (Accelerated Mystery): Every 15th click grants +1 additional Resonate Mystery stack
-- [ ] Crescendance Bond requires: Enigma Major resonated + Creator equipped
-- [ ] Duet (Mystery Clicks): Red effect grants 5× NPS as instant notes
-- [ ] Duet: Blue effect grants +10% NPS boost
-- [ ] Duet: Green effect grants +30 Harmonious Fragments
-- [ ] Duet: Yellow effect grants +30 Melodious Fragments
-- [ ] Duet: Purple effect grants +1 major per owned type
-- [ ] Duet: Orange effect grants +1 component per owned minor type
-- [ ] Duet: White effect grants +1 to 3 random minors
-- [ ] Duet: Black effect removes -65% current notes
-- [ ] Duet: 10 second duration, 30 minute cooldown
-
-### Truthseeker Weapon
-- [ ] Passive (Revelation Burst): On upgrade purchase, grants +5 Resonate Mystery stacks
-- [ ] Crescendance Bond (Knowledge Harvest): For every 2 Resonate Mystery stacks consumed, grants +1 random owned minor
-- [ ] Crescendance Bond requires: Enigma Major resonated + Truthseeker equipped
-- [ ] Duet (Mystery Clicks): Same as Creator - all 8 random effects testedMystery stacks
-- [ ] Crescendance Bond (Knowledge Harvest): For every 2 Resonate Mystery stacks consumed, grants +1 random owned minor
-- [ ] Crescendance Bond requires: Enigma Major resonated + Truthseeker equipped
-- [ ] Duet (Mystery Clicks): Same as Creator - all 8 random effects tested
+- [x] Passive (Component Echo): On minor craft, refunds 2 random components for that minor
+- [x] Crescendance Bond (Precision Chimes): While equipped, grants +2% critical click rate
+- [x] Crescendance Bond requires: La Campanella Major resonated + Razer equipped
+- [x] Duet (Chime Chain): Same as Symphony of Bells - all mechanics tested
 
 ---
 
-## FATE (SYMPHONY NO. 5)
+## ENIGMA VARIATIONS
+
+### Crescendance: Resonant Mystery
+- [x] Every 10th click grants +1 Resonant Mystery stack
+- [x] With Creator of Mystery weapon: Every 15th click grants +1 additional stack
+- [x] Consume 1 stack grants +50% of current notes
+- [x] Consume 1 stack grants +17 Entropic Melodies
+- [x] Consume 1 stack grants +1 random owned minor
+- [x] Bulk consume (10+ stacks): Grants +25% notes per stack consumed
+- [x] Truthseeker weapon bond: +1 random owned minor per 2 stacks consumed
+
+### Creator of Mystery Weapon
+- [x] Passive (Chaotic Flux): Every 3rd click grants ±25% notes (60% positive, 40% negative)
+- [x] Crescendance Bond (Accelerated Mystery): Every 15th click grants +1 additional Resonant Mystery stack
+- [x] Crescendance Bond requires: Enigma Major resonated + Creator equipped
+- [x] Duet (Mystery Clicks): Red effect grants 5× NPS as instant notes
+- [x] Duet: Blue effect grants +10% NPS boost
+- [x] Duet: Green effect grants +30 Harmonious Fragments
+- [x] Duet: Yellow effect grants +30 Melodious Fragments
+- [x] Duet: Purple effect grants +1 major per owned type
+- [x] Duet: Orange effect grants +1 component per owned minor type
+- [x] Duet: White effect grants +1 to 3 random minors
+- [x] Duet: Black effect removes -65% current notes
+- [x] Duet: 10 second duration, 30 minute cooldown
+
+### Truthseeker Weapon
+- [x] Passive (Revelation Burst): On upgrade purchase, grants +5 Resonant Mystery stacks
+- [x] Crescendance Bond (Knowledge Harvest): For every 2 Resonant Mystery stacks consumed, grants +1 random owned minor
+- [x] Crescendance Bond requires: Enigma Major resonated + Truthseeker equipped
+- [x] Duet (Mystery Clicks): Same as Creator - all 8 random effects tested
+
+---
+
+## FATE (SYMPHONY NO. 5) ✅ TESTED AND APPROVED
 
 ### Crescendance: Cosmic Modulation
-- [ ] Every 8th click grants +1 Cosmic Modulation stack
-- [ ] Every 8th click grants +10% notes bonus
-- [ ] Tiers activate at every 5 stacks (5, 10, 15, 20, etc.) with escalating passive effects
-- [ ] Consume Cosmic Modulation grants +15 Entropic Melodies per stack consumed
-- [ ] Astral Chainripper bond: Every 5 stacks gained grants +1 Symphony of the Stars
-- [ ] Symphony of the Stars: Consume 1 stack grants +3 to lowest owned minor score
-- [ ] Cosmic Weaver bond: Each Symphony consumed grants next 5 clicks as guaranteed entropic crits
+- [x] Every 8th click grants +1 Cosmic Modulation stack
+- [x] Every 8th click grants +10% notes bonus
+- [x] Tiers activate at every 5 stacks (5, 10, 15, 20, etc.) with escalating passive effects
+- [x] Consume Cosmic Modulation grants +5 Entropic Melodies per stack consumed
+- [x] Astral Chainripper bond: Every 5 stacks gained grants +1 Symphony of the Stars
+- [x] Symphony of the Stars: Consume 1 stack grants +3 to lowest owned minor score
+- [x] Cosmic Weaver bond: Each Symphony consumed grants next 5 clicks as guaranteed Entropic Crescendo of Eternity critical hits
 
 ### Astral Chainripper Weapon
-- [ ] Passive (Temporal Surge): Crafting Fate minor grants 5× NPS for 10s
-### Astral Chainripper Weapon
-- [ ] Passive (Cosmic Rend): Every 8th click grants bonus notes = NPC × (owned Fate majors)
-- [ ] Crescendance Bond (Stellar Convergence): Every 5 Cosmic Modulation stacks gained grants +1 Symphony of the Stars
-- [ ] Crescendance Bond requires: Fate Major resonated + Astral Chainripper equipped
-- [ ] Duet (Hourglass Reversal): First 10 seconds banks all actions
-- [ ] Duet: Last 10 seconds replays actions at X× effectiveness (X = click count)
-- [ ] Duet: 20 second duration, 8 minute cooldown
+- [x] Passive (Temporal Surge): Crafting Fate minor grants 5× NPS for 10s
+- [x] Passive (Cosmic Rend): Every 8th click grants bonus notes = NPC × (owned Fate majors)
+- [x] Crescendance Bond (Stellar Convergence): Every 5 Cosmic Modulation stacks gained grants +1 Symphony of the Stars
+- [x] Crescendance Bond requires: Fate Major resonated + Astral Chainripper equipped
+- [x] Duet (Hourglass Reversal): First 10 seconds banks all actions
+- [x] Duet: Last 10 seconds replays actions at X× effectiveness (X = click count)
+- [x] Duet: 20 second duration, 8 minute cooldown
 
 ### Cosmic Weaver Weapon
-- [ ] Passive (Fate's Weave): On major craft, grants +3 of that major score type
-- [ ] Crescendance Bond (Entropic Starfall): Each Symphony of the Stars consumed grants next 5 clicks as guaranteed entropic crits
-- [ ] Crescendance Bond requires: Fate Major resonated + Cosmic Weaver equipped
-- [ ] Duet (Hourglass Reversal): Same as Astral Chainripper - action replay tested
+- [x] Passive (Fate's Weave): On major craft, grants +3 of that major score type
+- [x] Crescendance Bond (Entropic Starfall): Each Symphony of the Stars consumed grants next 5 clicks as guaranteed Entropic Crescendo of Eternity critical hits
+- [x] Crescendance Bond requires: Fate Major resonated + Cosmic Weaver equipped
+- [x] Duet (Hourglass Reversal): Same as Astral Chainripper - action replay tested
 
-## ODE TO JOY (SYMPHONY NO. 9)
+---
+
+## ODE TO JOY (SYMPHONY NO. 9) ✅ TESTED AND APPROVED
 
 ### Crescendance: Petals of Life
-- [ ] Minor craft grants +1 Petal of Harmony
-- [ ] Major craft grants +1 Petal of Melody
-- [ ] Consume Harmony grants +250 Entropic Melodies
-- [ ] Consume Melody grants +10s full entropic crits (stackable)
-- [ ] Combine (1 Harmony + 1 Melody + 50 Entropic) creates 1 Ode to Life
-- [ ] Consume Ode to Life doubles all owned minor scores
+- [x] Minor craft grants +1 Petal of Harmony
+- [x] Major craft grants +1 Petal of Melody
+- [x] Consume Harmony grants +83 Entropic Melodies
+- [x] Consume Melody grants +5s of guaranteed Entropic Crescendo of Eternity critical hits (stackable)
+- [x] Combine (1 Harmony + 1 Melody + 17 Entropic) creates 1 Ode to Life
+- [x] Consume Ode to Life doubles all owned minor scores
 
 ### Joyful Catharsis Weapon
-- [ ] Passive (Harmonic Entropy): Every 50th click grants +X Entropic Melodies (X = critical notes gotten × 3)
-### Joyful Catharsis Weapon
-- [ ] Passive (Euphoric Surge): On major craft, grants bonus notes = 10× NPS
-- [ ] Crescendance Bond (Euphoric Resonance): Every petal gained (Harmony or Melody) doubles NPS for 5s
-- [ ] Crescendance Bond: Effect stacks with multiple petals gained
-- [ ] Crescendance Bond requires: Ode to Joy Major resonated + Joyful Catharsis equipped
-- [ ] Duet (Crescendo Conductor): 4 notes grants +25 fragments (both types)
-- [ ] Duet: 8 notes grants +5 Petals of Harmony
-- [ ] Duet: 12 notes grants +5 Petals of Melody
-- [ ] Duet: 16 notes grants +1 Ode to Life (repeatable/stackable)
-- [ ] Duet: On expiry, grants +3 Entropic Melodies per completed 4-note section
-- [ ] Duet: 20 second duration, 10 minute cooldown
+- [x] Passive: Every 50th click grants +15 Entropic Melodies
+- [x] Crescendance Bond (Euphoric Resonance): Every petal gained (Harmony or Melody) doubles NPS for 5s
+- [x] Crescendance Bond: Effect stacks with multiple petals gained
+- [x] Crescendance Bond requires: Ode to Joy Major resonated + Joyful Catharsis equipped
+- [x] Duet (Crescendo Conductor): 4 notes grants +25 fragments (both types)
+- [x] Duet: 8 notes grants +5 Petals of Harmony
+- [x] Duet: 12 notes grants +5 Petals of Melody
+- [x] Duet: 16 notes grants +1 Ode to Life (repeatable/stackable)
+- [x] Duet: On expiry, grants +3 Entropic Melodies per completed 4-note section
+- [x] Duet: 20 second duration, 10 minute cooldown
 
 ### Ode to Creation Weapon
-- [ ] Passive (Life Genesis): Every 20th click generates random Petal (50% Harmony, 50% Melody)
-- [ ] Crescendance Bond (Life Amplification): On Ode to Life consume, doubles petal generation for 25s
-- [ ] Crescendance Bond: During doubled effect, generates petals every 10th click instead of 20th
-- [ ] Crescendance Bond requires: Ode to Joy Major resonated + Ode to Creation equipped
-- [ ] Duet (Crescendo Conductor): Same as Joyful Catharsis - all milestones tested
+- [x] Passive (Life Genesis): Every 20th click generates random Petal (50% Harmony, 50% Melody)
+- [x] Crescendance Bond (Life Amplification): On Ode to Life consume, doubles petal generation for 25s
+- [x] Crescendance Bond: During doubled effect, generates petals every 10th click instead of 20th
+- [x] Crescendance Bond requires: Ode to Joy Major resonated + Ode to Creation equipped
+- [x] Duet (Crescendo Conductor): Same as Joyful Catharsis - all milestones tested
 
-## DIES IRAE
+---
+
 ## DIES IRAE
 
 ### Crescendance: Symphony of Hell's Retribution
-- [ ] Every click grants +1 Burning Hatred (up to 50 max)
-- [ ] After 50 Burning Hatred, clicks grant +1 Discordant Malice instead
-- [ ] Consume 5 Burning Hatred grants +1 Dissonant Oblivion
-- [ ] Consume Discordant Malice grants +X Entropic Melodies (X = current Burning Hatred stacks)
-- [ ] Consume Dissonant Oblivion grants next 20 clicks as Symphony of Hell's Retribution crits
-- [ ] Hell's Retribution crit formula: NPC × NPS × Burning Hatred stacks
+- [ ] Every click grants +1 Dissonant Hatred (up to 50 max)
+- [ ] After 50 Dissonant Hatred, clicks grant +1 Discordant Malice instead
+- [ ] Consume 5 Dissonant Hatred grants +1 Cacophonic Oblivion
+- [ ] Consume Discordant Malice grants +X Entropic Melodies (X = current Dissonant Hatred stacks)
+- [ ] Consume Cacophonic Oblivion grants next 20 clicks as Symphony of Hell's Retribution crits
+- [ ] Hell's Retribution crit formula: NPC × NPS × Dissonant Hatred stacks
 
 ### Seven Circles Weapon
-- [ ] Passive (Infernal Descent): On minor craft, advances circle (1-7)
-- [ ] Passive: At Circle 7, next click deals bonus = NPC × (total owned minors)
-- [ ] Passive: Resets to Circle 1 after Circle 7 bonus
-- [ ] Crescendance Bond: TBD
-- [ ] Duet (Seven Seals): Each click places 1 seal
-- [ ] Duet: At 7 seals, grants 3 random minor scores without consuming components
+- [ ] Passive (Wrathful Amplification): Every critical hit in the game grants +20% of current notes
+- [ ] Crescendance Bond (Seal Resonance): Symphony of Hell's Retribution crits grant +1 Wrathful Seal per crit
+- [ ] Crescendance Bond: Consume 1 Wrathful Seal grants next 5 clicks as "Seal-breaking Melody of Oblivion"
+- [ ] Seal-breaking formula: DOUBLE Symphony of Hell (2 × NPC × NPS × Dissonant Hatred)
+- [ ] Crescendance Bond requires: Dies Irae Major resonated + Seven Circles equipped
+- [ ] Duet (Infernal Symphony): Seal-breaking Melody crits grant +1 Wrathful Seal
+- [ ] Duet: Consume 15+ Wrathful Seals grants next 5 clicks that double current notes
+- [ ] Duet: 20 second duration, 10 minute cooldown
+
+### Hell's Wrath Weapon
+- [ ] Passive (Infernal Bounty): Every 50th click grants +2 to your 2 lowest owned minor scores
+- [ ] Crescendance Bond (Entropic Fury): Each Symphony of Hell's Retribution crit grants +200 Entropic Melodies
+- [ ] Crescendance Bond: Each Seal-breaking Melody of Oblivion crit grants +200 Entropic Melodies
+- [ ] Crescendance Bond requires: Dies Irae Major resonated + Hell's Wrath equipped
+- [ ] Duet (Infernal Symphony): Same as Seven Circles - all rewards tested
+
+---
 ## WINTER
 
 ### Crescendance: Eternal Frost

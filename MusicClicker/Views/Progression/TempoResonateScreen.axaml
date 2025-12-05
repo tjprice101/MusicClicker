@@ -18,16 +18,16 @@
         </Grid.RowDefinitions>
 
         <!-- ========== HEADER ========== -->
-        <Border Grid.Row="0" Background="#CC000000" BorderBrush="Gold" BorderThickness="0,0,0,2">
+        <Border Grid.Row="0" Background="#DD1a1a2e" BorderBrush="#FFFF69B4" BorderThickness="0,0,0,2">
             <Grid>
                 <TextBlock Text="TEMPO RESONATE" 
                            FontSize="32" 
                            FontWeight="Bold"
-                           Foreground="Gold" 
+                           Foreground="White" 
                            HorizontalAlignment="Center" 
                            VerticalAlignment="Center">
                     <TextBlock.Effect>
-                        <DropShadowEffect Color="DarkGoldenrod" BlurRadius="12" Opacity="0.9" />
+                        <DropShadowEffect Color="#FFFF69B4" BlurRadius="12" Opacity="0.9" />
                     </TextBlock.Effect>
                 </TextBlock>
             </Grid>
@@ -47,8 +47,8 @@
             <!-- ========== LEFT PANEL: MAJOR SCORES ========== -->
             <Border x:Name="LeftPanelBorder"
                     Grid.Column="0" 
-                    Background="#DD1A1A1A" 
-                    BorderBrush="#666666" 
+                    Background="#DD1a1a2e" 
+                    BorderBrush="#FFFF69B4" 
                     BorderThickness="2" 
                     CornerRadius="12"
                     Padding="12">
@@ -117,20 +117,28 @@
                                     Content="✓ YES" 
                                     Width="100" 
                                     Height="35"
-                                    Background="#22AA22"
+                                    Background="#DD1a1a2e"
                                     Foreground="White"
-                                    BorderBrush="#44FF44"
+                                    BorderBrush="#FFFF69B4"
                                     BorderThickness="2"
-                                    FontWeight="Bold"/>
+                                    FontWeight="Bold">
+                                <Button.Effect>
+                                    <DropShadowEffect Color="#FFFF69B4" BlurRadius="8" Opacity="0.6"/>
+                                </Button.Effect>
+                            </Button>
                             <Button x:Name="EquipNoButton" 
                                     Content="✗ NO" 
                                     Width="100" 
                                     Height="35"
-                                    Background="#AA2222"
+                                    Background="#DD1a1a2e"
                                     Foreground="White"
-                                    BorderBrush="#FF4444"
+                                    BorderBrush="#FFFF69B4"
                                     BorderThickness="2"
-                                    FontWeight="Bold"/>
+                                    FontWeight="Bold">
+                                <Button.Effect>
+                                    <DropShadowEffect Color="#FFFF69B4" BlurRadius="8" Opacity="0.6"/>
+                                </Button.Effect>
+                            </Button>
                         </StackPanel>
                     </StackPanel>
                 </Border>
@@ -342,9 +350,9 @@
                         Content="◄ BACK"
                         Width="140"
                         Height="100"
-                        Background="#DD222222"
+                        Background="#DD1a1a2e"
                         Foreground="White"
-                        BorderBrush="Gold"
+                        BorderBrush="#FFFF69B4"
                         BorderThickness="2"
                         FontSize="16"
                         FontWeight="Bold"
@@ -352,7 +360,7 @@
                         Margin="15,0,0,0"
                         CornerRadius="8">
                     <Button.Effect>
-                        <DropShadowEffect Color="Gold" BlurRadius="8" Opacity="0.6"/>
+                        <DropShadowEffect Color="#FFFF69B4" BlurRadius="8" Opacity="0.6"/>
                     </Button.Effect>
                 </Button>
             </Grid>
