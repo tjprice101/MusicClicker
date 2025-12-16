@@ -816,28 +816,41 @@ namespace MusicClicker
                 }
             };
 
-            // Apply theme colors
+            // Helper to safely parse color strings and fallback to opaque white on error
+            Color SafeParse(string s)
+            {
+                try
+                {
+                    return Color.Parse(s);
+                }
+                catch
+                {
+                    return Color.Parse("#FFFFFFFF");
+                }
+            }
+
+            // Apply theme colors (use SafeParse to avoid runtime exceptions from malformed strings)
             if (_leftPanelBorder != null)
-                _leftPanelBorder.Background = new SolidColorBrush(Color.Parse(theme.LeftBg));
+                _leftPanelBorder.Background = new SolidColorBrush(SafeParse(theme.LeftBg));
             if (_leftPanelBorder != null)
-                _leftPanelBorder.BorderBrush = new SolidColorBrush(Color.Parse(theme.LeftBorder));
+                _leftPanelBorder.BorderBrush = new SolidColorBrush(SafeParse(theme.LeftBorder));
             if (_leftPanelHeader != null)
-                _leftPanelHeader.Background = new SolidColorBrush(Color.Parse(theme.LeftHeaderBg));
+                _leftPanelHeader.Background = new SolidColorBrush(SafeParse(theme.LeftHeaderBg));
             if (_leftPanelHeaderText != null)
-                _leftPanelHeaderText.Foreground = new SolidColorBrush(Color.Parse(theme.LeftHeaderText));
-                
+                _leftPanelHeaderText.Foreground = new SolidColorBrush(SafeParse(theme.LeftHeaderText));
+
             if (_rightPanelBorder != null)
-                _rightPanelBorder.Background = new SolidColorBrush(Color.Parse(theme.RightBg));
+                _rightPanelBorder.Background = new SolidColorBrush(SafeParse(theme.RightBg));
             if (_rightPanelBorder != null)
-                _rightPanelBorder.BorderBrush = new SolidColorBrush(Color.Parse(theme.RightBorder));
+                _rightPanelBorder.BorderBrush = new SolidColorBrush(SafeParse(theme.RightBorder));
             if (_rightPanelHeader != null)
-                _rightPanelHeader.Background = new SolidColorBrush(Color.Parse(theme.RightHeaderBg));
+                _rightPanelHeader.Background = new SolidColorBrush(SafeParse(theme.RightHeaderBg));
             if (_rightPanelHeaderText != null)
-                _rightPanelHeaderText.Foreground = new SolidColorBrush(Color.Parse(theme.RightHeaderText));
-                
+                _rightPanelHeaderText.Foreground = new SolidColorBrush(SafeParse(theme.RightHeaderText));
+
             // Update duet text color (static, no flashing)
             if (_duetResonanceText != null && _duetResonanceText.IsVisible)
-                _duetResonanceText.Foreground = new SolidColorBrush(Color.Parse(theme.DuetText));
+                _duetResonanceText.Foreground = new SolidColorBrush(SafeParse(theme.DuetText));
         }
 
         private void ThemePromptButtons(string scoreName)
@@ -967,7 +980,11 @@ namespace MusicClicker
         {
             // Set new equipped score text + bitmap (use full display name)
             _equippedText.Text = GetScoreDisplayName(scoreName);
-            _equippedBitmap = _bitmapCache[scoreName];
+            // Use TryGetValue to avoid KeyNotFoundException if bitmap failed to load
+            if (!_bitmapCache.TryGetValue(scoreName, out _equippedBitmap))
+            {
+                _equippedBitmap = _emptyBitmap;
+            }
 
             // Create 16:9 image (480x270 fills the Viewbox container)
             var scoreImage = MusicClicker.Helpers.ImageHelpers.CreateSmoothImage(_equippedBitmap, 480, 270, null, 1.0, true);
@@ -985,7 +1002,7 @@ namespace MusicClicker
             
             _equippedDisplay.Child = scoreImage;
 
-            // Disable all major ability flags
+            // Disable all major ability flags (include Winter)
             _gameState.MoonlightMajorAbility = false;
             _gameState.EroicaMajorAbility = false;
             _gameState.SwanMajorAbility = false;
@@ -993,6 +1010,7 @@ namespace MusicClicker
             _gameState.EnigmaMajorAbility = false;
             _gameState.FateMajorAbility = false;
             _gameState.OdeToJoyMajorAbility = false;
+            _gameState.WinterAbility = false;
 
             // Enable the selected ability
             switch (scoreName)
@@ -1004,6 +1022,7 @@ namespace MusicClicker
                 case "Enigma": _gameState.EnigmaMajorAbility = true; break;
                 case "Fate": _gameState.FateMajorAbility = true; break;
                 case "OdeToJoy": _gameState.OdeToJoyMajorAbility = true; break;
+                case "Winter": _gameState.WinterAbility = true; break;
             }
 
             // Save to GameState
@@ -1030,7 +1049,7 @@ namespace MusicClicker
                 Stretch = Stretch.Uniform
             };
 
-            // Disable all major abilities
+            // Disable all major abilities (include Winter)
             _gameState.MoonlightMajorAbility = false;
             _gameState.EroicaMajorAbility = false;
             _gameState.SwanMajorAbility = false;
@@ -1038,6 +1057,7 @@ namespace MusicClicker
             _gameState.EnigmaMajorAbility = false;
             _gameState.FateMajorAbility = false;
             _gameState.OdeToJoyMajorAbility = false;
+            _gameState.WinterAbility = false;
 
             // Save to GameState
             _gameState.CurrentResonatedScore = "None";

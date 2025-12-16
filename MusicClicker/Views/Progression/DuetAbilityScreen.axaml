@@ -1,14 +1,15 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="MusicClicker.Views.DuetAbilityScreen">
+             x:Class="MusicClicker.Views.DuetAbilityScreen"
+             Width="750">
 
-    <Border x:Name="MainBorder"
-            Width="500" Height="650"
+        <Border x:Name="MainBorder"
+            Width="750"
             Background="#DD1a1a2e"
             CornerRadius="20"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Margin="0,0,0,0">
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Top"
+            Margin="0">
         
         <Border.Effect>
             <DropShadowEffect Color="Black" BlurRadius="30" Opacity="0.9" />
@@ -17,7 +18,7 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
@@ -27,10 +28,10 @@
                     Grid.Row="0"
                     Background="#16213e"
                     CornerRadius="20,20,0,0"
-                    Padding="20,15,20,15">
+                    Padding="20,12,20,12">
                 <TextBlock x:Name="TitleText"
                            Text="Duet Resonance Ability"
-                           FontSize="26"
+                           FontSize="24"
                            FontWeight="Bold"
                            Foreground="#e94560"
                            HorizontalAlignment="Center"
@@ -43,20 +44,20 @@
 
             <!-- Ability Description -->
             <StackPanel Grid.Row="1"
-                        VerticalAlignment="Center"
+                        VerticalAlignment="Top"
                         HorizontalAlignment="Center"
-                        Spacing="12"
-                        Margin="20,15,20,15">
+                        Spacing="10"
+                        Margin="20,12,20,12">
                 
                 <TextBlock x:Name="DuetAbilityNameText"
                            Text="Ability Name"
-                           FontSize="20"
+                           FontSize="18"
                            FontWeight="Bold"
                            Foreground="White"
                            HorizontalAlignment="Center"
                            TextAlignment="Center"
                            TextWrapping="Wrap"
-                           MaxWidth="350">
+                           MaxWidth="650">
                     <TextBlock.Effect>
                         <DropShadowEffect Color="#e94560" BlurRadius="12" Opacity="0.6" />
                     </TextBlock.Effect>
@@ -64,13 +65,13 @@
 
                 <TextBlock x:Name="DuetAbilityDescriptionText"
                            Text="Ability description will appear here"
-                           FontSize="14"
+                           FontSize="13"
                            Foreground="White"
                            HorizontalAlignment="Center"
                            TextAlignment="Left"
                            TextWrapping="Wrap"
-                           MaxWidth="450"
-                           Margin="0,3,0,0">
+                           MaxWidth="700"
+                           Margin="0,2,0,0">
                     <TextBlock.Effect>
                         <DropShadowEffect Color="Black" BlurRadius="5" Opacity="1.0" OffsetX="0" OffsetY="0" />
                     </TextBlock.Effect>
@@ -78,12 +79,12 @@
 
                 <TextBlock x:Name="DuetAbilityStatusText"
                            Text="Ready"
-                           FontSize="15"
+                           FontSize="14"
                            FontWeight="SemiBold"
                            Foreground="#4ecca3"
                            HorizontalAlignment="Center"
                            TextAlignment="Center"
-                           Margin="0,8,0,0">
+                           Margin="0,6,0,0">
                     <TextBlock.Effect>
                         <DropShadowEffect Color="Black" BlurRadius="8" Opacity="0.7" />
                     </TextBlock.Effect>
@@ -95,7 +96,7 @@
                         Height="26"
                         Background="#2a2a40"
                         CornerRadius="15"
-                        Margin="0,8,0,0"
+                        Margin="0,6,0,0"
                         IsVisible="False">
                     <Grid>
                         <Border x:Name="VictoryMarchProgressFill"

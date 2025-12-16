@@ -272,10 +272,10 @@ namespace MusicClicker
             // Bottom-right Duet Ability button
             window.OpenDuetAbilityButton.Click += (s, e) =>
             {
-                if (window.DuetAbilityScreen != null)
+                if (window.DuetAbilityPanelContainer != null && window.DuetAbilityScreen != null)
                 {
-                    window.DuetAbilityScreen.IsVisible = !window.DuetAbilityScreen.IsVisible;
-                    if (window.DuetAbilityScreen.IsVisible)
+                    window.DuetAbilityPanelContainer.IsVisible = !window.DuetAbilityPanelContainer.IsVisible;
+                    if (window.DuetAbilityPanelContainer.IsVisible)
                     {
                         window.DuetAbilityScreen.UpdateAbilityDisplay();
                         window.DuetAbilityScreen.StartCooldownTimer();
@@ -473,12 +473,8 @@ namespace MusicClicker
                     }
                     
                     // Thousand Winged Swan passive now handled through score acquisition (not fragment purchase)
-
-                    // Trigger The Snow's Desire ability (Winter II)
-                    if (window.GameState.TheSnowsDesireAbility)
-                    {
-                        MusicClicker.Armory.WeaponAbilities.TheSnowsDesire_OnHarmoniousPurchase(window.GameState);
-                    }
+                    
+                    // Winter weapon passives no longer trigger on Harmonious purchases (removed Blizzard's Bounty mechanic)
                 }
             });
         }

@@ -40,7 +40,7 @@ namespace MusicClicker.Views
 		try
 		{
 			WinterMajorOwnedRightText.Text = $"Number Owned: {gameState.WinterOwned}";
-			WinterCrescendanceText.Text = "Eternal Frost: Converts frozen Notes Per Second into click multiplier. Each click extends duration by 0.5 seconds (max +10 seconds).";
+			WinterCrescendanceText.Text = "Requiem of the Frozen Choir: Freeze NPS for stacks. Convert Frigid Melody to Eternal Frost (enhanced clicks) or Regal Snowlight (fragments + entropic). Duet grants crits and extends duration.";
 			
 			// Update NPS Freeze timer
 			if (NpsFreezeTimerText != null)
@@ -48,7 +48,7 @@ namespace MusicClicker.Views
 				if (DateTime.Now <= gameState.NpsFreezeExpiry)
 				{
 					var remaining = gameState.NpsFreezeExpiry - DateTime.Now;
-					NpsFreezeTimerText.Text = $"NPS Freeze Active: {remaining.TotalSeconds:F1}s";
+					NpsFreezeTimerText.Text = $"NPS Frozen: {remaining.TotalSeconds:F1}s";
 					NpsFreezeTimerText.IsVisible = true;
 				}
 				else
@@ -57,19 +57,10 @@ namespace MusicClicker.Views
 				}
 			}
 			
-			// Update Blizzard Bounty timer
+			// Hide old Blizzard Bounty timer (removed from game)
 			if (BlizzardBountyTimerText != null)
 			{
-				if (DateTime.Now <= gameState.BlizzardBountyExpiry)
-				{
-					var remaining = gameState.BlizzardBountyExpiry - DateTime.Now;
-					BlizzardBountyTimerText.Text = $"Blizzard Bounty Active: {remaining.TotalSeconds:F1}s (+{gameState.BlizzardBountyNpsBonus:F1}% NPS)";
-					BlizzardBountyTimerText.IsVisible = true;
-				}
-				else
-				{
-					BlizzardBountyTimerText.IsVisible = false;
-				}
+				BlizzardBountyTimerText.IsVisible = false;
 			}
 		}
 		catch { }

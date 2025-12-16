@@ -118,11 +118,17 @@ Crescendance: Symphony of Hell's Retribution
 
             public const string Winter = @"Winter
 
-Major Ability:
-Converts NPS into click power when frozen.
+Major Ability: Glacial Dominion
+Grants bonus effects when NPS is frozen.
 
-Crescendance: Eternal Frost
-Freezes NPS and converts it into click multiplier. Clicks extend duration.";
+Crescendance: Requiem of the Frozen Choir
+• Freezing Harmony (3s cooldown): Freeze NPS for 5s, +1 Frigid Melody
+• Ignite the Blizzard: Convert Frigid Melody → Eternal Frost OR Regal Snowlight
+• Eternal Frost: Consume for NPS freeze + enhanced 'Blizzard's Command' clicks (15 per stack)
+• Regal Snowlight: Consume for +50 Melodious, +50 Harmonious, +25 Entropic per stack
+• Cacophonic Blizzard bond: Eternal Frost consume grants +2 Snow's Oblivion
+• Consume Snow's Oblivion: +X Entropic (X = total upgrades owned)
+• The Snow's Desire bond: Frigid Melody gains doubled";
         }
 
         // ============================================================
@@ -312,8 +318,8 @@ Duet: Infernal Symphony - During duet, Seal-breaking crits also grant +1 Wrathfu
             public const string HellsWrath = "Passive: Infernal Bounty - Every 20th click grants +2 to your 2 lowest owned minor scores (tied lowest chosen randomly).\n\nCrescendance Bond: Entropic Fury - Dies Irae crits grant Entropic Melodies:\n• Symphony of Hell's Retribution: +50 Entropic\n• Seal-breaking Melody of Oblivion: +50 Entropic\n\nDuet: Infernal Symphony - For 10 seconds, every click is a guaranteed Seal-breaking crit that returns +1 Wrathful Seal. During duet, consume 15+ Seals for next 5 note-doubling clicks. 10s duration, 10min cooldown.";
             
             // Winter
-            public const string CacophonicBlizzard = "Passive: TBD\n\nCrescendance Bond: TBD\n\nDuet: Absolute Zero - Freezes NPS and converts to click multiplier. 15s duration, 5min cooldown.";
-            public const string TheSnowsDesire = "Passive: TBD\n\nCrescendance Bond: TBD\n\nDuet: Absolute Zero - Freezes NPS and converts to click multiplier. 15s duration, 5min cooldown.";
+            public const string CacophonicBlizzard = "Passive: Permafrost Strikes - Every 20th click freezes NPS for 5 seconds and grants your next 20 clicks +50% notes each.\n\nCrescendance Bond: Snow's Oblivion - When you consume Eternal Frost stacks, gain +2 Snow's Oblivion. Consume 1 Snow's Oblivion for +X Entropic Melodies (X = total upgrades owned).\n\nDuet: Symphony of Absolute Zero - Freezes NPS for 20s. Every click grants +1 Frigid Melody + Blizzard's Command crit, extends duration by +0.5s (max +10s). 20s duration, 4min cooldown.";
+            public const string TheSnowsDesire = "Passive: Accelerating Flurry - Every click grants +1% Notes Per Click (max +50%). Decays to 0% after 5 seconds of no clicking. Current bonus displayed in Crescendance panel.\n\nCrescendance Bond: Frigid Resonance - Whenever you gain 1 Frigid Melody stack, gain +1 bonus stack (doubling effect).\n\nDuet: Symphony of Absolute Zero - Freezes NPS for 20s. Every click grants +1 Frigid Melody + Blizzard's Command crit, extends duration by +0.5s (max +10s). 20s duration, 4min cooldown.";
         }
 
         // ============================================================
@@ -326,7 +332,7 @@ Duet: Infernal Symphony - During duet, Seal-breaking crits also grant +1 Wrathfu
             {
                 public const string Moonlight = "Moonlight Sonata:\nLunar Phases";
                 public const string DiesIrae = "Damnation Requiem:\nInfernal Symphony";
-                public const string Winter = "Eternal Frost:\nAbsolute Zero";
+                public const string Winter = "Requiem of the Frozen Choir:\nSymphony of Absolute Zero";
                 public const string Eroica = "Symphony of Heroes:\nVictory March";
                 public const string SwanLake = "Wings of Transcendence:\nFeather Cascade";
                 public const string LaCampanella = "Bell Resonance:\nChime Chain";
@@ -339,7 +345,7 @@ Duet: Infernal Symphony - During duet, Seal-breaking crits also grant +1 Wrathfu
             {
                 public const string Moonlight = "Cycles through 4 moon phases every 5 seconds:\n• New Moon: 2× Notes Per Click\n• Crescent: 10% component drop chance per click\n• Full Moon: 3× Notes Per Second\n• Waning: Upgrades cost 50% less\n\nSPECIAL: All phases active simultaneously when resonating with Moonlight Sonata Major!\n\n20 second duration | 4 minute cooldown";
                 public const string DiesIrae = "For 10 seconds, every click is a guaranteed Seal-breaking Melody of Oblivion critical hit that returns +1 Wrathful Seal.\n\nDuring the duet, when you have 15+ Wrathful Seals, you can consume them to grant your next 5 clicks the power to double your current notes.\n\n10 second duration | 10 minute cooldown";
-                public const string Winter = "Converts frozen Notes Per Second into click multiplier. Each click extends duration by 0.5 seconds (maximum +10 seconds total extension).\n\n15 second base duration | 5 minute cooldown";
+                public const string Winter = "Freezes Notes Per Second for 20 seconds. Every click during freeze:\n• Grants +1 Frigid Melody stack\n• Applies 'Blizzard's Command of Eternal Ice' critical hit (base notes + NPC × NPS)\n• Extends duration by +0.5 seconds (max +10s extension = 30s total)\n\n20 second base duration | 4 minute cooldown";
                 public const string Eroica = "Fill progress bar with 100 clicks:\n• 25% progress: Random minor score\n• 50% progress: Random major score\n• 75% progress: +50 Melodious and Harmonious Fragments\n• 100% complete: Double all owned scores\n\n5 minute cooldown";
                 public const string SwanLake = "Each of your first 10 clicks grants 1 Revered Feather, 1 Chromatic Feather, and 1 Polyphonic Feather. Every 5th click (5th and 10th) increases current notes by +25%.\n\n20 second duration | 4 minute cooldown";
                 public const string LaCampanella = "Click to create chimes. Clicking within 1 second extends chain. Chain reward equals (chain length)² × Notes Per Second as instant notes. Chain breaks after 1 second of no clicks.\n\n10 second duration | 10 minute cooldown";
@@ -366,7 +372,7 @@ Duet: Infernal Symphony - During duet, Seal-breaking crits also grant +1 Wrathfu
             {
                 public const int Moonlight = 20;
                 public const int DiesIrae = 10;
-                public const int Winter = 15;
+                public const int Winter = 20;
                 public const int SwanLake = 20;
                 public const int LaCampanella = 10;
                 public const int Enigma = 10;
@@ -378,7 +384,7 @@ Duet: Infernal Symphony - During duet, Seal-breaking crits also grant +1 Wrathfu
             {
                 public const int Moonlight = 240;      // 4 minutes
                 public const int DiesIrae = 600;       // 10 minutes
-                public const int Winter = 300;         // 5 minutes
+                public const int Winter = 240;         // 4 minutes
                 public const int Eroica = 300;         // 5 minutes
                 public const int SwanLake = 240;       // 4 minutes
                 public const int LaCampanella = 600;   // 10 minutes

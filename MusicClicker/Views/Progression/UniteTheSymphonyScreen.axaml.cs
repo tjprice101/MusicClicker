@@ -63,12 +63,12 @@ namespace MusicClicker.Views
         }
 
         // Attempts to dissolve one of the given score. Returns the new owned count.
-        private int TryDissolve(int owned, Action<int> setter, int entropicAmount = 1)
+        private long TryDissolve(long owned, Action<long> setter, int entropicAmount = 1)
         {
             if (_gameState == null || _mainWindow == null) return owned;
             if (owned > 0)
             {
-                int newOwned = owned - 1;
+                long newOwned = owned - 1;
                 setter(newOwned);
                 AddEntropicMelody(entropicAmount);
                 UIUpdater.UpdateUnitySymphonyUIImmediate(_mainWindow, _gameState);
@@ -81,8 +81,8 @@ namespace MusicClicker.Views
         private void MoonlightMajorDissolveButton_Click(object? sender, RoutedEventArgs e)
         {
             if (_gameState == null) return;
-            int owned = _gameState.MoonlightMajorOwned;
-            int newOwned = TryDissolve(owned, v => _gameState.MoonlightMajorOwned = v, 10);
+            long owned = _gameState.MoonlightMajorOwned;
+            long newOwned = TryDissolve(owned, v => _gameState.MoonlightMajorOwned = v, 10);
             if (newOwned == 0)
                 _gameState.MoonlightMajorAbility = false;
         }
@@ -90,8 +90,8 @@ namespace MusicClicker.Views
         private void EroicaMajorDissolveButton_Click(object? sender, RoutedEventArgs e)
         {
             if (_gameState == null) return;
-            int owned = _gameState.EroicaMajorOwned;
-            int newOwned = TryDissolve(owned, v => _gameState.EroicaMajorOwned = v, 20);
+            long owned = _gameState.EroicaMajorOwned;
+            long newOwned = TryDissolve(owned, v => _gameState.EroicaMajorOwned = v, 20);
             if (newOwned == 0)
                 _gameState.EroicaMajorAbility = false;
         }
@@ -99,8 +99,8 @@ namespace MusicClicker.Views
         private void SwanMajorDissolveButton_Click(object? sender, RoutedEventArgs e)
         {
             if (_gameState == null) return;
-            int owned = _gameState.SwanMajorOwned;
-            int newOwned = TryDissolve(owned, v => _gameState.SwanMajorOwned = v, 40);
+            long owned = _gameState.SwanMajorOwned;
+            long newOwned = TryDissolve(owned, v => _gameState.SwanMajorOwned = v, 40);
             if (newOwned == 0)
                 _gameState.SwanMajorAbility = false;
         }
@@ -108,8 +108,8 @@ namespace MusicClicker.Views
         private void LaCampanellaMajorDissolveButton_Click(object? sender, RoutedEventArgs e)
         {
             if (_gameState == null) return;
-            int owned = _gameState.LaCampanellaMajorOwned;
-            int newOwned = TryDissolve(owned, v => _gameState.LaCampanellaMajorOwned = v, 80);
+            long owned = _gameState.LaCampanellaMajorOwned;
+            long newOwned = TryDissolve(owned, v => _gameState.LaCampanellaMajorOwned = v, 80);
             if (newOwned == 0)
                 _gameState.LaCampanellaMajorAbility = false;
         }
@@ -117,8 +117,8 @@ namespace MusicClicker.Views
         private void EnigmaMajorDissolveButton_Click(object? sender, RoutedEventArgs e)
         {
             if (_gameState == null) return;
-            int owned = _gameState.EnigmaMajorOwned;
-            int newOwned = TryDissolve(owned, v => _gameState.EnigmaMajorOwned = v, 160);
+            long owned = _gameState.EnigmaMajorOwned;
+            long newOwned = TryDissolve(owned, v => _gameState.EnigmaMajorOwned = v, 160);
             if (newOwned == 0)
                 _gameState.EnigmaMajorAbility = false;
         }
@@ -126,8 +126,8 @@ namespace MusicClicker.Views
         private void FateMajorDissolveButton_Click(object? sender, RoutedEventArgs e)
         {
             if (_gameState == null) return;
-            int owned = _gameState.FateMajorOwned;
-            int newOwned = TryDissolve(owned, v => _gameState.FateMajorOwned = v, 320);
+            long owned = _gameState.FateMajorOwned;
+            long newOwned = TryDissolve(owned, v => _gameState.FateMajorOwned = v, 320);
             if (newOwned == 0)
                 _gameState.FateMajorAbility = false;
         }
@@ -135,8 +135,8 @@ namespace MusicClicker.Views
         private void OdeToJoyMajorDissolveButton_Click(object? sender, RoutedEventArgs e)
         {
             if (_gameState == null) return;
-            int owned = _gameState.OdeToJoyMajorOwned;
-            int newOwned = TryDissolve(owned, v => _gameState.OdeToJoyMajorOwned = v, 640);
+            long owned = _gameState.OdeToJoyMajorOwned;
+            long newOwned = TryDissolve(owned, v => _gameState.OdeToJoyMajorOwned = v, 640);
             if (newOwned == 0)
                 _gameState.OdeToJoyMajorAbility = false;
         }

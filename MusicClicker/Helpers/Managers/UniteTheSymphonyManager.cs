@@ -16,7 +16,7 @@ namespace MusicClicker
         // which reduces unnecessary UI churn.
         // ==================== MINOR SCORES ====================
 
-        public static bool TryCraftMoonlightMinor(MainWindow window, ref int owned)
+        public static bool TryCraftMoonlightMinor(MainWindow window, ref long owned)
         {
             var gameState = window.GameState;
             bool canCraft = false;
@@ -111,7 +111,7 @@ namespace MusicClicker
             return canCraft;
         }
 
-        public static bool TryCraftEroicaMinor(MainWindow window, ref int owned)
+        public static bool TryCraftEroicaMinor(MainWindow window, ref long owned)
         {
             var gameState = window.GameState;
             bool canCraft = false;
@@ -206,7 +206,7 @@ namespace MusicClicker
             return canCraft;
         }
 
-        public static bool TryCraftSwanMinor(MainWindow window, ref int owned)
+        public static bool TryCraftSwanMinor(MainWindow window, ref long owned)
         {
             var gameState = window.GameState;
             bool canCraft = false;
@@ -301,7 +301,7 @@ namespace MusicClicker
             return canCraft;
         }
 
-        public static bool TryCraftLaCampanellaMinor(MainWindow window, ref int owned)
+        public static bool TryCraftLaCampanellaMinor(MainWindow window, ref long owned)
         {
             var gameState = window.GameState;
             bool canCraft = false;
@@ -396,7 +396,7 @@ namespace MusicClicker
             return canCraft;
         }
 
-        public static bool TryCraftEnigmaMinor(MainWindow window, ref int owned)
+        public static bool TryCraftEnigmaMinor(MainWindow window, ref long owned)
         {
             var gameState = window.GameState;
             bool canCraft = false;
@@ -491,7 +491,7 @@ namespace MusicClicker
             return canCraft;
         }
 
-        public static bool TryCraftFateMinor(MainWindow window, ref int owned)
+        public static bool TryCraftFateMinor(MainWindow window, ref long owned)
         {
             var gameState = window.GameState;
             bool canCraft = false;
@@ -594,7 +594,7 @@ namespace MusicClicker
             return canCraft;
         }
 
-        public static bool TryCraftOdeToJoyMinor(MainWindow window, ref int owned)
+        public static bool TryCraftOdeToJoyMinor(MainWindow window, ref long owned)
         {
             var gameState = window.GameState;
             bool canCraft = false;
@@ -697,7 +697,7 @@ namespace MusicClicker
 
         // ==================== MAJOR SCORES ====================
 
-        public static bool TryCraftMoonlightSonataMajor(MainWindow window, ref int owned)
+        public static bool TryCraftMoonlightSonataMajor(MainWindow window, ref long owned)
         {
             var gameState = window.GameState;
             bool canCraft = false;
@@ -756,7 +756,7 @@ namespace MusicClicker
             return canCraft;
         }
 
-        public static bool TryCraftEroicaMajor(MainWindow window, ref int owned)
+        public static bool TryCraftEroicaMajor(MainWindow window, ref long owned)
         {
             var gameState = window.GameState;
             bool canCraft = false;
@@ -813,7 +813,7 @@ namespace MusicClicker
             return canCraft;
         }
 
-        public static bool TryCraftSwanMajor(MainWindow window, ref int owned)
+        public static bool TryCraftSwanMajor(MainWindow window, ref long owned)
         {
             var gameState = window.GameState;
             bool canCraft = false;
@@ -872,7 +872,7 @@ namespace MusicClicker
             return canCraft;
         }
 
-        public static bool TryCraftLaCampanellaMajor(MainWindow window, ref int owned)
+        public static bool TryCraftLaCampanellaMajor(MainWindow window, ref long owned)
         {
             var gameState = window.GameState;
             bool canCraft = false;
@@ -931,7 +931,7 @@ namespace MusicClicker
             return canCraft;
         }
 
-        public static bool TryCraftEnigmaMajor(MainWindow window, ref int owned)
+        public static bool TryCraftEnigmaMajor(MainWindow window, ref long owned)
         {
             var gameState = window.GameState;
             bool canCraft = false;
@@ -987,7 +987,7 @@ namespace MusicClicker
             return canCraft;
         }
 
-        public static bool TryCraftFateMajor(MainWindow window, ref int owned)
+        public static bool TryCraftFateMajor(MainWindow window, ref long owned)
         {
             var gameState = window.GameState;
             bool canCraft = false;
@@ -1046,7 +1046,7 @@ namespace MusicClicker
             return canCraft;
         }
 
-        public static bool TryCraftOdeToJoyMajor(MainWindow window, ref int owned)
+        public static bool TryCraftOdeToJoyMajor(MainWindow window, ref long owned)
         {
             var gameState = window.GameState;
             bool canCraft = false;

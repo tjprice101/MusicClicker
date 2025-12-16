@@ -420,17 +420,18 @@
             <!-- Hidden OpenUpgradesButton for backward compatibility -->
             <Button x:Name="OpenUpgradesButton" IsVisible="False" Width="0" Height="0" />
 
-            <!-- ==================== CRESCENDANCE PANEL (Row 3, All Columns) ==================== -->
+            <!-- ==================== CRESCENDANCE & DUET ROW (Row 3, Left and Right) ==================== -->
+            <!-- Crescendance Panel - Left Side -->
             <Border x:Name="MainScreenCrescendancePanel"
-                    Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3"
+                    Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
                     Background="#DD000000"
                     BorderBrush="#FFFF69B4"
                     BorderThickness="3"
                     CornerRadius="8"
                     Padding="12"
-                    HorizontalAlignment="Center"
-                    Margin="0,0,0,12"
-                    Width="850"
+                    HorizontalAlignment="Left"
+                    Margin="12,0,6,12"
+                    Width="800"
                     IsVisible="False"
                     ZIndex="400">
                 <StackPanel Orientation="Vertical" Spacing="6">
@@ -1058,7 +1059,146 @@
                             </TextBlock>
                         </StackPanel>
                     </StackPanel>
+                    
+                    <!-- Winter Stack Display -->
+                    <StackPanel x:Name="MainWinterStackPanel"
+                                Orientation="Vertical"
+                                HorizontalAlignment="Center"
+                                Spacing="8"
+                                Margin="0,6,0,0"
+                                IsVisible="False">
+                        <!-- First Row: Frigid Melody + Freezing Harmony Button -->
+                        <StackPanel Orientation="Horizontal" Spacing="15" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Vertical" Spacing="3">
+                                <TextBlock Text="Frigid Melody"
+                                           Foreground="LightBlue"
+                                           FontSize="12"
+                                           HorizontalAlignment="Center" />
+                                <TextBlock x:Name="MainFrigidMelodyCount"
+                                           Text="0"
+                                           Foreground="White"
+                                           FontSize="16"
+                                           FontWeight="Bold"
+                                           HorizontalAlignment="Center" />
+                            </StackPanel>
+                            <Button x:Name="MainFreezingHarmonyButton"
+                                    Content="Freezing Harmony (Freeze NPS)"
+                                    Click="MainFreezingHarmonyButton_Click"
+                                    FontSize="11"
+                                    Padding="8,4"
+                                    IsEnabled="False" />
+                        </StackPanel>
+                        
+                        <!-- Second Row: Eternal Frost + Regal Snowlight -->
+                        <StackPanel Orientation="Horizontal" Spacing="20" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Vertical" Spacing="3">
+                                <TextBlock Text="Eternal Frost"
+                                           Foreground="Cyan"
+                                           FontSize="12"
+                                           HorizontalAlignment="Center" />
+                                <TextBlock x:Name="MainEternalFrostCount"
+                                           Text="0"
+                                           Foreground="White"
+                                           FontSize="16"
+                                           FontWeight="Bold"
+                                           HorizontalAlignment="Center" />
+                                <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Center">
+                                    <Button x:Name="MainIgniteEternalFrostButton"
+                                            Content="Ignite"
+                                            Click="MainIgniteEternalFrostButton_Click"
+                                            FontSize="10"
+                                            Padding="6,3"
+                                            IsEnabled="False" />
+                                    <Button x:Name="MainConsumeEternalFrostButton"
+                                            Content="Unleash Frozen Wrath"
+                                            Click="MainConsumeEternalFrostButton_Click"
+                                            FontSize="10"
+                                            Padding="6,3"
+                                            IsEnabled="False" />
+                                </StackPanel>
+                                <TextBlock x:Name="MainBlizzardCommandText"
+                                           Text=""
+                                           Foreground="LightBlue"
+                                           FontSize="10"
+                                           IsVisible="False"
+                                           HorizontalAlignment="Center" />
+                            </StackPanel>
+                            
+                            <StackPanel Orientation="Vertical" Spacing="3">
+                                <TextBlock Text="Regal Snowlight"
+                                           Foreground="Gold"
+                                           FontSize="12"
+                                           HorizontalAlignment="Center" />
+                                <TextBlock x:Name="MainRegalSnowlightCount"
+                                           Text="0"
+                                           Foreground="White"
+                                           FontSize="16"
+                                           FontWeight="Bold"
+                                           HorizontalAlignment="Center" />
+                                <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Center">
+                                    <Button x:Name="MainIgniteRegalSnowlightButton"
+                                            Content="Ignite"
+                                            Click="MainIgniteRegalSnowlightButton_Click"
+                                            FontSize="10"
+                                            Padding="6,3"
+                                            IsEnabled="False" />
+                                    <Button x:Name="MainConsumeRegalSnowlightButton"
+                                            Content="Invoke Crystalline Grace"
+                                            Click="MainConsumeRegalSnowlightButton_Click"
+                                            FontSize="10"
+                                            Padding="6,3"
+                                            IsEnabled="False" />
+                                </StackPanel>
+                            </StackPanel>
+                            
+                            <StackPanel Orientation="Vertical" Spacing="3">
+                                <TextBlock Text="Snow's Oblivion"
+                                           Foreground="Violet"
+                                           FontSize="12"
+                                           HorizontalAlignment="Center" />
+                                <TextBlock x:Name="MainSnowsOblivionCount"
+                                           Text="0"
+                                           Foreground="White"
+                                           FontSize="16"
+                                           FontWeight="Bold"
+                                           HorizontalAlignment="Center" />
+                                <Button x:Name="MainConsumeSnowsOblivionButton"
+                                            Content="Consume (+X Entropic)"
+                                            Click="MainConsumeSnowsOblivionButton_Click"
+                                            FontSize="10"
+                                            Padding="6,3"
+                                            IsEnabled="False" />
+                            </StackPanel>
+                        </StackPanel>
+                        
+                        <!-- Third Row: Weapon Passives -->
+                        <StackPanel Orientation="Horizontal" Spacing="15" HorizontalAlignment="Center">
+                            <TextBlock x:Name="MainAcceleratingFlurryText"
+                                       Text=""
+                                       Foreground="LightGreen"
+                                       FontSize="11"
+                                       IsVisible="False"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainCacophonicBlizzardBonusText"
+                                       Text=""
+                                       Foreground="Orange"
+                                       FontSize="11"
+                                       IsVisible="False"
+                                       HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </StackPanel>
                 </StackPanel>
+            </Border>
+            
+            <!-- Duet Ability Panel - Right Side (same row as Crescendance) -->
+            <Border x:Name="DuetAbilityPanelContainer"
+                    Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Margin="6,0,12,12"
+                    IsVisible="False"
+                    ZIndex="400">
+                <views:DuetAbilityScreen x:Name="DuetAbilityScreen" />
             </Border>
         </Grid>
 
@@ -1081,9 +1221,6 @@
         <views:ClickerCustomizeScreen x:Name="ClickerCustomizeScreen" IsVisible="False" />
         <views:BackgroundCustomizeScreen x:Name="BackgroundCustomizeScreen" IsVisible="False" />
         <views:CacophonicDreamsScreen x:Name="CacophonicDreamsScreen" IsVisible="False" />
-        
-        <!-- Duet Ability Screen - Bottom Right Corner -->
-        <views:DuetAbilityScreen x:Name="DuetAbilityScreen" IsVisible="False" />
         
         <!-- Fullscreen black fader used for cross-screen transitions -->
         <Rectangle x:Name="ScreenFader"

@@ -1,0 +1,174 @@
+===========================================
+WINTER MAJOR - ABILITIES & EFFECTS
+===========================================
+
+Flavor Text:
+"Where frozen silence crystallizes into power—the eternal blizzard commands absolute dominion over time itself."
+
+MAJOR ABILITY: Glacial Dominion
+---------------------------------------
+Requirements:
+• Winter Major must be acquired
+
+Mechanics:
+• Grants bonus effects when NPS is frozen
+• Passive effect - always active when Winter Major owned
+• Synergizes with Crescendance freeze mechanics
+
+CRESCENDANCE: Requiem of the Frozen Choir
+---------------------------------------
+Requirements:
+• Winter Major must be resonated
+
+Core Mechanic - Freezing Harmony:
+• Button: Freeze NPS for 5 seconds (NPS value locked, no passive notes gained)
+• Cooldown: 3 seconds
+• Effect: +1 Frigid Melody stack per use
+
+Stack System Overview:
+• Frigid Melody: Primary resource (gained from Freezing Harmony)
+• Eternal Frost: Offensive branch (critical hits + enhanced clicks)
+• Regal Snowlight: Utility branch (fragments + entropic melodies)
+
+Frigid Melody Consumption:
+• Button: "Ignite the Blizzard" - converts Frigid Melody into branch stacks
+• Consume X Frigid Melody → +X Eternal Frost OR +X Regal Snowlight
+• Player chooses which branch to empower
+
+ETERNAL FROST (Offensive Branch):
+• Consume Button: "Unleash Frozen Wrath"
+• Consumes all Eternal Frost stacks
+• Effect 1: Freeze NPS for 5 seconds
+• Effect 2: Next 15 clicks per stack consumed are enhanced
+  - Enhanced clicks stack: 1 stack = 15 clicks, 5 stacks = 75 clicks, etc.
+  - Enhanced clicks use special crit: "Blizzard's Command of Eternal Ice"
+  - Formula: (NPS * NPC)^2
+  - Extremely powerful with high NPS values
+
+REGAL SNOWLIGHT (Utility Branch):
+• Consume Button: "Invoke Crystalline Grace"
+• Consumes all Regal Snowlight stacks
+• Effect per stack consumed:
+  - +50 Melodious Fragments
+  - +50 Harmonious Fragments
+  - +25 Entropic Melodies
+
+WEAPON SYNERGIES
+---------------------------------------
+
+Cacophonic Blizzard (Weapon I):
+• Passive - Permafrost Strikes (while equipped):
+  - Every 20th click: Freeze NPS for 5 seconds (like Freezing Harmony)
+  - Every 20th click: Next 20 clicks gain +50% notes each
+  - Passive freeze effect works independently of Crescendance
+  
+• Crescendance Bond - Snow's Oblivion:
+  - When Eternal Frost consumed during Crescendance:
+    → +2 Snow's Oblivion stacks
+  - Consume 1 Snow's Oblivion:
+    → +X Entropic Melodies (X = total upgrades owned)
+  - Requires: Winter Major resonated + Cacophonic Blizzard equipped
+  - Scales with progression (more upgrades = more entropic)
+
+The Snow's Desire (Weapon II):
+• Passive - Accelerating Flurry (while equipped):
+  - Every click: +1% NPC (stacks up to +50% max)
+  - Decay: After 5 seconds of no clicking, bonus resets to 0%
+  - Active clicking bonus - rewards rapid clicking
+  - Display: Shows current bonus % in Crescendance panel
+  
+• Crescendance Bond - Frigid Resonance:
+  - Whenever you gain 1 Frigid Melody stack:
+    → Also gain +1 bonus Frigid Melody stack (doubling effect)
+  - Requires: Winter Major resonated + The Snow's Desire equipped
+  - Doubles Freezing Harmony efficiency (1 freeze = 2 stacks instead of 1)
+
+DUET ABILITY: Symphony of Absolute Zero
+---------------------------------------
+Requirements:
+• Winter Major resonated
+• Both Cacophonic Blizzard AND The Snow's Desire equipped
+
+Mechanics:
+• Freeze NPS for 20 seconds
+• Every click during freeze:
+  - Grants +1 Frigid Melody stack
+  - Grants "Blizzard's Command of Eternal Ice" crit (NPC × NPS bonus)
+  - Adds +0.5 seconds to freeze duration (max +10 seconds total)
+• Maximum Duration: 30 seconds (20 base + 10 from clicks)
+
+Cooldown: 4 minutes
+
+STRATEGY TIPS
+---------------------------------------
+1. Freeze NPS strategically - converts passive income to click power
+2. Build Frigid Melody stacks, then choose Frost (offense) or Snowlight (utility)
+3. Eternal Frost crits scale with NPS - freeze at high NPS for max damage
+4. Regal Snowlight best for fragment/entropic farming
+5. The Snow's Desire doubles Frigid Melody gain - equip for faster stacking
+6. Cacophonic Blizzard's passive 20th-click freeze combos with main Crescendance
+7. Snow's Oblivion scales with upgrades - more powerful in late game
+8. Accelerating Flurry requires active clicking - 50% NPC bonus is massive
+
+PROGRESSION NOTES
+---------------------------------------
+Early Game:
+• Use Freezing Harmony to build Frigid Melody (freeze NPS every 3s)
+• Focus on Regal Snowlight branch for fragments + entropic
+• Cacophonic Blizzard passive provides free freezes every 20 clicks
+
+Mid Game:
+• Eternal Frost becomes viable as NPS increases
+• Blizzard crits (NPC × NPS) grow exponentially stronger
+• Snow's Oblivion grants scaling entropic based on upgrade count
+• Start alternating between Frost/Snowlight based on needs
+
+Late Game:
+• Eternal Frost is primary offensive tool (massive crit values)
+• The Snow's Desire equipped doubles Frigid Melody gain
+• Duet (Symphony of Absolute Zero) provides 20-30s burst window
+• Accelerating Flurry +50% NPC bonus is game-changing
+• Snow's Oblivion grants hundreds/thousands of entropic per consume
+
+===========================================
+DESIGN CHANGELOG
+===========================================
+
+ABILITY NAMING:
+• Crescendance: "Winter Crescendance" → "Requiem of the Frozen Choir"
+• Eternal Frost consume: "Unleash Frozen Wrath"
+• Regal Snowlight consume: "Invoke Crystalline Grace"
+• Duet: "Absolute Zero" → "Symphony of Absolute Zero"
+
+STACK NAMING:
+• "Frigid Melody" - Primary resource stack (unchanged, already thematic)
+• "Eternal Frost" - Offensive branch stack (unchanged, strong ice theme)
+• "Regal Snowlight" - Utility branch stack (unchanged, elegant winter theme)
+• "Snow's Oblivion" - Cacophonic Blizzard bond stack (unchanged, fits weapon's dark theme)
+
+WEAPON PASSIVES:
+• Cacophonic Blizzard: "Passive on equip" → "Permafrost Strikes"
+• The Snow's Desire: "Passive on equip" → "Accelerating Flurry"
+
+CRESCENDANCE BONDS:
+• Cacophonic Blizzard bond: Named "Snow's Oblivion"
+• The Snow's Desire bond: Named "Frigid Resonance"
+
+CRITICAL HIT NAMES:
+• Enhanced clicks: "Blizzard's Command of Eternal Ice"
+  - Used during Eternal Frost consumption (15 clicks per stack)
+  - Used during Duet (every click for 20-30 seconds)
+
+FORMULA CLARIFICATIONS:
+• Blizzard's Command: Base notes + (NPC × NPS)
+• Snow's Oblivion: +X Entropic where X = total upgrades owned
+• Accelerating Flurry: +1% NPC per click, max +50%, decays after 5s no clicks
+• Eternal Frost: 15 enhanced clicks per stack consumed (stackable: 3 stacks = 45 clicks)
+• Regal Snowlight: Per stack consumed → +50 Melodious, +50 Harmonious, +25 Entropic
+
+MECHANICAL REFINEMENTS:
+• Freezing Harmony: 5s freeze, 3s cooldown, +1 Frigid Melody
+• Ignite the Blizzard: Convert Frigid Melody → Eternal Frost OR Regal Snowlight (player choice)
+• Cacophonic Blizzard passive: Every 20th click freezes NPS + buffs next 20 clicks
+• The Snow's Desire passive: Live % display added to Crescendance panel
+• Duet duration: 20s base, extendable to 30s via clicking (+0.5s per click, max +10s)

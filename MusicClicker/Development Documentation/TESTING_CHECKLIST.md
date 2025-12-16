@@ -220,63 +220,66 @@
 
 ---
 
-## DIES IRAE
+## DIES IRAE ✅ TESTED AND APPROVED
 
-### Crescendance: Symphony of Hell's Retribution
-- [ ] Every click grants +1 Dissonant Hatred (up to 50 max)
-- [ ] After 50 Dissonant Hatred, clicks grant +1 Discordant Malice instead
-- [ ] Consume 5 Dissonant Hatred grants +1 Cacophonic Oblivion
-- [ ] Consume Discordant Malice grants +X Entropic Melodies (X = current Dissonant Hatred stacks)
-- [ ] Consume Cacophonic Oblivion grants next 20 clicks as Symphony of Hell's Retribution crits
-- [ ] Hell's Retribution crit formula: NPC × NPS × Dissonant Hatred stacks
+### Crescendance: Damnation Requiem
+- [x] Every click grants +1 Dissonant Hatred (up to 50 max)
+- [x] After 50 Dissonant Hatred, clicks grant +1 Discordant Malice instead
+- [x] Consume 5 Dissonant Hatred grants +1 Cacophonic Oblivion
+- [x] Consume Discordant Malice grants +X Entropic Melodies (X = current Dissonant Hatred stacks)
+- [x] Consume ALL Discordant Malice button works correctly
+- [x] Consume Cacophonic Oblivion grants next 20 clicks as Symphony of Hell's Retribution crits
+- [x] Hell's Retribution crit formula: NPC × NPS × Dissonant Hatred stacks
+- [x] Crescendance timer displays correctly in main screen panel
 
 ### Seven Circles Weapon
-- [ ] Passive (Wrathful Amplification): Every critical hit in the game grants +20% of current notes
-- [ ] Crescendance Bond (Seal Resonance): Symphony of Hell's Retribution crits grant +1 Wrathful Seal per crit
-- [ ] Crescendance Bond: Consume 1 Wrathful Seal grants next 5 clicks as "Seal-breaking Melody of Oblivion"
-- [ ] Seal-breaking formula: DOUBLE Symphony of Hell (2 × NPC × NPS × Dissonant Hatred)
-- [ ] Crescendance Bond requires: Dies Irae Major resonated + Seven Circles equipped
-- [ ] Duet (Infernal Symphony): Seal-breaking Melody crits grant +1 Wrathful Seal
-- [ ] Duet: Consume 15+ Wrathful Seals grants next 5 clicks that double current notes
-- [ ] Duet: 20 second duration, 10 minute cooldown
+- [x] Passive (Wrathful Amplification): Every critical hit in the game grants +20% of current notes
+- [x] Crescendance Bond (Seal Resonance): Symphony of Hell's Retribution crits grant +1 Wrathful Seal per crit
+- [x] Crescendance Bond: Consume 1 Wrathful Seal grants next 5 clicks as "Seal-breaking Melody of Oblivion"
+- [x] Seal-breaking formula: DOUBLE Symphony of Hell (2 × NPC × NPS × Dissonant Hatred)
+- [x] Crescendance Bond requires: Dies Irae Major resonated + Seven Circles equipped
+- [x] Duet (Damnation Requiem: Infernal Symphony): Seal-breaking Melody crits grant +1 Wrathful Seal
+- [x] Duet: Consume 15+ Wrathful Seals grants next 5 clicks that double current notes
+- [x] Duet: 20 second duration, 10 minute cooldown
 
 ### Hell's Wrath Weapon
-- [ ] Passive (Infernal Bounty): Every 50th click grants +2 to your 2 lowest owned minor scores
-- [ ] Crescendance Bond (Entropic Fury): Each Symphony of Hell's Retribution crit grants +200 Entropic Melodies
-- [ ] Crescendance Bond: Each Seal-breaking Melody of Oblivion crit grants +200 Entropic Melodies
-- [ ] Crescendance Bond requires: Dies Irae Major resonated + Hell's Wrath equipped
-- [ ] Duet (Infernal Symphony): Same as Seven Circles - all rewards tested
+- [x] Passive (Infernal Bounty): Every 50th click grants +2 to your 2 lowest owned minor scores
+- [x] Crescendance Bond (Entropic Fury): Each Symphony of Hell's Retribution crit grants +200 Entropic Melodies
+- [x] Crescendance Bond: Each Seal-breaking Melody of Oblivion crit grants +200 Entropic Melodies
+- [x] Crescendance Bond requires: Dies Irae Major resonated + Hell's Wrath equipped
+- [x] Duet (Damnation Requiem: Infernal Symphony): Same as Seven Circles - all rewards tested
 
 ---
 ## WINTER
 
-### Crescendance: Eternal Frost
-- [ ] Activating freezes NPS (stops passive note generation)
-- [ ] Frozen NPS converts to click multiplier
-- [ ] Each click extends duration by +0.5 seconds
-- [ ] Maximum extension is +10 seconds total
-- [ ] 15 second base duration, 5 minute cooldown
+### Crescendance: Requiem of the Frozen Choir
+- [ ] Freezing Harmony button: Freezes NPS for 5 seconds (3s cooldown)
+- [ ] Freezing Harmony: Grants +1 Frigid Melody stack per use
+- [ ] NPS freeze prevents passive note generation correctly
+- [ ] Ignite the Blizzard: Converts Frigid Melody to Eternal Frost OR Regal Snowlight (player choice)
+- [ ] Eternal Frost consume: Freezes NPS for 5s + grants 15 enhanced clicks per stack consumed
+- [ ] Enhanced clicks use "Blizzard's Command of Eternal Ice" crit (base + NPC × NPS)
+- [ ] Enhanced clicks stack correctly (3 Frost = 45 enhanced clicks, etc.)
+- [ ] Regal Snowlight consume: Grants +50 Melodious, +50 Harmonious, +25 Entropic per stack
 
 ### Cacophonic Blizzard Weapon
-- [ ] Passive: TBD
-- [ ] Crescendance Bond: TBD
-- [ ] Duet (Absolute Zero): Same mechanics as Crescendance
-- [ ] Duet: NPS properly frozen and converted to click power
-- [ ] Duet: Click extension works correctly
+- [ ] Passive (Permafrost Strikes): Every 20th click freezes NPS for 5s + buffs next 20 clicks with +50% notes
+- [ ] Passive works independently from Crescendance freeze
+- [ ] Crescendance Bond (Snow's Oblivion): Eternal Frost consume grants +2 Snow's Oblivion stacks
+- [ ] Crescendance Bond: Consume 1 Snow's Oblivion grants +X Entropic (X = total upgrades owned)
+- [ ] Crescendance Bond requires: Winter Major resonated + Cacophonic Blizzard equipped
+- [ ] Duet (Symphony of Absolute Zero): Freezes NPS for 20s
+- [ ] Duet: Every click grants +1 Frigid Melody + Blizzard's Command crit
+- [ ] Duet: Each click extends duration by +0.5s (max +10s total = 30s max)
+- [ ] Duet: 20 second base duration, 4 minute cooldown
 
 ### The Snow's Desire Weapon
-- [ ] Passive: TBD
-- [ ] Crescendance Bond: TBD
-- [ ] Duet (Absolute Zero): Same as Cacophonic Blizzardassive note generation)
-- [ ] Frozen NPS converts to click multiplier
-- [ ] Each click extends duration by +0.5 seconds
-- [ ] Maximum extension is +10 seconds total
-- [ ] 15 second base duration, 5 minute cooldown
-
-### Duet: Absolute Zero
-- [ ] Same mechanics as Crescendance tested
-- [ ] NPS properly frozen and converted to click power
-- [ ] Click extension works correctly
+- [ ] Passive (Accelerating Flurry): Every click grants +1% NPC (max +50%)
+- [ ] Passive: Bonus decays to 0% after 5 seconds of no clicking
+- [ ] Passive: Current % bonus displays in Crescendance panel
+- [ ] Crescendance Bond (Frigid Resonance): Gaining 1 Frigid Melody grants +1 bonus stack (doubling effect)
+- [ ] Crescendance Bond requires: Winter Major resonated + The Snow's Desire equipped
+- [ ] Duet (Symphony of Absolute Zero): Same as Cacophonic Blizzard - all mechanics tested
 
 ---
 

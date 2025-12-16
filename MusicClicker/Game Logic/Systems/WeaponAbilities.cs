@@ -338,7 +338,7 @@ namespace MusicClicker.Armory
             // (Removed old behavior that halved the player's notes on major acquisition.)
 
             // Find lowest owned minor score
-            int[] minorScores = new int[] {
+            long[] minorScores = new long[] {
                 gameState.MoonlightMinorOwned,
                 gameState.EroicaMinorOwned,
                 gameState.SwanMinorOwned,
@@ -349,7 +349,7 @@ namespace MusicClicker.Armory
             };
 
             int minIndex = 0;
-            int minVal = minorScores[0];
+            long minVal = minorScores[0];
             for (int i = 1; i < minorScores.Length; i++)
             {
                 if (minorScores[i] < minVal)
@@ -670,7 +670,7 @@ namespace MusicClicker.Armory
             if (gameState == null) return;
 
             // Find lowest owned minor score
-            int[] minorScores = new int[] {
+            long[] minorScores = new long[] {
                 gameState.MoonlightMinorOwned,
                 gameState.EroicaMinorOwned,
                 gameState.SwanMinorOwned,
@@ -681,7 +681,7 @@ namespace MusicClicker.Armory
             };
 
             int minIndex = 0;
-            int minVal = minorScores[0];
+            long minVal = minorScores[0];
             for (int i = 1; i < minorScores.Length; i++)
             {
                 if (minorScores[i] < minVal)
@@ -1402,13 +1402,13 @@ namespace MusicClicker.Armory
                 gameState.FateDuetClickCounter = 0;
                 
                 // Find lowest owned minor
-                int[] minorScores = new int[] {
+                long[] minorScores = new long[] {
                     gameState.MoonlightMinorOwned, gameState.EroicaMinorOwned,
                     gameState.SwanMinorOwned, gameState.LaCampanellaMinorOwned,
                     gameState.EnigmaMinorOwned, gameState.FateMinorOwned,
                     gameState.OdeToJoyMinorOwned
                 };
-                int minIndex = 0, minVal = minorScores[0];
+                int minIndex = 0; long minVal = minorScores[0];
                 for (int i = 1; i < minorScores.Length; i++)
                     if (minorScores[i] < minVal) { minVal = minorScores[i]; minIndex = i; }
                 
@@ -1417,7 +1417,7 @@ namespace MusicClicker.Armory
                 {
                     case 0:
                         {
-                            int originalCount = gameState.MoonlightMinorOwned;
+                            long originalCount = gameState.MoonlightMinorOwned;
                             gameState.MoonlightMinorOwned *= 2;
                             if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
                             {
@@ -1427,7 +1427,7 @@ namespace MusicClicker.Armory
                         break;
                     case 1:
                         {
-                            int originalCount = gameState.EroicaMinorOwned;
+                            long originalCount = gameState.EroicaMinorOwned;
                             gameState.EroicaMinorOwned *= 2;
                             if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
                             {
@@ -1437,7 +1437,7 @@ namespace MusicClicker.Armory
                         break;
                     case 2:
                         {
-                            int originalCount = gameState.SwanMinorOwned;
+                            long originalCount = gameState.SwanMinorOwned;
                             gameState.SwanMinorOwned *= 2;
                             if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
                             {
@@ -1447,7 +1447,7 @@ namespace MusicClicker.Armory
                         break;
                     case 3:
                         {
-                            int originalCount = gameState.LaCampanellaMinorOwned;
+                            long originalCount = gameState.LaCampanellaMinorOwned;
                             gameState.LaCampanellaMinorOwned *= 2;
                             if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
                             {
@@ -1457,7 +1457,7 @@ namespace MusicClicker.Armory
                         break;
                     case 4:
                         {
-                            int originalCount = gameState.EnigmaMinorOwned;
+                            long originalCount = gameState.EnigmaMinorOwned;
                             gameState.EnigmaMinorOwned *= 2;
                             if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
                             {
@@ -1467,7 +1467,7 @@ namespace MusicClicker.Armory
                         break;
                     case 5:
                         {
-                            int originalCount = gameState.FateMinorOwned;
+                            long originalCount = gameState.FateMinorOwned;
                             gameState.FateMinorOwned *= 2;
                             if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
                             {
@@ -1477,11 +1477,11 @@ namespace MusicClicker.Armory
                         break;
                     case 6:
                         {
-                            int originalCount = gameState.OdeToJoyMinorOwned;
+                            long originalCount = gameState.OdeToJoyMinorOwned;
                             gameState.OdeToJoyMinorOwned *= 2;
                             if (!gameState.NpsFrozen || DateTime.Now > gameState.NpsFreezeExpiry)
                             {
-                                gameState.NotesPerSecond += originalCount * 255000;
+                                gameState.NotesPerSecond += originalCount * 300000;
                             }
                         }
                         break;
@@ -1499,65 +1499,184 @@ namespace MusicClicker.Armory
         // (No method needed - handled in timer logic)
 
         // ==================== WINTER EVENT WEAPONS (16-17) ====================
-        // Theme: "Eternal Frost" - Freeze mechanics with extended duration and multiplier effects
+        // Theme: "Requiem of the Frozen Choir" - Freeze mechanics with stacking systems
 
         /// <summary>
-        /// Cacophonic Blizzard (Winter I): Crystalline Shatter
-        /// Forte Effect: Every 10th click grants notes equal to 10 seconds worth of your current NPS instantly.
-        /// Duet Effect (with The Snow's Desire): Every 50th click freezes NPS for 12 seconds.
+        /// Winter Crescendance: Freezing Harmony
+        /// Button (3s cooldown): Freeze NPS for 5 seconds, grants +1 Frigid Melody stack
+        /// If The Snow's Desire equipped with Winter resonated, grants +2 stacks instead (Frigid Resonance bond)
+        /// </summary>
+        public static void Winter_FreezingHarmony(GameState gameState)
+        {
+            if (gameState == null) return;
+            if (DateTime.Now < gameState.FreezingHarmonyCooldownExpiry) return;
+
+            // Freeze NPS for 5 seconds
+            gameState.NpsFrozen = true;
+            gameState.FrozenNpsValue = gameState.NotesPerSecond;
+            gameState.NpsFreezeExpiry = DateTime.Now.AddSeconds(5);
+            gameState.FreezingHarmonyCooldownExpiry = DateTime.Now.AddSeconds(3);
+
+            // Grant Frigid Melody stack(s)
+            int stacksToGrant = 1;
+            
+            // Crescendance Bond: Frigid Resonance (The Snow's Desire)
+            bool hasTheSnowsDesire = gameState.CurrentResonatedWeapon1 == "TheSnowsDesire" || 
+                                      gameState.CurrentResonatedWeapon2 == "TheSnowsDesire";
+            if (hasTheSnowsDesire && gameState.WinterAbility) // Requires Winter resonated
+            {
+                stacksToGrant = 2; // Doubling effect
+            }
+
+            gameState.FrigidMelodyStacks += stacksToGrant;
+        }
+
+        /// <summary>
+        /// Winter Crescendance: Ignite the Blizzard (Eternal Frost branch)
+        /// Converts ALL Frigid Melody stacks → Eternal Frost stacks
+        /// </summary>
+        public static void Winter_IgniteToEternalFrost(GameState gameState)
+        {
+            if (gameState == null || gameState.FrigidMelodyStacks <= 0) return;
+            // Convert a single Frigid Melody stack into an Eternal Frost stack per activation
+            gameState.FrigidMelodyStacks -= 1;
+            gameState.EternalFrostStacks += 1;
+        }
+
+        /// <summary>
+        /// Winter Crescendance: Ignite the Blizzard (Regal Snowlight branch)
+        /// Converts ALL Frigid Melody stacks → Regal Snowlight stacks
+        /// </summary>
+        public static void Winter_IgniteToRegalSnowlight(GameState gameState)
+        {
+            if (gameState == null || gameState.FrigidMelodyStacks <= 0) return;
+            // Convert a single Frigid Melody stack into a Regal Snowlight stack per activation
+            gameState.FrigidMelodyStacks -= 1;
+            gameState.RegalSnowlightStacks += 1;
+        }
+
+        /// <summary>
+        /// Winter Crescendance: Unleash Frozen Wrath (Eternal Frost consumption)
+        /// Consumes ALL Eternal Frost stacks:
+        /// - Freezes NPS for 5 seconds
+        /// - Grants 15 enhanced clicks per stack consumed ("Blizzard's Command of Eternal Ice" crits)
+        /// - If Cacophonic Blizzard equipped + Winter resonated: Also grants +2 Snow's Oblivion per consume
+        /// </summary>
+        public static void Winter_ConsumeEternalFrost(GameState gameState)
+        {
+            if (gameState == null || gameState.EternalFrostStacks <= 0) return;
+
+            // Consume a single Eternal Frost stack per activation
+            gameState.EternalFrostStacks -= 1;
+
+            // Freeze NPS for 5 seconds
+            gameState.NpsFrozen = true;
+            gameState.FrozenNpsValue = gameState.NotesPerSecond;
+            gameState.NpsFreezeExpiry = DateTime.Now.AddSeconds(5);
+
+            // Grant enhanced clicks (15 per stack consumed)
+            gameState.BlizzardCommandClicksRemaining += 15;
+
+            // Crescendance Bond: Snow's Oblivion (Cacophonic Blizzard)
+            bool hasCacophonicBlizzard = gameState.CurrentResonatedWeapon1 == "CacophonicBlizzard" || 
+                                          gameState.CurrentResonatedWeapon2 == "CacophonicBlizzard";
+            if (hasCacophonicBlizzard && gameState.WinterAbility) // Requires Winter resonated
+            {
+                gameState.SnowsOblivionStacks += 2; // +2 per stack consumed
+            }
+        }
+
+        /// <summary>
+        /// Winter Crescendance: Invoke Crystalline Grace (Regal Snowlight consumption)
+        /// Consumes ALL Regal Snowlight stacks:
+        /// Per stack: +50 Melodious, +50 Harmonious, +25 Entropic Melodies
+        /// </summary>
+        public static void Winter_ConsumeRegalSnowlight(GameState gameState)
+        {
+            if (gameState == null || gameState.RegalSnowlightStacks <= 0) return;
+
+            // Consume a single Regal Snowlight stack per activation
+            gameState.RegalSnowlightStacks -= 1;
+
+            // Grant resources for one stack
+            gameState.MelodiousOwned += 50;
+            gameState.HarmoniousOwned += 50;
+            gameState.EntropicMelodies += 25;
+        }
+
+        /// <summary>
+        /// Cacophonic Blizzard Weapon: Permafrost Strikes (Passive while equipped)
+        /// Every 20th click:
+        /// - Freezes NPS for 5 seconds
+        /// - Next 20 clicks gain +50% notes each
         /// </summary>
         public static void CacophonicBlizzard_OnClick(GameState gameState)
         {
             if (gameState == null) return;
+            if (!gameState.CacophonicBlizzardAbility) return; // Only if equipped
 
-            // Crystalline Shatter - solo forte effect (every 10th click)
-            if (gameState.CacophonicBlizzardAbility)
-            {
-                gameState.CrystallineShatterCounter++;
-                if (gameState.CrystallineShatterCounter >= 10)
-                {
-                    gameState.CrystallineShatterCounter = 0;
-                    // Grant 10 seconds worth of NPS instantly
-                    double burst = gameState.NotesPerSecond * 10.0;
-                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, burst);
-                }
-            }
-
-            // Duet effect - freeze NPS every 50th click (only when both Winter weapons equipped)
             gameState.CacophonicBlizzardClickCounter++;
-            if (gameState.CacophonicBlizzardClickCounter >= 50)
+            if (gameState.CacophonicBlizzardClickCounter >= 20)
             {
                 gameState.CacophonicBlizzardClickCounter = 0;
+
+                // Freeze NPS for 5 seconds
                 gameState.NpsFrozen = true;
                 gameState.FrozenNpsValue = gameState.NotesPerSecond;
-                gameState.NpsFreezeExpiry = DateTime.Now.AddSeconds(12); // Extended duration
+                gameState.NpsFreezeExpiry = DateTime.Now.AddSeconds(5);
+
+                // Next 20 clicks gain +50% notes
+                gameState.CacophonicBlizzardBonusClicksRemaining = 20;
             }
         }
 
         /// <summary>
-        /// The Snow's Desire (Winter II): Blizzard's Bounty
-        /// Forte Effect: Each Harmonious fragment purchase grants +2% NPS for 30 seconds (stacks additively, multiple purchases extend duration).
+        /// Cacophonic Blizzard: Consume Snow's Oblivion
+        /// Consumes 1 Snow's Oblivion stack: Grants +X Entropic Melodies (X = total upgrades owned)
         /// </summary>
-        public static void TheSnowsDesire_OnHarmoniousPurchase(GameState gameState)
+        public static void CacophonicBlizzard_ConsumeSnowsOblivion(GameState gameState)
+        {
+            if (gameState == null || gameState.SnowsOblivionStacks <= 0) return;
+
+            // Count total upgrades owned (approximate: sum core upgrade counts)
+            int totalUpgrades = gameState.ChordOwned + gameState.ScaleOwned + gameState.OrchestraOwned + gameState.SymphonyOwned
+                                + gameState.AriaOwned + gameState.RequiemOwned + gameState.OpusOwned + gameState.MagnumOpusOwned;
+
+            gameState.EntropicMelodies += totalUpgrades;
+            gameState.SnowsOblivionStacks--;
+        }
+
+        /// <summary>
+        /// The Snow's Desire Weapon: Accelerating Flurry (Passive while equipped)
+        /// Every click: +1% NPC (max +50%)
+        /// Decays to 0% after 5 seconds of no clicking
+        /// </summary>
+        public static void TheSnowsDesire_OnClick(GameState gameState)
         {
             if (gameState == null) return;
+            if (!gameState.TheSnowsDesireAbility) return; // Only if equipped
 
-            // Blizzard's Bounty - solo forte effect
-            if (gameState.TheSnowsDesireAbility)
+            gameState.AcceleratingFlurryLastClickTime = DateTime.Now;
+
+            // Increase bonus by 1%, cap at 50%
+            if (gameState.AcceleratingFlurryBonus < 50.0)
             {
-                // Add 2% to the bonus (stacks additively)
-                gameState.BlizzardBountyNpsBonus += 0.02;
-                // Extend/set duration to 30 seconds from now
-                gameState.BlizzardBountyExpiry = DateTime.Now.AddSeconds(30);
+                gameState.AcceleratingFlurryBonus += 1.0;
+                if (gameState.AcceleratingFlurryBonus > 50.0)
+                {
+                    gameState.AcceleratingFlurryBonus = 50.0;
+                }
             }
         }
 
         /// <summary>
-        /// Winter Duet: "Absolute Zero"
-        /// Duet Ability (Manual activation, 5min cooldown, 15s base duration):
-        /// Activate to convert frozen NPS into a click multiplier (requires NPS to be frozen first).
-        /// Every click during this time extends duration by 0.5s (max +10s extension).
-        /// Returns the multiplier to apply to clicks when duet is active.
+        /// Winter Duet: "Symphony of Absolute Zero"
+        /// Duet Ability (4min cooldown, 20s base duration):
+        /// - Freezes NPS for 20 seconds
+        /// - Every click during freeze:
+        ///   * Grants +1 Frigid Melody stack
+        ///   * Applies "Blizzard's Command of Eternal Ice" crit (NPC × NPS bonus)
+        ///   * Extends duration by +0.5s (max +10s extension = 30s total)
         /// </summary>
         public static double WinterDuet_GetClickMultiplier(GameState gameState)
         {
@@ -1576,8 +1695,8 @@ namespace MusicClicker.Armory
         }
 
         /// <summary>
-        /// Winter Duet: Extend duration on click (called from click handler).
-        /// Each click extends the ability duration by 0.5s, up to a maximum of +10s total extension.
+        /// Winter Duet: On-click handler
+        /// Grants +1 Frigid Melody and extends duration by +0.5s (max +10s total)
         /// </summary>
         public static void WinterDuet_OnClick(GameState gameState)
         {
@@ -1585,7 +1704,10 @@ namespace MusicClicker.Armory
 
             if (gameState.WinterDuetActive && DateTime.Now <= gameState.WinterDuetExpiry)
             {
-                // Only extend if we haven't hit the max extension
+                // Grant +1 Frigid Melody
+                gameState.FrigidMelodyStacks++;
+
+                // Extend duration if not at max
                 if (gameState.WinterDuetExtensionTime < 10.0)
                 {
                     gameState.WinterDuetExpiry = gameState.WinterDuetExpiry.AddSeconds(0.5);
@@ -1964,21 +2086,21 @@ namespace MusicClicker.Armory
             if (gameState == null) return;
 
             // Store old values to calculate the NPS increase
-            int oldMoonlightMinor = gameState.MoonlightMinorOwned;
-            int oldEroicaMinor = gameState.EroicaMinorOwned;
-            int oldSwanMinor = gameState.SwanMinorOwned;
-            int oldLaCampanellaMinor = gameState.LaCampanellaMinorOwned;
-            int oldEnigmaMinor = gameState.EnigmaMinorOwned;
-            int oldFateMinor = gameState.FateMinorOwned;
-            int oldOdeMinor = gameState.OdeToJoyMinorOwned;
+            long oldMoonlightMinor = gameState.MoonlightMinorOwned;
+            long oldEroicaMinor = gameState.EroicaMinorOwned;
+            long oldSwanMinor = gameState.SwanMinorOwned;
+            long oldLaCampanellaMinor = gameState.LaCampanellaMinorOwned;
+            long oldEnigmaMinor = gameState.EnigmaMinorOwned;
+            long oldFateMinor = gameState.FateMinorOwned;
+            long oldOdeMinor = gameState.OdeToJoyMinorOwned;
 
-            int oldMoonlightMajor = gameState.MoonlightMajorOwned;
-            int oldEroicaMajor = gameState.EroicaMajorOwned;
-            int oldSwanMajor = gameState.SwanMajorOwned;
-            int oldLaCampanellaMajor = gameState.LaCampanellaMajorOwned;
-            int oldEnigmaMajor = gameState.EnigmaMajorOwned;
-            int oldFateMajor = gameState.FateMajorOwned;
-            int oldOdeMajor = gameState.OdeToJoyMajorOwned;
+            long oldMoonlightMajor = gameState.MoonlightMajorOwned;
+            long oldEroicaMajor = gameState.EroicaMajorOwned;
+            long oldSwanMajor = gameState.SwanMajorOwned;
+            long oldLaCampanellaMajor = gameState.LaCampanellaMajorOwned;
+            long oldEnigmaMajor = gameState.EnigmaMajorOwned;
+            long oldFateMajor = gameState.FateMajorOwned;
+            long oldOdeMajor = gameState.OdeToJoyMajorOwned;
 
             // Double all owned scores
             gameState.MoonlightMinorOwned *= 2;
@@ -2973,7 +3095,7 @@ namespace MusicClicker.Armory
         /// </summary>
         private static int GetLowestOwnedMinorIndex(GameState gameState)
         {
-            int[] minorCounts = {
+            long[] minorCounts = {
                 gameState.MoonlightMinorOwned,
                 gameState.EroicaMinorOwned,
                 gameState.SwanMinorOwned,
@@ -2984,7 +3106,7 @@ namespace MusicClicker.Armory
             };
             
             int lowestIndex = 0;
-            int lowestCount = minorCounts[0];
+            long lowestCount = minorCounts[0];
             
             for (int i = 1; i < minorCounts.Length; i++)
             {

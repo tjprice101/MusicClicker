@@ -501,20 +501,34 @@ namespace MusicClicker
         // Ode to Creation next click bonus
         public bool OdeToCreationNextClickBonus { get; set; } = false;
 
-        // Winter weapon mechanics
-        public int CacophonicBlizzardClickCounter { get; set; } = 0;
+        // ==================== WINTER CRESCENDANCE: REQUIEM OF THE FROZEN CHOIR ====================
+        
+        // Core stack system
+        public int FrigidMelodyStacks { get; set; } = 0;          // Primary resource (from Freezing Harmony)
+        public int EternalFrostStacks { get; set; } = 0;          // Offensive branch (enhanced clicks + crits)
+        public int RegalSnowlightStacks { get; set; } = 0;        // Utility branch (fragments + entropic)
+        
+        // Freezing Harmony cooldown
+        public DateTime FreezingHarmonyCooldownExpiry { get; set; } = DateTime.MinValue;
+        
+        // NPS Freeze mechanic (shared by Freezing Harmony, Eternal Frost, Cacophonic Blizzard passive, and Duet)
         public bool NpsFrozen { get; set; } = false;
         public double FrozenNpsValue { get; set; } = 0;
         public DateTime NpsFreezeExpiry { get; set; } = DateTime.MinValue;
         
-        // Cacophonic Blizzard - Crystalline Shatter (every 10th click grants 10 seconds of NPS instantly)
-        public int CrystallineShatterCounter { get; set; } = 0;
+        // Eternal Frost: Enhanced clicks ("Blizzard's Command of Eternal Ice" crits)
+        public int BlizzardCommandClicksRemaining { get; set; } = 0;
         
-        // The Snow's Desire - Blizzard's Bounty (Harmonious purchases grant +2% NPS for 30s, stacks)
-        public double BlizzardBountyNpsBonus { get; set; } = 0; // Tracks total % bonus
-        public DateTime BlizzardBountyExpiry { get; set; } = DateTime.MinValue;
+        // Weapon: Cacophonic Blizzard
+        public int CacophonicBlizzardClickCounter { get; set; } = 0;       // Tracks toward 20th click
+        public int CacophonicBlizzardBonusClicksRemaining { get; set; } = 0; // Next 20 clicks gain +50% notes
+        public int SnowsOblivionStacks { get; set; } = 0;                  // Crescendance Bond stack
         
-        // Winter Duet: Absolute Zero
+        // Weapon: The Snow's Desire
+        public double AcceleratingFlurryBonus { get; set; } = 0;           // Current +% NPC (up to 50%)
+        public DateTime AcceleratingFlurryLastClickTime { get; set; } = DateTime.MinValue; // For 5s decay
+        
+        // Winter Duet: Symphony of Absolute Zero
         public bool WinterDuetActive { get; set; } = false;
         public DateTime WinterDuetExpiry { get; set; } = DateTime.MinValue;
         public DateTime WinterDuetCooldownExpiry { get; set; } = DateTime.MinValue;

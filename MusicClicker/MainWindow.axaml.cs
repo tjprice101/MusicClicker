@@ -357,10 +357,11 @@ namespace MusicClicker
                             }
                         }
 
-                        // Check if Blizzard's Bounty has expired
-                        if (gameState.BlizzardBountyNpsBonus > 0 && now > gameState.BlizzardBountyExpiry)
+                        // Check if Accelerating Flurry has decayed (The Snow's Desire passive)
+                        if (gameState.AcceleratingFlurryBonus > 0 && 
+                            (now - gameState.AcceleratingFlurryLastClickTime).TotalSeconds > 5)
                         {
-                            gameState.BlizzardBountyNpsBonus = 0;
+                            gameState.AcceleratingFlurryBonus = 0;
                         }
 
                         // Check if Moonlight Duet has expired - start cooldown when it expires naturally
@@ -469,12 +470,6 @@ namespace MusicClicker
                         if (gameState.AstralChainripperNpsBoostActive)
                         {
                             effectiveNps *= 5.0;
-                        }
-
-                        // Apply Blizzard's Bounty NPS bonus (stacking +2% per harmonious purchase)
-                        if (gameState.BlizzardBountyNpsBonus > 0)
-                        {
-                            effectiveNps *= (1.0 + gameState.BlizzardBountyNpsBonus);
                         }
 
                         // Apply Ode to Joy Duet 5x NPS boost from completing 16-note crescendo
@@ -709,6 +704,12 @@ namespace MusicClicker
                 notesPerClick *= 1.33; // 33% increase
                 gameState.OdeToCreationNextClickBonus = false;
             }
+            
+            // Apply The Snow's Desire Accelerating Flurry bonus (+1% to +50% NPC)
+            if (gameState.AcceleratingFlurryBonus > 0)
+            {
+                notesPerClick *= (1.0 + (gameState.AcceleratingFlurryBonus / 100.0));
+            }
 
             // Apply Winter Duet multiplier: Frozen NPS is used as a click multiplier
             if (gameState.CurrentResonatedWeapon1 != "None" && gameState.CurrentResonatedWeapon2 != "None")
@@ -719,6 +720,13 @@ namespace MusicClicker
                     double winterMultiplier = MusicClicker.Armory.WeaponAbilities.WinterDuet_GetClickMultiplier(gameState);
                     notesPerClick *= winterMultiplier;
                 }
+            }
+            
+            // Apply Cacophonic Blizzard bonus clicks (+50% notes for next 20 clicks)
+            if (gameState.CacophonicBlizzardBonusClicksRemaining > 0)
+            {
+                notesPerClick *= 1.5; // +50% notes
+                gameState.CacophonicBlizzardBonusClicksRemaining--;
             }
             
             // Apply Incisor of Moonlight passive: Every 4th click bonus (while equipped)
@@ -812,11 +820,18 @@ namespace MusicClicker
                 MusicClicker.Armory.WeaponAbilities.JoyfulCatharsis_OnClick(gameState);
             }
 
-            // Winter: Cacophonic Blizzard - every 50th click freezes NPS for 8s
+            // Winter: Cacophonic Blizzard - every 20th click freezes NPS + buffs next 20 clicks
             if (gameState.CacophonicBlizzard &&
                 (gameState.CurrentResonatedWeapon1 == "CacophonicBlizzard" || gameState.CurrentResonatedWeapon2 == "CacophonicBlizzard"))
             {
                 MusicClicker.Armory.WeaponAbilities.CacophonicBlizzard_OnClick(gameState);
+            }
+            
+            // Winter: The Snow's Desire - Accelerating Flurry (+1% NPC per click, max 50%)
+            if (gameState.TheSnowsDesire &&
+                (gameState.CurrentResonatedWeapon1 == "TheSnowsDesire" || gameState.CurrentResonatedWeapon2 == "TheSnowsDesire"))
+            {
+                MusicClicker.Armory.WeaponAbilities.TheSnowsDesire_OnClick(gameState);
             }
 
             // Swan Lake Crescendance: Feather collection on clicks
@@ -921,12 +936,8 @@ namespace MusicClicker
                     roll -= 10.0;
                 }
 
-                // Apply Eulogy of the Moon: +5% critical rate during nighttime (8PM-6AM)
-                // Shift the roll down by 5 to effectively increase crit chance
-                if (gameState.EulogyOfTheMoonAbility && isNighttime)
-                {
-                    roll -= 5.0; // This increases the chance of hitting lower (crit) thresholds
-                }
+                // Eulogy of the Moon passive does NOT modify crit chance.
+                // (Nocturnal Refund and other Eulogy effects are handled elsewhere.)
                 
                 // Apply Fate Cosmic Modulation tier bonuses
                 int cosmicTier = gameState.CosmicModulationStacks;
@@ -1042,7 +1053,20 @@ namespace MusicClicker
                         gameState.EntropicMelodies += 50;
                     }
                 }
-                // 4. Priority comparison: Crimson Requiem vs Funeral Prayer Empowered (use highest value)
+                // 4. Winter: Blizzard's Command of Eternal Ice (enhanced clicks from Eternal Frost or Duet)
+                else if (gameState.BlizzardCommandClicksRemaining > 0)
+                {
+                    gameState.BlizzardCommandClicksRemaining--;
+                    // Blizzard's Command new formula: give notes equal to (NPS * NPC)^2 per click
+                    double prod = gameState.NotesPerSecond * gameState.NotesPerClick;
+                    finalNotes = prod * prod;
+                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
+                    critText = $"Blizzard's Command of Eternal Ice!!! +{NumberFormatter.FormatLargeNumber(finalNotes)}";
+                    critColor = Color.FromRgb(173, 216, 230); // Light blue
+                    hasStroke = true;
+                    strokeColor = Color.FromRgb(0, 191, 255); // Deep sky blue outline
+                }
+                // 5. Priority comparison: Crimson Requiem vs Funeral Prayer Empowered (use highest value)
                 else if (gameState.CrimsonRequiemClicksRemaining > 0 || funeralPrayerEmpoweredThisClick)
                 {
                     // Calculate values for comparison
@@ -1072,7 +1096,7 @@ namespace MusicClicker
                         hasStroke = true;
                     }
                 }
-                // 5. Thousand Winged Swan: Dawn of the Swan's Glory (NPS-to-NPC boost active)
+                // 6. Thousand Winged Swan: Dawn of the Swan's Glory (NPS-to-NPC boost active)
                 else if (thousandWingedSwanBoostActive)
                 {
                     critText = $"Dawn of the Swan's Glory!!! +{NumberFormatter.FormatLargeNumber(notesPerClick)}";
@@ -1080,7 +1104,7 @@ namespace MusicClicker
                     hasStroke = true;
                     strokeColor = Color.FromRgb(199, 21, 133); // Dark pink outline
                 }
-                // 6. Ode to Joy: Entropic Crescendo of Eternity from Petal of Melody (1500x multiplier, time-based)
+                // 7. Ode to Joy: Entropic Crescendo of Eternity from Petal of Melody (1500x multiplier, time-based)
                 else if (DateTime.Now <= gameState.EntropicCritExpiry)
                 {
                     finalNotes = notesPerClick * 1500;
@@ -2147,9 +2171,13 @@ namespace MusicClicker
             {
                 UpdateMainDiesIraeCrescendanceInfo();
             }
+            else if (gameState.CurrentResonatedScore == "Winter")
+            {
+                UpdateMainWinterCrescendanceInfo();
+            }
             else
             {
-                // No crescendance system for this score yet (Winter)
+                // No crescendance system for this score yet
                 MainScreenCrescendancePanel.IsVisible = false;
             }
         }
@@ -2344,6 +2372,167 @@ namespace MusicClicker
             gameState.NotesPerSecond = MusicClicker.Helpers.Progression.RecalculateNotesPerSecond(gameState);
             gameState.NotesPerClick = MusicClicker.Helpers.Progression.RecalculateNotesPerClick(gameState);
             UpdateMainOdeToJoyCrescendanceInfo();
+            UIUpdater.UpdateUI(this, gameState);
+        }
+        
+        /// <summary>
+        /// Updates Winter crescendance info (Frigid Melody, Eternal Frost, Regal Snowlight, Snow's Oblivion)
+        /// </summary>
+        private void UpdateMainWinterCrescendanceInfo()
+        {
+            if (MainCrescendanceTitle != null)
+                MainCrescendanceTitle.Text = "Winter: Requiem of the Frozen Choir";
+                
+            if (MainCrescendanceInfoText != null)
+                MainCrescendanceInfoText.Text = "Freeze NPS to gain Frigid Melody. Ignite into Eternal Frost (offensive) or Regal Snowlight (utility). Consume for powerful effects!";
+                
+            // Hide all other panels
+            if (MainSwanFeatherPanel != null) MainSwanFeatherPanel.IsVisible = false;
+            if (MainMoonlightStackPanel != null) MainMoonlightStackPanel.IsVisible = false;
+            if (MainLaCampanellaStackPanel != null) MainLaCampanellaStackPanel.IsVisible = false;
+            if (MainEnigmaStackPanel != null) MainEnigmaStackPanel.IsVisible = false;
+            if (MainFateStackPanel != null) MainFateStackPanel.IsVisible = false;
+            if (MainEroicaStackPanel != null) MainEroicaStackPanel.IsVisible = false;
+            if (MainOdeToJoyStackPanel != null) MainOdeToJoyStackPanel.IsVisible = false;
+            if (MainDiesIraeStackPanel != null) MainDiesIraeStackPanel.IsVisible = false;
+                
+            if (MainWinterStackPanel != null)
+                MainWinterStackPanel.IsVisible = true;
+                
+            // Update Frigid Melody count
+            if (MainFrigidMelodyCount != null)
+                MainFrigidMelodyCount.Text = gameState.FrigidMelodyStacks.ToString();
+                
+            // Update Freezing Harmony button (enabled if off cooldown)
+            if (MainFreezingHarmonyButton != null)
+            {
+                bool onCooldown = DateTime.Now < gameState.FreezingHarmonyCooldownExpiry;
+                MainFreezingHarmonyButton.IsEnabled = !onCooldown;
+                if (onCooldown)
+                {
+                    double remaining = (gameState.FreezingHarmonyCooldownExpiry - DateTime.Now).TotalSeconds;
+                    MainFreezingHarmonyButton.Content = $"Freezing Harmony ({remaining:F1}s)";
+                }
+                else
+                {
+                    MainFreezingHarmonyButton.Content = "Freezing Harmony (Freeze NPS)";
+                }
+            }
+                
+            // Update Eternal Frost count and buttons
+            if (MainEternalFrostCount != null)
+                MainEternalFrostCount.Text = gameState.EternalFrostStacks.ToString();
+                
+            if (MainIgniteEternalFrostButton != null)
+                MainIgniteEternalFrostButton.IsEnabled = gameState.FrigidMelodyStacks >= 1;
+                
+            if (MainConsumeEternalFrostButton != null)
+                MainConsumeEternalFrostButton.IsEnabled = gameState.EternalFrostStacks >= 1;
+                
+            // Update Blizzard Command clicks remaining
+            if (MainBlizzardCommandText != null)
+            {
+                if (gameState.BlizzardCommandClicksRemaining > 0)
+                {
+                    MainBlizzardCommandText.Text = $"Blizzard Command: {gameState.BlizzardCommandClicksRemaining} clicks";
+                    MainBlizzardCommandText.IsVisible = true;
+                }
+                else
+                {
+                    MainBlizzardCommandText.IsVisible = false;
+                }
+            }
+                
+            // Update Regal Snowlight count and buttons
+            if (MainRegalSnowlightCount != null)
+                MainRegalSnowlightCount.Text = gameState.RegalSnowlightStacks.ToString();
+                
+            if (MainIgniteRegalSnowlightButton != null)
+                MainIgniteRegalSnowlightButton.IsEnabled = gameState.FrigidMelodyStacks >= 1;
+                
+            if (MainConsumeRegalSnowlightButton != null)
+                MainConsumeRegalSnowlightButton.IsEnabled = gameState.RegalSnowlightStacks >= 1;
+                
+            // Update Snow's Oblivion count and button
+            if (MainSnowsOblivionCount != null)
+                MainSnowsOblivionCount.Text = gameState.SnowsOblivionStacks.ToString();
+                
+            if (MainConsumeSnowsOblivionButton != null)
+                MainConsumeSnowsOblivionButton.IsEnabled = gameState.SnowsOblivionStacks >= 1;
+                
+            // Update Accelerating Flurry display (only if The Snow's Desire equipped)
+            if (MainAcceleratingFlurryText != null)
+            {
+                bool hasSnowsDesire = gameState.CurrentResonatedWeapon1 == "TheSnowsDesire" || 
+                                      gameState.CurrentResonatedWeapon2 == "TheSnowsDesire";
+                if (hasSnowsDesire && gameState.AcceleratingFlurryBonus > 0)
+                {
+                    MainAcceleratingFlurryText.Text = $"Accelerating Flurry: +{gameState.AcceleratingFlurryBonus:F0}% NPC";
+                    MainAcceleratingFlurryText.IsVisible = true;
+                }
+                else
+                {
+                    MainAcceleratingFlurryText.IsVisible = false;
+                }
+            }
+                
+            // Update Cacophonic Blizzard bonus clicks (only if Cacophonic Blizzard equipped)
+            if (MainCacophonicBlizzardBonusText != null)
+            {
+                bool hasCacophonicBlizzard = gameState.CurrentResonatedWeapon1 == "CacophonicBlizzard" || 
+                                             gameState.CurrentResonatedWeapon2 == "CacophonicBlizzard";
+                if (hasCacophonicBlizzard && gameState.CacophonicBlizzardBonusClicksRemaining > 0)
+                {
+                    MainCacophonicBlizzardBonusText.Text = $"Permafrost Strikes: +50% notes for {gameState.CacophonicBlizzardBonusClicksRemaining} clicks";
+                    MainCacophonicBlizzardBonusText.IsVisible = true;
+                }
+                else
+                {
+                    MainCacophonicBlizzardBonusText.IsVisible = false;
+                }
+            }
+        }
+        
+        // Winter Handlers
+        private void MainFreezingHarmonyButton_Click(object? sender, RoutedEventArgs e)
+        {
+            MusicClicker.Armory.WeaponAbilities.Winter_FreezingHarmony(gameState);
+            UpdateMainWinterCrescendanceInfo();
+            UIUpdater.UpdateUI(this, gameState);
+        }
+        
+        private void MainIgniteEternalFrostButton_Click(object? sender, RoutedEventArgs e)
+        {
+            MusicClicker.Armory.WeaponAbilities.Winter_IgniteToEternalFrost(gameState);
+            UpdateMainWinterCrescendanceInfo();
+            UIUpdater.UpdateUI(this, gameState);
+        }
+        
+        private void MainConsumeEternalFrostButton_Click(object? sender, RoutedEventArgs e)
+        {
+            MusicClicker.Armory.WeaponAbilities.Winter_ConsumeEternalFrost(gameState);
+            UpdateMainWinterCrescendanceInfo();
+            UIUpdater.UpdateUI(this, gameState);
+        }
+        
+        private void MainIgniteRegalSnowlightButton_Click(object? sender, RoutedEventArgs e)
+        {
+            MusicClicker.Armory.WeaponAbilities.Winter_IgniteToRegalSnowlight(gameState);
+            UpdateMainWinterCrescendanceInfo();
+            UIUpdater.UpdateUI(this, gameState);
+        }
+        
+        private void MainConsumeRegalSnowlightButton_Click(object? sender, RoutedEventArgs e)
+        {
+            MusicClicker.Armory.WeaponAbilities.Winter_ConsumeRegalSnowlight(gameState);
+            UpdateMainWinterCrescendanceInfo();
+            UIUpdater.UpdateUI(this, gameState);
+        }
+        
+        private void MainConsumeSnowsOblivionButton_Click(object? sender, RoutedEventArgs e)
+        {
+            MusicClicker.Armory.WeaponAbilities.CacophonicBlizzard_ConsumeSnowsOblivion(gameState);
+            UpdateMainWinterCrescendanceInfo();
             UIUpdater.UpdateUI(this, gameState);
         }
         

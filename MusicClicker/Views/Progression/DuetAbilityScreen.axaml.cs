@@ -39,9 +39,27 @@ namespace MusicClicker.Views
 
             _cooldownTimer = new DispatcherTimer
             {
-                Interval = TimeSpan.FromMilliseconds(100)
+                Interval = TimeSpan.FromMilliseconds(500) // Reduced frequency from 100ms to 500ms for better performance
             };
             _cooldownTimer.Tick += UpdateCooldownDisplay;
+        }
+        
+        protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+        {
+            base.OnPropertyChanged(change);
+            
+            // Performance optimization: Only run timer when screen is visible
+            if (change.Property.Name == nameof(IsVisible))
+            {
+                if (IsVisible && _cooldownTimer != null)
+                {
+                    _cooldownTimer.Start();
+                }
+                else if (!IsVisible && _cooldownTimer != null)
+                {
+                    _cooldownTimer.Stop();
+                }
+            }
         }
 
         public void Initialize(GameState gameState, MainWindow mainWindow)
@@ -1143,16 +1161,15 @@ namespace MusicClicker.Views
                 }
                 else if (_gameState.WinterDuetCooldownExpiry <= DateTime.Now)
                 {
-                    // Activate immediately and freeze NPS
+                    // Activate immediately and freeze NPS for 20 seconds
                     _gameState.WinterDuetActive = true;
                     _gameState.WinterDuetExpiry = DateTime.Now.AddSeconds(DuetDescriptions.Duration.Winter);
-                    _gameState.WinterDuetExtensionTime = 0; // Reset extension counter
-                    _gameState.WinterDuetCooldownExpiry = DateTime.Now.AddSeconds(DuetDescriptions.Cooldown.Winter); // Start cooldown immediately
+                    _gameState.WinterDuetExtensionTime = 0; // Reset extension counter to 0
                     
-                    // Freeze NPS immediately
+                    // Freeze NPS for 20 seconds (matching duet duration)
                     _gameState.NpsFrozen = true;
                     _gameState.FrozenNpsValue = _gameState.NotesPerSecond;
-                    _gameState.NpsFreezeExpiry = DateTime.Now.AddSeconds(DuetDescriptions.Duration.Winter); // Match duet duration
+                    _gameState.NpsFreezeExpiry = DateTime.Now.AddSeconds(DuetDescriptions.Duration.Winter);
                     
                     _cooldownTimer?.Start();
                 }
