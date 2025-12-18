@@ -1108,6 +1108,8 @@ namespace MusicClicker
                 "OdeToCreation" => "Ode to Creation",
                 "SevenCircles" => "Seven Circles",
                 "HellsWrath" => "Hell's Wrath",
+                "CacophonicBlizzard" => "Cacophonic Blizzard",
+                "TheSnowsDesire" => "The Snow's Desire",
                 _ => internalName
             };
         }

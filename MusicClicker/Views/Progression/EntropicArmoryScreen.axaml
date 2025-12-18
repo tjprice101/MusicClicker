@@ -26,10 +26,25 @@
                            FontSize="42"
                            Foreground="White"
                            HorizontalAlignment="Center"
-                           FontWeight="Bold">
+                           FontWeight="Bold"
+                           Opacity="1.0">
                     <TextBlock.Effect>
                         <DropShadowEffect Color="Black" BlurRadius="8" Opacity="0.8"/>
                     </TextBlock.Effect>
+                    <TextBlock.Styles>
+                        <Style Selector="TextBlock">
+                            <Style.Animations>
+                                <Animation Duration="0:0:1.5" IterationCount="Infinite" PlaybackDirection="Alternate">
+                                    <KeyFrame Cue="0%">
+                                        <Setter Property="Opacity" Value="0.6"/>
+                                    </KeyFrame>
+                                    <KeyFrame Cue="100%">
+                                        <Setter Property="Opacity" Value="1.0"/>
+                                    </KeyFrame>
+                                </Animation>
+                            </Style.Animations>
+                        </Style>
+                    </TextBlock.Styles>
                 </TextBlock>
                 
                 <!-- Entropic Melody Display -->

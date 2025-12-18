@@ -8,7 +8,22 @@
         </Grid.Background>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="20,15,20,10" Spacing="8">
             <TextBlock Text="Upgrades" FontSize="32" FontWeight="Bold" Foreground="White"
-                HorizontalAlignment="Center" />
+                HorizontalAlignment="Center" Opacity="1.0">
+                <TextBlock.Styles>
+                    <Style Selector="TextBlock">
+                        <Style.Animations>
+                            <Animation Duration="0:0:1.5" IterationCount="Infinite" PlaybackDirection="Alternate">
+                                <KeyFrame Cue="0%">
+                                    <Setter Property="Opacity" Value="0.6"/>
+                                </KeyFrame>
+                                <KeyFrame Cue="100%">
+                                    <Setter Property="Opacity" Value="1.0"/>
+                                </KeyFrame>
+                            </Animation>
+                        </Style.Animations>
+                    </Style>
+                </TextBlock.Styles>
+            </TextBlock>
             <TextBlock x:Name="UpgradeNotesTextHeader" Text="Notes: 0" FontSize="22"
                 Foreground="White" HorizontalAlignment="Center" />
         </StackPanel>

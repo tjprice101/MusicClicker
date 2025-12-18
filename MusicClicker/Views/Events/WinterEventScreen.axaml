@@ -23,7 +23,23 @@
                        FontSize="42"
                        Foreground="White"
                        HorizontalAlignment="Center"
-                       FontWeight="Bold" />
+                       FontWeight="Bold"
+                       Opacity="1.0">
+                <TextBlock.Styles>
+                    <Style Selector="TextBlock">
+                        <Style.Animations>
+                            <Animation Duration="0:0:1.5" IterationCount="Infinite" PlaybackDirection="Alternate">
+                                <KeyFrame Cue="0%">
+                                    <Setter Property="Opacity" Value="0.6"/>
+                                </KeyFrame>
+                                <KeyFrame Cue="100%">
+                                    <Setter Property="Opacity" Value="1.0"/>
+                                </KeyFrame>
+                            </Animation>
+                        </Style.Animations>
+                    </Style>
+                </TextBlock.Styles>
+            </TextBlock>
             <TextBlock x:Name="NotesText"
                        Text="Notes: 0"
                        FontSize="20"
@@ -37,14 +53,18 @@
         </StackPanel>
 
         <!-- Event Content - Horizontal Layout -->
-        <StackPanel Grid.Row="1" 
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Center" 
-                    VerticalAlignment="Center"
-                    Spacing="60">
+        <Grid Grid.Row="1" 
+              HorizontalAlignment="Center" 
+              VerticalAlignment="Center"
+              Margin="60,0,60,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="525" />
+                <ColumnDefinition Width="60" />
+                <ColumnDefinition Width="525" />
+            </Grid.ColumnDefinitions>
             
             <!-- Soul of Winter Section -->
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="15">
+            <StackPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="15">
                 <!-- Soul of Winter Button (16:9, 18% smaller than 640x360 = 525x295) -->
                 <Button x:Name="SoulOfWinterButton"
                         Width="525"
@@ -63,7 +83,8 @@
                            FontSize="20"
                            Foreground="White"
                            HorizontalAlignment="Center"
-                           TextAlignment="Center" />
+                           TextAlignment="Center"
+                           Height="30" />
                 
                 <!-- Owned Text -->
                 <TextBlock x:Name="WinterMajorOwnedText"
@@ -71,11 +92,15 @@
                            FontSize="18"
                            Foreground="#CCCCCC"
                            HorizontalAlignment="Center"
-                           TextAlignment="Center" />
+                           TextAlignment="Center"
+                           Height="25" />
+                           
+                <!-- Spacer for alignment with timer on right side -->
+                <StackPanel Height="60" />
             </StackPanel>
 
             <!-- Winter Major Section -->
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="15">
+            <StackPanel Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="15">
                 <!-- Winter Major Button (16:9, 18% smaller) -->
                 <Button x:Name="WinterMajorButton"
                         Width="525"
@@ -94,7 +119,8 @@
                            FontSize="20"
                            Foreground="White"
                            HorizontalAlignment="Center"
-                           TextAlignment="Center" />
+                           TextAlignment="Center"
+                           Height="30" />
 
                 <!-- Crescendance Ability placeholder -->
                 <TextBlock x:Name="WinterCrescendanceText"
@@ -104,10 +130,11 @@
                            HorizontalAlignment="Center"
                            TextAlignment="Center"
                            TextWrapping="Wrap"
-                           MaxWidth="525" />
+                           MaxWidth="525"
+                           Height="25" />
                            
                 <!-- Timer Displays -->
-                <StackPanel Spacing="5" HorizontalAlignment="Center">
+                <StackPanel Spacing="5" HorizontalAlignment="Center" Height="60">
                     <TextBlock x:Name="NpsFreezeTimerText"
                                Text=""
                                Foreground="#FF00FF00"
@@ -131,7 +158,7 @@
                 </StackPanel>
             </StackPanel>
 
-        </StackPanel>
+        </Grid>
 
         <!-- Footer -->
         <Button Grid.Row="2"

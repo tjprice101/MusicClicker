@@ -12,64 +12,76 @@
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0"
             Spacing="10">
             <TextBlock Text="Fragmentation" FontSize="36" FontWeight="Bold" Foreground="White"
-                HorizontalAlignment="Center" />
+                HorizontalAlignment="Center" Opacity="1.0">
+                <TextBlock.Styles>
+                    <Style Selector="TextBlock">
+                        <Style.Animations>
+                            <Animation Duration="0:0:1.5" IterationCount="Infinite" PlaybackDirection="Alternate">
+                                <KeyFrame Cue="0%">
+                                    <Setter Property="Opacity" Value="0.6"/>
+                                </KeyFrame>
+                                <KeyFrame Cue="100%">
+                                    <Setter Property="Opacity" Value="1.0"/>
+                                </KeyFrame>
+                            </Animation>
+                        </Style.Animations>
+                    </Style>
+                </TextBlock.Styles>
+            </TextBlock>
             <TextBlock x:Name="FragmentationNotesText" Text="Notes: 0" FontSize="28"
                 Foreground="White" HorizontalAlignment="Center" />
         </StackPanel>
 
         <!-- Fragment squares -->
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
-            VerticalAlignment="Center" Spacing="80">
+        <Grid HorizontalAlignment="Center"
+              VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="280" />
+                <ColumnDefinition Width="80" />
+                <ColumnDefinition Width="280" />
+            </Grid.ColumnDefinitions>
 
             <!-- Melodious Fragments -->
-            <Grid Width="260">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-
-                <TextBlock Grid.Row="0" Text="Melodious Fragments" FontSize="24"
+            <StackPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="15">
+                <TextBlock Text="Melodious Fragments" FontSize="24"
                     FontWeight="Bold"
-                    Foreground="White" HorizontalAlignment="Center" TextWrapping="Wrap" />
-                <Button Grid.Row="1" x:Name="MelodiousFragmentButton" Width="200" Height="200"
+                    Foreground="White" HorizontalAlignment="Center" TextWrapping="Wrap"
+                    TextAlignment="Center" Height="32" />
+                <Button x:Name="MelodiousFragmentButton" Width="200" Height="200"
                     HorizontalAlignment="Center" VerticalAlignment="Top">
                     <Image
                         Source="avares://MusicClicker/Assets/Music Game Assets [F503F6F]-min.png"
                         Stretch="Uniform" />
                 </Button>
-                <TextBlock Grid.Row="2" Text="1000 Notes for 1" FontSize="20" Foreground="White"
-                    HorizontalAlignment="Center" TextWrapping="Wrap" />
-                <TextBlock Grid.Row="3" x:Name="MelodiousOwnedText" Text="0 Owned" FontSize="20"
-                    Foreground="White" HorizontalAlignment="Center" TextWrapping="Wrap" />
-            </Grid>
+                <TextBlock Text="1000 Notes for 1" FontSize="20" Foreground="White"
+                    HorizontalAlignment="Center" TextWrapping="Wrap"
+                    TextAlignment="Center" Height="28" />
+                <TextBlock x:Name="MelodiousOwnedText" Text="0 Owned" FontSize="20"
+                    Foreground="White" HorizontalAlignment="Center" TextWrapping="Wrap"
+                    TextAlignment="Center" Height="28" />
+            </StackPanel>
 
             <!-- Harmonious Fragments -->
-            <Grid Width="260">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-
-                <TextBlock Grid.Row="0" Text="Harmonious Fragments" FontSize="24"
+            <StackPanel Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="15">
+                <TextBlock Text="Harmonious Fragments" FontSize="24"
                     FontWeight="Bold"
-                    Foreground="White" HorizontalAlignment="Center" TextWrapping="Wrap" />
-                <Button Grid.Row="1" x:Name="HarmoniousFragmentButton" Width="200" Height="200"
+                    Foreground="White" HorizontalAlignment="Center" TextWrapping="Wrap"
+                    TextAlignment="Center" Height="32" />
+                <Button x:Name="HarmoniousFragmentButton" Width="200" Height="200"
                     HorizontalAlignment="Center" VerticalAlignment="Top">
                     <Image
                         Source="avares://MusicClicker/Assets/Music Game Assets [0EE1949]-min.png"
                         Stretch="Uniform" />
                 </Button>
-                <TextBlock Grid.Row="2" Text="5000 Notes for 1" FontSize="20" Foreground="White"
-                    HorizontalAlignment="Center" TextWrapping="Wrap" />
-                <TextBlock Grid.Row="3" x:Name="HarmoniousOwnedText" Text="0 Owned"
+                <TextBlock Text="5000 Notes for 1" FontSize="20" Foreground="White"
+                    HorizontalAlignment="Center" TextWrapping="Wrap"
+                    TextAlignment="Center" Height="28" />
+                <TextBlock x:Name="HarmoniousOwnedText" Text="0 Owned"
                     FontSize="20"
-                    Foreground="White" HorizontalAlignment="Center" TextWrapping="Wrap" />
-            </Grid>
-        </StackPanel>
+                    Foreground="White" HorizontalAlignment="Center" TextWrapping="Wrap"
+                    TextAlignment="Center" Height="28" />
+            </StackPanel>
+        </Grid>
 
         <!-- Back Button -->
         <Button x:Name="BackButtonFragmentation" Content="Back" Width="200" Height="50"

@@ -531,21 +531,21 @@ namespace MusicClicker
             window.UnityTheSymphonyScreen.UnityNotesTextHeader.Text = $"Notes: {NumberFormatter.FormatLargeNumber(gameState.Notes)}";
             try { window.UnityTheSymphonyScreen.EntropicMelodyText.Text = $"Entropic Melody: {gameState.EntropicMelodies}"; } catch { }
 
-            window.UnityTheSymphonyScreen.MoonlightMinorOwnedText.Text = $"{gameState.MoonlightMinorOwned} Owned";
-            window.UnityTheSymphonyScreen.EroicaMinorOwnedText.Text = $"{gameState.EroicaMinorOwned} Owned";
-            window.UnityTheSymphonyScreen.SwanMinorOwnedText.Text = $"{gameState.SwanMinorOwned} Owned";
-            window.UnityTheSymphonyScreen.LaCampanellaMinorOwnedText.Text = $"{gameState.LaCampanellaMinorOwned} Owned";
-            window.UnityTheSymphonyScreen.EnigmaMinorOwnedText.Text = $"{gameState.EnigmaMinorOwned} Owned";
-            window.UnityTheSymphonyScreen.FateMinorOwnedText.Text = $"{gameState.FateMinorOwned} Owned";
-            window.UnityTheSymphonyScreen.OdeToJoyMinorOwnedText.Text = $"{gameState.OdeToJoyMinorOwned} Owned";
+            window.UnityTheSymphonyScreen.MoonlightMinorOwnedText.Text = $"{Math.Max(0, gameState.MoonlightMinorOwned)} Owned";
+            window.UnityTheSymphonyScreen.EroicaMinorOwnedText.Text = $"{Math.Max(0, gameState.EroicaMinorOwned)} Owned";
+            window.UnityTheSymphonyScreen.SwanMinorOwnedText.Text = $"{Math.Max(0, gameState.SwanMinorOwned)} Owned";
+            window.UnityTheSymphonyScreen.LaCampanellaMinorOwnedText.Text = $"{Math.Max(0, gameState.LaCampanellaMinorOwned)} Owned";
+            window.UnityTheSymphonyScreen.EnigmaMinorOwnedText.Text = $"{Math.Max(0, gameState.EnigmaMinorOwned)} Owned";
+            window.UnityTheSymphonyScreen.FateMinorOwnedText.Text = $"{Math.Max(0, gameState.FateMinorOwned)} Owned";
+            window.UnityTheSymphonyScreen.OdeToJoyMinorOwnedText.Text = $"{Math.Max(0, gameState.OdeToJoyMinorOwned)} Owned";
 
-            window.UnityTheSymphonyScreen.MoonlightMajorOwnedText.Text = $"{gameState.MoonlightMajorOwned} Owned";
-            window.UnityTheSymphonyScreen.EroicaMajorOwnedText.Text = $"{gameState.EroicaMajorOwned} Owned";
-            window.UnityTheSymphonyScreen.SwanMajorOwnedText.Text = $"{gameState.SwanMajorOwned} Owned";
-            window.UnityTheSymphonyScreen.LaCampanellaMajorOwnedText.Text = $"{gameState.LaCampanellaMajorOwned} Owned";
-            window.UnityTheSymphonyScreen.EnigmaMajorOwnedText.Text = $"{gameState.EnigmaMajorOwned} Owned";
-            window.UnityTheSymphonyScreen.FateMajorOwnedText.Text = $"{gameState.FateMajorOwned} Owned";
-            window.UnityTheSymphonyScreen.OdeToJoyMajorOwnedText.Text = $"{gameState.OdeToJoyMajorOwned} Owned";
+            window.UnityTheSymphonyScreen.MoonlightMajorOwnedText.Text = $"{Math.Max(0, gameState.MoonlightMajorOwned)} Owned";
+            window.UnityTheSymphonyScreen.EroicaMajorOwnedText.Text = $"{Math.Max(0, gameState.EroicaMajorOwned)} Owned";
+            window.UnityTheSymphonyScreen.SwanMajorOwnedText.Text = $"{Math.Max(0, gameState.SwanMajorOwned)} Owned";
+            window.UnityTheSymphonyScreen.LaCampanellaMajorOwnedText.Text = $"{Math.Max(0, gameState.LaCampanellaMajorOwned)} Owned";
+            window.UnityTheSymphonyScreen.EnigmaMajorOwnedText.Text = $"{Math.Max(0, gameState.EnigmaMajorOwned)} Owned";
+            window.UnityTheSymphonyScreen.FateMajorOwnedText.Text = $"{Math.Max(0, gameState.FateMajorOwned)} Owned";
+            window.UnityTheSymphonyScreen.OdeToJoyMajorOwnedText.Text = $"{Math.Max(0, gameState.OdeToJoyMajorOwned)} Owned";
 
             // Update component requirement texts with owned counts
             // Moonlight Minor
@@ -644,21 +644,21 @@ namespace MusicClicker
             window.UnityTheSymphonyScreen.UnityNotesTextHeader.Text = $"Notes: {NumberFormatter.FormatLargeNumber(gameState.Notes)}";
             try { window.UnityTheSymphonyScreen.EntropicMelodyText.Text = $"Entropic Melody: {gameState.EntropicMelodies}"; } catch { }
 
-            window.UnityTheSymphonyScreen.MoonlightMinorOwnedText.Text = $"{gameState.MoonlightMinorOwned} Owned";
-            window.UnityTheSymphonyScreen.EroicaMinorOwnedText.Text = $"{gameState.EroicaMinorOwned} Owned";
-            window.UnityTheSymphonyScreen.SwanMinorOwnedText.Text = $"{gameState.SwanMinorOwned} Owned";
-            window.UnityTheSymphonyScreen.LaCampanellaMinorOwnedText.Text = $"{gameState.LaCampanellaMinorOwned} Owned";
-            window.UnityTheSymphonyScreen.EnigmaMinorOwnedText.Text = $"{gameState.EnigmaMinorOwned} Owned";
-            window.UnityTheSymphonyScreen.FateMinorOwnedText.Text = $"{gameState.FateMinorOwned} Owned";
-            window.UnityTheSymphonyScreen.OdeToJoyMinorOwnedText.Text = $"{gameState.OdeToJoyMinorOwned} Owned";
+            window.UnityTheSymphonyScreen.MoonlightMinorOwnedText.Text = $"{Math.Max(0, gameState.MoonlightMinorOwned)} Owned";
+            window.UnityTheSymphonyScreen.EroicaMinorOwnedText.Text = $"{Math.Max(0, gameState.EroicaMinorOwned)} Owned";
+            window.UnityTheSymphonyScreen.SwanMinorOwnedText.Text = $"{Math.Max(0, gameState.SwanMinorOwned)} Owned";
+            window.UnityTheSymphonyScreen.LaCampanellaMinorOwnedText.Text = $"{Math.Max(0, gameState.LaCampanellaMinorOwned)} Owned";
+            window.UnityTheSymphonyScreen.EnigmaMinorOwnedText.Text = $"{Math.Max(0, gameState.EnigmaMinorOwned)} Owned";
+            window.UnityTheSymphonyScreen.FateMinorOwnedText.Text = $"{Math.Max(0, gameState.FateMinorOwned)} Owned";
+            window.UnityTheSymphonyScreen.OdeToJoyMinorOwnedText.Text = $"{Math.Max(0, gameState.OdeToJoyMinorOwned)} Owned";
 
-            window.UnityTheSymphonyScreen.MoonlightMajorOwnedText.Text = $"{gameState.MoonlightMajorOwned} Owned";
-            window.UnityTheSymphonyScreen.EroicaMajorOwnedText.Text = $"{gameState.EroicaMajorOwned} Owned";
-            window.UnityTheSymphonyScreen.SwanMajorOwnedText.Text = $"{gameState.SwanMajorOwned} Owned";
-            window.UnityTheSymphonyScreen.LaCampanellaMajorOwnedText.Text = $"{gameState.LaCampanellaMajorOwned} Owned";
-            window.UnityTheSymphonyScreen.EnigmaMajorOwnedText.Text = $"{gameState.EnigmaMajorOwned} Owned";
-            window.UnityTheSymphonyScreen.FateMajorOwnedText.Text = $"{gameState.FateMajorOwned} Owned";
-            window.UnityTheSymphonyScreen.OdeToJoyMajorOwnedText.Text = $"{gameState.OdeToJoyMajorOwned} Owned";
+            window.UnityTheSymphonyScreen.MoonlightMajorOwnedText.Text = $"{Math.Max(0, gameState.MoonlightMajorOwned)} Owned";
+            window.UnityTheSymphonyScreen.EroicaMajorOwnedText.Text = $"{Math.Max(0, gameState.EroicaMajorOwned)} Owned";
+            window.UnityTheSymphonyScreen.SwanMajorOwnedText.Text = $"{Math.Max(0, gameState.SwanMajorOwned)} Owned";
+            window.UnityTheSymphonyScreen.LaCampanellaMajorOwnedText.Text = $"{Math.Max(0, gameState.LaCampanellaMajorOwned)} Owned";
+            window.UnityTheSymphonyScreen.EnigmaMajorOwnedText.Text = $"{Math.Max(0, gameState.EnigmaMajorOwned)} Owned";
+            window.UnityTheSymphonyScreen.FateMajorOwnedText.Text = $"{Math.Max(0, gameState.FateMajorOwned)} Owned";
+            window.UnityTheSymphonyScreen.OdeToJoyMajorOwnedText.Text = $"{Math.Max(0, gameState.OdeToJoyMajorOwned)} Owned";
 
             // Update component requirement texts with owned counts
             // Moonlight Minor

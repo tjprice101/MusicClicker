@@ -277,6 +277,23 @@ Crescendance Bond: Entropic Fury - Dies Irae crits grant Entropic Melodies:
 • Each 'Seal-breaking Melody of Oblivion' crit: +50 Entropic Melodies
 
 Duet: Infernal Symphony - During duet, Seal-breaking crits also grant +1 Wrathful Seal. Consume 15+ Wrathful Seals for next 5 clicks that double your current notes. 20s duration, 10min cooldown.";
+
+            // Winter Weapons
+            public const string CacophonicBlizzard = @"Cacophonic Blizzard
+
+Passive: Permafrost Strikes - Every 20th click freezes NPS for 5 seconds and grants your next 20 clicks +50% notes each.
+
+Crescendance Bond: Snow's Oblivion - When you consume Eternal Frost stacks, gain +2 Snow's Oblivion. Consume 1 Snow's Oblivion for +X Entropic Melodies (X = total upgrades owned).
+
+Duet: Symphony of Absolute Zero - Freezes NPS for 20s. Every click grants +1 Frigid Melody + Blizzard's Command crit, extends duration by +0.5s (max +10s). 20s duration, 4min cooldown.";
+
+            public const string TheSnowsDesire = @"The Snow's Desire
+
+Passive: Accelerating Flurry - Every click grants +1% NPC (max +50%). Bonus decays to 0% after 5 seconds of no clicking.
+
+Crescendance Bond: Frigid Resonance - Freezing Harmony grants +2 Frigid Melody stacks instead of +1 (doubling effect).
+
+Duet: Symphony of Absolute Zero - Freezes NPS for 20s. Every click grants +1 Frigid Melody + Blizzard's Command crit, extends duration by +0.5s (max +10s). 20s duration, 4min cooldown.";
         }
 
         // ============================================================
@@ -441,6 +458,8 @@ Duet: Infernal Symphony - During duet, Seal-breaking crits also grant +1 Wrathfu
                 "Ode to Creation" => Weapons.OdeToCreation,
                 "Seven Circles" => Weapons.SevenCircles,
                 "Hell's Wrath" => Weapons.HellsWrath,
+                "Cacophonic Blizzard" => Weapons.CacophonicBlizzard,
+                "The Snow's Desire" => Weapons.TheSnowsDesire,
                 _ => $"No description available for: {weaponName}"
             };
         }
