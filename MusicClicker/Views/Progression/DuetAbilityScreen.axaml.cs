@@ -201,12 +201,6 @@ namespace MusicClicker.Views
         private void ApplyMoonlightTheme()
         {
             // Moonlight: Deep blue/silver theme
-            if (MainBorder != null)
-                MainBorder.Background = new SolidColorBrush(Color.FromArgb(221, 10, 15, 35)); // Dark blue-tinted background
-            
-            if (TitleBorder != null)
-                TitleBorder.Background = new SolidColorBrush(Color.FromRgb(15, 25, 50)); // Deep midnight blue
-            
             if (TitleText != null)
             {
                 TitleText.Foreground = new SolidColorBrush(Color.FromRgb(192, 192, 220)); // Silver/moonlight
@@ -243,12 +237,6 @@ namespace MusicClicker.Views
         private void ApplyDiesIraeTheme()
         {
             // Dies Irae: Dark red/crimson theme
-            if (MainBorder != null)
-                MainBorder.Background = new SolidColorBrush(Color.FromArgb(221, 26, 10, 20)); // Dark red-tinted background
-            
-            if (TitleBorder != null)
-                TitleBorder.Background = new SolidColorBrush(Color.FromRgb(40, 10, 15)); // Deep crimson
-            
             if (TitleText != null)
             {
                 TitleText.Foreground = new SolidColorBrush(Color.FromRgb(233, 69, 96)); // Bright red
@@ -285,12 +273,6 @@ namespace MusicClicker.Views
         private void ApplySwanLakeTheme()
         {
             // Swan Lake: Elegant white/grey theme
-            if (MainBorder != null)
-                MainBorder.Background = new SolidColorBrush(Color.FromArgb(221, 240, 240, 245)); // Light white-grey background
-            
-            if (TitleBorder != null)
-                TitleBorder.Background = new SolidColorBrush(Color.FromRgb(220, 220, 230)); // Light grey title
-            
             if (TitleText != null)
             {
                 TitleText.Foreground = new SolidColorBrush(Color.FromRgb(60, 60, 80)); // Dark grey text
@@ -333,12 +315,6 @@ namespace MusicClicker.Views
         private void ApplyLaCampanellaTheme()
         {
             // La Campanella: Orangeish yellow theme
-            if (MainBorder != null)
-                MainBorder.Background = new SolidColorBrush(Color.FromArgb(221, 255, 200, 100)); // Orange-yellow background
-            
-            if (TitleBorder != null)
-                TitleBorder.Background = new SolidColorBrush(Color.FromRgb(255, 180, 60)); // Bright orange title
-            
             if (TitleText != null)
             {
                 TitleText.Foreground = new SolidColorBrush(Color.FromRgb(80, 40, 0)); // Dark brown text
@@ -387,13 +363,6 @@ namespace MusicClicker.Views
             
             // Convert HSV to RGB with dampened saturation and value
             var (r, g, b) = HsvToRgb(hue, 0.4, 0.6); // Low saturation, medium value for dampened effect
-            var (r2, g2, b2) = HsvToRgb(hue, 0.5, 0.5); // Darker version for title
-            
-            if (MainBorder != null)
-                MainBorder.Background = new SolidColorBrush(Color.FromArgb(221, r, g, b));
-            
-            if (TitleBorder != null)
-                TitleBorder.Background = new SolidColorBrush(Color.FromRgb(r2, g2, b2));
             
             if (TitleText != null)
             {
@@ -443,12 +412,6 @@ namespace MusicClicker.Views
         private void ApplyFateTheme()
         {
             // Fate: Purpleish pink theme
-            if (MainBorder != null)
-                MainBorder.Background = new SolidColorBrush(Color.FromArgb(221, 180, 100, 200)); // Purple-pink background
-            
-            if (TitleBorder != null)
-                TitleBorder.Background = new SolidColorBrush(Color.FromRgb(150, 60, 180)); // Deep purple title
-            
             if (TitleText != null)
             {
                 TitleText.Foreground = new SolidColorBrush(Color.FromRgb(255, 200, 255)); // Light pink text
@@ -475,12 +438,6 @@ namespace MusicClicker.Views
         private void ApplyOdeTheme()
         {
             // Ode: Monochrome with rainbow accents
-            if (MainBorder != null)
-                MainBorder.Background = new SolidColorBrush(Color.FromArgb(221, 240, 240, 240)); // Light grey background
-            
-            if (TitleBorder != null)
-                TitleBorder.Background = new SolidColorBrush(Color.FromRgb(50, 50, 50)); // Dark grey title
-            
             if (TitleText != null)
             {
                 TitleText.Foreground = new SolidColorBrush(Colors.White);
@@ -517,12 +474,6 @@ namespace MusicClicker.Views
         private void ApplyEroicaTheme()
         {
             // Eroica: Deep red/crimson theme
-            if (MainBorder != null)
-                MainBorder.Background = new SolidColorBrush(Color.FromArgb(221, 30, 10, 10)); // Dark red background
-            
-            if (TitleBorder != null)
-                TitleBorder.Background = new SolidColorBrush(Color.FromRgb(60, 15, 15)); // Deep crimson
-            
             if (TitleText != null)
             {
                 TitleText.Foreground = new SolidColorBrush(Color.FromRgb(220, 50, 50)); // Deep red
@@ -559,12 +510,6 @@ namespace MusicClicker.Views
         private void ApplyWinterTheme()
         {
             // Winter: Light blue/icy theme
-            if (MainBorder != null)
-                MainBorder.Background = new SolidColorBrush(Color.FromArgb(221, 15, 25, 40)); // Dark blue-tinted background
-            
-            if (TitleBorder != null)
-                TitleBorder.Background = new SolidColorBrush(Color.FromRgb(20, 35, 60)); // Deep icy blue
-            
             if (TitleText != null)
             {
                 TitleText.Foreground = new SolidColorBrush(Color.FromRgb(135, 206, 250)); // Light sky blue

@@ -1,20 +1,6 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="MusicClicker.Views.DuetAbilityScreen"
-             Width="800">
-
-        <Border x:Name="MainBorder"
-            Width="800"
-            MaxHeight="500"
-            Background="#DD1a1a2e"
-            CornerRadius="20"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Top"
-            Margin="0">
-        
-        <Border.Effect>
-            <DropShadowEffect Color="Black" BlurRadius="30" Opacity="0.9" />
-        </Border.Effect>
+             x:Class="MusicClicker.Views.DuetAbilityScreen">
 
         <Grid>
             <Grid.RowDefinitions>
@@ -23,23 +9,19 @@
             </Grid.RowDefinitions>
 
             <!-- Title -->
-            <Border x:Name="TitleBorder"
-                    Grid.Row="0"
-                    Background="#16213e"
-                    CornerRadius="20,20,0,0"
-                    Padding="20,12,20,12">
-                <TextBlock x:Name="TitleText"
-                           Text="Duet Resonance Ability"
-                           FontSize="24"
-                           FontWeight="Bold"
-                           Foreground="#e94560"
-                           HorizontalAlignment="Center"
-                           TextAlignment="Center">
-                    <TextBlock.Effect>
-                        <DropShadowEffect Color="Black" BlurRadius="10" Opacity="0.8" />
-                    </TextBlock.Effect>
-                </TextBlock>
-            </Border>
+            <TextBlock x:Name="TitleText"
+                       Grid.Row="0"
+                       Text="Duet Resonance Ability"
+                       FontSize="16"
+                       FontWeight="Bold"
+                       Foreground="White"
+                       HorizontalAlignment="Center"
+                       TextAlignment="Center"
+                       Margin="0,0,0,2">
+                <TextBlock.Effect>
+                    <DropShadowEffect Color="Black" BlurRadius="8" Opacity="0.9" />
+                </TextBlock.Effect>
+            </TextBlock>
 
             <!-- Scrollable Content Area -->
             <ScrollViewer Grid.Row="1" 
@@ -55,19 +37,18 @@
             <!-- Ability Description -->
             <StackPanel Grid.Row="0"
                         VerticalAlignment="Top"
-                        HorizontalAlignment="Center"
-                        Spacing="10"
-                        Margin="20,12,20,12">
+                        HorizontalAlignment="Stretch"
+                        Spacing="3"
+                        Margin="0,0,0,3">
                 
                 <TextBlock x:Name="DuetAbilityNameText"
                            Text="Ability Name"
-                           FontSize="18"
+                           FontSize="13"
                            FontWeight="Bold"
                            Foreground="White"
-                           HorizontalAlignment="Center"
+                           HorizontalAlignment="Stretch"
                            TextAlignment="Center"
-                           TextWrapping="Wrap"
-                           MaxWidth="650">
+                           TextWrapping="Wrap">
                     <TextBlock.Effect>
                         <DropShadowEffect Color="#e94560" BlurRadius="12" Opacity="0.6" />
                     </TextBlock.Effect>
@@ -75,13 +56,12 @@
 
                 <TextBlock x:Name="DuetAbilityDescriptionText"
                            Text="Ability description will appear here"
-                           FontSize="13"
+                           FontSize="11"
                            Foreground="White"
-                           HorizontalAlignment="Center"
+                           HorizontalAlignment="Stretch"
                            TextAlignment="Left"
                            TextWrapping="Wrap"
-                           MaxWidth="700"
-                           Margin="0,2,0,0">
+                           Margin="0,0,0,0">
                     <TextBlock.Effect>
                         <DropShadowEffect Color="Black" BlurRadius="5" Opacity="1.0" OffsetX="0" OffsetY="0" />
                     </TextBlock.Effect>
@@ -89,12 +69,12 @@
 
                 <TextBlock x:Name="DuetAbilityStatusText"
                            Text="Ready"
-                           FontSize="14"
+                           FontSize="12"
                            FontWeight="SemiBold"
                            Foreground="#4ecca3"
-                           HorizontalAlignment="Center"
+                           HorizontalAlignment="Stretch"
                            TextAlignment="Center"
-                           Margin="0,6,0,0">
+                           Margin="0,1,0,0">
                     <TextBlock.Effect>
                         <DropShadowEffect Color="Black" BlurRadius="8" Opacity="0.7" />
                     </TextBlock.Effect>
@@ -103,10 +83,10 @@
                 <!-- Victory March Progress Bar (only visible for Eroica Duet) -->
                 <Border x:Name="VictoryMarchProgressBorder"
                         Width="340"
-                        Height="26"
+                        Height="22"
                         Background="#2a2a40"
-                        CornerRadius="15"
-                        Margin="0,6,0,0"
+                        CornerRadius="12"
+                        Margin="0,3,0,0"
                         IsVisible="False">
                     <Grid>
                         <Border x:Name="VictoryMarchProgressFill"
@@ -134,21 +114,21 @@
 
                 <!-- Fate Duet: Hourglass Reversal Visual (only visible for Fate Duet) -->
                 <Border x:Name="FateHourglassDisplay"
-                        Width="380"
-                        Height="120"
+                        Width="340"
+                        Height="80"
                         Background="#33200064"
-                        CornerRadius="12"
-                        Margin="0,8,0,0"
+                        CornerRadius="8"
+                        Margin="0,3,0,0"
                         IsVisible="False">
                     <Grid>
                         <!-- Hourglass ASCII Art -->
                         <TextBlock x:Name="FateHourglassArt"
-                                   FontSize="48"
+                                   FontSize="32"
                                    FontFamily="Consolas"
                                    Foreground="#C864DC"
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"
-                                   Margin="20,0,0,0"
+                                   Margin="12,0,0,0"
                                    Text="⌛">
                             <TextBlock.Effect>
                                 <DropShadowEffect Color="#FF96FF" BlurRadius="12" Opacity="0.8" />
@@ -156,10 +136,10 @@
                         </TextBlock>
                         
                         <!-- Phase and Counter Display -->
-                        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0">
+                        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,12,0">
                             <TextBlock x:Name="FatePhaseText"
                                        Text="BANKING PHASE"
-                                       FontSize="16"
+                                       FontSize="13"
                                        FontWeight="Bold"
                                        Foreground="#C864DC"
                                        HorizontalAlignment="Right">
@@ -169,10 +149,10 @@
                             </TextBlock>
                             <TextBlock x:Name="FateBankedActionsText"
                                        Text="Actions Banked: 0"
-                                       FontSize="14"
+                                       FontSize="12"
                                        Foreground="#FF96FF"
                                        HorizontalAlignment="Right"
-                                       Margin="0,4,0,0">
+                                       Margin="0,2,0,0">
                                 <TextBlock.Effect>
                                     <DropShadowEffect Color="Black" BlurRadius="4" Opacity="0.9" />
                                 </TextBlock.Effect>
@@ -183,21 +163,21 @@
 
                 <!-- Ode to Joy Duet: Musical Staff Visual (only visible for Ode Duet) -->
                 <Border x:Name="OdeStaffDisplay"
-                        Width="380"
-                        Height="140"
+                        Width="340"
+                        Height="100"
                         Background="#33F0F0F0"
-                        CornerRadius="12"
-                        Margin="0,8,0,0"
+                        CornerRadius="8"
+                        Margin="0,3,0,0"
                         IsVisible="False">
                     <Grid>
                         <!-- Musical Staff Lines -->
-                        <Canvas Width="340" Height="80" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Canvas Width="300" Height="60" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <!-- 5 staff lines -->
-                            <Line StartPoint="10,10" EndPoint="330,10" Stroke="#505050" StrokeThickness="2" />
-                            <Line StartPoint="10,25" EndPoint="330,25" Stroke="#505050" StrokeThickness="2" />
-                            <Line StartPoint="10,40" EndPoint="330,40" Stroke="#505050" StrokeThickness="2" />
-                            <Line StartPoint="10,55" EndPoint="330,55" Stroke="#505050" StrokeThickness="2" />
-                            <Line StartPoint="10,70" EndPoint="330,70" Stroke="#505050" StrokeThickness="2" />
+                            <Line StartPoint="10,8" EndPoint="290,8" Stroke="#505050" StrokeThickness="1.5" />
+                            <Line StartPoint="10,20" EndPoint="290,20" Stroke="#505050" StrokeThickness="1.5" />
+                            <Line StartPoint="10,32" EndPoint="290,32" Stroke="#505050" StrokeThickness="1.5" />
+                            <Line StartPoint="10,44" EndPoint="290,44" Stroke="#505050" StrokeThickness="1.5" />
+                            <Line StartPoint="10,56" EndPoint="290,56" Stroke="#505050" StrokeThickness="1.5" />
                             
                             <!-- Notes will be added dynamically in code -->
                             <StackPanel x:Name="OdeNotesPanel" Orientation="Horizontal" Canvas.Left="15" Canvas.Top="0" />
@@ -206,12 +186,12 @@
                         <!-- Progress Text -->
                         <TextBlock x:Name="OdeNotesCountText"
                                    Text="Notes: 0 / 16"
-                                   FontSize="16"
+                                   FontSize="13"
                                    FontWeight="Bold"
                                    Foreground="#333333"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Bottom"
-                                   Margin="0,0,0,8">
+                                   Margin="0,0,0,4">
                             <TextBlock.Effect>
                                 <DropShadowEffect Color="White" BlurRadius="4" Opacity="0.9" />
                             </TextBlock.Effect>
@@ -223,8 +203,8 @@
             <!-- Resonate Button -->
             <Border x:Name="ActivateButtonBorder"
                     Grid.Row="1"
-                    Margin="20,8,20,5"
-                    CornerRadius="15"
+                    Margin="0,2,0,1"
+                    CornerRadius="10"
                     Background="#e94560">
                 <Border.Effect>
                     <DropShadowEffect Color="#e94560" BlurRadius="20" Opacity="0.5" />
@@ -232,12 +212,12 @@
                 
                 <Button x:Name="ActivateDuetAbilityButton"
                         Content="RESONATE"
-                        FontSize="20"
+                        FontSize="14"
                         FontWeight="Bold"
                         Foreground="White"
                         Background="Transparent"
                         BorderThickness="0"
-                        Height="60"
+                        Height="32"
                         HorizontalAlignment="Stretch"
                         HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center"
@@ -249,17 +229,17 @@
             </Border>
 
             <!-- Close Button -->
-            <Grid Grid.Row="2" Margin="20,5,20,15">
-                <Border CornerRadius="12"
+            <Grid Grid.Row="2" Margin="0,1,0,3">
+                <Border CornerRadius="8"
                         Background="#444455">
                     <Button x:Name="CloseDuetAbilityButton"
                             Content="CLOSE"
-                            FontSize="16"
+                            FontSize="13"
                             FontWeight="SemiBold"
                             Foreground="#cccccc"
                             Background="Transparent"
                             BorderThickness="0"
-                            Height="45"
+                            Height="28"
                             HorizontalAlignment="Stretch"
                             HorizontalContentAlignment="Center"
                             VerticalContentAlignment="Center"
@@ -275,5 +255,4 @@
                 </Grid>
             </ScrollViewer>
         </Grid>
-    </Border>
 </UserControl>
