@@ -27,10 +27,10 @@ namespace MusicClicker.Views
 
             var gs = window.GameState;
 
-            ChordOwnedTextUpgrade.Text = $"Number Owned: {gs.ChordOwned}";
-            ScaleOwnedTextUpgrade.Text = $"Number Owned: {gs.ScaleOwned}";
-            OrchestraOwnedTextUpgrade.Text = $"Number Owned: {gs.OrchestraOwned}";
-            SymphonyOwnedTextUpgrade.Text = $"Number Owned: {gs.SymphonyOwned}";
+            ChordOwnedTextUpgrade.Text = $"Number Owned: {gs.ChordOwned} - Boosts NPS by 5%.";
+            ScaleOwnedTextUpgrade.Text = $"Number Owned: {gs.ScaleOwned} - Increases crit chance by 10%.";
+            OrchestraOwnedTextUpgrade.Text = $"Number Owned: {gs.OrchestraOwned} - Enhances click damage by 15%.";
+            SymphonyOwnedTextUpgrade.Text = $"Number Owned: {gs.SymphonyOwned} - Grants +20% to all buffs.";
 
             AriaOwnedTextUpgrade.Text = $"Number Owned: {gs.AriaOwned}";
             RequiemOwnedTextUpgrade.Text = $"Number Owned: {gs.RequiemOwned}";

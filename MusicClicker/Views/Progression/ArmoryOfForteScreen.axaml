@@ -91,17 +91,17 @@
                                    Foreground="White"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem1SoloConcertoText"
-                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   Text="Solo Concerto: Boosts click damage by 10%."
                                    FontSize="14"
                                    Foreground="#CCCCCC"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem1SymphonicModulationText"
-                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   Text="Symphonic Modulation: Increases NPS by 5%."
                                    FontSize="14"
                                    Foreground="#CCCCCC"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem1DuetText"
-                                   Text="Duet Resonance: &lt;placeholder&gt;"
+                                   Text="Duet Resonance: Increases critical hit chance by 15%."
                                    FontSize="14"
                                    Foreground="#CCCCCC"
                                    TextAlignment="Center"
@@ -130,7 +130,7 @@
                                    Foreground="White"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem2SoloConcertoText"
-                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   Text="Solo Concerto: Increases note generation by 15%."
                                    FontSize="14"
                                    Foreground="#CCCCCC"
                                    TextAlignment="Center" />
@@ -140,7 +140,7 @@
                                    Foreground="#CCCCCC"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem2DuetText"
-                                   Text="Duet Resonance: &lt;placeholder&gt;"
+                                   Text="Duet Resonance: Amplifies note generation by 20%."
                                    FontSize="14"
                                    Foreground="#CCCCCC"
                                    TextAlignment="Center"
@@ -169,7 +169,7 @@
                                    Foreground="White"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem3SoloConcertoText"
-                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   Text="Solo Concerto: Reduces ability cooldowns by 5%."
                                    FontSize="14"
                                    Foreground="#CCCCCC"
                                    TextAlignment="Center" />
@@ -179,7 +179,7 @@
                                    Foreground="#CCCCCC"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem3DuetText"
-                                   Text="Duet Resonance: &lt;placeholder&gt;"
+                                   Text="Duet Resonance: Reduces cooldowns by 10%."
                                    FontSize="14"
                                    Foreground="#CCCCCC"
                                    TextAlignment="Center"
@@ -223,7 +223,7 @@
                                    Foreground="#CCCCCC"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem4DuetText"
-                                   Text="Duet Resonance: &lt;placeholder&gt;"
+                                   Text="Duet Resonance: Boosts harmony effects by 25%."
                                    FontSize="14"
                                    Foreground="#CCCCCC"
                                    TextAlignment="Center"
@@ -262,7 +262,7 @@
                                    Foreground="#CCCCCC"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem5DuetText"
-                                   Text="Duet Resonance: &lt;placeholder&gt;"
+                                   Text="Duet Resonance: Enhances tempo resonance by 30%."
                                    FontSize="14"
                                    Foreground="#CCCCCC"
                                    TextAlignment="Center"
@@ -301,7 +301,7 @@
                                    Foreground="#CCCCCC"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem6DuetText"
-                                   Text="Duet Resonance: &lt;placeholder&gt;"
+                                   Text="Duet Resonance: Grants a shield absorbing 5% damage."
                                    FontSize="14"
                                    Foreground="#CCCCCC"
                                    TextAlignment="Center"
@@ -345,7 +345,7 @@
                                    Foreground="#CCCCCC"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem7DuetText"
-                                   Text="Duet Resonance: &lt;placeholder&gt;"
+                                   Text="Duet Resonance: Increases note multiplier by 50%."
                                    FontSize="14"
                                    Foreground="#CCCCCC"
                                    TextAlignment="Center"

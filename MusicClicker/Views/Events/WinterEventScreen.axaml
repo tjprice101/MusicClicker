@@ -40,6 +40,12 @@
                     </Style>
                 </TextBlock.Styles>
             </TextBlock>
+            <TextBlock x:Name="WinterCountdownText"
+                       Text="Time Remaining: --:--:--:--"
+                       FontSize="18"
+                       Foreground="#FFDDDDDD"
+                       HorizontalAlignment="Center"
+                       Opacity="0.95" />
             <TextBlock x:Name="NotesText"
                        Text="Notes: 0"
                        FontSize="20"
@@ -124,14 +130,13 @@
 
                 <!-- Crescendance Ability placeholder -->
                 <TextBlock x:Name="WinterCrescendanceText"
-                           Text="Crescendance Ability: &lt;placeholder&gt;"
+                           Text="Freeze NPS for stacks. Convert Frigid Melody to Eternal Frost (enhanced clicks) or Regal Snowlight (fragments + entropic). Duet grants crits and extends duration."
                            FontSize="18"
                            Foreground="#CCCCCC"
                            HorizontalAlignment="Center"
                            TextAlignment="Center"
                            TextWrapping="Wrap"
-                           MaxWidth="525"
-                           Height="25" />
+                           MaxWidth="525" />
                            
                 <!-- Timer Displays -->
                 <StackPanel Spacing="5" HorizontalAlignment="Center" Height="60">

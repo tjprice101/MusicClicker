@@ -31,7 +31,7 @@
                     Foreground="#FFFF69B4"
                     HorizontalAlignment="Center" TextAlignment="Center" Opacity="1.0">
                     <TextBlock.Effect>
-                        <DropShadowEffect Color="Black" OffsetX="2" OffsetY="2" BlurRadius="8" />
+                        <DropShadowEffect Color="#FFFF69B4" OffsetX="0" OffsetY="0" BlurRadius="12" Opacity="0.9" />
                     </TextBlock.Effect>
                     <TextBlock.Styles>
                         <Style Selector="TextBlock">
@@ -51,13 +51,13 @@
                 <TextBlock x:Name="UnityNotesTextHeader" Text="Notes: 0" FontSize="24"
                     Foreground="White" HorizontalAlignment="Center" FontWeight="SemiBold" TextAlignment="Center">
                     <TextBlock.Effect>
-                        <DropShadowEffect Color="Black" OffsetX="1" OffsetY="1" BlurRadius="4" />
+                        <DropShadowEffect Color="#AAAAAA" OffsetX="0" OffsetY="0" BlurRadius="6" />
                     </TextBlock.Effect>
                 </TextBlock>
                 <TextBlock x:Name="EntropicMelodyText" Text="Entropic Melody: 0" FontSize="20"
                     Foreground="White" HorizontalAlignment="Center" FontWeight="SemiBold" TextAlignment="Center">
                     <TextBlock.Effect>
-                        <DropShadowEffect Color="Black" OffsetX="1" OffsetY="1" BlurRadius="4" />
+                        <DropShadowEffect Color="#AAAAAA" OffsetX="0" OffsetY="0" BlurRadius="6" />
                     </TextBlock.Effect>
                 </TextBlock>
             </StackPanel>
@@ -71,7 +71,7 @@
                     <Border Background="#66000000" CornerRadius="8" 
                         BorderBrush="#FFFF69B4" BorderThickness="3" Padding="20">
                         <Border.Effect>
-                            <DropShadowEffect Color="Black" OffsetX="0" OffsetY="4" BlurRadius="12" />
+                            <DropShadowEffect Color="#FFFF69B4" OffsetX="0" OffsetY="4" BlurRadius="12" Opacity="0.35" />
                         </Border.Effect>
                         <Grid Height="240">
                             <Grid.ColumnDefinitions>
@@ -87,11 +87,7 @@
                                     FontSize="17" HorizontalAlignment="Center" FontWeight="SemiBold" />
                                 <TextBlock Text="Adds 3,000 Notes Per Second" Foreground="#FFFF69B4" FontSize="16"
                                     HorizontalAlignment="Center" TextAlignment="Center" FontWeight="Bold"
-                                    TextWrapping="Wrap" Width="200">
-                                    <TextBlock.Effect>
-                                        <DropShadowEffect Color="Black" OffsetX="1" OffsetY="1" BlurRadius="3" />
-                                    </TextBlock.Effect>
-                                </TextBlock>
+                                    TextWrapping="Wrap" Width="200" />
                             </StackPanel>
 
                             <Button x:Name="MoonlightMinorButton" Grid.Column="1" Margin="10"
@@ -135,8 +131,7 @@
                                     Foreground="White"
                                     FontSize="17" HorizontalAlignment="Center" FontWeight="SemiBold" />
                                 <TextBlock Text="Crescendance Ability: Eclipse of the Nocturne - Every 20th click at night grants Moonbeam Resonance. 8 stacks auto-consume for +100% notes and Harmonizing Moonlight." Foreground="White"
-                                    FontSize="14" TextWrapping="Wrap" Width="200"
-                                    HorizontalAlignment="Center" TextAlignment="Center" />
+                                    FontSize="16" HorizontalAlignment="Center" TextWrapping="Wrap" />
                                 <Button x:Name="MoonlightMajorDissolveButton" Content="Dissolve" Width="140" Height="36" HorizontalAlignment="Center"
                                     Background="#66000000" Foreground="#FFFF69B4" BorderBrush="#FFFF69B4" BorderThickness="2"
                                     FontWeight="Bold" FontSize="15" />
