@@ -28,7 +28,7 @@ namespace MusicClicker.Armory
         public static bool IsNighttime()
         {
             int currentHour = DateTime.Now.Hour;
-            // Nighttime is 20:00 (8PM) to 05:59 (6AM)
+            // Nighttime is 8PM to 6AM
             return currentHour >= 20 || currentHour < 6;
         }
 

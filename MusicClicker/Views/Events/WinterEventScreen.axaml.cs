@@ -50,7 +50,7 @@ namespace MusicClicker.Views
             try
             {
                 WinterMajorOwnedRightText.Text = $"Number Owned: {gameState.WinterOwned}";
-                WinterCrescendanceText.Text = "Freeze NPS for stacks. Convert Frigid Melody to Eternal Frost (enhanced clicks) or Regal Snowlight (fragments + entropic). Duet grants crits and extends duration.";
+                WinterCrescendanceText.Text = "Crescendance Ability: Requiem of the Frozen Choir\n\n• Frigid Melody stacks are gained by Crescendance actions and are consumed to produce Eternal Frost or Regal Snowlight.\n• Eternal Frost grants a fixed number of enhanced offensive critical clicks when consumed; these criticals scale with NotesPerSecond.\n• Regal Snowlight grants immediate resource and fragment bonuses when consumed; stacking increases potency.\n• Crescendance Bonds (for example, The Snow's Desire) modify how Frigid Melody is gained or consumed and change the exact numerical effects of Eternal Frost and Regal Snowlight.";
 
                 if (NpsFreezeTimerText != null)
                 {

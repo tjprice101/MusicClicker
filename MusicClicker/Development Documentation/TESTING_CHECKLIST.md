@@ -222,7 +222,7 @@
 
 ## DIES IRAE ✅ TESTED AND APPROVED
 
-### Crescendance: Damnation Requiem
+### Crescendance: Wrathful Orchestration
 - [x] Every click grants +1 Dissonant Hatred (up to 50 max)
 - [x] After 50 Dissonant Hatred, clicks grant +1 Discordant Malice instead
 - [x] Consume 5 Dissonant Hatred grants +1 Cacophonic Oblivion
@@ -238,7 +238,7 @@
 - [x] Crescendance Bond: Consume 1 Wrathful Seal grants next 5 clicks as "Seal-breaking Melody of Oblivion"
 - [x] Seal-breaking formula: DOUBLE Symphony of Hell (2 × NPC × NPS × Dissonant Hatred)
 - [x] Crescendance Bond requires: Dies Irae Major resonated + Seven Circles equipped
-- [x] Duet (Damnation Requiem: Infernal Symphony): Seal-breaking Melody crits grant +1 Wrathful Seal
+- [x] Duet (Wrathful Orchestration: Infernal Symphony): Seal-breaking Melody crits grant +1 Wrathful Seal
 - [x] Duet: Consume 15+ Wrathful Seals grants next 5 clicks that double current notes
 - [x] Duet: 20 second duration, 10 minute cooldown
 
@@ -247,7 +247,7 @@
 - [x] Crescendance Bond (Entropic Fury): Each Symphony of Hell's Retribution crit grants +200 Entropic Melodies
 - [x] Crescendance Bond: Each Seal-breaking Melody of Oblivion crit grants +200 Entropic Melodies
 - [x] Crescendance Bond requires: Dies Irae Major resonated + Hell's Wrath equipped
-- [x] Duet (Damnation Requiem: Infernal Symphony): Same as Seven Circles - all rewards tested
+- [x] Duet (Wrathful Orchestration: Infernal Symphony): Same as Seven Circles - all rewards tested
 
 ---
 ## WINTER

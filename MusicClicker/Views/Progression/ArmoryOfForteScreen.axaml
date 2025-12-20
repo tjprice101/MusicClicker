@@ -762,7 +762,7 @@
                                 Background="#44000000"
                                 BorderBrush="White"
                                 BorderThickness="2">
-                            <Image Source="avares://MusicClicker/Assets/TheSwan'sDesire.png" Stretch="UniformToFill" />
+                            <Image Source="avares://MusicClicker/Assets/TheSnow'sDesire.png" Stretch="UniformToFill" />
                         </Button>
                         <TextBlock x:Name="ArmoryItem18CostText"
                                    Text="Cost: 5,000,000,000 Notes"

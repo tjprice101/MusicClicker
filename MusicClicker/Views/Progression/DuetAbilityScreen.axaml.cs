@@ -1313,7 +1313,22 @@ namespace MusicClicker.Views
 
         private void OnCloseButtonClicked(object? sender, RoutedEventArgs e)
         {
-            this.IsVisible = false;
+            // Hide the surrounding duet ability panel container so the
+            // toggle button in `ButtonInitializer` stays in sync.
+            try
+            {
+                if (_mainWindow != null && _mainWindow.DuetAbilityPanelContainer != null)
+                {
+                    _mainWindow.DuetAbilityPanelContainer.IsVisible = false;
+                }
+                else
+                {
+                    // Fallback: hide this control if parent container isn't available
+                    this.IsVisible = false;
+                }
+            }
+            catch { this.IsVisible = false; }
+
             _cooldownTimer?.Stop();
         }
 

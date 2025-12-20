@@ -415,21 +415,7 @@
                         </Button>
                     </Border>
 
-                    <!-- Fragmentation (Bottom) Button -->
-                    <Border CornerRadius="6">
-                        <Border.Effect>
-                            <DropShadowEffect Color="Black" BlurRadius="12" Opacity="0.8" OffsetX="0" OffsetY="0" />
-                        </Border.Effect>
-                        <Button x:Name="BottomFragmentationButton"
-                                Width="240"
-                                Height="135"
-                                Background="Transparent"
-                                BorderThickness="0"
-                                Padding="0">
-                            <Image Source="avares://MusicClicker/Assets/Fragmentation Button-min.png"
-                                   Stretch="Uniform" />
-                        </Button>
-                    </Border>
+                    <!-- Bottom Fragmentation Button removed (duplicate) -->
                 </StackPanel>
             </Border>
 

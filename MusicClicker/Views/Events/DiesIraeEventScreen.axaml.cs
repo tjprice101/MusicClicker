@@ -54,7 +54,7 @@ namespace MusicClicker.Views
             try
             {
                 DiesIraeMajorOwnedRightText.Text = $"Number Owned: {gameState.DiesIraeOwned}";
-                DiesIraeCrescendanceText.Text = "Every click grants +1 Dissonant Hatred (max 50). Combine 5 Dissonant → 1 Cacophonic Oblivion. Consume Cacophonic for 20 stacking 'Symphony of Hell's Retribution' crits (NPC × NPS × Dissonant Hatred). Consume Wrathful Seals for 5 stacking 'Seal-breaking Melody' crits (DOUBLE Symphony damage).";
+                DiesIraeCrescendanceText.Text = "Crescendance Ability: Wrathful Orchestration\n\n• Dissonant Hatred is a click-generated resource (each click grants +1, capped at 50). After the cap, extra clicks grant Discordant Malice.\n• Spend 5 Dissonant Hatred to gain 1 Cacophonic Oblivion.\n• Consuming a Cacophonic Oblivion converts your next 20 clicks into guaranteed 'Symphony of Hell's Retribution' critical clicks. Each such critical scales with NotesPerClick × NotesPerSecond × current Dissonant Hatred stacks.\n• Symphony crits may generate Wrathful Seals via Crescendance Bonds; consuming Wrathful Seals triggers higher-power effects like Seal-breaking Melody or duet-specific bonuses.";
             }
             catch { }
         }

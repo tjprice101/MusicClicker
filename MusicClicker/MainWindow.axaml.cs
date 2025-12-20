@@ -1480,7 +1480,7 @@ namespace MusicClicker
         /// <summary>
         /// Shows floating text at the mouse position indicating notes gained
         /// </summary>
-        private async void ShowFloatingText(Point position, string text, Color color, bool hasStroke = false, Color? strokeColor = null)
+        public async void ShowFloatingText(Point position, string text, Color color, bool hasStroke = false, Color? strokeColor = null)
         {
             if (FloatingTextCanvas == null) return;
             
@@ -1962,7 +1962,7 @@ namespace MusicClicker
         private void UpdateMainDiesIraeCrescendanceInfo()
         {
             if (MainCrescendanceTitle != null)
-                MainCrescendanceTitle.Text = "Dies Irae: Damnation Requiem";
+                MainCrescendanceTitle.Text = "Dies Irae: Wrathful Orchestration";
                 
             if (MainCrescendanceInfoText != null)
                 MainCrescendanceInfoText.Text = "Every click: +1 Dissonant Hatred (max 50), then Discordant Malice. Consume for infernal power.";

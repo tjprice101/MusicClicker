@@ -11,7 +11,7 @@
         <!-- Screen Title and Notes Owned -->
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,30,0,0"
             Spacing="8">
-            <TextBlock Text="Soul Resonance" FontSize="42" FontWeight="Bold" Foreground="#FFFF69B4"
+            <TextBlock Text="Soul Resonance" FontSize="42" FontWeight="Bold" Foreground="White"
                 HorizontalAlignment="Center" TextAlignment="Center" Opacity="1.0">
                 <TextBlock.Effect>
                     <DropShadowEffect Color="Black" OffsetX="2" OffsetY="2" BlurRadius="8" />

@@ -9,8 +9,13 @@
                ZIndex="0"
                Opacity="1" />
 
-    <Grid ZIndex="1"
-          Background="#66000000">
+        <Border ZIndex="1"
+            Background="#33000000"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch" />
+
+        <Grid ZIndex="2"
+            Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" /> <!-- Header -->
             <RowDefinition Height="*" />    <!-- Content -->
@@ -43,7 +48,7 @@
             <TextBlock x:Name="DiesIraeCountdownText"
                        Text="Time Remaining: --:--:--:--"
                        FontSize="18"
-                       Foreground="#FFDDDDDD"
+                       Foreground="White"
                        HorizontalAlignment="Center"
                        Opacity="0.95" />
             <TextBlock x:Name="NotesText"
@@ -54,27 +59,27 @@
             <TextBlock x:Name="NpsText"
                        Text="Notes Per Second: 0"
                        FontSize="18"
-                       Foreground="#CCCCCC"
+                       Foreground="White"
                        HorizontalAlignment="Center" />
         </StackPanel>
 
         <!-- Event Content - Horizontal Layout -->
-        <Grid Grid.Row="1" 
+          <Grid Grid.Row="1" 
               HorizontalAlignment="Center" 
-              VerticalAlignment="Center"
+              VerticalAlignment="Top"
               Margin="60,0,60,0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="525" />
+                <ColumnDefinition Width="475" />
                 <ColumnDefinition Width="60" />
-                <ColumnDefinition Width="525" />
+                <ColumnDefinition Width="475" />
             </Grid.ColumnDefinitions>
             
             <!-- Soul of Dies Irae Section -->
-            <StackPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="15">
+            <StackPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Top" Spacing="15">
                 <!-- Soul of Dies Irae Button (16:9, 18% smaller than 640x360 = 525x295) -->
                 <Button x:Name="SoulOfDiesIraeButton"
-                        Width="525"
-                        Height="295"
+                    Width="475"
+                    Height="266"
                         Background="Transparent"
                         BorderBrush="#FFFF69B4"
                         BorderThickness="3"
@@ -90,24 +95,25 @@
                            Foreground="White"
                            HorizontalAlignment="Center"
                            TextAlignment="Center"
+                           MaxWidth="1000"
                            Height="30" />
                 
                 <!-- Owned Text -->
                 <TextBlock x:Name="DiesIraeMajorOwnedText"
                            Text="Major Sheets of Dies Irae Owned: 0"
                            FontSize="18"
-                           Foreground="#CCCCCC"
+                           Foreground="White"
                            HorizontalAlignment="Center"
                            TextAlignment="Center"
                            Height="25" />
             </StackPanel>
 
             <!-- Dies Irae Major Section -->
-            <StackPanel Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="15">
+            <StackPanel Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Top" Spacing="15">
                 <!-- Dies Irae Major Button (16:9, 18% smaller) -->
                 <Button x:Name="DiesIraeMajorButton"
-                        Width="525"
-                        Height="295"
+                    Width="475"
+                    Height="266"
                         Background="Transparent"
                         BorderBrush="#FFFF69B4"
                         BorderThickness="3"
@@ -123,17 +129,20 @@
                            Foreground="White"
                            HorizontalAlignment="Center"
                            TextAlignment="Center"
+                           MaxWidth="1000"
                            Height="30" />
 
-                <!-- Crescendance Ability placeholder -->
-                <TextBlock x:Name="DiesIraeCrescendanceText"
-                           Text="Every click grants +1 Dissonant Hatred (max 50). Combine 5 Dissonant → 1 Cacophonic Oblivion. Consume Cacophonic for 20 stacking 'Symphony of Hell's Retribution' crits (NPC × NPS × Dissonant Hatred). Consume Wrathful Seals for 5 stacking 'Seal-breaking Melody' crits (DOUBLE Symphony damage)."
-                           FontSize="18"
-                           Foreground="#CCCCCC"
-                           HorizontalAlignment="Center"
-                           TextAlignment="Center"
-                           TextWrapping="Wrap"
-                           MaxWidth="525" />
+                <!-- Crescendance Ability placeholder (scrollable) -->
+                <ScrollViewer Width="475" MaxHeight="140" Margin="0,0,0,10" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <TextBlock x:Name="DiesIraeCrescendanceText"
+                               Text="Crescendance Ability: Wrathful Orchestration — Each click builds Dissonant Hatred. Spend accumulated Hatred to unleash brief, devastating bursts that amplify critical strikes and grant large note bonuses."
+                               FontSize="18"
+                               Foreground="White"
+                               HorizontalAlignment="Center"
+                               TextAlignment="Center"
+                               TextWrapping="Wrap"
+                               MaxWidth="475" />
+                </ScrollViewer>
             </StackPanel>
 
         </Grid>

@@ -2,6 +2,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="MusicClicker.Views.TempoResonateScreen">
 
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <Style x:Key="TempoResonateButtonStyle" Selector="Button">
+                <Setter Property="Background" Value="#DD2A2A2A"/>
+                <Setter Property="BorderBrush" Value="#FF69B4"/>
+                <Setter Property="Foreground" Value="White"/>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
     <Grid Background="#AA000000">
         <Grid.Background>
             <ImageBrush Source="avares://MusicClicker/Assets/TempoResonateBG.png"
@@ -18,7 +28,7 @@
         </Grid.RowDefinitions>
 
         <!-- ========== HEADER ========== -->
-        <Border Grid.Row="0" Background="#DD1a1a2e" BorderBrush="#FFFF69B4" BorderThickness="0,0,0,2">
+        <Border Grid.Row="0" Background="#DD2A2A2A" BorderBrush="#FF69B4" BorderThickness="0,0,0,2">
             <Grid>
                 <TextBlock Text="Tempo Resonate" 
                            FontSize="32" 
@@ -28,22 +38,8 @@
                            VerticalAlignment="Center"
                            Opacity="1.0">
                     <TextBlock.Effect>
-                        <DropShadowEffect Color="#FFFF69B4" BlurRadius="12" Opacity="0.9" />
+                        <DropShadowEffect Color="#FF69B4" BlurRadius="12" Opacity="0.9" />
                     </TextBlock.Effect>
-                    <TextBlock.Styles>
-                        <Style Selector="TextBlock">
-                            <Style.Animations>
-                                <Animation Duration="0:0:1.5" IterationCount="Infinite" PlaybackDirection="Alternate">
-                                    <KeyFrame Cue="0%">
-                                        <Setter Property="Opacity" Value="0.6"/>
-                                    </KeyFrame>
-                                    <KeyFrame Cue="100%">
-                                        <Setter Property="Opacity" Value="1.0"/>
-                                    </KeyFrame>
-                                </Animation>
-                            </Style.Animations>
-                        </Style>
-                    </TextBlock.Styles>
                 </TextBlock>
             </Grid>
         </Border>
@@ -62,8 +58,8 @@
             <!-- ========== LEFT PANEL: MAJOR SCORES ========== -->
             <Border x:Name="LeftPanelBorder"
                     Grid.Column="0" 
-                    Background="#DD1a1a2e" 
-                    BorderBrush="#FFFF69B4" 
+                    Background="#DD2A2A2A" 
+                    BorderBrush="#FF69B4" 
                     BorderThickness="2" 
                     CornerRadius="12"
                     Padding="12">
@@ -84,7 +80,7 @@
                                    Text="📜 MAJOR SCORES" 
                                    FontSize="18" 
                                    FontWeight="Bold" 
-                                   Foreground="#AAAAAA"
+                                   Foreground="#FF69B4"
                                    HorizontalAlignment="Center"/>
                     </Border>
 
@@ -111,8 +107,8 @@
                 <!-- Equip Prompt (appears at top when needed) -->
                 <Border x:Name="EquipPromptPanel"
                         Grid.Row="0"
-                        Background="#DD000000"
-                        BorderBrush="Gold"
+                        Background="#DD2A2A2A"
+                        BorderBrush="#FF69B4"
                         BorderThickness="2"
                         CornerRadius="8"
                         Padding="15"
@@ -128,32 +124,27 @@
                         <StackPanel Orientation="Horizontal" 
                                     HorizontalAlignment="Center" 
                                     Spacing="15">
-                            <Button x:Name="EquipYesButton" 
+                                <Button x:Name="EquipYesButton" 
                                     Content="✓ YES" 
                                     Width="100" 
                                     Height="35"
-                                    Background="#DD1a1a2e"
-                                    Foreground="White"
-                                    BorderBrush="#FFFF69B4"
+                                    FontWeight="Bold"
+                                    Background="#DD2A2A2A"
+                                    BorderBrush="#FF69B4"
                                     BorderThickness="2"
-                                    FontWeight="Bold">
+                                    Foreground="White">
                                 <Button.Effect>
-                                    <DropShadowEffect Color="#FFFF69B4" BlurRadius="8" Opacity="0.6"/>
+                                    <DropShadowEffect Color="#FF69B4" BlurRadius="8" Opacity="0.6"/>
                                 </Button.Effect>
                             </Button>
-                            <Button x:Name="EquipNoButton" 
+                                <Button x:Name="EquipNoButton" 
                                     Content="✗ NO" 
                                     Width="100" 
                                     Height="35"
-                                    Background="#DD1a1a2e"
-                                    Foreground="White"
-                                    BorderBrush="#FFFF69B4"
+                                    Background="#DD2A2A2A"
+                                    BorderBrush="#FF69B4"
                                     BorderThickness="2"
-                                    FontWeight="Bold">
-                                <Button.Effect>
-                                    <DropShadowEffect Color="#FFFF69B4" BlurRadius="8" Opacity="0.6"/>
-                                </Button.Effect>
-                            </Button>
+                                    Foreground="White" />
                         </StackPanel>
                     </StackPanel>
                 </Border>
@@ -174,13 +165,13 @@
                         <Border x:Name="EquippedScoreDisplay"
                                 Width="480"
                                 Height="270"
-                                Background="#DD2A2A4E"
-                                BorderBrush="Gold"
+                                Background="#DD2A2A2A"
+                                BorderBrush="#FF69B4"
                                 BorderThickness="3"
                                 CornerRadius="12"
                                 Cursor="Hand">
                             <Border.Effect>
-                                <DropShadowEffect Color="Gold" BlurRadius="15" Opacity="0.5"/>
+                                <DropShadowEffect Color="#FF69B4" BlurRadius="15" Opacity="0.5"/>
                             </Border.Effect>
                             <Grid>
                                 <TextBlock x:Name="EquippedScoreText"
@@ -209,9 +200,9 @@
                                TextWrapping="Wrap"
                                MaxWidth="500"
                                TextAlignment="Center"
-                               Foreground="#FFD700">
+                               Foreground="White">
                         <TextBlock.Effect>
-                            <DropShadowEffect Color="DarkOrange" BlurRadius="10" Opacity="0.8"/>
+                            <DropShadowEffect Color="#FF69B4" BlurRadius="10" Opacity="0.8"/>
                         </TextBlock.Effect>
                     </TextBlock>
 
@@ -228,13 +219,13 @@
                             <Border x:Name="EquippedWeaponDisplay1"
                                     Width="320"
                                     Height="180"
-                                    Background="#DD3A3A5E"
-                                    BorderBrush="#8888FF"
+                                    Background="#DD2A2A2A"
+                                    BorderBrush="#FF69B4"
                                     BorderThickness="2"
                                     CornerRadius="10"
                                     Cursor="Hand">
                                 <Border.Effect>
-                                    <DropShadowEffect Color="#4444FF" BlurRadius="10" Opacity="0.4"/>
+                                    <DropShadowEffect Color="#FF69B4" BlurRadius="10" Opacity="0.4"/>
                                 </Border.Effect>
                                 <Grid>
                                     <TextBlock x:Name="EquippedWeaponText1"
@@ -256,13 +247,13 @@
                             <Border x:Name="EquippedWeaponDisplay2"
                                     Width="320"
                                     Height="180"
-                                    Background="#DD3A3A5E"
-                                    BorderBrush="#8888FF"
+                                    Background="#DD2A2A2A"
+                                    BorderBrush="#FF69B4"
                                     BorderThickness="2"
                                     CornerRadius="10"
                                     Cursor="Hand">
                                 <Border.Effect>
-                                    <DropShadowEffect Color="#4444FF" BlurRadius="10" Opacity="0.4"/>
+                                    <DropShadowEffect Color="#FF69B4" BlurRadius="10" Opacity="0.4"/>
                                 </Border.Effect>
                                 <Grid>
                                     <TextBlock x:Name="EquippedWeaponText2"
@@ -285,8 +276,8 @@
             <!-- ========== RIGHT PANEL: WEAPONS ========== -->
             <Border x:Name="RightPanelBorder"
                     Grid.Column="2" 
-                    Background="#DD1A1A1A" 
-                    BorderBrush="#666666" 
+                    Background="#DD2A2A2A" 
+                    BorderBrush="#FF69B4" 
                     BorderThickness="2" 
                     CornerRadius="12"
                     Padding="12">
@@ -307,7 +298,7 @@
                                    Text="ARMORY OF FORTE" 
                                    FontSize="18" 
                                    FontWeight="Bold" 
-                                   Foreground="#AAAAAA"
+                                   Foreground="#FF69B4"
                                    HorizontalAlignment="Center"/>
                     </Border>
 
@@ -328,13 +319,13 @@
         <!-- ========== TOOLTIP DISPLAY PANEL ========== -->
         <Border Grid.Row="2"
                 x:Name="DescriptionTooltipPanel"
-                Background="#DD000000"
-                BorderBrush="Gold"
+                Background="#DD2A2A2A"
+                BorderBrush="#FF69B4"
                 BorderThickness="2,2,2,0"
                 Padding="15,10"
                 IsVisible="True">
             <Border.Effect>
-                <DropShadowEffect Color="Gold" BlurRadius="15" Opacity="0.6"/>
+                <DropShadowEffect Color="#FF69B4" BlurRadius="15" Opacity="0.6"/>
             </Border.Effect>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -348,10 +339,10 @@
                                    Text="Hover over any Major Score or Armory of Forte Weapon"
                                    FontSize="18"
                                    FontWeight="Bold"
-                                   Foreground="Gold"
+                                   Foreground="#FF69B4"
                                    TextWrapping="Wrap"
                                    TextAlignment="Left"/>
-                        <Rectangle Height="1" Fill="Gold" Opacity="0.5"/>
+                        <Rectangle Height="1" Fill="#FF69B4" Opacity="0.5"/>
                         <TextBlock x:Name="TooltipDescription"
                                    Text="Move your cursor over any item above to view detailed information about its passive effects, crescendance abilities, and requirements."
                                    FontSize="13"
@@ -365,9 +356,9 @@
                         Content="◄ BACK"
                         Width="140"
                         Height="100"
-                        Background="#DD1a1a2e"
+                        Background="#DD2A2A2A"
                         Foreground="White"
-                        BorderBrush="#FFFF69B4"
+                        BorderBrush="#FF69B4"
                         BorderThickness="2"
                         FontSize="16"
                         FontWeight="Bold"
@@ -375,7 +366,7 @@
                         Margin="15,0,0,0"
                         CornerRadius="8">
                     <Button.Effect>
-                        <DropShadowEffect Color="#FFFF69B4" BlurRadius="8" Opacity="0.6"/>
+                        <DropShadowEffect Color="#FF69B4" BlurRadius="8" Opacity="0.6"/>
                     </Button.Effect>
                 </Button>
             </Grid>
