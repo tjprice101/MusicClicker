@@ -1,0 +1,153 @@
+===========================================
+DIES IRAE MAJOR - ABILITIES & EFFECTS
+===========================================
+
+Flavor Text:
+"Wrath incarnate—where burning hatred forges an infernal symphony of unstoppable retribution."
+
+MAJOR ABILITY: Infernal Ascension
+---------------------------------------
+Requirements:
+• Dies Irae Major must be acquired
+
+• Clicks build infernal power that multiplies damage
+• Passive effect - always active when Dies Irae Major owned
+• Synergizes with Crescendance hatred stacking system
+
+CRESCENDANCE: Symphony of Hell's Retribution
+---------------------------------------
+Requirements:
+• Dies Irae Major must be resonated
+
+Stack Mechanics:
+• Every click: +1 Dissonant Hatred (up to 50 cap)
+• After 50 Dissonant Hatred: Additional clicks grant +1 Discordant Malice instead
+• No cap on Discordant Malice stacks
+
+Dissonant Hatred Consumption:
+• Consume 5 Dissonant Hatred: +1 Cacophonic Oblivion stack
+• Reduces Dissonant Hatred by 5 per Oblivion gained
+• Manual conversion via button
+
+Discordant Malice Consumption:
+• Consume stacks for Entropic Melodies
+• Entropic gained = X (X = current Dissonant Hatred stacks)
+• Example: 30 Dissonant Hatred, consume 5 Malice = 150 Entropic (30 × 5)
+
+Cacophonic Oblivion Consumption:
+• Consume 1 Oblivion: Next 20 clicks are "Symphony of Hell's Retribution" crits
+• Hell crit formula: NPC × NPS × Dissonant Hatred stacks
+• Extremely powerful with high Dissonant Hatred and NPS
+
+WEAPON SYNERGIES
+---------------------------------------
+
+Seven Circles (Weapon I):
+• Passive - Wrathful Amplification (while equipped):
+  - Every critical hit: +20% current notes
+  - Applies to ALL crit types (entropic, hell, etc.)
+  - Passive effect, always active
+  
+• Crescendance Bond - Seal Resonance:
+  - Symphony of Hell's Retribution crits: +1 Wrathful Seal per crit
+  - Consume 1 Wrathful Seal: Next 5 clicks are "Seal-breaking" clicks
+  - Seal-breaking clicks grant massive damage
+  - Requires: Dies Irae Major resonated + Seven Circles equipped
+
+Hell's Wrath (Weapon II):
+• Passive - Infernal Bounty (while equipped):
+  - Every 50th click: +2 to your 2 lowest owned minor scores
+  - Passive minor generation from clicking
+  - Helps balance minor score collection
+  
+• Crescendance Bond: TBD (Not Yet Implemented)
+
+DUET ABILITY: (Not Yet Implemented)
+---------------------------------------
+Dies Irae duet ability is planned but not yet implemented in current version.
+
+STRATEGY TIPS
+---------------------------------------
+1. Build Dissonant Hatred to 50 before consuming for Oblivion
+2. Cacophonic Oblivion crits scale with BOTH NPC and NPS - maximize both
+3. Save Oblivion consumes for when you have high Dissonant Hatred (30-50)
+4. Discordant Malice consumption scales with Dissonant Hatred - strategic timing
+5. Hell's Wrath provides passive minors - equip for long clicking sessions
+6. Seven Circles crit bonus stacks multiplicatively - extremely powerful
+
+PROGRESSION NOTES
+---------------------------------------
+Early Game:
+• Dissonant Hatred builds slowly (1 per click to 50 cap)
+• Focus on building to 50 before first Oblivion conversion
+• Wrathful Amplification provides consistent +20% per crit
+
+Mid Game:
+• Discordant Malice stacking begins after 50 Dissonant Hatred
+• Oblivion crits become viable (NPC × NPS × Dissonant Hatred)
+• Infernal Bounty minors help progression
+• Entropic Fury generates massive entropic from Oblivion crits
+
+Late Game:
+• Hell crit formula becomes exponential (high NPC × NPS × 50 Hatred)
+• 20 Hell crits from 1 Oblivion = massive note gain
+• Wrathful Seal stacking creates Seal-breaking burst windows
+• Discordant Malice → Entropic conversion generates 1000+ entropic per consume
+
+SYNERGY RECOMMENDATIONS
+---------------------------------------
+Best Paired With:
+• Eroica: Crimson Requiem boosts NPC, Hell crits benefit massively
+• Fate: High NPS from Tier 2 boosts Hell crit formula (NPC × NPS × Hatred)
+• Moonlight: Nighttime NPC bonuses enhance Hell crit damage
+
+Avoid Pairing With:
+• Winter: NPS freeze negates Hell crit formula scaling (NPC × NPS × Hatred)
+• Swan Lake: Both require consistent clicking - compete for attention
+
+BALANCE NOTES
+---------------------------------------
+Version 1.0 - Initial Implementation:
+• Dissonant Hatred capped at 50 to prevent infinite scaling
+• Hell crit formula (NPC × NPS × Hatred) provides exponential late-game power
+• Wrathful Seal and Seal-breaking mechanics add strategic depth
+
+ADVANCED TECHNIQUES
+---------------------------------------
+Hatred Management:
+• Optimal: Maintain 40-50 Dissonant Hatred at all times
+• Convert to Oblivion in increments of 5 (consume 5 Hatred per Oblivion)
+• Never let Dissonant Hatred drop below 30 (reduces Hell crit effectiveness)
+
+Oblivion Timing:
+• Save Oblivion for high NPS moments (Fate Tier 2, Moonlight Full Moon, etc.)
+• Hell crit formula: NPC × NPS × Dissonant Hatred
+• Example: 1000 NPC × 10,000 NPS × 50 Hatred = 500,000,000 per crit
+• 20 Hell crits from 1 Oblivion = 10,000,000,000 total damage
+
+Discordant Malice Strategy:
+• Let Malice stacks accumulate to 10+ before consuming
+• Entropic gain = Malice consumed × Dissonant Hatred
+• Example: 10 Malice × 50 Hatred = 167 Entropic Melodies
+• Only consume when Dissonant Hatred is maxed (50)
+
+Wrathful Seal Exploitation:
+• Each Hell crit grants +1 Wrathful Seal (20 crits = 20 Seals)
+• Consume Seals for Seal-breaking clicks (5 per Seal)
+• Chain: Oblivion (20 Hell crits) → 20 Seals → 100 Seal-breaking clicks
+• Seal-breaking damage formula not yet documented (high damage assumed)
+
+NPC/NPS Maximization:
+• Hell crit formula multiplicative - boost BOTH NPC and NPS
+• Eroica Crimson Requiem: Boosts NPC significantly
+• Fate Tier 2: Doubles NPS
+• Moonlight duet: 2× NPC + 3× NPS during all phases
+• Combined with 50 Hatred: Astronomical Hell crit damage
+
+CRITICAL WARNINGS
+---------------------------------------
+1. DO NOT consume all Dissonant Hatred - maintain 30+ for Hell crit effectiveness
+2. Cacophonic Oblivion is most powerful resource - use strategically
+3. Discordant Malice consumption worthless if Dissonant Hatred is low
+4. Seven Circles Wrathful Amplification is multiplicative - prioritize crits
+5. Hell's Wrath Entropic Fury can generate 4000+ entropic from 1 Oblivion (20 crits × 200)

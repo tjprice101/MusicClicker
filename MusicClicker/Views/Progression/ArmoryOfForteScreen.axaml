@@ -1,0 +1,814 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="MusicClicker.Views.ArmoryOfForteScreen">
+
+    <Panel>
+        <!-- Background image -->
+        <Image Source="avares://MusicClicker/Assets/ArmoryHall.png"
+               Stretch="UniformToFill"
+               ZIndex="0"
+               Opacity="1"
+               />
+
+        <!-- Main content on top -->
+        <Grid ZIndex="1"
+              Background="#33000000"> <!-- optional dark overlay -->
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!-- Header -->
+            <Grid Grid.Row="0" Margin="0,20,0,20">
+                <StackPanel HorizontalAlignment="Center" Spacing="10">
+                    <TextBlock Text="Armory of Forte"
+                               FontSize="42"
+                               Foreground="White"
+                               HorizontalAlignment="Center"
+                               FontWeight="Bold">
+                        <TextBlock.Effect>
+                            <DropShadowEffect Color="Black" BlurRadius="8" Opacity="0.8"/>
+                        </TextBlock.Effect>
+                    </TextBlock>
+                    <TextBlock x:Name="ArmoryNotesText"
+                               Text="Notes: 0"
+                               FontSize="24"
+                               Foreground="White"
+                               HorizontalAlignment="Center">
+                        <TextBlock.Effect>
+                            <DropShadowEffect Color="Black" BlurRadius="8" Opacity="0.8"/>
+                        </TextBlock.Effect>
+                    </TextBlock>
+                </StackPanel>
+                
+                <!-- Entropic Armory Button (Top Right) -->
+                <Button x:Name="EntropicArmoryButton"
+                        Content="Entropic Armory"
+                        Width="200"
+                        Height="50"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="0,0,50,0"
+                        Background="#55000000"
+                        Foreground="White"
+                        FontSize="18"
+                        BorderBrush="White"
+                        BorderThickness="2" />
+            </Grid>
+
+            <!-- Scrollable Content -->
+        <ScrollViewer Grid.Row="1" 
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto"
+                      Margin="50,0,50,20">
+            
+            <StackPanel Spacing="40" HorizontalAlignment="Center">
+                
+                <!-- Row 1: Moonlight Sonata Weapons -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
+                    
+                    <!-- Item 1 -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmoryItem1Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Assets/IncisorOfMoonlight.png"
+                                Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="ArmoryItem1CostText"
+                                   Text="Cost: 10,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem1OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem1SoloConcertoText"
+                                   Text="Solo Concerto: Boosts click damage by 10%."
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem1SymphonicModulationText"
+                                   Text="Symphonic Modulation: Increases NPS by 5%."
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem1DuetText"
+                                   Text="Duet Resonance: Increases critical hit chance by 15%."
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center"
+                                   HorizontalAlignment="Center" />
+                    </StackPanel>
+
+                    <!-- Item 2 -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmoryItem2Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Assets/EulogyOfTheMoon.png"
+                                Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="ArmoryItem2CostText"
+                                   Text="Cost: 25,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem2OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem2SoloConcertoText"
+                                   Text="Solo Concerto: Increases note generation by 15%."
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem2SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem2DuetText"
+                                   Text="Duet Resonance: Amplifies note generation by 20%."
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center"
+                                   HorizontalAlignment="Center" />
+                    </StackPanel>
+
+                    <!-- Item 3 -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmoryItem3Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Assets/Sakura'sBlossom.png"
+                                Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="ArmoryItem3CostText"
+                                   Text="Cost: 50,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem3OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem3SoloConcertoText"
+                                   Text="Solo Concerto: Reduces ability cooldowns by 5%."
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem3SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem3DuetText"
+                                   Text="Duet Resonance: Reduces cooldowns by 10%."
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center"
+                                   HorizontalAlignment="Center" />
+                    </StackPanel>
+
+                </StackPanel>
+
+                <!-- Row 2: Eroica & Swan Lake -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
+                    
+                    <!-- Item 4 -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmoryItem4Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Assets/FuneralPrayer.png"
+                                Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="ArmoryItem4CostText"
+                                   Text="Cost: 100,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem4OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem4SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem4SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem4DuetText"
+                                   Text="Duet Resonance: Boosts harmony effects by 25%."
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center"
+                                   HorizontalAlignment="Center" />
+                    </StackPanel>
+
+                    <!-- Item 5 -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmoryItem5Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Assets/StarScatteredWings.png"
+                                Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="ArmoryItem5CostText"
+                                   Text="Cost: 250,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem5OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem5SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem5SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem5DuetText"
+                                   Text="Duet Resonance: Enhances tempo resonance by 30%."
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center"
+                                   HorizontalAlignment="Center" />
+                    </StackPanel>
+
+                    <!-- Item 6 -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmoryItem6Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Assets/ThousandWingedSwan.png"
+                                Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="ArmoryItem6CostText"
+                                   Text="Cost: 500,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem6OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem6SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem6SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem6DuetText"
+                                   Text="Duet Resonance: Grants a shield absorbing 5% damage."
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center"
+                                   HorizontalAlignment="Center" />
+                    </StackPanel>
+
+                </StackPanel>
+
+                <!-- Row 3: La Campanella & Enigma -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
+                    
+                    <!-- Item 7 -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmoryItem7Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Assets/SymphonyOfBells.png"
+                                Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="ArmoryItem7CostText"
+                                   Text="Cost: 1,000,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem7OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem7SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem7SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem7DuetText"
+                                   Text="Duet Resonance: Increases note multiplier by 50%."
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center"
+                                   HorizontalAlignment="Center" />
+                    </StackPanel>
+
+                    <!-- Item 8 -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmoryItem8Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Assets/RazeofBellsChimes.png"
+                                Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="ArmoryItem8CostText"
+                                   Text="Cost: 2,500,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem8OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem8SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem8SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem8DuetText"
+                                   Text="Duet Resonance: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center"
+                                   HorizontalAlignment="Center" />
+                    </StackPanel>
+
+                    <!-- Item 9 -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmoryItem9Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Assets/CreatorofMystery.png"
+                                Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="ArmoryItem9CostText"
+                                   Text="Cost: 5,000,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem9OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem9SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem9SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem9DuetText"
+                                   Text="Duet Resonance: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center"
+                                   HorizontalAlignment="Center" />
+                    </StackPanel>
+
+                </StackPanel>
+
+                <!-- Row 4: Fate & Ode to Joy -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
+                    
+                    <!-- Item 10 -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmoryItem10Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Assets/Truthseeker.png"
+                                Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="ArmoryItem10CostText"
+                                   Text="Cost: 10,000,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem10OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem10SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem10SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem10DuetText"
+                                   Text="Duet Resonance: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center"
+                                   HorizontalAlignment="Center" />
+                    </StackPanel>
+
+                    <!-- Item 11 -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmoryItem11Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Assets/AstralChainripper.png"
+                                Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="ArmoryItem11CostText"
+                                   Text="Cost: 25,000,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem11OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem11SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem11SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem11DuetText"
+                                   Text="Duet Resonance: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center"
+                                   HorizontalAlignment="Center" />
+                    </StackPanel>
+
+                    <!-- Item 12 -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmoryItem12Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Assets/CosmicWeaver.png"
+                                Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="ArmoryItem12CostText"
+                                   Text="Cost: 50,000,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem12OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem12SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem12SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem12DuetText"
+                                   Text="Duet Resonance: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center"
+                                   HorizontalAlignment="Center" />
+                    </StackPanel>
+
+                </StackPanel>
+
+                <!-- Row 5: Ode to Joy & Dies Irae -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
+                    
+                    <!-- Item 13 -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmoryItem13Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Assets/JoyfulCatharsis.png"
+                                Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="ArmoryItem13CostText"
+                                   Text="Cost: 100,000,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem13OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem13SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem13SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem13DuetText"
+                                   Text="Duet Resonance: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center"
+                                   HorizontalAlignment="Center" />
+                    </StackPanel>
+
+                    <!-- Item 14 -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmoryItem14Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Assets/OdeToCreation.png"
+                                Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="ArmoryItem14CostText"
+                                   Text="Cost: 250,000,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem14OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem14SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem14SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem14DuetText"
+                                   Text="Duet Resonance: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center"
+                                   HorizontalAlignment="Center" />
+                    </StackPanel>
+
+                    <!-- Item 15 -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmoryItem15Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Assets/SevenCircles.png" Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="ArmoryItem15CostText"
+                                   Text="Cost: 500,000,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem15OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem15SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem15SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem15DuetText"
+                                   Text="Duet Resonance: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center"
+                                   HorizontalAlignment="Center" />
+                    </StackPanel>
+
+                </StackPanel>
+
+                <!-- Row 6: Dies Irae & Winter -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
+                    
+                    <!-- Item 16 -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmoryItem16Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Assets/Hell'sWrath.png" Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="ArmoryItem16CostText"
+                                   Text="Cost: 1,000,000,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem16OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem16SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem16SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem16DuetText"
+                                   Text="Duet Resonance: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center"
+                                   HorizontalAlignment="Center" />
+                    </StackPanel>
+
+                    <!-- Item 17 -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmoryItem17Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Assets/CacophonicBlizzard.png" Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="ArmoryItem17CostText"
+                                   Text="Cost: 2,500,000,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem17OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem17SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem17SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem17DuetText"
+                                   Text="Duet Resonance: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center"
+                                   HorizontalAlignment="Center" />
+                    </StackPanel>
+
+                    <!-- Item 18 -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmoryItem18Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Assets/TheSnow'sDesire.png" Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="ArmoryItem18CostText"
+                                   Text="Cost: 5,000,000,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem18OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem18SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem18SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem18DuetText"
+                                   Text="Duet Resonance: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center"
+                                   HorizontalAlignment="Center" />
+                    </StackPanel>
+
+                </StackPanel>
+
+            </StackPanel>
+
+            </ScrollViewer>
+
+            <!-- Footer -->
+            <Button Grid.Row="2"
+                    x:Name="BackButton"
+                    Content="Back to Main"
+                    Width="250"
+                    Height="50"
+                    HorizontalAlignment="Center"
+                    Margin="0,0,0,20"
+                    Background="#55000000"
+                    Foreground="White"
+                    FontSize="20" />
+        </Grid>
+    </Panel>
+</UserControl>

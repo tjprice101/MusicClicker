@@ -1,0 +1,121 @@
+===========================================
+SWAN LAKE MAJOR - ABILITIES & EFFECTS
+===========================================
+
+Flavor Text:
+"Through graceful wings, fortune's feathers descend—each one a promise of transcendent beauty."
+
+MAJOR ABILITY: Feather Bounty
+---------------------------------------
+Requirements:
+• Swan Lake Major must be acquired
+
+Mechanics:
+• Grants bonus components when feathers are collected
+• Passive effect - always active when Swan Lake Major owned
+• Works in conjunction with Crescendance feather system
+
+CRESCENDANCE: Wings of Transcendence
+---------------------------------------
+Requirements:
+• Swan Lake Major must be resonated
+
+Mechanics:
+• Revered Feathers (every 2 clicks):
+  - Consume 5 stacks → +20% current notes
+  
+• Chromatic Feathers (every 8 clicks):
+  - Consume 10 stacks → +2 of every owned minor score
+  
+• Polyphonic Feathers (every 15 clicks):
+  - Consume 1 stack → +83 Entropic Melodies + 75% current notes
+
+Feather Priority:
+• Polyphonic checked first (highest priority)
+• Then Chromatic
+• Then Revered
+• Only ONE feather drops per eligible click
+
+WEAPON SYNERGIES
+---------------------------------------
+
+Star-Scattered Wings (Weapon I):
+• Forte Resonance - Stellar Fragment Rain (while equipped):
+  - Every 10th click: +5 Melodious + 5 Harmonious Fragments
+  - Passive fragment generation independent of feathers
+  
+• Crescendance Bond - Stellar Component Rain:
+  - When Revered or Chromatic Feather obtained during Crescendance:
+    → +2 components to random owned minor score
+  - Requires: Swan Lake Major resonated + Star-Scattered equipped
+  - Auto-triggers on feather acquisition
+
+Thousand Winged Swan (Weapon II):
+• Forte Resonance - Wings of Fortune (while equipped):
+  - On weapon acquisition: +50% notes instantly (one-time)
+  - First-time acquisition bonus only
+  
+• Crescendance Bond - Wings of Velocity:
+  - When Polyphonic Feather consumed during Crescendance:
+    → 10 seconds of NPS-to-NPC boost (adds 2× NPS to NPC) -> new special crit: "Dawn of the Swan's Glory" in a white text with a pink outline. 
+  - Requires: Swan Lake Major resonated + Thousand Winged equipped
+  - Extremely powerful for click-heavy strategies
+
+DUET ABILITY: Feather Cascade (Star-Scattered + Thousand Winged)
+---------------------------------------
+First 10 clicks rain all feather types with milestone bonuses:
+• Each of first 10 clicks: Grants 1 Revered + 1 Chromatic + 1 Polyphonic Feather
+• Every 5th click (5th & 10th): +25% current notes bonus
+
+Total Feather Gain:
+• 10 Revered (can consume 2× for +40% notes)
+• 10 Chromatic (can consume 1× for +2 all minors)
+• 10 Polyphonic (can consume for massive entropic + notes)
+
+Duration: 20 seconds (but typically finishes in ~10 clicks)
+Cooldown: 4 minutes
+
+STRATEGY TIPS
+---------------------------------------
+1. Feathers drop on consistent intervals (every 2/8/15 clicks)
+2. Revered is easiest to stack (every 2 clicks vs 8/15)
+3. Save Polyphonic for critical moments - most powerful feather
+4. Chromatic best used mid-game for minor score acceleration
+5. Feather Cascade duet = instant 30 feathers total
+6. Thousand Winged NPS-to-NPC boost stacks with other click multipliers
+
+PROGRESSION NOTES
+---------------------------------------
+Early Game:
+• Feather drops are rare - focus on other crescendance systems
+• Revered feathers provide consistent small note boosts
+• Star-Scattered fragments help with early upgrades
+
+Mid Game:
+• Chromatic feathers accelerate minor score collection (every 8 clicks)
+• Feather Cascade becomes available - use strategically
+• Thousand Winged acquisition bonus provides nice one-time boost
+
+Late Game:
+• Polyphonic feathers (every 15 clicks) with NPS-to-NPC boost create massive burst windows
+• Feather Cascade generates 83-830 Entropic Melodies instantly
+• Combine Chromatic consumption (+2 all minors) with Ode to Joy doubling effects
+• RNG feather drops become more forgiving with higher click frequency
+
+SYNERGY RECOMMENDATIONS
+---------------------------------------
+Best Paired With:
+• Eroica: Chromatic feather minor boosts + Victory March = exponential scaling
+• Fate: NPS-to-NPC boost benefits Cosmic Modulation clicks
+• Enigma: Feather Cascade generates fragments for mystery consumption
+
+Avoid Pairing With:
+• Winter: NPS freeze negates Thousand Winged NPS-to-NPC boost
+• Dies Irae: Feather RNG unreliable for consistent Burning Hatred stacking
+
+BALANCE NOTES
+---------------------------------------
+Version 1.0 - Initial Implementation:
+• Feather drop rates balanced at 5% to avoid excessive RNG frustration
+• Polyphonic is intentionally rare (every 30 clicks) due to power level
+• Duet ability compensates for RNG by providing guaranteed feather burst

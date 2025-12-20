@@ -1,0 +1,147 @@
+===========================================
+ODE TO JOY (SYMPHONY NO. 9) MAJOR - ABILITIES & EFFECTS
+===========================================
+
+Flavor Text:
+"From petals of harmony and melody, life itself blooms—a symphony of boundless celebration."
+
+CRESCENDANCE: Petals of Life
+---------------------------------------
+Requirements:
+• Ode to Joy Major must be resonated
+
+Petal Generation:
+• Minor craft: +1 Petal of Harmony
+• Major craft: +1 Petal of Melody
+• Both trigger Joyful Catharsis bond (double NPS for 5s)
+
+Petal Consumption:
+• Consume Petal of Harmony: +83 Entropic Melodies
+• Consume Petal of Melody: +10 seconds of guaranteed Entropic Crescendo of Eternity critical hits (stackable)
+
+Ode to Life Crafting:
+• Recipe: 1 Petal of Harmony + 1 Petal of Melody + 17 Entropic Melodies
+• Result: 1 Ode to Life stack
+• Consume Ode to Life: Double all owned minor scores
+• Ode to Creation bond: Doubles passive petal generation for 25s
+
+WEAPON SYNERGIES
+---------------------------------------
+
+Joyful Catharsis (Weapon I):
+• Passive - Harmonic Entropy (while equipped):
+  - Every 50th click: +X Entropic Melodies (X = critical notes gotten × 3)
+  - Scales with your critical hit performance
+  - Tracks cumulative crit performance, not just recent
+  
+• Crescendance Bond - Euphoric Resonance:
+  - Every time you gain any Petal: Double NPS for 5 seconds
+  - Effect stacks with multiple petal gains
+  - Requires: Ode to Joy Major resonated + Joyful Catharsis equipped
+  - Applies to both Harmony and Melody petals
+
+Ode to Creation (Weapon II):
+• Passive - Rhythmic Genesis (while equipped):
+  - Every 20th click: Generate random Petal of Harmony OR Petal of Melody
+  - 50/50 chance for either petal type
+  - Passive petal generation independent of crafting
+  
+• Crescendance Bond - Life Amplification:
+  - On Ode to Life consume: Reduce passive effect by 10 clicks to activate for 25 seconds
+  - Generates petals every 10th click instead of 20th
+  - Requires: Ode to Joy Major resonated + Ode to Creation equipped
+  - Temporary boost to petal generation rate
+
+DUET ABILITY: Crescendo Conductor (Joyful Catharsis + Ode to Creation)
+---------------------------------------
+Build 16-note melodies through clicking with escalating rewards:
+• 4 notes: +25 Melodious + 25 Harmonious Fragments
+• 8 notes: +5 Petals of Harmony
+• 12 notes: +5 Petals of Melody
+• 16 notes: +1 Ode to Life
+
+Mechanics:
+• Repeatable/stackable - can complete multiple 16-note cycles
+• Counter resets after 16 notes, immediately starts new cycle
+• On ability expiry: +3 Entropic Melodies per completed 4-note section
+
+Duration: 20 seconds
+Cooldown: 10 minutes
+
+STRATEGY TIPS
+---------------------------------------
+1. Petals generate from ANY minor/major craft - not just Ode to Joy
+2. Save Petals of Melody for critical moments (Entropic Crescendo of Eternity windows)
+3. Ode to Life doubling is most powerful mid-game (exponential minor growth)
+4. Joyful Catharsis rewards crit-heavy playstyle
+5. Ode to Creation provides passive petals - equip early
+6. Crescendo Conductor: Click rapidly to maximize 16-note completions
+
+PROGRESSION NOTES
+---------------------------------------
+Early Game:
+• Petal generation is slow (requires crafting)
+• Ode to Creation passive helps accelerate petal collection
+• Focus on Harmony petals for entropic melodies
+
+Mid Game:
+• Ode to Life crafting becomes viable (requires 17 entropic)
+• Doubling minors creates exponential growth
+• Euphoric Resonance double NPS stacks provide nice boosts
+• Crescendo Conductor grants reliable major sheets
+
+Late Game:
+• Multiple Ode to Life consumes = repeated minor doubling
+• Petal of Melody stacking creates permanent Entropic Crescendo of Eternity windows
+• Harmonic Entropy generates 100+ entropic per 50 clicks with high crit rate
+• Life Amplification doubles petal generation (every 10 clicks)
+
+SYNERGY RECOMMENDATIONS
+---------------------------------------
+Best Paired With:
+• Eroica: Victory March doubling + Ode to Life doubling = quad minors
+• La Campanella: Symphony duplication + Ode to Life = explosive growth
+• Fate: Tier 3 guaranteed crits maximize Harmonic Entropy entropic gain
+
+Avoid Pairing With:
+• Winter: NPS freeze negates Euphoric Resonance double NPS benefit
+• Swan Lake: Both require crafting focus - compete for resources
+
+BALANCE NOTES
+---------------------------------------
+Version 1.0 - Initial Implementation:
+• Ode to Life doubling is multiplicative (2×, 4×, 8× with multiple consumes)
+• Petal of Melody stacking provides unlimited Entropic Crescendo of Eternity duration
+• Crescendo Conductor rewards fast clicking with multiple 16-note cycles
+
+ADVANCED TECHNIQUES
+---------------------------------------
+Ode to Life Multiplication:
+• First consume: 10 minors → 20 minors
+• Second consume: 20 minors → 40 minors
+• Third consume: 40 minors → 80 minors
+• Exponential growth - save multiple Ode to Life stacks for burst
+
+Petal of Melody Stacking:
+• Each Melody = +10s of guaranteed Entropic Crescendo of Eternity critical hits
+• 5 Melody petals = 50s continuous Entropic Crescendo of Eternity critical hits
+• Stack duration before consuming for extended crit windows
+• Pair with Fate Tier 3 or Eroica Crimson Requiem for mega-crits
+
+Crescendo Conductor Optimization:
+• 20 seconds = ~40-60 clicks possible
+• Can complete 2-3 full 16-note cycles per use
+• Each cycle grants 5× NPS for 15s (stacks duration)
+• Final entropic bonus: 12-18 entropic (3 per completed 4-note section)
+
+Life Amplification Exploitation:
+• Ode to Creation bond: Doubles generation for 25s (every 10 clicks)
+• During 25s window: Can gain 2-3 extra petals
+• Chain multiple Ode to Life consumes for extended double generation
+• Use during Crescendo Conductor for maximum petal gain
+
+Harmonic Entropy Maximization:
+• Every 50 clicks: Entropic = (critical notes × 3)
+• With Fate Tier 3: All clicks are crits = 50 crit notes per 50 clicks
+• Potential: 50 entropic per 50 clicks (50 × 1)
+• Requires high crit rate or guaranteed crit buffs (Fate/Eroica)

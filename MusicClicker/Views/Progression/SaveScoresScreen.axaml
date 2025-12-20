@@ -1,0 +1,371 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="MusicClicker.Views.SaveScoresScreen">
+
+    <Grid Background="#AA000000">
+        <Grid.Background>
+            <ImageBrush Source="avares://MusicClicker/Assets/Soul Menu 2-min.png"
+                Stretch="UniformToFill" />
+        </Grid.Background>
+
+        <!-- Screen Title and Notes Owned -->
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,30,0,0"
+            Spacing="8">
+            <TextBlock Text="Soul Resonance" FontSize="42" FontWeight="Bold" Foreground="White"
+                HorizontalAlignment="Center" TextAlignment="Center" Opacity="1.0">
+                <TextBlock.Effect>
+                    <DropShadowEffect Color="Black" OffsetX="2" OffsetY="2" BlurRadius="8" />
+                </TextBlock.Effect>
+                <TextBlock.Styles>
+                    <Style Selector="TextBlock">
+                        <Style.Animations>
+                            <Animation Duration="0:0:1.5" IterationCount="Infinite" PlaybackDirection="Alternate">
+                                <KeyFrame Cue="0%">
+                                    <Setter Property="Opacity" Value="0.6"/>
+                                </KeyFrame>
+                                <KeyFrame Cue="100%">
+                                    <Setter Property="Opacity" Value="1.0"/>
+                                </KeyFrame>
+                            </Animation>
+                        </Style.Animations>
+                    </Style>
+                </TextBlock.Styles>
+            </TextBlock>
+            <TextBlock x:Name="SaveScoresNotesText" Text="Notes: 0" FontSize="24"
+                Foreground="White" HorizontalAlignment="Center" FontWeight="SemiBold"
+                TextAlignment="Center">
+                <TextBlock.Effect>
+                    <DropShadowEffect Color="Black" OffsetX="1" OffsetY="1" BlurRadius="4" />
+                </TextBlock.Effect>
+            </TextBlock>
+        </StackPanel>
+
+        <!-- Scrollable Scores Section -->
+        <ScrollViewer VerticalScrollBarVisibility="Auto"
+            HorizontalScrollBarVisibility="Disabled"
+            Margin="40,130,40,90" Background="Transparent">
+            <StackPanel Orientation="Vertical" Spacing="25">
+
+                <!-- Moonlight Sonata -->
+                <Border Background="#66000000" Height="230" CornerRadius="8" 
+                    BorderBrush="#FFFF69B4" BorderThickness="3">
+                    <Border.Effect>
+                        <DropShadowEffect Color="Black" OffsetX="0" OffsetY="4" BlurRadius="12" />
+                    </Border.Effect>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="400" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Button x:Name="MoonlightSonataButton" Margin="10" Width="380"
+                            Height="210"
+                            Background="Transparent" BorderThickness="0" CornerRadius="10"
+                            Padding="0">
+                            <Border CornerRadius="10" ClipToBounds="True">
+                                <Image
+                                    Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [BC3B44D]-min.png"
+                                    Stretch="UniformToFill" Width="380" Height="210" />
+                            </Border>
+                        </Button>
+
+                        <StackPanel Grid.Column="1" Orientation="Vertical" Margin="20,15,20,15"
+                            Spacing="8" VerticalAlignment="Center">
+                            <TextBlock Text="5000 Notes for Soul Resonance" FontSize="22"
+                                Foreground="#FFFF69B4" FontWeight="Bold">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" OffsetX="1" OffsetY="1" BlurRadius="3" />
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock x:Name="MoonlightMinorKeysText" FontSize="17"
+                                Foreground="White" TextWrapping="Wrap" />
+                            <TextBlock x:Name="MoonlightMinorScalesText" FontSize="17"
+                                Foreground="White" TextWrapping="Wrap" />
+                            <TextBlock x:Name="MoonlightMinorProgressionsText" FontSize="17"
+                                Foreground="White" TextWrapping="Wrap" />
+                            <TextBlock x:Name="MoonlightMajorSheetsText" FontSize="17"
+                                Foreground="White" TextWrapping="Wrap" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- Eroica -->
+                <Border Background="#66000000" Height="230" CornerRadius="8" 
+                    BorderBrush="#FFFF69B4" BorderThickness="3">
+                    <Border.Effect>
+                        <DropShadowEffect Color="Black" OffsetX="0" OffsetY="4" BlurRadius="12" />
+                    </Border.Effect>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="400" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Button x:Name="EroicaButton" Margin="10" Width="380" Height="210"
+                            Background="Transparent" BorderThickness="0" CornerRadius="10"
+                            Padding="0">
+                            <Border CornerRadius="10" ClipToBounds="True">
+                                <Image
+                                    Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [9B5FF4F]-min.png"
+                                    Stretch="UniformToFill" Width="380" Height="210" />
+                            </Border>
+                        </Button>
+
+                        <StackPanel Grid.Column="1" Orientation="Vertical" Margin="20,15,20,15"
+                            Spacing="8" VerticalAlignment="Center">
+                            <TextBlock Text="15000 Notes for Soul Resonance" FontSize="22"
+                                Foreground="#FFFF69B4" FontWeight="Bold">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" OffsetX="1" OffsetY="1" BlurRadius="3" />
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock x:Name="EroicaMinorKeysText" FontSize="17"
+                                Foreground="White" TextWrapping="Wrap" />
+                            <TextBlock x:Name="EroicaMinorScalesText" FontSize="17"
+                                Foreground="White" TextWrapping="Wrap" />
+                            <TextBlock x:Name="EroicaMinorProgressionsText" FontSize="17"
+                                Foreground="White" TextWrapping="Wrap" />
+                            <TextBlock x:Name="EroicaMajorSheetsText" FontSize="17"
+                                Foreground="White" TextWrapping="Wrap" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- Swan Lake -->
+                <Border Background="#66000000" Height="230" CornerRadius="8" 
+                    BorderBrush="#FFFF69B4" BorderThickness="3">
+                    <Border.Effect>
+                        <DropShadowEffect Color="Black" OffsetX="0" OffsetY="4" BlurRadius="12" />
+                    </Border.Effect>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="400" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Button x:Name="SwanLakeButton" Margin="10" Width="380" Height="210"
+                            Background="Transparent" BorderThickness="0" CornerRadius="10"
+                            Padding="0">
+                            <Border CornerRadius="10" ClipToBounds="True">
+                                <Image
+                                    Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [AA78ED8].png"
+                                    Stretch="UniformToFill" Width="380" Height="210" />
+                            </Border>
+                        </Button>
+
+                        <StackPanel Grid.Column="1" Orientation="Vertical" Margin="20,15,20,15"
+                            Spacing="8" VerticalAlignment="Center">
+                            <TextBlock Text="45000 Notes for Soul Resonance" FontSize="22"
+                                Foreground="#FFFF69B4" FontWeight="Bold">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" OffsetX="1" OffsetY="1" BlurRadius="3" />
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock x:Name="SwanLakeMinorKeysText" FontSize="17"
+                                Foreground="White" TextWrapping="Wrap" />
+                            <TextBlock x:Name="SwanLakeMinorScalesText" FontSize="17"
+                                Foreground="White" TextWrapping="Wrap" />
+                            <TextBlock x:Name="SwanLakeMinorProgressionsText" FontSize="17"
+                                Foreground="White" TextWrapping="Wrap" />
+                            <TextBlock x:Name="SwanLakeMajorSheetsText" FontSize="17"
+                                Foreground="White" TextWrapping="Wrap" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- La Campanella -->
+                <Border Background="#66000000" Height="230" CornerRadius="8" 
+                    BorderBrush="#FFFF69B4" BorderThickness="3">
+                    <Border.Effect>
+                        <DropShadowEffect Color="Black" OffsetX="0" OffsetY="4" BlurRadius="12" />
+                    </Border.Effect>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="400" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Button x:Name="LaCampanellaButton" Margin="10" Width="380" Height="210"
+                            Background="Transparent" BorderThickness="0" CornerRadius="10"
+                            Padding="0">
+                            <Border CornerRadius="10" ClipToBounds="True">
+                                <Image
+                                    Source="avares://MusicClicker/Assets/SoulOfLaCampanella.png"
+                                    Stretch="UniformToFill" Width="380" Height="210" />
+                            </Border>
+                        </Button>
+
+                        <StackPanel Grid.Column="1" Orientation="Vertical" Margin="20,15,20,15"
+                            Spacing="8" VerticalAlignment="Center">
+                            <TextBlock Text="135,000 Notes for Soul Resonance" FontSize="22"
+                                Foreground="#FFFF69B4" FontWeight="Bold">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" OffsetX="1" OffsetY="1" BlurRadius="3" />
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock x:Name="LaCampanellaMinorKeysText"
+                                Text="Minor key of La Campanella"
+                                FontSize="17" Foreground="White" TextWrapping="Wrap" />
+                            <TextBlock x:Name="LaCampanellaMinorScalesText"
+                                Text="Minor scales of La Campanella"
+                                FontSize="17" Foreground="White" TextWrapping="Wrap" />
+                            <TextBlock x:Name="LaCampanellaMinorProgressionsText"
+                                Text="Minor progressions of La Campanella"
+                                FontSize="17" Foreground="White" TextWrapping="Wrap" />
+                            <TextBlock x:Name="LaCampanellaMajorSheetsText"
+                                Text="Major sheets of La Campanella"
+                                FontSize="17" Foreground="White" TextWrapping="Wrap" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- Enigma -->
+                <Border Background="#66000000" Height="230" CornerRadius="8" 
+                    BorderBrush="#FFFF69B4" BorderThickness="3">
+                    <Border.Effect>
+                        <DropShadowEffect Color="Black" OffsetX="0" OffsetY="4" BlurRadius="12" />
+                    </Border.Effect>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="400" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Button x:Name="EnigmaButton" Margin="10" Width="380" Height="210"
+                            Background="Transparent" BorderThickness="0" CornerRadius="10"
+                            Padding="0">
+                            <Border CornerRadius="10" ClipToBounds="True">
+                                <Image
+                                    Source="avares://MusicClicker/Assets/SoulOfEnigma.png"
+                                    Stretch="UniformToFill" Width="380" Height="210" />
+                            </Border>
+                        </Button>
+
+                        <StackPanel Grid.Column="1" Orientation="Vertical" Margin="20,15,20,15"
+                            Spacing="8" VerticalAlignment="Center">
+                            <TextBlock Text="405,000 Notes for Soul Resonance" FontSize="22"
+                                Foreground="#FFFF69B4" FontWeight="Bold">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" OffsetX="1" OffsetY="1" BlurRadius="3" />
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock x:Name="EnigmaMinorKeysText" Text="Minor key of Enigma"
+                                FontSize="17" Foreground="White" TextWrapping="Wrap" />
+                            <TextBlock x:Name="EnigmaMinorScalesText"
+                                Text="Minor scales of Enigma"
+                                FontSize="17" Foreground="White" TextWrapping="Wrap" />
+                            <TextBlock x:Name="EnigmaMinorProgressionsText"
+                                Text="Minor progressions of Enigma"
+                                FontSize="17" Foreground="White" TextWrapping="Wrap" />
+                            <TextBlock x:Name="EnigmaMajorSheetsText"
+                                Text="Major sheets of Enigma"
+                                FontSize="17" Foreground="White" TextWrapping="Wrap" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- Fate -->
+                <Border Background="#66000000" Height="230" CornerRadius="8" 
+                    BorderBrush="#FFFF69B4" BorderThickness="3">
+                    <Border.Effect>
+                        <DropShadowEffect Color="Black" OffsetX="0" OffsetY="4" BlurRadius="12" />
+                    </Border.Effect>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="400" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Button x:Name="FateButton" Margin="10" Width="380" Height="210"
+                            Background="Transparent" BorderThickness="0" CornerRadius="10"
+                            Padding="0">
+                            <Border CornerRadius="10" ClipToBounds="True">
+                                <Image
+                                    Source="avares://MusicClicker/Assets/SoulOfFate.png"
+                                    Stretch="UniformToFill" Width="380" Height="210" />
+                            </Border>
+                        </Button>
+
+                        <StackPanel Grid.Column="1" Orientation="Vertical" Margin="20,15,20,15"
+                            Spacing="8" VerticalAlignment="Center">
+                            <TextBlock Text="1,215,000 Notes for Soul Resonance" FontSize="22"
+                                Foreground="#FFFF69B4" FontWeight="Bold">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" OffsetX="1" OffsetY="1" BlurRadius="3" />
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock x:Name="FateMinorKeysText" Text="Minor key of Fate"
+                                FontSize="17" Foreground="White" TextWrapping="Wrap" />
+                            <TextBlock x:Name="FateMinorScalesText" Text="Minor scales of Fate"
+                                FontSize="17" Foreground="White" TextWrapping="Wrap" />
+                            <TextBlock x:Name="FateMinorProgressionsText"
+                                Text="Minor progressions of Fate"
+                                FontSize="17" Foreground="White" TextWrapping="Wrap" />
+                            <TextBlock x:Name="FateMajorSheetsText" Text="Major sheets of Fate"
+                                FontSize="17" Foreground="White" TextWrapping="Wrap" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- Ode to Joy -->
+                <Border Background="#66000000" Height="230" CornerRadius="8" 
+                    BorderBrush="#FFFF69B4" BorderThickness="3">
+                    <Border.Effect>
+                        <DropShadowEffect Color="Black" OffsetX="0" OffsetY="4" BlurRadius="12" />
+                    </Border.Effect>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="400" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Button x:Name="OdeToJoyButton" Margin="10" Width="380" Height="210"
+                            Background="Transparent" BorderThickness="0" CornerRadius="10"
+                            Padding="0">
+                            <Border CornerRadius="10" ClipToBounds="True">
+                                <Image
+                                    Source="avares://MusicClicker/Assets/SoulOfOdeToJoy.png"
+                                    Stretch="UniformToFill" Width="380" Height="210" />
+                            </Border>
+                        </Button>
+
+                        <StackPanel Grid.Column="1" Orientation="Vertical" Margin="20,15,20,15"
+                            Spacing="8" VerticalAlignment="Center">
+                            <TextBlock Text="3,645,000 Notes for Soul Resonance" FontSize="22"
+                                Foreground="#FFFF69B4" FontWeight="Bold">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" OffsetX="1" OffsetY="1" BlurRadius="3" />
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock x:Name="OdeToJoyMinorKeysText"
+                                Text="Minor key of Ode to Joy"
+                                FontSize="17" Foreground="White" TextWrapping="Wrap" />
+                            <TextBlock x:Name="OdeToJoyMinorScalesText"
+                                Text="Minor scales of Ode to Joy"
+                                FontSize="17" Foreground="White" TextWrapping="Wrap" />
+                            <TextBlock x:Name="OdeToJoyMinorProgressionsText"
+                                Text="Minor progressions of Ode to Joy"
+                                FontSize="17" Foreground="White" TextWrapping="Wrap" />
+                            <TextBlock x:Name="OdeToJoyMajorSheetsText"
+                                Text="Major sheets of Ode to Joy"
+                                FontSize="17" Foreground="White" TextWrapping="Wrap" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Back Button -->
+        <Border HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,25"
+            CornerRadius="8" Background="#66000000" BorderBrush="#FFFF69B4" BorderThickness="3">
+            <Border.Effect>
+                <DropShadowEffect Color="Black" OffsetX="0" OffsetY="3" BlurRadius="10" />
+            </Border.Effect>
+            <Button x:Name="BackButtonSaveScores" Content="Back" Width="220" Height="55"
+                Background="Transparent" Foreground="White" FontSize="22" FontWeight="Bold"
+                BorderThickness="0" CornerRadius="8">
+            </Button>
+        </Border>
+    </Grid>
+</UserControl>

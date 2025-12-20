@@ -1,0 +1,163 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="MusicClicker.Views.DiesIraeEventScreen">
+
+    <Panel>
+        <!-- Background image -->
+        <Image Source="avares://MusicClicker/Assets/DiesIraeEventBackground.jpg"
+               Stretch="UniformToFill"
+               ZIndex="0"
+               Opacity="1" />
+
+        <Border ZIndex="1"
+            Background="#33000000"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch" />
+
+        <Grid ZIndex="2"
+            Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" /> <!-- Header -->
+            <RowDefinition Height="*" />    <!-- Content -->
+            <RowDefinition Height="Auto" /> <!-- Footer -->
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center" Spacing="10" Margin="0,30,0,30">
+            <TextBlock Text="Dies Irae Event"
+                       FontSize="42"
+                       Foreground="White"
+                       HorizontalAlignment="Center"
+                       FontWeight="Bold"
+                       Opacity="1.0">
+                <TextBlock.Styles>
+                    <Style Selector="TextBlock">
+                        <Style.Animations>
+                            <Animation Duration="0:0:1.5" IterationCount="Infinite" PlaybackDirection="Alternate">
+                                <KeyFrame Cue="0%">
+                                    <Setter Property="Opacity" Value="0.6"/>
+                                </KeyFrame>
+                                <KeyFrame Cue="100%">
+                                    <Setter Property="Opacity" Value="1.0"/>
+                                </KeyFrame>
+                            </Animation>
+                        </Style.Animations>
+                    </Style>
+                </TextBlock.Styles>
+            </TextBlock>
+            <TextBlock x:Name="DiesIraeCountdownText"
+                       Text="Time Remaining: --:--:--:--"
+                       FontSize="18"
+                       Foreground="White"
+                       HorizontalAlignment="Center"
+                       Opacity="0.95" />
+            <TextBlock x:Name="NotesText"
+                       Text="Notes: 0"
+                       FontSize="20"
+                       Foreground="White"
+                       HorizontalAlignment="Center" />
+            <TextBlock x:Name="NpsText"
+                       Text="Notes Per Second: 0"
+                       FontSize="18"
+                       Foreground="White"
+                       HorizontalAlignment="Center" />
+        </StackPanel>
+
+        <!-- Event Content - Horizontal Layout -->
+          <Grid Grid.Row="1" 
+              HorizontalAlignment="Center" 
+              VerticalAlignment="Top"
+              Margin="60,0,60,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="475" />
+                <ColumnDefinition Width="60" />
+                <ColumnDefinition Width="475" />
+            </Grid.ColumnDefinitions>
+            
+            <!-- Soul of Dies Irae Section -->
+            <StackPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Top" Spacing="15">
+                <!-- Soul of Dies Irae Button (16:9, 18% smaller than 640x360 = 525x295) -->
+                <Button x:Name="SoulOfDiesIraeButton"
+                    Width="475"
+                    Height="266"
+                        Background="Transparent"
+                        BorderBrush="#FFFF69B4"
+                        BorderThickness="3"
+                        HorizontalAlignment="Center">
+                    <Image Source="avares://MusicClicker/Assets/SoulOfDiesIrae.png"
+                           Stretch="UniformToFill" />
+                </Button>
+                
+                <!-- Cost Text -->
+                <TextBlock x:Name="SoulOfDiesIraeCostText"
+                           Text="0 Notes for Soul Resonance"
+                           FontSize="20"
+                           Foreground="White"
+                           HorizontalAlignment="Center"
+                           TextAlignment="Center"
+                           MaxWidth="1000"
+                           Height="30" />
+                
+                <!-- Owned Text -->
+                <TextBlock x:Name="DiesIraeMajorOwnedText"
+                           Text="Major Sheets of Dies Irae Owned: 0"
+                           FontSize="18"
+                           Foreground="White"
+                           HorizontalAlignment="Center"
+                           TextAlignment="Center"
+                           Height="25" />
+            </StackPanel>
+
+            <!-- Dies Irae Major Section -->
+            <StackPanel Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Top" Spacing="15">
+                <!-- Dies Irae Major Button (16:9, 18% smaller) -->
+                <Button x:Name="DiesIraeMajorButton"
+                    Width="475"
+                    Height="266"
+                        Background="Transparent"
+                        BorderBrush="#FFFF69B4"
+                        BorderThickness="3"
+                        HorizontalAlignment="Center">
+                    <Image Source="avares://MusicClicker/Assets/DiesIraeMajor.png"
+                           Stretch="UniformToFill" />
+                </Button>
+                
+                <!-- Number Owned -->
+                <TextBlock x:Name="DiesIraeMajorOwnedRightText"
+                           Text="Number Owned: 0"
+                           FontSize="20"
+                           Foreground="White"
+                           HorizontalAlignment="Center"
+                           TextAlignment="Center"
+                           MaxWidth="1000"
+                           Height="30" />
+
+                <!-- Crescendance Ability placeholder (scrollable) -->
+                <ScrollViewer Width="475" MaxHeight="140" Margin="0,0,0,10" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <TextBlock x:Name="DiesIraeCrescendanceText"
+                               Text="Crescendance Ability: Wrathful Orchestration — Each click builds Dissonant Hatred. Spend accumulated Hatred to unleash brief, devastating bursts that amplify critical strikes and grant large note bonuses."
+                               FontSize="18"
+                               Foreground="White"
+                               HorizontalAlignment="Center"
+                               TextAlignment="Center"
+                               TextWrapping="Wrap"
+                               MaxWidth="475" />
+                </ScrollViewer>
+            </StackPanel>
+
+        </Grid>
+
+        <!-- Footer -->
+        <Button Grid.Row="2"
+                x:Name="BackButton"
+                Content="Back to Events"
+                Width="250"
+                Height="50"
+                HorizontalAlignment="Center"
+                Margin="0,0,0,30"
+                Background="#55000000"
+                Foreground="White"
+                FontSize="20" />
+    </Grid>
+    </Panel>
+</UserControl>

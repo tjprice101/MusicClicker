@@ -1,0 +1,91 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="MusicClicker.Views.FragmentationScreen">
+
+    <Grid Background="#66000000">
+        <Grid.Background>
+            <ImageBrush Source="avares://MusicClicker/Assets/FragmentationBG-min.png"
+                Stretch="UniformToFill" />
+        </Grid.Background>
+
+        <!-- Top Title and Notes -->
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0"
+            Spacing="10">
+            <TextBlock Text="Fragmentation" FontSize="36" FontWeight="Bold" Foreground="White"
+                HorizontalAlignment="Center" Opacity="1.0">
+                <TextBlock.Styles>
+                    <Style Selector="TextBlock">
+                        <Style.Animations>
+                            <Animation Duration="0:0:1.5" IterationCount="Infinite" PlaybackDirection="Alternate">
+                                <KeyFrame Cue="0%">
+                                    <Setter Property="Opacity" Value="0.6"/>
+                                </KeyFrame>
+                                <KeyFrame Cue="100%">
+                                    <Setter Property="Opacity" Value="1.0"/>
+                                </KeyFrame>
+                            </Animation>
+                        </Style.Animations>
+                    </Style>
+                </TextBlock.Styles>
+            </TextBlock>
+            <TextBlock x:Name="FragmentationNotesText" Text="Notes: 0" FontSize="28"
+                Foreground="White" HorizontalAlignment="Center" />
+        </StackPanel>
+
+        <!-- Fragment squares -->
+        <Grid HorizontalAlignment="Center"
+              VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="280" />
+                <ColumnDefinition Width="80" />
+                <ColumnDefinition Width="280" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Melodious Fragments -->
+            <StackPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="15">
+                <TextBlock Text="Melodious Fragments" FontSize="24"
+                    FontWeight="Bold"
+                    Foreground="White" HorizontalAlignment="Center" TextWrapping="Wrap"
+                    TextAlignment="Center" Height="32" />
+                <Button x:Name="MelodiousFragmentButton" Width="200" Height="200"
+                    HorizontalAlignment="Center" VerticalAlignment="Top">
+                    <Image
+                        Source="avares://MusicClicker/Assets/Music Game Assets [F503F6F]-min.png"
+                        Stretch="Uniform" />
+                </Button>
+                <TextBlock Text="1000 Notes for 1" FontSize="20" Foreground="White"
+                    HorizontalAlignment="Center" TextWrapping="Wrap"
+                    TextAlignment="Center" Height="28" />
+                <TextBlock x:Name="MelodiousOwnedText" Text="0 Owned" FontSize="20"
+                    Foreground="White" HorizontalAlignment="Center" TextWrapping="Wrap"
+                    TextAlignment="Center" Height="28" />
+            </StackPanel>
+
+            <!-- Harmonious Fragments -->
+            <StackPanel Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="15">
+                <TextBlock Text="Harmonious Fragments" FontSize="24"
+                    FontWeight="Bold"
+                    Foreground="White" HorizontalAlignment="Center" TextWrapping="Wrap"
+                    TextAlignment="Center" Height="32" />
+                <Button x:Name="HarmoniousFragmentButton" Width="200" Height="200"
+                    HorizontalAlignment="Center" VerticalAlignment="Top">
+                    <Image
+                        Source="avares://MusicClicker/Assets/Music Game Assets [0EE1949]-min.png"
+                        Stretch="Uniform" />
+                </Button>
+                <TextBlock Text="5000 Notes for 1" FontSize="20" Foreground="White"
+                    HorizontalAlignment="Center" TextWrapping="Wrap"
+                    TextAlignment="Center" Height="28" />
+                <TextBlock x:Name="HarmoniousOwnedText" Text="0 Owned"
+                    FontSize="20"
+                    Foreground="White" HorizontalAlignment="Center" TextWrapping="Wrap"
+                    TextAlignment="Center" Height="28" />
+            </StackPanel>
+        </Grid>
+
+        <!-- Back Button -->
+        <Button x:Name="BackButtonFragmentation" Content="Back" Width="200" Height="50"
+            Background="#55000000" Foreground="White" FontSize="20"
+            HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20" />
+    </Grid>
+</UserControl>

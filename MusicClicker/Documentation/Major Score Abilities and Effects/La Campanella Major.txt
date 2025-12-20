@@ -1,0 +1,141 @@
+===========================================
+LA CAMPANELLA MAJOR - ABILITIES & EFFECTS
+===========================================
+
+Flavor Text:
+"Each chime resonates with destiny; as the bell cracks, fortune rings eternal."
+
+MAJOR ABILITY: Bell's Fortune
+---------------------------------------
+Requirements:
+• La Campanella Major must be acquired
+
+Mechanics:
+• Grants bonus +10% bonus notes whenever the Grandiose Bell cracks
+• Passive effect - always active when La Campanella Major owned
+• Works in conjunction with Crescendance bell system
+
+CRESCENDANCE: Grandiose Bell
+---------------------------------------
+Requirements:
+• La Campanella Major must be resonated
+
+Mechanics:
+Bell progresses through stages based on click count:
+• Stage 0 (Intact): 0-19 clicks
+• Stage 1 (Crescending): 20-39 clicks
+• Stage 2 (Radiant): 40-59 clicks
+• Stage 3 (Harmonizing): 60+ clicks
+
+Bell cracks at 20, 40, and 60 clicks, advancing to next stage.
+
+Mending Rewards:
+• Crescending (Stage 1): +2 random owned minor scores
+• Radiant (Stage 2): Next 5 clicks are Entropic Crescendo of Eternity critical hits + 5 Deafening Chime stacks 
+• Harmonizing (Stage 3): Consume all Deafening Chime for 2^stacks multiplier to notes
+
+Deafening Chime Mechanics:
+• Gained from Radiant mend (5 stacks) or Entropic Crescendo of Eternity critical hits (3 stacks)
+• Max effective stacks for Harmonizing mend: 6 (2^6 = 64× multiplier)
+• Stacks have 2-minute expiry timer
+• Can stack from multiple Radiant mends before Harmonizing consumption
+
+WEAPON SYNERGIES
+---------------------------------------
+
+Symphony of Bells (Weapon I):
+• Passive - Harmonic Duplication (while equipped):
+  - On minor craft: Duplicate that minor (+1 extra copy)
+  - Every minor craft grants 2× the score
+  - Passive effect, requires equipped
+  
+• Crescendance Bond - Resonant Crack Bonus:
+  - When Grandiose Bell cracks (at 20/40/60 clicks):
+    → Instantly gain +75% current notes
+  - Requires: La Campanella Major resonated + Symphony equipped
+  - Triggers at each crack threshold
+
+Razer of Bell's Chimes (Weapon II):
+• Passive - Component Echo (while equipped):
+  - On minor craft: Refund 2 random components for that minor
+  - Helps offset crafting costs
+  - Passive effect, requires equipped
+  
+• Crescendance Bond - Entropic Resonance:
+  - On Grandiose Bell mend (any stage):
+    → Gain Entropic Melodies = click count × 2/3 (max 83)
+  - Requires: La Campanella Major resonated + Razer equipped
+  - Maximum 83 Entropic per mend even if 60+ clicks
+
+DUET ABILITY: Chime Chain (Symphony + Razer)
+---------------------------------------
+Build exponential click chains within tight time windows:
+• Each click within 1 second of previous click continues the chain
+• Chain breaks if 1+ seconds pass without clicking
+• Reward calculation: (chain length)² × NPS as instant notes
+
+Example Chains:
+• 5-click chain: 25 × NPS instant notes
+• 10-click chain: 100 × NPS instant notes
+• 20-click chain: 400 × NPS instant notes
+
+Duration: 10 seconds
+Cooldown: 10 minutes
+
+STRATEGY TIPS
+---------------------------------------
+1. Plan bell mending strategically - don't mend at Crescending unless desperate
+2. Stack multiple Radiant mends (5 Deafening each) before Harmonizing mend
+3. 6 Deafening Chime stacks = 64× multiplier (optimal target)
+4. Symphony weapon doubles ALL minor crafts - extremely powerful
+5. Razer entropic generation scales with click count (aim for 60+ before mending)
+6. Chime Chain requires fast clicking - practice timing for maximum chains
+
+PROGRESSION NOTES
+---------------------------------------
+Early Game:
+• Bell system is slow - requires 60 clicks for Harmonizing mend
+• Symphony duplication helps accelerate minor collection
+• Component Echo reduces crafting costs
+
+Mid Game:
+• Radiant mends provide reliable Entropic Crescendo of Eternity critical hit windows
+• Deafening Chime stacking becomes viable strategy
+• Resonant Crack Bonus provides consistent note boosts every 20 clicks
+
+Late Game:
+• Harmonizing mend with 6 Deafening = 64× note multiplier
+• Can stack 12+ Deafening from multiple Radiant mends (diminishing returns after 6)
+• Chime Chain with high NPS creates massive instant note gains
+• Pair with click speed buffs for faster bell progression
+
+SYNERGY RECOMMENDATIONS
+---------------------------------------
+Best Paired With:
+• Eroica: Symphony duplication + Victory March doubling = exponential minors
+• Ode to Joy: Symphony duplication accelerates Petal of Harmony generation
+• Moonlight: Nighttime clicking + Resonant Crack Bonus = consistent bursts
+
+Avoid Pairing With:
+• Winter: NPS freeze reduces Chime Chain effectiveness
+• Swan Lake: Both rely on RNG/specific mechanics - better to alternate
+
+BALANCE NOTES
+---------------------------------------
+Version 1.0 - Initial Implementation:
+• Deafening Chime capped at 6 effective stacks for Harmonizing (64× multiplier)
+• Razer entropic capped at 250 per mend to prevent excessive generation
+• Chime Chain 1-second window balanced for skill-based rewards
+
+ADVANCED TECHNIQUES
+---------------------------------------
+Deafening Chime Stacking:
+1. Reach 40 clicks → Mend Radiant → +5 Deafening
+2. Reach 40 clicks again → Mend Radiant → +5 Deafening (10 total)
+3. Reach 60 clicks → Mend Harmonizing → 64× note multiplier (uses 6 stacks)
+4. Remaining 4 stacks persist for next cycle
+
+Entropic Maximization:
+• With Razer equipped, always mend at 60+ clicks for 83 Entropic
+• Radiant mends also grant 5 Entropic Crescendo of Eternity critical hit clicks (via Deafening)
+• Combine with Fate/Enigma for entropic synergy

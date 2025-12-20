@@ -1,0 +1,706 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="MusicClicker.Views.EntropicArmoryScreen">
+
+    <Panel>
+        <!-- Background image -->
+        <Image Source="avares://MusicClicker/Assets/EntropicArmory.jpg"
+               Stretch="UniformToFill"
+               ZIndex="0"
+               Opacity="1"
+               />
+
+        <!-- Main content on top -->
+        <Grid ZIndex="1"
+              Background="#66000000">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!-- Header -->
+            <StackPanel Grid.Row="0" HorizontalAlignment="Center" Spacing="10" Margin="0,20,0,20">
+                <TextBlock Text="Entropic Armory"
+                           FontSize="42"
+                           Foreground="White"
+                           HorizontalAlignment="Center"
+                           FontWeight="Bold"
+                           Opacity="1.0">
+                    <TextBlock.Effect>
+                        <DropShadowEffect Color="Black" BlurRadius="8" Opacity="0.8"/>
+                    </TextBlock.Effect>
+                    <TextBlock.Styles>
+                        <Style Selector="TextBlock">
+                            <Style.Animations>
+                                <Animation Duration="0:0:1.5" IterationCount="Infinite" PlaybackDirection="Alternate">
+                                    <KeyFrame Cue="0%">
+                                        <Setter Property="Opacity" Value="0.6"/>
+                                    </KeyFrame>
+                                    <KeyFrame Cue="100%">
+                                        <Setter Property="Opacity" Value="1.0"/>
+                                    </KeyFrame>
+                                </Animation>
+                            </Style.Animations>
+                        </Style>
+                    </TextBlock.Styles>
+                </TextBlock>
+                
+                <!-- Entropic Melody Display -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10">
+                    <TextBlock x:Name="EntropicMelodyText"
+                               Text="0"
+                               FontSize="28"
+                               Foreground="White"
+                               VerticalAlignment="Center">
+                        <TextBlock.Effect>
+                            <DropShadowEffect Color="Black" BlurRadius="8" Opacity="0.8"/>
+                        </TextBlock.Effect>
+                    </TextBlock>
+                    <TextBlock Text="Entropic Melody Owned"
+                               FontSize="24"
+                               Foreground="White"
+                               VerticalAlignment="Center">
+                        <TextBlock.Effect>
+                            <DropShadowEffect Color="Black" BlurRadius="8" Opacity="0.8"/>
+                        </TextBlock.Effect>
+                    </TextBlock>
+                    <Image Source="avares://MusicClicker/Assets/EntropicMelody.jpg"
+                           Width="40"
+                           Height="40"
+                           VerticalAlignment="Center" />
+                </StackPanel>
+            </StackPanel>
+
+            <!-- Scrollable Content -->
+            <ScrollViewer Grid.Row="1" 
+                          HorizontalScrollBarVisibility="Disabled"
+                          VerticalScrollBarVisibility="Auto"
+                          Margin="50,0,50,20">
+                
+                <StackPanel Spacing="40" HorizontalAlignment="Center">
+                    
+                    <!-- Row 1: First 3 Entropic Weapons -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
+                        
+                        <!-- Weapon 1: Phases of Infinity -->
+                        <StackPanel Spacing="10" Width="350">
+                            <Button x:Name="EntropicWeapon1Button" 
+                                    Width="350" 
+                                    Height="197"
+                                    Background="#44000000"
+                                    BorderBrush="White"
+                                    BorderThickness="2">
+                                <Image Source="avares://MusicClicker/Assets/PhasesOfInfinity.jpg"
+                                    Stretch="UniformToFill" />
+                            </Button>
+                            <TextBlock x:Name="EntropicWeapon1NameText"
+                                       Text="Phases of Infinity"
+                                       FontSize="18"
+                                       Foreground="White"
+                                       FontWeight="Bold"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock x:Name="EntropicWeapon1CostText"
+                                       Text="Cost: 100 Entropic Melody"
+                                       FontSize="16"
+                                       Foreground="White"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock x:Name="EntropicWeapon1OwnedText"
+                                       Text="Owned: 0"
+                                       FontSize="16"
+                                       Foreground="White"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <!-- Weapon 2: Moonlit Revelation -->
+                        <StackPanel Spacing="10" Width="350">
+                            <Button x:Name="EntropicWeapon2Button" 
+                                    Width="350" 
+                                    Height="197"
+                                    Background="#44000000"
+                                    BorderBrush="White"
+                                    BorderThickness="2">
+                                <Image Source="avares://MusicClicker/Assets/MoonlitRevelation.jpg"
+                                    Stretch="UniformToFill" />
+                            </Button>
+                            <TextBlock x:Name="EntropicWeapon2NameText"
+                                       Text="Moonlit Revelation"
+                                       FontSize="18"
+                                       Foreground="White"
+                                       FontWeight="Bold"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock x:Name="EntropicWeapon2CostText"
+                                       Text="Cost: 200 Entropic Melody"
+                                       FontSize="16"
+                                       Foreground="White"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock x:Name="EntropicWeapon2OwnedText"
+                                       Text="Owned: 0"
+                                       FontSize="16"
+                                       Foreground="White"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <!-- Weapon 3: Reborn in Sakura's Embrace -->
+                        <StackPanel Spacing="10" Width="350">
+                            <Button x:Name="EntropicWeapon3Button" 
+                                    Width="350" 
+                                    Height="197"
+                                    Background="#44000000"
+                                    BorderBrush="White"
+                                    BorderThickness="2">
+                                <Image Source="avares://MusicClicker/Assets/RebornInSakurasEmbrace.jpg"
+                                    Stretch="UniformToFill" />
+                            </Button>
+                            <TextBlock x:Name="EntropicWeapon3NameText"
+                                       Text="Reborn in Sakura's Embrace"
+                                       FontSize="18"
+                                       Foreground="White"
+                                       FontWeight="Bold"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock x:Name="EntropicWeapon3CostText"
+                                       Text="Cost: 400 Entropic Melody"
+                                       FontSize="16"
+                                       Foreground="White"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock x:Name="EntropicWeapon3OwnedText"
+                                       Text="Owned: 0"
+                                       FontSize="16"
+                                       Foreground="White"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                        </StackPanel>
+
+                    </StackPanel>
+
+                    <!-- Row 2: Weapons 4-6 -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
+                        
+                        <!-- Weapon 4: A Thousand Petals -->
+                        <StackPanel Spacing="10" Width="350">
+                            <Button x:Name="EntropicWeapon4Button" 
+                                    Width="350" 
+                                    Height="197"
+                                    Background="#44000000"
+                                    BorderBrush="White"
+                                    BorderThickness="2">
+                                <Image Source="avares://MusicClicker/Assets/AThousandPetals.jpg"
+                                    Stretch="UniformToFill" />
+                            </Button>
+                            <TextBlock x:Name="EntropicWeapon4NameText"
+                                       Text="A Thousand Petals"
+                                       FontSize="18"
+                                       Foreground="White"
+                                       FontWeight="Bold"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock x:Name="EntropicWeapon4CostText"
+                                       Text="Cost: 800 Entropic Melody"
+                                       FontSize="16"
+                                       Foreground="White"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock x:Name="EntropicWeapon4OwnedText"
+                                       Text="Owned: 0"
+                                       FontSize="16"
+                                       Foreground="White"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <!-- Weapon 5: Swan's Finality -->
+                        <StackPanel Spacing="10" Width="350">
+                            <Button x:Name="EntropicWeapon5Button" 
+                                    Width="350" 
+                                    Height="197"
+                                    Background="#44000000"
+                                    BorderBrush="White"
+                                    BorderThickness="2">
+                                <Image Source="avares://MusicClicker/Assets/SwansFinality.jpg"
+                                    Stretch="UniformToFill" />
+                            </Button>
+                            <TextBlock x:Name="EntropicWeapon5NameText"
+                                       Text="Swan's Finality"
+                                       FontSize="18"
+                                       Foreground="White"
+                                       FontWeight="Bold"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock x:Name="EntropicWeapon5CostText"
+                                       Text="Cost: 1,600 Entropic Melody"
+                                       FontSize="16"
+                                       Foreground="White"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock x:Name="EntropicWeapon5OwnedText"
+                                       Text="Owned: 0"
+                                       FontSize="16"
+                                       Foreground="White"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <!-- Weapon 6: Star-Piercing Swan Song -->
+                        <StackPanel Spacing="10" Width="350">
+                            <Button x:Name="EntropicWeapon6Button" 
+                                    Width="350" 
+                                    Height="197"
+                                    Background="#44000000"
+                                    BorderBrush="White"
+                                    BorderThickness="2">
+                                <Image Source="avares://MusicClicker/Assets/Star-PiercingSwanSong.jpg"
+                                    Stretch="UniformToFill" />
+                            </Button>
+                            <TextBlock x:Name="EntropicWeapon6NameText"
+                                       Text="Star-Piercing Swan Song"
+                                       FontSize="18"
+                                       Foreground="White"
+                                       FontWeight="Bold"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock x:Name="EntropicWeapon6CostText"
+                                       Text="Cost: 3,200 Entropic Melody"
+                                       FontSize="16"
+                                       Foreground="White"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock x:Name="EntropicWeapon6OwnedText"
+                                       Text="Owned: 0"
+                                       FontSize="16"
+                                       Foreground="White"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                        </StackPanel>
+
+                    </StackPanel>
+
+                    <!-- Row 3: Weapons 7-9 -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
+                        
+                        <!-- Weapon 7: Heaven's Chime -->
+                        <StackPanel Spacing="10" Width="350">
+                            <Button x:Name="EntropicWeapon7Button" 
+                                    Width="350" 
+                                    Height="197"
+                                    Background="#44000000"
+                                    BorderBrush="White"
+                                    BorderThickness="2">
+                                <Image Source="avares://MusicClicker/Assets/HeavensChime.jpg"
+                                    Stretch="UniformToFill" />
+                            </Button>
+                            <TextBlock x:Name="EntropicWeapon7NameText"
+                                       Text="Heaven's Chime"
+                                       FontSize="18"
+                                       Foreground="White"
+                                       FontWeight="Bold"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock x:Name="EntropicWeapon7CostText"
+                                       Text="Cost: 6,400 Entropic Melody"
+                                       FontSize="16"
+                                       Foreground="White"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock x:Name="EntropicWeapon7OwnedText"
+                                       Text="Owned: 0"
+                                       FontSize="16"
+                                       Foreground="White"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <!-- Weapon 8: Bell of Chromatic Fate -->
+                        <StackPanel Spacing="10" Width="350">
+                            <Button x:Name="EntropicWeapon8Button" 
+                                    Width="350" 
+                                    Height="197"
+                                    Background="#44000000"
+                                    BorderBrush="White"
+                                    BorderThickness="2">
+                                <Image Source="avares://MusicClicker/Assets/BellOfChromaticFate.jpg"
+                                    Stretch="UniformToFill" />
+                            </Button>
+                            <TextBlock x:Name="EntropicWeapon8NameText"
+                                       Text="Bell of Chromatic Fate"
+                                       FontSize="18"
+                                       Foreground="White"
+                                       FontWeight="Bold"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock x:Name="EntropicWeapon8CostText"
+                                       Text="Cost: 12,800 Entropic Melody"
+                                       FontSize="16"
+                                       Foreground="White"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock x:Name="EntropicWeapon8OwnedText"
+                                       Text="Owned: 0"
+                                       FontSize="16"
+                                       Foreground="White"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <!-- Weapon 9: Ever-Burning Mystery -->
+                        <StackPanel Spacing="10" Width="350">
+                            <Button x:Name="EntropicWeapon9Button" 
+                                    Width="350" 
+                                    Height="197"
+                                    Background="#44000000"
+                                    BorderBrush="White"
+                                    BorderThickness="2">
+                                <Image Source="avares://MusicClicker/Assets/Ever-burningMystery.jpg"
+                                    Stretch="UniformToFill" />
+                            </Button>
+                            <TextBlock x:Name="EntropicWeapon9NameText"
+                                       Text="Ever-Burning Mystery"
+                                       FontSize="18"
+                                       Foreground="White"
+                                       FontWeight="Bold"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock x:Name="EntropicWeapon9CostText"
+                                       Text="Cost: 25,600 Entropic Melody"
+                                       FontSize="16"
+                                       Foreground="White"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock x:Name="EntropicWeapon9OwnedText"
+                                       Text="Owned: 0"
+                                       FontSize="16"
+                                       Foreground="White"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                        </StackPanel>
+
+                    </StackPanel>
+
+                    <!-- Row 4: Weapons 10-12 -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
+                        
+                        <!-- Weapon 10: Prismatic Enigmas -->
+                        <StackPanel Spacing="10" Width="350">
+                            <Button x:Name="EntropicWeapon10Button" 
+                                    Width="350" 
+                                    Height="197"
+                                    Background="#44000000"
+                                    BorderBrush="White"
+                                    BorderThickness="2">
+                                <Image Source="avares://MusicClicker/Assets/PrismaticEnigmas.jpg"
+                                    Stretch="UniformToFill" />
+                            </Button>
+                            <TextBlock x:Name="EntropicWeapon10NameText"
+                                       Text="Prismatic Enigmas"
+                                       FontSize="18"
+                                       Foreground="White"
+                                       FontWeight="Bold"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock x:Name="EntropicWeapon10CostText"
+                                       Text="Cost: 51,200 Entropic Melody"
+                                       FontSize="16"
+                                       Foreground="White"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock x:Name="EntropicWeapon10OwnedText"
+                                       Text="Owned: 0"
+                                       FontSize="16"
+                                       Foreground="White"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <!-- Weapon 11: Finality of the Cosmos -->
+                        <StackPanel Spacing="10" Width="350">
+                            <Button x:Name="EntropicWeapon11Button" 
+                                    Width="350" 
+                                    Height="197"
+                                    Background="#44000000"
+                                    BorderBrush="White"
+                                    BorderThickness="2">
+                                <Image Source="avares://MusicClicker/Assets/FinalityOfTheCosmos.jpg"
+                                    Stretch="UniformToFill" />
+                            </Button>
+                            <TextBlock x:Name="EntropicWeapon11NameText"
+                                       Text="Finality of the Cosmos"
+                                       FontSize="18"
+                                       Foreground="White"
+                                       FontWeight="Bold"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock x:Name="EntropicWeapon11CostText"
+                                       Text="Cost: 102,400 Entropic Melody"
+                                       FontSize="16"
+                                       Foreground="White"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock x:Name="EntropicWeapon11OwnedText"
+                                       Text="Owned: 0"
+                                       FontSize="16"
+                                       Foreground="White"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <!-- Weapon 12: Destiny's Conductor -->
+                        <StackPanel Spacing="10" Width="350">
+                            <Button x:Name="EntropicWeapon12Button" 
+                                    Width="350" 
+                                    Height="197"
+                                    Background="#44000000"
+                                    BorderBrush="White"
+                                    BorderThickness="2">
+                                <Image Source="avares://MusicClicker/Assets/DestinysConductor.jpg"
+                                    Stretch="UniformToFill" />
+                            </Button>
+                            <TextBlock x:Name="EntropicWeapon12NameText"
+                                       Text="Destiny's Conductor"
+                                       FontSize="18"
+                                       Foreground="White"
+                                       FontWeight="Bold"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock x:Name="EntropicWeapon12CostText"
+                                       Text="Cost: 204,800 Entropic Melody"
+                                       FontSize="16"
+                                       Foreground="White"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock x:Name="EntropicWeapon12OwnedText"
+                                       Text="Owned: 0"
+                                       FontSize="16"
+                                       Foreground="White"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                        </StackPanel>
+
+                    </StackPanel>
+
+                    <!-- Row 5: Weapons 13-14 -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
+                        
+                        <!-- Weapon 13: Cathartic Divination -->
+                        <StackPanel Spacing="10" Width="350">
+                            <Button x:Name="EntropicWeapon13Button" 
+                                    Width="350" 
+                                    Height="197"
+                                    Background="#44000000"
+                                    BorderBrush="White"
+                                    BorderThickness="2">
+                                <Image Source="avares://MusicClicker/Assets/CatharticDivination.jpg"
+                                    Stretch="UniformToFill" />
+                            </Button>
+                            <TextBlock x:Name="EntropicWeapon13NameText"
+                                       Text="Cathartic Divination"
+                                       FontSize="18"
+                                       Foreground="White"
+                                       FontWeight="Bold"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock x:Name="EntropicWeapon13CostText"
+                                       Text="Cost: 409,600 Entropic Melody"
+                                       FontSize="16"
+                                       Foreground="White"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock x:Name="EntropicWeapon13OwnedText"
+                                       Text="Owned: 0"
+                                       FontSize="16"
+                                       Foreground="White"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <!-- Weapon 14: Dreams of Harmony -->
+                        <StackPanel Spacing="10" Width="350">
+                            <Button x:Name="EntropicWeapon14Button" 
+                                    Width="350" 
+                                    Height="197"
+                                    Background="#44000000"
+                                    BorderBrush="White"
+                                    BorderThickness="2">
+                                <Image Source="avares://MusicClicker/Assets/DreamsOfHarmony.jpg"
+                                    Stretch="UniformToFill" />
+                            </Button>
+                            <TextBlock x:Name="EntropicWeapon14NameText"
+                                       Text="Dreams of Harmony"
+                                       FontSize="18"
+                                       Foreground="White"
+                                       FontWeight="Bold"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock x:Name="EntropicWeapon14CostText"
+                                       Text="Cost: 819,200 Entropic Melody"
+                                       FontSize="16"
+                                       Foreground="White"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock x:Name="EntropicWeapon14OwnedText"
+                                       Text="Owned: 0"
+                                       FontSize="16"
+                                       Foreground="White"
+                                       TextAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                        </StackPanel>
+
+                    </StackPanel>
+
+                </StackPanel>
+
+            </ScrollViewer>
+
+            <!-- Footer -->
+            <Button Grid.Row="2"
+                    x:Name="BackButton"
+                    Content="Back to Armory"
+                    Width="250"
+                    Height="50"
+                    HorizontalAlignment="Center"
+                    Margin="0,0,0,20"
+                    Background="#55000000"
+                    Foreground="White"
+                    FontSize="20"
+                    BorderBrush="White"
+                    BorderThickness="2">
+                <Button.Effect>
+                    <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.8"/>
+                </Button.Effect>
+            </Button>
+        </Grid>
+    </Panel>
+</UserControl>

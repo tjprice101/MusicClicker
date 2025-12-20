@@ -1,0 +1,378 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="MusicClicker.Views.TempoResonateScreen">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <Style x:Key="TempoResonateButtonStyle" Selector="Button">
+                <Setter Property="Background" Value="#DD2A2A2A"/>
+                <Setter Property="BorderBrush" Value="#FF69B4"/>
+                <Setter Property="Foreground" Value="White"/>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Background="#AA000000">
+        <Grid.Background>
+            <ImageBrush Source="avares://MusicClicker/Assets/TempoResonateBG.png"
+                        Stretch="UniformToFill" />
+        </Grid.Background>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <!-- Header -->
+            <RowDefinition Height="*"/>
+            <!-- Main Content -->
+            <RowDefinition Height="140"/>
+            <!-- Tooltip Display Panel -->
+        </Grid.RowDefinitions>
+
+        <!-- ========== HEADER ========== -->
+        <Border Grid.Row="0" Background="#DD2A2A2A" BorderBrush="#FF69B4" BorderThickness="0,0,0,2">
+            <Grid>
+                <TextBlock Text="Tempo Resonate" 
+                           FontSize="32" 
+                           FontWeight="Bold"
+                           Foreground="White" 
+                           HorizontalAlignment="Center" 
+                           VerticalAlignment="Center"
+                           Opacity="1.0">
+                    <TextBlock.Effect>
+                        <DropShadowEffect Color="#FF69B4" BlurRadius="12" Opacity="0.9" />
+                    </TextBlock.Effect>
+                </TextBlock>
+            </Grid>
+        </Border>
+
+        <!-- ========== MAIN CONTENT ========== -->
+        <Grid Grid.Row="1" Margin="20,10,20,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="340"/>
+                <!-- Left: Major Scores -->
+                <ColumnDefinition Width="*"/>
+                <!-- Center: Equipment Display -->
+                <ColumnDefinition Width="340"/>
+                <!-- Right: Weapons -->
+            </Grid.ColumnDefinitions>
+
+            <!-- ========== LEFT PANEL: MAJOR SCORES ========== -->
+            <Border x:Name="LeftPanelBorder"
+                    Grid.Column="0" 
+                    Background="#DD2A2A2A" 
+                    BorderBrush="#FF69B4" 
+                    BorderThickness="2" 
+                    CornerRadius="12"
+                    Padding="12">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Header -->
+                    <Border x:Name="LeftPanelHeader"
+                            Grid.Row="0" 
+                            Background="#BB2A2A2A" 
+                            CornerRadius="8" 
+                            Padding="8"
+                            Margin="0,0,0,10">
+                        <TextBlock x:Name="LeftPanelHeaderText"
+                                   Text="📜 MAJOR SCORES" 
+                                   FontSize="18" 
+                                   FontWeight="Bold" 
+                                   Foreground="#FF69B4"
+                                   HorizontalAlignment="Center"/>
+                    </Border>
+
+                    <!-- Scrollable Score List -->
+                    <ScrollViewer Grid.Row="1" 
+                                  VerticalScrollBarVisibility="Auto"
+                                  HorizontalScrollBarVisibility="Disabled">
+                        <StackPanel x:Name="LeftDrawerPanel" 
+                                    Orientation="Vertical" 
+                                    Spacing="8"/>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+
+            <!-- ========== CENTER PANEL: EQUIPMENT DISPLAY ========== -->
+            <Grid Grid.Column="1" Margin="15,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <!-- Equip Prompt -->
+                    <RowDefinition Height="*"/>
+                    <!-- Main Display Area -->
+                </Grid.RowDefinitions>
+
+                <!-- Equip Prompt (appears at top when needed) -->
+                <Border x:Name="EquipPromptPanel"
+                        Grid.Row="0"
+                        Background="#DD2A2A2A"
+                        BorderBrush="#FF69B4"
+                        BorderThickness="2"
+                        CornerRadius="8"
+                        Padding="15"
+                        IsVisible="False"
+                        Margin="0,0,0,10">
+                    <StackPanel Orientation="Vertical" Spacing="10">
+                        <TextBlock x:Name="EquipPromptText"
+                                   Text="Equip X?"
+                                   Foreground="White"
+                                   FontSize="20"
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Center"/>
+                        <StackPanel Orientation="Horizontal" 
+                                    HorizontalAlignment="Center" 
+                                    Spacing="15">
+                                <Button x:Name="EquipYesButton" 
+                                    Content="✓ YES" 
+                                    Width="100" 
+                                    Height="35"
+                                    FontWeight="Bold"
+                                    Background="#DD2A2A2A"
+                                    BorderBrush="#FF69B4"
+                                    BorderThickness="2"
+                                    Foreground="White">
+                                <Button.Effect>
+                                    <DropShadowEffect Color="#FF69B4" BlurRadius="8" Opacity="0.6"/>
+                                </Button.Effect>
+                            </Button>
+                                <Button x:Name="EquipNoButton" 
+                                    Content="✗ NO" 
+                                    Width="100" 
+                                    Height="35"
+                                    Background="#DD2A2A2A"
+                                    BorderBrush="#FF69B4"
+                                    BorderThickness="2"
+                                    Foreground="White" />
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Equipment Display Area -->
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1.8*"/>
+                        <!-- Equipped Score -->
+                        <RowDefinition Height="Auto"/>
+                        <!-- Duet Text -->
+                        <RowDefinition Height="1.5*"/>
+                        <!-- Weapons (bigger) -->
+                    </Grid.RowDefinitions>
+
+                    <!-- Equipped Major Score Card (16:9 aspect ratio) -->
+                    <Viewbox Grid.Row="0" Stretch="Uniform" Margin="0,0,0,10">
+                        <Border x:Name="EquippedScoreDisplay"
+                                Width="480"
+                                Height="270"
+                                Background="#DD2A2A2A"
+                                BorderBrush="#FF69B4"
+                                BorderThickness="3"
+                                CornerRadius="12"
+                                Cursor="Hand">
+                            <Border.Effect>
+                                <DropShadowEffect Color="#FF69B4" BlurRadius="15" Opacity="0.5"/>
+                            </Border.Effect>
+                            <Grid>
+                                <TextBlock x:Name="EquippedScoreText"
+                                           Text="No Score Equipped"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontSize="22"
+                                           FontWeight="Bold"
+                                           Foreground="White"
+                                           TextWrapping="Wrap"
+                                           TextAlignment="Center"
+                                           Margin="20"/>
+                            </Grid>
+                        </Border>
+                    </Viewbox>
+
+                    <!-- Duet Resonance Display -->
+                    <TextBlock Grid.Row="1"
+                               x:Name="DuetResonanceText"
+                               Text=""
+                               FontSize="16"
+                               FontWeight="Bold"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Margin="0,5"
+                               TextWrapping="Wrap"
+                               MaxWidth="500"
+                               TextAlignment="Center"
+                               Foreground="White">
+                        <TextBlock.Effect>
+                            <DropShadowEffect Color="#FF69B4" BlurRadius="10" Opacity="0.8"/>
+                        </TextBlock.Effect>
+                    </TextBlock>
+
+                    <!-- Weapon Slots -->
+                    <Grid Grid.Row="2" Margin="0,10,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="15"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Weapon Slot 1 (16:9 aspect ratio) -->
+                        <Viewbox Grid.Column="0" Stretch="Uniform">
+                            <Border x:Name="EquippedWeaponDisplay1"
+                                    Width="320"
+                                    Height="180"
+                                    Background="#DD2A2A2A"
+                                    BorderBrush="#FF69B4"
+                                    BorderThickness="2"
+                                    CornerRadius="10"
+                                    Cursor="Hand">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="#FF69B4" BlurRadius="10" Opacity="0.4"/>
+                                </Border.Effect>
+                                <Grid>
+                                    <TextBlock x:Name="EquippedWeaponText1"
+                                               Text="Weapon Slot 1"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               FontSize="14"
+                                               FontWeight="Bold"
+                                               Foreground="White"
+                                               TextWrapping="Wrap"
+                                               TextAlignment="Center"
+                                               Margin="10"/>
+                                </Grid>
+                            </Border>
+                        </Viewbox>
+
+                        <!-- Weapon Slot 2 (16:9 aspect ratio) -->
+                        <Viewbox Grid.Column="2" Stretch="Uniform">
+                            <Border x:Name="EquippedWeaponDisplay2"
+                                    Width="320"
+                                    Height="180"
+                                    Background="#DD2A2A2A"
+                                    BorderBrush="#FF69B4"
+                                    BorderThickness="2"
+                                    CornerRadius="10"
+                                    Cursor="Hand">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="#FF69B4" BlurRadius="10" Opacity="0.4"/>
+                                </Border.Effect>
+                                <Grid>
+                                    <TextBlock x:Name="EquippedWeaponText2"
+                                               Text="Weapon Slot 2"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               FontSize="14"
+                                               FontWeight="Bold"
+                                               Foreground="White"
+                                               TextWrapping="Wrap"
+                                               TextAlignment="Center"
+                                               Margin="10"/>
+                                </Grid>
+                            </Border>
+                        </Viewbox>
+                    </Grid>
+                </Grid>
+            </Grid>
+
+            <!-- ========== RIGHT PANEL: WEAPONS ========== -->
+            <Border x:Name="RightPanelBorder"
+                    Grid.Column="2" 
+                    Background="#DD2A2A2A" 
+                    BorderBrush="#FF69B4" 
+                    BorderThickness="2" 
+                    CornerRadius="12"
+                    Padding="12">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Header -->
+                    <Border x:Name="RightPanelHeader"
+                            Grid.Row="0" 
+                            Background="#BB2A2A2A" 
+                            CornerRadius="8" 
+                            Padding="8"
+                            Margin="0,0,0,10">
+                        <TextBlock x:Name="RightPanelHeaderText"
+                                   Text="ARMORY OF FORTE" 
+                                   FontSize="18" 
+                                   FontWeight="Bold" 
+                                   Foreground="#FF69B4"
+                                   HorizontalAlignment="Center"/>
+                    </Border>
+
+                    <!-- Scrollable Weapon List -->
+                    <ScrollViewer Grid.Row="1" 
+                                  VerticalScrollBarVisibility="Auto"
+                                  HorizontalScrollBarVisibility="Disabled">
+                        <StackPanel x:Name="RightDrawerPanel" 
+                                    Orientation="Vertical" 
+                                    Spacing="8"/>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+        </Grid>
+
+
+
+        <!-- ========== TOOLTIP DISPLAY PANEL ========== -->
+        <Border Grid.Row="2"
+                x:Name="DescriptionTooltipPanel"
+                Background="#DD2A2A2A"
+                BorderBrush="#FF69B4"
+                BorderThickness="2,2,2,0"
+                Padding="15,10"
+                IsVisible="True">
+            <Border.Effect>
+                <DropShadowEffect Color="#FF69B4" BlurRadius="15" Opacity="0.6"/>
+            </Border.Effect>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Spacing="6">
+                        <TextBlock x:Name="TooltipTitle"
+                                   Text="Hover over any Major Score or Armory of Forte Weapon"
+                                   FontSize="18"
+                                   FontWeight="Bold"
+                                   Foreground="#FF69B4"
+                                   TextWrapping="Wrap"
+                                   TextAlignment="Left"/>
+                        <Rectangle Height="1" Fill="#FF69B4" Opacity="0.5"/>
+                        <TextBlock x:Name="TooltipDescription"
+                                   Text="Move your cursor over any item above to view detailed information about its passive effects, crescendance abilities, and requirements."
+                                   FontSize="13"
+                                   Foreground="White"
+                                   TextWrapping="Wrap"
+                                   LineHeight="18"/>
+                    </StackPanel>
+                </ScrollViewer>
+                
+                <Button Grid.Column="1" x:Name="BackButtonTempoResonate"
+                        Content="◄ BACK"
+                        Width="140"
+                        Height="100"
+                        Background="#DD2A2A2A"
+                        Foreground="White"
+                        BorderBrush="#FF69B4"
+                        BorderThickness="2"
+                        FontSize="16"
+                        FontWeight="Bold"
+                        VerticalAlignment="Center"
+                        Margin="15,0,0,0"
+                        CornerRadius="8">
+                    <Button.Effect>
+                        <DropShadowEffect Color="#FF69B4" BlurRadius="8" Opacity="0.6"/>
+                    </Button.Effect>
+                </Button>
+            </Grid>
+        </Border>
+
+        <!-- ========== BOTTOM NAVIGATION (now in tooltip panel) ========== -->
+        <!-- Removed dark bottom bar - Back button moved to tooltip panel -->
+    </Grid>
+</UserControl>

@@ -1,0 +1,109 @@
+===========================================
+EROICA (SYMPHONY NO. 3) MAJOR - ABILITIES & EFFECTS
+===========================================
+
+Flavor Text:
+"A hero's triumph echoes through eternity, where crimson sakura blooms amidst symphonic glory."
+
+CRESCENDANCE: Symphony of Triumph
+---------------------------------------
+Requirements:
+• Eroica Major must be resonated
+
+Mechanics:
+• Every minor craft: +1 Heroic Resolve stack
+• Consume 1 Heroic Resolve + 25% current notes:
+  - Grants +1 Symphonic Catharsis stack
+  
+• Consume 1 Symphonic Catharsis:
+  - 10 seconds of double NPC
+  - +10% critical hit chance for 10 seconds
+  - Triggers weapon bonds (see below)
+
+WEAPON SYNERGIES
+---------------------------------------
+
+Sakura's Blossom (Weapon I):
+• Forte Resonance - Heroic Bounty (while equipped):
+  - On Major acquisition (unite the symphony screen):
+    → +1 of each component type (Keys, Scales, Progressions) for that Major's score
+  - Trigger: Crafting major score from the unite the symphony screen.
+  
+• Crescendance Bond - Crimson Requiem:
+  - When Symphonic Catharsis consumed: Next 30 clicks gain bonus
+  - Bonus per click = NPC + (NPS × NPC)
+  - Special crit: "Blossom's Blooming in Crimson Light" (salmon-red text with black border)
+  - Requires: Eroica Major resonated + Sakura equipped
+  - Extremely powerful burst damage window
+
+Funeral Prayer (Weapon II):
+• Forte Resonance - Prayer of Valor (while equipped):
+  - Every 10th click: +1 Prayer stack
+  - At 3 Prayer stacks: Next 15 clicks each gain +6× NPS as a special critical called "Retribution of the Symphonic Sakura" (dark pink text with black outline)
+  - Auto-triggers and resets
+  
+• Crescendance Bond - Testament of Harmony:
+  - When Symphonic Catharsis consumed: +1 Testament of Harmony stack
+  - Consume 1 Testament: +100 Melodious + 100 Harmonious Fragments
+  - Requires: Eroica Major resonated + Funeral Prayer equipped
+  - Manual consumption via button
+
+DUET ABILITY: Victory March (Sakura + Funeral Prayer)
+---------------------------------------
+Fill a 100-click progress bar for escalating rewards:
+• 25% progress (25 clicks): Random minor score
+• 50% progress (50 clicks): Random major score
+• 75% progress (75 clicks): +50 Melodious + 50 Harmonious Fragments
+• 100% progress (100 clicks): Double all owned scores
+
+Duration: N/A (progress-based, not time-based)
+Cooldown: 5 minutes
+
+BALANCE NOTES
+---------------------------------------
+Version 1.3 - Major Ability Removal:
+• Removed Eroica Major Ability (Triumph of Heroes) that doubled notes on major acquisition
+• Reason: Effect was passive and didn't fit with Eroica's active crescendance theme
+• Crescendance renamed from "Heroic Momentum" to "Symphony of Triumph" for clarity
+
+Version 1.2 - Eroica Deep Dive:
+• Removed "double NPS beyond 10th minor" effect (was not documented, removed for clarity)
+• All Eroica functionality verified and documented accurately
+
+STRATEGY TIPS
+---------------------------------------
+1. Heroic Resolve generation requires active minor crafting
+2. Save Symphonic Catharsis for burst windows (boss fights, critical moments)
+3. Sakura's Crimson Requiem creates massive click damage - combine with click speed buffs
+4. Funeral Prayer's Testament provides steady fragment income
+5. Victory March duet is one of the strongest score multipliers in the game
+6. "Blossom's Blooming in Crimson Light" crits deal NPC + (NPS × NPC) damage - maximize both stats
+7. Prayer of Valor's "Retribution" crits grant +6× NPS bonus - powerful passive income boost
+
+PROGRESSION NOTES
+---------------------------------------
+Early Game:
+• Focus on acquiring both weapons for Victory March access
+• Heroic Resolve stacks slowly at first
+
+Mid Game:
+• Heroic Resolve stacking becomes reliable with consistent minor crafting
+• Testament fragments help accelerate progression
+• Prayer passive provides consistent click bonuses
+
+Late Game:
+• Crimson Requiem creates extreme burst windows with "Blossom's Blooming in Crimson Light" crits
+• Victory March doubling effect becomes exponentially powerful
+• Pair with Moonlight/Fate for combo multiplication effects
+• Symphonic Catharsis double NPC stacks with other click multipliers
+• Prayer of Valor "Retribution" crits provide consistent 6× NPS bursts
+
+SYNERGY RECOMMENDATIONS
+---------------------------------------
+Best Paired With:
+• Moonlight Sonata: Nighttime clicking with Crimson Requiem = massive burst
+• Fate: Cosmic Modulation stacks benefit from double NPC window
+• La Campanella: Bell cracks during Crimson Requiem accelerate Deafening Chime
+
+Avoid Pairing With:
+• Winter: NPS freeze negates Prayer passive and some weapon effects

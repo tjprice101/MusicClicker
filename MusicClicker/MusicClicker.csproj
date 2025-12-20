@@ -6,7 +6,19 @@
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <IsTestProject>false</IsTestProject>
   </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Exclude Unit Tests folder from main project -->
+    <Compile Remove="Unit Tests\**" />
+    <EmbeddedResource Remove="Unit Tests\**" />
+    <None Remove="Unit Tests\**" />
+    
+    <!-- Exclude Tests folder completely from build to avoid entry point conflicts -->
+    <Compile Remove="Tests\**" />
+    <EmbeddedResource Remove="Tests\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <!-- Existing Assets -->

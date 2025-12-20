@@ -1,0 +1,144 @@
+===========================================
+FATE (SYMPHONY NO. 5) MAJOR - ABILITIES & EFFECTS
+===========================================
+
+Flavor Text:
+"The stars themselves bend to your will, weaving cosmic threads into a tapestry of destiny."
+
+CRESCENDANCE: Cosmic Modulation
+---------------------------------------
+Requirements:
+• Fate Major must be resonated
+
+Mechanics:
+• Every 8th click: +1 Cosmic Modulation stack + 10% current notes
+• Immediate +10% note bonus per stack gained
+
+Tier System (every 5 stacks):
+• Tier 1 (1-4 stacks): Increased Entropic Crescendo of Eternity critical hit chance
+• Tier 2 (5-9 stacks): Double NPS passive effect
+• Tier 3 (10+ stacks): Guaranteed Crescending crits on clicks
+
+Consumption:
+• Consume stacks for Entropic Melodies (+5 per stack consumed)
+• Can consume any amount (1-all stacks)
+• Consuming removes tier benefits
+
+Symphony of the Stars:
+• Special resource generated via Astral Chainripper weapon bond
+• Consume 1 Symphony: +3 to lowest owned minor score
+• Cosmic Weaver bond: Also grants 5 guaranteed Entropic Crescendo of Eternity critical hit clicks
+
+WEAPON SYNERGIES
+---------------------------------------
+
+Astral Chainripper (Weapon I):
+• Passive - Temporal Surge (while equipped):
+  - On Fate minor score craft: 5× NPS for 10 seconds
+  - Massive temporary passive income boost
+  - Stackable duration (multiple crafts extend timer)
+  
+• Crescendance Bond - Stellar Convergence:
+  - Every 5 Cosmic Modulation stacks gained:
+    → Automatically grants +1 Symphony of the Stars
+  - Requires: Fate Major resonated + Astral Chainripper equipped
+  - Passive generation, no manual activation needed
+
+Cosmic Weaver (Weapon II):
+• Passive - Harmonic Multiplication (while equipped):
+  - On any minor craft: If you own 1+ of that major, gain +3 of that major score
+  - Accelerates major score collection significantly
+  - Works for ALL minor crafts (not just Fate)
+  
+• Crescendance Bond - Entropic Starfall:
+  - Each Symphony of the Stars consumed:
+    → Next 5 clicks are guaranteed Entropic Melody critical hits
+  - Requires: Fate Major resonated + Cosmic Weaver equipped
+  - Stacks with multiple Symphony consumptions
+
+DUET ABILITY: Hourglass Reversal (Astral Chainripper + Cosmic Weaver)
+---------------------------------------
+Time-based banking and replay mechanic:
+• First 10 seconds: Bank all actions (clicks, notes gained, etc.)
+• Last 10 seconds: Replay at X× effectiveness (X = number of clicks performed)
+
+Mechanics:
+• Click count during first 10s determines multiplier for second 10s
+• All actions (notes, stacks, etc.) are recorded and replayed
+• More clicks in first half = stronger replay in second half
+
+Example:
+• First 10s: Perform 20 clicks, gain 1M notes
+• Last 10s: Replay grants 20M notes (20× multiplier from 20 clicks)
+
+Duration: 20 seconds (10s banking + 10s replay)
+Cooldown: 8 minutes
+
+STRATEGY TIPS
+---------------------------------------
+1. Every 8th click grants stack - consistent generation
+2. Don't consume Cosmic stacks unless you need entropic melodies
+3. Tier 3 (10+ stacks) provides guaranteed crits - very powerful
+4. Symphony of the Stars best used on lowest minor for balanced growth
+5. Cosmic Weaver passive works on ALL minors - equip early
+6. Hourglass Reversal: Click as much as possible in first 10 seconds
+
+PROGRESSION NOTES
+---------------------------------------
+Early Game:
+• Cosmic Modulation stacks slowly but consistently
+• +10% notes per stack provides steady growth
+• Astral Chainripper 5× NPS boost helps early progression
+
+Mid Game:
+• Tier 2 double NPS activates at 5 stacks (very achievable)
+• Symphony of the Stars generation begins with Astral Chainripper
+• Harmonic Multiplication accelerates major collection
+• Hourglass Reversal becomes available - powerful burst tool
+
+Late Game:
+• Tier 3 (10+ stacks) = all clicks are Entropic Crescendo of Eternity critical hits
+• Symphony stacks can reach 10+ for massive minor boosts
+• Entropic Starfall grants 5 guaranteed crits per Symphony (50+ crits possible)
+• Hourglass Reversal with 50+ click multiplier = exponential replay
+
+SYNERGY RECOMMENDATIONS
+---------------------------------------
+Best Paired With:
+• Eroica: Cosmic Modulation Tier 3 + Crimson Requiem = guaranteed crit burst
+• La Campanella: Guaranteed crits accelerate Deafening Chime stacking
+• Ode to Joy: Entropic Crescendo of Eternity critical hits trigger Joyful Catharsis passive
+
+Avoid Pairing With:
+• Winter: NPS freeze negates Tier 2 double NPS benefit
+• Moonlight: Nighttime restriction doesn't synergize with 5-click cadence
+
+BALANCE NOTES
+---------------------------------------
+Version 1.0 - Initial Implementation:
+• Tier system provides scaling power without consumption pressure
+• Symphony of the Stars balanced at +3 lowest minor (not highest)
+• Hourglass Reversal click multiplier encourages active play
+
+ADVANCED TECHNIQUES
+---------------------------------------
+Cosmic Stack Management:
+• Maintain 10+ stacks for Tier 3 guaranteed crits
+• Only consume for entropic when you have 15+ stacks (surplus)
+• Astral Chainripper generates 1 Symphony per 5 Cosmic (optimal at 10 Cosmic)
+
+Symphony Optimization:
+• Save Symphony stacks for critical moments
+• With Cosmic Weaver: Consume all Symphonies before major clicking session
+• 5 Symphonies = 25 guaranteed Entropic Crescendo of Eternity critical hits (5 per Symphony)
+
+Hourglass Strategy:
+• First 10s: Click speed determines multiplier - use click speed buffs
+• First 10s: Consume resources, activate buffs - all will replay
+• Last 10s: Don't click excessively - replay handles the work
+• Optimal: 30-50 clicks in first 10s for 30-50× replay multiplier
+
+Tier Exploitation:
+• Tier 3 (10+ stacks) makes every click an Entropic Crescendo of Eternity critical hit
+• Pair with Eroica Crimson Requiem for 30 guaranteed entropic burst clicks
+• Pair with La Campanella bell progression for entropic Deafening stacks

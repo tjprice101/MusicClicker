@@ -5,6 +5,38 @@
         Title="Magnum Opus"
         Width="1600" Height="900">
 
+    <Window.Styles>
+        <!-- Shrink effect for all buttons except specific exclusions -->
+        <Style Selector="Button:not(#FragmentationButton):not(#ResonanceButton):not(#MelodyButton):not(#HarmonyButton):not(#TempoResonateButton):not(#EternalModulationButton):not(#ArmoryOfForteButton):not(#SymphonicGalleryButton):not(#ClickButton):not(#BackButton):not(#BackButtonSaveScores):not(#BackButtonHeartOfHarmony):not(#BackButtonFragmentation):not(#BackButtonUnitySymphony):not(#BackButtonBottom):not(#MercuryChallengeButton):not(#TonalityChallengeButton):not(#MarsChallengeButton):not(#GiveUpButton):not(#BuyChordButton):not(#BuyChordMaxButton):not(#BuyScaleButton):not(#BuyScaleMaxButton):not(#BuyOrchestraButton):not(#BuyOrchestraMaxButton):not(#BuySymphonyButton):not(#BuySymphonyMaxButton):not(#BuyAriaButton):not(#BuyAriaMaxButton):not(#BuyRequiemButton):not(#BuyRequiemMaxButton):not(#BuyOpusButton):not(#BuyOpusMaxButton):not(#BuyMagnumOpusButton):not(#BuyMagnumOpusMaxButton)">
+            <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+            <Setter Property="RenderTransform" Value="scale(1.0)"/>
+            <Setter Property="Transitions">
+                <Transitions>
+                    <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.1"/>
+                </Transitions>
+            </Setter>
+        </Style>
+        
+        <Style Selector="Button:not(#FragmentationButton):not(#ResonanceButton):not(#MelodyButton):not(#HarmonyButton):not(#TempoResonateButton):not(#EternalModulationButton):not(#ArmoryOfForteButton):not(#SymphonicGalleryButton):not(#ClickButton):not(#BackButton):not(#BackButtonSaveScores):not(#BackButtonHeartOfHarmony):not(#BackButtonFragmentation):not(#BackButtonUnitySymphony):not(#BackButtonBottom):not(#MercuryChallengeButton):not(#TonalityChallengeButton):not(#MarsChallengeButton):not(#GiveUpButton):not(#BuyChordButton):not(#BuyChordMaxButton):not(#BuyScaleButton):not(#BuyScaleMaxButton):not(#BuyOrchestraButton):not(#BuyOrchestraMaxButton):not(#BuySymphonyButton):not(#BuySymphonyMaxButton):not(#BuyAriaButton):not(#BuyAriaMaxButton):not(#BuyRequiemButton):not(#BuyRequiemMaxButton):not(#BuyOpusButton):not(#BuyOpusMaxButton):not(#BuyMagnumOpusButton):not(#BuyMagnumOpusMaxButton):pointerover">
+            <Setter Property="RenderTransform" Value="scale(0.95)"/>
+        </Style>
+        
+        <!-- ClickButton shrinks very slightly on press -->
+        <Style Selector="Button#ClickButton">
+            <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+            <Setter Property="RenderTransform" Value="scale(1.0)"/>
+            <Setter Property="Transitions">
+                <Transitions>
+                    <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.05"/>
+                </Transitions>
+            </Setter>
+        </Style>
+        
+        <Style Selector="Button#ClickButton:pressed">
+            <Setter Property="RenderTransform" Value="scale(0.98)"/>
+        </Style>
+    </Window.Styles>
+
     <Window.Background>
         <ImageBrush
             Source="avares://MusicClicker/Assets/sacredtrevor_A_grand_musical_city_lights_everywhere_popular_shi_d84ff662-c87b-4630-9887-25228f42097b-min.png"
@@ -13,284 +45,1175 @@
 
     <Grid>
         <!-- Main Screen -->
-        <Grid x:Name="MainScreen">
-            <!-- Top-left Save button -->
-<StackPanel HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Orientation="Vertical"
-            Spacing="6"
-            Margin="12,12,0,0"
-            Panel.ZIndex="500">
+        <Grid x:Name="MainScreen" ZIndex="1">
+            <!-- Grid Structure -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="120" />     <!-- Top Bar -->
+                <RowDefinition Height="40" />      <!-- Spacer to lower panels -->
+                <RowDefinition Height="*" />       <!-- Main Content Area -->
+                <RowDefinition Height="Auto" />    <!-- Crescendance Panel -->
+                <RowDefinition Height="155" />     <!-- Bottom Button Bar -->
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="280" />   <!-- Left Panel (slightly wider) -->
+                <ColumnDefinition Width="*" />     <!-- Center Area -->
+                <ColumnDefinition Width="280" />   <!-- Right Panel (slightly wider) -->
+            </Grid.ColumnDefinitions>
 
-    <Border CornerRadius="4">
-        <Border.Effect>
-            <DropShadowEffect Color="Black" 
-                              BlurRadius="15" 
-                              Opacity="0.7"
-                              OffsetX="0"
-                              OffsetY="0" />
-        </Border.Effect>
-        <Button x:Name="TopSaveButton"
-                Width="250"     
-                Height="140"  
-                Background="Transparent"
-                BorderThickness="0"
-                Padding="0">
-            <Image Source="avares://MusicClicker/Assets/SaveIcon.png"
-                   Stretch="Uniform" IsHitTestVisible="False" />
-        </Button>
-    </Border>
+            <!-- ==================== TOP BAR (Row 0, All Columns) ==================== -->
+            <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" 
+                    Background="#66000000" 
+                    CornerRadius="8" 
+                    Margin="12,12,12,0"
+                    BorderBrush="#FFFF69B4"
+                    BorderThickness="3">
+                <Grid Margin="12,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
-    <TextBlock x:Name="SaveStatusText"
-               Text=""
-               Foreground="White"
-               FontSize="14"
-               HorizontalAlignment="Left" />
-</StackPanel>
-
-
-            <!-- Top-right Upgrades button (image) -->
-            <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal" Spacing="8" Margin="0,12,12,0" Panel.ZIndex="500">
-                <Border CornerRadius="4">
-                    <Border.Effect>
-                        <DropShadowEffect Color="Black" 
-                                          BlurRadius="15" 
-                                          Opacity="0.7"
-                                          OffsetX="0"
-                                          OffsetY="0" />
-                    </Border.Effect>
-                    <Button x:Name="TopOpenUpgradesButton" Width="250" Height="140" Background="Transparent" BorderThickness="0" Padding="0">
-                        <Image Source="avares://MusicClicker/Assets/UpgradeMenu.png" Stretch="UniformToFill" Width="250" Height="140" IsHitTestVisible="False" />
-                    </Button>
-                </Border>
-            </StackPanel>
-            <!-- Center Content -->
-            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" /> <!-- Title and Notes -->
-                    <RowDefinition Height="Auto" /> <!-- Click Button with Carousel -->
-                    <RowDefinition Height="Auto" /> <!-- Upgrades Button -->
-                </Grid.RowDefinitions>
-
-                <!-- Title and Notes -->
-                <StackPanel Grid.Row="0" HorizontalAlignment="Center" Spacing="10" Margin="0,0,0,30">
-                    <TextBlock Text="Magnum Opus"
-                               FontSize="36"
-                               Foreground="White"
-                               HorizontalAlignment="Center"
-                               FontWeight="Bold" />
-                    <TextBlock x:Name="NotesText"
-                               Text="Notes: 0"
-                               FontSize="28"
-                               Foreground="White"
-                               HorizontalAlignment="Center" />
-                    <TextBlock x:Name="NpsText"
-                               Text="Notes Per Second: 0"
-                               FontSize="22"
-                               Foreground="White"
-                               HorizontalAlignment="Center" />
-                </StackPanel>
-
-                <!-- Main Click Button with Carousel Behind It -->
-                <Grid Grid.Row="1"
-                      Width="1400"
-                      Height="1400"
-                      HorizontalAlignment="Center"
-                      VerticalAlignment="Center"
-                      Margin="0,-150,0,0">
-
-                    <!-- Carousel Canvas (Behind) -->
-                    <Canvas x:Name="CarouselCanvas"
-                            Width="1400"
-                            Height="1400"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            ClipToBounds="False"
-                            Background="Transparent">
-
-                        <!-- Button 0: Fragmentation -->
-                        <Border Canvas.Left="503" Canvas.Top="100" CornerRadius="4">
+                    <!-- Save Button (Left) -->
+                    <StackPanel Grid.Column="0" Orientation="Vertical" Spacing="4">
+                        <Border CornerRadius="8">
                             <Border.Effect>
-                                <DropShadowEffect Color="Black" 
-                                                  BlurRadius="15" 
-                                                  Opacity="0.7"
-                                                  OffsetX="0"
-                                                  OffsetY="0" />
+                                <DropShadowEffect Color="Black" BlurRadius="12" Opacity="0.7" OffsetX="0" OffsetY="0" />
                             </Border.Effect>
-                            <Button x:Name="FragmentationButton"
-                                    Width="374"
-                                    Height="213">
-                                <Image Source="avares://MusicClicker/Assets/Fragmentation Button-min.png"
-                                       Stretch="UniformToFill" />
+                            <Button x:Name="TopSaveButton"
+                                    Width="170"
+                                    Height="85"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Padding="0">
+                                <Image Source="avares://MusicClicker/Assets/SaveIcon.png"
+                                       Stretch="Uniform" IsHitTestVisible="False" />
                             </Button>
                         </Border>
+                        <TextBlock x:Name="SaveStatusText"
+                                   Text=""
+                                   Foreground="White"
+                                   FontSize="12"
+                                   FontWeight="SemiBold"
+                                   HorizontalAlignment="Center" />
+                    </StackPanel>
 
-                        <!-- Button 1: Resonance -->
-                        <Border Canvas.Left="503" Canvas.Top="100" CornerRadius="4">
-                            <Border.Effect>
-                                <DropShadowEffect Color="Black" 
-                                                  BlurRadius="15" 
-                                                  Opacity="0.7"
-                                                  OffsetX="0"
-                                                  OffsetY="0" />
-                            </Border.Effect>
-                            <Button x:Name="ResonanceButton"
-                                    Width="374"
-                                    Height="213">
-                                <Image Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [C690BBF]-min.png"
-                                       Stretch="UniformToFill" />
-                            </Button>
-                        </Border>
+                    <!-- Stats Display (Center) -->
+                    <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="6">
+                        <TextBlock Text="Magnum Opus"
+                                   FontSize="24"
+                                   Foreground="#FFFF69B4"
+                                   HorizontalAlignment="Center"
+                                   FontWeight="Bold"
+                                   Opacity="1.0">
+                            <TextBlock.Styles>
+                                <Style Selector="TextBlock">
+                                    <Style.Animations>
+                                        <Animation Duration="0:0:1.5" IterationCount="Infinite" PlaybackDirection="Alternate">
+                                            <KeyFrame Cue="0%">
+                                                <Setter Property="Opacity" Value="0.6"/>
+                                            </KeyFrame>
+                                            <KeyFrame Cue="100%">
+                                                <Setter Property="Opacity" Value="1.0"/>
+                                            </KeyFrame>
+                                        </Animation>
+                                    </Style.Animations>
+                                </Style>
+                            </TextBlock.Styles>
+                        </TextBlock>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="20">
+                            <TextBlock x:Name="NotesText"
+                                       Text="Notes: 0"
+                                       FontSize="18"
+                                       FontWeight="SemiBold"
+                                       Foreground="White" />
+                            <TextBlock x:Name="NpsText"
+                                       Text="NPS: 0"
+                                       FontSize="18"
+                                       FontWeight="SemiBold"
+                                       Foreground="White" />
+                        </StackPanel>
+                    </StackPanel>
 
-                        <!-- Button 2: Melody -->
-                        <Border Canvas.Left="503" Canvas.Top="100" CornerRadius="4">
-                            <Border.Effect>
-                                <DropShadowEffect Color="Black" 
-                                                  BlurRadius="15" 
-                                                  Opacity="0.7"
-                                                  OffsetX="0"
-                                                  OffsetY="0" />
-                            </Border.Effect>
-                            <Button x:Name="MelodyButton"
-                                    Width="374"
-                                    Height="213">
-                                <Image Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [2299EA4]-min.png"
-                                       Stretch="UniformToFill" />
-                            </Button>
-                        </Border>
-
-                        <!-- Button 3: Harmony -->
-                        <Border Canvas.Left="503" Canvas.Top="100" CornerRadius="4">
-                            <Border.Effect>
-                                <DropShadowEffect Color="Black" 
-                                                  BlurRadius="15" 
-                                                  Opacity="0.7"
-                                                  OffsetX="0"
-                                                  OffsetY="0" />
-                            </Border.Effect>
-                            <Button x:Name="HarmonyButton"
-                                    Width="374"
-                                    Height="213">
-                                <Image Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [5A28B4B]-min.png"
-                                       Stretch="UniformToFill" />
-                            </Button>
-                        </Border>
-
-                        <!-- Button 4: Tempo Resonate -->
-                        <Border Canvas.Left="503" Canvas.Top="100" CornerRadius="4">
-                            <Border.Effect>
-                                <DropShadowEffect Color="Black" 
-                                                  BlurRadius="15" 
-                                                  Opacity="0.7"
-                                                  OffsetX="0"
-                                                  OffsetY="0" />
-                            </Border.Effect>
-                            <Button x:Name="TempoResonateButton"
-                                    Width="374"
-                                    Height="213">
-                                <Image Source="avares://MusicClicker/Assets/TempoResonate.png"
-                                       Stretch="UniformToFill" />
-                            </Button>
-                        </Border>
-
-                        <!-- Button 5: Eternal Modulation -->
-                        <Border Canvas.Left="503" Canvas.Top="100" CornerRadius="4">
-                            <Border.Effect>
-                                <DropShadowEffect Color="Black" 
-                                                  BlurRadius="15" 
-                                                  Opacity="0.7"
-                                                  OffsetX="0"
-                                                  OffsetY="0" />
-                            </Border.Effect>
-                            <Button x:Name="EternalModulationButton"
-                                    Width="374"
-                                    Height="213">
-                                <Image Source="avares://MusicClicker/Assets/EternalModulation.png"
-                                       Stretch="UniformToFill" />
-                            </Button>
-                        </Border>
-
-                        <!-- Button 6: Armory of Forte -->
-                        <Border Canvas.Left="503" Canvas.Top="100" CornerRadius="4">
-                            <Border.Effect>
-                                <DropShadowEffect Color="Black" 
-                                                  BlurRadius="15" 
-                                                  Opacity="0.7"
-                                                  OffsetX="0"
-                                                  OffsetY="0" />
-                            </Border.Effect>
-                                <Button x:Name="ArmoryOfForteButton"
-                                    Width="374"
-                                    Height="213">
-                                <Image Source="avares://MusicClicker/Assets/ArmoryofForte.png"
-                                       Stretch="UniformToFill" />
-                            </Button>
-                        </Border>
-
-                        <!-- Button 7: Symphonic Gallery -->
-                        <Border Canvas.Left="503" Canvas.Top="100" CornerRadius="4">
-                            <Border.Effect>
-                                <DropShadowEffect Color="Black" 
-                                                  BlurRadius="15" 
-                                                  Opacity="0.7"
-                                                  OffsetX="0"
-                                                  OffsetY="0" />
-                            </Border.Effect>
-                            <Button x:Name="SymphonicGalleryButton"
-                                    Width="374"
-                                    Height="213">
-                                <Image Source="avares://MusicClicker/Assets/SymphonicGallery.png"
-                                       Stretch="UniformToFill" />
-                            </Button>
-                        </Border>
-
-                        
-
-                    </Canvas>
-
-                    <!-- Main Click Button (with shadow like carousel buttons) -->
-                    <Border HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,180,0,0" CornerRadius="110" ZIndex="200">
+                    <!-- Upgrades Button (Right) -->
+                    <Border Grid.Column="2" CornerRadius="8">
                         <Border.Effect>
-                            <DropShadowEffect Color="Black" 
-                                              BlurRadius="15" 
-                                              Opacity="0.7"
-                                              OffsetX="0"
-                                              OffsetY="0" />
+                            <DropShadowEffect Color="Black" BlurRadius="12" Opacity="0.7" OffsetX="0" OffsetY="0" />
                         </Border.Effect>
-                        <Button x:Name="ClickButton"
-                                Width="220"
-                                Height="220"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Top"
-                                Background="Transparent"
-                                BorderThickness="0"
+                        <Button x:Name="TopOpenUpgradesButton" 
+                                Width="170" 
+                                Height="85" 
+                                Background="Transparent" 
+                                BorderThickness="0" 
                                 Padding="0">
-                            <Image Source="avares://MusicClicker/Assets/Music Game Assets [A961E2A]-min.png"
-                                   Stretch="Uniform" IsHitTestVisible="False" />
+                            <Image Source="avares://MusicClicker/Assets/UpgradeMenu.png" 
+                                   Stretch="Uniform" 
+                                   IsHitTestVisible="False" />
                         </Button>
                     </Border>
                 </Grid>
+            </Border>
 
-                <!-- Upgrades Button -->
-                <Border Grid.Row="2" HorizontalAlignment="Center" Margin="0,30,0,0" CornerRadius="4">
+            <!-- ==================== LEFT PANEL (Row 2, Column 0) ==================== -->
+            <Border Grid.Row="2" Grid.Column="0" 
+                    Background="#66000000"
+                    BorderBrush="#FFFF69B4"
+                    BorderThickness="3"
+                    CornerRadius="8"
+                    Margin="12,8,6,8"
+                    ZIndex="2">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Spacing="6" Margin="10">
+                        <!-- Fragmentation Button -->
+                        <Button x:Name="FragmentationButton"
+                                Width="231"
+                                Height="130"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Padding="0">
+                            <Image Source="avares://MusicClicker/Assets/Fragmentation Button-min.png"
+                                   Stretch="Uniform" />
+                        </Button>
+
+                        <!-- Resonance Button -->
+                        <Button x:Name="ResonanceButton"
+                                Width="231"
+                                Height="130"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Padding="0">
+                            <Image Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [C690BBF]-min.png"
+                                   Stretch="Uniform" />
+                        </Button>
+
+                        <!-- Melody Button -->
+                        <Button x:Name="MelodyButton"
+                                Width="231"
+                                Height="130"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Padding="0">
+                            <Image Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [2299EA4]-min.png"
+                                   Stretch="Uniform" />
+                        </Button>
+
+                        <!-- Harmony Button -->
+                        <Button x:Name="HarmonyButton"
+                                Width="231"
+                                Height="130"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Padding="0">
+                            <Image Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [5A28B4B]-min.png"
+                                   Stretch="Uniform" />
+                        </Button>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+
+            <!-- ==================== CENTER AREA (Row 2, Column 1) ==================== -->
+            <Grid Grid.Row="2" Grid.Column="1" Margin="6,8">
+                <!-- Click Button -->
+                <Border HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="75">
                     <Border.Effect>
-                        <DropShadowEffect Color="Black" 
-                                          BlurRadius="15" 
-                                          Opacity="0.7"
-                                          OffsetX="0"
-                                          OffsetY="0" />
+                        <DropShadowEffect Color="Black" BlurRadius="15" Opacity="0.7" OffsetX="0" OffsetY="0" />
                     </Border.Effect>
-                    <Button x:Name="OpenUpgradesButton"
-                            Content="Upgrades"
-                            Width="250"
-                            Height="140"
-                            Background="#55000000"
-                            Foreground="White"
-                            FontSize="20"
-                            HorizontalAlignment="Center"
-                            Margin="0,0,0,0" />
+                    <Button x:Name="ClickButton"
+                            Width="220"
+                            Height="220"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Padding="0"
+                            PointerMoved="ClickButton_PointerMoved">
+                        <Image Source="avares://MusicClicker/Assets/Music Game Assets [A961E2A]-min.png"
+                               Stretch="Uniform" IsHitTestVisible="False" />
+                    </Button>
                 </Border>
+                
+                <!-- Prayer Stacks Display (Funeral Prayer) -->
+                <Border x:Name="PrayerStacksDisplayBorder"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        CornerRadius="8"
+                        Background="#DD1a1a2e"
+                        BorderBrush="#FF8B0000"
+                        BorderThickness="2"
+                        Padding="12,8"
+                        Margin="0,0,40,0"
+                        IsVisible="False">
+                    <Border.Effect>
+                        <DropShadowEffect Color="#8B0000" BlurRadius="15" Opacity="0.7" OffsetX="0" OffsetY="0" />
+                    </Border.Effect>
+                    <StackPanel Orientation="Vertical" Spacing="4">
+                        <TextBlock Text="Prayer Stacks"
+                                   Foreground="#FFFF6B6B"
+                                   FontSize="14"
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Center" />
+                        <TextBlock x:Name="PrayerStacksText"
+                                   Text="0 / 3"
+                                   Foreground="White"
+                                   FontSize="20"
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Center" />
+                    </StackPanel>
+                </Border>
+                
+                <!-- Floating text canvas for click feedback -->
+                <Canvas x:Name="FloatingTextCanvas"
+                        IsHitTestVisible="False"
+                        ZIndex="300" />
             </Grid>
+
+            <!-- ==================== RIGHT PANEL (Row 2, Column 2) ==================== -->
+            <Border Grid.Row="2" Grid.Column="2"
+                    Background="#66000000"
+                    BorderBrush="#FFFF69B4"
+                    BorderThickness="3"
+                    CornerRadius="8"
+                    Margin="6,8,12,8"
+                    ZIndex="2">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Spacing="6" Margin="10">
+                        <!-- Duet Ability Button -->
+                        <Border x:Name="DuetAbilityButtonBorder"
+                                CornerRadius="8"
+                                Background="#DD1a1a2e"
+                                IsVisible="False">
+                            <Border.Effect>
+                                <DropShadowEffect Color="#e94560" BlurRadius="25" Opacity="0.8" OffsetX="0" OffsetY="0" />
+                            </Border.Effect>
+                            <Button x:Name="OpenDuetAbilityButton" 
+                                    Width="147"
+                                    Height="147"
+                                    Background="Transparent" 
+                                    BorderThickness="0"
+                                    Cursor="Hand">
+                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="6">
+                                    <TextBlock Text="⚡" 
+                                               FontSize="46" 
+                                               HorizontalAlignment="Center"
+                                               Foreground="#e94560">
+                                        <TextBlock.Effect>
+                                            <DropShadowEffect Color="Black" BlurRadius="8" Opacity="0.8" />
+                                        </TextBlock.Effect>
+                                    </TextBlock>
+                                    <TextBlock Text="Duet Ability" 
+                                               FontSize="13" 
+                                               FontWeight="Bold"
+                                               HorizontalAlignment="Center"
+                                               TextAlignment="Center"
+                                               Foreground="White"
+                                               TextWrapping="Wrap">
+                                        <TextBlock.Effect>
+                                            <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.7" />
+                                        </TextBlock.Effect>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Button>
+                        </Border>
+
+                        <!-- Tempo Resonate Button -->
+                        <Button x:Name="TempoResonateButton"
+                                Width="231"
+                                Height="130"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Padding="0">
+                            <Image Source="avares://MusicClicker/Assets/TempoResonate.png"
+                                   Stretch="Uniform" />
+                        </Button>
+
+                        <!-- Eternal Modulation Button -->
+                        <Button x:Name="EternalModulationButton"
+                                Width="231"
+                                Height="130"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Padding="0">
+                            <Image Source="avares://MusicClicker/Assets/EternalModulation.png"
+                                   Stretch="Uniform" />
+                        </Button>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+
+            <!-- ==================== BOTTOM BAR (Row 4, All Columns) ==================== -->
+            <Border Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3"
+                    Background="#66000000"
+                    BorderBrush="#FFFF69B4"
+                    BorderThickness="3"
+                    CornerRadius="8"
+                    Margin="12,0,12,12">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="15" Margin="10">
+                    <!-- Cacophonic Dreams Button -->
+                    <Border CornerRadius="6">
+                        <Border.Effect>
+                            <DropShadowEffect Color="Black" BlurRadius="12" Opacity="0.8" OffsetX="0" OffsetY="0" />
+                        </Border.Effect>
+                        <Grid Width="240" Height="135">
+                            <Button x:Name="CacophonicDreamsButton"
+                                    Width="240"
+                                    Height="135"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Padding="0"
+                                    IsEnabled="False"
+                                    Opacity="0.4">
+                                <Image Source="avares://MusicClicker/Assets/CacophonicDreamsBUTTON.jpg"
+                                       Stretch="UniformToFill" />
+                            </Button>
+                            
+                            <!-- Lock overlay -->
+                            <Border x:Name="CacophonicDreamsLockOverlay"
+                                    Background="#AA000000"
+                                    CornerRadius="6"
+                                    Width="240"
+                                    Height="135"
+                                    IsVisible="True">
+                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="1">
+                                    <TextBlock Text="🔒" FontSize="16" HorizontalAlignment="Center" Foreground="White" />
+                                    <TextBlock x:Name="CacophonicDreamsLockText"
+                                               Text="Locked"
+                                               Foreground="White"
+                                               FontSize="9"
+                                               HorizontalAlignment="Center" />
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </Border>
+
+                    <!-- Armory of Forte Button -->
+                    <Border CornerRadius="6">
+                        <Border.Effect>
+                            <DropShadowEffect Color="Black" BlurRadius="12" Opacity="0.8" OffsetX="0" OffsetY="0" />
+                        </Border.Effect>
+                        <Button x:Name="ArmoryOfForteButton"
+                                Width="240"
+                                Height="135"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Padding="0">
+                            <Image Source="avares://MusicClicker/Assets/ArmoryofForte.png"
+                                   Stretch="Uniform" />
+                        </Button>
+                    </Border>
+
+                    <!-- Symphonic Gallery Button -->
+                    <Border CornerRadius="6">
+                        <Border.Effect>
+                            <DropShadowEffect Color="Black" BlurRadius="12" Opacity="0.8" OffsetX="0" OffsetY="0" />
+                        </Border.Effect>
+                        <Button x:Name="SymphonicGalleryButton"
+                                Width="240"
+                                Height="135"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Padding="0">
+                            <Image Source="avares://MusicClicker/Assets/SymphonicGallery.png"
+                                   Stretch="Uniform" />
+                        </Button>
+                    </Border>
+
+                    <!-- Bottom Fragmentation Button removed (duplicate) -->
+                </StackPanel>
+            </Border>
+
+            <!-- Hidden OpenUpgradesButton for backward compatibility -->
+            <Button x:Name="OpenUpgradesButton" IsVisible="False" Width="0" Height="0" />
+
+            <!-- ==================== CRESCENDANCE & DUET ROW (Row 3, Left and Right) ==================== -->
+            <!-- Crescendance Panel - Left Side -->
+            <Border x:Name="MainScreenCrescendancePanel"
+                    Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
+                    Background="#DD000000"
+                    BorderBrush="#FFFF69B4"
+                    BorderThickness="3"
+                    CornerRadius="8"
+                    Padding="12"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Margin="12,0,6,12"
+                    Width="750"
+                    MaxHeight="180"
+                    IsVisible="False"
+                    ZIndex="400">
+                <ScrollViewer VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel Orientation="Vertical" Spacing="6">
+                    <TextBlock x:Name="MainCrescendanceTitle"
+                               Text="Crescendance: [Score Name]"
+                               FontSize="18"
+                               FontWeight="Bold"
+                               Foreground="White"
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,4">
+                        <TextBlock.Effect>
+                            <DropShadowEffect Color="Black" BlurRadius="8" Opacity="0.9" />
+                        </TextBlock.Effect>
+                    </TextBlock>
+                    
+                    <TextBlock x:Name="MainCrescendanceInfoText"
+                               Text="Crescendance information will appear here."
+                               FontSize="14"
+                               Foreground="White"
+                               TextWrapping="Wrap"
+                               TextAlignment="Center"
+                               MaxWidth="700">
+                        <TextBlock.Effect>
+                            <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.7" />
+                        </TextBlock.Effect>
+                    </TextBlock>
+                    
+                    <!-- Swan Lake Feather Display -->
+                    <StackPanel x:Name="MainSwanFeatherPanel"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                Spacing="15"
+                                Margin="0,6,0,0"
+                                IsVisible="False">
+                        <StackPanel Orientation="Vertical" Spacing="3">
+                            <TextBlock Text="Revered Feathers"
+                                       Foreground="LightBlue"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainReveredFeatherCount"
+                                       Text="0 / 5"
+                                       Foreground="White"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center" />
+                            <Button x:Name="MainConsumeReveredButton"
+                                    Content="Consume (+ 20% Notes)"
+                                    FontSize="11"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Vertical" Spacing="3">
+                            <TextBlock Text="Chromatic Feathers"
+                                       Foreground="Violet"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainChromaticFeatherCount"
+                                       Text="0 / 10"
+                                       Foreground="White"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center" />
+                            <Button x:Name="MainConsumeChromaticButton"
+                                    Content="Consume (+2 All Minors)"
+                                    FontSize="11"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Vertical" Spacing="3">
+                            <TextBlock Text="Polyphonic Feathers"
+                                       Foreground="Gold"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainPolyphonicFeatherCount"
+                                       Text="0"
+                                       Foreground="White"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center" />
+                            <Button x:Name="MainConsumePolyphonicButton"
+                                    Content="Consume (+83 Entropic Melodies +75% Notes)"
+                                    FontSize="11"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                            <TextBlock x:Name="MainThousandWingTimerText"
+                                       Text=""
+                                       Foreground="#C71585"
+                                       FontSize="13"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center"
+                                       Margin="0,2,0,0"
+                                       IsVisible="False" />
+                        </StackPanel>
+                    </StackPanel>
+                    
+                    <!-- Moonlight Sonata Stack Display -->
+                    <StackPanel x:Name="MainMoonlightStackPanel"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                Spacing="25"
+                                Margin="0,6,0,0"
+                                IsVisible="False">
+                        <StackPanel Orientation="Vertical" Spacing="3">
+                            <TextBlock Text="Moonbeam Resonance"
+                                       Foreground="LightBlue"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainMoonbeamResonanceCount"
+                                       Text="0 / 5"
+                                       Foreground="White"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock Text="(Auto-consumes at 8 stacks)"
+                                       Foreground="Gray"
+                                       FontSize="10"
+                                       HorizontalAlignment="Center" />
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Vertical" Spacing="3">
+                            <TextBlock Text="Harmonizing Moonlight"
+                                       Foreground="Gold"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainHarmonizingMoonlightCount"
+                                       Text="0"
+                                       Foreground="White"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock Text="(Consumed by Eulogy weapon)"
+                                       Foreground="Gray"
+                                       FontSize="10"
+                                       HorizontalAlignment="Center" />
+                            <Button x:Name="ConsumeHarmonizingMoonlightButton"
+                                    Content="Consume (1 Harmonizing → 3 Moonbeam + Components)"
+                                    HorizontalAlignment="Center"
+                                    Padding="8,4"
+                                    Margin="0,4,0,0"
+                                    Background="#e94560"
+                                    Foreground="White"
+                                    FontSize="11"
+                                    CornerRadius="8"
+                                    IsVisible="False"
+                                    Click="ConsumeHarmonizingMoonlight_Click" />
+                        </StackPanel>
+                    </StackPanel>
+                    
+                    <!-- La Campanella Stack Display -->
+                    <StackPanel x:Name="MainLaCampanellaStackPanel"
+                                Orientation="Vertical"
+                                HorizontalAlignment="Center"
+                                Spacing="8"
+                                Margin="0,6,0,0"
+                                IsVisible="False">
+                        <StackPanel Orientation="Horizontal" Spacing="3" HorizontalAlignment="Center">
+                            <TextBlock Text="Grandiose Bell:"
+                                       Foreground="Gold"
+                                       FontSize="12" />
+                            <TextBlock x:Name="MainGrandioseBellStage"
+                                       Text="Intact"
+                                       Foreground="White"
+                                       FontSize="12"
+                                       FontWeight="Bold" />
+                        </StackPanel>
+                        <ProgressBar x:Name="MainGrandioseBellProgress"
+                                     Minimum="0"
+                                     Maximum="60"
+                                     Value="0"
+                                     Height="8"
+                                     Width="200" />
+                        <Button x:Name="MainMendBellButton"
+                                Content="Mend Bell"
+                                Click="MainMendBellButton_Click"
+                                FontSize="11"
+                                Padding="8,4"
+                                IsEnabled="False" />
+                        <StackPanel Orientation="Horizontal" Spacing="3" HorizontalAlignment="Center">
+                            <TextBlock Text="Deafening Chime:"
+                                       Foreground="Violet"
+                                       FontSize="11" />
+                            <TextBlock x:Name="MainDeafeningChimeCount"
+                                       Text="0"
+                                       Foreground="White"
+                                       FontSize="11"
+                                       FontWeight="Bold" />
+                        </StackPanel>
+                        <TextBlock x:Name="MainDeafeningChimeTimerText"
+                                   Text=""
+                                   Foreground="#FF00FF00"
+                                   FontSize="11"
+                                   IsVisible="False"
+                                   HorizontalAlignment="Center">
+                            <TextBlock.Effect>
+                                <DropShadowEffect Color="#FF00FF00" BlurRadius="8" />
+                            </TextBlock.Effect>
+                        </TextBlock>
+                    </StackPanel>
+                    
+                    <!-- Enigma Stack Display -->
+                    <StackPanel x:Name="MainEnigmaStackPanel"
+                                Orientation="Vertical"
+                                HorizontalAlignment="Center"
+                                Spacing="8"
+                                Margin="0,6,0,0"
+                                IsVisible="False">
+                        <StackPanel Orientation="Horizontal" Spacing="3" HorizontalAlignment="Center">
+                            <TextBlock Text="Resonant Mystery:"
+                                       Foreground="Violet"
+                                       FontSize="12" />
+                            <TextBlock x:Name="MainResonateMysteryCount"
+                                       Text="0"
+                                       Foreground="White"
+                                       FontSize="14"
+                                       FontWeight="Bold" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="5" HorizontalAlignment="Center">
+                            <Button x:Name="MainEnigmaConsumeNotesButton"
+                                    Content="+50% Notes"
+                                    Click="MainEnigmaConsumeNotesButton_Click"
+                                    FontSize="10"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                            <Button x:Name="MainEnigmaConsumeEntropicButton"
+                                    Content="+17 Entropic"
+                                    Click="MainEnigmaConsumeEntropicButton_Click"
+                                    FontSize="10"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                            <Button x:Name="MainEnigmaConsumeMinorButton"
+                                    Content="+1 Random Minor"
+                                    Click="MainEnigmaConsumeMinorButton_Click"
+                                    FontSize="10"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                        </StackPanel>
+                        <Button x:Name="MainEnigmaConsumeAllButton"
+                                Content="Consume All (10+): +25% Notes per Stack"
+                                Click="MainEnigmaConsumeAllButton_Click"
+                                FontSize="11"
+                                Padding="8,4"
+                                IsEnabled="False" />
+                    </StackPanel>
+                    
+                    <!-- Fate Stack Display -->
+                    <StackPanel x:Name="MainFateStackPanel"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                Spacing="20"
+                                Margin="0,6,0,0"
+                                IsVisible="False">
+                        <StackPanel Orientation="Vertical" Spacing="3">
+                            <TextBlock Text="Cosmic Modulation"
+                                       Foreground="Cyan"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainCosmicModulationCount"
+                                       Text="0"
+                                       Foreground="White"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center" />
+                            <StackPanel Orientation="Horizontal" Spacing="3" HorizontalAlignment="Center">
+                                <TextBlock Text="Tier:"
+                                           Foreground="Gray"
+                                           FontSize="10" />
+                                <TextBlock x:Name="MainCosmicModulationTier"
+                                           Text="0"
+                                           Foreground="Gold"
+                                           FontSize="10"
+                                           FontWeight="Bold" />
+                            </StackPanel>
+                            <Button x:Name="MainConsumeCosmicButton"
+                                    Content="Consume for Entropic"
+                                    Click="MainConsumeCosmicButton_Click"
+                                    FontSize="10"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Vertical" Spacing="3">
+                            <TextBlock Text="Symphony of the Stars"
+                                       Foreground="Gold"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainSymphonyStarsCount"
+                                       Text="0"
+                                       Foreground="White"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center" />
+                            <StackPanel Orientation="Horizontal" Spacing="3" HorizontalAlignment="Center">
+                                <TextBlock Text="(1 per 5 Cosmic)"
+                                           Foreground="Gray"
+                                           FontSize="9" />
+                                <TextBlock x:Name="MainSymphonyStarsNote"
+                                           Text="- Requires Astral Chainripper"
+                                           Foreground="Orange"
+                                           FontSize="9" />
+                            </StackPanel>
+                            <TextBlock x:Name="MainAstralChainripperTimerText"
+                                       Text=""
+                                       Foreground="#FF00FF00"
+                                       FontSize="10"
+                                       IsVisible="False"
+                                       HorizontalAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="#FF00FF00" BlurRadius="8" />
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <Button x:Name="MainConsumeSymphonyButton"
+                                    Content="Consume (+3 Lowest Minor)"
+                                    Click="MainConsumeSymphonyButton_Click"
+                                    FontSize="10"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Spacing="3">
+                            <TextBlock Text="Fate Craft NPS Boost"
+                                       Foreground="Cyan"
+                                       FontSize="10"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainFateCraftTimerText"
+                                       Text=""
+                                       Foreground="#FF00FF00"
+                                       FontSize="10"
+                                       IsVisible="False"
+                                       HorizontalAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="#FF00FF00" BlurRadius="8" />
+                                </TextBlock.Effect>
+                            </TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                    
+                    <!-- Eroica Stack Display -->
+                    <StackPanel x:Name="MainEroicaStackPanel"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                Spacing="20"
+                                Margin="0,6,0,0"
+                                IsVisible="False">
+                        <StackPanel Orientation="Vertical" Spacing="3">
+                            <TextBlock Text="Heroic Resolve"
+                                       Foreground="LightBlue"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainHeroicResolveCount"
+                                       Text="0"
+                                       Foreground="White"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center" />
+                            <Button x:Name="MainConsumeHeroicResolveButton"
+                                    Content="Consume (+1 Catharsis, -25% Notes)"
+                                    Click="MainConsumeHeroicResolveButton_Click"
+                                    FontSize="10"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Vertical" Spacing="3">
+                            <TextBlock Text="Symphonic Catharsis"
+                                       Foreground="Gold"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainSymphonicCatharsisCount"
+                                       Text="0"
+                                       Foreground="White"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center" />
+                            <Button x:Name="MainConsumeCatharsisButton"
+                                    Content="Consume (10s double NPC +10% crit)"
+                                    Click="MainConsumeCatharsisButton_Click"
+                                    FontSize="10"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                            <TextBlock x:Name="MainCatharsisTimerText"
+                                       Text="Active: 0s"
+                                       Foreground="#FF00FF00"
+                                       FontSize="11"
+                                       FontWeight="SemiBold"
+                                       HorizontalAlignment="Center"
+                                       Margin="0,3,0,0"
+                                       IsVisible="False">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="4" Opacity="0.8" />
+                                </TextBlock.Effect>
+                            </TextBlock>
+                        </StackPanel>
+                        
+                        <StackPanel x:Name="MainTestamentPanel"
+                                    Orientation="Vertical" Spacing="3"
+                                    IsVisible="False">
+                            <TextBlock Text="Testament of Harmony"
+                                       Foreground="Violet"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainTestamentCount"
+                                       Text="0"
+                                       Foreground="White"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center" />
+                            <Button x:Name="MainConsumeTestamentButton"
+                                    Content="Consume (+100 Melodic/Harmonic)"
+                                    Click="MainConsumeTestamentButton_Click"
+                                    FontSize="10"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                        </StackPanel>
+                    </StackPanel>
+                    
+                    <!-- Ode to Joy Stack Display -->
+                    <StackPanel x:Name="MainOdeToJoyStackPanel"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                Spacing="15"
+                                Margin="0,6,0,0"
+                                IsVisible="False">
+                        <StackPanel Orientation="Vertical" Spacing="3">
+                            <TextBlock Text="Petals of Harmony"
+                                       Foreground="LightBlue"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainPetalsOfHarmonyCount"
+                                       Text="0"
+                                       Foreground="White"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center" />
+                            <Button x:Name="MainConsumeHarmonyPetalButton"
+                                    Content="Consume (+83 Entropic)"
+                                    Click="MainConsumeHarmonyPetalButton_Click"
+                                    FontSize="11"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Vertical" Spacing="3">
+                            <TextBlock Text="Petals of Melody"
+                                       Foreground="Violet"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainPetalsOfMelodyCount"
+                                       Text="0"
+                                       Foreground="White"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainEntropicCritTimer"
+                                       Text=""
+                                       Foreground="Red"
+                                       FontSize="11"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center" />
+                            <Button x:Name="MainConsumeMelodyPetalButton"
+                                    Content="Consume (+5s Full Crits)"
+                                    Click="MainConsumeMelodyPetalButton_Click"
+                                    FontSize="11"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Vertical" Spacing="3">
+                            <TextBlock Text="Ode to Life"
+                                       Foreground="Gold"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainOdeToLifeCount"
+                                       Text="0"
+                                       Foreground="White"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainOdeToCreationDoubleTimerText"
+                                       Text=""
+                                       Foreground="#FF00FF00"
+                                       FontSize="10"
+                                       IsVisible="False"
+                                       HorizontalAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="#FF00FF00" BlurRadius="8" />
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <Button x:Name="MainCombineForOdeToLifeButton"
+                                    Content="Combine (1H + 1M + 17E)"
+                                    Click="MainCombineForOdeToLifeButton_Click"
+                                    FontSize="10"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                            <Button x:Name="MainConsumeOdeToLifeButton"
+                                    Content="Consume (2× All Minors)"
+                                    Click="MainConsumeOdeToLifeButton_Click"
+                                    FontSize="11"
+                                    Padding="6,3"
+                                    Margin="0,2,0,0"
+                                    IsEnabled="False" />
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Spacing="3">
+                            <TextBlock Text="Joyful Catharsis"
+                                       Foreground="LightGreen"
+                                       FontSize="10"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainJoyfulCatharsisTimerText"
+                                       Text=""
+                                       Foreground="#FF00FF00"
+                                       FontSize="10"
+                                       IsVisible="False"
+                                       HorizontalAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="#FF00FF00" BlurRadius="8" />
+                                </TextBlock.Effect>
+                            </TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                    
+                    <!-- Dies Irae Stack Display -->
+                    <StackPanel x:Name="MainDiesIraeStackPanel"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                Spacing="15"
+                                Margin="0,6,0,0"
+                                IsVisible="False">
+                        <StackPanel Orientation="Vertical" Spacing="3">
+                            <TextBlock Text="Dissonant Hatred"
+                                       Foreground="OrangeRed"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainDissonantHatredCount"
+                                       Text="0 / 50"
+                                       Foreground="White"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center" />
+                            <Button x:Name="MainConsumeDissonantHatredButton"
+                                    Content="Consume 5 (+1 Oblivion)"
+                                    Click="MainConsumeDissonantHatredButton_Click"
+                                    FontSize="10"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Vertical" Spacing="3">
+                            <TextBlock Text="Discordant Malice"
+                                       Foreground="DarkViolet"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainDiscordantMaliceCount"
+                                       Text="0"
+                                       Foreground="White"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center" />
+                            <Button x:Name="MainConsumeDiscordantButton"
+                                    Content="Consume (+X Entropic)"
+                                    Click="MainConsumeDiscordantButton_Click"
+                                    FontSize="10"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                            <Button x:Name="MainConsumeAllDiscordantButton"
+                                    Content="Consume All"
+                                    Click="MainConsumeAllDiscordantButton_Click"
+                                    FontSize="9"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Vertical" Spacing="3">
+                            <TextBlock Text="Cacophonic Oblivion"
+                                       Foreground="DarkRed"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainCacophonicOblivionCount"
+                                       Text="0"
+                                       Foreground="White"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center" />
+                            <Button x:Name="MainConsumeCacophonicOblivionButton"
+                                    Content="Consume (20 Symphony Crits)"
+                                    Click="MainConsumeCacophonicOblivionButton_Click"
+                                    FontSize="10"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Vertical" Spacing="3">
+                            <TextBlock Text="Wrathful Seal"
+                                       Foreground="Gold"
+                                       FontSize="12"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainWrathfulSealCount"
+                                       Text="0"
+                                       Foreground="White"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center" />
+                            <Button x:Name="MainConsumeWrathfulSealButton"
+                                    Content="Consume (5 Seal-breaking)"
+                                    Click="MainConsumeWrathfulSealButton_Click"
+                                    FontSize="9"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                            <Button x:Name="MainDiesIraeDuetButton"
+                                    Content="Duet: 15 Seals (5 Doublings)"
+                                    Click="MainDiesIraeDuetButton_Click"
+                                    FontSize="9"
+                                    Padding="6,3"
+                                    IsEnabled="False" />
+                            <!-- Duet Timer -->
+                            <TextBlock x:Name="MainDiesIraeTimerText"
+                                       Text=""
+                                       Foreground="#FF00FF00"
+                                       FontSize="10"
+                                       IsVisible="False"
+                                       HorizontalAlignment="Center"
+                                       Margin="0,3,0,0">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="#FF00FF00" BlurRadius="8" />
+                                </TextBlock.Effect>
+                            </TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                    
+                    <!-- Winter Stack Display -->
+                    <StackPanel x:Name="MainWinterStackPanel"
+                                Orientation="Vertical"
+                                HorizontalAlignment="Center"
+                                Spacing="8"
+                                Margin="0,6,0,0"
+                                IsVisible="False">
+                        <!-- First Row: Frigid Melody + Freezing Harmony Button -->
+                        <StackPanel Orientation="Horizontal" Spacing="15" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Vertical" Spacing="3">
+                                <TextBlock Text="Frigid Melody"
+                                           Foreground="LightBlue"
+                                           FontSize="12"
+                                           HorizontalAlignment="Center" />
+                                <TextBlock x:Name="MainFrigidMelodyCount"
+                                           Text="0"
+                                           Foreground="White"
+                                           FontSize="16"
+                                           FontWeight="Bold"
+                                           HorizontalAlignment="Center" />
+                            </StackPanel>
+                            <Button x:Name="MainFreezingHarmonyButton"
+                                    Content="Freezing Harmony (Freeze NPS)"
+                                    Click="MainFreezingHarmonyButton_Click"
+                                    FontSize="11"
+                                    Padding="8,4"
+                                    IsEnabled="False" />
+                        </StackPanel>
+                        
+                        <!-- Second Row: Eternal Frost + Regal Snowlight -->
+                        <StackPanel Orientation="Horizontal" Spacing="20" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Vertical" Spacing="3">
+                                <TextBlock Text="Eternal Frost"
+                                           Foreground="Cyan"
+                                           FontSize="12"
+                                           HorizontalAlignment="Center" />
+                                <TextBlock x:Name="MainEternalFrostCount"
+                                           Text="0"
+                                           Foreground="White"
+                                           FontSize="16"
+                                           FontWeight="Bold"
+                                           HorizontalAlignment="Center" />
+                                <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Center">
+                                    <Button x:Name="MainIgniteEternalFrostButton"
+                                            Content="Ignite"
+                                            Click="MainIgniteEternalFrostButton_Click"
+                                            FontSize="10"
+                                            Padding="6,3"
+                                            IsEnabled="False" />
+                                    <Button x:Name="MainConsumeEternalFrostButton"
+                                            Content="Unleash Frozen Wrath"
+                                            Click="MainConsumeEternalFrostButton_Click"
+                                            FontSize="10"
+                                            Padding="6,3"
+                                            IsEnabled="False" />
+                                </StackPanel>
+                                <TextBlock x:Name="MainBlizzardCommandText"
+                                           Text=""
+                                           Foreground="LightBlue"
+                                           FontSize="10"
+                                           IsVisible="False"
+                                           HorizontalAlignment="Center" />
+                            </StackPanel>
+                            
+                            <StackPanel Orientation="Vertical" Spacing="3">
+                                <TextBlock Text="Regal Snowlight"
+                                           Foreground="Gold"
+                                           FontSize="12"
+                                           HorizontalAlignment="Center" />
+                                <TextBlock x:Name="MainRegalSnowlightCount"
+                                           Text="0"
+                                           Foreground="White"
+                                           FontSize="16"
+                                           FontWeight="Bold"
+                                           HorizontalAlignment="Center" />
+                                <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Center">
+                                    <Button x:Name="MainIgniteRegalSnowlightButton"
+                                            Content="Ignite"
+                                            Click="MainIgniteRegalSnowlightButton_Click"
+                                            FontSize="10"
+                                            Padding="6,3"
+                                            IsEnabled="False" />
+                                    <Button x:Name="MainConsumeRegalSnowlightButton"
+                                            Content="Invoke Crystalline Grace"
+                                            Click="MainConsumeRegalSnowlightButton_Click"
+                                            FontSize="10"
+                                            Padding="6,3"
+                                            IsEnabled="False" />
+                                </StackPanel>
+                            </StackPanel>
+                            
+                            <StackPanel Orientation="Vertical" Spacing="3">
+                                <TextBlock Text="Snow's Oblivion"
+                                           Foreground="Violet"
+                                           FontSize="12"
+                                           HorizontalAlignment="Center" />
+                                <TextBlock x:Name="MainSnowsOblivionCount"
+                                           Text="0"
+                                           Foreground="White"
+                                           FontSize="16"
+                                           FontWeight="Bold"
+                                           HorizontalAlignment="Center" />
+                                <Button x:Name="MainConsumeSnowsOblivionButton"
+                                            Content="Consume (+X Entropic)"
+                                            Click="MainConsumeSnowsOblivionButton_Click"
+                                            FontSize="10"
+                                            Padding="6,3"
+                                            IsEnabled="False" />
+                            </StackPanel>
+                        </StackPanel>
+                        
+                        <!-- Third Row: Weapon Passives -->
+                        <StackPanel Orientation="Horizontal" Spacing="15" HorizontalAlignment="Center">
+                            <TextBlock x:Name="MainAcceleratingFlurryText"
+                                       Text=""
+                                       Foreground="LightGreen"
+                                       FontSize="11"
+                                       IsVisible="False"
+                                       HorizontalAlignment="Center" />
+                            <TextBlock x:Name="MainCacophonicBlizzardBonusText"
+                                       Text=""
+                                       Foreground="Orange"
+                                       FontSize="11"
+                                       IsVisible="False"
+                                       HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+                </ScrollViewer>
+            </Border>
+            
+            <!-- Duet Ability Panel - Right Side (same row as Crescendance) -->
+            <Border x:Name="DuetAbilityPanelContainer"
+                    Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3"
+                    Background="#DD000000"
+                    BorderBrush="#FFFF69B4"
+                    BorderThickness="3"
+                    CornerRadius="8"
+                    Padding="12"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Margin="6,0,12,12"
+                    Width="750"
+                    MaxHeight="180"
+                    IsVisible="False"
+                    ZIndex="400">
+                <views:DuetAbilityScreen x:Name="DuetAbilityScreen" />
+            </Border>
         </Grid>
 
         <!-- Game Screens -->
@@ -301,6 +1224,7 @@
         <views:HeartOfHarmonyScreen x:Name="HeartOfHarmonyScreen" IsVisible="False" />
         <views:UniteTheSymphonyScreen x:Name="UnityTheSymphonyScreen" IsVisible="False" />
         <views:ArmoryOfForteScreen x:Name="ArmoryOfForteScreen" IsVisible="False" />
+        <views:EntropicArmoryScreen x:Name="EntropicArmoryScreen" IsVisible="False" />
         <views:EternalModulationScreen x:Name="EternalModulationScreen" IsVisible="False" />
         
         <!-- Currently Active Events. Comment out any events that are not currently active in sets of 2. (Top = left and bottom = right) -->
@@ -310,6 +1234,7 @@
         <views:SymphonicGalleryScreen x:Name="SymphonicGalleryScreen" IsVisible="False" />
         <views:ClickerCustomizeScreen x:Name="ClickerCustomizeScreen" IsVisible="False" />
         <views:BackgroundCustomizeScreen x:Name="BackgroundCustomizeScreen" IsVisible="False" />
+        <views:CacophonicDreamsScreen x:Name="CacophonicDreamsScreen" IsVisible="False" />
         
         <!-- Fullscreen black fader used for cross-screen transitions -->
         <Rectangle x:Name="ScreenFader"

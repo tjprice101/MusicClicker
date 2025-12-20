@@ -1,0 +1,663 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="1920" d:DesignHeight="1080"
+             x:Class="MusicClicker.Views.CacophonicDreamsScreen">
+    
+    <!-- Main container with background image -->
+    <Grid>
+        <!-- Background Image -->
+        <Image Source="avares://MusicClicker/Assets/CacophonicDreamsBG.jpg" 
+               Stretch="UniformToFill" 
+               HorizontalAlignment="Stretch" 
+               VerticalAlignment="Stretch" />
+        
+        <!-- Content overlay -->
+        <Grid Margin="50">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" /> <!-- Header -->
+                <RowDefinition Height="*" />    <!-- Scroller Content -->
+                <RowDefinition Height="Auto" /> <!-- Back Button -->
+            </Grid.RowDefinitions>
+            
+            <!-- Header -->
+            <TextBlock Grid.Row="0" 
+                       Text="Cacophonic Dreams" 
+                       FontSize="48" 
+                       FontWeight="Bold" 
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Top" 
+                       Foreground="White" 
+                       Margin="0,10,0,15">
+                <TextBlock.Effect>
+                    <DropShadowEffect Color="Black" BlurRadius="10" Opacity="0.8" OffsetX="2" OffsetY="2" />
+                </TextBlock.Effect>
+            </TextBlock>
+            
+            <!-- Vertical Scroller for Boss Fights -->
+            <ScrollViewer Grid.Row="1" 
+                          x:Name="BossScroller"
+                          HorizontalScrollBarVisibility="Disabled"
+                          VerticalScrollBarVisibility="Auto"
+                          Background="#22000000">
+                <StackPanel Orientation="Vertical" Spacing="30" Margin="20">
+                    
+                    <!-- Boss 1: Mercury -->
+                    <Border Background="#AA000000" 
+                            CornerRadius="15" 
+                            Padding="25">
+                        <Border.Effect>
+                            <DropShadowEffect Color="Black" BlurRadius="20" Opacity="0.9" />
+                        </Border.Effect>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="420" /> <!-- Boss Image -->
+                                <ColumnDefinition Width="*" />   <!-- Middle Section -->
+                                <ColumnDefinition Width="420" /> <!-- Reward Image -->
+                            </Grid.ColumnDefinitions>
+                            
+                            <!-- Left: Boss Image (16:9 aspect ratio) -->
+                            <Border Grid.Column="0"
+                                    CornerRadius="10"
+                                    Margin="0,0,10,0"
+                                    Background="Black"
+                                    VerticalAlignment="Center">
+                                <Image Source="avares://MusicClicker/Assets/MercuryFIGHT.jpg"
+                                       Stretch="UniformToFill"
+                                       Width="390"
+                                       Height="218" />
+                            </Border>
+                            
+                            <!-- Middle: Fight Info and Button -->
+                            <StackPanel Grid.Column="1" Spacing="8" VerticalAlignment="Center">
+                                <TextBlock Text="Planetary Discordance: Mercury" 
+                                           FontSize="22" 
+                                           FontWeight="Bold" 
+                                           Foreground="White"
+                                           HorizontalAlignment="Center"
+                                           TextWrapping="Wrap" />
+                                <TextBlock Text="Recommended Notes Per Second: 1 Trillion" 
+                                           FontSize="13" 
+                                           Foreground="#FFAA00"
+                                           HorizontalAlignment="Center" />
+                                
+                                <!-- Weekly Completions -->
+                                <TextBlock x:Name="MercuryWeeklyText"
+                                           Text="Weekly Completions Remaining: 3/3"
+                                           FontSize="12"
+                                           Foreground="#00CED1"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center" />
+                                
+                                <!-- Strategic Info -->
+                                <Border Background="#DD000000"
+                                        CornerRadius="8"
+                                        Padding="10"
+                                        Margin="0,5,0,0">
+                                    <StackPanel Spacing="4">
+                                        <TextBlock Text="Strategic Information" 
+                                                   FontSize="13" 
+                                                   FontWeight="Bold"
+                                                   Foreground="White" />
+                                        <TextBlock Text="✓ Weak to: Swan Lake, Ode to Joy (+ weapons)" 
+                                                   FontSize="11" 
+                                                   Foreground="#00CED1"
+                                                   TextWrapping="Wrap" />
+                                        <TextBlock Text="✗ Resistant to: Moonlight, Eroica, Enigma (+ weapons)" 
+                                                   FontSize="11" 
+                                                   Foreground="#8B0000"
+                                                   TextWrapping="Wrap" />
+                                        <TextBlock Text="Special: Harder early, easier late" 
+                                                   FontSize="11" 
+                                                   Foreground="#20B2AA"
+                                                   FontStyle="Italic"
+                                                   TextWrapping="Wrap" />
+                                    </StackPanel>
+                                </Border>
+                                
+                                <!-- Challenge Button -->
+                                <Button x:Name="MercuryChallengeButton"
+                                        Content="Modulate the Dissonance"
+                                        FontSize="16"
+                                        FontWeight="Bold"
+                                        Height="40"
+                                        Background="#FF6600"
+                                        Foreground="White"
+                                        CornerRadius="8"
+                                        HorizontalAlignment="Stretch"
+                                        Margin="15,5,15,0">
+                                    <Button.Effect>
+                                        <DropShadowEffect Color="Black" BlurRadius="10" Opacity="0.7" />
+                                    </Button.Effect>
+                                </Button>
+                                
+                                <!-- Success Message -->
+                                <TextBlock x:Name="MercurySuccessText"
+                                           Text="Victory! Modulation Complete!"
+                                           FontSize="12"
+                                           FontWeight="Bold"
+                                           Foreground="#00CED1"
+                                           HorizontalAlignment="Center"
+                                           IsVisible="False" />
+                                
+                                <!-- Failed Message -->
+                                <TextBlock x:Name="MercuryFailedText"
+                                           Text="Failed to Modulate"
+                                           FontSize="12"
+                                           FontWeight="SemiBold"
+                                           Foreground="#8B0000"
+                                           HorizontalAlignment="Center"
+                                           IsVisible="False" />
+                            </StackPanel>
+                            
+                            <!-- Right: Reward Display -->
+                            <Border Grid.Column="2"
+                                    Background="#22FFAA00"
+                                    CornerRadius="10"
+                                    Padding="10"
+                                    Margin="10,0,0,0"
+                                    VerticalAlignment="Center">
+                                <StackPanel VerticalAlignment="Center" Spacing="6">
+                                    <TextBlock Text="Reward (1%)" 
+                                               FontSize="12" 
+                                               Foreground="#FFCC00"
+                                               FontWeight="SemiBold"
+                                               HorizontalAlignment="Center" />
+                                    
+                                    <Border Width="390"
+                                            Height="218"
+                                            CornerRadius="8"
+                                            Background="Black">
+                                        <Image Source="avares://MusicClicker/Assets/MercuryMajor.jpg"
+                                               Stretch="UniformToFill" />
+                                    </Border>
+                                    
+                                    <TextBlock Text="Mercury Major" 
+                                               FontSize="13" 
+                                               FontWeight="Bold" 
+                                               Foreground="White"
+                                               HorizontalAlignment="Center"
+                                               TextWrapping="Wrap"
+                                               TextAlignment="Center" />
+                                    
+                                    <TextBlock x:Name="MercuryOwnedText"
+                                               Text="Not Owned" 
+                                               FontSize="11" 
+                                               Foreground="#8B0000"
+                                               HorizontalAlignment="Center"
+                                               FontStyle="Italic" />
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </Border>
+                    
+                    <!-- Boss 2: Tonality -->
+                    <Border Background="#AA000000" 
+                            CornerRadius="15" 
+                            Padding="25">
+                        <Border.Effect>
+                            <DropShadowEffect Color="Black" BlurRadius="20" Opacity="0.9" />
+                        </Border.Effect>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="420" /> <!-- Boss Image -->
+                                <ColumnDefinition Width="*" />   <!-- Middle Section -->
+                                <ColumnDefinition Width="420" /> <!-- Reward Image -->
+                            </Grid.ColumnDefinitions>
+                            
+                            <!-- Left: Boss Image (16:9 aspect ratio) -->
+                            <Border Grid.Column="0"
+                                    CornerRadius="10"
+                                    Margin="0,0,10,0"
+                                    Background="Black"
+                                    VerticalAlignment="Center">
+                                <Image Source="avares://MusicClicker/Assets/TonalityFIGHT.jpg"
+                                       Stretch="UniformToFill"
+                                       Width="390"
+                                       Height="218" />
+                            </Border>
+                            
+                            <!-- Middle: Fight Info and Button -->
+                            <StackPanel Grid.Column="1" Spacing="8" VerticalAlignment="Center">
+                                <TextBlock Text="Eternal Discordance: Tonality" 
+                                           FontSize="22" 
+                                           FontWeight="Bold" 
+                                           Foreground="White"
+                                           HorizontalAlignment="Center"
+                                           TextWrapping="Wrap" />
+                                <TextBlock Text="Recommended Notes Per Second: 100 Trillion" 
+                                           FontSize="13" 
+                                           Foreground="#FFAA00"
+                                           HorizontalAlignment="Center" />
+                                
+                                <!-- Weekly Completions -->
+                                <TextBlock x:Name="TonalityWeeklyText"
+                                           Text="Weekly Completions Remaining: 3/3"
+                                           FontSize="12"
+                                           Foreground="#FFC0CB"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center" />
+                                
+                                <!-- Strategic Info -->
+                                <Border Background="#DD000000"
+                                        CornerRadius="8"
+                                        Padding="10"
+                                        Margin="0,5,0,0">
+                                    <StackPanel Spacing="4">
+                                        <TextBlock Text="Strategic Information" 
+                                                   FontSize="13" 
+                                                   FontWeight="Bold"
+                                                   Foreground="White" />
+                                        <TextBlock Text="✓ Weak to: Moonlight Sonata, La Campanella, Fate (+ weapons)" 
+                                                   FontSize="11" 
+                                                   Foreground="#FFC0CB"
+                                                   TextWrapping="Wrap" />
+                                        <TextBlock Text="✗ Resistant to: Eroica, Enigma, Ode to Joy (+ weapons)" 
+                                                   FontSize="11" 
+                                                   Foreground="#FF0000"
+                                                   TextWrapping="Wrap" />
+                                        <TextBlock Text="Special: Freezes for 5s at &lt;50% HP" 
+                                                   FontSize="11" 
+                                                   Foreground="#FF69B4"
+                                                   FontStyle="Italic"
+                                                   TextWrapping="Wrap" />
+                                    </StackPanel>
+                                </Border>
+                                
+                                <!-- Challenge Button -->
+                                <Button x:Name="TonalityChallengeButton"
+                                        Content="Modulate the Dissonance"
+                                        FontSize="16"
+                                        FontWeight="Bold"
+                                        Height="40"
+                                        Background="#FF6600"
+                                        Foreground="White"
+                                        CornerRadius="8"
+                                        HorizontalAlignment="Stretch"
+                                        Margin="15,5,15,0">
+                                    <Button.Effect>
+                                        <DropShadowEffect Color="Black" BlurRadius="10" Opacity="0.7" />
+                                    </Button.Effect>
+                                </Button>
+                                
+                                <!-- Success Message -->
+                                <TextBlock x:Name="TonalitySuccessText"
+                                           Text="Victory! Modulation Complete!"
+                                           FontSize="12"
+                                           FontWeight="Bold"
+                                           Foreground="#FFC0CB"
+                                           HorizontalAlignment="Center"
+                                           IsVisible="False" />
+                                
+                                <!-- Failed Message -->
+                                <TextBlock x:Name="TonalityFailedText"
+                                           Text="Failed to Modulate"
+                                           FontSize="12"
+                                           FontWeight="SemiBold"
+                                           Foreground="#FF0000"
+                                           HorizontalAlignment="Center"
+                                           IsVisible="False" />
+                            </StackPanel>
+                            
+                            <!-- Right: Reward Display -->
+                            <Border Grid.Column="2"
+                                    Background="#22FFAA00"
+                                    CornerRadius="10"
+                                    Padding="10"
+                                    Margin="10,0,0,0"
+                                    VerticalAlignment="Center">
+                                <StackPanel VerticalAlignment="Center" Spacing="6">
+                                    <TextBlock Text="Reward (1%)" 
+                                               FontSize="12" 
+                                               Foreground="#FFCC00"
+                                               FontWeight="SemiBold"
+                                               HorizontalAlignment="Center" />
+                                    
+                                    <Border Width="390"
+                                            Height="218"
+                                            CornerRadius="8"
+                                            Background="Black">
+                                        <Image Source="avares://MusicClicker/Assets/ClairDeLuneMajor.jpg"
+                                               Stretch="UniformToFill" />
+                                    </Border>
+                                    
+                                    <TextBlock Text="Clair De Lune Major" 
+                                               FontSize="13" 
+                                               FontWeight="Bold" 
+                                               Foreground="White"
+                                               HorizontalAlignment="Center"
+                                               TextWrapping="Wrap"
+                                               TextAlignment="Center" />
+                                    
+                                    <TextBlock x:Name="TonalityOwnedText"
+                                               Text="Not Owned" 
+                                               FontSize="11" 
+                                               Foreground="#FF0000"
+                                               HorizontalAlignment="Center"
+                                               FontStyle="Italic" />
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </Border>
+                    
+                    <!-- Boss 3: Mars -->
+                    <Border Background="#AA000000" 
+                            CornerRadius="15" 
+                            Padding="25">
+                        <Border.Effect>
+                            <DropShadowEffect Color="Black" BlurRadius="20" Opacity="0.9" />
+                        </Border.Effect>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="420" /> <!-- Boss Image -->
+                                <ColumnDefinition Width="*" />   <!-- Middle Section -->
+                                <ColumnDefinition Width="420" /> <!-- Reward Image -->
+                            </Grid.ColumnDefinitions>
+                            
+                            <!-- Left: Boss Image (16:9 aspect ratio) -->
+                            <Border Grid.Column="0"
+                                    CornerRadius="10"
+                                    Margin="0,0,10,0"
+                                    Background="Black"
+                                    VerticalAlignment="Center">
+                                <Image Source="avares://MusicClicker/Assets/MarsFIGHT.jpg"
+                                       Stretch="UniformToFill"
+                                       Width="390"
+                                       Height="218" />
+                            </Border>
+                            
+                            <!-- Middle: Fight Info and Button -->
+                            <StackPanel Grid.Column="1" Spacing="8" VerticalAlignment="Center">
+                                <TextBlock Text="Planetary Discordance: Mars" 
+                                           FontSize="22" 
+                                           FontWeight="Bold" 
+                                           Foreground="White"
+                                           HorizontalAlignment="Center"
+                                           TextWrapping="Wrap" />
+                                <TextBlock Text="Recommended Notes Per Second: 1 Quadrillion" 
+                                           FontSize="13" 
+                                           Foreground="#FFAA00"
+                                           HorizontalAlignment="Center" />
+                                
+                                <!-- Weekly Completions -->
+                                <TextBlock x:Name="MarsWeeklyText"
+                                           Text="Weekly Completions Remaining: 3/3"
+                                           FontSize="12"
+                                           Foreground="#FF4444"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center" />
+                                
+                                <!-- Strategic Info -->
+                                <Border Background="#DD000000"
+                                        CornerRadius="8"
+                                        Padding="10"
+                                        Margin="0,5,0,0">
+                                    <StackPanel Spacing="4">
+                                        <TextBlock Text="Strategic Information" 
+                                                   FontSize="13" 
+                                                   FontWeight="Bold"
+                                                   Foreground="White" />
+                                        <TextBlock Text="✓ Weak to: Ode to Joy, Fate, Dies Irae (+ weapons)" 
+                                                   FontSize="11" 
+                                                   Foreground="#FF4444"
+                                                   TextWrapping="Wrap" />
+                                        <TextBlock Text="✗ Resistant to: All other scores and weapons" 
+                                                   FontSize="11" 
+                                                   Foreground="#E0E0E0"
+                                                   TextWrapping="Wrap" />
+                                        <TextBlock Text="Special: Pushback intensifies over time" 
+                                                   FontSize="11" 
+                                                   Foreground="#FF6347"
+                                                   FontStyle="Italic"
+                                                   TextWrapping="Wrap" />
+                                    </StackPanel>
+                                </Border>
+                                
+                                <!-- Challenge Button -->
+                                <Button x:Name="MarsChallengeButton"
+                                        Content="Modulate the Dissonance"
+                                        FontSize="16"
+                                        FontWeight="Bold"
+                                        Height="40"
+                                        Background="#FF6600"
+                                        Foreground="White"
+                                        CornerRadius="8"
+                                        HorizontalAlignment="Stretch"
+                                        Margin="15,5,15,0">
+                                    <Button.Effect>
+                                        <DropShadowEffect Color="Black" BlurRadius="10" Opacity="0.7" />
+                                    </Button.Effect>
+                                </Button>
+                                
+                                <!-- Success Message -->
+                                <TextBlock x:Name="MarsSuccessText"
+                                           Text="Victory! Modulation Complete!"
+                                           FontSize="12"
+                                           FontWeight="Bold"
+                                           Foreground="#FF4444"
+                                           HorizontalAlignment="Center"
+                                           IsVisible="False" />
+                                
+                                <!-- Failed Message -->
+                                <TextBlock x:Name="MarsFailedText"
+                                           Text="Failed to Modulate"
+                                           FontSize="12"
+                                           FontWeight="SemiBold"
+                                           Foreground="#E0E0E0"
+                                           HorizontalAlignment="Center"
+                                           IsVisible="False" />
+                            </StackPanel>
+                            
+                            <!-- Right: Reward Display -->
+                            <Border Grid.Column="2"
+                                    Background="#22FFAA00"
+                                    CornerRadius="10"
+                                    Padding="10"
+                                    Margin="10,0,0,0"
+                                    VerticalAlignment="Center">
+                                <StackPanel VerticalAlignment="Center" Spacing="6">
+                                    <TextBlock Text="Reward (1%)" 
+                                               FontSize="12" 
+                                               Foreground="#FFCC00"
+                                               FontWeight="SemiBold"
+                                               HorizontalAlignment="Center" />
+                                    
+                                    <Border Width="390"
+                                            Height="218"
+                                            CornerRadius="8"
+                                            Background="Black">
+                                        <Image Source="avares://MusicClicker/Assets/MarsMajor.jpg"
+                                               Stretch="UniformToFill" />
+                                    </Border>
+                                    
+                                    <TextBlock Text="Mars Major" 
+                                               FontSize="13" 
+                                               FontWeight="Bold" 
+                                               Foreground="White"
+                                               HorizontalAlignment="Center"
+                                               TextWrapping="Wrap"
+                                               TextAlignment="Center" />
+                                    
+                                    <TextBlock x:Name="MarsOwnedText"
+                                               Text="Not Owned" 
+                                               FontSize="11" 
+                                               Foreground="#E0E0E0"
+                                               HorizontalAlignment="Center"
+                                               FontStyle="Italic" />
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </Border>
+                    
+                </StackPanel>
+            </ScrollViewer>
+            
+            <!-- Boss Fight Overlay (initially hidden) -->
+            <Grid x:Name="FightOverlay"
+                  Grid.Row="0"
+                  Grid.RowSpan="3"
+                  Background="#EE000000"
+                  IsVisible="False">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" /> <!-- Boss Name -->
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="Auto" /> <!-- Health Bar -->
+                    <RowDefinition Height="*" />    <!-- Click Area -->
+                    <RowDefinition Height="Auto" /> <!-- Controls -->
+                </Grid.RowDefinitions>
+                
+                <!-- Boss Name -->
+                <TextBlock x:Name="FightBossName"
+                           Grid.Row="0"
+                           Text="Boss Fight"
+                           FontSize="56"
+                           FontWeight="Bold"
+                           HorizontalAlignment="Center"
+                           Foreground="White"
+                           Margin="0,40,0,0">
+                    <TextBlock.Effect>
+                        <DropShadowEffect Color="Black" BlurRadius="10" Opacity="0.8" />
+                    </TextBlock.Effect>
+                </TextBlock>
+                
+                <!-- Health Bar Container -->
+                <Border Grid.Row="2"
+                        Background="#33FFFFFF"
+                        CornerRadius="20"
+                        Height="60"
+                        Margin="100,0"
+                        Padding="10">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        
+                        <!-- Health Bar Background (Black) -->
+                        <Border Background="#FF000000"
+                                CornerRadius="15"
+                                HorizontalAlignment="Stretch" />
+                        
+                        <!-- Health Bar Fill (Starts at 100%, changes color per boss) -->
+                        <Border x:Name="HealthBarFill"
+                                Background="#FF44DD44"
+                                CornerRadius="15"
+                                HorizontalAlignment="Right" />
+                        
+                        <!-- Health Text -->
+                        <TextBlock x:Name="HealthText"
+                                   Text="100% | 30s"
+                                   FontSize="24"
+                                   FontWeight="Bold"
+                                   Foreground="White"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center">
+                            <TextBlock.Effect>
+                                <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.9" />
+                            </TextBlock.Effect>
+                        </TextBlock>
+                    </Grid>
+                </Border>
+                
+                <!-- Click Area with Multiplier Display -->
+                <Grid Grid.Row="3">
+                    <Border x:Name="ClickArea"
+                            Background="Transparent"
+                            Cursor="Hand"
+                            PointerPressed="ClickArea_PointerPressed">
+                        <StackPanel VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    Spacing="20">
+                            <TextBlock Text="CLICK TO FIGHT!"
+                                       FontSize="48"
+                                       FontWeight="Bold"
+                                       Foreground="White"
+                                       HorizontalAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="10" Opacity="0.8" />
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            
+                            <Border Background="#AA000000"
+                                    CornerRadius="10"
+                                    Padding="30,20">
+                                <StackPanel Spacing="10">
+                                    <TextBlock x:Name="MultiplierText"
+                                               Text="Damage Multiplier: 1.0x"
+                                               FontSize="28"
+                                               FontWeight="SemiBold"
+                                               Foreground="#FFCC00"
+                                               HorizontalAlignment="Center" />
+                                    <TextBlock x:Name="EffectivenesText"
+                                               Text=""
+                                               FontSize="20"
+                                               Foreground="#CCCCCC"
+                                               HorizontalAlignment="Center"
+                                               TextWrapping="Wrap"
+                                               MaxWidth="600" />
+                                    <TextBlock x:Name="SpecialMechanicText"
+                                               Text=""
+                                               FontSize="24"
+                                               FontWeight="Bold"
+                                               Foreground="#FF44FF"
+                                               HorizontalAlignment="Center"
+                                               TextWrapping="Wrap"
+                                               MaxWidth="600"
+                                               IsVisible="False" />
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+                    
+                    <!-- Musical Note Mechanic Overlay -->
+                    <Canvas x:Name="NoteMechanicCanvas"
+                            IsVisible="False"
+                            Background="#DD000000">
+                        <!-- Notes will be added programmatically -->
+                    </Canvas>
+                </Grid>
+                
+                <!-- Control Buttons -->
+                <StackPanel Grid.Row="4"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            Spacing="20"
+                            Margin="0,0,0,40">
+                    <Button x:Name="GiveUpButton"
+                            Content="Give Up"
+                            FontSize="24"
+                            FontWeight="Bold"
+                            Width="200"
+                            Height="60"
+                            Background="#FF666666"
+                            Foreground="White"
+                            CornerRadius="8"
+                            Click="GiveUpButton_Click">
+                        <Button.Effect>
+                            <DropShadowEffect Color="Black" BlurRadius="8" Opacity="0.6" />
+                        </Button.Effect>
+                    </Button>
+                </StackPanel>
+            </Grid>
+            
+            <!-- Back Button -->
+            <Button Grid.Row="2" 
+                    x:Name="BackButton" 
+                    Content="Back to Main" 
+                    FontSize="24" 
+                    FontWeight="Bold" 
+                    Width="200" 
+                    Height="60" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Bottom" 
+                    Background="#FF444444" 
+                    Foreground="White" 
+                    CornerRadius="8" 
+                    Margin="0,20,0,0">
+                <Button.Effect>
+                    <DropShadowEffect Color="Black" BlurRadius="8" Opacity="0.6" OffsetX="2" OffsetY="2" />
+                </Button.Effect>
+            </Button>
+        </Grid>
+    </Grid>
+</UserControl>
