@@ -83,7 +83,7 @@ namespace MusicClicker
         // Mapping of score names → image asset paths
         private readonly Dictionary<string, string> _majorScoreImages = new()
         {
-            {"Moonlight Sonata", "avares://MusicClicker/Assets/Music Game 16_9 Assets [978EB92]-min2.png"},
+            {"Moonlight Sonata", "avares://MusicClicker/Assets/MoonlightSonataMajor.jpg"},
             {"Eroica", "avares://MusicClicker/Assets/Music Game 16_9 Assets [04AC7F2]-min2.png"},
             {"Swan", "avares://MusicClicker/Assets/Music Game 16_9 Assets [876DEE6]-min2.png"},
             {"LaCampanella", "avares://MusicClicker/Assets/LaCampanellaMajor2.png"},

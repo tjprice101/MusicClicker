@@ -139,7 +139,7 @@
                                 Width="384" Height="216"
                                 Background="Transparent" BorderThickness="0">
                                 <Image
-                                    Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [978EB92]-min.png"
+                                    Source="avares://MusicClicker/Assets/MoonlightSonataMajor.jpg"
                                     Stretch="UniformToFill" Width="384" Height="216" />
                             </Button>
 

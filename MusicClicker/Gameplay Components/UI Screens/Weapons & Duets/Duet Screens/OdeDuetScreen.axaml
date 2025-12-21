@@ -27,7 +27,7 @@
                 <TextBlock Text="Orchestra Conductor"
                            FontSize="36"
                            FontWeight="Bold"
-                           Foreground="#f59e0b"
+                           Foreground="White"
                            HorizontalAlignment="Center"
                            TextAlignment="Center">
                     <TextBlock.Effect>
@@ -50,10 +50,10 @@
                                Text="Ready to Activate"
                                FontSize="24"
                                FontWeight="SemiBold"
-                               Foreground="#f59e0b"
+                               Foreground="White"
                                HorizontalAlignment="Center">
                         <TextBlock.Effect>
-                            <DropShadowEffect Color="#f59e0b" BlurRadius="10" Opacity="0.6" />
+                            <DropShadowEffect Color="Black" BlurRadius="10" Opacity="0.6" />
                         </TextBlock.Effect>
                     </TextBlock>
 

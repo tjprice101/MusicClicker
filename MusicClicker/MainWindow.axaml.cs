@@ -1335,71 +1335,92 @@ namespace MusicClicker
         /// <summary>
         /// Updates the visibility of the Duet Ability button based on currently equipped weapons.
         /// Only shows the button if a duet with cooldown abilities is equipped.
+        /// Also updates the button's image to match the active duet.
         /// </summary>
         public void UpdateDuetAbilityButtonVisibility()
         {
-            if (DuetAbilityButtonBorder == null || gameState == null) return;
+            if (OpenDuetAbilityButton == null || DuetAbilityButtonImage == null || gameState == null) return;
 
             string weapon1 = gameState.CurrentResonatedWeapon1;
             string weapon2 = gameState.CurrentResonatedWeapon2;
             bool hasCooldownDuet = false;
+            string? duetImagePath = null;
 
             // Check for Moonlight Duet (Lunar Phases)
             if ((weapon1 == "IncisorOfMoonlight" && weapon2 == "EulogyOfTheMoon") ||
                 (weapon1 == "EulogyOfTheMoon" && weapon2 == "IncisorOfMoonlight"))
             {
                 hasCooldownDuet = true;
+                duetImagePath = "avares://MusicClicker/Assets/MoonlightSonataDuetResonance.jpg";
             }
             // Check for Dies Irae Duet (Seven Seals)
             else if ((weapon1 == "SevenCircles" && weapon2 == "HellsWrath") ||
                 (weapon1 == "HellsWrath" && weapon2 == "SevenCircles"))
             {
                 hasCooldownDuet = true;
+                duetImagePath = "avares://MusicClicker/Assets/DIESIRAEDuetResonance.jpg";
             }
             // Check for Winter Duet (Absolute Zero)
             else if ((weapon1 == "CacophonicBlizzard" && weapon2 == "TheSnowsDesire") ||
                      (weapon1 == "TheSnowsDesire" && weapon2 == "CacophonicBlizzard"))
             {
                 hasCooldownDuet = true;
+                duetImagePath = "avares://MusicClicker/Assets/WINTERDuetResonance.jpg";
             }
             // Check for Eroica Duet (Victory March)
             else if ((weapon1 == "SakurasBlossom" && weapon2 == "FuneralPrayer") ||
                      (weapon1 == "FuneralPrayer" && weapon2 == "SakurasBlossom"))
             {
                 hasCooldownDuet = true;
+                duetImagePath = "avares://MusicClicker/Assets/EroicaDuetResonance.jpg";
             }
             // Check for Swan Lake Duet (Feather Cascade)
             else if ((weapon1 == "StarScatteredWings" && weapon2 == "ThousandWingedSwan") ||
                      (weapon1 == "ThousandWingedSwan" && weapon2 == "StarScatteredWings"))
             {
                 hasCooldownDuet = true;
+                duetImagePath = "avares://MusicClicker/Assets/SwanLakeDuetResonance.jpg";
             }
             // Check for La Campanella Duet (Chime Chain)
             else if ((weapon1 == "SymphonyOfBells" && weapon2 == "RazerOfBellsChimes") ||
                      (weapon1 == "RazerOfBellsChimes" && weapon2 == "SymphonyOfBells"))
             {
                 hasCooldownDuet = true;
+                duetImagePath = "avares://MusicClicker/Assets/LaCampanellaDuetResonance.jpg";
             }
             // Check for Enigma Duet (Cipher Wheel)
             else if ((weapon1 == "CreatorOfMystery" && weapon2 == "Truthseeker") ||
                      (weapon1 == "Truthseeker" && weapon2 == "CreatorOfMystery"))
             {
                 hasCooldownDuet = true;
+                duetImagePath = "avares://MusicClicker/Assets/EnigmaDuetResonance.jpg";
             }
             // Check for Fate Duet (Hourglass Fracture)
             else if ((weapon1 == "AstralChainripper" && weapon2 == "CosmicWeaver") ||
                      (weapon1 == "CosmicWeaver" && weapon2 == "AstralChainripper"))
             {
                 hasCooldownDuet = true;
+                duetImagePath = "avares://MusicClicker/Assets/FateDuetResonance.jpg";
             }
             // Check for Ode to Joy Duet (Orchestra Conductor)
             else if ((weapon1 == "JoyfulCatharsis" && weapon2 == "OdeToCreation") ||
                      (weapon1 == "OdeToCreation" && weapon2 == "JoyfulCatharsis"))
             {
                 hasCooldownDuet = true;
+                duetImagePath = "avares://MusicClicker/Assets/OdeToJoyDuetResonance.jpg";
             }
 
-            DuetAbilityButtonBorder.IsVisible = hasCooldownDuet;
+            OpenDuetAbilityButton.IsVisible = hasCooldownDuet;
+            
+            // Update image source if a duet is active
+            if (hasCooldownDuet && duetImagePath != null)
+            {
+                var bitmap = MusicClicker.Helpers.ImageHelpers.GetBitmap(duetImagePath, 231);
+                if (bitmap != null)
+                {
+                    DuetAbilityButtonImage.Source = bitmap;
+                }
+            }
         }
 
         /// <summary>

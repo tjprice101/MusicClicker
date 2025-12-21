@@ -27,7 +27,7 @@
                 <TextBlock Text="Hourglass Fracture"
                            FontSize="36"
                            FontWeight="Bold"
-                           Foreground="#d946ef"
+                           Foreground="White"
                            HorizontalAlignment="Center"
                            TextAlignment="Center">
                     <TextBlock.Effect>
@@ -50,10 +50,10 @@
                                Text="Ready to Activate"
                                FontSize="24"
                                FontWeight="SemiBold"
-                               Foreground="#d946ef"
+                               Foreground="White"
                                HorizontalAlignment="Center">
                         <TextBlock.Effect>
-                            <DropShadowEffect Color="#d946ef" BlurRadius="10" Opacity="0.6" />
+                            <DropShadowEffect Color="Black" BlurRadius="10" Opacity="0.6" />
                         </TextBlock.Effect>
                     </TextBlock>
 
@@ -72,7 +72,7 @@
                         <StackPanel Spacing="8">
                             <TextBlock Text="⏮️ Past Stream - Fragment Echoes"
                                        FontSize="20"
-                                       Foreground="#fbbf24"
+                                       Foreground="White"
                                        FontWeight="SemiBold" />
                             <TextBlock Text="Grants random Melodious/Harmonious fragments over time. More allocation = more fragments!"
                                        FontSize="13"
@@ -91,7 +91,7 @@
                                 <Button x:Name="Past100Button" Grid.Column="3" Content="100%" Margin="5,0,0,0" Height="40" Background="#2a2a40" Foreground="White" CornerRadius="5" />
                             </Grid>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="20" Margin="0,5,0,0">
-                                <TextBlock x:Name="PastValueText" Text="Current: 0%" FontSize="16" Foreground="#fbbf24" FontWeight="SemiBold" />
+                                <TextBlock x:Name="PastValueText" Text="Current: 0%" FontSize="16" Foreground="White" FontWeight="SemiBold" />
                                 <TextBlock x:Name="PastFragmentsText" Text="Fragments: 0" FontSize="14" Foreground="#9ca3af" />
                             </StackPanel>
                         </StackPanel>
@@ -102,7 +102,7 @@
                         <StackPanel Spacing="8">
                             <TextBlock Text="⏸️ Present Stream - Instant Gratification"
                                        FontSize="20"
-                                       Foreground="#10b981"
+                                       Foreground="White"
                                        FontWeight="SemiBold" />
                             <TextBlock Text="Grants notes immediately as Notes Per Second flows. Safe and reliable - perfect for steady income."
                                        FontSize="13"
@@ -120,7 +120,7 @@
                                 <Button x:Name="Present75Button" Grid.Column="2" Content="75%" Margin="5,0,5,0" Height="40" Background="#2a2a40" Foreground="White" CornerRadius="5" />
                                 <Button x:Name="Present100Button" Grid.Column="3" Content="100%" Margin="5,0,0,0" Height="40" Background="#2a2a40" Foreground="White" CornerRadius="5" />
                             </Grid>
-                            <TextBlock x:Name="PresentValueText" Text="Current: 100%" FontSize="16" Foreground="#10b981" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,5,0,0" />
+                            <TextBlock x:Name="PresentValueText" Text="Current: 100%" FontSize="16" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,5,0,0" />
                         </StackPanel>
                     </Border>
 
@@ -129,7 +129,7 @@
                         <StackPanel Spacing="8">
                             <TextBlock Text="⏭️ Future Stream - Exponential Gamble"
                                        FontSize="20"
-                                       Foreground="#3b82f6"
+                                       Foreground="White"
                                        FontWeight="SemiBold" />
                             <TextBlock Text="Multiplier scales with allocation! 25%=2x, 50%=2.5x, 75%=3.25x, 100%=4x payout at end."
                                        FontSize="13"
@@ -148,7 +148,7 @@
                                 <Button x:Name="Future100Button" Grid.Column="3" Content="100%" Margin="5,0,0,0" Height="40" Background="#2a2a40" Foreground="White" CornerRadius="5" />
                             </Grid>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="20" Margin="0,5,0,0">
-                                <TextBlock x:Name="FutureValueText" Text="Current: 0%" FontSize="16" Foreground="#3b82f6" FontWeight="SemiBold" />
+                                <TextBlock x:Name="FutureValueText" Text="Current: 0%" FontSize="16" Foreground="White" FontWeight="SemiBold" />
                                 <TextBlock x:Name="FutureMultiplierText" Text="Multiplier: 0x" FontSize="14" Foreground="#9ca3af" />
                                 <TextBlock x:Name="FutureBankText" Text="Banked: 0" FontSize="14" Foreground="#9ca3af" />
                             </StackPanel>

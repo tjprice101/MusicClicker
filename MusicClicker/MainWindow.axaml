@@ -276,42 +276,17 @@
                 <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Spacing="6" Margin="10">
                         <!-- Duet Ability Button -->
-                        <Border x:Name="DuetAbilityButtonBorder"
-                                CornerRadius="8"
-                                Background="#DD1a1a2e"
+                        <Button x:Name="OpenDuetAbilityButton" 
+                                Width="231"
+                                Height="130"
+                                Background="Transparent" 
+                                BorderThickness="0"
+                                Padding="0"
+                                Cursor="Hand"
                                 IsVisible="False">
-                            <Border.Effect>
-                                <DropShadowEffect Color="#e94560" BlurRadius="25" Opacity="0.8" OffsetX="0" OffsetY="0" />
-                            </Border.Effect>
-                            <Button x:Name="OpenDuetAbilityButton" 
-                                    Width="147"
-                                    Height="147"
-                                    Background="Transparent" 
-                                    BorderThickness="0"
-                                    Cursor="Hand">
-                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="6">
-                                    <TextBlock Text="⚡" 
-                                               FontSize="46" 
-                                               HorizontalAlignment="Center"
-                                               Foreground="#e94560">
-                                        <TextBlock.Effect>
-                                            <DropShadowEffect Color="Black" BlurRadius="8" Opacity="0.8" />
-                                        </TextBlock.Effect>
-                                    </TextBlock>
-                                    <TextBlock Text="Duet Ability" 
-                                               FontSize="13" 
-                                               FontWeight="Bold"
-                                               HorizontalAlignment="Center"
-                                               TextAlignment="Center"
-                                               Foreground="White"
-                                               TextWrapping="Wrap">
-                                        <TextBlock.Effect>
-                                            <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.7" />
-                                        </TextBlock.Effect>
-                                    </TextBlock>
-                                </StackPanel>
-                            </Button>
-                        </Border>
+                            <Image x:Name="DuetAbilityButtonImage"
+                                   Stretch="Uniform" />
+                        </Button>
 
                         <!-- Tempo Resonate Button -->
                         <Button x:Name="TempoResonateButton"

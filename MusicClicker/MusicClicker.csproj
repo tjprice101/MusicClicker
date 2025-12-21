@@ -22,8 +22,8 @@
 
   <ItemGroup>
     <!-- Existing Assets -->
-    <AvaloniaResource Include="Assets\**\*.*" />
-    <AvaloniaResource Include="Fonts\**\*.ttf" />
+    <AvaloniaResource Include="Gameplay Components\Resources\Assets\**\*.*" />
+    <AvaloniaResource Include="Gameplay Components\Resources\Fonts\**\*.ttf" />
   </ItemGroup>
 
   <ItemGroup>
