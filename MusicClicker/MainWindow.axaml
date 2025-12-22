@@ -1,4 +1,4 @@
-<Window xmlns="https://github.com/avaloniaui"
+﻿<Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:views="clr-namespace:MusicClicker.Views"
         x:Class="MusicClicker.MainWindow"
@@ -39,7 +39,7 @@
 
     <Window.Background>
         <ImageBrush
-            Source="avares://MusicClicker/Assets/sacredtrevor_A_grand_musical_city_lights_everywhere_popular_shi_d84ff662-c87b-4630-9887-25228f42097b-min.png"
+            Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/sacredtrevor_A_grand_musical_city_lights_everywhere_popular_shi_d84ff662-c87b-4630-9887-25228f42097b-min.png"
             Stretch="UniformToFill" />
     </Window.Background>
 
@@ -86,7 +86,7 @@
                                     Background="Transparent"
                                     BorderThickness="0"
                                     Padding="0">
-                                <Image Source="avares://MusicClicker/Assets/SaveIcon.png"
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/UI Buttons &amp; Menus/SaveIcon.png"
                                        Stretch="Uniform" IsHitTestVisible="False" />
                             </Button>
                         </Border>
@@ -146,7 +146,7 @@
                                 Background="Transparent" 
                                 BorderThickness="0" 
                                 Padding="0">
-                            <Image Source="avares://MusicClicker/Assets/UpgradeMenu.png" 
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/UI Buttons &amp; Menus/UpgradeMenu.png" 
                                    Stretch="Uniform" 
                                    IsHitTestVisible="False" />
                         </Button>
@@ -171,7 +171,7 @@
                                 Background="Transparent"
                                 BorderThickness="0"
                                 Padding="0">
-                            <Image Source="avares://MusicClicker/Assets/Fragmentation Button-min.png"
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/UI Buttons &amp; Menus/Fragmentation Button-min.png"
                                    Stretch="Uniform" />
                         </Button>
 
@@ -182,7 +182,7 @@
                                 Background="Transparent"
                                 BorderThickness="0"
                                 Padding="0">
-                            <Image Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [C690BBF]-min.png"
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/Music Game 16_9 Assets [C690BBF]-min.png"
                                    Stretch="Uniform" />
                         </Button>
 
@@ -193,7 +193,7 @@
                                 Background="Transparent"
                                 BorderThickness="0"
                                 Padding="0">
-                            <Image Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [2299EA4]-min.png"
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/Music Game 16_9 Assets [2299EA4]-min.png"
                                    Stretch="Uniform" />
                         </Button>
 
@@ -204,7 +204,7 @@
                                 Background="Transparent"
                                 BorderThickness="0"
                                 Padding="0">
-                            <Image Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [5A28B4B]-min.png"
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/Music Game 16_9 Assets [5A28B4B]-min.png"
                                    Stretch="Uniform" />
                         </Button>
                     </StackPanel>
@@ -225,7 +225,7 @@
                             BorderThickness="0"
                             Padding="0"
                             PointerMoved="ClickButton_PointerMoved">
-                        <Image Source="avares://MusicClicker/Assets/Music Game Assets [A961E2A]-min.png"
+                        <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/Music Game Assets [A961E2A]-min.png"
                                Stretch="Uniform" IsHitTestVisible="False" />
                     </Button>
                 </Border>
@@ -295,7 +295,7 @@
                                 Background="Transparent"
                                 BorderThickness="0"
                                 Padding="0">
-                            <Image Source="avares://MusicClicker/Assets/TempoResonate.png"
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/UI Buttons &amp; Menus/TempoResonate.png"
                                    Stretch="Uniform" />
                         </Button>
 
@@ -306,7 +306,7 @@
                                 Background="Transparent"
                                 BorderThickness="0"
                                 Padding="0">
-                            <Image Source="avares://MusicClicker/Assets/EternalModulation.png"
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/UI Buttons &amp; Menus/EternalModulation.png"
                                    Stretch="Uniform" />
                         </Button>
                     </StackPanel>
@@ -335,7 +335,7 @@
                                     Padding="0"
                                     IsEnabled="False"
                                     Opacity="0.4">
-                                <Image Source="avares://MusicClicker/Assets/CacophonicDreamsBUTTON.jpg"
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/UI Buttons &amp; Menus/CacophonicDreamsBUTTON.jpg"
                                        Stretch="UniformToFill" />
                             </Button>
                             
@@ -369,7 +369,7 @@
                                 Background="Transparent"
                                 BorderThickness="0"
                                 Padding="0">
-                            <Image Source="avares://MusicClicker/Assets/ArmoryofForte.png"
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/UI Buttons &amp; Menus/ArmoryofForte.png"
                                    Stretch="Uniform" />
                         </Button>
                     </Border>
@@ -385,7 +385,7 @@
                                 Background="Transparent"
                                 BorderThickness="0"
                                 Padding="0">
-                            <Image Source="avares://MusicClicker/Assets/SymphonicGallery.png"
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/UI Buttons &amp; Menus/SymphonicGallery.png"
                                    Stretch="Uniform" />
                         </Button>
                     </Border>

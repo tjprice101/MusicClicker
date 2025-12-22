@@ -1,4 +1,4 @@
-// GameState holds the full, serializable snapshot of the player's progression.
+﻿// GameState holds the full, serializable snapshot of the player's progression.
 // Design choices:
 // - Many fields are exposed as public backing fields with thin properties. This allows
 //   other parts of the code to pass fields by reference (ref) where necessary (e.g.
@@ -258,6 +258,48 @@ namespace MusicClicker
         
         public int _marsMajorOwned = 0;
         public int MarsMajorOwned { get => _marsMajorOwned; set => _marsMajorOwned = value; }
+
+        // ==================== CLAIR DE LUNE CRESCENDANCE: CLOCKWORK SYMPHONY ====================
+        
+        // Clock Configuration - Hour and Minute hand positions (0-12)
+        public int ClairDeLuneHourHand { get; set; } = 12; // Default to 12
+        public int ClairDeLuneMinuteHand { get; set; } = 1; // Default to 1
+        
+        // Custom Stacks
+        public int ClockworkForteStacks { get; set; } = 0; // From hour=12 every 3/6/9/12 click
+        public int TemporalHarmonyStacks { get; set; } = 0; // From hour=6 every 6th click
+        public int ClockOfEternityStacks { get; set; } = 0; // From minute=11 when NPS > 1 Quintillion
+        
+        // Click counter for Clair De Lune Crescendance
+        public int ClairDeLuneClickCounter { get; set; } = 0;
+        
+        // Minute Hand 1 effect - next N clicks give entropic melodies
+        public int ClairMinute1EntropicClicksRemaining { get; set; } = 0;
+        
+        // Minute Hand 2 effect - guaranteed Entropic Crescendo crits
+        public int ClairMinute2CritClicksRemaining { get; set; } = 0;
+        
+        // Minute Hand 9 effect - Era of Music's Chronos crits
+        public int ClairEraOfChronosClicksRemaining { get; set; } = 0;
+        
+        // Weapon 1 (Everlasting Melody) effect - special critical
+        public int ClairWeapon1CritClicksRemaining { get; set; } = 0;
+        
+        // Weapon 2 (Temporal Refractor) - tracking for refund mechanic (handled per consume, no persistent state)
+        
+        // Duet: Symphony of Infinity critical clicks
+        public int ClairSymphonyOfInfinityClicksRemaining { get; set; } = 0;
+        
+        // Duet: Entropic Crescendo critical from 9th click
+        public int ClairDuetEntropicCritClicksRemaining { get; set; } = 0;
+        
+        // Duet activation state
+        public bool ClairDeLuneDuetActive { get; set; } = false;
+        public DateTime ClairDeLuneDuetCooldownExpiry { get; set; } = DateTime.MinValue;
+        public int ClairDeLuneDuetClickCounter { get; set; } = 0; // Tracks which duet click (1-12)
+        
+        // Clair De Lune major ability flag
+        public bool ClairDeLuneMajorAbility { get; set; } = false;
 
         // Event Score Major Sheets
         public int _diesIraeMajorSheets = 0;
@@ -721,8 +763,22 @@ namespace MusicClicker
         public bool _theSnowsDesire = false;
         public bool TheSnowsDesire { get => _theSnowsDesire; set => _theSnowsDesire = value; }
 
-        public string CurrentClickerImage { get; set; } = "avares://MusicClicker/Assets/Music Game Assets [A961E2A]-min.png";
-        public string CurrentBackgroundImage { get; set; } = "avares://MusicClicker/Assets/sacredtrevor_A_grand_musical_city_lights_everywhere_popular_shi_d84ff662-c87b-4630-9887-25228f42097b-min.png";
+        // Clair De Lune weapons (Boss Fight - Tonality)
+        public bool _everlastingMelody = false;
+        public bool EverlastingMelody { get => _everlastingMelody; set => _everlastingMelody = value; }
+
+        public bool _temporalRefractor = false;
+        public bool TemporalRefractor { get => _temporalRefractor; set => _temporalRefractor = value; }
+
+        // Clair De Lune weapon ability flags
+        public bool _everlastingMelodyAbility = false;
+        public bool EverlastingMelodyAbility { get => _everlastingMelodyAbility; set => _everlastingMelodyAbility = value; }
+
+        public bool _temporalRefractorAbility = false;
+        public bool TemporalRefractorAbility { get => _temporalRefractorAbility; set => _temporalRefractorAbility = value; }
+
+        public string CurrentClickerImage { get; set; } = "avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds & Generic/Music Game Assets [A961E2A]-min.png";
+        public string CurrentBackgroundImage { get; set; } = "avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds & Generic/sacredtrevor_A_grand_musical_city_lights_everywhere_popular_shi_d84ff662-c87b-4630-9887-25228f42097b-min.png";
         public string CurrentResonatedScore { get; set; } = "None";
 
         // Cached upgrade costs for performance optimization (avoids recalculating Math.Pow every frame)

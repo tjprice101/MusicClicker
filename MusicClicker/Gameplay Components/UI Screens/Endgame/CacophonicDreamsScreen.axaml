@@ -1,4 +1,4 @@
-<UserControl xmlns="https://github.com/avaloniaui"
+﻿<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -8,7 +8,7 @@
     <!-- Main container with background image -->
     <Grid>
         <!-- Background Image -->
-        <Image Source="avares://MusicClicker/Assets/CacophonicDreamsBG.jpg" 
+        <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/CacophonicDreamsBG.jpg" 
                Stretch="UniformToFill" 
                HorizontalAlignment="Stretch" 
                VerticalAlignment="Stretch" />
@@ -63,7 +63,7 @@
                                     Margin="0,0,10,0"
                                     Background="Black"
                                     VerticalAlignment="Center">
-                                <Image Source="avares://MusicClicker/Assets/MercuryFIGHT.jpg"
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Challenges &amp; Bosses/MercuryFIGHT.jpg"
                                        Stretch="UniformToFill"
                                        Width="390"
                                        Height="218" />
@@ -169,7 +169,7 @@
                                             Height="218"
                                             CornerRadius="8"
                                             Background="Black">
-                                        <Image Source="avares://MusicClicker/Assets/MercuryMajor.jpg"
+                                        <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Major Scores/MercuryMajor.jpg"
                                                Stretch="UniformToFill" />
                                     </Border>
                                     
@@ -212,7 +212,7 @@
                                     Margin="0,0,10,0"
                                     Background="Black"
                                     VerticalAlignment="Center">
-                                <Image Source="avares://MusicClicker/Assets/TonalityFIGHT.jpg"
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Challenges &amp; Bosses/TonalityFIGHT.jpg"
                                        Stretch="UniformToFill"
                                        Width="390"
                                        Height="218" />
@@ -318,7 +318,7 @@
                                             Height="218"
                                             CornerRadius="8"
                                             Background="Black">
-                                        <Image Source="avares://MusicClicker/Assets/ClairDeLuneMajor.jpg"
+                                        <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Major Scores/ClairDeLuneMajor.jpg"
                                                Stretch="UniformToFill" />
                                     </Border>
                                     
@@ -361,7 +361,7 @@
                                     Margin="0,0,10,0"
                                     Background="Black"
                                     VerticalAlignment="Center">
-                                <Image Source="avares://MusicClicker/Assets/MarsFIGHT.jpg"
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Challenges &amp; Bosses/MarsFIGHT.jpg"
                                        Stretch="UniformToFill"
                                        Width="390"
                                        Height="218" />
@@ -467,7 +467,7 @@
                                             Height="218"
                                             CornerRadius="8"
                                             Background="Black">
-                                        <Image Source="avares://MusicClicker/Assets/MarsMajor.jpg"
+                                        <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Major Scores/MarsMajor.jpg"
                                                Stretch="UniformToFill" />
                                     </Border>
                                     

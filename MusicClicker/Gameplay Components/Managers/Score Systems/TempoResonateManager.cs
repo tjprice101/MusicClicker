@@ -1,4 +1,4 @@
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
@@ -83,18 +83,18 @@ namespace MusicClicker
         // Mapping of score names → image asset paths
         private readonly Dictionary<string, string> _majorScoreImages = new()
         {
-            {"Moonlight Sonata", "avares://MusicClicker/Assets/MoonlightSonataMajor.jpg"},
-            {"Eroica", "avares://MusicClicker/Assets/Music Game 16_9 Assets [04AC7F2]-min2.png"},
-            {"Swan", "avares://MusicClicker/Assets/Music Game 16_9 Assets [876DEE6]-min2.png"},
-            {"LaCampanella", "avares://MusicClicker/Assets/LaCampanellaMajor2.png"},
-            {"Enigma", "avares://MusicClicker/Assets/EnigmaMajor2.png"},
-            {"Fate", "avares://MusicClicker/Assets/FateMajor2.png"},
-            {"OdeToJoy", "avares://MusicClicker/Assets/OdeToJoyMajor2.png"},
-            {"DiesIrae", "avares://MusicClicker/Assets/DiesIraeMajor.png"},
-            {"Winter", "avares://MusicClicker/Assets/WinterMajor.png"},
-            {"Mercury", "avares://MusicClicker/Assets/MercuryMajor.jpg"},
-            {"ClairDeLune", "avares://MusicClicker/Assets/ClairDeLuneMajor.jpg"},
-            {"Mars", "avares://MusicClicker/Assets/MarsMajor.jpg"}
+            {"Moonlight Sonata", "avares://MusicClicker/Gameplay Components/Resources/Assets/Major Scores/MoonlightSonataMajor.jpg"},
+            {"Eroica", "avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds & Generic/Music Game 16_9 Assets [04AC7F2]-min2.png"},
+            {"Swan", "avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds & Generic/Music Game 16_9 Assets [876DEE6]-min2.png"},
+            {"LaCampanella", "avares://MusicClicker/Gameplay Components/Resources/Assets/Major Scores/LaCampanellaMajor2.png"},
+            {"Enigma", "avares://MusicClicker/Gameplay Components/Resources/Assets/Major Scores/EnigmaMajor2.png"},
+            {"Fate", "avares://MusicClicker/Gameplay Components/Resources/Assets/Major Scores/FateMajor2.png"},
+            {"OdeToJoy", "avares://MusicClicker/Gameplay Components/Resources/Assets/Major Scores/OdeToJoyMajor2.png"},
+            {"DiesIrae", "avares://MusicClicker/Gameplay Components/Resources/Assets/Major Scores/DiesIraeMajor.png"},
+            {"Winter", "avares://MusicClicker/Gameplay Components/Resources/Assets/Major Scores/WinterMajor.png"},
+            {"Mercury", "avares://MusicClicker/Gameplay Components/Resources/Assets/Major Scores/MercuryMajor.jpg"},
+            {"ClairDeLune", "avares://MusicClicker/Gameplay Components/Resources/Assets/Major Scores/ClairDeLuneMajor.jpg"},
+            {"Mars", "avares://MusicClicker/Gameplay Components/Resources/Assets/Major Scores/MarsMajor.jpg"}
         };
 
         // Friendly display names for major scores (internal key -> UI string)
@@ -141,24 +141,24 @@ namespace MusicClicker
         // Mapping of weapon names → image asset paths (Armory of Forte)
         private readonly Dictionary<string, string> _weaponImages = new()
         {
-            {"EulogyOfTheMoon", "avares://MusicClicker/Assets/EulogyOfTheMoon.png"},
-            {"IncisorOfMoonlight", "avares://MusicClicker/Assets/IncisorOfMoonlight.png"},
-            {"SakurasBlossom", "avares://MusicClicker/Assets/Sakura'sBlossom.png"},
-            {"FuneralPrayer", "avares://MusicClicker/Assets/FuneralPrayer.png"},
-            {"StarScatteredWings", "avares://MusicClicker/Assets/StarScatteredWings.png"},
-            {"ThousandWingedSwan", "avares://MusicClicker/Assets/ThousandWingedSwan.png"},
-            {"SymphonyOfBells", "avares://MusicClicker/Assets/SymphonyOfBells.png"},
-            {"RazerOfBellsChimes", "avares://MusicClicker/Assets/RazeofBellsChimes.png"},
-            {"CreatorOfMystery", "avares://MusicClicker/Assets/CreatorofMystery.png"},
-            {"Truthseeker", "avares://MusicClicker/Assets/Truthseeker.png"},
-            {"AstralChainripper", "avares://MusicClicker/Assets/AstralChainripper.png"},
-            {"CosmicWeaver", "avares://MusicClicker/Assets/CosmicWeaver.png"},
-            {"JoyfulCatharsis", "avares://MusicClicker/Assets/JoyfulCatharsis.png"},
-            {"OdeToCreation", "avares://MusicClicker/Assets/OdeToCreation.png"},
-            {"SevenCircles", "avares://MusicClicker/Assets/SevenCircles.png"},
-            {"HellsWrath", "avares://MusicClicker/Assets/Hell'sWrath.png"},
-            {"CacophonicBlizzard", "avares://MusicClicker/Assets/CacophonicBlizzard.png"},
-            {"TheSnowsDesire", "avares://MusicClicker/Assets/TheSnow'sDesire.png"}
+            {"EulogyOfTheMoon", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/EulogyOfTheMoon.png"},
+            {"IncisorOfMoonlight", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/IncisorOfMoonlight.png"},
+            {"SakurasBlossom", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/Sakura'sBlossom.png"},
+            {"FuneralPrayer", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/FuneralPrayer.png"},
+            {"StarScatteredWings", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/StarScatteredWings.png"},
+            {"ThousandWingedSwan", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/ThousandWingedSwan.png"},
+            {"SymphonyOfBells", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/SymphonyOfBells.png"},
+            {"RazerOfBellsChimes", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/RazeofBellsChimes.png"},
+            {"CreatorOfMystery", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/CreatorofMystery.png"},
+            {"Truthseeker", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/Truthseeker.png"},
+            {"AstralChainripper", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/AstralChainripper.png"},
+            {"CosmicWeaver", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/CosmicWeaver.png"},
+            {"JoyfulCatharsis", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/JoyfulCatharsis.png"},
+            {"OdeToCreation", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/OdeToCreation.png"},
+            {"SevenCircles", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/SevenCircles.png"},
+            {"HellsWrath", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/Hell'sWrath.png"},
+            {"CacophonicBlizzard", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/CacophonicBlizzard.png"},
+            {"TheSnowsDesire", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/TheSnow'sDesire.png"}
         };
 
         // Friendly display names for weapons (internal key -> UI string)
@@ -282,7 +282,7 @@ namespace MusicClicker
             }
 
             // Load placeholder image for the "None" equipped state once and reuse it.
-            _emptyBitmap = MusicClicker.Helpers.ImageHelpers.GetBitmap("avares://MusicClicker/Assets/EmptyResonate.png", 256);
+            _emptyBitmap = MusicClicker.Helpers.ImageHelpers.GetBitmap("avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds & Generic/EmptyResonate.png", 256);
 
             // Preload weapon images
             foreach (var kvp in _weaponImages)

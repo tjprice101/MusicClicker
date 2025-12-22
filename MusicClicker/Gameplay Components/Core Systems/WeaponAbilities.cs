@@ -3434,6 +3434,509 @@ namespace MusicClicker.Armory
         }
         
         #endregion
+        
+        #region Clair De Lune Crescendance: Clockwork Symphony
+        
+        /// <summary>
+        /// Clair De Lune Crescendance: Process click based on hour and minute hand positions
+        /// </summary>
+        public static void ClairDeLuneCrescendance_OnClick(GameState gameState, MainWindow mainWindow)
+        {
+            if (!gameState.ClairDeLuneMajorAbility) return;
+            
+            gameState.ClairDeLuneClickCounter++;
+            int counter = gameState.ClairDeLuneClickCounter;
+            
+            // ==================== HOUR HAND EFFECTS ====================
+            
+            // Hour = 12: Every 3rd, 6th, 9th, 12th click give Clockwork Forte
+            if (gameState.ClairDeLuneHourHand == 12)
+            {
+                if (counter % 3 == 0)
+                {
+                    gameState.ClockworkForteStacks++;
+                    
+                    // Minute Hand 2: On gain of Clockwork Forte, next 2 clicks are guaranteed Entropic Crescendo crits
+                    if (gameState.ClairDeLuneMinuteHand == 2)
+                    {
+                        gameState.ClairMinute2CritClicksRemaining += 2;
+                    }
+                    
+                    // Weapon 2 (Temporal Refractor) Crescendance Bond: +12 of 3 random minors
+                    if (gameState.TemporalRefractorAbility && 
+                        (gameState.CurrentResonatedWeapon1 == "TemporalRefractor" || gameState.CurrentResonatedWeapon2 == "TemporalRefractor"))
+                    {
+                        ClairWeapon2_OnClockworkForteGain(gameState);
+                    }
+                }
+            }
+            
+            // Hour = 6: Every 6th click gives Temporal Harmony
+            else if (gameState.ClairDeLuneHourHand == 6)
+            {
+                if (counter % 6 == 0)
+                {
+                    gameState.TemporalHarmonyStacks++;
+                    
+                    // Minute Hand 1: On gain of Temporal Harmony, next 3 clicks give +1.5% Entropic Melodies
+                    if (gameState.ClairDeLuneMinuteHand == 1)
+                    {
+                        gameState.ClairMinute1EntropicClicksRemaining += 3;
+                    }
+                    
+                    // Weapon 2 (Temporal Refractor) Crescendance Bond: +2 to 5 random majors
+                    if (gameState.TemporalRefractorAbility && 
+                        (gameState.CurrentResonatedWeapon1 == "TemporalRefractor" || gameState.CurrentResonatedWeapon2 == "TemporalRefractor"))
+                    {
+                        ClairWeapon2_OnTemporalHarmonyGain(gameState);
+                    }
+                }
+            }
+            
+            // ==================== MINUTE HAND EFFECTS ====================
+            
+            // Minute = 11: If NPS > 1 Quintillion, every 12th click gives Clock of Eternity
+            if (gameState.ClairDeLuneMinuteHand == 11 && gameState.NotesPerSecond > 1e18)
+            {
+                if (counter % 12 == 0)
+                {
+                    gameState.ClockOfEternityStacks++;
+                }
+            }
+            
+            // Minute = 1: Already handled in Temporal Harmony gain above
+            // Minute = 2: Already handled in Clockwork Forte gain above
+            
+            // Minute = 4: Every time you gain Entropic Melodies, handled separately in entropic gain logic
+        }
+        
+        /// <summary>
+        /// Minute Hand 3: Consume 1 Clockwork Forte for +50% notes and +2% Entropic Melodies
+        /// </summary>
+        public static void ClairMinuteHand3_ConsumeClockworkForte(GameState gameState)
+        {
+            if (gameState.ClockworkForteStacks < 1) return;
+            
+            int consumed = AttemptClairStackRefund(gameState, 1);
+            gameState.ClockworkForteStacks -= consumed;
+            
+            // +50% current notes
+            double currentNotes = MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes);
+            MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, currentNotes * 0.50);
+            
+            // +2% Entropic Melodies
+            double entropicGain = 2.0;
+            
+            // Minute Hand 4: increase notes by 0.1% per Entropic Melodies gained
+            if (gameState.ClairDeLuneMinuteHand == 4)
+            {
+                double noteBonus = currentNotes * (entropicGain * 0.001);
+                MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, noteBonus);
+            }
+            
+            gameState.EntropicMelodies += (int)entropicGain;
+        }
+        
+        /// <summary>
+        /// Minute Hand 5: Consume 3 Clockwork Forte for +5 to all owned minors
+        /// </summary>
+        public static void ClairMinuteHand5_ConsumeClockworkForte(GameState gameState)
+        {
+            if (gameState.ClockworkForteStacks < 3) return;
+            
+            int consumed = AttemptClairStackRefund(gameState, 3);
+            gameState.ClockworkForteStacks -= consumed;
+            
+            // +5 to all owned minors
+            if (gameState.MoonlightMinorOwned > 0) gameState.MoonlightMinorOwned += 5;
+            if (gameState.EroicaMinorOwned > 0) gameState.EroicaMinorOwned += 5;
+            if (gameState.SwanMinorOwned > 0) gameState.SwanMinorOwned += 5;
+            if (gameState.LaCampanellaMinorOwned > 0) gameState.LaCampanellaMinorOwned += 5;
+            if (gameState.EnigmaMinorOwned > 0) gameState.EnigmaMinorOwned += 5;
+            if (gameState.FateMinorOwned > 0) gameState.FateMinorOwned += 5;
+            if (gameState.OdeToJoyMinorOwned > 0) gameState.OdeToJoyMinorOwned += 5;
+        }
+        
+        /// <summary>
+        /// Minute Hand 7: Consume 20 Clockwork Forte for +1 Clair De Lune Major and +15% Entropic Melodies
+        /// </summary>
+        public static void ClairMinuteHand7_ConsumeClockworkForte(GameState gameState)
+        {
+            if (gameState.ClockworkForteStacks < 20) return;
+            
+            int consumed = AttemptClairStackRefund(gameState, 20);
+            gameState.ClockworkForteStacks -= consumed;
+            
+            // +1 Clair De Lune Major
+            gameState.ClairDeLuneMajorOwned++;
+            
+            // +15% Entropic Melodies
+            double entropicGain = 15.0;
+            
+            // Minute Hand 4: increase notes by 0.1% per Entropic Melodies gained
+            if (gameState.ClairDeLuneMinuteHand == 4)
+            {
+                double currentNotes = MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes);
+                double noteBonus = currentNotes * (entropicGain * 0.001);
+                MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, noteBonus);
+            }
+            
+            gameState.EntropicMelodies += (int)entropicGain;
+        }
+        
+        /// <summary>
+        /// Minute Hand 8: Consume 8 Temporal Harmony for +5 to every owned major
+        /// </summary>
+        public static void ClairMinuteHand8_ConsumeTemporalHarmony(GameState gameState)
+        {
+            if (gameState.TemporalHarmonyStacks < 8) return;
+            
+            int consumed = AttemptClairStackRefund(gameState, 8);
+            gameState.TemporalHarmonyStacks -= consumed;
+            
+            // +5 to every owned major
+            if (gameState.MoonlightMajorOwned > 0) gameState.MoonlightMajorOwned += 5;
+            if (gameState.EroicaMajorOwned > 0) gameState.EroicaMajorOwned += 5;
+            if (gameState.SwanMajorOwned > 0) gameState.SwanMajorOwned += 5;
+            if (gameState.LaCampanellaMajorOwned > 0) gameState.LaCampanellaMajorOwned += 5;
+            if (gameState.EnigmaMajorOwned > 0) gameState.EnigmaMajorOwned += 5;
+            if (gameState.FateMajorOwned > 0) gameState.FateMajorOwned += 5;
+            if (gameState.OdeToJoyMajorOwned > 0) gameState.OdeToJoyMajorOwned += 5;
+        }
+        
+        /// <summary>
+        /// Minute Hand 9: Consume 1 Temporal Harmony for Era of Music's Chronos crits (10 clicks)
+        /// </summary>
+        public static void ClairMinuteHand9_ConsumeTemporalHarmony(GameState gameState)
+        {
+            if (gameState.TemporalHarmonyStacks < 1) return;
+            
+            int consumed = AttemptClairStackRefund(gameState, 1);
+            gameState.TemporalHarmonyStacks -= consumed;
+            
+            gameState.ClairEraOfChronosClicksRemaining += 10;
+        }
+        
+        /// <summary>
+        /// Minute Hand 10: Consume all Clockwork Forte stacks
+        /// For each stack consumed, next click gives +X notes where X = NPC^stacks
+        /// </summary>
+        public static void ClairMinuteHand10_ConsumeClockworkForte(GameState gameState)
+        {
+            if (gameState.ClockworkForteStacks < 1) return;
+            
+            int stacks = gameState.ClockworkForteStacks;
+            int consumed = AttemptClairStackRefund(gameState, stacks);
+            gameState.ClockworkForteStacks -= consumed;
+            
+            // Next click gives bonus based on consumed stacks
+            // Formula: NPC^(consumed stacks)
+            double npc = gameState.NotesPerClick;
+            double bonus = Math.Pow(npc, consumed);
+            MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, bonus);
+        }
+        
+        /// <summary>
+        /// Weapon 2 (Temporal Refractor) passive: 10% chance to refund stacks on consume
+        /// Returns number of stacks that should actually be consumed (original - refunded)
+        /// </summary>
+        private static int AttemptClairStackRefund(GameState gameState, int stacksToConsume)
+        {
+            // Check if Weapon 2 is equipped and active
+            if (!gameState.TemporalRefractorAbility) return stacksToConsume;
+            if (gameState.CurrentResonatedWeapon1 != "TemporalRefractor" && 
+                gameState.CurrentResonatedWeapon2 != "TemporalRefractor") return stacksToConsume;
+            
+            Random rng = new Random();
+            if (rng.NextDouble() < 0.10) // 10% chance
+            {
+                // Refund all stacks
+                return 0;
+            }
+            
+            return stacksToConsume;
+        }
+        
+        /// <summary>
+        /// Weapon 2 Crescendance Bond: On Clockwork Forte gain, +12 of 3 random minors
+        /// </summary>
+        private static void ClairWeapon2_OnClockworkForteGain(GameState gameState)
+        {
+            Random rng = new Random();
+            var minorScores = new System.Collections.Generic.List<string> 
+            { 
+                "Moonlight", "Eroica", "SwanLake", "LaCampanella", "Enigma", "Fate", "OdeToJoy" 
+            };
+            
+            // Pick 3 random minors
+            for (int i = 0; i < 3; i++)
+            {
+                if (minorScores.Count == 0) break;
+                
+                int index = rng.Next(minorScores.Count);
+                string score = minorScores[index];
+                minorScores.RemoveAt(index); // Don't pick same minor twice
+                
+                switch (score)
+                {
+                    case "Moonlight":
+                        if (gameState.MoonlightMinorOwned > 0) gameState.MoonlightMinorOwned += 12;
+                        break;
+                    case "Eroica":
+                        if (gameState.EroicaMinorOwned > 0) gameState.EroicaMinorOwned += 12;
+                        break;
+                    case "SwanLake":
+                        if (gameState.SwanMinorOwned > 0) gameState.SwanMinorOwned += 12;
+                        break;
+                    case "LaCampanella":
+                        if (gameState.LaCampanellaMinorOwned > 0) gameState.LaCampanellaMinorOwned += 12;
+                        break;
+                    case "Enigma":
+                        if (gameState.EnigmaMinorOwned > 0) gameState.EnigmaMinorOwned += 12;
+                        break;
+                    case "Fate":
+                        if (gameState.FateMinorOwned > 0) gameState.FateMinorOwned += 12;
+                        break;
+                    case "OdeToJoy":
+                        if (gameState.OdeToJoyMinorOwned > 0) gameState.OdeToJoyMinorOwned += 12;
+                        break;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Weapon 2 Crescendance Bond: On Temporal Harmony gain, +2 to 5 random majors (not Event/Discordance)
+        /// </summary>
+        private static void ClairWeapon2_OnTemporalHarmonyGain(GameState gameState)
+        {
+            Random rng = new Random();
+            var majorScores = new System.Collections.Generic.List<string> 
+            { 
+                "Moonlight", "Eroica", "SwanLake", "LaCampanella", "Enigma", "Fate", "OdeToJoy" 
+            };
+            
+            // Pick 5 random majors
+            for (int i = 0; i < 5; i++)
+            {
+                if (majorScores.Count == 0) break;
+                
+                int index = rng.Next(majorScores.Count);
+                string score = majorScores[index];
+                majorScores.RemoveAt(index); // Don't pick same major twice
+                
+                switch (score)
+                {
+                    case "Moonlight":
+                        if (gameState.MoonlightMajorOwned > 0) gameState.MoonlightMajorOwned += 2;
+                        break;
+                    case "Eroica":
+                        if (gameState.EroicaMajorOwned > 0) gameState.EroicaMajorOwned += 2;
+                        break;
+                    case "SwanLake":
+                        if (gameState.SwanMajorOwned > 0) gameState.SwanMajorOwned += 2;
+                        break;
+                    case "LaCampanella":
+                        if (gameState.LaCampanellaMajorOwned > 0) gameState.LaCampanellaMajorOwned += 2;
+                        break;
+                    case "Enigma":
+                        if (gameState.EnigmaMajorOwned > 0) gameState.EnigmaMajorOwned += 2;
+                        break;
+                    case "Fate":
+                        if (gameState.FateMajorOwned > 0) gameState.FateMajorOwned += 2;
+                        break;
+                    case "OdeToJoy":
+                        if (gameState.OdeToJoyMajorOwned > 0) gameState.OdeToJoyMajorOwned += 2;
+                        break;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Weapon 1 (Everlasting Melody) passive: 50% Entropic Melodies refund on spend
+        /// Call this whenever Entropic Melodies are spent
+        /// </summary>
+        public static void ClairWeapon1_OnEntropicSpend(GameState gameState, int amountSpent)
+        {
+            if (!gameState.EverlastingMelodyAbility) return;
+            if (gameState.CurrentResonatedWeapon1 != "EverlastingMelody" && 
+                gameState.CurrentResonatedWeapon2 != "EverlastingMelody") return;
+            
+            int refund = (int)(amountSpent * 0.5);
+            gameState.EntropicMelodies += refund;
+        }
+        
+        /// <summary>
+        /// Weapon 1 (Everlasting Melody) Crescendance Bond: Consume Clock of Eternity for special crit (2 clicks)
+        /// </summary>
+        public static void ClairWeapon1_ConsumeClockOfEternity(GameState gameState)
+        {
+            if (gameState.ClockOfEternityStacks < 1) return;
+            
+            int consumed = AttemptClairStackRefund(gameState, 1);
+            gameState.ClockOfEternityStacks -= consumed;
+            
+            gameState.ClairWeapon1CritClicksRemaining += 2;
+        }
+        
+        /// <summary>
+        /// Clair De Lune Duet: 12-click sequence with stackable effects
+        /// </summary>
+        public static void ClairDeLuneDuet_OnClick(GameState gameState)
+        {
+            if (!gameState.ClairDeLuneDuetActive) return;
+            
+            gameState.ClairDeLuneDuetClickCounter++;
+            int clickNum = gameState.ClairDeLuneDuetClickCounter;
+            
+            double currentNotes = MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes);
+            double nps = gameState.NotesPerSecond;
+            double npc = gameState.NotesPerClick;
+            
+            switch (clickNum)
+            {
+                case 1:
+                    // Triple current notes
+                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, currentNotes * 2);
+                    break;
+                    
+                case 2:
+                    // +75% to current Entropic Melodies
+                    int entropicBonus = (int)(gameState.EntropicMelodies * 0.75);
+                    gameState.EntropicMelodies += entropicBonus;
+                    break;
+                    
+                case 3:
+                    // +5 to random owned minor
+                    ClairDuet_AddRandomMinor(gameState, 5);
+                    break;
+                    
+                case 4:
+                    // +5 to random owned major (not Event/Discordance)
+                    ClairDuet_AddRandomMajor(gameState, 5);
+                    break;
+                    
+                case 5:
+                    // Consume all Clockwork Forte and Temporal Harmony for notes
+                    int totalStacks = gameState.ClockworkForteStacks + gameState.TemporalHarmonyStacks;
+                    if (totalStacks > 0)
+                    {
+                        gameState.ClockworkForteStacks = 0;
+                        gameState.TemporalHarmonyStacks = 0;
+                        double bonus = npc * Math.Pow(totalStacks, 5);
+                        MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, bonus);
+                    }
+                    break;
+                    
+                case 6:
+                    // +5 stacks of Clockwork Forte
+                    gameState.ClockworkForteStacks += 5;
+                    break;
+                    
+                case 7:
+                    // +5% Entropic Melodies
+                    double entropicGain = 5.0;
+                    
+                    // Minute Hand 4: increase notes by 0.1% per Entropic Melodies gained
+                    if (gameState.ClairDeLuneMinuteHand == 4)
+                    {
+                        double noteBonus = currentNotes * (entropicGain * 0.001);
+                        MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, noteBonus);
+                    }
+                    
+                    gameState.EntropicMelodies += (int)entropicGain;
+                    break;
+                    
+                case 8:
+                    // +1 stack of Temporal Harmony
+                    gameState.TemporalHarmonyStacks++;
+                    break;
+                    
+                case 9:
+                    // Next 3 clicks are Entropic Crescendo of Eternity crits
+                    gameState.ClairDuetEntropicCritClicksRemaining += 3;
+                    break;
+                    
+                case 10:
+                    // +50 Harmonious and Melodious Fragments
+                    gameState.HarmoniousOwned += 50;
+                    gameState.MelodiousOwned += 50;
+                    break;
+                    
+                case 11:
+                    // +2 Clair De Lune Major
+                    gameState.ClairDeLuneMajorOwned += 2;
+                    break;
+                    
+                case 12:
+                    // Next 5 clicks: Symphony of Infinity crit
+                    gameState.ClairSymphonyOfInfinityClicksRemaining += 5;
+                    
+                    // Deactivate duet
+                    gameState.ClairDeLuneDuetActive = false;
+                    gameState.ClairDeLuneDuetClickCounter = 0;
+                    gameState.ClairDeLuneDuetCooldownExpiry = DateTime.Now.AddMinutes(5);
+                    break;
+            }
+        }
+        
+        private static void ClairDuet_AddRandomMinor(GameState gameState, int amount)
+        {
+            Random rng = new Random();
+            var ownedMinors = new System.Collections.Generic.List<int>();
+            
+            if (gameState.MoonlightMinorOwned > 0) ownedMinors.Add(0);
+            if (gameState.EroicaMinorOwned > 0) ownedMinors.Add(1);
+            if (gameState.SwanMinorOwned > 0) ownedMinors.Add(2);
+            if (gameState.LaCampanellaMinorOwned > 0) ownedMinors.Add(3);
+            if (gameState.EnigmaMinorOwned > 0) ownedMinors.Add(4);
+            if (gameState.FateMinorOwned > 0) ownedMinors.Add(5);
+            if (gameState.OdeToJoyMinorOwned > 0) ownedMinors.Add(6);
+            
+            if (ownedMinors.Count == 0) return;
+            
+            int picked = ownedMinors[rng.Next(ownedMinors.Count)];
+            
+            switch (picked)
+            {
+                case 0: gameState.MoonlightMinorOwned += amount; break;
+                case 1: gameState.EroicaMinorOwned += amount; break;
+                case 2: gameState.SwanMinorOwned += amount; break;
+                case 3: gameState.LaCampanellaMinorOwned += amount; break;
+                case 4: gameState.EnigmaMinorOwned += amount; break;
+                case 5: gameState.FateMinorOwned += amount; break;
+                case 6: gameState.OdeToJoyMinorOwned += amount; break;
+            }
+        }
+        
+        private static void ClairDuet_AddRandomMajor(GameState gameState, int amount)
+        {
+            Random rng = new Random();
+            var ownedMajors = new System.Collections.Generic.List<int>();
+            
+            if (gameState.MoonlightMajorOwned > 0) ownedMajors.Add(0);
+            if (gameState.EroicaMajorOwned > 0) ownedMajors.Add(1);
+            if (gameState.SwanMajorOwned > 0) ownedMajors.Add(2);
+            if (gameState.LaCampanellaMajorOwned > 0) ownedMajors.Add(3);
+            if (gameState.EnigmaMajorOwned > 0) ownedMajors.Add(4);
+            if (gameState.FateMajorOwned > 0) ownedMajors.Add(5);
+            if (gameState.OdeToJoyMajorOwned > 0) ownedMajors.Add(6);
+            
+            if (ownedMajors.Count == 0) return;
+            
+            int picked = ownedMajors[rng.Next(ownedMajors.Count)];
+            
+            switch (picked)
+            {
+                case 0: gameState.MoonlightMajorOwned += amount; break;
+                case 1: gameState.EroicaMajorOwned += amount; break;
+                case 2: gameState.SwanMajorOwned += amount; break;
+                case 3: gameState.LaCampanellaMajorOwned += amount; break;
+                case 4: gameState.EnigmaMajorOwned += amount; break;
+                case 5: gameState.FateMajorOwned += amount; break;
+                case 6: gameState.OdeToJoyMajorOwned += amount; break;
+            }
+        }
+        
+        #endregion
     }
 }
-

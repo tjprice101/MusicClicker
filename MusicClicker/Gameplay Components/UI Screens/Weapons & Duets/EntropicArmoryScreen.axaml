@@ -1,10 +1,10 @@
-<UserControl xmlns="https://github.com/avaloniaui"
+﻿<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="MusicClicker.Views.EntropicArmoryScreen">
 
     <Panel>
         <!-- Background image -->
-        <Image Source="avares://MusicClicker/Assets/EntropicArmory.jpg"
+        <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/EntropicArmory.jpg"
                Stretch="UniformToFill"
                ZIndex="0"
                Opacity="1"
@@ -66,7 +66,7 @@
                             <DropShadowEffect Color="Black" BlurRadius="8" Opacity="0.8"/>
                         </TextBlock.Effect>
                     </TextBlock>
-                    <Image Source="avares://MusicClicker/Assets/EntropicMelody.jpg"
+                    <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Special Abilities/EntropicMelody.jpg"
                            Width="40"
                            Height="40"
                            VerticalAlignment="Center" />
@@ -92,7 +92,7 @@
                                     Background="#44000000"
                                     BorderBrush="White"
                                     BorderThickness="2">
-                                <Image Source="avares://MusicClicker/Assets/PhasesOfInfinity.jpg"
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Special Abilities/PhasesOfInfinity.jpg"
                                     Stretch="UniformToFill" />
                             </Button>
                             <TextBlock x:Name="EntropicWeapon1NameText"
@@ -133,7 +133,7 @@
                                     Background="#44000000"
                                     BorderBrush="White"
                                     BorderThickness="2">
-                                <Image Source="avares://MusicClicker/Assets/MoonlitRevelation.jpg"
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Special Abilities/MoonlitRevelation.jpg"
                                     Stretch="UniformToFill" />
                             </Button>
                             <TextBlock x:Name="EntropicWeapon2NameText"
@@ -174,7 +174,7 @@
                                     Background="#44000000"
                                     BorderBrush="White"
                                     BorderThickness="2">
-                                <Image Source="avares://MusicClicker/Assets/RebornInSakurasEmbrace.jpg"
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Special Abilities/RebornInSakurasEmbrace.jpg"
                                     Stretch="UniformToFill" />
                             </Button>
                             <TextBlock x:Name="EntropicWeapon3NameText"
@@ -220,7 +220,7 @@
                                     Background="#44000000"
                                     BorderBrush="White"
                                     BorderThickness="2">
-                                <Image Source="avares://MusicClicker/Assets/AThousandPetals.jpg"
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Special Abilities/AThousandPetals.jpg"
                                     Stretch="UniformToFill" />
                             </Button>
                             <TextBlock x:Name="EntropicWeapon4NameText"
@@ -261,7 +261,7 @@
                                     Background="#44000000"
                                     BorderBrush="White"
                                     BorderThickness="2">
-                                <Image Source="avares://MusicClicker/Assets/SwansFinality.jpg"
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Special Abilities/SwansFinality.jpg"
                                     Stretch="UniformToFill" />
                             </Button>
                             <TextBlock x:Name="EntropicWeapon5NameText"
@@ -302,7 +302,7 @@
                                     Background="#44000000"
                                     BorderBrush="White"
                                     BorderThickness="2">
-                                <Image Source="avares://MusicClicker/Assets/Star-PiercingSwanSong.jpg"
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Special Abilities/Star-PiercingSwanSong.jpg"
                                     Stretch="UniformToFill" />
                             </Button>
                             <TextBlock x:Name="EntropicWeapon6NameText"
@@ -348,7 +348,7 @@
                                     Background="#44000000"
                                     BorderBrush="White"
                                     BorderThickness="2">
-                                <Image Source="avares://MusicClicker/Assets/HeavensChime.jpg"
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Special Abilities/HeavensChime.jpg"
                                     Stretch="UniformToFill" />
                             </Button>
                             <TextBlock x:Name="EntropicWeapon7NameText"
@@ -389,7 +389,7 @@
                                     Background="#44000000"
                                     BorderBrush="White"
                                     BorderThickness="2">
-                                <Image Source="avares://MusicClicker/Assets/BellOfChromaticFate.jpg"
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Special Abilities/BellOfChromaticFate.jpg"
                                     Stretch="UniformToFill" />
                             </Button>
                             <TextBlock x:Name="EntropicWeapon8NameText"
@@ -430,7 +430,7 @@
                                     Background="#44000000"
                                     BorderBrush="White"
                                     BorderThickness="2">
-                                <Image Source="avares://MusicClicker/Assets/Ever-burningMystery.jpg"
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Special Abilities/Ever-burningMystery.jpg"
                                     Stretch="UniformToFill" />
                             </Button>
                             <TextBlock x:Name="EntropicWeapon9NameText"
@@ -476,7 +476,7 @@
                                     Background="#44000000"
                                     BorderBrush="White"
                                     BorderThickness="2">
-                                <Image Source="avares://MusicClicker/Assets/PrismaticEnigmas.jpg"
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Special Abilities/PrismaticEnigmas.jpg"
                                     Stretch="UniformToFill" />
                             </Button>
                             <TextBlock x:Name="EntropicWeapon10NameText"
@@ -517,7 +517,7 @@
                                     Background="#44000000"
                                     BorderBrush="White"
                                     BorderThickness="2">
-                                <Image Source="avares://MusicClicker/Assets/FinalityOfTheCosmos.jpg"
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Special Abilities/FinalityOfTheCosmos.jpg"
                                     Stretch="UniformToFill" />
                             </Button>
                             <TextBlock x:Name="EntropicWeapon11NameText"
@@ -558,7 +558,7 @@
                                     Background="#44000000"
                                     BorderBrush="White"
                                     BorderThickness="2">
-                                <Image Source="avares://MusicClicker/Assets/DestinysConductor.jpg"
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Special Abilities/DestinysConductor.jpg"
                                     Stretch="UniformToFill" />
                             </Button>
                             <TextBlock x:Name="EntropicWeapon12NameText"
@@ -604,7 +604,7 @@
                                     Background="#44000000"
                                     BorderBrush="White"
                                     BorderThickness="2">
-                                <Image Source="avares://MusicClicker/Assets/CatharticDivination.jpg"
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Special Abilities/CatharticDivination.jpg"
                                     Stretch="UniformToFill" />
                             </Button>
                             <TextBlock x:Name="EntropicWeapon13NameText"
@@ -645,7 +645,7 @@
                                     Background="#44000000"
                                     BorderBrush="White"
                                     BorderThickness="2">
-                                <Image Source="avares://MusicClicker/Assets/DreamsOfHarmony.jpg"
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Special Abilities/DreamsOfHarmony.jpg"
                                     Stretch="UniformToFill" />
                             </Button>
                             <TextBlock x:Name="EntropicWeapon14NameText"

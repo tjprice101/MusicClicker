@@ -1,4 +1,4 @@
-<UserControl xmlns="https://github.com/avaloniaui"
+﻿<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="MusicClicker.Views.HeartOfHarmonyScreen">
 
@@ -22,7 +22,7 @@
     <Grid Background="#AA000000">
         <Grid.Background>
             <ImageBrush
-                Source="avares://MusicClicker/Assets/sacredtrevor_A_ray_of_light_shining_down_onto_a_pink_and_red_wi_d8fbd6c8-2ca7-4ae7-91b0-4c2dd7c79ff4-min.png"
+                Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/sacredtrevor_A_ray_of_light_shining_down_onto_a_pink_and_red_wi_d8fbd6c8-2ca7-4ae7-91b0-4c2dd7c79ff4-min.png"
                 Stretch="UniformToFill" />
         </Grid.Background>
 
@@ -91,7 +91,7 @@
                             <Button x:Name="MoonlightHarmonyButton" Width="216" Height="216"
                                 Background="Transparent" BorderThickness="0">
                                 <Image
-                                    Source="avares://MusicClicker/Assets/Music Game Assets [9B2D761]-min.png"
+                                    Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/Music Game Assets [9B2D761]-min.png"
                                     Stretch="UniformToFill" Width="216" Height="216" />
                             </Button>
                         </StackPanel>
@@ -103,7 +103,7 @@
                             <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
                                 Spacing="8">
                                 <Image
-                                    Source="avares://MusicClicker/Assets/MoonlightMajorKey-min.png"
+                                    Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Score Components/MoonlightMajorKey-min.png"
                                     Width="60" Height="60" Stretch="Uniform" />
                                 <TextBlock x:Name="MoonlightMajorKeysOwnedText"
                                     Text="0 Moonlight Sonata Major Keys Owned" FontSize="15"
@@ -113,7 +113,7 @@
                             <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
                                 Spacing="8">
                                 <Image
-                                    Source="avares://MusicClicker/Assets/MoonlightMajorScale-min.png"
+                                    Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Score Components/MoonlightMajorScale-min.png"
                                     Width="60" Height="60" Stretch="Uniform" />
                                 <TextBlock x:Name="MoonlightMajorScalesOwnedText"
                                     Text="0 Moonlight Sonata Major Scales Owned" FontSize="15"
@@ -123,7 +123,7 @@
                             <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
                                 Spacing="8">
                                 <Image
-                                    Source="avares://MusicClicker/Assets/MoonlightMajorProgression-min.png"
+                                    Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Score Components/MoonlightMajorProgression-min.png"
                                     Width="60" Height="60" Stretch="Uniform" />
                                 <TextBlock x:Name="MoonlightMajorProgressionsOwnedText"
                                     Text="0 Moonlight Sonata Major Progressions Owned" FontSize="15"
@@ -162,7 +162,7 @@
                             <Button x:Name="EroicaHarmonyButton" Width="216" Height="216"
                                 Background="Transparent" BorderThickness="0">
                                 <Image
-                                    Source="avares://MusicClicker/Assets/Music Game Assets [7518255]-min.png"
+                                    Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/Music Game Assets [7518255]-min.png"
                                     Stretch="UniformToFill" Width="216" Height="216" />
                             </Button>
                         </StackPanel>
@@ -173,7 +173,7 @@
                             <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
                                 Spacing="8">
                                 <Image
-                                    Source="avares://MusicClicker/Assets/Music Game Assets [6876507]-min.png"
+                                    Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/Music Game Assets [6876507]-min.png"
                                     Width="60" Height="60" Stretch="Uniform" />
                                 <TextBlock x:Name="EroicaMajorKeysOwnedText"
                                     Text="0 Eroica Major Keys Owned" FontSize="15"
@@ -183,7 +183,7 @@
                             <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
                                 Spacing="8">
                                 <Image
-                                    Source="avares://MusicClicker/Assets/Music Game Assets [CBE124E]-min.png"
+                                    Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/Music Game Assets [CBE124E]-min.png"
                                     Width="60" Height="60" Stretch="Uniform" />
                                 <TextBlock x:Name="EroicaMajorScalesOwnedText"
                                     Text="0 Eroica Major Scales Owned" FontSize="15"
@@ -193,7 +193,7 @@
                             <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
                                 Spacing="8">
                                 <Image
-                                    Source="avares://MusicClicker/Assets/Music Game Assets [2E061F4]-min.png"
+                                    Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/Music Game Assets [2E061F4]-min.png"
                                     Width="60" Height="60" Stretch="Uniform" />
                                 <TextBlock x:Name="EroicaMajorProgressionsOwnedText"
                                     Text="0 Eroica Major Progressions Owned" FontSize="15"
@@ -232,7 +232,7 @@
                             <Button x:Name="SwanLakeHarmonyButton" Width="216" Height="216"
                                 Background="Transparent" BorderThickness="0">
                                 <Image
-                                    Source="avares://MusicClicker/Assets/Music Game Assets [75A6901]-min.png"
+                                    Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/Music Game Assets [75A6901]-min.png"
                                     Stretch="UniformToFill" Width="216" Height="216" />
                             </Button>
                         </StackPanel>
@@ -243,7 +243,7 @@
                             <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
                                 Spacing="8">
                                 <Image
-                                    Source="avares://MusicClicker/Assets/Music Game Assets [C94C657]-min.png"
+                                    Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/Music Game Assets [C94C657]-min.png"
                                     Width="60" Height="60" Stretch="Uniform" />
                                 <TextBlock x:Name="SwanLakeMajorKeysOwnedText"
                                     Text="0 Swan Lake Major Keys Owned" FontSize="15"
@@ -253,7 +253,7 @@
                             <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
                                 Spacing="8">
                                 <Image
-                                    Source="avares://MusicClicker/Assets/Music Game Assets [EDD5DE8]-min.png"
+                                    Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/Music Game Assets [EDD5DE8]-min.png"
                                     Width="60" Height="60" Stretch="Uniform" />
                                 <TextBlock x:Name="SwanLakeMajorScalesOwnedText"
                                     Text="0 Swan Lake Major Scales Owned" FontSize="15"
@@ -263,7 +263,7 @@
                             <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
                                 Spacing="8">
                                 <Image
-                                    Source="avares://MusicClicker/Assets/Music Game Assets [B52771B]-min.png"
+                                    Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/Music Game Assets [B52771B]-min.png"
                                     Width="60" Height="60" Stretch="Uniform" />
                                 <TextBlock x:Name="SwanLakeMajorProgressionsOwnedText"
                                     Text="0 Swan Lake Major Progressions Owned" FontSize="15"
@@ -303,7 +303,7 @@
                             <Button x:Name="LaCampanellaHarmonyButton" Width="216" Height="216"
                                 Background="Transparent" BorderThickness="0">
                                 <Image
-                                    Source="avares://MusicClicker/Assets/LaCampanellaMajorSheets.png"
+                                    Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Score Components/LaCampanellaMajorSheets.png"
                                     Stretch="UniformToFill" Width="216" Height="216" />
                             </Button>
                         </StackPanel>
@@ -315,7 +315,7 @@
                             <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
                                 Spacing="8">
                                 <Image
-                                    Source="avares://MusicClicker/Assets/LaCampanellaMajorKey.png"
+                                    Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Score Components/LaCampanellaMajorKey.png"
                                     Width="60" Height="60" Stretch="Uniform" />
                                 <TextBlock x:Name="LaCampanellaMajorKeysOwnedText"
                                     Text="0 La Campanella Major Keys Owned" FontSize="15"
@@ -325,7 +325,7 @@
                             <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
                                 Spacing="8">
                                 <Image
-                                    Source="avares://MusicClicker/Assets/LaCampanellaMajorScale.png"
+                                    Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Score Components/LaCampanellaMajorScale.png"
                                     Width="60" Height="60" Stretch="Uniform" />
                                 <TextBlock x:Name="LaCampanellaMajorScalesOwnedText"
                                     Text="0 La Campanella Major Scales Owned" FontSize="15"
@@ -335,7 +335,7 @@
                             <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
                                 Spacing="8">
                                 <Image
-                                    Source="avares://MusicClicker/Assets/LaCampanellaMajorProgression.png"
+                                    Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Score Components/LaCampanellaMajorProgression.png"
                                     Width="60" Height="60" Stretch="Uniform" />
                                 <TextBlock x:Name="LaCampanellaMajorProgressionsOwnedText"
                                     Text="0 La Campanella Major Progressions Owned" FontSize="15"
@@ -374,7 +374,7 @@
                             </TextBlock>
                             <Button x:Name="EnigmaHarmonyButton" Width="216" Height="216"
                                 Background="Transparent" BorderThickness="0">
-                                <Image Source="avares://MusicClicker/Assets/EnigmaMajorSheets.png"
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Score Components/EnigmaMajorSheets.png"
                                     Stretch="UniformToFill" Width="216" Height="216" />
                             </Button>
                         </StackPanel>
@@ -385,7 +385,7 @@
                             Margin="20,0,0,0">
                             <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
                                 Spacing="8">
-                                <Image Source="avares://MusicClicker/Assets/EnigmaMajorKey.png"
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Score Components/EnigmaMajorKey.png"
                                     Width="60" Height="60" Stretch="Uniform" />
                                 <TextBlock x:Name="EnigmaMajorKeysOwnedText"
                                     Text="0 Enigma Major Keys Owned" FontSize="15"
@@ -394,7 +394,7 @@
                             </StackPanel>
                             <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
                                 Spacing="8">
-                                <Image Source="avares://MusicClicker/Assets/EnigmaMajorScale.png"
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Score Components/EnigmaMajorScale.png"
                                     Width="60" Height="60" Stretch="Uniform" />
                                 <TextBlock x:Name="EnigmaMajorScalesOwnedText"
                                     Text="0 Enigma Major Scales Owned" FontSize="15"
@@ -404,7 +404,7 @@
                             <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
                                 Spacing="8">
                                 <Image
-                                    Source="avares://MusicClicker/Assets/EnigmaMajorProgression.png"
+                                    Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Score Components/EnigmaMajorProgression.png"
                                     Width="60" Height="60" Stretch="Uniform" />
                                 <TextBlock x:Name="EnigmaMajorProgressionsOwnedText"
                                     Text="0 Enigma Major Progressions Owned" FontSize="15"
@@ -443,7 +443,7 @@
                             </TextBlock>
                             <Button x:Name="FateHarmonyButton" Width="216" Height="216"
                                 Background="Transparent" BorderThickness="0">
-                                <Image Source="avares://MusicClicker/Assets/FateMajorSheets.png"
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Score Components/FateMajorSheets.png"
                                     Stretch="UniformToFill" Width="216" Height="216" />
                             </Button>
                         </StackPanel>
@@ -454,7 +454,7 @@
                             Margin="20,0,0,0">
                             <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
                                 Spacing="8">
-                                <Image Source="avares://MusicClicker/Assets/FateMajorKey.png"
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Score Components/FateMajorKey.png"
                                     Width="60" Height="60" Stretch="Uniform" />
                                 <TextBlock x:Name="FateMajorKeysOwnedText"
                                     Text="0 Fate Major Keys Owned" FontSize="15"
@@ -463,7 +463,7 @@
                             </StackPanel>
                             <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
                                 Spacing="8">
-                                <Image Source="avares://MusicClicker/Assets/FateMajorScale.png"
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Score Components/FateMajorScale.png"
                                     Width="60" Height="60" Stretch="Uniform" />
                                 <TextBlock x:Name="FateMajorScalesOwnedText"
                                     Text="0 Fate Major Scales Owned" FontSize="15"
@@ -473,7 +473,7 @@
                             <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
                                 Spacing="8">
                                 <Image
-                                    Source="avares://MusicClicker/Assets/FateMajorProgression.png"
+                                    Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Score Components/FateMajorProgression.png"
                                     Width="60" Height="60" Stretch="Uniform" />
                                 <TextBlock x:Name="FateMajorProgressionsOwnedText"
                                     Text="0 Fate Major Progressions Owned" FontSize="15"
@@ -512,7 +512,7 @@
                             </TextBlock>
                             <Button x:Name="OdeToJoyHarmonyButton" Width="216" Height="216"
                                 Background="Transparent" BorderThickness="0">
-                                <Image Source="avares://MusicClicker/Assets/OdeToJoyMajorSheets.png"
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Score Components/OdeToJoyMajorSheets.png"
                                     Stretch="UniformToFill" Width="216" Height="216" />
                             </Button>
                         </StackPanel>
@@ -523,7 +523,7 @@
                             Margin="20,0,0,0">
                             <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
                                 Spacing="8">
-                                <Image Source="avares://MusicClicker/Assets/OdeToJoyMajorKey.png"
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Score Components/OdeToJoyMajorKey.png"
                                     Width="60" Height="60" Stretch="Uniform" />
                                 <TextBlock x:Name="OdeToJoyMajorKeysOwnedText"
                                     Text="0 Ode to Joy Major Keys Owned" FontSize="15"
@@ -532,7 +532,7 @@
                             </StackPanel>
                             <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
                                 Spacing="8">
-                                <Image Source="avares://MusicClicker/Assets/OdeToJoyMajorScale.png"
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Score Components/OdeToJoyMajorScale.png"
                                     Width="60" Height="60" Stretch="Uniform" />
                                 <TextBlock x:Name="OdeToJoyMajorScalesOwnedText"
                                     Text="0 Ode to Joy Major Scales Owned" FontSize="15"
@@ -542,7 +542,7 @@
                             <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
                                 Spacing="8">
                                 <Image
-                                    Source="avares://MusicClicker/Assets/OdeToJoyMajorProgression.png"
+                                    Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Score Components/OdeToJoyMajorProgression.png"
                                     Width="60" Height="60" Stretch="Uniform" />
                                 <TextBlock x:Name="OdeToJoyMajorProgressionsOwnedText"
                                     Text="0 Ode to Joy Major Progressions Owned" FontSize="15"

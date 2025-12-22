@@ -1,10 +1,10 @@
-<UserControl xmlns="https://github.com/avaloniaui"
+﻿<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="MusicClicker.Views.SaveScoresScreen">
 
     <Grid Background="#AA000000">
         <Grid.Background>
-            <ImageBrush Source="avares://MusicClicker/Assets/Soul Menu 2-min.png"
+            <ImageBrush Source="avares://MusicClicker/Gameplay Components/Resources/Assets/UI Buttons &amp; Menus/Soul Menu 2-min.png"
                 Stretch="UniformToFill" />
         </Grid.Background>
 
@@ -64,7 +64,7 @@
                             Padding="0">
                             <Border CornerRadius="10" ClipToBounds="True">
                                 <Image
-                                    Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [BC3B44D]-min.png"
+                                    Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/Music Game 16_9 Assets [BC3B44D]-min.png"
                                     Stretch="UniformToFill" Width="380" Height="210" />
                             </Border>
                         </Button>
@@ -106,7 +106,7 @@
                             Padding="0">
                             <Border CornerRadius="10" ClipToBounds="True">
                                 <Image
-                                    Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [9B5FF4F]-min.png"
+                                    Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/Music Game 16_9 Assets [9B5FF4F]-min.png"
                                     Stretch="UniformToFill" Width="380" Height="210" />
                             </Border>
                         </Button>
@@ -148,7 +148,7 @@
                             Padding="0">
                             <Border CornerRadius="10" ClipToBounds="True">
                                 <Image
-                                    Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [AA78ED8].png"
+                                    Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/Music Game 16_9 Assets [AA78ED8].png"
                                     Stretch="UniformToFill" Width="380" Height="210" />
                             </Border>
                         </Button>
@@ -190,7 +190,7 @@
                             Padding="0">
                             <Border CornerRadius="10" ClipToBounds="True">
                                 <Image
-                                    Source="avares://MusicClicker/Assets/SoulOfLaCampanella.png"
+                                    Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Soul Items/SoulOfLaCampanella.png"
                                     Stretch="UniformToFill" Width="380" Height="210" />
                             </Border>
                         </Button>
@@ -236,7 +236,7 @@
                             Padding="0">
                             <Border CornerRadius="10" ClipToBounds="True">
                                 <Image
-                                    Source="avares://MusicClicker/Assets/SoulOfEnigma.png"
+                                    Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Soul Items/SoulOfEnigma.png"
                                     Stretch="UniformToFill" Width="380" Height="210" />
                             </Border>
                         </Button>
@@ -281,7 +281,7 @@
                             Padding="0">
                             <Border CornerRadius="10" ClipToBounds="True">
                                 <Image
-                                    Source="avares://MusicClicker/Assets/SoulOfFate.png"
+                                    Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Soul Items/SoulOfFate.png"
                                     Stretch="UniformToFill" Width="380" Height="210" />
                             </Border>
                         </Button>
@@ -324,7 +324,7 @@
                             Padding="0">
                             <Border CornerRadius="10" ClipToBounds="True">
                                 <Image
-                                    Source="avares://MusicClicker/Assets/SoulOfOdeToJoy.png"
+                                    Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Soul Items/SoulOfOdeToJoy.png"
                                     Stretch="UniformToFill" Width="380" Height="210" />
                             </Border>
                         </Button>

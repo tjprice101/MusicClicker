@@ -1,10 +1,10 @@
-<UserControl xmlns="https://github.com/avaloniaui"
+﻿<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="MusicClicker.Views.UpgradeScreen">
 
     <Grid>
         <Grid.Background>
-            <ImageBrush Source="avares://MusicClicker/Assets/UpgradeScreenBackground.png" Stretch="UniformToFill" />
+            <ImageBrush Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/UpgradeScreenBackground.png" Stretch="UniformToFill" />
         </Grid.Background>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="20,15,20,10" Spacing="8">
             <TextBlock Text="Upgrades" FontSize="32" FontWeight="Bold" Foreground="White"
@@ -38,7 +38,7 @@
                     <!-- Chord -->
                     <Border Background="#111" BorderBrush="White" BorderThickness="2" Padding="8" Width="320" Height="160">
                         <StackPanel Orientation="Horizontal" Spacing="10">
-                            <Image Source="avares://MusicClicker/Assets/MusicGameAssetsChord-min.png" Width="80" Height="80" Stretch="UniformToFill" />
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Upgrade Resources/MusicGameAssetsChord-min.png" Width="80" Height="80" Stretch="UniformToFill" />
                             <StackPanel Spacing="6">
                                 <TextBlock Text="Chord" FontSize="18" FontWeight="Bold" Foreground="White" />
                                 <TextBlock x:Name="ChordOwnedTextUpgrade" Text="Number Owned: 0" FontSize="14" Foreground="White" />
@@ -55,7 +55,7 @@
                     <!-- Scale -->
                     <Border Background="#111" BorderBrush="White" BorderThickness="2" Padding="8" Width="320" Height="160">
                         <StackPanel Orientation="Horizontal" Spacing="10">
-                            <Image Source="avares://MusicClicker/Assets/MusicGameAssetsScale-min.png" Width="80" Height="80" Stretch="UniformToFill" />
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Upgrade Resources/MusicGameAssetsScale-min.png" Width="80" Height="80" Stretch="UniformToFill" />
                             <StackPanel Spacing="6">
                                 <TextBlock Text="Scale" FontSize="18" FontWeight="Bold" Foreground="White" />
                                 <TextBlock x:Name="ScaleOwnedTextUpgrade" Text="Number Owned: 0" FontSize="14" Foreground="White" />
@@ -72,7 +72,7 @@
                     <!-- Orchestra -->
                     <Border Background="#111" BorderBrush="White" BorderThickness="2" Padding="8" Width="320" Height="160">
                         <StackPanel Orientation="Horizontal" Spacing="10">
-                            <Image Source="avares://MusicClicker/Assets/MusicGameAssetsOrchestra-min.png" Width="80" Height="80" Stretch="UniformToFill" />
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Upgrade Resources/MusicGameAssetsOrchestra-min.png" Width="80" Height="80" Stretch="UniformToFill" />
                             <StackPanel Spacing="6">
                                 <TextBlock Text="Orchestra" FontSize="18" FontWeight="Bold" Foreground="White" />
                                 <TextBlock x:Name="OrchestraOwnedTextUpgrade" Text="Number Owned: 0" FontSize="14" Foreground="White" />
@@ -89,7 +89,7 @@
                     <!-- Symphony -->
                     <Border Background="#111" BorderBrush="White" BorderThickness="2" Padding="8" Width="320" Height="160">
                         <StackPanel Orientation="Horizontal" Spacing="10">
-                            <Image Source="avares://MusicClicker/Assets/MusicGameAssetsSymphony-min.png" Width="80" Height="80" Stretch="UniformToFill" />
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Upgrade Resources/MusicGameAssetsSymphony-min.png" Width="80" Height="80" Stretch="UniformToFill" />
                             <StackPanel Spacing="6">
                                 <TextBlock Text="Symphony" FontSize="18" FontWeight="Bold" Foreground="White" />
                                 <TextBlock x:Name="SymphonyOwnedTextUpgrade" Text="Number Owned: 0" FontSize="14" Foreground="White" />
@@ -109,7 +109,7 @@
                     <!-- Aria -->
                     <Border Background="#111" BorderBrush="White" BorderThickness="2" Padding="8" Width="320" Height="160">
                         <StackPanel Orientation="Horizontal" Spacing="10">
-                            <Image Source="avares://MusicClicker/Assets/MusicGameAssetsAria-min.png" Width="80" Height="80" Stretch="UniformToFill" />
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Upgrade Resources/MusicGameAssetsAria-min.png" Width="80" Height="80" Stretch="UniformToFill" />
                             <StackPanel Spacing="6">
                                 <TextBlock Text="Aria" FontSize="18" FontWeight="Bold" Foreground="White" />
                                 <TextBlock x:Name="AriaOwnedTextUpgrade" Text="Number Owned: 0" FontSize="14" Foreground="White" />
@@ -126,7 +126,7 @@
                     <!-- Requiem -->
                     <Border Background="#111" BorderBrush="White" BorderThickness="2" Padding="8" Width="320" Height="160">
                         <StackPanel Orientation="Horizontal" Spacing="10">
-                            <Image Source="avares://MusicClicker/Assets/MusicGameAssetsRequiem-min.png" Width="80" Height="80" Stretch="UniformToFill" />
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Upgrade Resources/MusicGameAssetsRequiem-min.png" Width="80" Height="80" Stretch="UniformToFill" />
                             <StackPanel Spacing="6">
                                 <TextBlock Text="Requiem" FontSize="18" FontWeight="Bold" Foreground="White" />
                                 <TextBlock x:Name="RequiemOwnedTextUpgrade" Text="Number Owned: 0" FontSize="14" Foreground="White" />
@@ -143,7 +143,7 @@
                     <!-- Opus -->
                     <Border Background="#111" BorderBrush="White" BorderThickness="2" Padding="8" Width="320" Height="160">
                         <StackPanel Orientation="Horizontal" Spacing="10">
-                            <Image Source="avares://MusicClicker/Assets/MusicGameAssetsOpus-min.png" Width="80" Height="80" Stretch="UniformToFill" />
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Upgrade Resources/MusicGameAssetsOpus-min.png" Width="80" Height="80" Stretch="UniformToFill" />
                             <StackPanel Spacing="6">
                                 <TextBlock Text="Opus" FontSize="18" FontWeight="Bold" Foreground="White" />
                                 <TextBlock x:Name="OpusOwnedTextUpgrade" Text="Number Owned: 0" FontSize="14" Foreground="White" />
@@ -160,7 +160,7 @@
                     <!-- Magnum Opus -->
                     <Border Background="#111" BorderBrush="White" BorderThickness="2" Padding="8" Width="320" Height="160">
                         <StackPanel Orientation="Horizontal" Spacing="10">
-                            <Image Source="avares://MusicClicker/Assets/MusicGameAssetsMagnumOpus-min.png" Width="80" Height="80" Stretch="UniformToFill" />
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Upgrade Resources/MusicGameAssetsMagnumOpus-min.png" Width="80" Height="80" Stretch="UniformToFill" />
                             <StackPanel Spacing="6">
                                 <TextBlock Text="Magnum Opus" FontSize="18" FontWeight="Bold" Foreground="White" />
                                 <TextBlock x:Name="MagnumOpusOwnedTextUpgrade" Text="Number Owned: 0" FontSize="14" Foreground="White" />

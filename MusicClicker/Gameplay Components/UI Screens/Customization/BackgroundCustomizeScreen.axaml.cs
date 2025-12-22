@@ -1,4 +1,4 @@
-/*
+﻿/*
  * File: Views/BackgroundCustomizeScreen.axaml.cs
  * Summary: Code-behind for background customization screen.
  * Purpose: Lets players preview and select main window backgrounds; persists selection.
@@ -157,51 +157,51 @@ namespace MusicClicker.Views
             {
                 case 1:
                     // Default main background (musical city lights) - reset to the packaged default
-                    imageUri = "avares://MusicClicker/Assets/sacredtrevor_A_grand_musical_city_lights_everywhere_popular_shi_d84ff662-c87b-4630-9887-25228f42097b-min.png";
+                    imageUri = "avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds & Generic/sacredtrevor_A_grand_musical_city_lights_everywhere_popular_shi_d84ff662-c87b-4630-9887-25228f42097b-min.png";
                     break;
                 case 2:
                     // Custom background 1
-                    imageUri = "avares://MusicClicker/Assets/CustomBG1.png";
+                    imageUri = "avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds & Generic/CustomBG1.png";
                     break;
                 case 3:
                     // Custom background 2
-                    imageUri = "avares://MusicClicker/Assets/CustomBG2.png";
+                    imageUri = "avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds & Generic/CustomBG2.png";
                     break;
                 case 4:
                     // Moonlight Sonata background
-                    imageUri = "avares://MusicClicker/Assets/MoonlightCUSTOMBG.jpg";
+                    imageUri = "avares://MusicClicker/Gameplay Components/Resources/Assets/Customization Backgrounds/MoonlightCUSTOMBG.jpg";
                     break;
                 case 5:
                     // Eroica background
-                    imageUri = "avares://MusicClicker/Assets/EroicaCUSTOMBG.jpg";
+                    imageUri = "avares://MusicClicker/Gameplay Components/Resources/Assets/Customization Backgrounds/EroicaCUSTOMBG.jpg";
                     break;
                 case 6:
                     // Swan Lake background
-                    imageUri = "avares://MusicClicker/Assets/SwanLakeCUSTOMBG.jpg";
+                    imageUri = "avares://MusicClicker/Gameplay Components/Resources/Assets/Customization Backgrounds/SwanLakeCUSTOMBG.jpg";
                     break;
                 case 7:
                     // La Campanella background
-                    imageUri = "avares://MusicClicker/Assets/LaCampanellaCUSTOMBG.jpg";
+                    imageUri = "avares://MusicClicker/Gameplay Components/Resources/Assets/Customization Backgrounds/LaCampanellaCUSTOMBG.jpg";
                     break;
                 case 8:
                     // Enigma background
-                    imageUri = "avares://MusicClicker/Assets/EnigmaCUSTOMBG.jpg";
+                    imageUri = "avares://MusicClicker/Gameplay Components/Resources/Assets/Customization Backgrounds/EnigmaCUSTOMBG.jpg";
                     break;
                 case 9:
                     // Fate background
-                    imageUri = "avares://MusicClicker/Assets/FateCUSTOMBG.jpg";
+                    imageUri = "avares://MusicClicker/Gameplay Components/Resources/Assets/Customization Backgrounds/FateCUSTOMBG.jpg";
                     break;
                 case 10:
                     // Ode to Joy background
-                    imageUri = "avares://MusicClicker/Assets/OdeToJoyCUSTOMBG.jpg";
+                    imageUri = "avares://MusicClicker/Gameplay Components/Resources/Assets/Customization Backgrounds/OdeToJoyCUSTOMBG.jpg";
                     break;
                 case 11:
                     // Dies Irae background
-                    imageUri = "avares://MusicClicker/Assets/DiesIraeCUSTOMBG.jpg";
+                    imageUri = "avares://MusicClicker/Gameplay Components/Resources/Assets/Customization Backgrounds/DiesIraeCUSTOMBG.jpg";
                     break;
                 case 12:
                     // Winter background
-                    imageUri = "avares://MusicClicker/Assets/WinterCUSTOMBG.jpg";
+                    imageUri = "avares://MusicClicker/Gameplay Components/Resources/Assets/Customization Backgrounds/WinterCUSTOMBG.jpg";
                     break;
                 // TODO: Add cases for additional backgrounds if needed
                 default:

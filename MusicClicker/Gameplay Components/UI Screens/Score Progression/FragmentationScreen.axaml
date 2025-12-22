@@ -1,10 +1,10 @@
-<UserControl xmlns="https://github.com/avaloniaui"
+﻿<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="MusicClicker.Views.FragmentationScreen">
 
     <Grid Background="#66000000">
         <Grid.Background>
-            <ImageBrush Source="avares://MusicClicker/Assets/FragmentationBG-min.png"
+            <ImageBrush Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/FragmentationBG-min.png"
                 Stretch="UniformToFill" />
         </Grid.Background>
 
@@ -50,7 +50,7 @@
                 <Button x:Name="MelodiousFragmentButton" Width="200" Height="200"
                     HorizontalAlignment="Center" VerticalAlignment="Top">
                     <Image
-                        Source="avares://MusicClicker/Assets/Music Game Assets [F503F6F]-min.png"
+                        Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/Music Game Assets [F503F6F]-min.png"
                         Stretch="Uniform" />
                 </Button>
                 <TextBlock Text="1000 Notes for 1" FontSize="20" Foreground="White"
@@ -70,7 +70,7 @@
                 <Button x:Name="HarmoniousFragmentButton" Width="200" Height="200"
                     HorizontalAlignment="Center" VerticalAlignment="Top">
                     <Image
-                        Source="avares://MusicClicker/Assets/Music Game Assets [0EE1949]-min.png"
+                        Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/Music Game Assets [0EE1949]-min.png"
                         Stretch="Uniform" />
                 </Button>
                 <TextBlock Text="5000 Notes for 1" FontSize="20" Foreground="White"

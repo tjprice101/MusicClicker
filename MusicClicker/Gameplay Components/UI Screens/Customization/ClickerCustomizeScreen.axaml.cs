@@ -1,4 +1,4 @@
-/*
+﻿/*
  * File: Views/ClickerCustomizeScreen.axaml.cs
  * Summary: Code-behind for clicker customization screen.
  * Purpose: Allows player to change the clicker image and manages unlock logic for options.
@@ -38,7 +38,7 @@ namespace MusicClicker.Views
             // Ensure the first option shows the packaged default clicker image
             try
             {
-                string defaultUri = "avares://MusicClicker/Assets/Music Game Assets [A961E2A]-min.png";
+                string defaultUri = "avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds & Generic/Music Game Assets [A961E2A]-min.png";
                 var bmp = ImageHelpers.GetBitmap(defaultUri, 128);
                 if (bmp != null)
                 {
@@ -204,49 +204,49 @@ namespace MusicClicker.Views
             {
                 case 1:
                     // Default clicker image (musical note)
-                    imageUri = "avares://MusicClicker/Assets/Music Game Assets [A961E2A]-min.png";
+                    imageUri = "avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds & Generic/Music Game Assets [A961E2A]-min.png";
                     break;
                 case 2:
                     // Check if option 2 is enabled before allowing selection
                     if (!ClickerOption2.IsEnabled) return;
                     // Special all-majors clicker button (requires all non-event majors)
-                    imageUri = "avares://MusicClicker/Assets/ALLMAJORClickerButton.png";
+                    imageUri = "avares://MusicClicker/Gameplay Components/Resources/Assets/UI Buttons & Menus/ALLMAJORClickerButton.png";
                     break;
                 case 3:
                     if (!ClickerOption3.IsEnabled) return;
-                    imageUri = "avares://MusicClicker/Assets/MoonlightIcon.jpg";
+                    imageUri = "avares://MusicClicker/Gameplay Components/Resources/Assets/Score Icons/MoonlightIcon.jpg";
                     break;
                 case 4:
                     if (!ClickerOption4.IsEnabled) return;
-                    imageUri = "avares://MusicClicker/Assets/EroicaIcon.jpg";
+                    imageUri = "avares://MusicClicker/Gameplay Components/Resources/Assets/Score Icons/EroicaIcon.jpg";
                     break;
                 case 5:
                     if (!ClickerOption5.IsEnabled) return;
-                    imageUri = "avares://MusicClicker/Assets/SwanLakeIcon.jpg";
+                    imageUri = "avares://MusicClicker/Gameplay Components/Resources/Assets/Score Icons/SwanLakeIcon.jpg";
                     break;
                 case 6:
                     if (!ClickerOption6.IsEnabled) return;
-                    imageUri = "avares://MusicClicker/Assets/LaCampanellaIcon.jpg";
+                    imageUri = "avares://MusicClicker/Gameplay Components/Resources/Assets/Score Icons/LaCampanellaIcon.jpg";
                     break;
                 case 7:
                     if (!ClickerOption7.IsEnabled) return;
-                    imageUri = "avares://MusicClicker/Assets/EnigmaIcon.jpg";
+                    imageUri = "avares://MusicClicker/Gameplay Components/Resources/Assets/Score Icons/EnigmaIcon.jpg";
                     break;
                 case 8:
                     if (!ClickerOption8.IsEnabled) return;
-                    imageUri = "avares://MusicClicker/Assets/FateIcon.jpg";
+                    imageUri = "avares://MusicClicker/Gameplay Components/Resources/Assets/Score Icons/FateIcon.jpg";
                     break;
                 case 9:
                     if (!ClickerOption9.IsEnabled) return;
-                    imageUri = "avares://MusicClicker/Assets/OdeToJoyIcon.png";
+                    imageUri = "avares://MusicClicker/Gameplay Components/Resources/Assets/Score Icons/OdeToJoyIcon.png";
                     break;
                 case 10:
                     if (!ClickerOption10.IsEnabled) return;
-                    imageUri = "avares://MusicClicker/Assets/DiesIraeIcon.jpg";
+                    imageUri = "avares://MusicClicker/Gameplay Components/Resources/Assets/Score Icons/DiesIraeIcon.jpg";
                     break;
                 case 11:
                     if (!ClickerOption11.IsEnabled) return;
-                    imageUri = "avares://MusicClicker/Assets/WinterIcon.jpg";
+                    imageUri = "avares://MusicClicker/Gameplay Components/Resources/Assets/Score Icons/WinterIcon.jpg";
                     break;
                 // TODO: Add cases for options 12-16 when additional clicker images are added
                 default:

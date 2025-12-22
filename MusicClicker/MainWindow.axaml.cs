@@ -805,6 +805,12 @@ namespace MusicClicker
             {
                 MusicClicker.Armory.WeaponAbilities.OdeDuet_AddNote(gameState);
             }
+            
+            // Clair De Lune Duet: 12-click sequence
+            if (gameState.ClairDeLuneDuetActive)
+            {
+                MusicClicker.Armory.WeaponAbilities.ClairDeLuneDuet_OnClick(gameState);
+            }
 
             // Individual weapon click abilities
             if (gameState.OdeToCreation && 
@@ -875,6 +881,12 @@ namespace MusicClicker
             if (gameState.CurrentResonatedScore == "DiesIrae")
             {
                 MusicClicker.Armory.WeaponAbilities.DiesIraeCrescendance_OnClick(gameState, this);
+            }
+            
+            // Clair De Lune Crescendance: Clockwork Symphony
+            if (gameState.CurrentResonatedScore == "ClairDeLune")
+            {
+                MusicClicker.Armory.WeaponAbilities.ClairDeLuneCrescendance_OnClick(gameState, this);
             }
 
             // Swan Lake Weapon: Star-Scattered Wings passive (every 10th click grants fragments)
@@ -962,6 +974,23 @@ namespace MusicClicker
                     {
                         fateGuaranteedCrit = true;
                     }
+                }
+                
+                // Clair De Lune: Minute Hand 1 effect (next 3 clicks after Temporal Harmony gain)
+                if (gameState.ClairMinute1EntropicClicksRemaining > 0)
+                {
+                    gameState.ClairMinute1EntropicClicksRemaining--;
+                    double entropicGain = 1.5;
+                    
+                    // Minute Hand 4: increase notes by 0.1% per Entropic Melodies gained
+                    if (gameState.ClairDeLuneMinuteHand == 4)
+                    {
+                        double currentNotes = MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes);
+                        double noteBonus = currentNotes * (entropicGain * 0.001);
+                        MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, noteBonus);
+                    }
+                    
+                    gameState.EntropicMelodies += (int)entropicGain;
                 }
                 
                 string critText;
@@ -1103,6 +1132,69 @@ namespace MusicClicker
                     critColor = Colors.White; // White text
                     hasStroke = true;
                     strokeColor = Color.FromRgb(199, 21, 133); // Dark pink outline
+                }
+                // 6.5. Clair De Lune: Everlasting Melody of Time's Infinite Symphony (Weapon 1 crit)
+                else if (gameState.ClairWeapon1CritClicksRemaining > 0)
+                {
+                    gameState.ClairWeapon1CritClicksRemaining--;
+                    // Formula: ((NPS^NPC)/(144)) notes
+                    double nps = gameState.NotesPerSecond;
+                    double npc = gameState.NotesPerClick;
+                    finalNotes = (Math.Pow(nps, npc)) / 144.0;
+                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
+                    critText = $"Everlasting Melody of Time's Infinite Symphony!!! +{NumberFormatter.FormatLargeNumber(finalNotes)}";
+                    critColor = Color.FromRgb(135, 206, 250); // Light sky blue (time/clock theme)
+                    hasStroke = true;
+                    strokeColor = Color.FromRgb(25, 25, 112); // Midnight blue outline
+                }
+                // 6.6. Clair De Lune: Symphony of Infinity (Duet 12th click effect)
+                else if (gameState.ClairSymphonyOfInfinityClicksRemaining > 0)
+                {
+                    gameState.ClairSymphonyOfInfinityClicksRemaining--;
+                    // Formula: (NPC^NPS^12) notes
+                    double nps = gameState.NotesPerSecond;
+                    double npc = gameState.NotesPerClick;
+                    finalNotes = Math.Pow(npc, Math.Pow(nps, 12));
+                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
+                    critText = $"Symphony of Infinity!!! +{NumberFormatter.FormatLargeNumber(finalNotes)}";
+                    critColor = Color.FromRgb(218, 165, 32); // Golden rod (infinity theme)
+                    hasStroke = true;
+                    strokeColor = Colors.White;
+                }
+                // 6.7. Clair De Lune: Era of the Music's Chronos (Minute Hand 9 effect)
+                else if (gameState.ClairEraOfChronosClicksRemaining > 0)
+                {
+                    gameState.ClairEraOfChronosClicksRemaining--;
+                    // Formula: ((NPS^9)/5) notes
+                    double nps = gameState.NotesPerSecond;
+                    finalNotes = (Math.Pow(nps, 9)) / 5.0;
+                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
+                    critText = $"Era of the Music's Chronos!!! +{NumberFormatter.FormatLargeNumber(finalNotes)}";
+                    critColor = Color.FromRgb(147, 112, 219); // Medium purple (chronos/time theme)
+                    hasStroke = true;
+                    strokeColor = Colors.Black;
+                }
+                // 6.8. Clair De Lune: Entropic Crescendo of Eternity (Minute Hand 2 or Duet 9th click)
+                else if (gameState.ClairMinute2CritClicksRemaining > 0 || gameState.ClairDuetEntropicCritClicksRemaining > 0)
+                {
+                    if (gameState.ClairMinute2CritClicksRemaining > 0)
+                        gameState.ClairMinute2CritClicksRemaining--;
+                    if (gameState.ClairDuetEntropicCritClicksRemaining > 0)
+                        gameState.ClairDuetEntropicCritClicksRemaining--;
+                        
+                    finalNotes = notesPerClick * 1500;
+                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
+                    critText = $"Entropic Crescendo of Eternity!!! +{NumberFormatter.FormatLargeNumber(finalNotes)}";
+                    critColor = Colors.Red;
+                    hasStroke = true;
+                    strokeColor = Colors.Black;
+                    
+                    // La Campanella: Entropic Crescendo grants +3 Deafening Chime stacks (max 15)
+                    if (gameState.CurrentResonatedScore == "LaCampanella")
+                    {
+                        int stacksToAdd = Math.Min(3, 15 - gameState.DeafeningChimeStacks);
+                        gameState.DeafeningChimeStacks += stacksToAdd;
+                    }
                 }
                 // 7. Ode to Joy: Entropic Crescendo of Eternity from Petal of Melody (1500x multiplier, time-based)
                 else if (DateTime.Now <= gameState.EntropicCritExpiry)

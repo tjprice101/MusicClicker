@@ -1,4 +1,4 @@
-<UserControl xmlns="https://github.com/avaloniaui"
+﻿<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="MusicClicker.Views.UniteTheSymphonyScreen">
 
@@ -21,7 +21,7 @@
 
     <Grid Background="#AA000000">
         <Grid.Background>
-            <ImageBrush Source="avares://MusicClicker/Assets/Concert Hall Menu-min.png"
+            <ImageBrush Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/Concert Hall Menu-min.png"
                 Stretch="UniformToFill" AlignmentX="Center" AlignmentY="Center" />
         </Grid.Background>
 
@@ -94,7 +94,7 @@
                                 Width="384" Height="216"
                                 Background="Transparent" BorderThickness="0">
                                 <Image
-                                    Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [1701D72]-min.png"
+                                    Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/Music Game 16_9 Assets [1701D72]-min.png"
                                     Stretch="UniformToFill" Width="384" Height="216" />
                             </Button>
 
@@ -139,7 +139,7 @@
                                 Width="384" Height="216"
                                 Background="Transparent" BorderThickness="0">
                                 <Image
-                                    Source="avares://MusicClicker/Assets/MoonlightSonataMajor.jpg"
+                                    Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Major Scores/MoonlightSonataMajor.jpg"
                                     Stretch="UniformToFill" Width="384" Height="216" />
                             </Button>
 
@@ -185,7 +185,7 @@
                                 Width="384" Height="216"
                                 Background="Transparent" BorderThickness="0">
                                 <Image
-                                    Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [1F82811]-min.png"
+                                    Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/Music Game 16_9 Assets [1F82811]-min.png"
                                     Stretch="UniformToFill" Width="384" Height="216" />
                             </Button>
 
@@ -230,7 +230,7 @@
                                 Width="384" Height="216"
                                 Background="Transparent" BorderThickness="0">
                                 <Image
-                                    Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [04AC7F2]-min.png"
+                                    Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/Music Game 16_9 Assets [04AC7F2]-min.png"
                                     Stretch="UniformToFill" Width="384" Height="216" />
                             </Button>
 
@@ -276,7 +276,7 @@
                                 Height="216"
                                 Background="Transparent" BorderThickness="0">
                                 <Image
-                                    Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [B5BBBBC]-min.png"
+                                    Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/Music Game 16_9 Assets [B5BBBBC]-min.png"
                                     Stretch="UniformToFill" Width="384" Height="216" />
                             </Button>
 
@@ -321,7 +321,7 @@
                                 Height="216"
                                 Background="Transparent" BorderThickness="0">
                                 <Image
-                                    Source="avares://MusicClicker/Assets/Music Game 16_9 Assets [876DEE6]-min.png"
+                                    Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/Music Game 16_9 Assets [876DEE6]-min.png"
                                     Stretch="UniformToFill" Width="384" Height="216" />
                             </Button>
 
@@ -366,7 +366,7 @@
                             <Button x:Name="LaCampanellaMinorButton" Grid.Column="1" Margin="10"
                                 Width="384" Height="216"
                                 Background="Transparent" BorderThickness="0">
-                                <Image Source="avares://MusicClicker/Assets/LaCampanellaMinor.png"
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Minor Scores/LaCampanellaMinor.png"
                                     Stretch="UniformToFill" Width="384" Height="216" />
                             </Button>
 
@@ -410,7 +410,7 @@
                             <Button x:Name="LaCampanellaMajorButton" Grid.Column="1" Margin="10"
                                 Width="384" Height="216"
                                 Background="Transparent" BorderThickness="0">
-                                <Image Source="avares://MusicClicker/Assets/LaCampanellaMajor.png"
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Major Scores/LaCampanellaMajor.png"
                                     Stretch="UniformToFill" Width="384" Height="216" />
                             </Button>
 
@@ -456,7 +456,7 @@
                                 Width="384" Height="216"
                                 Background="Transparent" BorderThickness="0">
                                 <Image
-                                    Source="avares://MusicClicker/Assets/EnigmaVariationsMinor.png"
+                                    Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Minor Scores/EnigmaVariationsMinor.png"
                                     Stretch="UniformToFill" Width="384" Height="216" />
                             </Button>
 
@@ -500,7 +500,7 @@
                             <Button x:Name="EnigmaMajorButton" Grid.Column="1" Margin="10"
                                 Width="384" Height="216"
                                 Background="Transparent" BorderThickness="0">
-                                <Image Source="avares://MusicClicker/Assets/EnigmaMajor.png"
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Major Scores/EnigmaMajor.png"
                                     Stretch="UniformToFill" Width="384" Height="216" />
                             </Button>
 
@@ -545,7 +545,7 @@
                             <Button x:Name="FateMinorButton" Grid.Column="1" Margin="10" Width="384"
                                 Height="216"
                                 Background="Transparent" BorderThickness="0">
-                                <Image Source="avares://MusicClicker/Assets/FateMinor.png"
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Minor Scores/FateMinor.png"
                                     Stretch="UniformToFill" Width="384" Height="216" />
                             </Button>
 
@@ -589,7 +589,7 @@
                             <Button x:Name="FateMajorButton" Grid.Column="1" Margin="10" Width="384"
                                 Height="216"
                                 Background="Transparent" BorderThickness="0">
-                                <Image Source="avares://MusicClicker/Assets/FateMajor.png"
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Major Scores/FateMajor.png"
                                     Stretch="UniformToFill" Width="384" Height="216" />
                             </Button>
 
@@ -634,7 +634,7 @@
                             <Button x:Name="OdeToJoyMinorButton" Grid.Column="1" Margin="10"
                                 Width="384" Height="216"
                                 Background="Transparent" BorderThickness="0">
-                                <Image Source="avares://MusicClicker/Assets/OdeToJoyMinor.png"
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Minor Scores/OdeToJoyMinor.png"
                                     Stretch="UniformToFill" Width="384" Height="216" />
                             </Button>
 
@@ -678,7 +678,7 @@
                             <Button x:Name="OdeToJoyMajorButton" Grid.Column="1" Margin="10"
                                 Width="384" Height="216"
                                 Background="Transparent" BorderThickness="0">
-                                <Image Source="avares://MusicClicker/Assets/OdeToJoyMajor.png"
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Major Scores/OdeToJoyMajor.png"
                                     Stretch="UniformToFill" Width="384" Height="216" />
                             </Button>
 

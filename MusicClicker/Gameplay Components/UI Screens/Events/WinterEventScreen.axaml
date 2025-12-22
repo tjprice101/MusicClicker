@@ -1,10 +1,10 @@
-<UserControl xmlns="https://github.com/avaloniaui"
+﻿<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="MusicClicker.Views.WinterEventScreen">
 
     <Panel>
         <!-- Background image -->
-        <Image Source="avares://MusicClicker/Assets/WinterEventBackground.jpg"
+        <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Events/WinterEventBackground.jpg"
                Stretch="UniformToFill"
                ZIndex="0"
                Opacity="1" />
@@ -84,7 +84,7 @@
                         BorderBrush="#FFFF69B4"
                         BorderThickness="3"
                         HorizontalAlignment="Center">
-                    <Image Source="avares://MusicClicker/Assets/SoulOfWinter.png"
+                    <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Soul Items/SoulOfWinter.png"
                            Stretch="UniformToFill" />
                 </Button>
                 
@@ -120,7 +120,7 @@
                         BorderBrush="#FFFF69B4"
                         BorderThickness="3"
                         HorizontalAlignment="Center">
-                    <Image Source="avares://MusicClicker/Assets/WinterMajor.png"
+                    <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Major Scores/WinterMajor.png"
                            Stretch="UniformToFill" />
                 </Button>
                 

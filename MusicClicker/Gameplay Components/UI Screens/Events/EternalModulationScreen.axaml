@@ -1,9 +1,9 @@
-<UserControl xmlns="https://github.com/avaloniaui"
+﻿<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="MusicClicker.Views.EternalModulationScreen">
 
     <UserControl.Background>
-        <ImageBrush Source="avares://MusicClicker/Assets/sacredtrevor_Musical_warriors_fighting_back_creatures_in_a_neon_cf8e60cc-d1bc-4542-bece-767848ecea8f-min.png"
+        <ImageBrush Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/sacredtrevor_Musical_warriors_fighting_back_creatures_in_a_neon_cf8e60cc-d1bc-4542-bece-767848ecea8f-min.png"
                     Stretch="UniformToFill" />
     </UserControl.Background>
 
@@ -50,7 +50,7 @@
                         BorderBrush="Transparent"
                         BorderThickness="0"
                         Padding="0">
-                    <Image Source="avares://MusicClicker/Assets/DiesIraeBanner.png"
+                    <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Events/DiesIraeBanner.png"
                            Stretch="Fill" />
                 </Button>
             </Border>
@@ -71,7 +71,7 @@
                         BorderBrush="Transparent"
                         BorderThickness="0"
                         Padding="0">
-                    <Image Source="avares://MusicClicker/Assets/WinterBanner.png"
+                    <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Events/WinterBanner.png"
                            Stretch="Fill" />
                 </Button>
             </Border>
