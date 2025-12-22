@@ -1,0 +1,161 @@
+===================================================
+           CLAIR DE LUNE MAJOR SCORE
+===================================================
+
+CRESCENDANCE ABILITY: Clockwork Symphony
+---------------------------------------------------
+
+CORE MECHANIC - Clock Configuration:
+You choose where the hour and minute hands point on a clock face.
+Each position provides unique effects and stack mechanics.
+
+---------------------------------------------------
+HOUR HAND POSITIONS:
+---------------------------------------------------
+
+Hour Hand on 12:
+• Every 3rd, 6th, 9th, and 12th click give 1 stack of "Clockwork Forte"
+
+Hour Hand on 3:
+• Consume 1 stack of Clockwork Forte to give yourself:
+  - +50% Notes to your current notes
+  - +2% Entropic Melodies
+
+Hour Hand on 6:
+• Every 6th click gives you 1 stack of "Temporal Harmony"
+
+Hour Hand on 9:
+• Consume 1 stack of Temporal Harmony to give your next 10 clicks a special critical:
+  - "Era of the Music's Chronos"
+  - Gives +X notes where X = ((NPS^9)/5)
+
+---------------------------------------------------
+MINUTE HAND POSITIONS:
+---------------------------------------------------
+
+Minute Hand on 1:
+• On gain of Temporal Harmony stack, your next 3 clicks will give you +1.5% Entropic Melodies
+
+Minute Hand on 2:
+• On gain of Clockwork Forte stack, your next 2 clicks are guaranteed "Entropic Crescendo of Eternity" critical
+
+Minute Hand on 4:
+• Every time you gain Entropic Melodies, increase your current notes by 0.1% per Entropic Melodies gained
+
+Minute Hand on 5:
+• Consume 3 stacks of Clockwork Forte to give yourself +5 to all owned minor scores
+
+Minute Hand on 7:
+• Consume 20 stacks of Clockwork Forte to give yourself:
+  - 1 Clair De Lune Major
+  - +15% Entropic Melodies
+
+Minute Hand on 8:
+• Consume 8 stacks of Temporal Harmony to give yourself +5 to every owned major
+
+Minute Hand on 10:
+• For each Clockwork Forte stack consumed, your next click gives +X notes
+  - X = (NPC^# of stacks consumed prior to this click)
+
+Minute Hand on 11:
+• If your notes per second exceeds 1 Quintillion, every 12th click gives you 1 stack of "Clock of Eternity"
+
+---------------------------------------------------
+CUSTOM STACKS:
+---------------------------------------------------
+
+Clockwork Forte:
+• Gained from Hour Hand on 12 position (every 3rd, 6th, 9th, 12th click)
+• Can be consumed by various Minute Hand positions for powerful effects
+
+Temporal Harmony:
+• Gained from Hour Hand on 6 position (every 6th click)
+• Can be consumed for Era of the Music's Chronos criticals and other effects
+
+Clock of Eternity:
+• Gained from Minute Hand on 11 position (requires 1 Quintillion+ NPS)
+• Used by Weapon 1's Crescendance Bond
+
+===================================================
+           WEAPON 1
+===================================================
+
+PASSIVE ON EQUIP:
+• Anytime you spend Entropic Melodies, refund 50% of them
+
+CRESCENDANCE BOND:
+• Consume 1 stack of Clock of Eternity to give your next 2 clicks a new critical:
+  - "Everlasting Melody of Time's Infinite Symphony!!!"
+  - Gives ((NPS^NPC)/(144)) notes
+
+===================================================
+           WEAPON 2
+===================================================
+
+PASSIVE ON EQUIP:
+• Anytime a custom stack is consumed, 10% chance to refund that stack
+  (Or stacks if multiple are consumed)
+
+CRESCENDANCE BOND:
+• Every time you gain a stack of Clockwork Forte:
+  - Gain +12 of 3 random owned minors
+
+• Every time you gain a stack of Temporal Harmony:
+  - Gain +2 to 5 random owned majors
+  - (Not including Event majors or Discordance majors)
+
+===================================================
+           DUET ABILITY
+===================================================
+
+SEQUENTIAL CLICK EFFECTS:
+
+1st Click:
+• Triples your current owned notes
+
+2nd Click:
+• Gives +75% to your current owned Entropic Melodies
+
+3rd Click:
+• Gives +5 to a random owned minor
+
+4th Click:
+• Gives +5 to a random owned major
+  (Not including Event or Discordance majors)
+
+5th Click:
+• Consumes all stacks of Clockwork Forte and Temporal Harmony
+• Gives yourself (NPC * (# of stacks consumed)^5) notes
+
+6th Click:
+• Gives +5 stacks of Clockwork Forte
+
+7th Click:
+• Gives +5% Entropic Melodies
+
+8th Click:
+• Gives +1 stack of Temporal Harmony
+
+9th Click:
+• Makes your next 3 clicks "Entropic Crescendo of Eternity" Criticals
+
+10th Click:
+• Gives you +50 Harmonious and Melodious Fragments
+
+11th Click:
+• Gives you +2 Clair De Lune Major
+
+12th Click:
+• Gives your next 5 clicks a new critical: "Symphony of Infinity"
+• Gives you +X notes per click where X = (NPC^NPS^12)
+
+===================================================
+IMPORTANT NOTES:
+===================================================
+
+• All criticals and effects are stackable
+• Clock hand positions can be changed/customized
+• Custom stacks persist until consumed
+• Weapon names pending (currently WEAPON 1 and WEAPON 2)
+
+===================================================

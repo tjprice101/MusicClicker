@@ -292,7 +292,7 @@
                         <Button x:Name="TempoResonateButton"
                                 Width="231"
                                 Height="130"
-                                Background="Transparent"
+                                Background="Transparent" 
                                 BorderThickness="0"
                                 Padding="0">
                             <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/UI Buttons &amp; Menus/TempoResonate.png"
