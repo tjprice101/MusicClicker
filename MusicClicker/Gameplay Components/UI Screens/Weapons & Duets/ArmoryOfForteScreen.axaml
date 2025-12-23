@@ -794,6 +794,87 @@
 
                 </StackPanel>
 
+                <!-- Row 10: Clair de Lune Weapons -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
+                    
+                    <!-- Item 19 -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmoryItem19Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/Clockwork'sHarmony.jpg" Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="ArmoryItem19CostText"
+                                   Text="Cost: 10,000,000,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem19OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem19SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem19SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem19DuetText"
+                                   Text="Duet Resonance: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center"
+                                   HorizontalAlignment="Center" />
+                    </StackPanel>
+
+                    <!-- Item 20 -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmoryItem20Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/MetronomicDissonance.jpg" Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="ArmoryItem20CostText"
+                                   Text="Cost: 20,000,000,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem20OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem20SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem20SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem20DuetText"
+                                   Text="Duet Resonance: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#CCCCCC"
+                                   TextAlignment="Center"
+                                   HorizontalAlignment="Center" />
+                    </StackPanel>
+
+                </StackPanel>
+
             </StackPanel>
 
             </ScrollViewer>

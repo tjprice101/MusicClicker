@@ -71,6 +71,30 @@
                             
                             <!-- Middle: Fight Info and Button -->
                             <StackPanel Grid.Column="1" Spacing="8" VerticalAlignment="Center">
+                                                                <!-- Countdown Timer -->
+                                                                <TextBlock x:Name="MercuryCountdownText"
+                                                                           Text="Time until next Wednesday: --:--:--"
+                                                                           FontSize="14"
+                                                                           Foreground="#00CED1"
+                                                                           FontWeight="Bold"
+                                                                           HorizontalAlignment="Center"
+                                                                           Margin="0,0,0,4" />
+                                                                <!-- Countdown Timer -->
+                                                                <TextBlock x:Name="TonalityCountdownText"
+                                                                           Text="Time until next Wednesday: --:--:--"
+                                                                           FontSize="14"
+                                                                           Foreground="#FFC0CB"
+                                                                           FontWeight="Bold"
+                                                                           HorizontalAlignment="Center"
+                                                                           Margin="0,0,0,4" />
+                                                                <!-- Countdown Timer -->
+                                                                <TextBlock x:Name="MarsCountdownText"
+                                                                           Text="Time until next Wednesday: --:--:--"
+                                                                           FontSize="14"
+                                                                           Foreground="#FF4444"
+                                                                           FontWeight="Bold"
+                                                                           HorizontalAlignment="Center"
+                                                                           Margin="0,0,0,4" />
                                 <TextBlock Text="Planetary Discordance: Mercury" 
                                            FontSize="22" 
                                            FontWeight="Bold" 

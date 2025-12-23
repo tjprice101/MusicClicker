@@ -1,0 +1,49 @@
+Clair de Lune Major Score & Weapons - Testing Checklist
+=====================================================
+
+1. Hour Hand Effects
+--------------------
+[ ] Temporal Overture: Every 3rd, 6th, 9th, 12th click gives 1 Resonant Shard
+[ ] Shatterchord Surge: Consume Resonant Shard for +50% notes, +2% Entropic Melodies
+[ ] Fractal Modulation: Every 6th click gives 1 Tempo Fragment
+[ ] Syncopated Rupture: Consume Tempo Fragment for 10 special crits (Cadenza Cataclysm)
+
+2. Minute Hand Effects
+----------------------
+[ ] Cadenza Cataclysm: On Tempo Fragment gain, next 3 clicks give +1.5% Entropic Melodies
+[ ] Infinity Arpeggio: On Resonant Shard gain, next 2 clicks are guaranteed crits
+[ ] Prismal Crescendo: On Entropic Melodies gain, +0.1% notes per EM gained
+[ ] Refrain of Endless Measures: Consume 3 Resonant Shard for +5 to all minors
+[ ] Sonata of Shattered Hours: Consume 20 Resonant Shard for +1 Major Score, +15% Entropic Melodies
+[ ] Symphony of Broken Time: Consume 8 Tempo Fragment for +5 to every owned major
+[ ] Power Spike: Each Resonant Shard consumed, next click gives +X notes
+[ ] Glass Forte: If NPS > 1 Quintillion, every 12th click gives 1 Clock of Eternity
+
+3. Custom Stacks
+----------------
+[ ] Clockwork Forte: Gain/consume logic for all effects
+[ ] Temporal Harmony: Gain/consume logic for all effects
+[ ] Clock of Eternity: Gain/consume logic for all effects
+
+4. Weapon Bonds
+---------------
+[ ] Weapon 1: Refund 50% Entropic Melodies spent
+[ ] Weapon 1 Crescendance: Consume Clock of Eternity for criticals
+[ ] Weapon 2: 10% chance to refund custom stack on consume
+[ ] Weapon 2 Crescendance: On Temporal Harmony gain, +2 to 5 random majors
+
+5. Duet Ability (12-Click Sequence)
+-----------------------------------
+[ ] All 12 effects trigger in correct order and update game state
+
+6. General
+----------
+[ ] Stack consumption and reward logic matches documentation
+[ ] All effects update game state and UI as described
+[ ] No errors or unexpected behavior during play
+
+Instructions:
+-------------
+- For each item, test the described effect in-game and verify the correct game state changes and UI feedback.
+- If any effect does not trigger or update as described, note the bug and report the specific effect and context.
+- Use debug logging or UI overlays to confirm stack changes, rewards, and criticals where possible.

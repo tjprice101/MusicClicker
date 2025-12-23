@@ -22,7 +22,7 @@ namespace MusicClicker.Views
         // Reference to the game state for checking/updating player progress
         private GameState? _gameState;
 
-        // Array of all weapon names displayed in the shop (18 total weapons)
+        // Array of all weapon names displayed in the shop (20 total weapons)
         private readonly string[] _weaponNames = new[]
         {
             // Moonlight weapons — user requested Incisor first, then Eulogy
@@ -57,7 +57,11 @@ namespace MusicClicker.Views
             "Seven Circles",            // Formerly: Dies Irae Scythe I (event)
             "Hell's Wrath",             // Formerly: Dies Irae Scythe II (event)
             "Cacophonic Blizzard",      // Formerly: Winter Bow I (event)
-            "The Snow's Desire"         // Formerly: Winter Bow II (event)
+            "The Snow's Desire",        // Formerly: Winter Bow II (event)
+
+            // Boss Fight weapons (Clair de Lune)
+            "Clockwork's Harmony",      // Clair de Lune 1
+            "Metronomic Dissonance"     // Clair de Lune 2
         };
 
         // Array mapping each weapon to its required major
@@ -81,7 +85,9 @@ namespace MusicClicker.Views
             "Dies Irae",               // Required for Dies Irae Scythe I & II (actual score)
             "Dies Irae",
             "Winter",                  // Required for Winter Bow I & II (actual score)
-            "Winter"
+            "Winter",
+            "Clair de Lune",           // Required for Clair de Lune weapons
+            "Clair de Lune"
         };
 
         // Precomputed exponential base multipliers for weapon costs to avoid repeated Math.Pow calls.
@@ -89,7 +95,7 @@ namespace MusicClicker.Views
 
         static ArmoryOfForteScreen()
         {
-            _weaponBaseMultipliers = new double[18];
+            _weaponBaseMultipliers = new double[20];
             for (int i = 0; i < _weaponBaseMultipliers.Length; i++)
             {
                 _weaponBaseMultipliers[i] = 250 * Math.Pow(3, i + 1);
@@ -109,13 +115,13 @@ namespace MusicClicker.Views
             // Wire up Entropic Armory button
             EntropicArmoryButton.Click += EntropicArmoryButton_Click;
             
-            // Set up click handlers for all 18 weapon purchase buttons
+            // Set up click handlers for all 20 weapon purchase buttons
             InitializeArmoryButtons();
         }
 
         /// <summary>
         /// Connects each weapon button to its purchase handler.
-        /// Each button is linked to its corresponding weapon index (0-17).
+        /// Each button is linked to its corresponding weapon index (0-19).
         /// </summary>
         private void InitializeArmoryButtons()
         {
@@ -137,6 +143,8 @@ namespace MusicClicker.Views
             ArmoryItem16Button.Click += (s, e) => HandleArmoryPurchase(15); // Hell's Wrath
             ArmoryItem17Button.Click += (s, e) => HandleArmoryPurchase(16); // Cacophonic Blizzard
             ArmoryItem18Button.Click += (s, e) => HandleArmoryPurchase(17); // The Snow's Desire
+            ArmoryItem19Button.Click += (s, e) => HandleArmoryPurchase(18); // Clockwork's Harmony
+            ArmoryItem20Button.Click += (s, e) => HandleArmoryPurchase(19); // Metronomic Dissonance
         }
 
         /// <summary>
@@ -179,6 +187,7 @@ namespace MusicClicker.Views
                 12 or 13 => _gameState.OdeToJoyMajorOwned > 0,     // Ode to Joy weapons
                 14 or 15 => _gameState.DiesIraeOwned > 0,          // Dies Irae weapons
                 16 or 17 => _gameState.WinterOwned > 0,            // Winter weapons
+                18 or 19 => _gameState.ClairDeLuneMajorOwned > 0,       // Clair de Lune weapons
                 _ => false
             };
         }
@@ -211,6 +220,8 @@ namespace MusicClicker.Views
                 15 => _gameState.HellsWrath,
                 16 => _gameState.CacophonicBlizzard,
                 17 => _gameState.TheSnowsDesire,
+                18 => _gameState.ClockworksHarmony,
+                19 => _gameState.MetronomicDissonance,
                 _ => false
             };
         }
@@ -244,6 +255,8 @@ namespace MusicClicker.Views
                 case 15: _gameState.HellsWrath = value; break;
                 case 16: _gameState.CacophonicBlizzard = value; break;
                 case 17: _gameState.TheSnowsDesire = value; break;
+                case 18: _gameState.ClockworksHarmony = value; break;
+                case 19: _gameState.MetronomicDissonance = value; break;
             }
         }
 
@@ -339,7 +352,7 @@ namespace MusicClicker.Views
             // Update the notes display at top of screen
             ArmoryNotesText.Text = $"Notes: {FormatNumber(gameState.Notes)}";
             
-            // Update all 18 weapon slots with current state
+            // Update all 20 weapon slots with current state
             UpdateWeaponSlot(0, ArmoryItem1Button, ArmoryItem1CostText, ArmoryItem1OwnedText, ArmoryItem1SoloConcertoText, ArmoryItem1SymphonicModulationText, ArmoryItem1DuetText);
             UpdateWeaponSlot(1, ArmoryItem2Button, ArmoryItem2CostText, ArmoryItem2OwnedText, ArmoryItem2SoloConcertoText, ArmoryItem2SymphonicModulationText, ArmoryItem2DuetText);
             UpdateWeaponSlot(2, ArmoryItem3Button, ArmoryItem3CostText, ArmoryItem3OwnedText, ArmoryItem3SoloConcertoText, ArmoryItem3SymphonicModulationText, ArmoryItem3DuetText);
@@ -358,6 +371,8 @@ namespace MusicClicker.Views
             UpdateWeaponSlot(15, ArmoryItem16Button, ArmoryItem16CostText, ArmoryItem16OwnedText, ArmoryItem16SoloConcertoText, ArmoryItem16SymphonicModulationText, ArmoryItem16DuetText);
             UpdateWeaponSlot(16, ArmoryItem17Button, ArmoryItem17CostText, ArmoryItem17OwnedText, ArmoryItem17SoloConcertoText, ArmoryItem17SymphonicModulationText, ArmoryItem17DuetText);
             UpdateWeaponSlot(17, ArmoryItem18Button, ArmoryItem18CostText, ArmoryItem18OwnedText, ArmoryItem18SoloConcertoText, ArmoryItem18SymphonicModulationText, ArmoryItem18DuetText);
+            UpdateWeaponSlot(18, ArmoryItem19Button, ArmoryItem19CostText, ArmoryItem19OwnedText, ArmoryItem19SoloConcertoText, ArmoryItem19SymphonicModulationText, ArmoryItem19DuetText);
+            UpdateWeaponSlot(19, ArmoryItem20Button, ArmoryItem20CostText, ArmoryItem20OwnedText, ArmoryItem20SoloConcertoText, ArmoryItem20SymphonicModulationText, ArmoryItem20DuetText);
         }
 
         /// <summary>

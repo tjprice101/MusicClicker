@@ -114,6 +114,34 @@ Crescendance: Petals of Life
 • Eternal Frost grants a fixed number of enhanced offensive critical clicks when consumed; these criticals scale with NotesPerSecond.
 • Regal Snowlight grants immediate resource and fragment bonuses when consumed; stacking increases potency.
 • Crescendance Bonds (for example, The Snow's Desire) alter how Frigid Melody is gained or consumed and change the exact numerical effects of Eternal Frost/Regal Snowlight.";
+
+            public const string ClairDeLune = @"Clair de Lune
+Crescendance Ability: Sonata of Shattered Hours
+
+CORE MECHANIC — Clock Configuration:
+You choose where the hour and minute hands point on a clock face. Each position provides unique effects and stack mechanics, themed to shattered time and musical resonance.
+
+HOUR HAND POSITIONS (Effects):
+• 12 (Temporal Overture): Every 3rd, 6th, 9th, and 12th click give 1 stack of 'Resonant Shard'
+• 3 (Shatterchord Surge): Consume 1 stack of Resonant Shard to give yourself +50% Notes and +2% Entropic Melodies
+• 6 (Fractal Modulation): Every 6th click gives you 1 stack of 'Tempo Fragment'
+• 9 (Syncopated Rupture): Consume 1 stack of Tempo Fragment to give your next 10 clicks a special critical ('Cadenza Cataclysm')
+
+MINUTE HAND POSITIONS (Criticals/Effects):
+• 1 (Cadenza Cataclysm): On gain of Tempo Fragment, next 3 clicks give +1.5% Entropic Melodies
+• 2 (Infinity Arpeggio): On gain of Resonant Shard, next 2 clicks are guaranteed 'Infinity Arpeggio' criticals
+• 4 (Prismal Crescendo): Every time you gain Entropic Melodies, increase your current notes by 0.1% per Entropic Melody gained
+• 5 (Refrain of Endless Measures): Consume 3 Resonant Shard for +5 to all owned minor scores
+• 7 (Sonata of Shattered Hours): Consume 20 Resonant Shard for +1 Major Score and +15% Entropic Melodies
+• 8 (Duet: Symphony of Broken Time): Consume 8 Tempo Fragment for +5 to every owned major
+• 10 (Power Spike): For each Resonant Shard consumed, your next click gives +X notes (X = NPC^# of stacks consumed)
+• 11 (Glass Forte): If NPS > 1 Quintillion, every 12th click gives 1 stack of 'Glass Forte'
+
+CUSTOM STACKS:
+• Resonant Shard: Gained from Hour 12 (every 3rd, 6th, 9th, 12th click); consumed for powerful effects
+• Tempo Fragment: Gained from Hour 6 (every 6th click); consumed for Cadenza Cataclysm and other effects
+• Glass Forte: Gained from Minute 11 (if NPS > 1 Quintillion); used by Weapon 1's Crescendance Bond
+";
         }
 
         // ============================================================
@@ -289,6 +317,40 @@ Passive: Accelerating Flurry — Each click grants +1% Notes Per Click (stacking
 Crescendance Bond: Frigid Resonance — While equipped and resonating with Winter, effects that grant Frigid Melody grant +2 Frigid Melody instead of +1 (doubling Frigid Melody gain).
 
 Duet: Symphony of Absolute Zero — Freezes NPS for 20 seconds. Each click during the duet grants +1 Frigid Melody and extends duration by +0.5 seconds (max +10s). 20s base duration | 4 minute cooldown.";
+
+            // Clair de Lune Weapons
+            public const string ClockworksHarmony = @"Clockwork's Harmony
+Passive (on equip):
+Anytime you spend Entropic Melodies, refund 50% of them.
+
+Crescendance Bond:
+Consume 1 stack of Clock of Eternity to give your next 2 clicks a new critical:
+Everlasting Melody of Time's Infinite Symphony
+Gives ((NPS^NPC)/144) notes
+
+Duet: Eternal Crescendo
+12-click sequence with escalating rewards.
+Clicks 1-4 grant fragments, 5-8 grant minor scores, 9-12 grant major scores and notes.
+Completing all 12 clicks doubles all owned minor scores.
+6 minute cooldown.
+";
+
+            public const string MetronomicDissonance = @"Metronomic Dissonance
+Passive (on equip):
+Anytime a custom stack is consumed, 10% chance to refund that stack (or stacks if multiple are consumed).
+
+Crescendance Bond:
+Every time you gain a stack of Clockwork Forte:
+Gain +12 of 3 random owned minors
+Every time you gain a stack of Temporal Harmony:
+Gain +2 to 5 random owned majors (not including Event/Discordance majors)
+
+Duet: Eternal Crescendo
+12-click sequence with escalating rewards.
+Clicks 1-4 grant fragments, 5-8 grant minor scores, 9-12 grant major scores and notes.
+Completing all 12 clicks doubles all owned minor scores.
+6 minute cooldown.
+";
         }
 
         // ============================================================
@@ -298,40 +360,44 @@ Duet: Symphony of Absolute Zero — Freezes NPS for 20 seconds. Each click durin
         public static class ForteResonance
         {
             // Moonlight
-            public const string IncisorOfMoonlight = "Passive: Moonlight Strike — Every 4th click grants bonus notes equal to 1% of your current notes (5% during nighttime 8PM to 6AM).\n\nUpgrade Note: Purchasing the Incisor upgrade grants an immediate 5% increase of current notes.\n\nCrescendance Bond: Piercing Radiance — Each Moonbeam Resonance stack increases the bonus amount by +10% of current notes when stacks are consumed.\n\nDuet (Lunar Phases): 20s duration, cycles phases every 5s, 4min cooldown. When resonating with Moonlight Sonata Major, all phases are active simultaneously.";
-            public const string EulogyOfTheMoon = "Passive: Nocturnal Refund — On minor score craft: 25% chance to refund all crafting materials (50% during nighttime 8PM to 6AM).\n\nCrescendance Bond: Requiem of Renewal — Consuming one Harmonizing Moonlight stack will: grant 3 Moonbeam Resonance stacks; if Moonbeam stacks reach 8 they auto-convert (in blocks of 8) into 1 Harmonizing Moonlight and each conversion grants +100% of your current notes; and give +1 Key, +1 Scale, and +1 Progression to the lowest-owned minor score.\n\nDuet (Lunar Phases): 20s duration, cycles phases every 5s, 4min cooldown. When resonating with Moonlight Sonata Major, all phases are active simultaneously.";
+            public const string IncisorOfMoonlight = "Passive: Moonlight Strike — Every 4th click grants bonus notes equal to 1% of your current notes (5% during nighttime 8PM to 6AM).\n\nUpgrade Note: Purchasing the Incisor upgrade grants an immediate 5% increase of current notes.\n\nCrescendance Bond: Piercing Radiance — Each Moonbeam Resonance stack increases the bonus amount by +10% of current notes when stacks are consumed.";
+            public const string EulogyOfTheMoon = "Passive: Nocturnal Refund — On minor score craft: 25% chance to refund all crafting materials (50% during nighttime 8PM to 6AM).\n\nCrescendance Bond: Requiem of Renewal — Consuming one Harmonizing Moonlight stack grants 3 Moonbeam Resonance stacks. If Moonbeam stacks reach 8, they auto-convert (in blocks of 8) into 1 Harmonizing Moonlight and each conversion grants +100% of your current notes. Also grants +1 Key, +1 Scale, and +1 Progression to the lowest-owned minor score.";
             
             // Eroica
-            public const string SakurasBlossom = "Passive: Heroic Bounty — On Major craft: grant 1 Key, 1 Scale, and 1 Progression for that score's associated minor.\n\nCrescendance Bond: Crimson Requiem — When a Symphonic Catharsis is consumed, the next 30 clicks are Blossom Crits that award immediate notes equal to NPC + (NPS × NPC).\n\nDuet: Victory March — Fill a 100-click bar for escalating rewards. 5 minute cooldown.";
-            public const string FuneralPrayer = "Passive: Prayer of Valor — Every 10th click grants 1 Prayer stack. At 3 Prayer stacks they are consumed to trigger 15 Retribution Crits: the next 15 clicks each grant an additional +6 × Notes Per Second as instant notes.\n\nCrescendance Bond: Testament of Harmony — When a Symphonic Catharsis is consumed, gain +1 Testament of Harmony. Consuming 1 Testament grants +100 Melodious, +100 Harmonious, and immediate notes equal to NPS × 10.\n\nDuet: Victory March — Fill a 100-click bar for escalating rewards. 5 minute cooldown.";
+            public const string SakurasBlossom = "Passive: Heroic Bounty — On Major craft: grant 1 Key, 1 Scale, and 1 Progression for that score's associated minor.\n\nCrescendance Bond: Crimson Requiem — When a Symphonic Catharsis is consumed, the next 30 clicks are Blossom Crits that award immediate notes equal to Notes Per Click + (Notes Per Second × Notes Per Click).";
+            public const string FuneralPrayer = "Passive: Prayer of Valor — Every 10th click grants 1 Prayer stack. At 3 Prayer stacks, they are consumed to trigger 15 Retribution Crits: the next 15 clicks each grant an additional +6 × Notes Per Second as instant notes.\n\nCrescendance Bond: Testament of Harmony — When a Symphonic Catharsis is consumed, gain +1 Testament of Harmony. Consuming 1 Testament grants +100 Melodious, +100 Harmonious, and immediate notes equal to Notes Per Second × 10.";
             
             // Swan Lake
-            public const string StarScatteredWings = "Passive: Stellar Fragment Rain — Every 10th click grants +5 Melodious and +5 Harmonious Fragments.\n\nCrescendance Bond: Scattered Starlight — While equipped, obtaining any Feather during Swan Lake crescendance grants +1 Scattered Starlight stack (max 5). Scattered Starlight stacks are tracked separately and consumed by other Swan Lake effects.\n\nDuet: Feather Cascade — First 10 clicks of the duet grant all three feather types (Revered, Chromatic, Polyphonic). Milestone clicks within the duet also grant immediate note bonuses. 20s duration | 4 minute cooldown.";
-            public const string ThousandWingedSwan = "Passive: Wings of Fortune — Each time you acquire a new minor score, gain +33 Entropic Melodies.\n\nCrescendance Bond: Wings of Velocity — Consuming Polyphonic Feathers grants a temporary Notes Per Click override for 7 seconds. While active, Notes Per Click is set to NPS × 10^stacks (10 to the power of stacks), where stacks is the number of Polyphonic Feather stacks used (maximum 8 stacks).\n\nDuet: Feather Cascade — First 10 clicks of the duet grant all three feather types (Revered, Chromatic, Polyphonic). Milestone clicks within the duet grant immediate note bonuses. 20s duration | 4 minute cooldown.";
+            public const string StarScatteredWings = "Passive: Stellar Fragment Rain — Every 10th click grants +5 Melodious and +5 Harmonious Fragments.\n\nCrescendance Bond: Scattered Starlight — While equipped, obtaining any Feather during Swan Lake crescendance grants +1 Scattered Starlight stack (max 5). Scattered Starlight stacks are tracked separately and consumed by other Swan Lake effects.";
+            public const string ThousandWingedSwan = "Passive: Wings of Fortune — Each time you acquire a new minor score, gain +33 Entropic Melodies.\n\nCrescendance Bond: Wings of Velocity — Consuming Polyphonic Feathers grants a temporary Notes Per Click override for 7 seconds. While active, Notes Per Click is set to Notes Per Second × 10^stacks (where stacks is the number of Polyphonic Feather stacks used, max 8).";
             
             // La Campanella
-            public const string SymphonyOfBells = "Passive: Harmonic Duplication — On minor score craft: duplicate that minor (+1 extra copy).\n\nCrescendance Bond: Resonant Crack Bonus — When the Grandiose Bell cracks (20/40/60 clicks), gain +1 Deafening Chime stack (applies up to the 15-stack cap).\n\nDuet: Chime Chain — Build click chains within 1s windows for exponential rewards. 10s duration | 10 minute cooldown.";
-            public const string RazerOfBellsChimes = "Passive: Component Echo — On minor score craft: refund 2 random components for that minor.\n\nCrescendance Bond: Entropic Resonance — If mended at Radiant stage, gain +5 Deafening Chime stacks; additionally, when mended at Radiant while this weapon is equipped, grant +50 Entropic Melodies.\n\nDuet: Chime Chain — Build click chains within 1s windows for exponential rewards. 10s duration | 10 minute cooldown.";
+            public const string SymphonyOfBells = "Passive: Harmonic Duplication — On minor score craft: duplicate that minor (+1 extra copy).\n\nCrescendance Bond: Resonant Crack Bonus — When the Grandiose Bell cracks (20/40/60 clicks), gain +1 Deafening Chime stack (applies up to the 15-stack cap).";
+            public const string RazerOfBellsChimes = "Passive: Component Echo — On minor score craft: refund 2 random components for that minor.\n\nCrescendance Bond: Entropic Resonance — If mended at Radiant stage, gain +5 Deafening Chime stacks; additionally, when mended at Radiant while this weapon is equipped, grant +50 Entropic Melodies.";
             
             // Fate
-            public const string AstralChainripper = "Passive: Temporal Surge — On crafting a Fate minor score: temporarily set Notes Per Second to 5× for 10 seconds.\n\nCrescendance Bond: Stellar Convergence — Every 5 Cosmic Modulation stacks gained: grant +1 Symphony of the Stars stack.\n• Symphony of the Stars: Consume 1 stack to add +3 to your lowest-owned minor score.\n\nDuet: Hourglass Reversal — First 10s bank actions; last 10s replay them at X× effectiveness where X equals the clicks performed during banking. 20s duration | 8 minute cooldown.";
-            public const string CosmicWeaver = "Passive: Harmonic Multiplication — On Fate minor craft: if you own an extra copy of that major, gain +3 additional copies of that minor score.\n\nCrescendance Bond: Stellar Cascade — Each Symphony of the Stars consumed grants 5 Stellar Cascade critical clicks (very high multiplier).\n\nDuet: Hourglass Reversal — First 10s bank actions; last 10s replay them at X× effectiveness (X = clicks during banking). 20s duration | 8 minute cooldown.";
+            public const string AstralChainripper = "Passive: Temporal Surge — On crafting a Fate minor score: temporarily set Notes Per Second to 5× for 10 seconds.\n\nCrescendance Bond: Stellar Convergence — Every 5 Cosmic Modulation stacks gained: grant +1 Symphony of the Stars stack.\n• Symphony of the Stars: Consume 1 stack to add +3 to your lowest-owned minor score.";
+            public const string CosmicWeaver = "Passive: Harmonic Multiplication — On Fate minor craft: if you own an extra copy of that major, gain +3 additional copies of that minor score.\n\nCrescendance Bond: Stellar Cascade — Each Symphony of the Stars consumed grants 5 Stellar Cascade critical clicks (very high multiplier).";
             
             // Enigma
-            public const string CreatorOfMystery = "Passive: Chaotic Flux — Every 3rd click: ±25% of current notes (60% chance positive, 40% chance negative).\n\nCrescendance Bond: Accelerated Mystery — While equipped, every 15th click grants +1 additional Resonant Mystery stack.\n\nDuet: Mystery Clicks — 10s duration | 30 minute cooldown.";
-            public const string Truthseeker = "Passive: Revelation Burst — On weapon upgrade purchase, immediately gain +5 Resonant Mystery stacks.\n\nCrescendance Bond: Knowledge Harvest — Consume 2 Resonant Mystery stacks to gain +1 random owned minor score.\n\nDuet: Mystery Clicks — 10s duration | 30 minute cooldown.";
+            public const string CreatorOfMystery = "Passive: Chaotic Flux — Every 3rd click: ±25% of current notes (60% chance positive, 40% chance negative).\n\nCrescendance Bond: Accelerated Mystery — While equipped, every 15th click grants +1 additional Resonant Mystery stack.";
+            public const string Truthseeker = "Passive: Revelation Burst — On weapon upgrade purchase, immediately gain +5 Resonant Mystery stacks.\n\nCrescendance Bond: Knowledge Harvest — For every 2 Resonant Mystery stacks consumed, gain +1 random owned minor score.";
             
             // Ode to Joy
-            public const string JoyfulCatharsis = "Passive: Harmonic Entropy - Every 50th click: +15 Entropic Melodies.\n\nCrescendance Bond: Euphoric Resonance - Every time you gain any Petal: double Notes Per Second for 5 seconds (effect stacks).\n\nDuet: Crescendo Conductor - Build melodies for escalating rewards. 20s duration, 10min cooldown.";
-            public const string OdeToCreation = "Passive: Life Genesis - Every 20th click: generate random Petal (50% Harmony, 50% Melody).\n\nCrescendance Bond: Life Amplification - When Ode to Life is consumed: double petal generation for 25 seconds (generates petals every 10th click instead).\n\nDuet: Crescendo Conductor - Build melodies for escalating rewards. 20s duration, 10min cooldown.";
+            public const string JoyfulCatharsis = "Passive: Harmonic Entropy — Every 50th click grants +15 Entropic Melodies.\n\nCrescendance Bond: Euphoric Resonance — Every time you gain any Petal (Harmony or Melody), immediately grants a 5 second double Notes Per Second effect; multiple grants stack their durations.";
+            public const string OdeToCreation = "Passive: Life Genesis — Every 20th click generates a random Petal (50% Harmony, 50% Melody).\n\nCrescendance Bond: Life Amplification — When Ode to Life is consumed, petal generation is doubled for 25 seconds (petals are generated every 10th click during this period).";
             
             // Dies Irae
-            public const string SevenCircles = "Passive: Wrathful Amplification — Every critical hit grants bonus notes equal to 20% of your current notes.\n\nCrescendance Bond: Seal Resonance — Symphony of Hell's Retribution critical hits generate Wrathful Seals. Consuming 1 Wrathful Seal converts into 5 Seal-breaking Melody critical clicks (these crits use a heavy damage multiplier: 2 × NPC × NPS × Dissonant Hatred).\n\nDuet: Infernal Symphony — During the duet, Seal-breaking Melody crits also grant Wrathful Seals. If you have 15 or more Wrathful Seals you may consume them to make your next 5 clicks double your current notes. 20s duration | 10 minute cooldown.";
-            public const string HellsWrath = "Passive: Infernal Bounty — Every 20th click grants +2 to each of your two lowest-owned minor scores (ties chosen randomly).\n\nCrescendance Bond: Entropic Fury — Dies Irae critical hits grant Entropic Melodies:\n• Each Symphony of Hell's Retribution critical hit: +50 Entropic Melodies.\n• Each Seal-breaking Melody critical hit: +50 Entropic Melodies.\n\nDuet: Infernal Symphony — During duet, Seal-breaking Melody crits return Wrathful Seals; consuming 15+ Seals lets you convert them to five clicks that double your current notes. 20s duration | 10 minute cooldown.";
+            public const string SevenCircles = "Passive: Wrathful Amplification — Every critical hit grants bonus notes equal to 20% of your current notes.\n\nCrescendance Bond: Seal Resonance — Symphony of Hell's Retribution critical hits generate Wrathful Seals. Consuming 1 Wrathful Seal converts into 5 Seal-breaking Melody critical clicks (these crits use a heavy damage multiplier: 2 × Notes Per Click × Notes Per Second × Dissonant Hatred).";
+            public const string HellsWrath = "Passive: Infernal Bounty — Every 20th click grants +2 to each of your two lowest-owned minor scores (ties chosen randomly).\n\nCrescendance Bond: Entropic Fury — Dies Irae critical hits grant Entropic Melodies:\n• Each Symphony of Hell's Retribution critical hit: +50 Entropic Melodies.\n• Each Seal-breaking Melody critical hit: +50 Entropic Melodies.";
             
             // Winter
-            public const string CacophonicBlizzard = "Passive: Permafrost Strikes - Every 20th click freezes NPS for 5 seconds and grants your next 20 clicks +50% notes each.\n\nCrescendance Bond: Snow's Oblivion - When you consume Eternal Frost stacks, gain +2 Snow's Oblivion. Consume 1 Snow's Oblivion for +X Entropic Melodies (X = total upgrades owned).\n\nDuet: Symphony of Absolute Zero - Freezes NPS for 20s. Every click grants +1 Frigid Melody and extends duration by +0.5s (max +10s). 20s duration, 4min cooldown.";
-            public const string TheSnowsDesire = "Passive: Accelerating Flurry - Every click grants +1% Notes Per Click (max +50%). Decays to 0% after 5 seconds of no clicking. Current bonus displayed in Crescendance panel.\n\nCrescendance Bond: Frigid Resonance - Whenever you gain 1 Frigid Melody stack, gain +1 bonus stack (doubling effect).\n\nDuet: Symphony of Absolute Zero - Freezes NPS for 20s. Every click grants +1 Frigid Melody and extends duration by +0.5s (max +10s). 20s duration, 4min cooldown.";
+            public const string CacophonicBlizzard = "Passive: Permafrost Strikes — Every 20th click freezes Notes Per Second for 5 seconds and grants your next 20 clicks +50% notes each (applied immediately as bonus notes).\n\nCrescendance Bond: Snow's Oblivion — When Eternal Frost is consumed, gain +2 Snow's Oblivion stacks. Consume 1 Snow's Oblivion to gain Entropic Melodies equal to your total upgrades owned.";
+            public const string TheSnowsDesire = "Passive: Accelerating Flurry — Every click grants +1% Notes Per Click (max +50%). Decays to 0% after 5 seconds of no clicking. Current bonus displayed in Crescendance panel.\n\nCrescendance Bond: Frigid Resonance — Whenever you gain 1 Frigid Melody stack, gain +1 bonus stack (doubling effect).";
+            
+            // Clair de Lune
+            public const string ClockworksHarmony = "Passive: Timeless Echo — Every 15th click grants +5% current notes and +1 random minor score.\n\nCrescendance Bond: Shatterchord Surge — While resonating with Clair de Lune, gain Temporal Overture every 10th click instead of every 12th.";
+            public const string MetronomicDissonance = "Passive: Chrono Shift — On major craft, grant +2 Temporal Overture per clock hand configured (up to 4 stacks: 2 hour + 2 minute).\n\nCrescendance Bond: Syncopated Rupture — While resonating with Clair de Lune, consume effects grant double rewards (M1: +50/+50 fragments, M8: +100% notes).";
         }
 
         // ============================================================
@@ -351,6 +417,7 @@ Duet: Symphony of Absolute Zero — Freezes NPS for 20 seconds. Each click durin
                 public const string Enigma = "Enigmatic Puzzle:\nMystery Clicks";
                 public const string Fate = "Threads of Destiny:\nHourglass Reversal";
                 public const string OdeToJoy = "Symphony of Celebration:\nCrescendo Conductor";
+                public const string ClairDeLune = "Sonata of Shattered Hours:\nSymphony of Broken Time";
             }
 
             public static class Full
@@ -376,6 +443,7 @@ Duet: Symphony of Absolute Zero — Freezes NPS for 20 seconds. Each click durin
                 public const string LaCampanella = "Chime Chain: First click creates a chime. Each click within 1 second extends the chain. Chain gives length² × Notes Per Second as instant notes. Chain breaks after 1 second of no clicks - 10 second duration, 10 minute cooldown.";
                 public const string Enigma = "Mystery Clicks: Each click triggers 1 random effect (Red: 5× Notes Per Second notes, Blue: 10% Notes Per Second boost, Green: 30 Harmonious Fragments, Yellow: 30 Melodious Fragments, Purple: +1 major per owned, Orange: +1 minor component per owned, White: +1 to 3 random minors, Black: -65% notes) - 10 second duration, 30 minute cooldown.";
                 public const string Fate = "Hourglass Reversal: All actions during first 10 seconds replay during last 10 seconds at X× effectiveness where X = clicks performed (20 second duration, 8 minute cooldown).";
+                public const string ClairDeLune = "Symphony of Broken Time:\n• 12-click sequence — every 4 clicks grants unique rewards:\n   - 1st set: Triple current notes\n   - 2nd set: +75% Entropic Melodies\n   - 3rd set: +5 to a random owned minor score\n   - 4th set: +5 to a random owned major score\n• Complete the sequence to double all minor scores\n\nCooldown: 6 minutes.";
                 public const string OdeToJoy = "Crescendo Conductor: Build 16-note melodies (repeatable/stackable). Rewards at 4/8/12/16 notes (+25 fragments, +5 Petals of Harmony, +5 Petals of Melody, +1 Ode to Life). On expiry: +3 Entropic Melodies per completed section - 20 second duration, 10 minute cooldown.";
             }
 
@@ -426,6 +494,7 @@ Duet: Symphony of Absolute Zero — Freezes NPS for 20 seconds. Each click durin
                 "Ode to Joy" => MajorScores.OdeToJoy,
                 "Dies Irae" => MajorScores.DiesIrae,
                 "Winter" => MajorScores.Winter,
+                "Clair de Lune" => MajorScores.ClairDeLune,
                 _ => $"No description available for: {scoreName}"
             };
         }
@@ -455,6 +524,8 @@ Duet: Symphony of Absolute Zero — Freezes NPS for 20 seconds. Each click durin
                 "Hell's Wrath" => Weapons.HellsWrath,
                 "Cacophonic Blizzard" => Weapons.CacophonicBlizzard,
                 "The Snow's Desire" => Weapons.TheSnowsDesire,
+                "Clockwork's Harmony" => Weapons.ClockworksHarmony,
+                "Metronomic Dissonance" => Weapons.MetronomicDissonance,
                 _ => $"No description available for: {weaponName}"
             };
         }
@@ -484,6 +555,8 @@ Duet: Symphony of Absolute Zero — Freezes NPS for 20 seconds. Each click durin
                 "Hell's Wrath" => ForteResonance.HellsWrath,
                 "Cacophonic Blizzard" => ForteResonance.CacophonicBlizzard,
                 "The Snow's Desire" => ForteResonance.TheSnowsDesire,
+                "Clockwork's Harmony" => ForteResonance.ClockworksHarmony,
+                "Metronomic Dissonance" => ForteResonance.MetronomicDissonance,
                 _ => "Forte Resonance: <placeholder>"
             };
         }

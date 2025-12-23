@@ -2,62 +2,62 @@
            CLAIR DE LUNE MAJOR SCORE
 ===================================================
 
-CRESCENDANCE ABILITY: Clockwork Symphony
+CRECENDANCE ABILITY: Sonata of Shattered Hours
 ---------------------------------------------------
 
 CORE MECHANIC - Clock Configuration:
 You choose where the hour and minute hands point on a clock face.
-Each position provides unique effects and stack mechanics.
+Each position provides unique effects and stack mechanics, themed to shattered time and musical resonance.
 
 ---------------------------------------------------
-HOUR HAND POSITIONS:
+HOUR HAND POSITIONS (Effects):
 ---------------------------------------------------
 
-Hour Hand on 12:
-• Every 3rd, 6th, 9th, and 12th click give 1 stack of "Clockwork Forte"
+Hour Hand on 12 (Temporal Overture):
+• Every 3rd, 6th, 9th, and 12th click give 1 stack of "Resonant Shard"
 
-Hour Hand on 3:
-• Consume 1 stack of Clockwork Forte to give yourself:
+Hour Hand on 3 (Shatterchord Surge):
+• Consume 1 stack of Resonant Shard to give yourself:
   - +50% Notes to your current notes
   - +2% Entropic Melodies
 
-Hour Hand on 6:
-• Every 6th click gives you 1 stack of "Temporal Harmony"
+Hour Hand on 6 (Fractal Modulation):
+• Every 6th click gives you 1 stack of "Tempo Fragment"
 
-Hour Hand on 9:
-• Consume 1 stack of Temporal Harmony to give your next 10 clicks a special critical:
-  - "Era of the Music's Chronos"
+Hour Hand on 9 (Syncopated Rupture):
+• Consume 1 stack of Tempo Fragment to give your next 10 clicks a special critical:
+  - "Cadenza Cataclysm"
   - Gives +X notes where X = ((NPS^9)/5)
 
 ---------------------------------------------------
-MINUTE HAND POSITIONS:
+MINUTE HAND POSITIONS (Criticals/Effects):
 ---------------------------------------------------
 
-Minute Hand on 1:
-• On gain of Temporal Harmony stack, your next 3 clicks will give you +1.5% Entropic Melodies
+Minute Hand on 1 (Cadenza Cataclysm):
+• On gain of Tempo Fragment stack, your next 3 clicks will give you +1.5% Entropic Melodies
 
-Minute Hand on 2:
-• On gain of Clockwork Forte stack, your next 2 clicks are guaranteed "Entropic Crescendo of Eternity" critical
+Minute Hand on 2 (Infinity Arpeggio):
+• On gain of Resonant Shard stack, your next 2 clicks are guaranteed "Infinity Arpeggio" critical
 
-Minute Hand on 4:
+Minute Hand on 4 (Prismal Crescendo):
 • Every time you gain Entropic Melodies, increase your current notes by 0.1% per Entropic Melodies gained
 
-Minute Hand on 5:
-• Consume 3 stacks of Clockwork Forte to give yourself +5 to all owned minor scores
+Minute Hand on 5 (Refrain of Endless Measures):
+• Consume 3 stacks of Resonant Shard to give yourself +5 to all owned minor scores
 
-Minute Hand on 7:
-• Consume 20 stacks of Clockwork Forte to give yourself:
-  - 1 Clair De Lune Major
+Minute Hand on 7 (Sonata of Shattered Hours):
+• Consume 20 stacks of Resonant Shard to give yourself:
+  - 1 Major Score
   - +15% Entropic Melodies
 
-Minute Hand on 8:
-• Consume 8 stacks of Temporal Harmony to give yourself +5 to every owned major
+Minute Hand on 8 (Duet: Symphony of Broken Time):
+• Consume 8 stacks of Tempo Fragment to give yourself +5 to every owned major
 
-Minute Hand on 10:
-• For each Clockwork Forte stack consumed, your next click gives +X notes
+Minute Hand on 10 (Power Spike):
+• For each Resonant Shard consumed, your next click gives +X notes
   - X = (NPC^# of stacks consumed prior to this click)
 
-Minute Hand on 11:
+Minute Hand on 11 (Glass Forte):
 • If your notes per second exceeds 1 Quintillion, every 12th click gives you 1 stack of "Clock of Eternity"
 
 ---------------------------------------------------

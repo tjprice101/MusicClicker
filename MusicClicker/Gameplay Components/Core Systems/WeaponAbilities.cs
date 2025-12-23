@@ -16,6 +16,127 @@ namespace MusicClicker.Armory
     /// </summary>
     public static class WeaponAbilities
     {
+        // =================== CLAIR DE LUNE MAJOR SCORE EFFECTS ===================
+            public static void ClairDeLune_OnClick(GameState gameState)
+            {
+                // Track click count for hour/minute hand logic
+                gameState.ClairDeLuneLastClickCount++;
+
+                // Hour Hand Effects
+                if (gameState.ClairDeLuneHourHand == 12 && (gameState.ClairDeLuneLastClickCount % 3 == 0 || gameState.ClairDeLuneLastClickCount % 6 == 0 || gameState.ClairDeLuneLastClickCount % 9 == 0 || gameState.ClairDeLuneLastClickCount % 12 == 0))
+                    gameState.ResonantShardStacks++;
+                if (gameState.ClairDeLuneHourHand == 3 && gameState.ResonantShardStacks > 0)
+                {
+                    gameState.ResonantShardStacks--;
+                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, gameState.Notes * 0.5);
+                    gameState.EntropicMelodies += (int)(gameState.EntropicMelodies * 0.02);
+                }
+                if (gameState.ClairDeLuneHourHand == 6 && gameState.ClairDeLuneLastClickCount % 6 == 0)
+                    gameState.TempoFragmentStacks++;
+                if (gameState.ClairDeLuneHourHand == 9 && gameState.TempoFragmentStacks > 0)
+                {
+                    gameState.TempoFragmentStacks--;
+                    gameState.ClairDeLuneCadenzaCataclysmClicks = 10;
+                }
+
+                // Minute Hand Effects
+                if (gameState.ClairDeLuneMinuteHand == 1 && gameState.TempoFragmentStacks > 0)
+                {
+                    gameState.ClairDeLuneCadenzaCataclysmClicks = 3;
+                }
+                if (gameState.ClairDeLuneMinuteHand == 2 && gameState.ResonantShardStacks > 0)
+                {
+                    gameState.ClairDeLuneInfinityArpeggioClicks = 2;
+                }
+                if (gameState.ClairDeLuneMinuteHand == 4 && gameState.EntropicMelodies > 0)
+                {
+                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, gameState.Notes * (gameState.EntropicMelodies * 0.001));
+                }
+                if (gameState.ClairDeLuneMinuteHand == 5 && gameState.ResonantShardStacks >= 3)
+                {
+                    gameState.ResonantShardStacks -= 3;
+                    gameState.MoonlightMinorOwned += 5;
+                    gameState.EroicaMinorOwned += 5;
+                    gameState.SwanMinorOwned += 5;
+                    gameState.LaCampanellaMinorOwned += 5;
+                    gameState.EnigmaMinorOwned += 5;
+                    gameState.FateMinorOwned += 5;
+                    gameState.OdeToJoyMinorOwned += 5;
+                }
+                if (gameState.ClairDeLuneMinuteHand == 7 && gameState.ResonantShardStacks >= 20)
+                {
+                    gameState.ResonantShardStacks -= 20;
+                    gameState.ClairDeLuneMajorOwned += 1;
+                    gameState.EntropicMelodies += (int)(gameState.EntropicMelodies * 0.15);
+                }
+                if (gameState.ClairDeLuneMinuteHand == 8 && gameState.TempoFragmentStacks >= 8)
+                {
+                    gameState.TempoFragmentStacks -= 8;
+                    gameState.MoonlightMajorOwned += 5;
+                    gameState.EroicaMajorOwned += 5;
+                    gameState.SwanMajorOwned += 5;
+                    gameState.LaCampanellaMajorOwned += 5;
+                    gameState.EnigmaMajorOwned += 5;
+                    gameState.FateMajorOwned += 5;
+                    gameState.OdeToJoyMajorOwned += 5;
+                }
+                if (gameState.ClairDeLuneMinuteHand == 10 && gameState.ResonantShardStacks > 0)
+                {
+                    int stacks = gameState.ResonantShardStacks;
+                    gameState.ResonantShardStacks = 0;
+                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, gameState.NotesPerClick * Math.Pow(stacks, stacks));
+                }
+                if (gameState.ClairDeLuneMinuteHand == 11 && gameState.NotesPerSecond > 1e18 && gameState.ClairDeLuneLastClickCount % 12 == 0)
+                {
+                    gameState.ClockOfEternityStacks++;
+                }
+
+                // Custom Stack Consumption (Clockwork Forte, Temporal Harmony, Clock of Eternity)
+                // Example: Weapon 1 Crescendance
+                if (gameState.ClockOfEternityStacks > 0 && gameState.ClockworksHarmonyAbility)
+                {
+                    gameState.ClockOfEternityStacks--;
+                    // Grant criticals or other effects as needed
+                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, gameState.Notes * 2);
+                }
+
+                // Weapon Bonds
+                // Weapon 1: Refund 50% Entropic Melodies spent
+                if (gameState.ClockworksHarmony && gameState.ClairDeLuneRefundEntropic)
+                {
+                    int refund = (int)(gameState.EntropicMelodiesSpent * 0.5);
+                    gameState.EntropicMelodies += refund;
+                    gameState.ClairDeLuneRefundEntropic = false;
+                }
+                // Weapon 2: 10% chance to refund custom stack on consume
+                if (gameState.MetronomicDissonance && gameState.ClairDeLuneWeapon2RefundStack)
+                {
+                    if (_random.NextDouble() < 0.1)
+                    {
+                        gameState.ResonantShardStacks++;
+                    }
+                    gameState.ClairDeLuneWeapon2RefundStack = false;
+                }
+                // Weapon 2 Crescendance: On Temporal Harmony gain, +2 to 5 random majors
+                if (gameState.MetronomicDissonanceAbility && gameState.TemporalHarmonyStacks > 0)
+                {
+                    for (int i = 0; i < 5; i++)
+                    {
+                        int pick = _random.Next(7);
+                        switch (pick)
+                        {
+                            case 0: gameState.MoonlightMajorOwned += 2; break;
+                            case 1: gameState.EroicaMajorOwned += 2; break;
+                            case 2: gameState.SwanMajorOwned += 2; break;
+                            case 3: gameState.LaCampanellaMajorOwned += 2; break;
+                            case 4: gameState.EnigmaMajorOwned += 2; break;
+                            case 5: gameState.FateMajorOwned += 2; break;
+                            case 6: gameState.OdeToJoyMajorOwned += 2; break;
+                        }
+                    }
+                }
+            }
+    // Removed misplaced curly brace
         // Static Random instance to avoid creating new instances on every call (performance optimization)
         private static readonly Random _random = new Random();
         
@@ -3463,8 +3584,8 @@ namespace MusicClicker.Armory
                     }
                     
                     // Weapon 2 (Temporal Refractor) Crescendance Bond: +12 of 3 random minors
-                    if (gameState.TemporalRefractorAbility && 
-                        (gameState.CurrentResonatedWeapon1 == "TemporalRefractor" || gameState.CurrentResonatedWeapon2 == "TemporalRefractor"))
+                    if (gameState.MetronomicDissonanceAbility && 
+                        (gameState.CurrentResonatedWeapon1 == "MetronomicDissonance" || gameState.CurrentResonatedWeapon2 == "MetronomicDissonance"))
                     {
                         ClairWeapon2_OnClockworkForteGain(gameState);
                     }
@@ -3485,8 +3606,8 @@ namespace MusicClicker.Armory
                     }
                     
                     // Weapon 2 (Temporal Refractor) Crescendance Bond: +2 to 5 random majors
-                    if (gameState.TemporalRefractorAbility && 
-                        (gameState.CurrentResonatedWeapon1 == "TemporalRefractor" || gameState.CurrentResonatedWeapon2 == "TemporalRefractor"))
+                    if (gameState.MetronomicDissonanceAbility && 
+                        (gameState.CurrentResonatedWeapon1 == "MetronomicDissonance" || gameState.CurrentResonatedWeapon2 == "MetronomicDissonance"))
                     {
                         ClairWeapon2_OnTemporalHarmonyGain(gameState);
                     }
@@ -3643,9 +3764,9 @@ namespace MusicClicker.Armory
         private static int AttemptClairStackRefund(GameState gameState, int stacksToConsume)
         {
             // Check if Weapon 2 is equipped and active
-            if (!gameState.TemporalRefractorAbility) return stacksToConsume;
-            if (gameState.CurrentResonatedWeapon1 != "TemporalRefractor" && 
-                gameState.CurrentResonatedWeapon2 != "TemporalRefractor") return stacksToConsume;
+            if (!gameState.MetronomicDissonanceAbility) return stacksToConsume;
+            if (gameState.CurrentResonatedWeapon1 != "MetronomicDissonance" && 
+                gameState.CurrentResonatedWeapon2 != "MetronomicDissonance") return stacksToConsume;
             
             Random rng = new Random();
             if (rng.NextDouble() < 0.10) // 10% chance
@@ -3757,9 +3878,9 @@ namespace MusicClicker.Armory
         /// </summary>
         public static void ClairWeapon1_OnEntropicSpend(GameState gameState, int amountSpent)
         {
-            if (!gameState.EverlastingMelodyAbility) return;
-            if (gameState.CurrentResonatedWeapon1 != "EverlastingMelody" && 
-                gameState.CurrentResonatedWeapon2 != "EverlastingMelody") return;
+            if (!gameState.ClockworksHarmonyAbility) return;
+            if (gameState.CurrentResonatedWeapon1 != "ClockworksHarmony" && 
+                gameState.CurrentResonatedWeapon2 != "ClockworksHarmony") return;
             
             int refund = (int)(amountSpent * 0.5);
             gameState.EntropicMelodies += refund;

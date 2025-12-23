@@ -135,7 +135,9 @@ namespace MusicClicker
             "SevenCircles",
             "HellsWrath",
             "CacophonicBlizzard",
-            "TheSnowsDesire"
+            "TheSnowsDesire",
+            "ClockworksHarmony",
+            "MetronomicDissonance"
         };
 
         // Mapping of weapon names → image asset paths (Armory of Forte)
@@ -159,6 +161,9 @@ namespace MusicClicker
             {"HellsWrath", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/Hell'sWrath.png"},
             {"CacophonicBlizzard", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/CacophonicBlizzard.png"},
             {"TheSnowsDesire", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/TheSnow'sDesire.png"}
+        ,
+        {"ClockworksHarmony", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/Clockwork'sHarmony.jpg"},
+        {"MetronomicDissonance", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/MetronomicDissonance.jpg"}
         };
 
         // Friendly display names for weapons (internal key -> UI string)
@@ -182,6 +187,9 @@ namespace MusicClicker
             {"HellsWrath", "Hell's Wrath"},
             {"CacophonicBlizzard", "Cacophonic Blizzard"},
             {"TheSnowsDesire", "The Snow's Desire"}
+        ,
+        {"ClockworksHarmony", "Clockwork's Harmony"},
+        {"MetronomicDissonance", "Metronomic Dissonance"}
         };
 
         // Cache of already-loaded bitmaps
@@ -767,61 +775,13 @@ namespace MusicClicker
 
         private string GetDuetText(string weapon1, string weapon2)
         {
-            // Check for matching pairs from the same score
-            if ((weapon1 == "IncisorOfMoonlight" && weapon2 == "EulogyOfTheMoon") ||
-                (weapon1 == "EulogyOfTheMoon" && weapon2 == "IncisorOfMoonlight"))
+            // Clair de lune Duet: ClockworksHarmony + MetronomicDissonance
+            if ((weapon1 == "ClockworksHarmony" && weapon2 == "MetronomicDissonance") ||
+                (weapon1 == "MetronomicDissonance" && weapon2 == "ClockworksHarmony"))
             {
-                return DuetDescriptions.Compact.Moonlight;
+                return DuetDescriptions.Compact.ClairDeLune;
             }
-
-            if ((weapon1 == "SakurasBlossom" && weapon2 == "FuneralPrayer") ||
-                (weapon1 == "FuneralPrayer" && weapon2 == "SakurasBlossom"))
-            {
-                return DuetDescriptions.Compact.Eroica;
-            }
-
-            if ((weapon1 == "StarScatteredWings" && weapon2 == "ThousandWingedSwan") ||
-                (weapon1 == "ThousandWingedSwan" && weapon2 == "StarScatteredWings"))
-            {
-                return DuetDescriptions.Compact.SwanLake;
-            }
-
-            if ((weapon1 == "SymphonyOfBells" && weapon2 == "RazerOfBellsChimes") ||
-                (weapon1 == "RazerOfBellsChimes" && weapon2 == "SymphonyOfBells"))
-            {
-                return DuetDescriptions.Compact.LaCampanella;
-            }
-
-            if ((weapon1 == "CreatorOfMystery" && weapon2 == "Truthseeker") ||
-                (weapon1 == "Truthseeker" && weapon2 == "CreatorOfMystery"))
-            {
-                return DuetDescriptions.Compact.Enigma;
-            }
-
-            if ((weapon1 == "AstralChainripper" && weapon2 == "CosmicWeaver") ||
-                (weapon1 == "CosmicWeaver" && weapon2 == "AstralChainripper"))
-            {
-                return DuetDescriptions.Compact.Fate;
-            }
-
-            if ((weapon1 == "JoyfulCatharsis" && weapon2 == "OdeToCreation") ||
-                (weapon1 == "OdeToCreation" && weapon2 == "JoyfulCatharsis"))
-            {
-                return DuetDescriptions.Compact.OdeToJoy;
-            }
-
-            if ((weapon1 == "SevenCircles" && weapon2 == "HellsWrath") ||
-                (weapon1 == "HellsWrath" && weapon2 == "SevenCircles"))
-            {
-                return DuetDescriptions.Compact.DiesIrae;
-            }
-
-            if ((weapon1 == "CacophonicBlizzard" && weapon2 == "TheSnowsDesire") ||
-                (weapon1 == "TheSnowsDesire" && weapon2 == "CacophonicBlizzard"))
-            {
-                return DuetDescriptions.Compact.Winter;
-            }
-
+            // (Other duets can be added here as needed)
             return "";
         }
 

@@ -5,7 +5,7 @@ namespace MusicClicker
     /// </summary>
     public static class DuetDescriptions
     {
-        // Delegate all properties to GameDescriptions.Duets
+        // All duet names and descriptions are now updated in GameDescriptions.Duets
         public static class Names
         {
             public static string Moonlight => GameDescriptions.Duets.Names.Moonlight;
@@ -43,6 +43,7 @@ namespace MusicClicker
             public static string Enigma => GameDescriptions.Duets.Short.Enigma;
             public static string Fate => GameDescriptions.Duets.Short.Fate;
             public static string OdeToJoy => GameDescriptions.Duets.Short.OdeToJoy;
+            public static string ClairDeLune => GameDescriptions.Duets.Short.ClairDeLune;
         }
 
         public static class Short

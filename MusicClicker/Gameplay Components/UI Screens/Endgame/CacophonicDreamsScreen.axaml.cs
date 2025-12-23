@@ -26,7 +26,8 @@ namespace MusicClicker.Views
         private DispatcherTimer? _bossFightTimer;
         private BossFightManager.BossType? _activeBossType;
         private Dictionary<int, Border> _noteElements = new();
-        
+        private DispatcherTimer? _countdownTimer;
+
         public CacophonicDreamsScreen()
         {
             InitializeComponent();
@@ -58,6 +59,10 @@ namespace MusicClicker.Views
                 Interval = TimeSpan.FromMilliseconds(100) // Update 10 times per second
             };
             _bossFightTimer.Tick += BossFightTimer_Tick;
+            
+            _countdownTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
+            _countdownTimer.Tick += CountdownTimer_Tick;
+            _countdownTimer.Start();
         }
         
         /// <summary>
@@ -820,6 +825,34 @@ namespace MusicClicker.Views
                     _parentWindow.MainScreen.IsVisible = true;
                 });
             }
+        }
+
+        private DateTime GetNextWednesdayNoon()
+        {
+            var now = DateTime.Now;
+            int daysUntilWednesday = ((int)DayOfWeek.Wednesday - (int)now.DayOfWeek + 7) % 7;
+            if (daysUntilWednesday == 0 && now.Hour >= 12)
+                daysUntilWednesday = 7; // If today is Wednesday past noon, go to next week
+            
+            var nextWednesday = now.Date.AddDays(daysUntilWednesday);
+            return new DateTime(nextWednesday.Year, nextWednesday.Month, nextWednesday.Day, 12, 0, 0);
+        }
+
+        private void CountdownTimer_Tick(object? sender, EventArgs e)
+        {
+            var nextWednesday = GetNextWednesdayNoon();
+            var now = DateTime.Now;
+            var remaining = nextWednesday - now;
+            string formatted = remaining.TotalSeconds > 0
+                ? $"Time until next Wednesday: {remaining.Days}d {remaining.Hours:D2}:{remaining.Minutes:D2}:{remaining.Seconds:D2}"
+                : "Time until next Wednesday: 0d 00:00:00";
+            
+            if (MercuryCountdownText != null)
+                MercuryCountdownText.Text = formatted;
+            if (TonalityCountdownText != null)
+                TonalityCountdownText.Text = formatted;
+            if (MarsCountdownText != null)
+                MarsCountdownText.Text = formatted;
         }
     }
 }

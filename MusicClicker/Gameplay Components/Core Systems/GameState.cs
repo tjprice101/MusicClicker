@@ -11,6 +11,25 @@ namespace MusicClicker
 {
     public class GameState
     {
+        // Clair de Lune custom stacks and flags
+        public int ResonantShardStacks { get; set; } = 0;
+        public int TempoFragmentStacks { get; set; } = 0;
+        public int ClockworkForteStacks { get; set; } = 0;
+        public int TemporalHarmonyStacks { get; set; } = 0;
+        public int ClockOfEternityStacks { get; set; } = 0;
+        public int ClairDeLuneHourHand { get; set; } = 12;
+        public int ClairDeLuneMinuteHand { get; set; } = 1;
+        public int ClairDeLunePowerSpikePending { get; set; } = 0;
+        public int ClairDeLuneCadenzaCataclysmClicks { get; set; } = 0;
+        public int ClairDeLuneInfinityArpeggioClicks { get; set; } = 0;
+        public int ClairDeLuneGlassFortePending { get; set; } = 0;
+        public int ClairDeLuneRefrainPending { get; set; } = 0;
+        public int ClairDeLuneSonataPending { get; set; } = 0;
+        public int ClairDeLuneSymphonyPending { get; set; } = 0;
+        public int ClairDeLuneLastClickCount { get; set; } = 0;
+        public bool ClairDeLuneRefundEntropic { get; set; } = false;
+        public bool ClairDeLuneWeapon2RefundStack { get; set; } = false;
+    // Removed misplaced curly brace
         // Save format version - keep this field to support future migrations.
         public int SaveVersion = 2;
 
@@ -262,13 +281,7 @@ namespace MusicClicker
         // ==================== CLAIR DE LUNE CRESCENDANCE: CLOCKWORK SYMPHONY ====================
         
         // Clock Configuration - Hour and Minute hand positions (0-12)
-        public int ClairDeLuneHourHand { get; set; } = 12; // Default to 12
-        public int ClairDeLuneMinuteHand { get; set; } = 1; // Default to 1
-        
-        // Custom Stacks
-        public int ClockworkForteStacks { get; set; } = 0; // From hour=12 every 3/6/9/12 click
-        public int TemporalHarmonyStacks { get; set; } = 0; // From hour=6 every 6th click
-        public int ClockOfEternityStacks { get; set; } = 0; // From minute=11 when NPS > 1 Quintillion
+        // (Removed duplicate definitions; see top of class for these properties)
         
         // Click counter for Clair De Lune Crescendance
         public int ClairDeLuneClickCounter { get; set; } = 0;
@@ -405,6 +418,8 @@ namespace MusicClicker
         // Currency gained by dissolving major scores
         public int _entropicMelodies = 0;
         public int EntropicMelodies { get => _entropicMelodies; set => _entropicMelodies = value; }
+            // Tracks total Entropic Melodies spent (for refund logic)
+            public int EntropicMelodiesSpent { get; set; } = 0;
         // Armory of Forte - Weapon Ownership booleans (true = owned)
         // Naming uses the weapon identifier (no spaces/special chars) matching displayed names.
         public bool _eulogyOfTheMoon = false;
@@ -764,18 +779,18 @@ namespace MusicClicker
         public bool TheSnowsDesire { get => _theSnowsDesire; set => _theSnowsDesire = value; }
 
         // Clair De Lune weapons (Boss Fight - Tonality)
-        public bool _everlastingMelody = false;
-        public bool EverlastingMelody { get => _everlastingMelody; set => _everlastingMelody = value; }
+        public bool _clockworksHarmony = false;
+        public bool ClockworksHarmony { get => _clockworksHarmony; set => _clockworksHarmony = value; }
 
-        public bool _temporalRefractor = false;
-        public bool TemporalRefractor { get => _temporalRefractor; set => _temporalRefractor = value; }
+        public bool _metronomicDissonance = false;
+        public bool MetronomicDissonance { get => _metronomicDissonance; set => _metronomicDissonance = value; }
 
         // Clair De Lune weapon ability flags
-        public bool _everlastingMelodyAbility = false;
-        public bool EverlastingMelodyAbility { get => _everlastingMelodyAbility; set => _everlastingMelodyAbility = value; }
+        public bool _clockworksHarmonyAbility = false;
+        public bool ClockworksHarmonyAbility { get => _clockworksHarmonyAbility; set => _clockworksHarmonyAbility = value; }
 
-        public bool _temporalRefractorAbility = false;
-        public bool TemporalRefractorAbility { get => _temporalRefractorAbility; set => _temporalRefractorAbility = value; }
+        public bool _metronomicDissonanceAbility = false;
+        public bool MetronomicDissonanceAbility { get => _metronomicDissonanceAbility; set => _metronomicDissonanceAbility = value; }
 
         public string CurrentClickerImage { get; set; } = "avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds & Generic/Music Game Assets [A961E2A]-min.png";
         public string CurrentBackgroundImage { get; set; } = "avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds & Generic/sacredtrevor_A_grand_musical_city_lights_everywhere_popular_shi_d84ff662-c87b-4630-9887-25228f42097b-min.png";

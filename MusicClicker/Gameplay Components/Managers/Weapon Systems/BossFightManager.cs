@@ -326,7 +326,7 @@ namespace MusicClicker.Helpers
             DateTime now = DateTime.UtcNow;
             TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
             DateTime nowEastern = TimeZoneInfo.ConvertTimeFromUtc(now, easternZone);
-            
+
             foreach (var boss in Bosses.Values)
             {
                 if (!boss.LastWeeklyReset.HasValue)
@@ -335,12 +335,12 @@ namespace MusicClicker.Helpers
                     boss.LastWeeklyReset = now;
                     continue;
                 }
-                
+
                 DateTime lastResetEastern = TimeZoneInfo.ConvertTimeFromUtc(boss.LastWeeklyReset.Value, easternZone);
-                
-                // Check if we've passed a Sunday 12:00 PM ET since last reset
-                DateTime nextReset = GetNextSundayNoon(lastResetEastern);
-                
+
+                // Check if we've passed a Wednesday 12:00 PM ET since last reset
+                DateTime nextReset = GetNextWednesdayNoon(lastResetEastern);
+
                 if (nowEastern >= nextReset)
                 {
                     boss.WeeklyCompletions = 0;
@@ -348,20 +348,27 @@ namespace MusicClicker.Helpers
                 }
             }
         }
-        
-        private DateTime GetNextSundayNoon(DateTime fromDate)
+
+        // Helper: Find next Wednesday at 12:00 PM ET from a given date
+        private DateTime GetNextWednesdayNoon(DateTime fromDate)
         {
-            // Find next Sunday at 12:00 PM from the given date
             DateTime candidate = fromDate.Date.AddHours(12);
-            
-            // Move to next Sunday
-            int daysUntilSunday = ((int)DayOfWeek.Sunday - (int)candidate.DayOfWeek + 7) % 7;
-            if (daysUntilSunday == 0 && fromDate >= candidate)
+            int daysUntilWednesday = ((int)DayOfWeek.Wednesday - (int)candidate.DayOfWeek + 7) % 7;
+            if (daysUntilWednesday == 0 && fromDate >= candidate)
             {
-                daysUntilSunday = 7; // If already past noon Sunday, go to next Sunday
+                daysUntilWednesday = 7; // If already past noon Wednesday, go to next Wednesday
             }
-            
-            return candidate.AddDays(daysUntilSunday);
+            return candidate.AddDays(daysUntilWednesday);
+        }
+
+        // Helper: Get time remaining until next Wednesday 12:00 PM ET (for countdown timer)
+        public TimeSpan GetTimeUntilNextReset(BossFight boss)
+        {
+            TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+            DateTime nowEastern = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, easternZone);
+            DateTime lastResetEastern = boss.LastWeeklyReset.HasValue ? TimeZoneInfo.ConvertTimeFromUtc(boss.LastWeeklyReset.Value, easternZone) : nowEastern;
+            DateTime nextReset = GetNextWednesdayNoon(lastResetEastern);
+            return nextReset - nowEastern;
         }
 
         public bool CanFight(BossType bossType)

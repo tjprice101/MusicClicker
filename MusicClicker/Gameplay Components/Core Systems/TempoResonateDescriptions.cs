@@ -5,7 +5,7 @@ namespace MusicClicker
     /// </summary>
     public static class TempoResonateDescriptions
     {
-        // Delegate to central GameDescriptions
+        // All tempo resonate descriptions are now updated in GameDescriptions
         public static string GetDescription(string itemName)
         {
             return GameDescriptions.GetTempoResonateDescription(itemName);

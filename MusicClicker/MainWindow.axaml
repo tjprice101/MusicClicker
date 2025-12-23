@@ -46,6 +46,8 @@
     <Grid>
         <!-- Main Screen -->
         <Grid x:Name="MainScreen" ZIndex="1">
+            <!-- Floating Hover Info Screen -->
+            <Canvas x:Name="HoverInfoCanvas" IsHitTestVisible="False" ZIndex="999" />
             <!-- Grid Structure -->
             <Grid.RowDefinitions>
                 <RowDefinition Height="120" />     <!-- Top Bar -->
@@ -76,20 +78,41 @@
 
                     <!-- Save Button (Left) -->
                     <StackPanel Grid.Column="0" Orientation="Vertical" Spacing="4">
-                        <Border CornerRadius="8">
-                            <Border.Effect>
-                                <DropShadowEffect Color="Black" BlurRadius="12" Opacity="0.7" OffsetX="0" OffsetY="0" />
-                            </Border.Effect>
-                            <Button x:Name="TopSaveButton"
-                                    Width="170"
-                                    Height="85"
-                                    Background="Transparent"
-                                    BorderThickness="0"
-                                    Padding="0">
-                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/UI Buttons &amp; Menus/SaveIcon.png"
-                                       Stretch="Uniform" IsHitTestVisible="False" />
-                            </Button>
-                        </Border>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Border CornerRadius="8">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="12" Opacity="0.7" OffsetX="0" OffsetY="0" />
+                                </Border.Effect>
+                                <Button x:Name="TopSaveButton"
+                                        Width="85"
+                                        Height="85"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Padding="0">
+                                    <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/UI Buttons &amp; Menus/SaveIcon.png"
+                                           Stretch="Uniform" IsHitTestVisible="False" />
+                                </Button>
+                            </Border>
+                            <Border CornerRadius="8">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="12" Opacity="0.7" OffsetX="0" OffsetY="0" />
+                                </Border.Effect>
+                                <Button x:Name="FeedbackButton"
+                                        Width="128"
+                                        Height="72"
+                                        Background="White"
+                                        BorderThickness="2"
+                                        BorderBrush="Black"
+                                        Padding="0">
+                                    <TextBlock Text="Feedback"
+                                               Foreground="Black"
+                                               FontSize="24"
+                                               FontWeight="Bold"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center" />
+                                </Button>
+                            </Border>
+                        </StackPanel>
                         <TextBlock x:Name="SaveStatusText"
                                    Text=""
                                    Foreground="White"
@@ -162,53 +185,59 @@
                     CornerRadius="8"
                     Margin="12,8,6,8"
                     ZIndex="2">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Spacing="6" Margin="10">
-                        <!-- Fragmentation Button -->
-                        <Button x:Name="FragmentationButton"
-                                Width="231"
-                                Height="130"
-                                Background="Transparent"
-                                BorderThickness="0"
-                                Padding="0">
-                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/UI Buttons &amp; Menus/Fragmentation Button-min.png"
-                                   Stretch="Uniform" />
-                        </Button>
+                <StackPanel Orientation="Vertical" Spacing="0">
+                    <!-- Collapse Arrow Button (Left Panel) -->
+                    <Button x:Name="LeftPanelCollapseButton" Width="32" Height="32" Background="Transparent" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,4,4,0">
+                        <Path Data="M 8 4 L 24 16 L 8 28" Stroke="White" StrokeThickness="3" />
+                    </Button>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Spacing="6" Margin="10">
+                            <!-- Fragmentation Button -->
+                            <Button x:Name="FragmentationButton"
+                                    Width="231"
+                                    Height="130"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Padding="0">
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/UI Buttons &amp; Menus/Fragmentation Button-min.png"
+                                       Stretch="Uniform" />
+                            </Button>
 
-                        <!-- Resonance Button -->
-                        <Button x:Name="ResonanceButton"
-                                Width="231"
-                                Height="130"
-                                Background="Transparent"
-                                BorderThickness="0"
-                                Padding="0">
-                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/Music Game 16_9 Assets [C690BBF]-min.png"
-                                   Stretch="Uniform" />
-                        </Button>
+                            <!-- Resonance Button -->
+                            <Button x:Name="ResonanceButton"
+                                    Width="231"
+                                    Height="130"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Padding="0">
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/Music Game 16_9 Assets [C690BBF]-min.png"
+                                       Stretch="Uniform" />
+                            </Button>
 
-                        <!-- Melody Button -->
-                        <Button x:Name="MelodyButton"
-                                Width="231"
-                                Height="130"
-                                Background="Transparent"
-                                BorderThickness="0"
-                                Padding="0">
-                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/Music Game 16_9 Assets [2299EA4]-min.png"
-                                   Stretch="Uniform" />
-                        </Button>
+                            <!-- Melody Button -->
+                            <Button x:Name="MelodyButton"
+                                    Width="231"
+                                    Height="130"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Padding="0">
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/Music Game 16_9 Assets [2299EA4]-min.png"
+                                       Stretch="Uniform" />
+                            </Button>
 
-                        <!-- Harmony Button -->
-                        <Button x:Name="HarmonyButton"
-                                Width="231"
-                                Height="130"
-                                Background="Transparent"
-                                BorderThickness="0"
-                                Padding="0">
-                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/Music Game 16_9 Assets [5A28B4B]-min.png"
-                                   Stretch="Uniform" />
-                        </Button>
-                    </StackPanel>
-                </ScrollViewer>
+                            <!-- Harmony Button -->
+                            <Button x:Name="HarmonyButton"
+                                    Width="231"
+                                    Height="130"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Padding="0">
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/Music Game 16_9 Assets [5A28B4B]-min.png"
+                                       Stretch="Uniform" />
+                            </Button>
+                        </StackPanel>
+                    </ScrollViewer>
+                </StackPanel>
             </Border>
 
             <!-- ==================== CENTER AREA (Row 2, Column 1) ==================== -->
@@ -273,44 +302,50 @@
                     CornerRadius="8"
                     Margin="6,8,12,8"
                     ZIndex="2">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Spacing="6" Margin="10">
-                        <!-- Duet Ability Button -->
-                        <Button x:Name="OpenDuetAbilityButton" 
-                                Width="231"
-                                Height="130"
-                                Background="Transparent" 
-                                BorderThickness="0"
-                                Padding="0"
-                                Cursor="Hand"
-                                IsVisible="False">
-                            <Image x:Name="DuetAbilityButtonImage"
-                                   Stretch="Uniform" />
-                        </Button>
+                <StackPanel Orientation="Vertical" Spacing="0">
+                    <!-- Collapse Arrow Button (Right Panel) -->
+                    <Button x:Name="RightPanelCollapseButton" Width="32" Height="32" Background="Transparent" BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4,4,0,0">
+                        <Path Data="M 24 4 L 8 16 L 24 28" Stroke="White" StrokeThickness="3" />
+                    </Button>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Spacing="6" Margin="10">
+                            <!-- Duet Ability Button -->
+                            <Button x:Name="OpenDuetAbilityButton" 
+                                    Width="231"
+                                    Height="130"
+                                    Background="Transparent" 
+                                    BorderThickness="0"
+                                    Padding="0"
+                                    Cursor="Hand"
+                                    IsVisible="False">
+                                <Image x:Name="DuetAbilityButtonImage"
+                                       Stretch="Uniform" />
+                            </Button>
 
-                        <!-- Tempo Resonate Button -->
-                        <Button x:Name="TempoResonateButton"
-                                Width="231"
-                                Height="130"
-                                Background="Transparent" 
-                                BorderThickness="0"
-                                Padding="0">
-                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/UI Buttons &amp; Menus/TempoResonate.png"
-                                   Stretch="Uniform" />
-                        </Button>
+                            <!-- Tempo Resonate Button -->
+                            <Button x:Name="TempoResonateButton"
+                                    Width="231"
+                                    Height="130"
+                                    Background="Transparent" 
+                                    BorderThickness="0"
+                                    Padding="0">
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/UI Buttons &amp; Menus/TempoResonate.png"
+                                       Stretch="Uniform" />
+                            </Button>
 
-                        <!-- Eternal Modulation Button -->
-                        <Button x:Name="EternalModulationButton"
-                                Width="231"
-                                Height="130"
-                                Background="Transparent"
-                                BorderThickness="0"
-                                Padding="0">
-                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/UI Buttons &amp; Menus/EternalModulation.png"
-                                   Stretch="Uniform" />
-                        </Button>
-                    </StackPanel>
-                </ScrollViewer>
+                            <!-- Eternal Modulation Button -->
+                            <Button x:Name="EternalModulationButton"
+                                    Width="231"
+                                    Height="130"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Padding="0">
+                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/UI Buttons &amp; Menus/EternalModulation.png"
+                                       Stretch="Uniform" />
+                            </Button>
+                        </StackPanel>
+                    </ScrollViewer>
+                </StackPanel>
             </Border>
 
             <!-- ==================== BOTTOM BAR (Row 4, All Columns) ==================== -->
@@ -396,6 +431,11 @@
 
             <!-- Hidden OpenUpgradesButton for backward compatibility -->
             <Button x:Name="OpenUpgradesButton" IsVisible="False" Width="0" Height="0" />
+            <!-- Save the Scores Button hover target -->
+            <!-- Heart of Harmony hover target -->
+            <!-- Unite the Symphony hover target -->
+            <!-- Tempo Resonate hover target -->
+            <!-- Eternal Modulation hover target -->
 
             <!-- ==================== CRESCENDANCE & DUET ROW (Row 3, Left and Right) ==================== -->
             <!-- Crescendance Panel - Left Side -->
@@ -427,18 +467,13 @@
                             <DropShadowEffect Color="Black" BlurRadius="8" Opacity="0.9" />
                         </TextBlock.Effect>
                     </TextBlock>
-                    
                     <TextBlock x:Name="MainCrescendanceInfoText"
-                               Text="Crescendance information will appear here."
+                               Text=""
                                FontSize="14"
                                Foreground="White"
                                TextWrapping="Wrap"
-                               TextAlignment="Center"
-                               MaxWidth="700">
-                        <TextBlock.Effect>
-                            <DropShadowEffect Color="Black" BlurRadius="6" Opacity="0.7" />
-                        </TextBlock.Effect>
-                    </TextBlock>
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,8" />
                     
                     <!-- Swan Lake Feather Display -->
                     <StackPanel x:Name="MainSwanFeatherPanel"
@@ -1039,6 +1074,183 @@
                                 </TextBlock.Effect>
                             </TextBlock>
                         </StackPanel>
+                    </StackPanel>
+                    
+                    <!-- Clair De Lune Clock Display -->
+                    <StackPanel x:Name="MainClairDeLuneStackPanel"
+                                Orientation="Vertical"
+                                HorizontalAlignment="Center"
+                                Spacing="8"
+                                Margin="0,6,0,0"
+                                IsVisible="False">
+                        <!-- Clock Hand Configuration (Sonata of Shattered Hours) -->
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="20">
+                            <StackPanel Orientation="Vertical" Spacing="3">
+                                <TextBlock Text="Hour Hand"
+                                           Foreground="Gold"
+                                           FontSize="12"
+                                           HorizontalAlignment="Center" />
+                                <ComboBox x:Name="ClairHourHandComboBox"
+                                          SelectedIndex="0"
+                                          SelectionChanged="ClairHourHandComboBox_SelectionChanged"
+                                          Width="100">
+                                    <ComboBoxItem Content="12 - Temporal Overture" />
+                                    <ComboBoxItem Content="3 - Shatterchord Surge" />
+                                    <ComboBoxItem Content="6 - Fractal Modulation" />
+                                    <ComboBoxItem Content="9 - Syncopated Rupture" />
+                                </ComboBox>
+                            </StackPanel>
+                            
+                            <StackPanel Orientation="Vertical" Spacing="3">
+                                <TextBlock Text="Minute Hand"
+                                           Foreground="LightBlue"
+                                           FontSize="12"
+                                           HorizontalAlignment="Center" />
+                                <ComboBox x:Name="ClairMinuteHandComboBox"
+                                          SelectedIndex="0"
+                                          SelectionChanged="ClairMinuteHandComboBox_SelectionChanged"
+                                          Width="100">
+                                    <ComboBoxItem Content="1 - Cadenza Cataclysm" />
+                                    <ComboBoxItem Content="2 - Infinity Arpeggio" />
+                                    <ComboBoxItem Content="4 - Prismal Crescendo" />
+                                    <ComboBoxItem Content="5 - Refrain of Endless Measures" />
+                                    <ComboBoxItem Content="7 - Sonata of Shattered Hours" />
+                                    <ComboBoxItem Content="8 - Duet: Symphony of Broken Time" />
+                                    <ComboBoxItem Content="10 - Power Spike" />
+                                    <ComboBoxItem Content="11 - Glass Forte" />
+                                </ComboBox>
+                            </StackPanel>
+                        </StackPanel>
+                        
+                        <!-- Stack Displays -->
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="15">
+                            <StackPanel Orientation="Vertical" Spacing="3">
+                                <TextBlock Text="Resonant Shard"
+                                           Foreground="Orange"
+                                           FontSize="12"
+                                           HorizontalAlignment="Center" />
+                                <TextBlock x:Name="ClairClockworkForteCount"
+                                           Text="0"
+                                           Foreground="White"
+                                           FontSize="16"
+                                           FontWeight="Bold"
+                                           HorizontalAlignment="Center" />
+                            </StackPanel>
+                            
+                            <StackPanel Orientation="Vertical" Spacing="3">
+                                <TextBlock Text="Tempo Fragment"
+                                           Foreground="Cyan"
+                                           FontSize="12"
+                                           HorizontalAlignment="Center" />
+                                <TextBlock x:Name="ClairTemporalHarmonyCount"
+                                           Text="0"
+                                           Foreground="White"
+                                           FontSize="16"
+                                           FontWeight="Bold"
+                                           HorizontalAlignment="Center" />
+                            </StackPanel>
+                            
+                            <StackPanel Orientation="Vertical" Spacing="3">
+                                <TextBlock Text="Glass Forte"
+                                           Foreground="Gold"
+                                           FontSize="12"
+                                           HorizontalAlignment="Center" />
+                                <TextBlock x:Name="ClairClockOfEternityCount"
+                                           Text="0"
+                                           Foreground="White"
+                                           FontSize="16"
+                                           FontWeight="Bold"
+                                           HorizontalAlignment="Center" />
+                            </StackPanel>
+                        </StackPanel>
+                        
+                        <!-- Consume Buttons Row 1 -->
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="8">
+                            <Button x:Name="ClairConsumeMinute3Button"
+                                    Content="M3: 1 Resonant Shard (Shatterchord Surge: +50% Notes, +2% Entropic Melodies)"
+                                    ToolTip.Tip="Shatter 1 Resonant Shard to trigger Shatterchord Surge: +50% Notes and +2% Entropic Melodies. (Hour hand at 3)"
+                                    Click="ClairConsumeMinute3Button_Click"
+                                    FontSize="10"
+                                    Padding="6,3" />
+                            <Button x:Name="ClairConsumeMinute5Button"
+                                    Content="M5: 3 Resonant Shards (Refrain of Endless Measures: +5 to all Minors)"
+                                    ToolTip.Tip="Shatter 3 Resonant Shards to trigger Refrain of Endless Measures: +5 to all owned minor scores. (Minute hand at 5)"
+                                    Click="ClairConsumeMinute5Button_Click"
+                                    FontSize="10"
+                                    Padding="6,3" />
+                            <Button x:Name="ClairConsumeMinute7Button"
+                                    Content="M7: 20 Resonant Shards (Sonata of Shattered Hours: +1 Major, +15% Entropic Melodies)"
+                                    ToolTip.Tip="Shatter 20 Resonant Shards to trigger Sonata of Shattered Hours: +1 Major and +15% Entropic Melodies. (Minute hand at 7)"
+                                    Click="ClairConsumeMinute7Button_Click"
+                                    FontSize="10"
+                                    Padding="6,3" />
+                        </StackPanel>
+                        
+                        <!-- Consume Buttons Row 2 -->
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="8">
+                            <Button x:Name="ClairConsumeMinute9Button"
+                                    Content="M9: 1 Tempo Fragment (10 Cadenza Cataclysms)"
+                                    ToolTip.Tip="Shatter 1 Tempo Fragment to trigger 10 Cadenza Cataclysms (special criticals). (Hour hand at 9)"
+                                    Click="ClairConsumeMinute9Button_Click"
+                                    FontSize="10"
+                                    Padding="6,3" />
+                            <Button x:Name="ClairConsumeMinute8Button"
+                                    Content="M8: 8 Tempo Fragments (Duet: Symphony of Broken Time: +5 to all Majors)"
+                                    ToolTip.Tip="Shatter 8 Tempo Fragments to trigger Duet: Symphony of Broken Time: +5 to every owned major score. (Minute hand at 8)"
+                                    Click="ClairConsumeMinute8Button_Click"
+                                    FontSize="10"
+                                    Padding="6,3" />
+                            <Button x:Name="ClairConsumeMinute10Button"
+                                    Content="M10: All Resonant Shards (Power Spike)"
+                                    ToolTip.Tip="For each Resonant Shard shattered, your next click triggers Power Spike: +X notes (X = NPC^# of shards shattered). (Minute hand at 10)"
+                                    Click="ClairConsumeMinute10Button_Click"
+                                    FontSize="10"
+                                    Padding="6,3" />
+                        </StackPanel>
+                        
+                        <!-- Weapon 1 Button -->
+                        <Button x:Name="ClairWeapon1Button"
+                                Content="Prismal Crescendo: 1 Glass Forte (2 Infinity Arpeggios)"
+                                ToolTip.Tip="Shatter 1 Glass Forte to trigger Prismal Crescendo: your next 2 clicks are Infinity Arpeggios (guaranteed crits, each gives ((NPS^NPC)/144) notes)."
+                                Click="ClairWeapon1Button_Click"
+                                FontSize="10"
+                                Padding="8,4"
+                                HorizontalAlignment="Center"
+                                IsVisible="False" />
+                        
+                        <!-- Duet Button -->
+                        <Button x:Name="ClairDuetButton"
+                                Content="Duet: Symphony of Broken Time (12-Click Sequence)"
+                                ToolTip.Tip="12-click sequence: Clicks 1-4 trigger Temporal Overture, 5-8 trigger Shatterchord Surge, 9-12 trigger Fractal Modulation and Refrain of Endless Measures. Completing all 12 clicks doubles all owned minor scores. 6 min cooldown."
+                                Click="ClairDuetButton_Click"
+                                FontSize="11"
+                                Padding="10,5"
+                                HorizontalAlignment="Center"
+                                Background="#FFD4AF37"
+                                Foreground="Black"
+                                FontWeight="Bold" />
+                        
+                        <!-- Duet Cooldown Display -->
+                        <TextBlock x:Name="ClairDuetCooldownText"
+                                   Text=""
+                                   Foreground="Orange"
+                                   FontSize="11"
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Center"
+                                   IsVisible="False" />
+                        
+                        <!-- Duet Progress Display -->
+                        <TextBlock x:Name="ClairDuetProgressText"
+                                   Text=""
+                                   Foreground="#FF00FF00"
+                                   FontSize="12"
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Center"
+                                   IsVisible="False">
+                            <TextBlock.Effect>
+                                <DropShadowEffect Color="#FF00FF00" BlurRadius="8" />
+                            </TextBlock.Effect>
+                        </TextBlock>
                     </StackPanel>
                     
                     <!-- Winter Stack Display -->
