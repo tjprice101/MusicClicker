@@ -1,0 +1,206 @@
+CLAIR DE LUNE - COMPREHENSIVE RENAMING PROPOSAL
+================================================
+
+THEME: Moonlight, Classical Music, Temporal Elegance, Clockwork Precision
+
+==================================================
+CRESCENDANCE ABILITY
+==================================================
+Current: "Sonata of Shattered Hours"
+Proposed Options:
+  1. "Moonlight Clockwork" 
+  2. "Lunar Chronometry" ⭐
+  3. "Clair de Lune's Temporal Waltz"
+  4. "Nocturnal Horology"
+
+==================================================
+CUSTOM STACKS (3 Total)
+==================================================
+
+Stack 1: Clockwork Forte
+Current Source: Hour Hand 12 (every 3rd, 6th, 9th, 12th click)
+Consumed By: Hour Hand 3, Minute Hands 5/7/10
+Proposed Names:
+  1. "Moonlight Gears" 
+  2. "Lunar Mechanisms"
+  3. "Chrono Fragments" ⭐
+  4. "Celestial Cogs"
+
+Stack 2: Temporal Harmony
+Current Source: Hour Hand 6 (every 6th click)
+Consumed By: Hour Hand 9, Minute Hand 8
+Proposed Names:
+  1. "Twilight Resonance" ⭐
+  2. "Lunar Echoes" 
+  3. "Moonlit Harmony"
+  4. "Nocturnal Cadence" 
+
+Stack 3: Clock of Eternity
+Current Source: Minute Hand 11 (every 12th click if NPS > 1 Quintillion)
+Consumed By: Clockwork's Harmony (Weapon 1 Bond)
+Proposed Names:
+  1. "Eternal Moonbeam" 
+  2. "Timeless Echo"
+  3. "Infinity Chime" 
+  4. "Perpetual Nocturne" ⭐
+
+==================================================
+CRITICAL HITS (4 Total)
+==================================================
+
+Critical 1: Cadenza Cataclysm
+Source: Hour Hand 9 (consume Temporal Harmony for 10 crits)
+Formula: ((NPS^9)/5) notes
+Current Display: Medium purple text, black outline
+Proposed Names:
+  1. "Midnight Crescendo" 
+  2. "Lunar Cascade"
+  3. "Twilight Rupture" ⭐
+  4. "Moonfall Sonata"
+
+Critical 2: Infinity Arpeggio
+Source: Minute Hand 2 (on Clockwork Forte gain, next 2 clicks)
+Formula: NPC * 1500
+Current Display: Cyan text, midnight blue outline
+Proposed Names:
+  1. "Eternal Waltz"
+  2. "Timeless Melody" ⭐
+  3. "Perpetual Serenade"
+  4. "Moonlight Rhapsody"
+
+Critical 3: Everlasting Melody of Time's Infinite Symphony
+Source: Weapon 1 Bond (consume Clock of Eternity)
+Formula: ((NPS^NPC)/144) notes
+Current Display: Light sky blue, midnight blue outline
+Proposed Names:
+  1. "Moonlight Eternity"
+  2. "Celestial Symphony"
+  3. "Nocturnal Infinity"
+  4. "Lunar Everlasting" ⭐
+
+Critical 4: Symphony of Infinity
+Source: Duet Ability (12th click, next 5 clicks)
+Formula: (NPC^NPS^12) notes
+Current Display: Goldenrod, white outline
+Proposed Names:
+  1. "Cosmic Nocturne"
+  2. "Infinite Reverie"
+  3. "Astral Serenade" 
+  4. "Eternal Moonlight Opus" ⭐
+
+==================================================
+WEAPON 1: CLOCKWORK'S HARMONY
+==================================================
+Current Name: "Clockwork's Harmony"
+Proposed Names:
+  1. "Lunar Mechanism" 
+  2. "Moonlit Clockwork"
+  3. "Celestial Horology" ⭐
+  4. "Nocturnal Timepiece"
+
+Passive Effect: Refund 50% Entropic Melodies spent
+Current Name: (unnamed)
+Proposed Names:
+  1. "Temporal Grace" 
+  2. "Moonlight Restoration"
+  3. "Chrono-Entropic Refund" ⭐
+  4. "Time's Mercy"
+
+Crescendance Bond: Consume Clock of Eternity for 2 critical clicks
+Current Name: (unnamed)
+Proposed Names:
+  1. "Eternal Radiance" 
+  2. "Moonbeam Resonance"
+  3. "Celestial Convergence" ⭐
+  4. "Infinity's Embrace"
+
+==================================================
+WEAPON 2: METRONOMIC DISSONANCE
+==================================================
+Current Name: "Metronomic Dissonance"
+
+Passive Effect: 10% chance to refund stacks on consume
+Current Name: (unnamed)
+Proposed Names:
+  1. "Rhythmic Fortune"
+  2. "Temporal Mercy"
+  3. "Chrono-Refraction" ⭐
+  4. "Lucky Beat"
+
+Crescendance Bond: On stack gain, grant minors/majors
+Current Name: (unnamed)
+Proposed Names:
+  1. "Symphonic Overflow" 
+  2. "Cascading Resonance" ⭐
+  3. "Harmonic Abundance"
+  4. "Melodic Proliferation" 
+
+==================================================
+DUET RESONANCE
+==================================================
+Current Name: (Not yet named)
+Weapon Pair: Clockwork's Harmony + Metronomic Dissonance
+Proposed Names:
+  1. "Moonlight Symphony"
+  2. "Temporal Waltz"
+  3. "Nocturnal Harmony"
+  4. "Clair de Lune's Embrace" ⭐
+
+Duet Ability Name:
+  1. "Twelve Movements of the Moon" 
+  2. "Lunar Dodecaphony" ⭐
+  3. "Nocturnal Progression"
+  4. "Moonlight's 12-Act Opera"
+
+==================================================
+HOUR HAND ABILITY NAMES
+==================================================
+
+Hour 12 - Temporal Overture (Stack Generation)
+Proposed Names:
+  1. "Moonlight Accumulation" 
+  2. "Lunar Forge"
+  3. "Celestial Assembly" ⭐
+  4. (Keep current)
+
+Hour 3 - Shatterchord Surge (Consume for notes + entropic)
+Proposed Names:
+  1. "Twilight Conversion"
+  2. "Moonbeam Catalyst" 
+  3. "Nocturnal Exchange" ⭐
+  4. (Keep current)
+
+Hour 6 - Fractal Modulation (Generate Temporal Harmony)
+Proposed Names:
+  1. "Harmonic Moonrise" 
+  2. "Twilight Resonance" 
+  3. "Lunar Frequency" 
+  4. (Keep current) ⭐ 
+
+Hour 9 - Syncopated Rupture (Consume for criticals)
+Proposed Names:
+  1. "Midnight Unleashing"
+  2. "Lunar Devastation"
+  3. "Nocturnal Cataclysm"
+  4. (Keep current) ⭐
+
+==================================================
+MINUTE HAND ABILITY NAMES
+==================================================
+
+All of these keep current
+
+==================================================
+IMPLEMENTATION PRIORITY
+==================================================
+1. Stack names (most visible, used everywhere)
+2. Critical names (seen frequently in combat)
+3. Weapon names and ability names
+4. Hour/Minute hand ability names (less critical, mostly in descriptions)
+
+==================================================
+RECOMMENDED FINAL NAMING SCHEME
+==================================================
+
+This creates a cohesive moonlight/time/elegance theme while maintaining
+the classical music and clockwork precision elements of Clair de Lune.

@@ -74,28 +74,50 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-                    <!-- Save Button (Left) -->
-                    <StackPanel Grid.Column="0" Orientation="Vertical" Spacing="4">
-                        <Border CornerRadius="8">
+                    <!-- Save Button and Feedback Button (Left) -->
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="8">
+                        <StackPanel Orientation="Vertical" Spacing="4">
+                            <Border CornerRadius="8">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="12" Opacity="0.7" OffsetX="0" OffsetY="0" />
+                                </Border.Effect>
+                                <Button x:Name="TopSaveButton"
+                                        Width="170"
+                                        Height="85"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Padding="0">
+                                    <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/UI Buttons &amp; Menus/SaveIcon.png"
+                                           Stretch="Uniform" IsHitTestVisible="False" />
+                                </Button>
+                            </Border>
+                            <TextBlock x:Name="SaveStatusText"
+                                       Text=""
+                                       Foreground="White"
+                                       FontSize="12"
+                                       FontWeight="SemiBold"
+                                       HorizontalAlignment="Center" />
+                        </StackPanel>
+                        
+                        <Border CornerRadius="8" VerticalAlignment="Top" Margin="0,0,0,0">
                             <Border.Effect>
                                 <DropShadowEffect Color="Black" BlurRadius="12" Opacity="0.7" OffsetX="0" OffsetY="0" />
                             </Border.Effect>
-                            <Button x:Name="TopSaveButton"
-                                    Width="170"
-                                    Height="85"
-                                    Background="Transparent"
-                                    BorderThickness="0"
+                            <Button x:Name="FeedbackButton"
+                                    Width="142"
+                                    Height="80"
+                                    Background="White"
+                                    BorderThickness="2"
+                                    BorderBrush="Black"
                                     Padding="0">
-                                <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/UI Buttons &amp; Menus/SaveIcon.png"
-                                       Stretch="Uniform" IsHitTestVisible="False" />
+                                <TextBlock Text="Feedback"
+                                           Foreground="Black"
+                                           FontSize="24"
+                                           FontWeight="Bold"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center" />
                             </Button>
                         </Border>
-                        <TextBlock x:Name="SaveStatusText"
-                                   Text=""
-                                   Foreground="White"
-                                   FontSize="12"
-                                   FontWeight="SemiBold"
-                                   HorizontalAlignment="Center" />
                     </StackPanel>
 
                     <!-- Stats Display (Center) -->
@@ -170,7 +192,11 @@
                                 Height="130"
                                 Background="Transparent"
                                 BorderThickness="0"
-                                Padding="0">
+                                Padding="0"
+                                PointerEntered="ShowButtonTooltip"
+                                PointerExited="HideButtonTooltip"
+                                PointerMoved="UpdateTooltipPosition"
+                                Tag="Acquire pieces of Minor musical scores here!">
                             <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/UI Buttons &amp; Menus/Fragmentation Button-min.png"
                                    Stretch="Uniform" />
                         </Button>
@@ -181,7 +207,11 @@
                                 Height="130"
                                 Background="Transparent"
                                 BorderThickness="0"
-                                Padding="0">
+                                Padding="0"
+                                PointerEntered="ShowButtonTooltip"
+                                PointerExited="HideButtonTooltip"
+                                PointerMoved="UpdateTooltipPosition"
+                                Tag="Resonate with any owned Major Score and select your instrumental weaponry to activate their unique connection to music.">
                             <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/Music Game 16_9 Assets [C690BBF]-min.png"
                                    Stretch="Uniform" />
                         </Button>
@@ -192,7 +222,11 @@
                                 Height="130"
                                 Background="Transparent"
                                 BorderThickness="0"
-                                Padding="0">
+                                Padding="0"
+                                PointerEntered="ShowButtonTooltip"
+                                PointerExited="HideButtonTooltip"
+                                PointerMoved="UpdateTooltipPosition"
+                                Tag="Consume Major Sheets here to obtain pieces for powerful Major versions of the Minor Scores!">
                             <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/Music Game 16_9 Assets [2299EA4]-min.png"
                                    Stretch="Uniform" />
                         </Button>
@@ -203,7 +237,11 @@
                                 Height="130"
                                 Background="Transparent"
                                 BorderThickness="0"
-                                Padding="0">
+                                Padding="0"
+                                PointerEntered="ShowButtonTooltip"
+                                PointerExited="HideButtonTooltip"
+                                PointerMoved="UpdateTooltipPosition"
+                                Tag="Bring it all together by combining the pieces of Minor and Major scores (separately) to acquire the compositions themselves to help boost you!">
                             <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/Music Game 16_9 Assets [5A28B4B]-min.png"
                                    Stretch="Uniform" />
                         </Button>
@@ -263,6 +301,25 @@
                 <Canvas x:Name="FloatingTextCanvas"
                         IsHitTestVisible="False"
                         ZIndex="300" />
+                
+                <!-- Hover Tooltip -->
+                <Border x:Name="HoverTooltip"
+                        Background="Black"
+                        BorderBrush="White"
+                        BorderThickness="2"
+                        CornerRadius="6"
+                        Padding="12,8"
+                        IsVisible="False"
+                        IsHitTestVisible="False"
+                        ZIndex="400">
+                    <TextBlock x:Name="HoverTooltipText"
+                               Text=""
+                               Foreground="White"
+                               FontSize="16"
+                               FontWeight="SemiBold"
+                               TextWrapping="Wrap"
+                               MaxWidth="400" />
+                </Border>
             </Grid>
 
             <!-- ==================== RIGHT PANEL (Row 2, Column 2) ==================== -->
@@ -294,7 +351,11 @@
                                 Height="130"
                                 Background="Transparent"
                                 BorderThickness="0"
-                                Padding="0">
+                                Padding="0"
+                                PointerEntered="ShowButtonTooltip"
+                                PointerExited="HideButtonTooltip"
+                                PointerMoved="UpdateTooltipPosition"
+                                Tag="Resonate with any owned Major Score and select your instrumental weaponry to activate their unique connection to music.">
                             <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/UI Buttons &amp; Menus/TempoResonate.png"
                                    Stretch="Uniform" />
                         </Button>
@@ -305,7 +366,11 @@
                                 Height="130"
                                 Background="Transparent"
                                 BorderThickness="0"
-                                Padding="0">
+                                Padding="0"
+                                PointerEntered="ShowButtonTooltip"
+                                PointerExited="HideButtonTooltip"
+                                PointerMoved="UpdateTooltipPosition"
+                                Tag="Take part in the currently active events to acquire limited time scores! The costs of these scores scales with your Notes Per Second and your Notes Per Click!">
                             <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/UI Buttons &amp; Menus/EternalModulation.png"
                                    Stretch="Uniform" />
                         </Button>
@@ -1166,6 +1231,189 @@
                                        FontSize="11"
                                        IsVisible="False"
                                        HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </StackPanel>
+                    
+                    <!-- Clair de Lune Stack Display -->
+                    <StackPanel x:Name="MainClairDeLuneStackPanel"
+                                Orientation="Vertical"
+                                HorizontalAlignment="Center"
+                                Spacing="8"
+                                Margin="0,6,0,0"
+                                IsVisible="False">
+                        <!-- First Row: Clock Configuration -->
+                        <StackPanel Orientation="Horizontal" Spacing="20" HorizontalAlignment="Center">
+                            <!-- Hour Hand Configuration -->
+                            <StackPanel Orientation="Vertical" Spacing="3">
+                                <TextBlock Text="Hour Hand Position"
+                                           Foreground="Cyan"
+                                           FontSize="12"
+                                           FontWeight="Bold"
+                                           HorizontalAlignment="Center" />
+                                <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Center">
+                                    <Button x:Name="MainSetHourHand12"
+                                            Content="12"
+                                            Click="MainSetHourHand_Click"
+                                            Tag="12"
+                                            FontSize="11"
+                                            Padding="8,4"
+                                            MinWidth="35" />
+                                    <Button x:Name="MainSetHourHand3"
+                                            Content="3"
+                                            Click="MainSetHourHand_Click"
+                                            Tag="3"
+                                            FontSize="11"
+                                            Padding="8,4"
+                                            MinWidth="35" />
+                                    <Button x:Name="MainSetHourHand6"
+                                            Content="6"
+                                            Click="MainSetHourHand_Click"
+                                            Tag="6"
+                                            FontSize="11"
+                                            Padding="8,4"
+                                            MinWidth="35" />
+                                    <Button x:Name="MainSetHourHand9"
+                                            Content="9"
+                                            Click="MainSetHourHand_Click"
+                                            Tag="9"
+                                            FontSize="11"
+                                            Padding="8,4"
+                                            MinWidth="35" />
+                                </StackPanel>
+                                <TextBlock x:Name="MainCurrentHourHandText"
+                                           Text="Current: 12"
+                                           Foreground="White"
+                                           FontSize="10"
+                                           HorizontalAlignment="Center" />
+                            </StackPanel>
+                            
+                            <!-- Minute Hand Configuration -->
+                            <StackPanel Orientation="Vertical" Spacing="3">
+                                <TextBlock Text="Minute Hand Position"
+                                           Foreground="Magenta"
+                                           FontSize="12"
+                                           FontWeight="Bold"
+                                           HorizontalAlignment="Center" />
+                                <StackPanel Orientation="Horizontal" Spacing="3" HorizontalAlignment="Center">
+                                    <Button x:Name="MainSetMinuteHand1"
+                                            Content="1"
+                                            Click="MainSetMinuteHand_Click"
+                                            Tag="1"
+                                            FontSize="10"
+                                            Padding="6,3"
+                                            MinWidth="28" />
+                                    <Button x:Name="MainSetMinuteHand2"
+                                            Content="2"
+                                            Click="MainSetMinuteHand_Click"
+                                            Tag="2"
+                                            FontSize="10"
+                                            Padding="6,3"
+                                            MinWidth="28" />
+                                    <Button x:Name="MainSetMinuteHand4"
+                                            Content="4"
+                                            Click="MainSetMinuteHand_Click"
+                                            Tag="4"
+                                            FontSize="10"
+                                            Padding="6,3"
+                                            MinWidth="28" />
+                                    <Button x:Name="MainSetMinuteHand5"
+                                            Content="5"
+                                            Click="MainSetMinuteHand_Click"
+                                            Tag="5"
+                                            FontSize="10"
+                                            Padding="6,3"
+                                            MinWidth="28" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Spacing="3" HorizontalAlignment="Center" Margin="0,2,0,0">
+                                    <Button x:Name="MainSetMinuteHand7"
+                                            Content="7"
+                                            Click="MainSetMinuteHand_Click"
+                                            Tag="7"
+                                            FontSize="10"
+                                            Padding="6,3"
+                                            MinWidth="28" />
+                                    <Button x:Name="MainSetMinuteHand8"
+                                            Content="8"
+                                            Click="MainSetMinuteHand_Click"
+                                            Tag="8"
+                                            FontSize="10"
+                                            Padding="6,3"
+                                            MinWidth="28" />
+                                    <Button x:Name="MainSetMinuteHand10"
+                                            Content="10"
+                                            Click="MainSetMinuteHand_Click"
+                                            Tag="10"
+                                            FontSize="10"
+                                            Padding="6,3"
+                                            MinWidth="28" />
+                                    <Button x:Name="MainSetMinuteHand11"
+                                            Content="11"
+                                            Click="MainSetMinuteHand_Click"
+                                            Tag="11"
+                                            FontSize="10"
+                                            Padding="6,3"
+                                            MinWidth="28" />
+                                </StackPanel>
+                                <TextBlock x:Name="MainCurrentMinuteHandText"
+                                           Text="Current: 1"
+                                           Foreground="White"
+                                           FontSize="10"
+                                           HorizontalAlignment="Center" />
+                            </StackPanel>
+                        </StackPanel>
+                        
+                        <!-- Second Row: Stack Displays -->
+                        <StackPanel Orientation="Horizontal" Spacing="20" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Vertical" Spacing="3">
+                                <TextBlock Text="Chrono Fragments"
+                                           Foreground="LightBlue"
+                                           FontSize="12"
+                                           HorizontalAlignment="Center" />
+                                <TextBlock x:Name="MainClockworkForteCount"
+                                           Text="0"
+                                           Foreground="White"
+                                           FontSize="16"
+                                           FontWeight="Bold"
+                                           HorizontalAlignment="Center" />
+                                <TextBlock Text="(From Hour Hand 12)"
+                                           Foreground="Gray"
+                                           FontSize="9"
+                                           HorizontalAlignment="Center" />
+                            </StackPanel>
+                            
+                            <StackPanel Orientation="Vertical" Spacing="3">
+                                <TextBlock Text="Twilight Resonance"
+                                           Foreground="Violet"
+                                           FontSize="12"
+                                           HorizontalAlignment="Center" />
+                                <TextBlock x:Name="MainTemporalHarmonyCount"
+                                           Text="0 / 50"
+                                           Foreground="White"
+                                           FontSize="16"
+                                           FontWeight="Bold"
+                                           HorizontalAlignment="Center" />
+                                <TextBlock Text="(From Hour Hand 6)"
+                                           Foreground="Gray"
+                                           FontSize="9"
+                                           HorizontalAlignment="Center" />
+                            </StackPanel>
+                            
+                            <StackPanel Orientation="Vertical" Spacing="3">
+                                <TextBlock Text="Perpetual Nocturne"
+                                           Foreground="Gold"
+                                           FontSize="12"
+                                           HorizontalAlignment="Center" />
+                                <TextBlock x:Name="MainClockOfEternityCount"
+                                           Text="0"
+                                           Foreground="White"
+                                           FontSize="16"
+                                           FontWeight="Bold"
+                                           HorizontalAlignment="Center" />
+                                <TextBlock Text="(From Minute Hand 11)"
+                                           Foreground="Gray"
+                                           FontSize="9"
+                                           HorizontalAlignment="Center" />
+                            </StackPanel>
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>

@@ -22,39 +22,118 @@ namespace MusicClicker.Armory
                 // Track click count for hour/minute hand logic
                 gameState.ClairDeLuneLastClickCount++;
 
-                // Hour Hand Effects
-                if (gameState.ClairDeLuneHourHand == 12 && (gameState.ClairDeLuneLastClickCount % 3 == 0 || gameState.ClairDeLuneLastClickCount % 6 == 0 || gameState.ClairDeLuneLastClickCount % 9 == 0 || gameState.ClairDeLuneLastClickCount % 12 == 0))
-                    gameState.ResonantShardStacks++;
-                if (gameState.ClairDeLuneHourHand == 3 && gameState.ResonantShardStacks > 0)
+                // === HOUR HAND EFFECTS ===
+                
+                // Hour Hand on 12 (Celestial Assembly): Every 3rd, 6th, 9th, 12th click gives Chrono Fragments (stacks)
+                if (gameState.ClairDeLuneHourHand == 12)
                 {
-                    gameState.ResonantShardStacks--;
-                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, gameState.Notes * 0.5);
-                    gameState.EntropicMelodies += (int)(gameState.EntropicMelodies * 0.02);
+                    int stacksGained = 0;
+                    
+                    // Check each divisor independently - they stack!
+                    if (gameState.ClairDeLuneLastClickCount % 3 == 0) stacksGained++;
+                    if (gameState.ClairDeLuneLastClickCount % 6 == 0) stacksGained++;
+                    if (gameState.ClairDeLuneLastClickCount % 9 == 0) stacksGained++;
+                    if (gameState.ClairDeLuneLastClickCount % 12 == 0) stacksGained++;
+                    
+                    if (stacksGained > 0)
+                    {
+                        gameState.ClockworkForteStacks += stacksGained;
+                        
+                        // Minute Hand on 2 (Infinity Arpeggio): On Clockwork Forte gain, next 2 clicks are Infinity Arpeggio criticals
+                        if (gameState.ClairDeLuneMinuteHand == 2)
+                        {
+                            gameState.ClairInfinityArpeggioClicksRemaining = 2;
+                        }
+                        
+                        // Metronomic Dissonance Crescendance Bond: Cascading Resonance - On Chrono Fragments gain, +12 of 3 random minors (per stack gained)
+                        if (gameState.MetronomicDissonanceAbility)
+                        {
+                            for (int s = 0; s < stacksGained; s++)
+                            {
+                                for (int i = 0; i < 3; i++)
+                                {
+                                    int pick = _random.Next(7);
+                                    switch (pick)
+                                    {
+                                        case 0: gameState.MoonlightMinorOwned += 12; break;
+                                        case 1: gameState.EroicaMinorOwned += 12; break;
+                                        case 2: gameState.SwanMinorOwned += 12; break;
+                                        case 3: gameState.LaCampanellaMinorOwned += 12; break;
+                                        case 4: gameState.EnigmaMinorOwned += 12; break;
+                                        case 5: gameState.FateMinorOwned += 12; break;
+                                        case 6: gameState.OdeToJoyMinorOwned += 12; break;
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
-                if (gameState.ClairDeLuneHourHand == 6 && gameState.ClairDeLuneLastClickCount % 6 == 0)
-                    gameState.TempoFragmentStacks++;
-                if (gameState.ClairDeLuneHourHand == 9 && gameState.TempoFragmentStacks > 0)
+                
+                // Hour Hand on 3 (Nocturnal Exchange): Consume 1 Chrono Fragment for +50% notes & +2% entropic
+                if (gameState.ClairDeLuneHourHand == 3 && gameState.ClockworkForteStacks > 0)
                 {
-                    gameState.TempoFragmentStacks--;
-                    gameState.ClairDeLuneCadenzaCataclysmClicks = 10;
+                    gameState.ClockworkForteStacks--;
+                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, gameState.Notes * 0.5);
+                    gameState.EntropicMelodies += Math.Max(1, (int)(gameState.EntropicMelodies * 0.02));
+                }
+                
+                // Hour Hand on 6 (Fractal Modulation): Every 6th click gives 1 Twilight Resonance
+                if (gameState.ClairDeLuneHourHand == 6 && gameState.ClairDeLuneLastClickCount % 6 == 0)
+                {
+                    if (gameState.TemporalHarmonyStacks < 50) // Cap at 50
+                    {
+                        gameState.TemporalHarmonyStacks++;
+                        
+                        // Minute Hand on 1: On Temporal Harmony gain, next 3 clicks get +1.5% entropic each
+                        if (gameState.ClairDeLuneMinuteHand == 1)
+                        {
+                            gameState.ClairDeLunePowerSpikePending = 3;
+                        }
+                        
+                        // Metronomic Dissonance Crescendance Bond: Cascading Resonance - On Twilight Resonance gain, +2 to 5 random majors (not events/discordance)
+                        if (gameState.MetronomicDissonanceAbility)
+                        {
+                            for (int i = 0; i < 5; i++)
+                            {
+                                int pick = _random.Next(7);
+                                switch (pick)
+                                {
+                                    case 0: gameState.MoonlightMajorOwned += 2; break;
+                                    case 1: gameState.EroicaMajorOwned += 2; break;
+                                    case 2: gameState.SwanMajorOwned += 2; break;
+                                    case 3: gameState.LaCampanellaMajorOwned += 2; break;
+                                    case 4: gameState.EnigmaMajorOwned += 2; break;
+                                    case 5: gameState.FateMajorOwned += 2; break;
+                                    case 6: gameState.OdeToJoyMajorOwned += 2; break;
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                // Hour Hand on 9 (Syncopated Rupture): Consume 1 Twilight Resonance for 10 Twilight Rupture crits
+                if (gameState.ClairDeLuneHourHand == 9 && gameState.TemporalHarmonyStacks > 0)
+                {
+                    gameState.TemporalHarmonyStacks--;
+                    gameState.ClairCadenzaCataclysmClicksRemaining = 10;
                 }
 
-                // Minute Hand Effects
-                if (gameState.ClairDeLuneMinuteHand == 1 && gameState.TempoFragmentStacks > 0)
+                // === MINUTE HAND EFFECTS ===
+                
+                // Minute Hand on 1: Apply entropic bonus if pending from Twilight Resonance gain
+                if (gameState.ClairDeLuneMinuteHand == 1 && gameState.ClairDeLunePowerSpikePending > 0)
                 {
-                    gameState.ClairDeLuneCadenzaCataclysmClicks = 3;
+                    gameState.EntropicMelodies += Math.Max(1, (int)(gameState.EntropicMelodies * 0.015));
+                    gameState.ClairDeLunePowerSpikePending--;
                 }
-                if (gameState.ClairDeLuneMinuteHand == 2 && gameState.ResonantShardStacks > 0)
+                
+                // Minute Hand on 4 (Prismal Crescendo): Every time you gain Entropic, increase notes by 0.1% per entropic gained
+                // (This is handled elsewhere when entropic is gained)
+                
+                // Minute Hand on 5 (Refrain of Endless Measures): Consume 3 Clockwork Forte for +5 all minors
+                if (gameState.ClairDeLuneMinuteHand == 5 && gameState.ClockworkForteStacks >= 3)
                 {
-                    gameState.ClairDeLuneInfinityArpeggioClicks = 2;
-                }
-                if (gameState.ClairDeLuneMinuteHand == 4 && gameState.EntropicMelodies > 0)
-                {
-                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, gameState.Notes * (gameState.EntropicMelodies * 0.001));
-                }
-                if (gameState.ClairDeLuneMinuteHand == 5 && gameState.ResonantShardStacks >= 3)
-                {
-                    gameState.ResonantShardStacks -= 3;
+                    gameState.ClockworkForteStacks -= 3;
                     gameState.MoonlightMinorOwned += 5;
                     gameState.EroicaMinorOwned += 5;
                     gameState.SwanMinorOwned += 5;
@@ -63,15 +142,19 @@ namespace MusicClicker.Armory
                     gameState.FateMinorOwned += 5;
                     gameState.OdeToJoyMinorOwned += 5;
                 }
-                if (gameState.ClairDeLuneMinuteHand == 7 && gameState.ResonantShardStacks >= 20)
+                
+                // Minute Hand on 7 (Sonata of Shattered Hours): Consume 20 Clockwork Forte for +1 major & +15% entropic
+                if (gameState.ClairDeLuneMinuteHand == 7 && gameState.ClockworkForteStacks >= 20)
                 {
-                    gameState.ResonantShardStacks -= 20;
+                    gameState.ClockworkForteStacks -= 20;
                     gameState.ClairDeLuneMajorOwned += 1;
-                    gameState.EntropicMelodies += (int)(gameState.EntropicMelodies * 0.15);
+                    gameState.EntropicMelodies += Math.Max(1, (int)(gameState.EntropicMelodies * 0.15));
                 }
-                if (gameState.ClairDeLuneMinuteHand == 8 && gameState.TempoFragmentStacks >= 8)
+                
+                // Minute Hand on 8 (Duet: Symphony of Broken Time): Consume 8 Temporal Harmony for +5 all majors
+                if (gameState.ClairDeLuneMinuteHand == 8 && gameState.TemporalHarmonyStacks >= 8)
                 {
-                    gameState.TempoFragmentStacks -= 8;
+                    gameState.TemporalHarmonyStacks -= 8;
                     gameState.MoonlightMajorOwned += 5;
                     gameState.EroicaMajorOwned += 5;
                     gameState.SwanMajorOwned += 5;
@@ -80,62 +163,58 @@ namespace MusicClicker.Armory
                     gameState.FateMajorOwned += 5;
                     gameState.OdeToJoyMajorOwned += 5;
                 }
-                if (gameState.ClairDeLuneMinuteHand == 10 && gameState.ResonantShardStacks > 0)
+                
+                // Minute Hand on 10 (Power Spike): For each Clockwork Forte consumed, next click gives +X notes where X = NPC^(# stacks consumed)
+                if (gameState.ClairDeLuneMinuteHand == 10 && gameState.ClockworkForteStacks > 0)
                 {
-                    int stacks = gameState.ResonantShardStacks;
-                    gameState.ResonantShardStacks = 0;
-                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, gameState.NotesPerClick * Math.Pow(stacks, stacks));
+                    int stacksToConsume = gameState.ClockworkForteStacks;
+                    gameState.ClockworkForteStacks = 0;
+                    // Grant massive notes on THIS click
+                    double bonus = Math.Pow(gameState.NotesPerClick, stacksToConsume);
+                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, bonus);
                 }
-                if (gameState.ClairDeLuneMinuteHand == 11 && gameState.NotesPerSecond > 1e18 && gameState.ClairDeLuneLastClickCount % 12 == 0)
+                
+                // Minute Hand on 11 (Glass Forte): If NPS > 1 Quintillion, every 12th click gives 1 Clock of Eternity
+                if (gameState.ClairDeLuneMinuteHand == 11 && 
+                    gameState.NotesPerSecond >= 1e18 && 
+                    gameState.ClairDeLuneLastClickCount % 12 == 0)
                 {
                     gameState.ClockOfEternityStacks++;
                 }
-
-                // Custom Stack Consumption (Clockwork Forte, Temporal Harmony, Clock of Eternity)
-                // Example: Weapon 1 Crescendance
-                if (gameState.ClockOfEternityStacks > 0 && gameState.ClockworksHarmonyAbility)
-                {
-                    gameState.ClockOfEternityStacks--;
-                    // Grant criticals or other effects as needed
-                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, gameState.Notes * 2);
-                }
-
-                // Weapon Bonds
-                // Weapon 1: Refund 50% Entropic Melodies spent
-                if (gameState.ClockworksHarmony && gameState.ClairDeLuneRefundEntropic)
-                {
-                    int refund = (int)(gameState.EntropicMelodiesSpent * 0.5);
-                    gameState.EntropicMelodies += refund;
-                    gameState.ClairDeLuneRefundEntropic = false;
-                }
-                // Weapon 2: 10% chance to refund custom stack on consume
-                if (gameState.MetronomicDissonance && gameState.ClairDeLuneWeapon2RefundStack)
-                {
-                    if (_random.NextDouble() < 0.1)
-                    {
-                        gameState.ResonantShardStacks++;
-                    }
-                    gameState.ClairDeLuneWeapon2RefundStack = false;
-                }
-                // Weapon 2 Crescendance: On Temporal Harmony gain, +2 to 5 random majors
-                if (gameState.MetronomicDissonanceAbility && gameState.TemporalHarmonyStacks > 0)
-                {
-                    for (int i = 0; i < 5; i++)
-                    {
-                        int pick = _random.Next(7);
-                        switch (pick)
-                        {
-                            case 0: gameState.MoonlightMajorOwned += 2; break;
-                            case 1: gameState.EroicaMajorOwned += 2; break;
-                            case 2: gameState.SwanMajorOwned += 2; break;
-                            case 3: gameState.LaCampanellaMajorOwned += 2; break;
-                            case 4: gameState.EnigmaMajorOwned += 2; break;
-                            case 5: gameState.FateMajorOwned += 2; break;
-                            case 6: gameState.OdeToJoyMajorOwned += 2; break;
-                        }
-                    }
-                }
             }
+            
+        // Celestial Horology (Weapon 1) - Crescendance Bond: Celestial Convergence
+        // Consume 1 Clock of Eternity for next 2 clicks with "Everlasting Melody of Time's Infinite Symphony!!!" critical
+        // Critical gives ((NPS^NPC)/(144)) notes
+        public static void ClockworksHarmony_CrescendanceBond(GameState gameState)
+        {
+            if (gameState.ClockOfEternityStacks > 0)
+            {
+                gameState.ClockOfEternityStacks--;
+                // Set the next 2 clicks to be Lunar Everlasting criticals
+                gameState.ClairWeapon1CritClicksRemaining = 2;
+            }
+        }
+        
+        // Metronomic Dissonance (Weapon 2) - 10% chance to refund consumed stack
+        // This is handled passively in the consumption logic above (Minute Hand effects)
+        // When any stack is consumed, there's a 10% chance to refund it
+        public static bool MetronomicDissonance_CheckRefund()
+        {
+            return _random.NextDouble() < 0.10;
+        }
+        
+        // Helper: Apply Celestial Horology passive: Chrono-Entropic Refund (50% entropic refund on spend)
+        // This should be called whenever entropic melodies are spent
+        public static void ClockworksHarmony_RefundEntropic(GameState gameState, int amountSpent)
+        {
+            if (gameState.ClockworksHarmony || gameState.ClockworksHarmonyAbility)
+            {
+                int refund = (int)(amountSpent * 0.5);
+                gameState.EntropicMelodies += refund;
+            }
+        }
+        
     // Removed misplaced curly brace
         // Static Random instance to avoid creating new instances on every call (performance optimization)
         private static readonly Random _random = new Random();
@@ -3368,6 +3447,10 @@ namespace MusicClicker.Armory
             gameState.PetalsOfHarmony--;
             gameState.PetalsOfMelody--;
             gameState.EntropicMelodies -= 17;
+            
+            // Celestial Horology passive: Chrono-Entropic Refund - refund 50% of spent entropic
+            ClockworksHarmony_RefundEntropic(gameState, 17);
+            
             gameState.OdeToLifeStacks++;
         }
         
@@ -3565,70 +3648,11 @@ namespace MusicClicker.Armory
         {
             if (!gameState.ClairDeLuneMajorAbility) return;
             
-            gameState.ClairDeLuneClickCounter++;
-            int counter = gameState.ClairDeLuneClickCounter;
+            // Call the main Clair de Lune click logic which handles all hour/minute hand effects
+            ClairDeLune_OnClick(gameState);
             
-            // ==================== HOUR HAND EFFECTS ====================
-            
-            // Hour = 12: Every 3rd, 6th, 9th, 12th click give Clockwork Forte
-            if (gameState.ClairDeLuneHourHand == 12)
-            {
-                if (counter % 3 == 0)
-                {
-                    gameState.ClockworkForteStacks++;
-                    
-                    // Minute Hand 2: On gain of Clockwork Forte, next 2 clicks are guaranteed Entropic Crescendo crits
-                    if (gameState.ClairDeLuneMinuteHand == 2)
-                    {
-                        gameState.ClairMinute2CritClicksRemaining += 2;
-                    }
-                    
-                    // Weapon 2 (Temporal Refractor) Crescendance Bond: +12 of 3 random minors
-                    if (gameState.MetronomicDissonanceAbility && 
-                        (gameState.CurrentResonatedWeapon1 == "MetronomicDissonance" || gameState.CurrentResonatedWeapon2 == "MetronomicDissonance"))
-                    {
-                        ClairWeapon2_OnClockworkForteGain(gameState);
-                    }
-                }
-            }
-            
-            // Hour = 6: Every 6th click gives Temporal Harmony
-            else if (gameState.ClairDeLuneHourHand == 6)
-            {
-                if (counter % 6 == 0)
-                {
-                    gameState.TemporalHarmonyStacks++;
-                    
-                    // Minute Hand 1: On gain of Temporal Harmony, next 3 clicks give +1.5% Entropic Melodies
-                    if (gameState.ClairDeLuneMinuteHand == 1)
-                    {
-                        gameState.ClairMinute1EntropicClicksRemaining += 3;
-                    }
-                    
-                    // Weapon 2 (Temporal Refractor) Crescendance Bond: +2 to 5 random majors
-                    if (gameState.MetronomicDissonanceAbility && 
-                        (gameState.CurrentResonatedWeapon1 == "MetronomicDissonance" || gameState.CurrentResonatedWeapon2 == "MetronomicDissonance"))
-                    {
-                        ClairWeapon2_OnTemporalHarmonyGain(gameState);
-                    }
-                }
-            }
-            
-            // ==================== MINUTE HAND EFFECTS ====================
-            
-            // Minute = 11: If NPS > 1 Quintillion, every 12th click gives Clock of Eternity
-            if (gameState.ClairDeLuneMinuteHand == 11 && gameState.NotesPerSecond > 1e18)
-            {
-                if (counter % 12 == 0)
-                {
-                    gameState.ClockOfEternityStacks++;
-                }
-            }
-            
-            // Minute = 1: Already handled in Temporal Harmony gain above
-            // Minute = 2: Already handled in Clockwork Forte gain above
-            
-            // Minute = 4: Every time you gain Entropic Melodies, handled separately in entropic gain logic
+            // Update the main window's crescendance panel
+            mainWindow.UpdateMainClairDeLuneCrescendanceInfo();
         }
         
         /// <summary>

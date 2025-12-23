@@ -536,6 +536,28 @@ namespace MusicClicker
             };
             _saveTimer.Start();
 
+            // Wire up FeedbackButton to open the Google Form
+            var feedbackButton = this.FindControl<Button>("FeedbackButton");
+            if (feedbackButton != null)
+            {
+                feedbackButton.Click += (_, __) =>
+                {
+                    try
+                    {
+                        var url = "https://forms.gle/gmbzf6voQWXNgjMq9";
+                        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                        {
+                            FileName = url,
+                            UseShellExecute = true
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Failed to open feedback form: {ex.Message}");
+                    }
+                };
+            }
+
             // Register handler to save when window closes
             this.Closing += MainWindow_Closing;
 
@@ -977,9 +999,9 @@ namespace MusicClicker
                 }
                 
                 // Clair De Lune: Minute Hand 1 effect (next 3 clicks after Temporal Harmony gain)
-                if (gameState.ClairMinute1EntropicClicksRemaining > 0)
+                if (gameState.ClairDeLunePowerSpikePending > 0)
                 {
-                    gameState.ClairMinute1EntropicClicksRemaining--;
+                    gameState.ClairDeLunePowerSpikePending--;
                     double entropicGain = 1.5;
                     
                     // Minute Hand 4: increase notes by 0.1% per Entropic Melodies gained
@@ -1133,7 +1155,7 @@ namespace MusicClicker
                     hasStroke = true;
                     strokeColor = Color.FromRgb(199, 21, 133); // Dark pink outline
                 }
-                // 6.5. Clair De Lune: Everlasting Melody of Time's Infinite Symphony (Weapon 1 crit)
+                // 6.5. Clair De Lune: Lunar Everlasting (Weapon 1 crit)
                 else if (gameState.ClairWeapon1CritClicksRemaining > 0)
                 {
                     gameState.ClairWeapon1CritClicksRemaining--;
@@ -1142,12 +1164,12 @@ namespace MusicClicker
                     double npc = gameState.NotesPerClick;
                     finalNotes = (Math.Pow(nps, npc)) / 144.0;
                     MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
-                    critText = $"Everlasting Melody of Time's Infinite Symphony!!! +{NumberFormatter.FormatLargeNumber(finalNotes)}";
+                    critText = $"Lunar Everlasting!!! +{NumberFormatter.FormatLargeNumber(finalNotes)}";
                     critColor = Color.FromRgb(135, 206, 250); // Light sky blue (time/clock theme)
                     hasStroke = true;
                     strokeColor = Color.FromRgb(25, 25, 112); // Midnight blue outline
                 }
-                // 6.6. Clair De Lune: Symphony of Infinity (Duet 12th click effect)
+                // 6.6. Clair De Lune: Eternal Moonlight Opus (Duet 12th click effect)
                 else if (gameState.ClairSymphonyOfInfinityClicksRemaining > 0)
                 {
                     gameState.ClairSymphonyOfInfinityClicksRemaining--;
@@ -1156,31 +1178,47 @@ namespace MusicClicker
                     double npc = gameState.NotesPerClick;
                     finalNotes = Math.Pow(npc, Math.Pow(nps, 12));
                     MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
-                    critText = $"Symphony of Infinity!!! +{NumberFormatter.FormatLargeNumber(finalNotes)}";
+                    critText = $"Eternal Moonlight Opus!!! +{NumberFormatter.FormatLargeNumber(finalNotes)}";
                     critColor = Color.FromRgb(218, 165, 32); // Golden rod (infinity theme)
                     hasStroke = true;
                     strokeColor = Colors.White;
                 }
-                // 6.7. Clair De Lune: Era of the Music's Chronos (Minute Hand 9 effect)
-                else if (gameState.ClairEraOfChronosClicksRemaining > 0)
+                // 6.7. Clair De Lune: Twilight Rupture (Hour Hand 9 effect)
+                else if (gameState.ClairCadenzaCataclysmClicksRemaining > 0)
                 {
-                    gameState.ClairEraOfChronosClicksRemaining--;
+                    gameState.ClairCadenzaCataclysmClicksRemaining--;
                     // Formula: ((NPS^9)/5) notes
                     double nps = gameState.NotesPerSecond;
                     finalNotes = (Math.Pow(nps, 9)) / 5.0;
                     MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
-                    critText = $"Era of the Music's Chronos!!! +{NumberFormatter.FormatLargeNumber(finalNotes)}";
+                    critText = $"Twilight Rupture!!! +{NumberFormatter.FormatLargeNumber(finalNotes)}";
                     critColor = Color.FromRgb(147, 112, 219); // Medium purple (chronos/time theme)
                     hasStroke = true;
                     strokeColor = Colors.Black;
                 }
-                // 6.8. Clair De Lune: Entropic Crescendo of Eternity (Minute Hand 2 or Duet 9th click)
-                else if (gameState.ClairMinute2CritClicksRemaining > 0 || gameState.ClairDuetEntropicCritClicksRemaining > 0)
+                // 6.8. Clair De Lune: Timeless Melody (Minute Hand 2 effect)
+                else if (gameState.ClairInfinityArpeggioClicksRemaining > 0)
                 {
-                    if (gameState.ClairMinute2CritClicksRemaining > 0)
-                        gameState.ClairMinute2CritClicksRemaining--;
-                    if (gameState.ClairDuetEntropicCritClicksRemaining > 0)
-                        gameState.ClairDuetEntropicCritClicksRemaining--;
+                    gameState.ClairInfinityArpeggioClicksRemaining--;
+                    // Timeless Melody is a guaranteed critical - use 1500x multiplier like Entropic Crescendo
+                    finalNotes = notesPerClick * 1500;
+                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
+                    critText = $"Timeless Melody!!! +{NumberFormatter.FormatLargeNumber(finalNotes)}";
+                    critColor = Color.FromRgb(0, 255, 255); // Cyan (infinity/time theme)
+                    hasStroke = true;
+                    strokeColor = Color.FromRgb(25, 25, 112); // Midnight blue outline
+                    
+                    // La Campanella: Entropic-level crits grant +3 Deafening Chime stacks (max 15)
+                    if (gameState.CurrentResonatedScore == "LaCampanella")
+                    {
+                        int stacksToAdd = Math.Min(3, 15 - gameState.DeafeningChimeStacks);
+                        gameState.DeafeningChimeStacks += stacksToAdd;
+                    }
+                }
+                // 6.9. Clair De Lune: Entropic Crescendo of Eternity (Duet 9th click)
+                else if (gameState.ClairDuetEntropicCritClicksRemaining > 0)
+                {
+                    gameState.ClairDuetEntropicCritClicksRemaining--;
                         
                     finalNotes = notesPerClick * 1500;
                     MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
@@ -1344,6 +1382,9 @@ namespace MusicClicker
                 gameState.OdeToJoyMajorOwned += 1;
                 gameState.DiesIraeOwned += 1;
                 gameState.WinterOwned += 1;
+                gameState.ClairDeLuneMajorOwned += 1;
+                gameState.MercuryMajorOwned += 1;
+                gameState.MarsMajorOwned += 1;
 
                 // Give one of each weapon
                 gameState.IncisorOfMoonlight = true;
@@ -1364,6 +1405,8 @@ namespace MusicClicker
                 gameState.HellsWrath = true;
                 gameState.CacophonicBlizzard = true;
                 gameState.TheSnowsDesire = true;
+                gameState.MetronomicDissonance = true;
+                gameState.ClockworksHarmony = true;
 
                 // Update all UI displays
                 UIUpdater.UpdateUI(this, gameState);
@@ -2288,6 +2331,10 @@ namespace MusicClicker
             {
                 UpdateMainWinterCrescendanceInfo();
             }
+            else if (gameState.CurrentResonatedScore == "ClairDeLune")
+            {
+                UpdateMainClairDeLuneCrescendanceInfo();
+            }
             else
             {
                 // No crescendance system for this score yet
@@ -2647,6 +2694,119 @@ namespace MusicClicker
             MusicClicker.Armory.WeaponAbilities.CacophonicBlizzard_ConsumeSnowsOblivion(gameState);
             UpdateMainWinterCrescendanceInfo();
             UIUpdater.UpdateUI(this, gameState);
+        }
+        
+        // Clair de Lune Crescendance Info
+        public void UpdateMainClairDeLuneCrescendanceInfo()
+        {
+            if (MainCrescendanceTitle != null)
+                MainCrescendanceTitle.Text = "Clair de Lune: Shattered Time";
+                
+            if (MainCrescendanceInfoText != null)
+                MainCrescendanceInfoText.Text = "Master the clockwork mechanisms. Configure Hour and Minute hands to generate and consume stacks for devastating temporal effects.";
+                
+            // Hide all other panels
+            if (MainSwanFeatherPanel != null) MainSwanFeatherPanel.IsVisible = false;
+            if (MainMoonlightStackPanel != null) MainMoonlightStackPanel.IsVisible = false;
+            if (MainLaCampanellaStackPanel != null) MainLaCampanellaStackPanel.IsVisible = false;
+            if (MainEnigmaStackPanel != null) MainEnigmaStackPanel.IsVisible = false;
+            if (MainFateStackPanel != null) MainFateStackPanel.IsVisible = false;
+            if (MainEroicaStackPanel != null) MainEroicaStackPanel.IsVisible = false;
+            if (MainOdeToJoyStackPanel != null) MainOdeToJoyStackPanel.IsVisible = false;
+            if (MainDiesIraeStackPanel != null) MainDiesIraeStackPanel.IsVisible = false;
+            if (MainWinterStackPanel != null) MainWinterStackPanel.IsVisible = false;
+                
+            if (MainClairDeLuneStackPanel != null)
+                MainClairDeLuneStackPanel.IsVisible = true;
+                
+            // Update current hand positions
+            if (MainCurrentHourHandText != null)
+                MainCurrentHourHandText.Text = $"Current: {gameState.ClairDeLuneHourHand}";
+                
+            if (MainCurrentMinuteHandText != null)
+                MainCurrentMinuteHandText.Text = $"Current: {gameState.ClairDeLuneMinuteHand}";
+                
+            // Update Clockwork Forte count
+            if (MainClockworkForteCount != null)
+                MainClockworkForteCount.Text = gameState.ClockworkForteStacks.ToString();
+                
+            // Update Temporal Harmony count
+            if (MainTemporalHarmonyCount != null)
+                MainTemporalHarmonyCount.Text = $"{gameState.TemporalHarmonyStacks} / 50";
+                
+            // Update Clock of Eternity count
+            if (MainClockOfEternityCount != null)
+                MainClockOfEternityCount.Text = gameState.ClockOfEternityStacks.ToString();
+        }
+        
+        // Clair de Lune Clock Configuration Handlers
+        private void MainSetHourHand_Click(object? sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.Tag is string positionStr && int.TryParse(positionStr, out int position))
+            {
+                gameState.ClairDeLuneHourHand = position;
+                UpdateMainClairDeLuneCrescendanceInfo();
+            }
+        }
+        
+        private void MainSetMinuteHand_Click(object? sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.Tag is string positionStr && int.TryParse(positionStr, out int position))
+            {
+                gameState.ClairDeLuneMinuteHand = position;
+                UpdateMainClairDeLuneCrescendanceInfo();
+            }
+        }
+        
+        #endregion
+        
+        #region Hover Tooltip Handlers
+        
+        private void ShowButtonTooltip(object? sender, Avalonia.Input.PointerEventArgs e)
+        {
+            if (sender is Button button && button.Tag is string tooltipText && HoverTooltip != null && HoverTooltipText != null)
+            {
+                HoverTooltipText.Text = tooltipText;
+                HoverTooltip.IsVisible = true;
+                UpdateTooltipPosition(sender, e);
+            }
+        }
+        
+        private void HideButtonTooltip(object? sender, Avalonia.Input.PointerEventArgs e)
+        {
+            if (HoverTooltip != null)
+            {
+                HoverTooltip.IsVisible = false;
+            }
+        }
+        
+        private void UpdateTooltipPosition(object? sender, Avalonia.Input.PointerEventArgs e)
+        {
+            if (HoverTooltip != null && HoverTooltip.IsVisible)
+            {
+                var position = e.GetPosition(this);
+                
+                // Offset tooltip to appear next to the cursor (to the right and slightly below)
+                double offsetX = 20;
+                double offsetY = 20;
+                
+                // Calculate tooltip bounds
+                double tooltipWidth = HoverTooltip.Bounds.Width;
+                double tooltipHeight = HoverTooltip.Bounds.Height;
+                
+                // Ensure tooltip doesn't go off-screen
+                double left = position.X + offsetX;
+                double top = position.Y + offsetY;
+                
+                if (left + tooltipWidth > this.Bounds.Width)
+                    left = position.X - tooltipWidth - 10;
+                    
+                if (top + tooltipHeight > this.Bounds.Height)
+                    top = position.Y - tooltipHeight - 10;
+                
+                // Position the tooltip
+                HoverTooltip.Margin = new Thickness(left, top, 0, 0);
+            }
         }
         
         #endregion

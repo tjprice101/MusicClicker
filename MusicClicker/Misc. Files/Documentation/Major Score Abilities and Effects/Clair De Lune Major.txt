@@ -2,7 +2,7 @@
            CLAIR DE LUNE MAJOR SCORE
 ===================================================
 
-CRECENDANCE ABILITY: Sonata of Shattered Hours
+CRECENDANCE ABILITY: Lunar Chronometry
 ---------------------------------------------------
 
 CORE MECHANIC - Clock Configuration:
@@ -13,20 +13,21 @@ Each position provides unique effects and stack mechanics, themed to shattered t
 HOUR HAND POSITIONS (Effects):
 ---------------------------------------------------
 
-Hour Hand on 12 (Temporal Overture):
-• Every 3rd, 6th, 9th, and 12th click give 1 stack of "Resonant Shard"
+Hour Hand on 12 (Celestial Assembly):
+• Every 3rd, 6th, 9th, and 12th click give stacks of "Chrono Fragments"
+• Stacks accumulate: Click 3 gives 1, click 6 gives 2, click 9 gives 2, click 12 gives 4
 
-Hour Hand on 3 (Shatterchord Surge):
-• Consume 1 stack of Resonant Shard to give yourself:
+Hour Hand on 3 (Nocturnal Exchange):
+• Consume 1 stack of Chrono Fragments to give yourself:
   - +50% Notes to your current notes
   - +2% Entropic Melodies
 
 Hour Hand on 6 (Fractal Modulation):
-• Every 6th click gives you 1 stack of "Tempo Fragment"
+• Every 6th click gives you 1 stack of "Twilight Resonance" (max 50 stacks)
 
 Hour Hand on 9 (Syncopated Rupture):
-• Consume 1 stack of Tempo Fragment to give your next 10 clicks a special critical:
-  - "Cadenza Cataclysm"
+• Consume 1 stack of Twilight Resonance to give your next 10 clicks a special critical:
+  - "Twilight Rupture"
   - Gives +X notes where X = ((NPS^9)/5)
 
 ---------------------------------------------------
@@ -34,79 +35,80 @@ MINUTE HAND POSITIONS (Criticals/Effects):
 ---------------------------------------------------
 
 Minute Hand on 1 (Cadenza Cataclysm):
-• On gain of Tempo Fragment stack, your next 3 clicks will give you +1.5% Entropic Melodies
+• On gain of Twilight Resonance stack, your next 3 clicks will give you +1.5% Entropic Melodies
 
 Minute Hand on 2 (Infinity Arpeggio):
-• On gain of Resonant Shard stack, your next 2 clicks are guaranteed "Infinity Arpeggio" critical
+• On gain of Chrono Fragments stack, your next 2 clicks are guaranteed "Timeless Melody" critical
 
 Minute Hand on 4 (Prismal Crescendo):
 • Every time you gain Entropic Melodies, increase your current notes by 0.1% per Entropic Melodies gained
 
 Minute Hand on 5 (Refrain of Endless Measures):
-• Consume 3 stacks of Resonant Shard to give yourself +5 to all owned minor scores
+• Consume 3 stacks of Chrono Fragments to give yourself +5 to all owned minor scores
 
 Minute Hand on 7 (Sonata of Shattered Hours):
-• Consume 20 stacks of Resonant Shard to give yourself:
+• Consume 20 stacks of Chrono Fragments to give yourself:
   - 1 Major Score
   - +15% Entropic Melodies
 
 Minute Hand on 8 (Duet: Symphony of Broken Time):
-• Consume 8 stacks of Tempo Fragment to give yourself +5 to every owned major
+• Consume 8 stacks of Twilight Resonance to give yourself +5 to every owned major
 
 Minute Hand on 10 (Power Spike):
-• For each Resonant Shard consumed, your next click gives +X notes
+• For each Chrono Fragment consumed, your next click gives +X notes
   - X = (NPC^# of stacks consumed prior to this click)
 
 Minute Hand on 11 (Glass Forte):
-• If your notes per second exceeds 1 Quintillion, every 12th click gives you 1 stack of "Clock of Eternity"
+• If your notes per second exceeds 1 Quintillion, every 12th click gives you 1 stack of "Perpetual Nocturne"
 
 ---------------------------------------------------
 CUSTOM STACKS:
 ---------------------------------------------------
 
-Clockwork Forte:
+Chrono Fragments:
 • Gained from Hour Hand on 12 position (every 3rd, 6th, 9th, 12th click)
 • Can be consumed by various Minute Hand positions for powerful effects
 
-Temporal Harmony:
+Twilight Resonance:
 • Gained from Hour Hand on 6 position (every 6th click)
-• Can be consumed for Era of the Music's Chronos criticals and other effects
+• Can be consumed for Twilight Rupture criticals and other effects
 
-Clock of Eternity:
+Perpetual Nocturne:
 • Gained from Minute Hand on 11 position (requires 1 Quintillion+ NPS)
-• Used by Weapon 1's Crescendance Bond
+• Used by Celestial Horology's Crescendance Bond
 
 ===================================================
-           WEAPON 1
+           WEAPON 1: CELESTIAL HOROLOGY
 ===================================================
 
-PASSIVE ON EQUIP:
+PASSIVE ON EQUIP: Chrono-Entropic Refund
 • Anytime you spend Entropic Melodies, refund 50% of them
 
-CRESCENDANCE BOND:
-• Consume 1 stack of Clock of Eternity to give your next 2 clicks a new critical:
-  - "Everlasting Melody of Time's Infinite Symphony!!!"
+CRESCENDANCE BOND: Celestial Convergence
+• Consume 1 stack of Perpetual Nocturne to give your next 2 clicks a new critical:
+  - "Lunar Everlasting"
   - Gives ((NPS^NPC)/(144)) notes
 
 ===================================================
-           WEAPON 2
+           WEAPON 2: METRONOMIC DISSONANCE
 ===================================================
 
-PASSIVE ON EQUIP:
+PASSIVE ON EQUIP: Chrono-Refraction
 • Anytime a custom stack is consumed, 10% chance to refund that stack
   (Or stacks if multiple are consumed)
 
-CRESCENDANCE BOND:
-• Every time you gain a stack of Clockwork Forte:
+CRESCENDANCE BOND: Cascading Resonance
+• Every time you gain a stack of Chrono Fragments:
   - Gain +12 of 3 random owned minors
 
-• Every time you gain a stack of Temporal Harmony:
+• Every time you gain a stack of Twilight Resonance:
   - Gain +2 to 5 random owned majors
   - (Not including Event majors or Discordance majors)
 
 ===================================================
-           DUET ABILITY
+           DUET ABILITY: LUNAR DODECAPHONY
 ===================================================
+Duet Name: Clair de Lune's Embrace
 
 SEQUENTIAL CLICK EFFECTS:
 
@@ -124,17 +126,17 @@ SEQUENTIAL CLICK EFFECTS:
   (Not including Event or Discordance majors)
 
 5th Click:
-• Consumes all stacks of Clockwork Forte and Temporal Harmony
+• Consumes all stacks of Chrono Fragments and Twilight Resonance
 • Gives yourself (NPC * (# of stacks consumed)^5) notes
 
 6th Click:
-• Gives +5 stacks of Clockwork Forte
+• Gives +5 stacks of Chrono Fragments
 
 7th Click:
 • Gives +5% Entropic Melodies
 
 8th Click:
-• Gives +1 stack of Temporal Harmony
+• Gives +1 stack of Twilight Resonance
 
 9th Click:
 • Makes your next 3 clicks "Entropic Crescendo of Eternity" Criticals
@@ -146,7 +148,7 @@ SEQUENTIAL CLICK EFFECTS:
 • Gives you +2 Clair De Lune Major
 
 12th Click:
-• Gives your next 5 clicks a new critical: "Symphony of Infinity"
+• Gives your next 5 clicks a new critical: "Eternal Moonlight Opus"
 • Gives you +X notes per click where X = (NPC^NPS^12)
 
 ===================================================

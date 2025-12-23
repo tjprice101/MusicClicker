@@ -188,7 +188,7 @@ namespace MusicClicker
             {"CacophonicBlizzard", "Cacophonic Blizzard"},
             {"TheSnowsDesire", "The Snow's Desire"}
         ,
-        {"ClockworksHarmony", "Clockwork's Harmony"},
+        {"ClockworksHarmony", "Celestial Horology"},
         {"MetronomicDissonance", "Metronomic Dissonance"}
         };
 
@@ -945,6 +945,7 @@ namespace MusicClicker
             _gameState.FateMajorAbility = false;
             _gameState.OdeToJoyMajorAbility = false;
             _gameState.WinterAbility = false;
+            _gameState.ClairDeLuneMajorAbility = false;
 
             // Enable the selected ability
             switch (scoreName)
@@ -957,6 +958,7 @@ namespace MusicClicker
                 case "Fate": _gameState.FateMajorAbility = true; break;
                 case "OdeToJoy": _gameState.OdeToJoyMajorAbility = true; break;
                 case "Winter": _gameState.WinterAbility = true; break;
+                case "ClairDeLune": _gameState.ClairDeLuneMajorAbility = true; break;
             }
 
             // Save to GameState

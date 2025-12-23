@@ -116,26 +116,27 @@ Crescendance: Petals of Life
 • Crescendance Bonds (for example, The Snow's Desire) alter how Frigid Melody is gained or consumed and change the exact numerical effects of Eternal Frost/Regal Snowlight.";
 
             public const string ClairDeLune = @"Clair de Lune
-Crescendance Ability: Sonata of Shattered Hours
 
-CORE MECHANIC — Clock Configuration:
-You choose where the hour and minute hands point on a clock face. Each position provides unique effects and stack mechanics, themed to shattered time and musical resonance.
+""Time bends and fractures in moonlight's embrace—each broken moment holds infinite possibility.""
 
-HOUR HAND POSITIONS (Effects):
-• 12 (Temporal Overture): Every 3rd, 6th, 9th, and 12th click give 1 stack of 'Resonant Shard'
-• 3 (Shatterchord Surge): Consume 1 stack of Resonant Shard to give yourself +50% Notes and +2% Entropic Melodies
-• 6 (Fractal Modulation): Every 6th click gives you 1 stack of 'Tempo Fragment'
-• 9 (Syncopated Rupture): Consume 1 stack of Tempo Fragment to give your next 10 clicks a special critical ('Cadenza Cataclysm')
+Crescendance: Clockwork Symphony
+Configure clock hands to shatter time itself. Each position on the clock face grants unique powers over temporal resonance.
 
-MINUTE HAND POSITIONS (Criticals/Effects):
-• 1 (Cadenza Cataclysm): On gain of Tempo Fragment, next 3 clicks give +1.5% Entropic Melodies
-• 2 (Infinity Arpeggio): On gain of Resonant Shard, next 2 clicks are guaranteed 'Infinity Arpeggio' criticals
-• 4 (Prismal Crescendo): Every time you gain Entropic Melodies, increase your current notes by 0.1% per Entropic Melody gained
-• 5 (Refrain of Endless Measures): Consume 3 Resonant Shard for +5 to all owned minor scores
-• 7 (Sonata of Shattered Hours): Consume 20 Resonant Shard for +1 Major Score and +15% Entropic Melodies
-• 8 (Duet: Symphony of Broken Time): Consume 8 Tempo Fragment for +5 to every owned major
-• 10 (Power Spike): For each Resonant Shard consumed, your next click gives +X notes (X = NPC^# of stacks consumed)
-• 11 (Glass Forte): If NPS > 1 Quintillion, every 12th click gives 1 stack of 'Glass Forte'
+HOUR HAND (Main Effects):
+• 12: Every 3rd, 6th, 9th, and 12th click grants 1 Clockwork Forte stack
+• 3: Consume 1 Clockwork Forte for +50% notes and +2% Entropic Melodies
+• 6: Every 6th click grants 1 Temporal Harmony stack
+• 9: Consume 1 Temporal Harmony to empower your next 10 clicks with Era of the Music's Chronos crits
+
+MINUTE HAND (Special Triggers):
+• 1: Gaining Temporal Harmony empowers your next 3 clicks with +1.5% Entropic Melodies each
+• 2: Gaining Clockwork Forte empowers your next 2 clicks to be guaranteed Entropic Crescendo of Eternity crits
+• 4: Whenever you gain Entropic Melodies, increase your current notes by 0.1% per EM gained
+• 5: Consume 3 Clockwork Forte for +5 to all minor scores
+• 7: Consume 20 Clockwork Forte for +1 Clair de Lune and +15% Entropic Melodies
+• 8: Consume 8 Temporal Harmony for +5 to every owned major score
+• 10: Each Clockwork Forte consumed empowers your next click with +(NPC^stacks) notes
+• 11: If NPS > 1 Quintillion, every 12th click grants 1 Glass Forte stack
 
 CUSTOM STACKS:
 • Resonant Shard: Gained from Hour 12 (every 3rd, 6th, 9th, 12th click); consumed for powerful effects
@@ -319,7 +320,7 @@ Crescendance Bond: Frigid Resonance — While equipped and resonating with Winte
 Duet: Symphony of Absolute Zero — Freezes NPS for 20 seconds. Each click during the duet grants +1 Frigid Melody and extends duration by +0.5 seconds (max +10s). 20s base duration | 4 minute cooldown.";
 
             // Clair de Lune Weapons
-            public const string ClockworksHarmony = @"Clockwork's Harmony
+            public const string ClockworksHarmony = @"Celestial Horology
 Passive (on equip):
 Anytime you spend Entropic Melodies, refund 50% of them.
 
@@ -396,8 +397,8 @@ Completing all 12 clicks doubles all owned minor scores.
             public const string TheSnowsDesire = "Passive: Accelerating Flurry — Every click grants +1% Notes Per Click (max +50%). Decays to 0% after 5 seconds of no clicking. Current bonus displayed in Crescendance panel.\n\nCrescendance Bond: Frigid Resonance — Whenever you gain 1 Frigid Melody stack, gain +1 bonus stack (doubling effect).";
             
             // Clair de Lune
-            public const string ClockworksHarmony = "Passive: Timeless Echo — Every 15th click grants +5% current notes and +1 random minor score.\n\nCrescendance Bond: Shatterchord Surge — While resonating with Clair de Lune, gain Temporal Overture every 10th click instead of every 12th.";
-            public const string MetronomicDissonance = "Passive: Chrono Shift — On major craft, grant +2 Temporal Overture per clock hand configured (up to 4 stacks: 2 hour + 2 minute).\n\nCrescendance Bond: Syncopated Rupture — While resonating with Clair de Lune, consume effects grant double rewards (M1: +50/+50 fragments, M8: +100% notes).";
+            public const string ClockworksHarmony = "Passive: Timeless Echo — Every 15th click grants +5% current notes and +1 random minor score.\n\nCrescendance Bond: Accelerated Clockwork — Hour hand on 12 position grants Clockwork Forte every 10th click instead of every 12th.";
+            public const string MetronomicDissonance = "Passive: Chrono Shift — Each major craft grants +2 Clockwork Forte per clock hand configured (up to 4 total from both hands).\n\nCrescendance Bond: Temporal Amplification — Minute hand effects that consume stacks grant double rewards.";
         }
 
         // ============================================================
@@ -417,7 +418,7 @@ Completing all 12 clicks doubles all owned minor scores.
                 public const string Enigma = "Enigmatic Puzzle:\nMystery Clicks";
                 public const string Fate = "Threads of Destiny:\nHourglass Reversal";
                 public const string OdeToJoy = "Symphony of Celebration:\nCrescendo Conductor";
-                public const string ClairDeLune = "Sonata of Shattered Hours:\nSymphony of Broken Time";
+                public const string ClairDeLune = "Clockwork Symphony:\nSymphony of Broken Time";
             }
 
             public static class Full
@@ -431,6 +432,7 @@ Completing all 12 clicks doubles all owned minor scores.
                 public const string Enigma = "Each click triggers 1 random effect:\nRed: 5× Notes Per Second as instant notes | Blue: +10% Notes Per Second boost | Green: +30 Harmonious Fragments | Yellow: +30 Melodious Fragments | Purple: +1 major score per owned type | Orange: +1 minor component per owned minor type | White: +1 to 3 random minor scores | Black: -65% current notes\n\n10 second duration | 30 minute cooldown";
                 public const string Fate = "All actions performed during the first 10 seconds will be replayed during the last 10 seconds at X× effectiveness, where X equals the number of clicks you performed during the first half.\n\nDuration: 20 seconds | Cooldown: 8 minutes";
                 public const string OdeToJoy = "Build 16-note melodies by clicking (repeatable). Every 16 notes resets counter and grants rewards:\n• 4 notes: +25 Melodious and Harmonious Fragments\n• 8 notes: +5 Petals of Harmony\n• 12 notes: +5 Petals of Melody\n• 16 notes: +1 Ode to Life\nOn ability expiry: +3 Entropic Melodies per completed 4-note section\n\n20 second duration | 10 minute cooldown";
+                public const string ClairDeLune = "Symphony of Broken Time:\nEach click advances through a 12-step sequence, granting unique rewards every 4 clicks:\n• Clicks 1-4: Triple current notes\n• Clicks 5-8: +75% Entropic Melodies\n• Clicks 9-12: +5 random minor, then +5 random major\n\nComplete the full 12-click sequence to double all minor scores.\n\nDuration: Until 12 clicks complete | Cooldown: 6 minutes";
             }
 
             public static class Short
@@ -443,7 +445,7 @@ Completing all 12 clicks doubles all owned minor scores.
                 public const string LaCampanella = "Chime Chain: First click creates a chime. Each click within 1 second extends the chain. Chain gives length² × Notes Per Second as instant notes. Chain breaks after 1 second of no clicks - 10 second duration, 10 minute cooldown.";
                 public const string Enigma = "Mystery Clicks: Each click triggers 1 random effect (Red: 5× Notes Per Second notes, Blue: 10% Notes Per Second boost, Green: 30 Harmonious Fragments, Yellow: 30 Melodious Fragments, Purple: +1 major per owned, Orange: +1 minor component per owned, White: +1 to 3 random minors, Black: -65% notes) - 10 second duration, 30 minute cooldown.";
                 public const string Fate = "Hourglass Reversal: All actions during first 10 seconds replay during last 10 seconds at X× effectiveness where X = clicks performed (20 second duration, 8 minute cooldown).";
-                public const string ClairDeLune = "Symphony of Broken Time:\n• 12-click sequence — every 4 clicks grants unique rewards:\n   - 1st set: Triple current notes\n   - 2nd set: +75% Entropic Melodies\n   - 3rd set: +5 to a random owned minor score\n   - 4th set: +5 to a random owned major score\n• Complete the sequence to double all minor scores\n\nCooldown: 6 minutes.";
+                public const string ClairDeLune = "Symphony of Broken Time: 12-click sequence with escalating rewards. Every 4 clicks: triple notes, then +75% Entropic Melodies, then +5 random minor/major. Completing all 12 clicks doubles all minor scores - Cooldown: 6 minutes.";
                 public const string OdeToJoy = "Crescendo Conductor: Build 16-note melodies (repeatable/stackable). Rewards at 4/8/12/16 notes (+25 fragments, +5 Petals of Harmony, +5 Petals of Melody, +1 Ode to Life). On expiry: +3 Entropic Melodies per completed section - 20 second duration, 10 minute cooldown.";
             }
 
@@ -524,7 +526,7 @@ Completing all 12 clicks doubles all owned minor scores.
                 "Hell's Wrath" => Weapons.HellsWrath,
                 "Cacophonic Blizzard" => Weapons.CacophonicBlizzard,
                 "The Snow's Desire" => Weapons.TheSnowsDesire,
-                "Clockwork's Harmony" => Weapons.ClockworksHarmony,
+                "Celestial Horology" => Weapons.ClockworksHarmony,
                 "Metronomic Dissonance" => Weapons.MetronomicDissonance,
                 _ => $"No description available for: {weaponName}"
             };
@@ -555,7 +557,7 @@ Completing all 12 clicks doubles all owned minor scores.
                 "Hell's Wrath" => ForteResonance.HellsWrath,
                 "Cacophonic Blizzard" => ForteResonance.CacophonicBlizzard,
                 "The Snow's Desire" => ForteResonance.TheSnowsDesire,
-                "Clockwork's Harmony" => ForteResonance.ClockworksHarmony,
+                "Celestial Horology" => ForteResonance.ClockworksHarmony,
                 "Metronomic Dissonance" => ForteResonance.MetronomicDissonance,
                 _ => "Forte Resonance: <placeholder>"
             };

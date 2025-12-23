@@ -12,24 +12,19 @@ namespace MusicClicker
     public class GameState
     {
         // Clair de Lune custom stacks and flags
-        public int ResonantShardStacks { get; set; } = 0;
-        public int TempoFragmentStacks { get; set; } = 0;
         public int ClockworkForteStacks { get; set; } = 0;
         public int TemporalHarmonyStacks { get; set; } = 0;
         public int ClockOfEternityStacks { get; set; } = 0;
         public int ClairDeLuneHourHand { get; set; } = 12;
         public int ClairDeLuneMinuteHand { get; set; } = 1;
         public int ClairDeLunePowerSpikePending { get; set; } = 0;
-        public int ClairDeLuneCadenzaCataclysmClicks { get; set; } = 0;
-        public int ClairDeLuneInfinityArpeggioClicks { get; set; } = 0;
-        public int ClairDeLuneGlassFortePending { get; set; } = 0;
-        public int ClairDeLuneRefrainPending { get; set; } = 0;
-        public int ClairDeLuneSonataPending { get; set; } = 0;
-        public int ClairDeLuneSymphonyPending { get; set; } = 0;
+        public int ClairCadenzaCataclysmClicksRemaining { get; set; } = 0;
+        public int ClairInfinityArpeggioClicksRemaining { get; set; } = 0;
         public int ClairDeLuneLastClickCount { get; set; } = 0;
-        public bool ClairDeLuneRefundEntropic { get; set; } = false;
-        public bool ClairDeLuneWeapon2RefundStack { get; set; } = false;
-    // Removed misplaced curly brace
+        public int ClairWeapon1CritClicksRemaining { get; set; } = 0;
+        public int ClairSymphonyOfInfinityClicksRemaining { get; set; } = 0;
+        public int ClairDuetEntropicCritClicksRemaining { get; set; } = 0;
+        
         // Save format version - keep this field to support future migrations.
         public int SaveVersion = 2;
 
@@ -294,17 +289,6 @@ namespace MusicClicker
         
         // Minute Hand 9 effect - Era of Music's Chronos crits
         public int ClairEraOfChronosClicksRemaining { get; set; } = 0;
-        
-        // Weapon 1 (Everlasting Melody) effect - special critical
-        public int ClairWeapon1CritClicksRemaining { get; set; } = 0;
-        
-        // Weapon 2 (Temporal Refractor) - tracking for refund mechanic (handled per consume, no persistent state)
-        
-        // Duet: Symphony of Infinity critical clicks
-        public int ClairSymphonyOfInfinityClicksRemaining { get; set; } = 0;
-        
-        // Duet: Entropic Crescendo critical from 9th click
-        public int ClairDuetEntropicCritClicksRemaining { get; set; } = 0;
         
         // Duet activation state
         public bool ClairDeLuneDuetActive { get; set; } = false;

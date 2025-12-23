@@ -60,7 +60,7 @@ namespace MusicClicker.Views
             "The Snow's Desire",        // Formerly: Winter Bow II (event)
 
             // Boss Fight weapons (Clair de Lune)
-            "Clockwork's Harmony",      // Clair de Lune 1
+            "Celestial Horology",      // Clair de Lune 1
             "Metronomic Dissonance"     // Clair de Lune 2
         };
 
@@ -143,7 +143,7 @@ namespace MusicClicker.Views
             ArmoryItem16Button.Click += (s, e) => HandleArmoryPurchase(15); // Hell's Wrath
             ArmoryItem17Button.Click += (s, e) => HandleArmoryPurchase(16); // Cacophonic Blizzard
             ArmoryItem18Button.Click += (s, e) => HandleArmoryPurchase(17); // The Snow's Desire
-            ArmoryItem19Button.Click += (s, e) => HandleArmoryPurchase(18); // Clockwork's Harmony
+            ArmoryItem19Button.Click += (s, e) => HandleArmoryPurchase(18); // Celestial Horology
             ArmoryItem20Button.Click += (s, e) => HandleArmoryPurchase(19); // Metronomic Dissonance
         }
 

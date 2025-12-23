@@ -1,0 +1,116 @@
+Clair de Lune Implementation - Cleanup Summary
+===============================================
+
+Date: December 2024
+Purpose: Document all cleanup and fixes applied to Clair de Lune implementation
+
+OBSOLETE CODE REMOVED
+======================
+
+1. GameState.cs - Removed Unused Properties
+--------------------------------------------
+❌ ResonantShardStacks - Old name for Chrono Fragments (replaced by ClockworkForteStacks)
+❌ TempoFragmentStacks - Old name for Twilight Resonance (replaced by TemporalHarmonyStacks)
+❌ ClairDeLuneGlassFortePending - Incremented but never used/displayed
+❌ ClairDeLuneRefrainPending - Set but never read
+❌ ClairDeLuneSonataPending - Set but never read
+❌ ClairDeLuneSymphonyPending - Set but never read
+❌ ClairDeLuneCadenzaCataclysmClicks - Old duplicate (ClairCadenzaCataclysmClicksRemaining is correct one)
+❌ ClairDeLuneInfinityArpeggioClicks - Old duplicate (ClairInfinityArpeggioClicksRemaining is correct one)
+❌ ClairDeLuneRefundEntropic - Was never used
+❌ ClairDeLuneWeapon2RefundStack - Was never used
+
+2. GameState.cs - Removed Duplicate Properties
+-----------------------------------------------
+❌ ClairWeapon1CritClicksRemaining (duplicate at line 294)
+❌ ClairSymphonyOfInfinityClicksRemaining (duplicate at line 299)
+❌ ClairDuetEntropicCritClicksRemaining (duplicate at line 302)
+
+These were already defined at the top of the class (lines 24-26) and 
+duplicated in the Clair de Lune section.
+
+3. MainWindow.axaml.cs - Removed Broken UI Reference
+-----------------------------------------------------
+❌ Removed MainGlassForteCount.Text update (line 2739)
+   - The UI element MainGlassForteCount was removed from XAML during earlier cleanup
+   - This would have caused NullReferenceException at runtime
+
+4. WeaponAbilities.cs - Fixed Variable Reference
+-------------------------------------------------
+✅ Changed ClairDeLuneCadenzaCataclysmClicks → ClairWeapon1CritClicksRemaining
+   - Line 195: Fixed the Celestial Convergence bond to use correct property
+   - This bond consumes Perpetual Nocturne to trigger Lunar Everlasting crits
+
+
+MISSING FUNCTIONALITY ADDED
+============================
+
+1. Celestial Horology Passive: Chrono-Entropic Refund
+------------------------------------------------------
+Added 50% entropic refund calls to all places where Entropic Melodies are spent:
+
+✅ EntropicArmoryScreen.axaml.cs (line 197)
+   - Added refund call when purchasing entropic weapons
+   - Refunds 50% of the cost when Celestial Horology is equipped
+
+✅ WeaponAbilities.cs (line 3454)
+   - Added refund call to OdeToJoy_CombineForOdeToLife method
+   - Refunds 50% of the 17 entropic spent when combining petals
+
+Implementation:
+- Both locations now call: WeaponAbilities.ClockworksHarmony_RefundEntropic(_gameState, cost);
+- The method checks if ClockworksHarmony or ClockworksHarmonyAbility is active
+- If active, refunds 50% of spent entropic immediately
+
+2. Added Namespace Import
+--------------------------
+✅ EntropicArmoryScreen.axaml.cs
+   - Added: using MusicClicker.Armory;
+   - Required to access WeaponAbilities static methods
+
+
+VERIFICATION
+============
+
+✅ Build Status: SUCCESS (0 errors, 16 warnings)
+   - All warnings are pre-existing and unrelated to Clair de Lune
+
+✅ All Clair de Lune References Updated:
+   - Hour hand positions: 12, 3, 6, 9
+   - Minute hand positions: 1, 2, 4, 5, 7, 8, 10, 11
+   - Custom stacks: Chrono Fragments, Twilight Resonance, Perpetual Nocturne
+   - Critical hits: Twilight Rupture, Timeless Melody, Lunar Everlasting, Eternal Moonlight Opus
+   - Weapon 1: Celestial Horology
+   - Weapon 2: Metronomic Dissonance
+
+✅ No Dangling References:
+   - All removed properties confirmed not referenced elsewhere
+   - All updated property names consistent across codebase
+
+
+READY FOR TESTING
+=================
+
+All Clair de Lune functionality is now implemented and cleaned up:
+
+✅ Crescendance: Lunar Chronometry (clock configuration system)
+✅ Hour hand effects (12, 3, 6, 9)
+✅ Minute hand effects (1, 2, 4, 5, 7, 8, 10, 11)
+✅ Custom stack generation and consumption
+✅ Four unique critical hits
+✅ Weapon 1 passive: Chrono-Entropic Refund (50% EM refund)
+✅ Weapon 1 bond: Celestial Convergence (Lunar Everlasting crits)
+✅ Weapon 2 passive: Chrono-Refraction (10% stack refund)
+✅ Weapon 2 bond: Cascading Resonance (bonus scores on stack gain)
+✅ ClairDeLuneMajorAbility flag in TempoResonateManager
+
+Refer to ClairDeLune_TestingChecklist.txt for comprehensive testing procedures.
+
+
+NOTES
+=====
+
+- Duet ability (Lunar Dodecaphony) is NOT implemented
+- All consume effects are automatic on click (no manual buttons)
+- Stack accumulation at Hour 12 works correctly (1-4 stacks per click)
+- All naming updated per user's selections in ClairDeLune_Renaming_Proposal.txt

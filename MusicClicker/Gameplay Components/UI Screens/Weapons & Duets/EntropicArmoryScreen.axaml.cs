@@ -9,6 +9,7 @@ using Avalonia.Interactivity;
 using Avalonia.Media;
 using System;
 using MusicClicker;
+using MusicClicker.Armory;
 
 namespace MusicClicker.Views
 {
@@ -192,6 +193,9 @@ namespace MusicClicker.Views
 
             // Deduct cost
             _gameState.EntropicMelodies -= cost;
+            
+            // Celestial Horology passive: Chrono-Entropic Refund - refund 50% of spent entropic
+            WeaponAbilities.ClockworksHarmony_RefundEntropic(_gameState, cost);
 
             // Set ownership
             switch (weaponIndex)
