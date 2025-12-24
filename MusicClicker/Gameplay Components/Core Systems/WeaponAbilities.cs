@@ -3690,14 +3690,14 @@ namespace MusicClicker.Armory
             int consumed = AttemptClairStackRefund(gameState, 8);
             gameState.TemporalHarmonyStacks -= consumed;
             
-            // +5 to every owned major
-            if (gameState.MoonlightMajorOwned > 0) gameState.MoonlightMajorOwned += 5;
-            if (gameState.EroicaMajorOwned > 0) gameState.EroicaMajorOwned += 5;
-            if (gameState.SwanMajorOwned > 0) gameState.SwanMajorOwned += 5;
-            if (gameState.LaCampanellaMajorOwned > 0) gameState.LaCampanellaMajorOwned += 5;
-            if (gameState.EnigmaMajorOwned > 0) gameState.EnigmaMajorOwned += 5;
-            if (gameState.FateMajorOwned > 0) gameState.FateMajorOwned += 5;
-            if (gameState.OdeToJoyMajorOwned > 0) gameState.OdeToJoyMajorOwned += 5;
+            // +5 to all majors (even if not owned)
+            gameState.MoonlightMajorOwned += 5;
+            gameState.EroicaMajorOwned += 5;
+            gameState.SwanMajorOwned += 5;
+            gameState.LaCampanellaMajorOwned += 5;
+            gameState.EnigmaMajorOwned += 5;
+            gameState.FateMajorOwned += 5;
+            gameState.OdeToJoyMajorOwned += 5;
         }
         
         /// <summary>
@@ -3749,15 +3749,12 @@ namespace MusicClicker.Armory
         public static void ClairMinuteHand10_ConsumeClockworkForte(GameState gameState)
         {
             if (gameState.ClockworkForteStacks < 1) return;
-            
+            // Nerfed: Now gives (NPC * stacks * 2) notes immediately (was NPC^stacks)
             int stacks = gameState.ClockworkForteStacks;
             int consumed = AttemptClairStackRefund(gameState, stacks);
             gameState.ClockworkForteStacks -= consumed;
-            
-            // Next click gives bonus based on consumed stacks
-            // Formula: NPC^(consumed stacks)
             double npc = gameState.NotesPerClick;
-            double bonus = Math.Pow(npc, consumed);
+            double bonus = npc * consumed * 2; // Nerfed multiplier
             MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, bonus);
         }
         

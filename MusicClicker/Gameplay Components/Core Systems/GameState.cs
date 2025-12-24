@@ -763,15 +763,15 @@ namespace MusicClicker
         public bool TheSnowsDesire { get => _theSnowsDesire; set => _theSnowsDesire = value; }
 
         // Clair De Lune weapons (Boss Fight - Tonality)
-        public bool _clockworksHarmony = false;
-        public bool ClockworksHarmony { get => _clockworksHarmony; set => _clockworksHarmony = value; }
+        public bool _celestialHorology = false;
+        public bool CelestialHorology { get => _celestialHorology; set => _celestialHorology = value; }
 
         public bool _metronomicDissonance = false;
         public bool MetronomicDissonance { get => _metronomicDissonance; set => _metronomicDissonance = value; }
 
         // Clair De Lune weapon ability flags
-        public bool _clockworksHarmonyAbility = false;
-        public bool ClockworksHarmonyAbility { get => _clockworksHarmonyAbility; set => _clockworksHarmonyAbility = value; }
+        public bool _celestialHorologyAbility = false;
+        public bool CelestialHorologyAbility { get => _celestialHorologyAbility; set => _celestialHorologyAbility = value; }
 
         public bool _metronomicDissonanceAbility = false;
         public bool MetronomicDissonanceAbility { get => _metronomicDissonanceAbility; set => _metronomicDissonanceAbility = value; }

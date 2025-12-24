@@ -220,7 +220,7 @@ namespace MusicClicker.Views
                 15 => _gameState.HellsWrath,
                 16 => _gameState.CacophonicBlizzard,
                 17 => _gameState.TheSnowsDesire,
-                18 => _gameState.ClockworksHarmony,
+                18 => _gameState.CelestialHorology,
                 19 => _gameState.MetronomicDissonance,
                 _ => false
             };
@@ -255,7 +255,7 @@ namespace MusicClicker.Views
                 case 15: _gameState.HellsWrath = value; break;
                 case 16: _gameState.CacophonicBlizzard = value; break;
                 case 17: _gameState.TheSnowsDesire = value; break;
-                case 18: _gameState.ClockworksHarmony = value; break;
+                case 18: _gameState.CelestialHorology = value; break;
                 case 19: _gameState.MetronomicDissonance = value; break;
             }
         }

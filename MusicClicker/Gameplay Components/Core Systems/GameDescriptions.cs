@@ -320,7 +320,7 @@ Crescendance Bond: Frigid Resonance — While equipped and resonating with Winte
 Duet: Symphony of Absolute Zero — Freezes NPS for 20 seconds. Each click during the duet grants +1 Frigid Melody and extends duration by +0.5 seconds (max +10s). 20s base duration | 4 minute cooldown.";
 
             // Clair de Lune Weapons
-            public const string ClockworksHarmony = @"Celestial Horology
+            public const string CelestialHorology = @"Celestial Horology
 Passive (on equip):
 Anytime you spend Entropic Melodies, refund 50% of them.
 
@@ -397,7 +397,7 @@ Completing all 12 clicks doubles all owned minor scores.
             public const string TheSnowsDesire = "Passive: Accelerating Flurry — Every click grants +1% Notes Per Click (max +50%). Decays to 0% after 5 seconds of no clicking. Current bonus displayed in Crescendance panel.\n\nCrescendance Bond: Frigid Resonance — Whenever you gain 1 Frigid Melody stack, gain +1 bonus stack (doubling effect).";
             
             // Clair de Lune
-            public const string ClockworksHarmony = "Passive: Timeless Echo — Every 15th click grants +5% current notes and +1 random minor score.\n\nCrescendance Bond: Accelerated Clockwork — Hour hand on 12 position grants Clockwork Forte every 10th click instead of every 12th.";
+            public const string CelestialHorology = "Passive: Timeless Echo — Every 15th click grants +5% current notes and +1 random minor score.\n\nCrescendance Bond: Accelerated Celestial — Hour hand on 12 position grants Celestial Forte every 10th click instead of every 12th.";
             public const string MetronomicDissonance = "Passive: Chrono Shift — Each major craft grants +2 Clockwork Forte per clock hand configured (up to 4 total from both hands).\n\nCrescendance Bond: Temporal Amplification — Minute hand effects that consume stacks grant double rewards.";
         }
 
@@ -526,7 +526,7 @@ Completing all 12 clicks doubles all owned minor scores.
                 "Hell's Wrath" => Weapons.HellsWrath,
                 "Cacophonic Blizzard" => Weapons.CacophonicBlizzard,
                 "The Snow's Desire" => Weapons.TheSnowsDesire,
-                "Celestial Horology" => Weapons.ClockworksHarmony,
+                "Celestial Horology" => Weapons.CelestialHorology,
                 "Metronomic Dissonance" => Weapons.MetronomicDissonance,
                 _ => $"No description available for: {weaponName}"
             };
@@ -557,7 +557,7 @@ Completing all 12 clicks doubles all owned minor scores.
                 "Hell's Wrath" => ForteResonance.HellsWrath,
                 "Cacophonic Blizzard" => ForteResonance.CacophonicBlizzard,
                 "The Snow's Desire" => ForteResonance.TheSnowsDesire,
-                "Celestial Horology" => ForteResonance.ClockworksHarmony,
+                "Celestial Horology" => ForteResonance.CelestialHorology,
                 "Metronomic Dissonance" => ForteResonance.MetronomicDissonance,
                 _ => "Forte Resonance: <placeholder>"
             };

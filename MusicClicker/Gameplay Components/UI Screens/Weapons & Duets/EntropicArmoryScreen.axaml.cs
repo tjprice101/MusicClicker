@@ -195,7 +195,7 @@ namespace MusicClicker.Views
             _gameState.EntropicMelodies -= cost;
             
             // Celestial Horology passive: Chrono-Entropic Refund - refund 50% of spent entropic
-            WeaponAbilities.ClockworksHarmony_RefundEntropic(_gameState, cost);
+            WeaponAbilities.CelestialHorology_RefundEntropic(_gameState, cost);
 
             // Set ownership
             switch (weaponIndex)

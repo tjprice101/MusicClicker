@@ -1627,7 +1627,7 @@ namespace MusicClicker
                 gameState.CacophonicBlizzard = true;
                 gameState.TheSnowsDesire = true;
                 gameState.MetronomicDissonance = true;
-                gameState.ClockworksHarmony = true;
+                gameState.CelestialHorology = true;
 
                 // Update all UI displays
                 UIUpdater.UpdateUI(this, gameState);
