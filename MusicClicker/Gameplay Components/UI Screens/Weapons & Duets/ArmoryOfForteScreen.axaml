@@ -1,4 +1,4 @@
-﻿<UserControl xmlns="https://github.com/avaloniaui"
+<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="MusicClicker.Views.ArmoryOfForteScreen">
 
@@ -93,17 +93,17 @@
                         <TextBlock x:Name="ArmoryItem1SoloConcertoText"
                                    Text="Solo Concerto: Boosts click damage by 10%."
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem1SymphonicModulationText"
                                    Text="Symphonic Modulation: Increases NPS by 5%."
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem1DuetText"
                                    Text="Duet Resonance: Increases critical hit chance by 15%."
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center"
                                    HorizontalAlignment="Center" />
                     </StackPanel>
@@ -132,17 +132,17 @@
                         <TextBlock x:Name="ArmoryItem2SoloConcertoText"
                                    Text="Solo Concerto: Increases note generation by 15%."
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem2SymphonicModulationText"
                                    Text="Symphonic Modulation: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem2DuetText"
                                    Text="Duet Resonance: Amplifies note generation by 20%."
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center"
                                    HorizontalAlignment="Center" />
                     </StackPanel>
@@ -171,17 +171,17 @@
                         <TextBlock x:Name="ArmoryItem3SoloConcertoText"
                                    Text="Solo Concerto: Reduces ability cooldowns by 5%."
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem3SymphonicModulationText"
                                    Text="Symphonic Modulation: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem3DuetText"
                                    Text="Duet Resonance: Reduces cooldowns by 10%."
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center"
                                    HorizontalAlignment="Center" />
                     </StackPanel>
@@ -215,17 +215,17 @@
                         <TextBlock x:Name="ArmoryItem4SoloConcertoText"
                                    Text="Solo Concerto: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem4SymphonicModulationText"
                                    Text="Symphonic Modulation: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem4DuetText"
                                    Text="Duet Resonance: Boosts harmony effects by 25%."
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center"
                                    HorizontalAlignment="Center" />
                     </StackPanel>
@@ -254,17 +254,17 @@
                         <TextBlock x:Name="ArmoryItem5SoloConcertoText"
                                    Text="Solo Concerto: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem5SymphonicModulationText"
                                    Text="Symphonic Modulation: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem5DuetText"
                                    Text="Duet Resonance: Enhances tempo resonance by 30%."
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center"
                                    HorizontalAlignment="Center" />
                     </StackPanel>
@@ -293,17 +293,17 @@
                         <TextBlock x:Name="ArmoryItem6SoloConcertoText"
                                    Text="Solo Concerto: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem6SymphonicModulationText"
                                    Text="Symphonic Modulation: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem6DuetText"
                                    Text="Duet Resonance: Grants a shield absorbing 5% damage."
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center"
                                    HorizontalAlignment="Center" />
                     </StackPanel>
@@ -337,17 +337,17 @@
                         <TextBlock x:Name="ArmoryItem7SoloConcertoText"
                                    Text="Solo Concerto: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem7SymphonicModulationText"
                                    Text="Symphonic Modulation: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem7DuetText"
                                    Text="Duet Resonance: Increases note multiplier by 50%."
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center"
                                    HorizontalAlignment="Center" />
                     </StackPanel>
@@ -376,17 +376,17 @@
                         <TextBlock x:Name="ArmoryItem8SoloConcertoText"
                                    Text="Solo Concerto: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem8SymphonicModulationText"
                                    Text="Symphonic Modulation: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem8DuetText"
                                    Text="Duet Resonance: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center"
                                    HorizontalAlignment="Center" />
                     </StackPanel>
@@ -415,17 +415,17 @@
                         <TextBlock x:Name="ArmoryItem9SoloConcertoText"
                                    Text="Solo Concerto: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem9SymphonicModulationText"
                                    Text="Symphonic Modulation: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem9DuetText"
                                    Text="Duet Resonance: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center"
                                    HorizontalAlignment="Center" />
                     </StackPanel>
@@ -459,17 +459,17 @@
                         <TextBlock x:Name="ArmoryItem10SoloConcertoText"
                                    Text="Solo Concerto: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem10SymphonicModulationText"
                                    Text="Symphonic Modulation: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem10DuetText"
                                    Text="Duet Resonance: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center"
                                    HorizontalAlignment="Center" />
                     </StackPanel>
@@ -498,17 +498,17 @@
                         <TextBlock x:Name="ArmoryItem11SoloConcertoText"
                                    Text="Solo Concerto: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem11SymphonicModulationText"
                                    Text="Symphonic Modulation: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem11DuetText"
                                    Text="Duet Resonance: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center"
                                    HorizontalAlignment="Center" />
                     </StackPanel>
@@ -537,17 +537,17 @@
                         <TextBlock x:Name="ArmoryItem12SoloConcertoText"
                                    Text="Solo Concerto: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem12SymphonicModulationText"
                                    Text="Symphonic Modulation: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem12DuetText"
                                    Text="Duet Resonance: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center"
                                    HorizontalAlignment="Center" />
                     </StackPanel>
@@ -581,17 +581,17 @@
                         <TextBlock x:Name="ArmoryItem13SoloConcertoText"
                                    Text="Solo Concerto: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem13SymphonicModulationText"
                                    Text="Symphonic Modulation: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem13DuetText"
                                    Text="Duet Resonance: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center"
                                    HorizontalAlignment="Center" />
                     </StackPanel>
@@ -620,17 +620,17 @@
                         <TextBlock x:Name="ArmoryItem14SoloConcertoText"
                                    Text="Solo Concerto: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem14SymphonicModulationText"
                                    Text="Symphonic Modulation: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem14DuetText"
                                    Text="Duet Resonance: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center"
                                    HorizontalAlignment="Center" />
                     </StackPanel>
@@ -658,17 +658,17 @@
                         <TextBlock x:Name="ArmoryItem15SoloConcertoText"
                                    Text="Solo Concerto: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem15SymphonicModulationText"
                                    Text="Symphonic Modulation: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem15DuetText"
                                    Text="Duet Resonance: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center"
                                    HorizontalAlignment="Center" />
                     </StackPanel>
@@ -701,17 +701,17 @@
                         <TextBlock x:Name="ArmoryItem16SoloConcertoText"
                                    Text="Solo Concerto: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem16SymphonicModulationText"
                                    Text="Symphonic Modulation: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem16DuetText"
                                    Text="Duet Resonance: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center"
                                    HorizontalAlignment="Center" />
                     </StackPanel>
@@ -739,17 +739,17 @@
                         <TextBlock x:Name="ArmoryItem17SoloConcertoText"
                                    Text="Solo Concerto: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem17SymphonicModulationText"
                                    Text="Symphonic Modulation: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem17DuetText"
                                    Text="Duet Resonance: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center"
                                    HorizontalAlignment="Center" />
                     </StackPanel>
@@ -777,17 +777,17 @@
                         <TextBlock x:Name="ArmoryItem18SoloConcertoText"
                                    Text="Solo Concerto: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem18SymphonicModulationText"
                                    Text="Symphonic Modulation: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem18DuetText"
                                    Text="Duet Resonance: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center"
                                    HorizontalAlignment="Center" />
                     </StackPanel>
@@ -820,17 +820,17 @@
                         <TextBlock x:Name="ArmoryItem19SoloConcertoText"
                                    Text="Solo Concerto: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem19SymphonicModulationText"
                                    Text="Symphonic Modulation: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem19DuetText"
                                    Text="Duet Resonance: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center"
                                    HorizontalAlignment="Center" />
                     </StackPanel>
@@ -858,17 +858,17 @@
                         <TextBlock x:Name="ArmoryItem20SoloConcertoText"
                                    Text="Solo Concerto: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem20SymphonicModulationText"
                                    Text="Symphonic Modulation: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem20DuetText"
                                    Text="Duet Resonance: &lt;placeholder&gt;"
                                    FontSize="14"
-                                   Foreground="#CCCCCC"
+                                   Foreground="#F0F0F0"
                                    TextAlignment="Center"
                                    HorizontalAlignment="Center" />
                     </StackPanel>

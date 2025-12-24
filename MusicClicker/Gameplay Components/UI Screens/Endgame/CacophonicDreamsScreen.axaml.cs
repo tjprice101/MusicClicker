@@ -32,6 +32,9 @@ namespace MusicClicker.Views
         {
             InitializeComponent();
             
+            // Wire up visibility changed event for music switching
+            this.PropertyChanged += CacophonicDreamsScreen_PropertyChanged;
+            
             // Wire up buttons
             if (BackButton != null)
             {
@@ -77,6 +80,26 @@ namespace MusicClicker.Views
             
             // Update weekly completions displays
             UpdateWeeklyCompletionsDisplays();
+        }
+        
+        /// <summary>
+        /// Called when the screen visibility changes (for music switching)
+        /// </summary>
+        private void CacophonicDreamsScreen_PropertyChanged(object? sender, AvaloniaPropertyChangedEventArgs e)
+        {
+            if (e.Property.Name == "IsVisible" && _parentWindow != null)
+            {
+                if ((bool)e.NewValue! == true)
+                {
+                    // Screen became visible - switch to Dreams music
+                    _parentWindow.SwitchToDreamsMusic();
+                }
+                else
+                {
+                    // Screen became hidden - switch back to main menu music
+                    _parentWindow.SwitchToMainMenuMusic();
+                }
+            }
         }
         
         /// <summary>
@@ -819,6 +842,7 @@ namespace MusicClicker.Views
             if (_parentWindow != null)
             {
                 // Use the parent window's transition system
+                // Music switching is handled automatically by IsVisibleChanged event
                 await _parentWindow.TransitionAsync(() =>
                 {
                     this.IsVisible = false;

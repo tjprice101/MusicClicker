@@ -14,8 +14,8 @@ HOUR HAND POSITIONS (Effects):
 ---------------------------------------------------
 
 Hour Hand on 12 (Celestial Assembly):
-• Every 3rd, 6th, 9th, and 12th click give stacks of "Chrono Fragments"
-• Stacks accumulate: Click 3 gives 1, click 6 gives 2, click 9 gives 2, click 12 gives 4
+• Every 3rd, 6th, and 12th click give stacks of "Chrono Fragments"
+• Stacks accumulate: Click 3 gives 1, click 6 gives 2, click 12 gives 3
 
 Hour Hand on 3 (Nocturnal Exchange):
 • Consume 1 stack of Chrono Fragments to give yourself:
@@ -23,28 +23,37 @@ Hour Hand on 3 (Nocturnal Exchange):
   - +2% Entropic Melodies
 
 Hour Hand on 6 (Fractal Modulation):
-• Every 6th click gives you 1 stack of "Twilight Resonance" (max 50 stacks)
+• Every 6th click gives you 1 stack of "Twilight Resonance" (max 30 stacks)
 
 Hour Hand on 9 (Syncopated Rupture):
-• Consume 1 stack of Twilight Resonance to give your next 10 clicks a special critical:
+• Consume button appears when Hour Hand 9 is selected
+• Consume 1 stack of Twilight Resonance to give your next 7 clicks a special critical:
   - "Twilight Rupture"
-  - Gives +X notes where X = ((NPS^9)/5)
+  - Gives +X notes where X = ((NPS^7)/3)
+• Crits stack: consuming 3 stacks gives 21 stockpiled crits
+• NOT consumed automatically on click - must use button
 
 ---------------------------------------------------
 MINUTE HAND POSITIONS (Criticals/Effects):
 ---------------------------------------------------
 
 Minute Hand on 1 (Cadenza Cataclysm):
-• On gain of Twilight Resonance stack, your next 3 clicks will give you +1.5% Entropic Melodies
+• On gain of Twilight Resonance stack, your next 3 clicks will each give you +3 Entropic Melodies
+• Total: 9 Entropic Melodies over the next 3 clicks
 
 Minute Hand on 2 (Infinity Arpeggio):
-• On gain of Chrono Fragments stack, your next 2 clicks are guaranteed "Timeless Melody" critical
+• On gain of Chrono Fragments stack, your next 2 clicks per stack are guaranteed "Timeless Melody" critical
+  - Critical formula: NPC * 750
+  - Cyan text with midnight blue outline
+• Crits stack: gaining 2 stacks gives 4 crits, 3 stacks gives 6 crits, etc.
 
 Minute Hand on 4 (Prismal Crescendo):
-• Every time you gain Entropic Melodies, increase your current notes by 0.1% per Entropic Melodies gained
+• Every time you gain Entropic Melodies, increase your current notes by 2.5% per Entropic Melodies gained
 
 Minute Hand on 5 (Refrain of Endless Measures):
+• Consume button appears when Minute Hand 5 is selected
 • Consume 3 stacks of Chrono Fragments to give yourself +5 to all owned minor scores
+• NOT consumed automatically on click - must use button
 
 Minute Hand on 7 (Sonata of Shattered Hours):
 • Consume 20 stacks of Chrono Fragments to give yourself:
@@ -99,10 +108,10 @@ PASSIVE ON EQUIP: Chrono-Refraction
 
 CRESCENDANCE BOND: Cascading Resonance
 • Every time you gain a stack of Chrono Fragments:
-  - Gain +12 of 3 random owned minors
+  - Gain +8 of 2 random owned minors
 
 • Every time you gain a stack of Twilight Resonance:
-  - Gain +2 to 5 random owned majors
+  - Gain +1 to 4 random owned majors
   - (Not including Event majors or Discordance majors)
 
 ===================================================

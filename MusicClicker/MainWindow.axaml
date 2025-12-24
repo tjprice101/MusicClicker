@@ -118,6 +118,27 @@
                                            VerticalAlignment="Center" />
                             </Button>
                         </Border>
+                        
+                        <Border CornerRadius="8" VerticalAlignment="Top" Margin="0,0,0,0">
+                            <Border.Effect>
+                                <DropShadowEffect Color="Black" BlurRadius="12" Opacity="0.7" OffsetX="0" OffsetY="0" />
+                            </Border.Effect>
+                            <Button x:Name="QuitButton"
+                                    Width="142"
+                                    Height="80"
+                                    Background="#8B0000"
+                                    BorderThickness="2"
+                                    BorderBrush="Black"
+                                    Padding="0">
+                                <TextBlock Text="Save and Quit"
+                                           Foreground="White"
+                                           FontSize="18"
+                                           FontWeight="Bold"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           TextWrapping="Wrap" />
+                            </Button>
+                        </Border>
                     </StackPanel>
 
                     <!-- Stats Display (Center) -->
@@ -1379,6 +1400,47 @@
                                            Foreground="Gray"
                                            FontSize="9"
                                            HorizontalAlignment="Center" />
+                                <!-- Consume Buttons for Chrono Fragments -->
+                                <Button x:Name="MainConsumeHourHand3Button"
+                                        Content="Consume (Hour 3)"
+                                        Click="MainConsumeHourHand3_Click"
+                                        Background="#20B2AA"
+                                        Foreground="White"
+                                        FontSize="9"
+                                        Padding="5,2"
+                                        HorizontalAlignment="Center"
+                                        Margin="0,3,0,0"
+                                        IsVisible="False" />
+                                <Button x:Name="MainConsumeMinuteHand5Button"
+                                        Content="Consume (Minute 5)"
+                                        Click="MainConsumeMinuteHand5_Click"
+                                        Background="#4169E1"
+                                        Foreground="White"
+                                        FontSize="9"
+                                        Padding="5,2"
+                                        HorizontalAlignment="Center"
+                                        Margin="0,2,0,0"
+                                        IsVisible="False" />
+                                <Button x:Name="MainConsumeMinuteHand7Button"
+                                        Content="Consume (Minute 7)"
+                                        Click="MainConsumeMinuteHand7_Click"
+                                        Background="#1E90FF"
+                                        Foreground="White"
+                                        FontSize="9"
+                                        Padding="5,2"
+                                        HorizontalAlignment="Center"
+                                        Margin="0,2,0,0"
+                                        IsVisible="False" />
+                                <Button x:Name="MainConsumeMinuteHand10Button"
+                                        Content="Consume (Minute 10)"
+                                        Click="MainConsumeMinuteHand10_Click"
+                                        Background="#00BFFF"
+                                        Foreground="White"
+                                        FontSize="9"
+                                        Padding="5,2"
+                                        HorizontalAlignment="Center"
+                                        Margin="0,2,0,0"
+                                        IsVisible="False" />
                             </StackPanel>
                             
                             <StackPanel Orientation="Vertical" Spacing="3">
@@ -1396,6 +1458,27 @@
                                            Foreground="Gray"
                                            FontSize="9"
                                            HorizontalAlignment="Center" />
+                                <!-- Consume Buttons for Twilight Resonance -->
+                                <Button x:Name="MainConsumeHourHand9Button"
+                                        Content="Consume (Hour 9)"
+                                        Click="MainConsumeHourHand9_Click"
+                                        Background="#8B008B"
+                                        Foreground="White"
+                                        FontSize="9"
+                                        Padding="5,2"
+                                        HorizontalAlignment="Center"
+                                        Margin="0,3,0,0"
+                                        IsVisible="False" />
+                                <Button x:Name="MainConsumeMinuteHand8Button"
+                                        Content="Consume (Minute 8)"
+                                        Click="MainConsumeMinuteHand8_Click"
+                                        Background="#9370DB"
+                                        Foreground="White"
+                                        FontSize="9"
+                                        Padding="5,2"
+                                        HorizontalAlignment="Center"
+                                        Margin="0,2,0,0"
+                                        IsVisible="False" />
                             </StackPanel>
                             
                             <StackPanel Orientation="Vertical" Spacing="3">
@@ -1464,6 +1547,13 @@
                Fill="Black"
                Opacity="0"
                IsHitTestVisible="False" />
+
+        <!-- Splash Screen -->
+        <Grid x:Name="SplashScreen" IsVisible="True" ZIndex="1000">
+            <Grid.Background>
+                <ImageBrush Source="avares://MusicClicker/Gameplay Components/Resources/Assets/System Images/Splash Screen-min.jpg" Stretch="UniformToFill" />
+            </Grid.Background>
+        </Grid>
 
     </Grid>
 </Window>

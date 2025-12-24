@@ -8,37 +8,42 @@ CRESCENDANCE ABILITY: Lunar Chronometry
 
 1. Hour Hand Effects (Crescendance - On Click)
 -----------------------------------------------
-[ ] Hour 12 (Celestial Assembly): Every 3rd, 6th, 9th, 12th click gives Chrono Fragments
+[O] Hour 12 (Celestial Assembly): Every 3rd, 6th, 12th click gives Chrono Fragments
     - Click 3: +1 stack (3 only)
     - Click 6: +2 stacks (3+6)
-    - Click 9: +2 stacks (3+9)
-    - Click 12: +4 stacks (3+6+9+12)
+    - Click 9: +1 stack (3 only)
+    - Click 12: +3 stacks (3+6+12)
     - Pattern repeats every 12 clicks
     
-[ ] Hour 3 (Nocturnal Exchange): Consume 1 Chrono Fragment for +50% notes, +2% Entropic Melodies
+[O] Hour 3 (Nocturnal Exchange): Consume 1 Chrono Fragment for +50% notes, +2% Entropic Melodies
     - Activates on EVERY click when stacks available
     
-[ ] Hour 6 (Fractal Modulation): Every 6th click gives 1 Twilight Resonance (max 50 stacks)
+[O] Hour 6 (Fractal Modulation): Every 6th click gives 1 Twilight Resonance (max 30 stacks) [NERFED from 50]
     - Click 6, 12, 18, 24, etc.
     
-[ ] Hour 9 (Syncopated Rupture): Consume 1 Twilight Resonance for 10 Twilight Rupture crits
-    - Activates on EVERY click when stacks available
-    - Critical formula: ((NPS^9)/5) notes
+[O] Hour 9 (Syncopated Rupture): Consume button when Hour 9 selected - Consume 1 Twilight Resonance for 7 Twilight Rupture crits
+    - Consume button appears when Hour Hand 9 is resonated
+    - Crits stack: consuming 3 stacks = 21 stockpiled crits
+    - NOT on-click consumption - button only
+    - Critical formula: ((NPS^7)/3) notes [NERFED from (NPS^9)/5]
 
 2. Minute Hand Effects (Crescendance - On Click)
 -------------------------------------------------
-[ ] Minute 1 (Cadenza Cataclysm): On Twilight Resonance gain, next 3 clicks give +1.5% Entropic Melodies each
+[ ] Minute 1 (Cadenza Cataclysm): On Twilight Resonance gain, next 3 clicks each give +3 Entropic Melodies [CHANGED from +1.0% per click]
+    - Total: 9 Entropic Melodies over the next 3 clicks
     - Works with Minute 4 if both equipped
     
-[ ] Minute 2 (Infinity Arpeggio): On Chrono Fragments gain, next 2 clicks are Timeless Melody crits
-    - Critical formula: NPC * 1500
+[O] Minute 2 (Infinity Arpeggio): On Chrono Fragments gain, next 2 clicks per stack are Timeless Melody crits
+    - Critical formula: NPC * 750 [NERFED from 1500]
     - Cyan text with midnight blue outline
+    - Crits stack: gaining 2 stacks gives 4 crits, 3 stacks gives 6 crits
     
-[ ] Minute 4 (Prismal Crescendo): On Entropic Melodies gain, +0.1% notes per EM gained
+[O] Minute 4 (Prismal Crescendo): On Entropic Melodies gain, +2.5% notes per EM gained [CHANGED from 0.1%]
     - Triggers for Minute 1 effect and Hour 3 effect
     
-[ ] Minute 5 (Refrain of Endless Measures): Consume 3 Chrono Fragments for +5 to all 7 minors
-    - Activates on EVERY click when stacks available
+[ ] Minute 5 (Refrain of Endless Measures): Consume button when Minute 5 selected - Consume 3 Chrono Fragments for +5 to all 7 minors
+    - Consume button appears when Minute Hand 5 is resonated
+    - NOT on-click consumption - button only
     
 [ ] Minute 7 (Sonata of Shattered Hours): Consume 20 Chrono Fragments for +1 Clair de Lune Major, +15% Entropic Melodies
     - Activates on EVERY click when stacks available
@@ -55,16 +60,16 @@ CRESCENDANCE ABILITY: Lunar Chronometry
 
 3. Custom Stacks - UI Display
 ------------------------------
-[ ] Chrono Fragments: Display updates on Crescendance panel
-[ ] Twilight Resonance: Display updates on Crescendance panel
-[ ] Perpetual Nocturne: Display updates on Crescendance panel
+[O] Chrono Fragments: Display updates on Crescendance panel
+[O] Twilight Resonance: Display updates on Crescendance panel
+[O] Perpetual Nocturne: Display updates on Crescendance panel
 
 4. Clock Configuration UI
 --------------------------
-[ ] Hour hand buttons (12, 3, 6, 9) change configuration
-[ ] Minute hand buttons (1, 2, 4, 5, 7, 8, 10, 11) change configuration
-[ ] "Current: X" displays update when buttons clicked
-[ ] Stack displays show current values
+[O] Hour hand buttons (12, 3, 6, 9) change configuration
+[O] Minute hand buttons (1, 2, 4, 5, 7, 8, 10, 11) change configuration
+[O] "Current: X" displays update when buttons clicked
+[O] Stack displays show current values
 
 5. Weapon 1: Celestial Horology
 ---------------------------------
@@ -78,10 +83,10 @@ CRESCENDANCE ABILITY: Lunar Chronometry
 [ ] Passive: Chrono-Refraction - 10% chance to refund custom stacks on consume
     - Test with Hour 3, Hour 9, Minute 5, 7, 8, 10
     
-[ ] Crescendance Bond: Cascading Resonance - On Chrono Fragments gain: +12 to 3 random minors (per stack gained)
-    - Test at click 12 (should grant 4 stacks = 12 minors each)
+[ ] Crescendance Bond: Cascading Resonance - On Chrono Fragments gain: +8 to 2 random minors (per stack gained) [NERFED from +12 to 3]
+    - Test at click 12 (should grant 4 stacks = 8 minors each to 2 random types)
     
-[ ] Crescendance Bond: Cascading Resonance - On Twilight Resonance gain: +2 to 5 random majors (excludes events/discordance)
+[ ] Crescendance Bond: Cascading Resonance - On Twilight Resonance gain: +1 to 4 random majors (excludes events/discordance) [NERFED from +2 to 5]
 
 7. Critical Hit Visuals
 -----------------------

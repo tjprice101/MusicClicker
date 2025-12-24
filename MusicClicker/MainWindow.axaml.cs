@@ -69,6 +69,15 @@ namespace MusicClicker
         
         // Track last mouse position for floating text
         private Point _lastClickPosition;
+        
+        // Background music players (NAudio)
+        private NAudio.Wave.IWavePlayer? _waveOut;
+        private NAudio.Wave.Mp3FileReader? _audioFileReader;
+        private bool _mainMusicPaused = false;
+        
+        // Cacophonic Dreams music player
+        private NAudio.Wave.IWavePlayer? _dreamsWaveOut;
+        private NAudio.Wave.Mp3FileReader? _dreamsAudioFileReader;
 
 
         // Carousel removed: buttons are static in the grid-based layout.
@@ -569,8 +578,216 @@ namespace MusicClicker
                 UIUpdater.UpdateSaveScoresUI(this, gameState);
                 UIUpdater.UpdateHeartOfHarmonyUI(this, gameState);
                 UIUpdater.UpdateUnitySymphonyUI(this, gameState);
+                
+                // Hide splash screen after initialization
+                HideSplashScreen();
+                
+                // Start background music
+                StartBackgroundMusic();
             });
 
+        }
+        
+        /// <summary>
+        /// Hides the splash screen with a smooth fade-out animation
+        /// </summary>
+        private async void HideSplashScreen()
+        {
+            if (SplashScreen == null) return;
+            
+            // Delay for 5 seconds to display splash screen
+            await Task.Delay(5000);
+            
+            // Fade out animation
+            var startTime = DateTime.Now;
+            var duration = TimeSpan.FromSeconds(0.8);
+            
+            while (DateTime.Now - startTime < duration)
+            {
+                var elapsed = (DateTime.Now - startTime).TotalSeconds;
+                var progress = elapsed / duration.TotalSeconds;
+                
+                // Fade out
+                SplashScreen.Opacity = 1.0 - progress;
+                
+                await Task.Delay(16); // ~60fps
+            }
+            
+            // Hide completely
+            SplashScreen.IsVisible = false;
+        }
+        
+        /// <summary>
+        /// Starts the background music with looping
+        /// </summary>
+        private void StartBackgroundMusic()
+        {
+            try
+            {
+                // Get the embedded music file
+                var assets = Avalonia.Platform.AssetLoader.Open(new Uri("avares://MusicClicker/Gameplay Components/Resources/Music/Main Menu Theme/Symphony in Our Skin.mp3"));
+                
+                // Create a memory stream to hold the audio data
+                var memoryStream = new System.IO.MemoryStream();
+                assets.CopyTo(memoryStream);
+                memoryStream.Position = 0;
+                
+                // Initialize NAudio player
+                _waveOut = new NAudio.Wave.WaveOutEvent();
+                _audioFileReader = new NAudio.Wave.Mp3FileReader(memoryStream);
+                
+                // Set up looping manually
+                _waveOut.Init(_audioFileReader);
+                _waveOut.PlaybackStopped += (s, e) =>
+                {
+                    if (_audioFileReader != null && _waveOut != null && !_mainMusicPaused)
+                    {
+                        _audioFileReader.Position = 0;
+                        _waveOut.Play();
+                    }
+                };
+                
+                _waveOut.Play();
+                _mainMusicPaused = false;
+            }
+            catch (Exception ex)
+            {
+                // Log error but don't crash the game
+                Console.WriteLine($"Failed to start background music: {ex.Message}");
+            }
+        }
+        
+        /// <summary>
+        /// Pauses the main menu background music
+        /// </summary>
+        private void PauseBackgroundMusic()
+        {
+            try
+            {
+                if (_waveOut != null && _waveOut.PlaybackState == NAudio.Wave.PlaybackState.Playing)
+                {
+                    _waveOut.Pause();
+                    _mainMusicPaused = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to pause background music: {ex.Message}");
+            }
+        }
+        
+        /// <summary>
+        /// Resumes the main menu background music from where it was paused
+        /// </summary>
+        private void ResumeBackgroundMusic()
+        {
+            try
+            {
+                if (_waveOut != null && _mainMusicPaused)
+                {
+                    _waveOut.Play();
+                    _mainMusicPaused = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to resume background music: {ex.Message}");
+            }
+        }
+        
+        /// <summary>
+        /// Starts the Cacophonic Dreams music with looping
+        /// </summary>
+        private void StartDreamsMusic()
+        {
+            try
+            {
+                // Get the embedded music file
+                var assets = Avalonia.Platform.AssetLoader.Open(new Uri("avares://MusicClicker/Gameplay Components/Resources/Music/Cacophonic Dreams Theme/Resonate With The Stars.mp3"));
+                
+                // Create a memory stream to hold the audio data
+                var memoryStream = new System.IO.MemoryStream();
+                assets.CopyTo(memoryStream);
+                memoryStream.Position = 0;
+                
+                // Initialize NAudio player
+                _dreamsWaveOut = new NAudio.Wave.WaveOutEvent();
+                _dreamsAudioFileReader = new NAudio.Wave.Mp3FileReader(memoryStream);
+                
+                // Set up looping manually
+                _dreamsWaveOut.Init(_dreamsAudioFileReader);
+                _dreamsWaveOut.PlaybackStopped += (s, e) =>
+                {
+                    if (_dreamsAudioFileReader != null && _dreamsWaveOut != null)
+                    {
+                        _dreamsAudioFileReader.Position = 0;
+                        _dreamsWaveOut.Play();
+                    }
+                };
+                
+                _dreamsWaveOut.Play();
+            }
+            catch (Exception ex)
+            {
+                // Log error but don't crash the game
+                Console.WriteLine($"Failed to start Cacophonic Dreams music: {ex.Message}");
+            }
+        }
+        
+        /// <summary>
+        /// Stops the Cacophonic Dreams music
+        /// </summary>
+        private void StopDreamsMusic()
+        {
+            try
+            {
+                _dreamsWaveOut?.Stop();
+                _dreamsWaveOut?.Dispose();
+                _dreamsAudioFileReader?.Dispose();
+                _dreamsWaveOut = null;
+                _dreamsAudioFileReader = null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to stop Cacophonic Dreams music: {ex.Message}");
+            }
+        }
+        
+        /// <summary>
+        /// Switch to Cacophonic Dreams music (pause main menu music and start Dreams music)
+        /// </summary>
+        public void SwitchToDreamsMusic()
+        {
+            PauseBackgroundMusic();
+            StartDreamsMusic();
+        }
+        
+        /// <summary>
+        /// Switch back to main menu music (stop Dreams music and resume main menu music)
+        /// </summary>
+        public void SwitchToMainMenuMusic()
+        {
+            StopDreamsMusic();
+            ResumeBackgroundMusic();
+        }
+        
+        /// <summary>
+        /// Stops and disposes the background music
+        /// </summary>
+        private void StopBackgroundMusic()
+        {
+            try
+            {
+                _waveOut?.Stop();
+                _waveOut?.Dispose();
+                _audioFileReader?.Dispose();
+                _waveOut = null;
+                _audioFileReader = null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error stopping background music: {ex.Message}");
+            }
         }
 
         // ------------------- SAVE/LOAD METHODS -------------------
@@ -606,6 +823,10 @@ namespace MusicClicker
             _saveTimer?.Stop();
             _backgroundNpsTimer?.Stop();
             _backgroundNpsTimer?.Dispose();
+            
+            // Stop and dispose all music
+            StopBackgroundMusic();
+            StopDreamsMusic();
         }
 
         /// <summary>
@@ -1002,13 +1223,13 @@ namespace MusicClicker
                 if (gameState.ClairDeLunePowerSpikePending > 0)
                 {
                     gameState.ClairDeLunePowerSpikePending--;
-                    double entropicGain = 1.5;
+                    double entropicGain = 3.0; // 3 Entropic Melodies per click [CHANGED from 1.5]
                     
-                    // Minute Hand 4: increase notes by 0.1% per Entropic Melodies gained
+                    // Minute Hand 4: increase notes by 2.5% per Entropic Melodies gained [CHANGED from 0.1%]
                     if (gameState.ClairDeLuneMinuteHand == 4)
                     {
                         double currentNotes = MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes);
-                        double noteBonus = currentNotes * (entropicGain * 0.001);
+                        double noteBonus = currentNotes * (entropicGain * 0.025);
                         MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, noteBonus);
                     }
                     
@@ -1187,9 +1408,9 @@ namespace MusicClicker
                 else if (gameState.ClairCadenzaCataclysmClicksRemaining > 0)
                 {
                     gameState.ClairCadenzaCataclysmClicksRemaining--;
-                    // Formula: ((NPS^9)/5) notes
+                    // Formula: ((NPS^7)/3) notes [NERFED from NPS^9/5]
                     double nps = gameState.NotesPerSecond;
-                    finalNotes = (Math.Pow(nps, 9)) / 5.0;
+                    finalNotes = (Math.Pow(nps, 7)) / 3.0;
                     MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
                     critText = $"Twilight Rupture!!! +{NumberFormatter.FormatLargeNumber(finalNotes)}";
                     critColor = Color.FromRgb(147, 112, 219); // Medium purple (chronos/time theme)
@@ -1200,8 +1421,8 @@ namespace MusicClicker
                 else if (gameState.ClairInfinityArpeggioClicksRemaining > 0)
                 {
                     gameState.ClairInfinityArpeggioClicksRemaining--;
-                    // Timeless Melody is a guaranteed critical - use 1500x multiplier like Entropic Crescendo
-                    finalNotes = notesPerClick * 1500;
+                    // Timeless Melody critical - 750x multiplier [NERFED from 1500x]
+                    finalNotes = notesPerClick * 750;
                     MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
                     critText = $"Timeless Melody!!! +{NumberFormatter.FormatLargeNumber(finalNotes)}";
                     critColor = Color.FromRgb(0, 255, 255); // Cyan (infinity/time theme)
@@ -1713,8 +1934,13 @@ namespace MusicClicker
                 };
             }
             
-            Canvas.SetLeft(textBlock, position.X);
-            Canvas.SetTop(textBlock, position.Y - 30);
+            // Add random offset for visual variety
+            Random rng = new Random();
+            double offsetX = rng.Next(-20, 21); // -20 to +20 pixels
+            double offsetY = rng.Next(-10, 11); // -10 to +10 pixels
+            
+            Canvas.SetLeft(textBlock, position.X + offsetX);
+            Canvas.SetTop(textBlock, position.Y - 30 + offsetY);
             
             FloatingTextCanvas.Children.Add(textBlock);
             
@@ -2737,6 +2963,44 @@ namespace MusicClicker
             // Update Clock of Eternity count
             if (MainClockOfEternityCount != null)
                 MainClockOfEternityCount.Text = gameState.ClockOfEternityStacks.ToString();
+                
+            // Show/Hide consume buttons based on hand position and stack availability
+            
+            // Hour Hand 3 - Consumes 1 Chrono Fragment
+            if (MainConsumeHourHand3Button != null)
+            {
+                MainConsumeHourHand3Button.IsVisible = gameState.ClairDeLuneHourHand == 3 && gameState.ClockworkForteStacks > 0;
+            }
+            
+            // Hour Hand 9 - Consumes 1 Twilight Resonance
+            if (MainConsumeHourHand9Button != null)
+            {
+                MainConsumeHourHand9Button.IsVisible = gameState.ClairDeLuneHourHand == 9 && gameState.TemporalHarmonyStacks > 0;
+            }
+            
+            // Minute Hand 5 - Consumes 3 Chrono Fragments
+            if (MainConsumeMinuteHand5Button != null)
+            {
+                MainConsumeMinuteHand5Button.IsVisible = gameState.ClairDeLuneMinuteHand == 5 && gameState.ClockworkForteStacks >= 3;
+            }
+            
+            // Minute Hand 7 - Consumes 20 Chrono Fragments
+            if (MainConsumeMinuteHand7Button != null)
+            {
+                MainConsumeMinuteHand7Button.IsVisible = gameState.ClairDeLuneMinuteHand == 7 && gameState.ClockworkForteStacks >= 20;
+            }
+            
+            // Minute Hand 8 - Consumes 8 Twilight Resonance
+            if (MainConsumeMinuteHand8Button != null)
+            {
+                MainConsumeMinuteHand8Button.IsVisible = gameState.ClairDeLuneMinuteHand == 8 && gameState.TemporalHarmonyStacks >= 8;
+            }
+            
+            // Minute Hand 10 - Consumes ALL Chrono Fragments
+            if (MainConsumeMinuteHand10Button != null)
+            {
+                MainConsumeMinuteHand10Button.IsVisible = gameState.ClairDeLuneMinuteHand == 10 && gameState.ClockworkForteStacks > 0;
+            }
         }
         
         // Clair de Lune Clock Configuration Handlers
@@ -2758,10 +3022,69 @@ namespace MusicClicker
             }
         }
         
+        // Clair de Lune Consume Button Handlers
+        private void MainConsumeHourHand3_Click(object? sender, RoutedEventArgs e)
+        {
+            if (gameState.ClairDeLuneHourHand == 3 && gameState.ClockworkForteStacks > 0)
+            {
+                MusicClicker.Armory.WeaponAbilities.ClairHourHand3_ConsumeClockworkForte(gameState);
+                UpdateMainClairDeLuneCrescendanceInfo();
+                UIUpdater.UpdateUI(this, gameState);
+            }
+        }
+        
+        private void MainConsumeHourHand9_Click(object? sender, RoutedEventArgs e)
+        {
+            if (gameState.ClairDeLuneHourHand == 9 && gameState.TemporalHarmonyStacks > 0)
+            {
+                // Consume 1 stack at a time for now (can be enhanced later for multiple stacks)
+                int stacksToConsume = 1;
+                MusicClicker.Armory.WeaponAbilities.ClairHourHand9_ConsumeTwilightResonance(gameState, stacksToConsume);
+                UpdateMainClairDeLuneCrescendanceInfo();
+            }
+        }
+        
+        private void MainConsumeMinuteHand5_Click(object? sender, RoutedEventArgs e)
+        {
+            if (gameState.ClairDeLuneMinuteHand == 5 && gameState.ClockworkForteStacks >= 3)
+            {
+                MusicClicker.Armory.WeaponAbilities.ClairMinuteHand5_ConsumeClockworkForte(gameState);
+                UpdateMainClairDeLuneCrescendanceInfo();
+            }
+        }
+        
+        private void MainConsumeMinuteHand7_Click(object? sender, RoutedEventArgs e)
+        {
+            if (gameState.ClairDeLuneMinuteHand == 7 && gameState.ClockworkForteStacks >= 20)
+            {
+                MusicClicker.Armory.WeaponAbilities.ClairMinuteHand7_ConsumeClockworkForte(gameState);
+                UpdateMainClairDeLuneCrescendanceInfo();
+            }
+        }
+        
+        private void MainConsumeMinuteHand8_Click(object? sender, RoutedEventArgs e)
+        {
+            if (gameState.ClairDeLuneMinuteHand == 8 && gameState.TemporalHarmonyStacks >= 8)
+            {
+                MusicClicker.Armory.WeaponAbilities.ClairMinuteHand8_ConsumeTemporalHarmony(gameState);
+                UpdateMainClairDeLuneCrescendanceInfo();
+            }
+        }
+        
+        private void MainConsumeMinuteHand10_Click(object? sender, RoutedEventArgs e)
+        {
+            if (gameState.ClairDeLuneMinuteHand == 10 && gameState.ClockworkForteStacks > 0)
+            {
+                MusicClicker.Armory.WeaponAbilities.ClairMinuteHand10_ConsumeClockworkForte(gameState);
+                UpdateMainClairDeLuneCrescendanceInfo();
+                UIUpdater.UpdateUI(this, gameState);
+            }
+        }
+        
         #endregion
-        
+
         #region Hover Tooltip Handlers
-        
+
         private void ShowButtonTooltip(object? sender, Avalonia.Input.PointerEventArgs e)
         {
             if (sender is Button button && button.Tag is string tooltipText && HoverTooltip != null && HoverTooltipText != null)
@@ -2771,7 +3094,7 @@ namespace MusicClicker
                 UpdateTooltipPosition(sender, e);
             }
         }
-        
+
         private void HideButtonTooltip(object? sender, Avalonia.Input.PointerEventArgs e)
         {
             if (HoverTooltip != null)
@@ -2779,36 +3102,36 @@ namespace MusicClicker
                 HoverTooltip.IsVisible = false;
             }
         }
-        
+
         private void UpdateTooltipPosition(object? sender, Avalonia.Input.PointerEventArgs e)
         {
             if (HoverTooltip != null && HoverTooltip.IsVisible)
             {
                 var position = e.GetPosition(this);
-                
+
                 // Offset tooltip to appear next to the cursor (to the right and slightly below)
                 double offsetX = 20;
                 double offsetY = 20;
-                
+
                 // Calculate tooltip bounds
                 double tooltipWidth = HoverTooltip.Bounds.Width;
                 double tooltipHeight = HoverTooltip.Bounds.Height;
-                
+
                 // Ensure tooltip doesn't go off-screen
                 double left = position.X + offsetX;
                 double top = position.Y + offsetY;
-                
+
                 if (left + tooltipWidth > this.Bounds.Width)
                     left = position.X - tooltipWidth - 10;
-                    
+
                 if (top + tooltipHeight > this.Bounds.Height)
                     top = position.Y - tooltipHeight - 10;
-                
+
                 // Position the tooltip
                 HoverTooltip.Margin = new Thickness(left, top, 0, 0);
             }
         }
-        
+
         #endregion
     }
 }

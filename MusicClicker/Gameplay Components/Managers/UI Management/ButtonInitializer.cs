@@ -303,6 +303,17 @@ namespace MusicClicker
                 }
             };
 
+            // Quit button - Save and close application
+            window.QuitButton.Click += (s, e) =>
+            {
+                // Save first
+                string err;
+                bool ok = MusicClicker.Helpers.SaveManager.Save(window.GameState, out err);
+                
+                // Close the application
+                window.Close();
+            };
+
             // Fragmentation
             window.FragmentationButton.Click += async (s, e) =>
             {
