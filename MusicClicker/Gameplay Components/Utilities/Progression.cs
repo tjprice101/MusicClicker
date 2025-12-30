@@ -134,6 +134,16 @@ namespace MusicClicker.Helpers
                 totalNpc += gameState.MagnumOpusBaseClickEffect * Math.Pow(gameState.MagnumOpusClickGrowth, i);
             }
 
+            // Clair de Lune Crescendance Passive: NPC += NPS^5
+            if (gameState.CurrentResonatedScore == "ClairDeLune")
+            {
+                double npsBonus = Math.Pow(gameState.NotesPerSecond, 5);
+                if (!double.IsInfinity(npsBonus) && !double.IsNaN(npsBonus))
+                {
+                    totalNpc += npsBonus;
+                }
+            }
+
             return totalNpc;
         }
     }

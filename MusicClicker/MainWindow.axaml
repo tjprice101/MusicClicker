@@ -1262,240 +1262,98 @@
                                 Spacing="8"
                                 Margin="0,6,0,0"
                                 IsVisible="False">
-                        <!-- First Row: Clock Configuration -->
-                        <StackPanel Orientation="Horizontal" Spacing="20" HorizontalAlignment="Center">
-                            <!-- Hour Hand Configuration -->
-                            <StackPanel Orientation="Vertical" Spacing="3">
-                                <TextBlock Text="Hour Hand Position"
-                                           Foreground="Cyan"
-                                           FontSize="12"
-                                           FontWeight="Bold"
-                                           HorizontalAlignment="Center" />
-                                <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Center">
-                                    <Button x:Name="MainSetHourHand12"
-                                            Content="12"
-                                            Click="MainSetHourHand_Click"
-                                            Tag="12"
-                                            FontSize="11"
-                                            Padding="8,4"
-                                            MinWidth="35" />
-                                    <Button x:Name="MainSetHourHand3"
-                                            Content="3"
-                                            Click="MainSetHourHand_Click"
-                                            Tag="3"
-                                            FontSize="11"
-                                            Padding="8,4"
-                                            MinWidth="35" />
-                                    <Button x:Name="MainSetHourHand6"
-                                            Content="6"
-                                            Click="MainSetHourHand_Click"
-                                            Tag="6"
-                                            FontSize="11"
-                                            Padding="8,4"
-                                            MinWidth="35" />
-                                    <Button x:Name="MainSetHourHand9"
-                                            Content="9"
-                                            Click="MainSetHourHand_Click"
-                                            Tag="9"
-                                            FontSize="11"
-                                            Padding="8,4"
-                                            MinWidth="35" />
-                                </StackPanel>
-                                <TextBlock x:Name="MainCurrentHourHandText"
-                                           Text="Current: 12"
-                                           Foreground="White"
-                                           FontSize="10"
-                                           HorizontalAlignment="Center" />
-                            </StackPanel>
-                            
-                            <!-- Minute Hand Configuration -->
-                            <StackPanel Orientation="Vertical" Spacing="3">
-                                <TextBlock Text="Minute Hand Position"
-                                           Foreground="Magenta"
-                                           FontSize="12"
-                                           FontWeight="Bold"
-                                           HorizontalAlignment="Center" />
-                                <StackPanel Orientation="Horizontal" Spacing="3" HorizontalAlignment="Center">
-                                    <Button x:Name="MainSetMinuteHand1"
-                                            Content="1"
-                                            Click="MainSetMinuteHand_Click"
-                                            Tag="1"
-                                            FontSize="10"
-                                            Padding="6,3"
-                                            MinWidth="28" />
-                                    <Button x:Name="MainSetMinuteHand2"
-                                            Content="2"
-                                            Click="MainSetMinuteHand_Click"
-                                            Tag="2"
-                                            FontSize="10"
-                                            Padding="6,3"
-                                            MinWidth="28" />
-                                    <Button x:Name="MainSetMinuteHand4"
-                                            Content="4"
-                                            Click="MainSetMinuteHand_Click"
-                                            Tag="4"
-                                            FontSize="10"
-                                            Padding="6,3"
-                                            MinWidth="28" />
-                                    <Button x:Name="MainSetMinuteHand5"
-                                            Content="5"
-                                            Click="MainSetMinuteHand_Click"
-                                            Tag="5"
-                                            FontSize="10"
-                                            Padding="6,3"
-                                            MinWidth="28" />
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal" Spacing="3" HorizontalAlignment="Center" Margin="0,2,0,0">
-                                    <Button x:Name="MainSetMinuteHand7"
-                                            Content="7"
-                                            Click="MainSetMinuteHand_Click"
-                                            Tag="7"
-                                            FontSize="10"
-                                            Padding="6,3"
-                                            MinWidth="28" />
-                                    <Button x:Name="MainSetMinuteHand8"
-                                            Content="8"
-                                            Click="MainSetMinuteHand_Click"
-                                            Tag="8"
-                                            FontSize="10"
-                                            Padding="6,3"
-                                            MinWidth="28" />
-                                    <Button x:Name="MainSetMinuteHand10"
-                                            Content="10"
-                                            Click="MainSetMinuteHand_Click"
-                                            Tag="10"
-                                            FontSize="10"
-                                            Padding="6,3"
-                                            MinWidth="28" />
-                                    <Button x:Name="MainSetMinuteHand11"
-                                            Content="11"
-                                            Click="MainSetMinuteHand_Click"
-                                            Tag="11"
-                                            FontSize="10"
-                                            Padding="6,3"
-                                            MinWidth="28" />
-                                </StackPanel>
-                                <TextBlock x:Name="MainCurrentMinuteHandText"
-                                           Text="Current: 1"
-                                           Foreground="White"
-                                           FontSize="10"
-                                           HorizontalAlignment="Center" />
-                            </StackPanel>
-                        </StackPanel>
+                        <!-- Time-Based System Info -->
+                        <TextBlock Text="Clockwork Symphony - Time-Based Effects"
+                                   Foreground="#FFD700"
+                                   FontSize="13"
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,0,0,8" />
                         
-                        <!-- Second Row: Stack Displays -->
-                        <StackPanel Orientation="Horizontal" Spacing="20" HorizontalAlignment="Center">
+                        <!-- Temporal Stacks Display -->
+                        <StackPanel Orientation="Horizontal" Spacing="25" HorizontalAlignment="Center">
+                            <!-- Shattered Moonlight -->
                             <StackPanel Orientation="Vertical" Spacing="3">
-                                <TextBlock Text="Chrono Fragments"
-                                           Foreground="LightBlue"
+                                <TextBlock Text="Shattered Moonlight"
+                                           Foreground="#B0C4DE"
                                            FontSize="12"
+                                           FontWeight="Bold"
                                            HorizontalAlignment="Center" />
-                                <TextBlock x:Name="MainClockworkForteCount"
+                                <TextBlock x:Name="MainShatteredMoonlightCount"
                                            Text="0"
                                            Foreground="White"
-                                           FontSize="16"
+                                           FontSize="18"
                                            FontWeight="Bold"
                                            HorizontalAlignment="Center" />
-                                <TextBlock Text="(From Hour Hand 12)"
-                                           Foreground="Gray"
+                                <TextBlock Text="(3:00 - 6:00)"
+                                           Foreground="#A9A9A9"
                                            FontSize="9"
                                            HorizontalAlignment="Center" />
-                                <!-- Consume Buttons for Chrono Fragments -->
-                                <Button x:Name="MainConsumeHourHand3Button"
-                                        Content="Consume (Hour 3)"
-                                        Click="MainConsumeHourHand3_Click"
-                                        Background="#20B2AA"
+                                <Button x:Name="MainConsumeShatteredMoonlightButton"
+                                        Content="Consume (+100 EM)"
+                                        Click="MainConsumeShatteredMoonlight_Click"
+                                        Background="#4682B4"
                                         Foreground="White"
-                                        FontSize="9"
-                                        Padding="5,2"
+                                        FontSize="10"
+                                        Padding="8,4"
                                         HorizontalAlignment="Center"
-                                        Margin="0,3,0,0"
-                                        IsVisible="False" />
-                                <Button x:Name="MainConsumeMinuteHand5Button"
-                                        Content="Consume (Minute 5)"
-                                        Click="MainConsumeMinuteHand5_Click"
-                                        Background="#4169E1"
-                                        Foreground="White"
-                                        FontSize="9"
-                                        Padding="5,2"
-                                        HorizontalAlignment="Center"
-                                        Margin="0,2,0,0"
-                                        IsVisible="False" />
-                                <Button x:Name="MainConsumeMinuteHand7Button"
-                                        Content="Consume (Minute 7)"
-                                        Click="MainConsumeMinuteHand7_Click"
-                                        Background="#1E90FF"
-                                        Foreground="White"
-                                        FontSize="9"
-                                        Padding="5,2"
-                                        HorizontalAlignment="Center"
-                                        Margin="0,2,0,0"
-                                        IsVisible="False" />
-                                <Button x:Name="MainConsumeMinuteHand10Button"
-                                        Content="Consume (Minute 10)"
-                                        Click="MainConsumeMinuteHand10_Click"
-                                        Background="#00BFFF"
-                                        Foreground="White"
-                                        FontSize="9"
-                                        Padding="5,2"
-                                        HorizontalAlignment="Center"
-                                        Margin="0,2,0,0"
-                                        IsVisible="False" />
+                                        Margin="0,4,0,0" />
                             </StackPanel>
                             
+                            <!-- Clockwork of Infinity -->
                             <StackPanel Orientation="Vertical" Spacing="3">
-                                <TextBlock Text="Twilight Resonance"
-                                           Foreground="Violet"
+                                <TextBlock Text="Clockwork of Infinity"
+                                           Foreground="#DA70D6"
                                            FontSize="12"
-                                           HorizontalAlignment="Center" />
-                                <TextBlock x:Name="MainTemporalHarmonyCount"
-                                           Text="0 / 50"
-                                           Foreground="White"
-                                           FontSize="16"
                                            FontWeight="Bold"
                                            HorizontalAlignment="Center" />
-                                <TextBlock Text="(From Hour Hand 6)"
-                                           Foreground="Gray"
-                                           FontSize="9"
-                                           HorizontalAlignment="Center" />
-                                <!-- Consume Buttons for Twilight Resonance -->
-                                <Button x:Name="MainConsumeHourHand9Button"
-                                        Content="Consume (Hour 9)"
-                                        Click="MainConsumeHourHand9_Click"
-                                        Background="#8B008B"
-                                        Foreground="White"
-                                        FontSize="9"
-                                        Padding="5,2"
-                                        HorizontalAlignment="Center"
-                                        Margin="0,3,0,0"
-                                        IsVisible="False" />
-                                <Button x:Name="MainConsumeMinuteHand8Button"
-                                        Content="Consume (Minute 8)"
-                                        Click="MainConsumeMinuteHand8_Click"
-                                        Background="#9370DB"
-                                        Foreground="White"
-                                        FontSize="9"
-                                        Padding="5,2"
-                                        HorizontalAlignment="Center"
-                                        Margin="0,2,0,0"
-                                        IsVisible="False" />
-                            </StackPanel>
-                            
-                            <StackPanel Orientation="Vertical" Spacing="3">
-                                <TextBlock Text="Perpetual Nocturne"
-                                           Foreground="Gold"
-                                           FontSize="12"
-                                           HorizontalAlignment="Center" />
-                                <TextBlock x:Name="MainClockOfEternityCount"
+                                <TextBlock x:Name="MainClockworkOfInfinityCount"
                                            Text="0"
                                            Foreground="White"
-                                           FontSize="16"
+                                           FontSize="18"
                                            FontWeight="Bold"
                                            HorizontalAlignment="Center" />
-                                <TextBlock Text="(From Minute Hand 11)"
-                                           Foreground="Gray"
+                                <TextBlock Text="(6:00 - 9:00)"
+                                           Foreground="#A9A9A9"
                                            FontSize="9"
                                            HorizontalAlignment="Center" />
+                                <Button x:Name="MainConsumeClockworkOfInfinityButton"
+                                        Content="Consume (5 Crits)"
+                                        Click="MainConsumeClockworkOfInfinity_Click"
+                                        Background="#9932CC"
+                                        Foreground="White"
+                                        FontSize="10"
+                                        Padding="8,4"
+                                        HorizontalAlignment="Center"
+                                        Margin="0,4,0,0" />
+                            </StackPanel>
+                            
+                            <!-- Temporal Fracture -->
+                            <StackPanel Orientation="Vertical" Spacing="3">
+                                <TextBlock Text="Temporal Fracture"
+                                           Foreground="#FFD700"
+                                           FontSize="12"
+                                           FontWeight="Bold"
+                                           HorizontalAlignment="Center" />
+                                <TextBlock x:Name="MainTemporalFractureCount"
+                                           Text="0"
+                                           Foreground="White"
+                                           FontSize="18"
+                                           FontWeight="Bold"
+                                           HorizontalAlignment="Center" />
+                                <TextBlock Text="(Bond)"
+                                           Foreground="#A9A9A9"
+                                           FontSize="9"
+                                           HorizontalAlignment="Center" />
+                                <Button x:Name="MainConsumeTemporalFractureButton"
+                                        Content="Consume (+15% Notes)"
+                                        Click="MainConsumeTemporalFracture_Click"
+                                        Background="#DAA520"
+                                        Foreground="White"
+                                        FontSize="10"
+                                        Padding="8,4"
+                                        HorizontalAlignment="Center"
+                                        Margin="0,4,0,0" />
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>

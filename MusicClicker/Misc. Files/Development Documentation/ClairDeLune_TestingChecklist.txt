@@ -1,126 +1,52 @@
-Clair de Lune Major Score & Weapons - Testing Checklist
-=====================================================
+Clair de Lune - Testing Checklist
+==================================
 
-IMPLEMENTED - Ready for Testing
-=================================
+CRESCENDANCE PASSIVE: Temporal Acceleration
+-------------------------------------------
+[ ] Notes Per Click permanently increased by (Notes Per Second)^5
+[ ] Passive active while Clair de Lune is resonated
+[ ] Stacks with all other NPC buffs (duets, crits, time-based bonuses)
 
-CRESCENDANCE ABILITY: Lunar Chronometry
+CRESCENDANCE ABILITY: Clockwork Symphony
 
-1. Hour Hand Effects (Crescendance - On Click)
------------------------------------------------
-[O] Hour 12 (Celestial Assembly): Every 3rd, 6th, 12th click gives Chrono Fragments
-    - Click 3: +1 stack (3 only)
-    - Click 6: +2 stacks (3+6)
-    - Click 9: +1 stack (3 only)
-    - Click 12: +3 stacks (3+6+12)
-    - Pattern repeats every 12 clicks
-    
-[O] Hour 3 (Nocturnal Exchange): Consume 1 Chrono Fragment for +50% notes, +2% Entropic Melodies
-    - Activates on EVERY click when stacks available
-    
-[O] Hour 6 (Fractal Modulation): Every 6th click gives 1 Twilight Resonance (max 30 stacks) [NERFED from 50]
-    - Click 6, 12, 18, 24, etc.
-    
-[O] Hour 9 (Syncopated Rupture): Consume button when Hour 9 selected - Consume 1 Twilight Resonance for 7 Twilight Rupture crits
-    - Consume button appears when Hour Hand 9 is resonated
-    - Crits stack: consuming 3 stacks = 21 stockpiled crits
-    - NOT on-click consumption - button only
-    - Critical formula: ((NPS^7)/3) notes [NERFED from (NPS^9)/5]
+Time-Based Click Effects (based on real-world clock hour)
+----------------------------------------------------------
+[ ] 12:00-3:00 (AM/PM): Every 12th click gives ×12,000 NPC bonus notes
+[ ] 3:00-6:00 (AM/PM): Every 6th click gives +1 Shattered Moonlight stack
+[ ] 6:00-9:00 (AM/PM): Every 9th click gives +1 Clockwork of Infinity stack
+[ ] 9:00-12:00 (AM/PM): Every 12th click gives +20% current notes
 
-2. Minute Hand Effects (Crescendance - On Click)
--------------------------------------------------
-[ ] Minute 1 (Cadenza Cataclysm): On Twilight Resonance gain, next 3 clicks each give +3 Entropic Melodies [CHANGED from +1.0% per click]
-    - Total: 9 Entropic Melodies over the next 3 clicks
-    - Works with Minute 4 if both equipped
-    
-[O] Minute 2 (Infinity Arpeggio): On Chrono Fragments gain, next 2 clicks per stack are Timeless Melody crits
-    - Critical formula: NPC * 750 [NERFED from 1500]
-    - Cyan text with midnight blue outline
-    - Crits stack: gaining 2 stacks gives 4 crits, 3 stacks gives 6 crits
-    
-[O] Minute 4 (Prismal Crescendo): On Entropic Melodies gain, +2.5% notes per EM gained [CHANGED from 0.1%]
-    - Triggers for Minute 1 effect and Hour 3 effect
-    
-[ ] Minute 5 (Refrain of Endless Measures): Consume button when Minute 5 selected - Consume 3 Chrono Fragments for +5 to all 7 minors
-    - Consume button appears when Minute Hand 5 is resonated
-    - NOT on-click consumption - button only
-    
-[ ] Minute 7 (Sonata of Shattered Hours): Consume 20 Chrono Fragments for +1 Clair de Lune Major, +15% Entropic Melodies
-    - Activates on EVERY click when stacks available
-    
-[ ] Minute 8 (Symphony of Broken Time): Consume 8 Twilight Resonance for +5 to all 7 majors
-    - Activates on EVERY click when stacks available
-    
-[ ] Minute 10 (Power Spike): Consume ALL Chrono Fragments for +(NPC^stacks) notes
-    - Activates on EVERY click when stacks available
-    - Immediate notes bonus on consumption
-    
-[ ] Minute 11 (Glass Forte): If NPS > 1 Quintillion, every 12th click gives 1 Perpetual Nocturne
-    - Also increments ClairDeLuneGlassFortePending (unused currently)
+Consumable Stacks
+-----------------
+[ ] Consume Shattered Moonlight: -1 stack, +100 Entropic Melodies
+[ ] Consume Clockwork of Infinity: -1 stack, +5 "Infinite Temporality!!!" crits (NPC^12)
+[ ] Consume Temporal Fracture: -1 stack, +15% notes (+ 10 Surge crits if Weapon 2 bonded)
 
-3. Custom Stacks - UI Display
-------------------------------
-[O] Chrono Fragments: Display updates on Crescendance panel
-[O] Twilight Resonance: Display updates on Crescendance panel
-[O] Perpetual Nocturne: Display updates on Crescendance panel
+UI Display
+----------
+[ ] Stack counters update correctly (Shattered Moonlight, Clockwork of Infinity, Temporal Fracture)
+[ ] Consume buttons enable/disable based on stack availability
+[ ] Title and description display correctly
 
-4. Clock Configuration UI
---------------------------
-[O] Hour hand buttons (12, 3, 6, 9) change configuration
-[O] Minute hand buttons (1, 2, 4, 5, 7, 8, 10, 11) change configuration
-[O] "Current: X" displays update when buttons clicked
-[O] Stack displays show current values
+WEAPON 1: Celestial Horology
+-----------------------------
+Passive: Chrono-Entropic Refund
+[ ] Every 5th click grants +3% Entropic Melodies
+[ ] 50% Entropic Melodies refund on spend
 
-5. Weapon 1: Celestial Horology
----------------------------------
-[ ] Passive: Chrono-Entropic Refund - Refund 50% Entropic Melodies spent
-[ ] Crescendance Bond: Celestial Convergence - Consume 1 Perpetual Nocturne for 2 clicks of "Lunar Everlasting" crit
-    - Critical formula: ((NPS^NPC)/144) notes
-    - Light sky blue text with midnight blue outline
+Crescendance Bond: Celestial Convergence
+[ ] Every 5th Shattered Moonlight consume grants +1 Temporal Fracture
 
-6. Weapon 2: Metronomic Dissonance
------------------------------------
-[ ] Passive: Chrono-Refraction - 10% chance to refund custom stacks on consume
-    - Test with Hour 3, Hour 9, Minute 5, 7, 8, 10
-    
-[ ] Crescendance Bond: Cascading Resonance - On Chrono Fragments gain: +8 to 2 random minors (per stack gained) [NERFED from +12 to 3]
-    - Test at click 12 (should grant 4 stacks = 8 minors each to 2 random types)
-    
-[ ] Crescendance Bond: Cascading Resonance - On Twilight Resonance gain: +1 to 4 random majors (excludes events/discordance) [NERFED from +2 to 5]
+WEAPON 2: Clockwork Finality
+-----------------------------
+Passive: Temporal Dissolution
+[ ] Dissolving major scores grants double Entropic Melodies
 
-7. Critical Hit Visuals
------------------------
-[ ] Twilight Rupture: Medium purple text with black outline
-[ ] Timeless Melody: Cyan text with midnight blue outline
-[ ] Lunar Everlasting: Light sky blue text with midnight blue outline
-[ ] Eternal Moonlight Opus: Goldenrod text with white outline
+Crescendance Bond: Surge Amplification
+[ ] Temporal Fracture consume grants 10 "Surge of Time's Fractalization!!!" crits (NPC^144)
+[ ] Only triggers when weapon ability is active
 
-NOT YET IMPLEMENTED
-===================
-
-8. Duet Ability: Lunar Dodecaphony (12-Click Sequence)
--------------------------------------------------------
-Duet Name: Clair de Lune's Embrace
-[ ] 1st Click: Triple current notes
-[ ] 2nd Click: +75% Entropic Melodies
-[ ] 3rd Click: +5 random minor
-[ ] 4th Click: +5 random major (not events/discordance)
-[ ] 5th Click: Consume all CF+TR stacks for (NPC * (stacks^5)) notes
-[ ] 6th Click: +5 Chrono Fragments
-[ ] 7th Click: +5% Entropic Melodies
-[ ] 8th Click: +1 Twilight Resonance
-[ ] 9th Click: Next 3 clicks are "Entropic Crescendo of Eternity" crits
-[ ] 10th Click: +50 Harmonious and Melodious Fragments
-[ ] 11th Click: +2 Clair de Lune Major
-[ ] 12th Click: Next 5 clicks are "Eternal Moonlight Opus" crits (NPC^NPS^12)
-
-Testing Priority Order:
-=======================
-1. Basic hour hand mechanics (12, 3, 6, 9)
-2. Stack generation and UI updates
-3. Hour hand consumption (3, 9)
-4. Minute hand on-gain triggers (1, 2)
-5. Minute hand consumption (5, 7, 8, 10, 11)
-6. Minute hand passive (4)
-7. Weapon passives and bonds
-8. Critical hit formulas and visuals
+Critical Hit Formulas
+---------------------
+[ ] "Infinite Temporality!!!" - RED text, DARK GRAY shadow, formula: NPC^12
+[ ] "Surge of Time's Fractalization!!!" - GRAY text, RED shadow, formula: NPC^144

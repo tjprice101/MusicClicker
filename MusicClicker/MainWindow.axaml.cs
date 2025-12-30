@@ -1049,8 +1049,8 @@ namespace MusicClicker
                 MusicClicker.Armory.WeaponAbilities.OdeDuet_AddNote(gameState);
             }
             
-            // Clair De Lune Duet: 12-click sequence
-            if (gameState.ClairDeLuneDuetActive)
+            // Clair De Lune Duet: Chain of Temporality
+            if (gameState.DuetChainOfTemporalityActive)
             {
                 MusicClicker.Armory.WeaponAbilities.ClairDeLuneDuet_OnClick(gameState);
             }
@@ -1219,22 +1219,7 @@ namespace MusicClicker
                     }
                 }
                 
-                // Clair De Lune: Minute Hand 1 effect (next 3 clicks after Temporal Harmony gain)
-                if (gameState.ClairDeLunePowerSpikePending > 0)
-                {
-                    gameState.ClairDeLunePowerSpikePending--;
-                    double entropicGain = 3.0; // 3 Entropic Melodies per click [CHANGED from 1.5]
-                    
-                    // Minute Hand 4: increase notes by 2.5% per Entropic Melodies gained [CHANGED from 0.1%]
-                    if (gameState.ClairDeLuneMinuteHand == 4)
-                    {
-                        double currentNotes = MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes);
-                        double noteBonus = currentNotes * (entropicGain * 0.025);
-                        MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, noteBonus);
-                    }
-                    
-                    gameState.EntropicMelodies += (int)entropicGain;
-                }
+                // [Old Minute Hand 1 logic removed - now uses time-based system]
                 
                 string critText;
                 Color critColor;
@@ -1376,84 +1361,31 @@ namespace MusicClicker
                     hasStroke = true;
                     strokeColor = Color.FromRgb(199, 21, 133); // Dark pink outline
                 }
-                // 6.5. Clair De Lune: Lunar Everlasting (Weapon 1 crit)
-                else if (gameState.ClairWeapon1CritClicksRemaining > 0)
+                // 6.5. Clair De Lune: Infinite Temporality!!! (Clockwork of Infinity consume)
+                else if (gameState.InfiniteTemporalityCritsRemaining > 0)
                 {
-                    gameState.ClairWeapon1CritClicksRemaining--;
-                    // Formula: ((NPS^NPC)/(144)) notes
-                    double nps = gameState.NotesPerSecond;
+                    gameState.InfiniteTemporalityCritsRemaining--;
+                    // Formula: NPC^12
                     double npc = gameState.NotesPerClick;
-                    finalNotes = (Math.Pow(nps, npc)) / 144.0;
+                    finalNotes = Math.Pow(npc, 12);
                     MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
-                    critText = $"Lunar Everlasting!!! +{NumberFormatter.FormatLargeNumber(finalNotes)}";
-                    critColor = Color.FromRgb(135, 206, 250); // Light sky blue (time/clock theme)
+                    critText = $"Infinite Temporality!!! +{NumberFormatter.FormatLargeNumber(finalNotes)}";
+                    critColor = Colors.Red; // Red font
                     hasStroke = true;
-                    strokeColor = Color.FromRgb(25, 25, 112); // Midnight blue outline
+                    strokeColor = Color.FromRgb(64, 64, 64); // Dark gray shadow
                 }
-                // 6.6. Clair De Lune: Eternal Moonlight Opus (Duet 12th click effect)
-                else if (gameState.ClairSymphonyOfInfinityClicksRemaining > 0)
+                // 6.6. Clair De Lune: Surge of Time's Fractalization!!! (Temporal Fracture consume with Clockwork Finality bond)
+                else if (gameState.SurgeOfTimeFractalizationCritsRemaining > 0)
                 {
-                    gameState.ClairSymphonyOfInfinityClicksRemaining--;
-                    // Formula: (NPC^NPS^12) notes
-                    double nps = gameState.NotesPerSecond;
+                    gameState.SurgeOfTimeFractalizationCritsRemaining--;
+                    // Formula: NPC^144
                     double npc = gameState.NotesPerClick;
-                    finalNotes = Math.Pow(npc, Math.Pow(nps, 12));
+                    finalNotes = Math.Pow(npc, 144);
                     MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
-                    critText = $"Eternal Moonlight Opus!!! +{NumberFormatter.FormatLargeNumber(finalNotes)}";
-                    critColor = Color.FromRgb(218, 165, 32); // Golden rod (infinity theme)
+                    critText = $"Surge of Time's Fractalization!!! +{NumberFormatter.FormatLargeNumber(finalNotes)}";
+                    critColor = Color.FromRgb(128, 128, 128); // Gray text
                     hasStroke = true;
-                    strokeColor = Colors.White;
-                }
-                // 6.7. Clair De Lune: Twilight Rupture (Hour Hand 9 effect)
-                else if (gameState.ClairCadenzaCataclysmClicksRemaining > 0)
-                {
-                    gameState.ClairCadenzaCataclysmClicksRemaining--;
-                    // Formula: ((NPS^7)/3) notes [NERFED from NPS^9/5]
-                    double nps = gameState.NotesPerSecond;
-                    finalNotes = (Math.Pow(nps, 7)) / 3.0;
-                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
-                    critText = $"Twilight Rupture!!! +{NumberFormatter.FormatLargeNumber(finalNotes)}";
-                    critColor = Color.FromRgb(147, 112, 219); // Medium purple (chronos/time theme)
-                    hasStroke = true;
-                    strokeColor = Colors.Black;
-                }
-                // 6.8. Clair De Lune: Timeless Melody (Minute Hand 2 effect)
-                else if (gameState.ClairInfinityArpeggioClicksRemaining > 0)
-                {
-                    gameState.ClairInfinityArpeggioClicksRemaining--;
-                    // Timeless Melody critical - 750x multiplier [NERFED from 1500x]
-                    finalNotes = notesPerClick * 750;
-                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
-                    critText = $"Timeless Melody!!! +{NumberFormatter.FormatLargeNumber(finalNotes)}";
-                    critColor = Color.FromRgb(0, 255, 255); // Cyan (infinity/time theme)
-                    hasStroke = true;
-                    strokeColor = Color.FromRgb(25, 25, 112); // Midnight blue outline
-                    
-                    // La Campanella: Entropic-level crits grant +3 Deafening Chime stacks (max 15)
-                    if (gameState.CurrentResonatedScore == "LaCampanella")
-                    {
-                        int stacksToAdd = Math.Min(3, 15 - gameState.DeafeningChimeStacks);
-                        gameState.DeafeningChimeStacks += stacksToAdd;
-                    }
-                }
-                // 6.9. Clair De Lune: Entropic Crescendo of Eternity (Duet 9th click)
-                else if (gameState.ClairDuetEntropicCritClicksRemaining > 0)
-                {
-                    gameState.ClairDuetEntropicCritClicksRemaining--;
-                        
-                    finalNotes = notesPerClick * 1500;
-                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
-                    critText = $"Entropic Crescendo of Eternity!!! +{NumberFormatter.FormatLargeNumber(finalNotes)}";
-                    critColor = Colors.Red;
-                    hasStroke = true;
-                    strokeColor = Colors.Black;
-                    
-                    // La Campanella: Entropic Crescendo grants +3 Deafening Chime stacks (max 15)
-                    if (gameState.CurrentResonatedScore == "LaCampanella")
-                    {
-                        int stacksToAdd = Math.Min(3, 15 - gameState.DeafeningChimeStacks);
-                        gameState.DeafeningChimeStacks += stacksToAdd;
-                    }
+                    strokeColor = Colors.Red; // Red shadow
                 }
                 // 7. Ode to Joy: Entropic Crescendo of Eternity from Petal of Melody (1500x multiplier, time-based)
                 else if (DateTime.Now <= gameState.EntropicCritExpiry)
@@ -2926,10 +2858,10 @@ namespace MusicClicker
         public void UpdateMainClairDeLuneCrescendanceInfo()
         {
             if (MainCrescendanceTitle != null)
-                MainCrescendanceTitle.Text = "Clair de Lune: Shattered Time";
+                MainCrescendanceTitle.Text = "Clair de Lune: Clockwork Symphony";
                 
             if (MainCrescendanceInfoText != null)
-                MainCrescendanceInfoText.Text = "Master the clockwork mechanisms. Configure Hour and Minute hands to generate and consume stacks for devastating temporal effects.";
+                MainCrescendanceInfoText.Text = "Passive: NPC += NPS^5. Time flows through your clicks. Different hours grant different effects: 12-3 (×12K NPC), 3-6 (+Shattered Moonlight), 6-9 (+Clockwork of Infinity), 9-12 (+20% Notes). Consume stacks for powerful bonuses.";
                 
             // Hide all other panels
             if (MainSwanFeatherPanel != null) MainSwanFeatherPanel.IsVisible = false;
@@ -2945,137 +2877,53 @@ namespace MusicClicker
             if (MainClairDeLuneStackPanel != null)
                 MainClairDeLuneStackPanel.IsVisible = true;
                 
-            // Update current hand positions
-            if (MainCurrentHourHandText != null)
-                MainCurrentHourHandText.Text = $"Current: {gameState.ClairDeLuneHourHand}";
+            // Update stack counts for new time-based system
+            if (MainShatteredMoonlightCount != null)
+                MainShatteredMoonlightCount.Text = gameState.ShatteredMoonlightStacks.ToString();
                 
-            if (MainCurrentMinuteHandText != null)
-                MainCurrentMinuteHandText.Text = $"Current: {gameState.ClairDeLuneMinuteHand}";
+            if (MainClockworkOfInfinityCount != null)
+                MainClockworkOfInfinityCount.Text = gameState.ClockworkOfInfinityStacks.ToString();
                 
-            // Update Clockwork Forte count
-            if (MainClockworkForteCount != null)
-                MainClockworkForteCount.Text = gameState.ClockworkForteStacks.ToString();
+            if (MainTemporalFractureCount != null)
+                MainTemporalFractureCount.Text = gameState.TemporalFractureStacks.ToString();
                 
-            // Update Temporal Harmony count
-            if (MainTemporalHarmonyCount != null)
-                MainTemporalHarmonyCount.Text = $"{gameState.TemporalHarmonyStacks} / 50";
+            // Update button visibility based on stack availability
+            if (MainConsumeShatteredMoonlightButton != null)
+                MainConsumeShatteredMoonlightButton.IsEnabled = gameState.ShatteredMoonlightStacks > 0;
                 
-            // Update Clock of Eternity count
-            if (MainClockOfEternityCount != null)
-                MainClockOfEternityCount.Text = gameState.ClockOfEternityStacks.ToString();
+            if (MainConsumeClockworkOfInfinityButton != null)
+                MainConsumeClockworkOfInfinityButton.IsEnabled = gameState.ClockworkOfInfinityStacks > 0;
                 
-            // Show/Hide consume buttons based on hand position and stack availability
-            
-            // Hour Hand 3 - Consumes 1 Chrono Fragment
-            if (MainConsumeHourHand3Button != null)
-            {
-                MainConsumeHourHand3Button.IsVisible = gameState.ClairDeLuneHourHand == 3 && gameState.ClockworkForteStacks > 0;
-            }
-            
-            // Hour Hand 9 - Consumes 1 Twilight Resonance
-            if (MainConsumeHourHand9Button != null)
-            {
-                MainConsumeHourHand9Button.IsVisible = gameState.ClairDeLuneHourHand == 9 && gameState.TemporalHarmonyStacks > 0;
-            }
-            
-            // Minute Hand 5 - Consumes 3 Chrono Fragments
-            if (MainConsumeMinuteHand5Button != null)
-            {
-                MainConsumeMinuteHand5Button.IsVisible = gameState.ClairDeLuneMinuteHand == 5 && gameState.ClockworkForteStacks >= 3;
-            }
-            
-            // Minute Hand 7 - Consumes 20 Chrono Fragments
-            if (MainConsumeMinuteHand7Button != null)
-            {
-                MainConsumeMinuteHand7Button.IsVisible = gameState.ClairDeLuneMinuteHand == 7 && gameState.ClockworkForteStacks >= 20;
-            }
-            
-            // Minute Hand 8 - Consumes 8 Twilight Resonance
-            if (MainConsumeMinuteHand8Button != null)
-            {
-                MainConsumeMinuteHand8Button.IsVisible = gameState.ClairDeLuneMinuteHand == 8 && gameState.TemporalHarmonyStacks >= 8;
-            }
-            
-            // Minute Hand 10 - Consumes ALL Chrono Fragments
-            if (MainConsumeMinuteHand10Button != null)
-            {
-                MainConsumeMinuteHand10Button.IsVisible = gameState.ClairDeLuneMinuteHand == 10 && gameState.ClockworkForteStacks > 0;
-            }
-        }
-        
-        // Clair de Lune Clock Configuration Handlers
-        private void MainSetHourHand_Click(object? sender, RoutedEventArgs e)
-        {
-            if (sender is Button button && button.Tag is string positionStr && int.TryParse(positionStr, out int position))
-            {
-                gameState.ClairDeLuneHourHand = position;
-                UpdateMainClairDeLuneCrescendanceInfo();
-            }
-        }
-        
-        private void MainSetMinuteHand_Click(object? sender, RoutedEventArgs e)
-        {
-            if (sender is Button button && button.Tag is string positionStr && int.TryParse(positionStr, out int position))
-            {
-                gameState.ClairDeLuneMinuteHand = position;
-                UpdateMainClairDeLuneCrescendanceInfo();
-            }
+            if (MainConsumeTemporalFractureButton != null)
+                MainConsumeTemporalFractureButton.IsEnabled = gameState.TemporalFractureStacks > 0;
         }
         
         // Clair de Lune Consume Button Handlers
-        private void MainConsumeHourHand3_Click(object? sender, RoutedEventArgs e)
+        private void MainConsumeShatteredMoonlight_Click(object? sender, RoutedEventArgs e)
         {
-            if (gameState.ClairDeLuneHourHand == 3 && gameState.ClockworkForteStacks > 0)
+            if (gameState.ShatteredMoonlightStacks > 0)
             {
-                MusicClicker.Armory.WeaponAbilities.ClairHourHand3_ConsumeClockworkForte(gameState);
+                MusicClicker.Armory.WeaponAbilities.ClairConsumeShatteredMoonlight(gameState);
                 UpdateMainClairDeLuneCrescendanceInfo();
                 UIUpdater.UpdateUI(this, gameState);
             }
         }
         
-        private void MainConsumeHourHand9_Click(object? sender, RoutedEventArgs e)
+        private void MainConsumeClockworkOfInfinity_Click(object? sender, RoutedEventArgs e)
         {
-            if (gameState.ClairDeLuneHourHand == 9 && gameState.TemporalHarmonyStacks > 0)
+            if (gameState.ClockworkOfInfinityStacks > 0)
             {
-                // Consume 1 stack at a time for now (can be enhanced later for multiple stacks)
-                int stacksToConsume = 1;
-                MusicClicker.Armory.WeaponAbilities.ClairHourHand9_ConsumeTwilightResonance(gameState, stacksToConsume);
+                MusicClicker.Armory.WeaponAbilities.ClairConsumeClockworkOfInfinity(gameState);
                 UpdateMainClairDeLuneCrescendanceInfo();
+                UIUpdater.UpdateUI(this, gameState);
             }
         }
         
-        private void MainConsumeMinuteHand5_Click(object? sender, RoutedEventArgs e)
+        private void MainConsumeTemporalFracture_Click(object? sender, RoutedEventArgs e)
         {
-            if (gameState.ClairDeLuneMinuteHand == 5 && gameState.ClockworkForteStacks >= 3)
+            if (gameState.TemporalFractureStacks > 0)
             {
-                MusicClicker.Armory.WeaponAbilities.ClairMinuteHand5_ConsumeClockworkForte(gameState);
-                UpdateMainClairDeLuneCrescendanceInfo();
-            }
-        }
-        
-        private void MainConsumeMinuteHand7_Click(object? sender, RoutedEventArgs e)
-        {
-            if (gameState.ClairDeLuneMinuteHand == 7 && gameState.ClockworkForteStacks >= 20)
-            {
-                MusicClicker.Armory.WeaponAbilities.ClairMinuteHand7_ConsumeClockworkForte(gameState);
-                UpdateMainClairDeLuneCrescendanceInfo();
-            }
-        }
-        
-        private void MainConsumeMinuteHand8_Click(object? sender, RoutedEventArgs e)
-        {
-            if (gameState.ClairDeLuneMinuteHand == 8 && gameState.TemporalHarmonyStacks >= 8)
-            {
-                MusicClicker.Armory.WeaponAbilities.ClairMinuteHand8_ConsumeTemporalHarmony(gameState);
-                UpdateMainClairDeLuneCrescendanceInfo();
-            }
-        }
-        
-        private void MainConsumeMinuteHand10_Click(object? sender, RoutedEventArgs e)
-        {
-            if (gameState.ClairDeLuneMinuteHand == 10 && gameState.ClockworkForteStacks > 0)
-            {
-                MusicClicker.Armory.WeaponAbilities.ClairMinuteHand10_ConsumeClockworkForte(gameState);
+                MusicClicker.Armory.WeaponAbilities.ClairConsumeTemporalFracture(gameState);
                 UpdateMainClairDeLuneCrescendanceInfo();
                 UIUpdater.UpdateUI(this, gameState);
             }

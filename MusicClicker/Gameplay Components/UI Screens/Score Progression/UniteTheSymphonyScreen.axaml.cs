@@ -71,6 +71,10 @@ namespace MusicClicker.Views
                 long newOwned = owned - 1;
                 setter(newOwned);
                 AddEntropicMelody(entropicAmount);
+                
+                // Clockwork Finality passive: Double EM from dissolving majors
+                MusicClicker.Armory.WeaponAbilities.ClockworkFinality_OnMajorDissolve(_gameState, entropicAmount);
+                
                 UIUpdater.UpdateUnitySymphonyUIImmediate(_mainWindow, _gameState);
                 return newOwned;
             }

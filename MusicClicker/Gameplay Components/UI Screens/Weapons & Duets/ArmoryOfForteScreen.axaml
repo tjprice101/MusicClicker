@@ -805,7 +805,7 @@
                                 Background="#44000000"
                                 BorderBrush="White"
                                 BorderThickness="2">
-            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/Clockwork'sHarmony.jpg" Stretch="UniformToFill" />
+            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/CelestialHorology.jpg" Stretch="UniformToFill" />
                         </Button>
                         <TextBlock x:Name="ArmoryItem19CostText"
                                    Text="Cost: 10,000,000,000 Notes"
@@ -843,7 +843,7 @@
                                 Background="#44000000"
                                 BorderBrush="White"
                                 BorderThickness="2">
-                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/MetronomicDissonance.jpg" Stretch="UniformToFill" />
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/ClockworkFinality.jpg" Stretch="UniformToFill" />
                         </Button>
                         <TextBlock x:Name="ArmoryItem20CostText"
                                    Text="Cost: 20,000,000,000 Notes"

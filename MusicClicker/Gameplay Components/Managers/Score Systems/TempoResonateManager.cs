@@ -162,8 +162,8 @@ namespace MusicClicker
             {"CacophonicBlizzard", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/CacophonicBlizzard.png"},
             {"TheSnowsDesire", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/TheSnow'sDesire.png"}
         ,
-        {"ClockworksHarmony", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/Clockwork'sHarmony.jpg"},
-        {"MetronomicDissonance", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/MetronomicDissonance.jpg"}
+        {"ClockworksHarmony", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/CelestialHorology.jpg"},
+        {"MetronomicDissonance", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/ClockworkFinality.jpg"}
         };
 
         // Friendly display names for weapons (internal key -> UI string)
@@ -189,7 +189,7 @@ namespace MusicClicker
             {"TheSnowsDesire", "The Snow's Desire"}
         ,
         {"ClockworksHarmony", "Celestial Horology"},
-        {"MetronomicDissonance", "Metronomic Dissonance"}
+        {"MetronomicDissonance", "Clockwork Finality"}
         };
 
         // Cache of already-loaded bitmaps

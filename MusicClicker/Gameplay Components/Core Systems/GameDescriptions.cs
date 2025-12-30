@@ -119,29 +119,24 @@ Crescendance: Petals of Life
 
 ""Time bends and fractures in moonlight's embrace—each broken moment holds infinite possibility.""
 
+Crescendance Passive: Temporal Acceleration
+Your Notes Per Click is permanently increased by (Notes Per Second)^5 while resonating with Clair de Lune.
+
 Crescendance: Clockwork Symphony
-Configure clock hands to shatter time itself. Each position on the clock face grants unique powers over temporal resonance.
+Your clicks resonate with the real-world clock, granting different effects based on the current hour.
 
-HOUR HAND (Main Effects):
-• 12: Every 3rd, 6th, 9th, and 12th click grants 1 Clockwork Forte stack
-• 3: Consume 1 Clockwork Forte for +50% notes and +2% Entropic Melodies
-• 6: Every 6th click grants 1 Temporal Harmony stack
-• 9: Consume 1 Temporal Harmony to empower your next 10 clicks with Era of the Music's Chronos crits
+TIME-BASED CLICK EFFECTS (automatically changes each hour):
+• 12:00-3:00 (AM/PM): Every 12th click grants ×12,000 Notes Per Click bonus notes
+• 3:00-6:00 (AM/PM): Every 6th click grants +1 Shattered Moonlight stack
+• 6:00-9:00 (AM/PM): Every 9th click grants +1 Clockwork of Infinity stack
+• 9:00-12:00 (AM/PM): Every 12th click grants +20% of your current notes
 
-MINUTE HAND (Special Triggers):
-• 1: Gaining Temporal Harmony empowers your next 3 clicks with +1.5% Entropic Melodies each
-• 2: Gaining Clockwork Forte empowers your next 2 clicks to be guaranteed Entropic Crescendo of Eternity crits
-• 4: Whenever you gain Entropic Melodies, increase your current notes by 0.1% per EM gained
-• 5: Consume 3 Clockwork Forte for +5 to all minor scores
-• 7: Consume 20 Clockwork Forte for +1 Clair de Lune and +15% Entropic Melodies
-• 8: Consume 8 Temporal Harmony for +5 to every owned major score
-• 10: Each Clockwork Forte consumed empowers your next click with +(NPC^stacks) notes
-• 11: If NPS > 1 Quintillion, every 12th click grants 1 Glass Forte stack
+CONSUMABLE STACKS:
+• Shattered Moonlight: Consume for +100 Entropic Melodies
+• Clockwork of Infinity: Consume for 5 Infinite Temporality critical hits (NPC^12)
+• Temporal Fracture: Consume for +15% current notes (grants Surge crits if bonded with Clockwork Finality)
 
-CUSTOM STACKS:
-• Resonant Shard: Gained from Hour 12 (every 3rd, 6th, 9th, 12th click); consumed for powerful effects
-• Tempo Fragment: Gained from Hour 6 (every 6th click); consumed for Cadenza Cataclysm and other effects
-• Glass Forte: Gained from Minute 11 (if NPS > 1 Quintillion); used by Weapon 1's Crescendance Bond
+The flow of time itself bends to your will—each hour brings new temporal power.
 ";
         }
 
@@ -321,32 +316,26 @@ Duet: Symphony of Absolute Zero — Freezes NPS for 20 seconds. Each click durin
 
             // Clair de Lune Weapons
             public const string CelestialHorology = @"Celestial Horology
-Passive (on equip):
-Anytime you spend Entropic Melodies, refund 50% of them.
+Passive: Chrono-Entropic Refund
+• Every 5th click grants +3% Entropic Melodies
+• Anytime you spend Entropic Melodies, refund 50% of them
 
-Crescendance Bond:
-Consume 1 stack of Clock of Eternity to give your next 2 clicks a new critical:
-Everlasting Melody of Time's Infinite Symphony
-Gives ((NPS^NPC)/144) notes
+Crescendance Bond: Celestial Convergence
+• Every 5th Shattered Moonlight consumed grants +1 Temporal Fracture stack
 
-Duet: Eternal Crescendo
-12-click sequence with escalating rewards.
-Clicks 1-4 grant fragments, 5-8 grant minor scores, 9-12 grant major scores and notes.
-Completing all 12 clicks doubles all owned minor scores.
-6 minute cooldown.
+Duet: Chain of Temporality
+For 12 seconds, each click doubles your Notes Per Click multiplier (1x → 2x → 4x → 8x...), stacking infinitely during the duration.
 ";
 
-            public const string MetronomicDissonance = @"Metronomic Dissonance
-Passive (on equip):
-Anytime a custom stack is consumed, 10% chance to refund that stack (or stacks if multiple are consumed).
+            public const string MetronomicDissonance = @"Clockwork Finality
+Passive: Temporal Dissolution
+• When dissolving major scores, gain double the Entropic Melodies
 
-Crescendance Bond:
-Every time you gain a stack of Clockwork Forte:
-Gain +12 of 3 random owned minors
-Every time you gain a stack of Temporal Harmony:
-Gain +2 to 5 random owned majors (not including Event/Discordance majors)
+Crescendance Bond: Surge Amplification
+• Consuming Temporal Fracture grants 10 Surge of Time's Fractalization critical hits (NPC^144)
+• Only active when weapon ability is equipped
 
-Duet: Eternal Crescendo
+Duet: Chain of Temporality
 12-click sequence with escalating rewards.
 Clicks 1-4 grant fragments, 5-8 grant minor scores, 9-12 grant major scores and notes.
 Completing all 12 clicks doubles all owned minor scores.
@@ -397,8 +386,8 @@ Completing all 12 clicks doubles all owned minor scores.
             public const string TheSnowsDesire = "Passive: Accelerating Flurry — Every click grants +1% Notes Per Click (max +50%). Decays to 0% after 5 seconds of no clicking. Current bonus displayed in Crescendance panel.\n\nCrescendance Bond: Frigid Resonance — Whenever you gain 1 Frigid Melody stack, gain +1 bonus stack (doubling effect).";
             
             // Clair de Lune
-            public const string CelestialHorology = "Passive: Timeless Echo — Every 15th click grants +5% current notes and +1 random minor score.\n\nCrescendance Bond: Accelerated Celestial — Hour hand on 12 position grants Celestial Forte every 10th click instead of every 12th.";
-            public const string MetronomicDissonance = "Passive: Chrono Shift — Each major craft grants +2 Clockwork Forte per clock hand configured (up to 4 total from both hands).\n\nCrescendance Bond: Temporal Amplification — Minute hand effects that consume stacks grant double rewards.";
+            public const string CelestialHorology = "Passive: Chrono-Entropic Refund — Every 5th click grants +3% Entropic Melodies. Anytime you spend Entropic Melodies, refund 50% of them.\n\nCrescendance Bond: Celestial Convergence — Every 5th Shattered Moonlight consumed grants +1 Temporal Fracture stack.";
+            public const string MetronomicDissonance = "Passive: Temporal Dissolution — When dissolving major scores, gain double the Entropic Melodies.\n\nCrescendance Bond: Surge Amplification — Consuming Temporal Fracture grants 10 Surge of Time's Fractalization critical hits (NPC^144). Only active when weapon ability is equipped.";
         }
 
         // ============================================================
@@ -418,7 +407,7 @@ Completing all 12 clicks doubles all owned minor scores.
                 public const string Enigma = "Enigmatic Puzzle:\nMystery Clicks";
                 public const string Fate = "Threads of Destiny:\nHourglass Reversal";
                 public const string OdeToJoy = "Symphony of Celebration:\nCrescendo Conductor";
-                public const string ClairDeLune = "Clockwork Symphony:\nSymphony of Broken Time";
+                public const string ClairDeLune = "Chain of Temporality";
             }
 
             public static class Full
@@ -432,7 +421,7 @@ Completing all 12 clicks doubles all owned minor scores.
                 public const string Enigma = "Each click triggers 1 random effect:\nRed: 5× Notes Per Second as instant notes | Blue: +10% Notes Per Second boost | Green: +30 Harmonious Fragments | Yellow: +30 Melodious Fragments | Purple: +1 major score per owned type | Orange: +1 minor component per owned minor type | White: +1 to 3 random minor scores | Black: -65% current notes\n\n10 second duration | 30 minute cooldown";
                 public const string Fate = "All actions performed during the first 10 seconds will be replayed during the last 10 seconds at X× effectiveness, where X equals the number of clicks you performed during the first half.\n\nDuration: 20 seconds | Cooldown: 8 minutes";
                 public const string OdeToJoy = "Build 16-note melodies by clicking (repeatable). Every 16 notes resets counter and grants rewards:\n• 4 notes: +25 Melodious and Harmonious Fragments\n• 8 notes: +5 Petals of Harmony\n• 12 notes: +5 Petals of Melody\n• 16 notes: +1 Ode to Life\nOn ability expiry: +3 Entropic Melodies per completed 4-note section\n\n20 second duration | 10 minute cooldown";
-                public const string ClairDeLune = "Symphony of Broken Time:\nEach click advances through a 12-step sequence, granting unique rewards every 4 clicks:\n• Clicks 1-4: Triple current notes\n• Clicks 5-8: +75% Entropic Melodies\n• Clicks 9-12: +5 random minor, then +5 random major\n\nComplete the full 12-click sequence to double all minor scores.\n\nDuration: Until 12 clicks complete | Cooldown: 6 minutes";
+                public const string ClairDeLune = "For 12 seconds, each click doubles your Notes Per Click multiplier (1× → 2× → 4× → 8× → 16×...). The multiplier is applied before calculating notes gained from each click, allowing for exponentially scaling power.\n\n12 second duration | 6 minute cooldown";
             }
 
             public static class Short
@@ -445,7 +434,7 @@ Completing all 12 clicks doubles all owned minor scores.
                 public const string LaCampanella = "Chime Chain: First click creates a chime. Each click within 1 second extends the chain. Chain gives length² × Notes Per Second as instant notes. Chain breaks after 1 second of no clicks - 10 second duration, 10 minute cooldown.";
                 public const string Enigma = "Mystery Clicks: Each click triggers 1 random effect (Red: 5× Notes Per Second notes, Blue: 10% Notes Per Second boost, Green: 30 Harmonious Fragments, Yellow: 30 Melodious Fragments, Purple: +1 major per owned, Orange: +1 minor component per owned, White: +1 to 3 random minors, Black: -65% notes) - 10 second duration, 30 minute cooldown.";
                 public const string Fate = "Hourglass Reversal: All actions during first 10 seconds replay during last 10 seconds at X× effectiveness where X = clicks performed (20 second duration, 8 minute cooldown).";
-                public const string ClairDeLune = "Symphony of Broken Time: 12-click sequence with escalating rewards. Every 4 clicks: triple notes, then +75% Entropic Melodies, then +5 random minor/major. Completing all 12 clicks doubles all minor scores - Cooldown: 6 minutes.";
+                public const string ClairDeLune = "Chain of Temporality: For 12 seconds, each click doubles your Notes Per Click multiplier (1× → 2× → 4× → 8×...), stacking infinitely - 6 minute cooldown.";
                 public const string OdeToJoy = "Crescendo Conductor: Build 16-note melodies (repeatable/stackable). Rewards at 4/8/12/16 notes (+25 fragments, +5 Petals of Harmony, +5 Petals of Melody, +1 Ode to Life). On expiry: +3 Entropic Melodies per completed section - 20 second duration, 10 minute cooldown.";
             }
 

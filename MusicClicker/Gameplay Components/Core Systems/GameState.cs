@@ -12,18 +12,16 @@ namespace MusicClicker
     public class GameState
     {
         // Clair de Lune custom stacks and flags
-        public int ClockworkForteStacks { get; set; } = 0;
-        public int TemporalHarmonyStacks { get; set; } = 0;
-        public int ClockOfEternityStacks { get; set; } = 0;
-        public int ClairDeLuneHourHand { get; set; } = 12;
-        public int ClairDeLuneMinuteHand { get; set; } = 1;
-        public int ClairDeLunePowerSpikePending { get; set; } = 0;
-        public int ClairCadenzaCataclysmClicksRemaining { get; set; } = 0;
-        public int ClairInfinityArpeggioClicksRemaining { get; set; } = 0;
-        public int ClairDeLuneLastClickCount { get; set; } = 0;
-        public int ClairWeapon1CritClicksRemaining { get; set; } = 0;
-        public int ClairSymphonyOfInfinityClicksRemaining { get; set; } = 0;
-        public int ClairDuetEntropicCritClicksRemaining { get; set; } = 0;
+        public int ShatteredMoonlightStacks { get; set; } = 0;
+        public int ClockworkOfInfinityStacks { get; set; } = 0;
+        public int TemporalFractureStacks { get; set; } = 0;
+        public int InfiniteTemporalityCritsRemaining { get; set; } = 0;
+        public int SurgeOfTimeFractalizationCritsRemaining { get; set; } = 0;
+        public int ShatteredMoonlightConsumeCount { get; set; } = 0; // Tracks consumes for Celestial Horology bond
+        public bool DuetChainOfTemporalityActive { get; set; } = false;
+        public DateTime DuetChainOfTemporalityExpiry { get; set; } = DateTime.MinValue;
+        public double DuetChainOfTemporalityNpcMultiplier { get; set; } = 1.0;
+        public int ClairDeLuneClickCounter { get; set; } = 0; // General click counter
         
         // Save format version - keep this field to support future migrations.
         public int SaveVersion = 2;
@@ -274,26 +272,8 @@ namespace MusicClicker
         public int MarsMajorOwned { get => _marsMajorOwned; set => _marsMajorOwned = value; }
 
         // ==================== CLAIR DE LUNE CRESCENDANCE: CLOCKWORK SYMPHONY ====================
-        
-        // Clock Configuration - Hour and Minute hand positions (0-12)
-        // (Removed duplicate definitions; see top of class for these properties)
-        
-        // Click counter for Clair De Lune Crescendance
-        public int ClairDeLuneClickCounter { get; set; } = 0;
-        
-        // Minute Hand 1 effect - next N clicks give entropic melodies
-        public int ClairMinute1EntropicClicksRemaining { get; set; } = 0;
-        
-        // Minute Hand 2 effect - guaranteed Entropic Crescendo crits
-        public int ClairMinute2CritClicksRemaining { get; set; } = 0;
-        
-        // Minute Hand 9 effect - Era of Music's Chronos crits
-        public int ClairEraOfChronosClicksRemaining { get; set; } = 0;
-        
-        // Duet activation state
-        public bool ClairDeLuneDuetActive { get; set; } = false;
-        public DateTime ClairDeLuneDuetCooldownExpiry { get; set; } = DateTime.MinValue;
-        public int ClairDeLuneDuetClickCounter { get; set; } = 0; // Tracks which duet click (1-12)
+        // New time-based system - no hour/minute hands, uses real-world time
+        // Variables already defined at top of class
         
         // Clair De Lune major ability flag
         public bool ClairDeLuneMajorAbility { get; set; } = false;
