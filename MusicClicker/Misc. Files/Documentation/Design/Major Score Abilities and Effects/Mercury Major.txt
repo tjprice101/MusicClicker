@@ -1,0 +1,77 @@
+"Mercury, The Winged Messenger" Major Score
+============================================
+
+CRESCENDANCE ABILITIES:
+
+Ability 1: Herald's Descent
+----------------------------
+• On activate, instantly double your notes and gain 5 stacks of Swift Resonance
+• 15 second cooldown
+
+Ability 2: Resonant Transformation
+------------------------------------
+• On activate, consume 1 stack of Swift Resonance to give 1 stack of Herald's Message and +250 Entropic Melodies.
+
+Ability 3: Symphony's Bounty
+-----------------------------
+• On activate, consume 3 stacks of Herald's Message and gain +X Entropic Melodies and gain +NPS^25 Notes. 
+• X = (number of currently owned minor scores) × 5
+
+CUSTOM STACKS:
+--------------
+• Swift Resonance: Gained from Herald's Descent (5 per activation)
+• Herald's Message: Gained by converting Swift Resonance (1:1 ratio)
+• Planetary Alignment: Gained from Weapon 1 Crescendance Bond
+
+WEAPON 1: Mercurial Overture
+============================
+Passive (on equip):
+• Every 3rd click gives your next click (NPC × NPC + (Entropic Melodies × 1,000)) notes
+
+Crescendance Bond:
+• Every stack of Herald's Message consumed, give one stack of Planetary Alignment
+• Your next 30 clicks gain a new critical "Messenger of Planetary Resonance!!!!"
+• Critical formula: (NPS × 30,000) + (NPC × # of Planetary Alignment stacks)
+
+WEAPON 2: Wing of the Messenger
+============================
+Passive (on equip):
+• Every 50th click gives you +X minor scores to your lowest owned minor score
+• X = (number of Entropic Melodies owned) ÷ 5
+
+Crescendance Bond:
+• Consume Planetary Alignment stacks to give your next 5 clicks a new critical
+• Critical: "A Thousand Winged Symphony for the Universe!!!"
+• Critical formula: NPC^1000
+
+DUET: Celestial Messengers
+===========================
+Choose between 3 different abilities to activate:
+
+Divine Proclamation
+------------------------------
+• Immediately triple your current owned notes
+• Double your current owned Entropic Melodies
+• 3 minute cooldown
+
+Fate's Grand Message
+-------------------------------
+• Consume all stacks of Swift Resonance, Herald's Message, and Planetary Alignment
+• Boost your next 10 clicks with a new critical: "Messenger of Fate's Melody!!!"
+• Critical formula: NPS^(total # of stacks consumed)
+• 8 minute cooldown
+
+Sacrificial Ascension
+--------------------------------
+• Sacrifice 75% of your current notes
+• Gain 3 stacks of Swift Resonance, Herald's Message, and Planetary Alignment each
+• Gain +25 owned to every upgrade in the upgrade menu
+• 5 minute cooldown
+
+DESIGN NOTES:
+=============
+• Mercury theme: Speed, transformation, messages, planetary motion
+• Stack conversion chain: Swift Resonance → Herald's Message → Planetary Alignment
+• Weapon 1 focuses on click crits and stack generation
+• Weapon 2 focuses on minor score growth and powerful burst crits
+• Duet offers strategic choice between immediate power, scaling crits, or long-term investment

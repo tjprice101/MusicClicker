@@ -21,7 +21,7 @@ namespace MusicClicker
         private readonly Border _equippedDisplay;
         private readonly TextBlock _equippedText;
         // Right-side (weapons) UI references
-        private readonly StackPanel? _rightDrawerPanel;
+        private readonly Panel? _rightDrawerPanel;
         private readonly Border? _equippedWeaponDisplay1;
         private readonly TextBlock? _equippedWeaponText1;
         private readonly Border? _equippedWeaponDisplay2;
@@ -116,6 +116,7 @@ namespace MusicClicker
 
         // Ordered list of weapon keys (matches ArmoryOfForte screen order)
         // NOTE: Moonlight weapons requested: Incisor first, then Eulogy.
+        // Order: Base majors -> Event majors -> Mercury -> Clair de Lune -> Mars
         private readonly List<string> _weaponOrder = new()
         {
             "IncisorOfMoonlight",
@@ -136,8 +137,15 @@ namespace MusicClicker
             "HellsWrath",
             "CacophonicBlizzard",
             "TheSnowsDesire",
-            "ClockworksHarmony",
-            "MetronomicDissonance"
+            // Mercury weapons
+            "MercurialOverture",
+            "WingOfTheMessenger",
+            // Clair de Lune weapons
+            "MetronomicDissonance",
+            "CelestialHorology",
+            // Mars weapons
+            "ConsonanceRequiemicWar",
+            "FractalOfWar"
         };
 
         // Mapping of weapon names → image asset paths (Armory of Forte)
@@ -160,10 +168,13 @@ namespace MusicClicker
             {"SevenCircles", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/SevenCircles.png"},
             {"HellsWrath", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/Hell'sWrath.png"},
             {"CacophonicBlizzard", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/CacophonicBlizzard.png"},
-            {"TheSnowsDesire", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/TheSnow'sDesire.png"}
-        ,
-        {"ClockworksHarmony", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/CelestialHorology.jpg"},
-        {"MetronomicDissonance", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/ClockworkFinality.jpg"}
+            {"TheSnowsDesire", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/TheSnow'sDesire.png"},
+            {"MercurialOverture", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/MercurialOverture.jpg"},
+            {"WingOfTheMessenger", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/WingOfTheMessenger.jpg"},
+            {"CelestialHorology", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/CelestialHorology.jpg"},
+            {"MetronomicDissonance", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/ClockworkFinality.jpg"},
+            {"FractalOfWar", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/FractalOfWar.jpg"},
+            {"ConsonanceRequiemicWar", "avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/ConsonancesRequiemicWar.jpg"}
         };
 
         // Friendly display names for weapons (internal key -> UI string)
@@ -186,10 +197,13 @@ namespace MusicClicker
             {"SevenCircles", "Seven Circles"},
             {"HellsWrath", "Hell's Wrath"},
             {"CacophonicBlizzard", "Cacophonic Blizzard"},
-            {"TheSnowsDesire", "The Snow's Desire"}
-        ,
-        {"ClockworksHarmony", "Celestial Horology"},
-        {"MetronomicDissonance", "Clockwork Finality"}
+            {"TheSnowsDesire", "The Snow's Desire"},
+            {"MercurialOverture", "Mercurial Overture"},
+            {"WingOfTheMessenger", "Wing of the Messenger"},
+            {"CelestialHorology", "Celestial Horology"},
+            {"MetronomicDissonance", "Clockwork Finality"},
+            {"FractalOfWar", "Fractal of War"},
+            {"ConsonanceRequiemicWar", "Consonance's Requiemic War"}
         };
 
         // Cache of already-loaded bitmaps
@@ -203,7 +217,7 @@ namespace MusicClicker
         public TempoResonateManager(
             StackPanel leftDrawerPanel, Border equippedDisplay, TextBlock equippedText, GameState gameState,
             Border equipPromptPanel, TextBlock equipPromptText, Button equipYesButton, Button equipNoButton,
-            StackPanel? rightDrawerPanel = null, Border? equippedWeaponDisplay1 = null, TextBlock? equippedWeaponText1 = null,
+            Panel? rightDrawerPanel = null, Border? equippedWeaponDisplay1 = null, TextBlock? equippedWeaponText1 = null,
             Border? equippedWeaponDisplay2 = null, TextBlock? equippedWeaponText2 = null, TextBlock? duetResonanceText = null,
             TempoResonateScreen? screen = null)
         {
@@ -439,7 +453,6 @@ namespace MusicClicker
             if (_rightDrawerPanel == null) return;
 
             _rightDrawerPanel.Children.Clear();
-            _rightDrawerPanel.Orientation = Avalonia.Layout.Orientation.Vertical;
             
             // If already initialized and images are cached, reuse them
             if (_drawersInitialized && _weaponImageCache.Count > 0)
@@ -547,6 +560,15 @@ namespace MusicClicker
                 "HellsWrath" => _gameState.HellsWrath,
                 "CacophonicBlizzard" => _gameState.CacophonicBlizzard,
                 "TheSnowsDesire" => _gameState.TheSnowsDesire,
+                // Mercury weapons
+                "MercurialOverture" => _gameState.MercurialOverture,
+                "WingOfTheMessenger" => _gameState.WingOfTheMessenger,
+                // Clair de Lune weapons
+                "MetronomicDissonance" => _gameState.MetronomicDissonance,
+                "CelestialHorology" => _gameState.CelestialHorology,
+                // Mars weapons
+                "ConsonanceRequiemicWar" => _gameState.ConsonanceRequiemicWar,
+                "FractalOfWar" => _gameState.FractalOfWar,
                 _ => false
             };
         }
@@ -624,6 +646,15 @@ namespace MusicClicker
                 case "HellsWrath": _gameState.HellsWrathAbility = true; break;
                 case "CacophonicBlizzard": _gameState.CacophonicBlizzardAbility = true; break;
                 case "TheSnowsDesire": _gameState.TheSnowsDesireAbility = true; break;
+                // Mercury weapons
+                case "MercurialOverture": _gameState.MercurialOvertureAbility = true; break;
+                case "WingOfTheMessenger": _gameState.WingOfTheMessengerAbility = true; break;
+                // Clair de Lune weapons
+                case "MetronomicDissonance": _gameState.MetronomicDissonanceAbility = true; break;
+                case "CelestialHorology": _gameState.CelestialHorologyAbility = true; break;
+                // Mars weapons
+                case "ConsonanceRequiemicWar": _gameState.ConsonanceRequiemicWarAbility = true; break;
+                case "FractalOfWar": _gameState.FractalOfWarAbility = true; break;
             }
 
             // Update duet resonance text
@@ -672,6 +703,15 @@ namespace MusicClicker
                 case "HellsWrath": _gameState.HellsWrathAbility = false; break;
                 case "CacophonicBlizzard": _gameState.CacophonicBlizzardAbility = false; break;
                 case "TheSnowsDesire": _gameState.TheSnowsDesireAbility = false; break;
+                // Mercury weapons
+                case "MercurialOverture": _gameState.MercurialOvertureAbility = false; break;
+                case "WingOfTheMessenger": _gameState.WingOfTheMessengerAbility = false; break;
+                // Clair de Lune weapons
+                case "MetronomicDissonance": _gameState.MetronomicDissonanceAbility = false; break;
+                case "CelestialHorology": _gameState.CelestialHorologyAbility = false; break;
+                // Mars weapons
+                case "ConsonanceRequiemicWar": _gameState.ConsonanceRequiemicWarAbility = false; break;
+                case "FractalOfWar": _gameState.FractalOfWarAbility = false; break;
             }
 
             if (slot == 1)
@@ -775,13 +815,78 @@ namespace MusicClicker
 
         private string GetDuetText(string weapon1, string weapon2)
         {
-            // Clair de lune Duet: ClockworksHarmony + MetronomicDissonance
-            if ((weapon1 == "ClockworksHarmony" && weapon2 == "MetronomicDissonance") ||
-                (weapon1 == "MetronomicDissonance" && weapon2 == "ClockworksHarmony"))
+            // Moonlight Duet (Lunar Phases)
+            if ((weapon1 == "IncisorOfMoonlight" && weapon2 == "EulogyOfTheMoon") ||
+                (weapon1 == "EulogyOfTheMoon" && weapon2 == "IncisorOfMoonlight"))
             {
-                return DuetDescriptions.Compact.ClairDeLune;
+                return $"Duet Resonance: {DuetDescriptions.Names.Moonlight}\n{DuetDescriptions.Compact.Moonlight}";
             }
-            // (Other duets can be added here as needed)
+            // Dies Irae Duet (Infernal Symphony)
+            if ((weapon1 == "SevenCircles" && weapon2 == "HellsWrath") ||
+                (weapon1 == "HellsWrath" && weapon2 == "SevenCircles"))
+            {
+                return $"Duet Resonance: {DuetDescriptions.Names.DiesIrae}\n{DuetDescriptions.Compact.DiesIrae}";
+            }
+            // Winter Duet (Symphony of Absolute Zero)
+            if ((weapon1 == "CacophonicBlizzard" && weapon2 == "TheSnowsDesire") ||
+                (weapon1 == "TheSnowsDesire" && weapon2 == "CacophonicBlizzard"))
+            {
+                return $"Duet Resonance: {DuetDescriptions.Names.Winter}\n{DuetDescriptions.Compact.Winter}";
+            }
+            // Eroica Duet (Victory March)
+            if ((weapon1 == "SakurasBlossom" && weapon2 == "FuneralPrayer") ||
+                (weapon1 == "FuneralPrayer" && weapon2 == "SakurasBlossom"))
+            {
+                return $"Duet Resonance: {DuetDescriptions.Names.Eroica}\n{DuetDescriptions.Compact.Eroica}";
+            }
+            // Swan Lake Duet (Feather Cascade)
+            if ((weapon1 == "StarScatteredWings" && weapon2 == "ThousandWingedSwan") ||
+                (weapon1 == "ThousandWingedSwan" && weapon2 == "StarScatteredWings"))
+            {
+                return $"Duet Resonance: {DuetDescriptions.Names.SwanLake}\n{DuetDescriptions.Compact.SwanLake}";
+            }
+            // La Campanella Duet (Chime Chain)
+            if ((weapon1 == "SymphonyOfBells" && weapon2 == "RazerOfBellsChimes") ||
+                (weapon1 == "RazerOfBellsChimes" && weapon2 == "SymphonyOfBells"))
+            {
+                return $"Duet Resonance: {DuetDescriptions.Names.LaCampanella}\n{DuetDescriptions.Compact.LaCampanella}";
+            }
+            // Enigma Duet (Mystery Clicks)
+            if ((weapon1 == "CreatorOfMystery" && weapon2 == "Truthseeker") ||
+                (weapon1 == "Truthseeker" && weapon2 == "CreatorOfMystery"))
+            {
+                return $"Duet Resonance: {DuetDescriptions.Names.Enigma}\n{DuetDescriptions.Compact.Enigma}";
+            }
+            // Fate Duet (Hourglass Reversal)
+            if ((weapon1 == "AstralChainripper" && weapon2 == "CosmicWeaver") ||
+                (weapon1 == "CosmicWeaver" && weapon2 == "AstralChainripper"))
+            {
+                return $"Duet Resonance: {DuetDescriptions.Names.Fate}\n{DuetDescriptions.Compact.Fate}";
+            }
+            // Ode to Joy Duet (Crescendo Conductor)
+            if ((weapon1 == "JoyfulCatharsis" && weapon2 == "OdeToCreation") ||
+                (weapon1 == "OdeToCreation" && weapon2 == "JoyfulCatharsis"))
+            {
+                return $"Duet Resonance: {DuetDescriptions.Names.OdeToJoy}\n{DuetDescriptions.Compact.OdeToJoy}";
+            }
+            // Mercury Duet (Celestial Messengers)
+            if ((weapon1 == "MercurialOverture" && weapon2 == "WingOfTheMessenger") ||
+                (weapon1 == "WingOfTheMessenger" && weapon2 == "MercurialOverture"))
+            {
+                return $"Duet Resonance: {DuetDescriptions.Names.Mercury}\n{DuetDescriptions.Compact.Mercury}";
+            }
+            // Clair de Lune Duet (Chain of Temporality)
+            if ((weapon1 == "MetronomicDissonance" && weapon2 == "CelestialHorology") ||
+                (weapon1 == "CelestialHorology" && weapon2 == "MetronomicDissonance"))
+            {
+                return $"Duet Resonance: {DuetDescriptions.Names.ClairDeLune}\n{DuetDescriptions.Compact.ClairDeLune}";
+            }
+            // Mars Duet (Annihilation Nocturne)
+            if ((weapon1 == "ConsonanceRequiemicWar" && weapon2 == "FractalOfWar") ||
+                (weapon1 == "FractalOfWar" && weapon2 == "ConsonanceRequiemicWar"))
+            {
+                return $"Duet Resonance: {DuetDescriptions.Names.Mars}\n{DuetDescriptions.Compact.Mars}";
+            }
             return "";
         }
 
@@ -946,6 +1051,8 @@ namespace MusicClicker
             _gameState.OdeToJoyMajorAbility = false;
             _gameState.WinterAbility = false;
             _gameState.ClairDeLuneMajorAbility = false;
+            _gameState.MercuryMajorAbility = false;
+            _gameState.MarsMajorAbility = false;
 
             // Enable the selected ability
             switch (scoreName)
@@ -959,6 +1066,8 @@ namespace MusicClicker
                 case "OdeToJoy": _gameState.OdeToJoyMajorAbility = true; break;
                 case "Winter": _gameState.WinterAbility = true; break;
                 case "ClairDeLune": _gameState.ClairDeLuneMajorAbility = true; break;
+                case "Mercury": _gameState.MercuryMajorAbility = true; break;
+                case "Mars": _gameState.MarsMajorAbility = true; break;
             }
 
             // Save to GameState
@@ -971,6 +1080,7 @@ namespace MusicClicker
             UpdateThemeColors();
 
             // Show a small floating confirmation via MainWindow (if available)
+            // and regenerate major score visual effects
             try
             {
                 if (_screen != null)
@@ -981,6 +1091,9 @@ namespace MusicClicker
                     {
                         var center = new Avalonia.Point(mw.Bounds.Width / 2, mw.Bounds.Height / 2);
                         mw.ShowFloatingText(center, $"Resonated: {GetScoreDisplayName(scoreName)}", Avalonia.Media.Color.Parse("#FFFF69B4"));
+                        
+                        // Regenerate visual effects for the newly equipped score (random each time)
+                        mw.RegenerateMajorScoreEffects();
                     }
                 }
             }
@@ -1032,6 +1145,7 @@ namespace MusicClicker
             // Update UI theme to default colors
             UpdateThemeColors();
 
+            // Clear visual effects and show unequip message
             try
             {
                 if (_screen != null)
@@ -1042,6 +1156,9 @@ namespace MusicClicker
                     {
                         var center = new Avalonia.Point(mw.Bounds.Width / 2, mw.Bounds.Height / 2);
                         mw.ShowFloatingText(center, "Resonance Disabled", Avalonia.Media.Color.Parse("#FFAAAAAA"));
+                        
+                        // Clear all major score visual effects
+                        mw.RegenerateMajorScoreEffects();
                     }
                 }
             }
@@ -1092,6 +1209,15 @@ namespace MusicClicker
                 "HellsWrath" => "Hell's Wrath",
                 "CacophonicBlizzard" => "Cacophonic Blizzard",
                 "TheSnowsDesire" => "The Snow's Desire",
+                // Mercury weapons
+                "MercurialOverture" => "Mercurial Overture",
+                "WingOfTheMessenger" => "Wing of the Messenger",
+                // Clair de Lune weapons
+                "MetronomicDissonance" => "Clockwork Finality",
+                "CelestialHorology" => "Celestial Horology",
+                // Mars weapons
+                "ConsonanceRequiemicWar" => "Consonance's Requiemic War",
+                "FractalOfWar" => "Fractal of War",
                 _ => internalName
             };
         }

@@ -32,62 +32,124 @@
                 <StackPanel Spacing="30" HorizontalAlignment="Center">
                 <!-- Row 1 - Default & Custom BG 1 -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
-                    <Button x:Name="BackgroundOption1" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2">
-                        <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/sacredtrevor_A_grand_musical_city_lights_everywhere_popular_shi_d84ff662-c87b-4630-9887-25228f42097b-min.png" Stretch="UniformToFill" />
-                    </Button>
-                    <Button x:Name="BackgroundOption2" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2">
-                        <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/CustomBG1.png" Stretch="UniformToFill" />
-                    </Button>
+                    <StackPanel>
+                        <Button x:Name="BackgroundOption1" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/sacredtrevor_A_grand_musical_city_lights_everywhere_popular_shi_d84ff662-c87b-4630-9887-25228f42097b-min.png" Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="BackgroundText1" Text="(Click to restore to default)" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                    </StackPanel>
+                    <StackPanel>
+                        <Button x:Name="BackgroundOption2" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/CustomBG1.png" Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="BackgroundText2" Text="Custom Background 1" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                    </StackPanel>
                 </StackPanel>
 
                 <!-- Row 2 - Custom BG 2 & Moonlight -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
-                    <Button x:Name="BackgroundOption3" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2">
-                        <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/CustomBG2.png" Stretch="UniformToFill" />
-                    </Button>
-                    <Button x:Name="BackgroundOption4" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2">
-                        <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Customization Backgrounds/MoonlightCUSTOMBG.jpg" Stretch="UniformToFill" />
-                    </Button>
+                    <StackPanel>
+                        <Button x:Name="BackgroundOption3" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/CustomBG2.png" Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="BackgroundText3" Text="Custom Background 2" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                    </StackPanel>
+                    <StackPanel>
+                        <Button x:Name="BackgroundOption4" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Customization Backgrounds/MoonlightCUSTOMBG.jpg" Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="BackgroundText4" Text="Requires Moonlight Sonata Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                    </StackPanel>
                 </StackPanel>
 
                 <!-- Row 3 - Eroica & Swan Lake -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
-                    <Button x:Name="BackgroundOption5" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2">
-                        <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Customization Backgrounds/EroicaCUSTOMBG.jpg" Stretch="UniformToFill" />
-                    </Button>
-                    <Button x:Name="BackgroundOption6" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2">
-                        <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Customization Backgrounds/SwanLakeCUSTOMBG.jpg" Stretch="UniformToFill" />
-                    </Button>
+                    <StackPanel>
+                        <Button x:Name="BackgroundOption5" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Customization Backgrounds/EroicaCUSTOMBG.jpg" Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="BackgroundText5" Text="Requires Eroica Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                    </StackPanel>
+                    <StackPanel>
+                        <Button x:Name="BackgroundOption6" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Customization Backgrounds/SwanLakeCUSTOMBG.jpg" Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="BackgroundText6" Text="Requires Swan Lake Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                    </StackPanel>
                 </StackPanel>
 
                 <!-- Row 4 - La Campanella & Enigma -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
-                    <Button x:Name="BackgroundOption7" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2">
-                        <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Customization Backgrounds/LaCampanellaCUSTOMBG.jpg" Stretch="UniformToFill" />
-                    </Button>
-                    <Button x:Name="BackgroundOption8" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2">
-                        <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Customization Backgrounds/EnigmaCUSTOMBG.jpg" Stretch="UniformToFill" />
-                    </Button>
+                    <StackPanel>
+                        <Button x:Name="BackgroundOption7" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Customization Backgrounds/LaCampanellaCUSTOMBG.jpg" Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="BackgroundText7" Text="Requires La Campanella Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                    </StackPanel>
+                    <StackPanel>
+                        <Button x:Name="BackgroundOption8" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Customization Backgrounds/EnigmaCUSTOMBG.jpg" Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="BackgroundText8" Text="Requires Enigma Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                    </StackPanel>
                 </StackPanel>
 
                 <!-- Row 5 - Fate & Ode to Joy -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
-                    <Button x:Name="BackgroundOption9" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2">
-                        <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Customization Backgrounds/FateCUSTOMBG.jpg" Stretch="UniformToFill" />
-                    </Button>
-                    <Button x:Name="BackgroundOption10" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2">
-                        <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Customization Backgrounds/OdeToJoyCUSTOMBG.jpg" Stretch="UniformToFill" />
-                    </Button>
+                    <StackPanel>
+                        <Button x:Name="BackgroundOption9" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Customization Backgrounds/FateCUSTOMBG.jpg" Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="BackgroundText9" Text="Requires Fate Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                    </StackPanel>
+                    <StackPanel>
+                        <Button x:Name="BackgroundOption10" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Customization Backgrounds/OdeToJoyCUSTOMBG.jpg" Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="BackgroundText10" Text="Requires Ode to Joy Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                    </StackPanel>
                 </StackPanel>
 
                 <!-- Row 6 - Dies Irae & Winter -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
-                    <Button x:Name="BackgroundOption11" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2">
-                        <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Customization Backgrounds/DiesIraeCUSTOMBG.jpg" Stretch="UniformToFill" />
-                    </Button>
-                    <Button x:Name="BackgroundOption12" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2">
-                        <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Customization Backgrounds/WinterCUSTOMBG.jpg" Stretch="UniformToFill" />
-                    </Button>
+                    <StackPanel>
+                        <Button x:Name="BackgroundOption11" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Customization Backgrounds/DiesIraeCUSTOMBG.jpg" Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="BackgroundText11" Text="Requires Dies Irae Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                    </StackPanel>
+                    <StackPanel>
+                        <Button x:Name="BackgroundOption12" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Customization Backgrounds/WinterCUSTOMBG.jpg" Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="BackgroundText12" Text="Requires Winter Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- Row 7 - Mercury & Clair de Lune -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
+                    <StackPanel>
+                        <Button x:Name="BackgroundOption13" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Customization Backgrounds/MercuryCustomBG.jpg" Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="BackgroundText13" Text="Requires Mercury Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                    </StackPanel>
+                    <StackPanel>
+                        <Button x:Name="BackgroundOption14" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Customization Backgrounds/ClairDeLuneCustomBG.jpg" Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="BackgroundText14" Text="Requires Clair de Lune Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- Row 8 - Mars -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
+                    <StackPanel>
+                        <Button x:Name="BackgroundOption15" Width="640" Height="360" Background="Black" BorderBrush="White" BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Customization Backgrounds/MarsCustomBG.jpg" Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="BackgroundText15" Text="Requires Mars Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                    </StackPanel>
                 </StackPanel>
 
                 </StackPanel>

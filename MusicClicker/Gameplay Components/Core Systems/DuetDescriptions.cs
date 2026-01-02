@@ -17,6 +17,9 @@ namespace MusicClicker
             public static string Enigma => GameDescriptions.Duets.Names.Enigma;
             public static string Fate => GameDescriptions.Duets.Names.Fate;
             public static string OdeToJoy => GameDescriptions.Duets.Names.OdeToJoy;
+            public static string ClairDeLune => GameDescriptions.Duets.Names.ClairDeLune;
+            public static string Mercury => GameDescriptions.Duets.Names.Mercury;
+            public static string Mars => GameDescriptions.Duets.Names.Mars;
         }
 
         public static class Full
@@ -30,6 +33,9 @@ namespace MusicClicker
             public static string Enigma => GameDescriptions.Duets.Full.Enigma;
             public static string Fate => GameDescriptions.Duets.Full.Fate;
             public static string OdeToJoy => GameDescriptions.Duets.Full.OdeToJoy;
+            public static string ClairDeLune => GameDescriptions.Duets.Full.ClairDeLune;
+            public static string Mercury => GameDescriptions.Duets.Full.Mercury;
+            public static string Mars => GameDescriptions.Duets.Full.Mars;
         }
 
         public static class Compact
@@ -43,7 +49,9 @@ namespace MusicClicker
             public static string Enigma => GameDescriptions.Duets.Short.Enigma;
             public static string Fate => GameDescriptions.Duets.Short.Fate;
             public static string OdeToJoy => GameDescriptions.Duets.Short.OdeToJoy;
+            public static string Mercury => GameDescriptions.Duets.Short.Mercury;
             public static string ClairDeLune => GameDescriptions.Duets.Short.ClairDeLune;
+            public static string Mars => GameDescriptions.Duets.Short.Mars;
         }
 
         public static class Short
@@ -57,6 +65,9 @@ namespace MusicClicker
             public static string Enigma => GameDescriptions.Duets.Short.Enigma;
             public static string Fate => GameDescriptions.Duets.Short.Fate;
             public static string OdeToJoy => GameDescriptions.Duets.Short.OdeToJoy;
+            public static string Mercury => GameDescriptions.Duets.Short.Mercury;
+            public static string ClairDeLune => GameDescriptions.Duets.Short.ClairDeLune;
+            public static string Mars => GameDescriptions.Duets.Short.Mars;
         }
 
         public static class Duration
@@ -69,6 +80,9 @@ namespace MusicClicker
             public static int Enigma => GameDescriptions.Duets.Duration.Enigma;
             public static int Fate => GameDescriptions.Duets.Duration.Fate;
             public static int OdeToJoy => GameDescriptions.Duets.Duration.OdeToJoy;
+            public static int ClairDeLune => GameDescriptions.Duets.Duration.ClairDeLune;
+            public static int Mercury => GameDescriptions.Duets.Duration.Mercury;
+            public static int Mars => GameDescriptions.Duets.Duration.Mars;
         }
 
         public static class Cooldown
@@ -82,6 +96,9 @@ namespace MusicClicker
             public static int Enigma => GameDescriptions.Duets.Cooldown.Enigma;
             public static int Fate => GameDescriptions.Duets.Cooldown.Fate;
             public static int OdeToJoy => GameDescriptions.Duets.Cooldown.OdeToJoy;
+            public static int ClairDeLune => GameDescriptions.Duets.Cooldown.ClairDeLune;
+            public static int Mercury => GameDescriptions.Duets.Cooldown.Mercury;
+            public static int Mars => GameDescriptions.Duets.Cooldown.Mars;
         }
     }
 }

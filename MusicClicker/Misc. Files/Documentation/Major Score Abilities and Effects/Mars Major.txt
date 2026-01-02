@@ -1,0 +1,164 @@
+===========================================
+MARS MAJOR - BLADE OF SYMPHONIC WAR
+===========================================
+
+CRESCENDANCE ABILITY: Blade of Symphonic War
+-------------------------------------------
+- Every click charges the Blade by 1%
+- At 100% charge: Blade continues charging up to 300%
+- Above 100%: Each 1% charge generates 1 Resolute Fractal stack
+- Maximum charge: 300% (generates 200 Resolute Fractal stacks total)
+
+RESOLUTE FRACTAL CONSUMPTION:
+- Cost: 1 Resolute Fractal
+- Effect: Quintuple current notes (5× multiplier)
+- SPECIAL: Every 5th consumption grants 20 "Infinite War of Harmony!!" critical hits
+- Triggers Consonance's Requiemic War bond (see below)
+
+INFINITE WAR OF HARMONY CRITS:
+- Granted: 20 crits every 5 Resolute Fractal consumed
+- Formula: NPC × (Blade charge %)
+- Visual: Deep red text with black outline, intense screen shake
+- Special Effect: Each crit grants +1 Oblivion's Destruction stack (if Fractal of War is equipped)
+- BLADE DEPLETION: After all Infinite War crits are spent, blade charge resets to 0%
+
+OBLIVION'S DESTRUCTION CONSUMPTION:
+- Cost: 5 Oblivion's Destruction stacks
+- Effect: +30 to ALL owned minor and major scores
+- Triggers Consonance's Requiemic War bond (see below)
+
+===========================================
+WEAPON 1: FRACTAL OF WAR
+===========================================
+
+PASSIVE ABILITY: Recursive Devastation
+-------------------------------------------
+- Every 25th click triggers:
+  • Doubles Entropic Melodies (EM × 2)
+  • Grants +10 to ALL 8 upgrades (Chord, Scale, Orchestra, Symphony, Aria, Requiem, Opus, Magnum Opus)
+
+BOND ABILITY: Fractal Armament
+-------------------------------------------
+- Effect: Each "Infinite War of Harmony!!" critical hit grants +1 Oblivion's Destruction stack
+- Synergy: Enables powerful score boosting via Oblivion's Destruction consumption
+
+===========================================
+WEAPON 2: CONSONANCE'S REQUIEMIC WAR
+===========================================
+
+PASSIVE ABILITY: Requiem's Crescendo
+-------------------------------------------
+- Triggers when ANY upgrade is purchased
+- Effect: +5% current notes
+- Scales multiplicatively with frequent upgrade purchases
+
+BOND ABILITY: Requiemic Resonance
+-------------------------------------------
+- Triggers when consuming Resolute Fractal OR Oblivion's Destruction
+- Effect: Next 3 clicks receive NPC^1.56 bonus
+- Visual: "Requiemic Resonance!!!" in firebrick red with black outline
+
+===========================================
+DUET ABILITY: ANNIHILATION NOCTURNE
+===========================================
+
+EFFECT:
+- Duration: 12 seconds
+- Every click during the duration is an "Annihilation Nocturne" critical that grants:
+  • Bonus notes equal to NPC^(NPC/NPS)
+  • +2 to ALL owned major scores per click
+- Fully charges Blade to 300% (instantly grants 200 Resolute Fractal stacks)
+- Quadruple Resolute Fractal generation during duet (4 stacks per click)
+
+VISUAL:
+- "Annihilation Nocturne!!!" text in black with deep red outline
+- Heavy screen shake effect
+- Flame overlay borders the screen during active duet
+
+COOLDOWN: 600 seconds (10 minutes)
+
+STRATEGIC USE:
+- Best used when Blade is empty to maximize the instant 300% charge
+- Click rapidly during the 12-second window for massive note gains
+- Each click boosts ALL owned major scores, making this a powerful late-game ability
+- Combine with weapon passives for maximum effectiveness
+
+===========================================
+CONSUME ALL & MERGE ALL BUTTONS
+===========================================
+
+CONSUME ALL (Resolute Fractals):
+- Requires: 5+ Resolute Fractal stacks
+- Effect: Consumes ALL stacks in groups of 5
+  • Each group of 5 quintuples notes and grants 5 Infinite War crits
+  • Leftover stacks (less than 5) are preserved
+- Example: 23 stacks → 4 consumptions (20 stacks used), 3 remaining
+
+MERGE ALL (Infinite War Criticals):
+- Requires: 2+ Infinite War critical hits stored
+- Effect: Combines ALL stored Infinite War crits into one mega-critical
+- Result: "Pyroclastic Harmony of War's Eternal Rage!!!" critical hit
+  • Formula: NPC^(number of crits merged)
+  • Visual: Black and red shimmering text with white shadow
+- Example: 15 crits merged → NPC^15 bonus damage
+
+===========================================
+SYNERGY OVERVIEW
+===========================================
+
+BLADE CHARGING LOOP:
+1. Click to charge Blade from 0% → 300%
+2. Generate 200 Resolute Fractal stacks during charging
+3. Consume Resolute Fractals for 5× notes (every 5th gives 20 Infinite War crits)
+4. Infinite War crits generate Oblivion's Destruction (Fractal of War bond)
+5. After Infinite War crits end, Blade depletes to 0%
+6. Repeat
+
+WEAPON SYNERGIES:
+- Fractal of War: Every 25 clicks → Double EM + +10 all upgrades
+  → Builds Oblivion's Destruction via Infinite War crits
+- Consonance's Requiemic War: Every upgrade purchase → +5% notes
+  → Every Resolute Fractal/Oblivion consumption → 3 clicks with NPC^1.56
+
+DUET SYNERGY:
+- Annihilation Nocturne instantly maxes Blade → 200 stacks
+- Duration: 12 seconds of NPC^(NPC/NPS) clicks
+- Each click grants +2 to ALL owned major scores
+- Quadruple generation during duet → massive additional stacks
+- Use "Consume All" to quickly process all Resolute Fractal stacks
+- Use "Merge All" to combine Infinite War crits into Pyroclastic Harmony
+
+OPTIMAL ROTATION:
+1. Use Fractal of War to build upgrades and EM
+2. Use Consonance to gain notes from upgrade purchases
+3. Charge Blade naturally through clicking
+4. Consume Resolute Fractals to quintuple notes (or use Consume All)
+5. Every 5th consumption triggers Infinite War sequence
+6. Use "Merge All" for massive Pyroclastic Harmony damage
+7. Use Oblivion's Destruction for major score boosts
+8. Activate Annihilation Nocturne when Blade is depleted for massive reset
+
+===========================================
+DESIGN PHILOSOPHY
+===========================================
+
+BLADE OF SYMPHONIC WAR represents a **charging crescendo system**:
+- Gradual buildup (0-300% charge)
+- Explosive payoff (Infinite War crits)
+- Strategic depletion (blade resets after crits)
+- Cyclical gameplay (charge → discharge → repeat)
+
+The design emphasizes:
+- RHYTHM: 25-click weapon passive intervals
+- RESONANCE: 5th consumption triggers special effects
+- CRESCENDO: Building to Infinite War climax
+- RESET: Blade depletion forces strategic timing
+
+Musical Themes:
+- "Blade" = Sharp, decisive musical strikes
+- "Symphonic War" = Orchestrated conflict and harmony
+- "Resolute Fractal" = Repeating patterns that build intensity
+- "Infinite War of Harmony" = Endless musical battle reaching peak intensity
+- "Annihilation Nocturne" = Night song of destruction
+- "Consonance" = Harmonious intervals and resolution
+- "Oblivion's Destruction" = Ultimate dissolution into musical chaos

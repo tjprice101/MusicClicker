@@ -27,10 +27,33 @@
             <Setter Property="FontFamily" Value="avares://MusicClicker/Fonts/Playfair_Display,Roboto_Condensed/Roboto_Condensed/static/RobotoCondensed-Regular.ttf#Roboto Condensed" />
         </Style>
 
-        <!-- Global Button style: add drop shadow effect to all buttons -->
+        <!-- Global Button style: drop shadow + snappy shrink animation on hover -->
         <Style Selector="Button">
             <Setter Property="Effect">
                 <DropShadowEffect Color="Black" BlurRadius="10" Opacity="0.7" OffsetX="0" OffsetY="0" />
+            </Setter>
+            <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
+            <Setter Property="RenderTransform">
+                <ScaleTransform ScaleX="1" ScaleY="1" />
+            </Setter>
+            <Setter Property="Transitions">
+                <Transitions>
+                    <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.1" Easing="CubicEaseOut" />
+                </Transitions>
+            </Setter>
+        </Style>
+        
+        <!-- Button hover state: shrink to 90% -->
+        <Style Selector="Button:pointerover">
+            <Setter Property="RenderTransform">
+                <ScaleTransform ScaleX="0.92" ScaleY="0.92" />
+            </Setter>
+        </Style>
+        
+        <!-- Button pressed state: shrink slightly more -->
+        <Style Selector="Button:pressed">
+            <Setter Property="RenderTransform">
+                <ScaleTransform ScaleX="0.88" ScaleY="0.88" />
             </Setter>
         </Style>
 

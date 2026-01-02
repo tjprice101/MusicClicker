@@ -138,6 +138,48 @@ CONSUMABLE STACKS:
 
 The flow of time itself bends to your will—each hour brings new temporal power.
 ";
+
+            public const string Mercury = @"Mercury: The Winged Messenger
+
+""Swift as thought, bearing fate's proclamations across the cosmos.""
+
+Crescendance: Herald of Fate
+Passively gain 1 Swift Resonance every 5 clicks.
+
+ABILITIES:
+• Herald's Descent: Double your current notes and gain 5 Swift Resonance (15s cooldown)
+• Resonant Transformation: Convert 1 Swift Resonance → 1 Herald's Message + 250 Entropic Melodies
+• Symphony's Bounty: Consume 3 Herald's Message for (minors × 5) Entropic Melodies + NPS^25 notes
+
+CUSTOM STACKS:
+• Swift Resonance: Gained passively from clicks and Herald's Descent
+• Herald's Message: Transformed from Swift Resonance, consumed for massive rewards
+• Planetary Alignment: Gained from weapon bonds, grants powerful critical hits
+
+Transform speed into power—let the messenger's swiftness guide your ascension.
+";
+
+            public const string Mars = @"Mars, Bringer of War
+
+""The blade sings with each strike—a symphony of war echoing through eternity.""
+
+Crescendance: Blade of Symphonic War
+• Every click: charge Blade by 1% (0-300% max)
+• At 100%+: each 1% charge generates 1 Resolute Fractal stack
+• Quadruple charge rate during Annihilation Nocturne duet
+
+STACK CONVERSIONS:
+• Consume 1 Resolute Fractal → Quintuple current notes (5× multiplier)
+  - Every 5th consumption: grants 20 'Infinite War of Harmony!!!' critical hits
+  - Critical Formula: NPC × (Blade charge %)
+  - After all Infinite War crits end: Blade fully depletes to 0%
+• Consume 5 Oblivion's Destruction → +30 to ALL owned minor scores
+
+CUSTOM STACKS:
+• Blade Charge: 0-300%, generates Resolute Fractal above 100%
+• Resolute Fractal: Consume for 5× notes, every 5th triggers Infinite War
+• Oblivion's Destruction: From Fractal of War bond (each Infinite War crit)
+• Infinite War of Harmony: 20 crits granted every 5 Resolute Fractal consumed";
         }
 
         // ============================================================
@@ -324,7 +366,7 @@ Crescendance Bond: Celestial Convergence
 • Every 5th Shattered Moonlight consumed grants +1 Temporal Fracture stack
 
 Duet: Chain of Temporality
-For 12 seconds, each click doubles your Notes Per Click multiplier (1x → 2x → 4x → 8x...), stacking infinitely during the duration.
+For 12 seconds, each click doubles your Notes Per Click multiplier (1× → 2× → 4× → 8×...), stacking infinitely. 30 min cooldown.
 ";
 
             public const string MetronomicDissonance = @"Clockwork Finality
@@ -336,11 +378,42 @@ Crescendance Bond: Surge Amplification
 • Only active when weapon ability is equipped
 
 Duet: Chain of Temporality
-12-click sequence with escalating rewards.
-Clicks 1-4 grant fragments, 5-8 grant minor scores, 9-12 grant major scores and notes.
-Completing all 12 clicks doubles all owned minor scores.
-6 minute cooldown.
+For 12 seconds, each click doubles your Notes Per Click multiplier (1× → 2× → 4× → 8×...), stacking infinitely. 30 min cooldown.
 ";
+
+            // Mercury Weapons
+            public const string MercurialOverture = @"Mercurial Overture
+
+Passive: Mercurial Strike — Every 3rd click grants bonus notes equal to (NPC × NPC) + (Entropic Melodies × 1,000).
+
+Crescendance Bond: Planetary Resonance — Every Herald's Message consumed grants +1 Planetary Alignment stack and your next 5 clicks become Messenger of Planetary Resonance crits: (NPS × 5,000) + (NPC × log₁₀(NPC+1)⁸ × Planetary Alignment stacks).
+
+Duet: Swift Delivery — Activate Mercury's Haste for 30 seconds. Every click grants +1 Swift Resonance and deals (NPC × NPS × log₁₀(NPC+1)^stacks) crit damage. Ends with NPS×stacks bonus. 3 min cooldown.";
+
+            public const string WingOfTheMessenger = @"Wing of the Messenger
+
+Passive: Messenger's Gift — Every 50th click grants (Entropic Melodies ÷ 5) to your lowest owned minor score.
+
+Crescendance Bond: A Thousand Wings — Consume Planetary Alignment stacks to grant your next 5 clicks the critical 'A Thousand Winged Symphony for the Universe!!!' (NPC × NPS × log₁₀(NPC+1)^20 × stacks).
+
+Duet: Swift Delivery — Activate Mercury's Haste for 30 seconds. Every click grants +1 Swift Resonance and deals (NPC × NPS × log₁₀(NPC+1)^stacks) crit damage. Ends with NPS×stacks bonus. 3 min cooldown.";
+
+            // Mars Weapons
+            public const string FractalOfWar = @"Fractal of War
+
+Passive: Recursive Devastation — Every 25th click doubles your Entropic Melodies and grants +10 to ALL 8 upgrades (Chord, Scale, Orchestra, Symphony, Aria, Requiem, Opus, Magnum Opus).
+
+Crescendance Bond: Fractal Armament — Each 'Infinite War of Harmony!!!' critical hit grants +1 Oblivion's Destruction stack. Consume 5 Oblivion's Destruction for +30 to all owned minor scores.
+
+Duet: Annihilation Nocturne — For 12 seconds, every click grants NPC^(NPC/NPS) notes and +2 to all owned Major Scores. Instantly sets Blade to 300% charge. 10 min cooldown.";
+
+            public const string ConsonanceRequiemicWar = @"Consonance's Requiemic War
+
+Passive: Requiem's Crescendo — Whenever you purchase ANY upgrade (Chord, Scale, etc.), instantly gain +5% of current notes.
+
+Crescendance Bond: Requiemic Resonance — When you consume Resolute Fractal or Oblivion's Destruction stacks, your next 3 clicks receive NPC^1.56 bonus damage.
+
+Duet: Annihilation Nocturne — For 12 seconds, every click grants NPC^(NPC/NPS) notes and +2 to all owned Major Scores. Instantly sets Blade to 300% charge. 10 min cooldown.";
         }
 
         // ============================================================
@@ -388,6 +461,14 @@ Completing all 12 clicks doubles all owned minor scores.
             // Clair de Lune
             public const string CelestialHorology = "Passive: Chrono-Entropic Refund — Every 5th click grants +3% Entropic Melodies. Anytime you spend Entropic Melodies, refund 50% of them.\n\nCrescendance Bond: Celestial Convergence — Every 5th Shattered Moonlight consumed grants +1 Temporal Fracture stack.";
             public const string MetronomicDissonance = "Passive: Temporal Dissolution — When dissolving major scores, gain double the Entropic Melodies.\n\nCrescendance Bond: Surge Amplification — Consuming Temporal Fracture grants 10 Surge of Time's Fractalization critical hits (NPC^144). Only active when weapon ability is equipped.";
+            
+            // Mercury
+            public const string MercurialOverture = "Passive: Mercurial Strike — Every 3rd click grants bonus notes equal to (Notes Per Click × Notes Per Click) + (Entropic Melodies × 1,000).\n\nCrescendance Bond: Planetary Resonance — Every Herald's Message consumed grants +1 Planetary Alignment stack and your next 5 clicks become Messenger of Planetary Resonance crits: (Notes Per Second × 5,000) + (Notes Per Click × log₁₀(NPC+1)⁸ × Planetary Alignment stacks).";
+            public const string WingOfTheMessenger = "Passive: Messenger's Gift — Every 50th click grants (Entropic Melodies ÷ 5) to your lowest owned minor score.\n\nCrescendance Bond: A Thousand Wings — Consume Planetary Alignment stacks to grant your next 5 clicks the critical 'A Thousand Winged Symphony for the Universe!!!' with damage equal to NPC × NPS × log₁₀(NPC+1)^20 × stacks.";
+            
+            // Mars
+            public const string FractalOfWar = "Passive: Recursive Devastation — Every 25th click doubles your Entropic Melodies and grants +10 to ALL 8 upgrades (Chord, Scale, Orchestra, Symphony, Aria, Requiem, Opus, Magnum Opus).\n\nCrescendance Bond: Fractal Armament — Each 'Infinite War of Harmony!!!' critical hit grants +1 Oblivion's Destruction stack. Consume 5 Oblivion's Destruction for +30 to all owned minor scores.";
+            public const string ConsonanceRequiemicWar = "Passive: Requiem's Crescendo — Whenever you purchase ANY upgrade (Chord, Scale, etc.), instantly gain +5% of current notes.\n\nCrescendance Bond: Requiemic Resonance — When you consume Resolute Fractal or Oblivion's Destruction stacks, your next 3 clicks receive NPC^1.56 bonus damage.";
         }
 
         // ============================================================
@@ -408,6 +489,8 @@ Completing all 12 clicks doubles all owned minor scores.
                 public const string Fate = "Threads of Destiny:\nHourglass Reversal";
                 public const string OdeToJoy = "Symphony of Celebration:\nCrescendo Conductor";
                 public const string ClairDeLune = "Chain of Temporality";
+                public const string Mercury = "Celestial Messengers";
+                public const string Mars = "Annihilation Nocturne";
             }
 
             public static class Full
@@ -421,7 +504,9 @@ Completing all 12 clicks doubles all owned minor scores.
                 public const string Enigma = "Each click triggers 1 random effect:\nRed: 5× Notes Per Second as instant notes | Blue: +10% Notes Per Second boost | Green: +30 Harmonious Fragments | Yellow: +30 Melodious Fragments | Purple: +1 major score per owned type | Orange: +1 minor component per owned minor type | White: +1 to 3 random minor scores | Black: -65% current notes\n\n10 second duration | 30 minute cooldown";
                 public const string Fate = "All actions performed during the first 10 seconds will be replayed during the last 10 seconds at X× effectiveness, where X equals the number of clicks you performed during the first half.\n\nDuration: 20 seconds | Cooldown: 8 minutes";
                 public const string OdeToJoy = "Build 16-note melodies by clicking (repeatable). Every 16 notes resets counter and grants rewards:\n• 4 notes: +25 Melodious and Harmonious Fragments\n• 8 notes: +5 Petals of Harmony\n• 12 notes: +5 Petals of Melody\n• 16 notes: +1 Ode to Life\nOn ability expiry: +3 Entropic Melodies per completed 4-note section\n\n20 second duration | 10 minute cooldown";
-                public const string ClairDeLune = "For 12 seconds, each click doubles your Notes Per Click multiplier (1× → 2× → 4× → 8× → 16×...). The multiplier is applied before calculating notes gained from each click, allowing for exponentially scaling power.\n\n12 second duration | 6 minute cooldown";
+                public const string ClairDeLune = "For 12 seconds, each click doubles your Notes Per Click multiplier (1× → 2× → 4× → 8× → 16×...). The multiplier is applied before calculating notes gained from each click, allowing for exponentially scaling power.\n\n12 second duration | 30 minute cooldown\n\n✦ RECOMMENDED: Resonating with Clair de Lune Major enhances the power of time itself!";
+                public const string Mercury = "Swift Delivery: Activate Mercury's Haste for 30 seconds (3 min cooldown).\n\nDuring Mercury's Haste:\n• Every click grants +1 Swift Resonance\n• Every click is an 'Alignment of Mercurial Judgement' crit: ((NPC × NPS)^stacks) notes\n\nWhen the effect ends: Consume all Swift Resonance for NPS × stacks bonus notes.\n\n✦ RECOMMENDED: Resonating with Mercury Major amplifies the messenger's swift delivery!";
+                public const string Mars = "For 12 seconds, every click becomes an Annihilation Nocturne critical:\n\n• Each click grants notes equal to NPC^(NPC/NPS)\n• Each click grants +2 to every owned Major Score\n• Instantly sets Blade of Symphonic War to 300% charge\n\n12 second duration | 10 minute cooldown\n\n✦ RECOMMENDED: Resonating with Mars Major unleashes the full fury of war!\n\nThe blade sings its final song—let annihilation's nocturne echo through eternity.";
             }
 
             public static class Short
@@ -434,8 +519,10 @@ Completing all 12 clicks doubles all owned minor scores.
                 public const string LaCampanella = "Chime Chain: First click creates a chime. Each click within 1 second extends the chain. Chain gives length² × Notes Per Second as instant notes. Chain breaks after 1 second of no clicks - 10 second duration, 10 minute cooldown.";
                 public const string Enigma = "Mystery Clicks: Each click triggers 1 random effect (Red: 5× Notes Per Second notes, Blue: 10% Notes Per Second boost, Green: 30 Harmonious Fragments, Yellow: 30 Melodious Fragments, Purple: +1 major per owned, Orange: +1 minor component per owned, White: +1 to 3 random minors, Black: -65% notes) - 10 second duration, 30 minute cooldown.";
                 public const string Fate = "Hourglass Reversal: All actions during first 10 seconds replay during last 10 seconds at X× effectiveness where X = clicks performed (20 second duration, 8 minute cooldown).";
-                public const string ClairDeLune = "Chain of Temporality: For 12 seconds, each click doubles your Notes Per Click multiplier (1× → 2× → 4× → 8×...), stacking infinitely - 6 minute cooldown.";
+                public const string ClairDeLune = "Chain of Temporality: For 12 seconds, each click doubles your Notes Per Click multiplier (1× → 2× → 4× → 8×...), stacking infinitely. ✦ Resonating with Clair de Lune Major recommended! - 30 minute cooldown.";
                 public const string OdeToJoy = "Crescendo Conductor: Build 16-note melodies (repeatable/stackable). Rewards at 4/8/12/16 notes (+25 fragments, +5 Petals of Harmony, +5 Petals of Melody, +1 Ode to Life). On expiry: +3 Entropic Melodies per completed section - 20 second duration, 10 minute cooldown.";
+                public const string Mercury = "Swift Delivery: 30s of Mercury's Haste where every click grants +1 Swift Resonance and deals ((NPC×NPS)^stacks) crit damage. Ends with NPS×stacks bonus notes. ✦ Resonating with Mercury Major recommended! - 3 min cooldown.";
+                public const string Mars = "Annihilation Nocturne: For 12 seconds, every click grants NPC^(NPC/NPS) notes and +2 to all owned Major Scores. Instantly sets Blade to 300% charge. ✦ Resonating with Mars Major recommended! - 10 minute cooldown.";
             }
 
             // Duration and cooldown constants
@@ -449,6 +536,9 @@ Completing all 12 clicks doubles all owned minor scores.
                 public const int Enigma = 10;
                 public const int Fate = 20;
                 public const int OdeToJoy = 20;
+                public const int ClairDeLune = 12; // Chain of Temporality duration
+                public const int Mercury = 30;     // Swift Delivery duration
+                public const int Mars = 12;        // Annihilation Nocturne duration
             }
 
             public static class Cooldown
@@ -462,6 +552,9 @@ Completing all 12 clicks doubles all owned minor scores.
                 public const int Enigma = 1800;        // 30 minutes
                 public const int Fate = 480;           // 8 minutes
                 public const int OdeToJoy = 600;       // 10 minutes
+                public const int ClairDeLune = 1800;   // 30 minutes (Chain of Temporality)
+                public const int Mercury = 180;        // 3 minutes (Swift Delivery)
+                public const int Mars = 600;           // 10 minutes (Annihilation Nocturne)
             }
         }
 
@@ -486,6 +579,8 @@ Completing all 12 clicks doubles all owned minor scores.
                 "Dies Irae" => MajorScores.DiesIrae,
                 "Winter" => MajorScores.Winter,
                 "Clair de Lune" => MajorScores.ClairDeLune,
+                "Mercury" => MajorScores.Mercury,
+                "Mars" => MajorScores.Mars,
                 _ => $"No description available for: {scoreName}"
             };
         }
@@ -515,8 +610,12 @@ Completing all 12 clicks doubles all owned minor scores.
                 "Hell's Wrath" => Weapons.HellsWrath,
                 "Cacophonic Blizzard" => Weapons.CacophonicBlizzard,
                 "The Snow's Desire" => Weapons.TheSnowsDesire,
+                "Mercurial Overture" => Weapons.MercurialOverture,
+                "Wing of the Messenger" => Weapons.WingOfTheMessenger,
                 "Celestial Horology" => Weapons.CelestialHorology,
-                "Metronomic Dissonance" => Weapons.MetronomicDissonance,
+                "Clockwork Finality" => Weapons.MetronomicDissonance,
+                "Fractal of War" => Weapons.FractalOfWar,
+                "Consonance's Requiemic War" => Weapons.ConsonanceRequiemicWar,
                 _ => $"No description available for: {weaponName}"
             };
         }
@@ -546,8 +645,12 @@ Completing all 12 clicks doubles all owned minor scores.
                 "Hell's Wrath" => ForteResonance.HellsWrath,
                 "Cacophonic Blizzard" => ForteResonance.CacophonicBlizzard,
                 "The Snow's Desire" => ForteResonance.TheSnowsDesire,
+                "Mercurial Overture" => ForteResonance.MercurialOverture,
+                "Wing of the Messenger" => ForteResonance.WingOfTheMessenger,
                 "Celestial Horology" => ForteResonance.CelestialHorology,
-                "Metronomic Dissonance" => ForteResonance.MetronomicDissonance,
+                "Clockwork Finality" => ForteResonance.MetronomicDissonance,
+                "Fractal of War" => ForteResonance.FractalOfWar,
+                "Consonance's Requiemic War" => ForteResonance.ConsonanceRequiemicWar,
                 _ => "Forte Resonance: <placeholder>"
             };
         }

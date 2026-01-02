@@ -78,6 +78,11 @@ namespace MusicClicker
         // Cacophonic Dreams music player
         private NAudio.Wave.IWavePlayer? _dreamsWaveOut;
         private NAudio.Wave.Mp3FileReader? _dreamsAudioFileReader;
+        
+        // Animation flags for falling particle effects
+        private bool _swanFeatherAnimationActive = false;
+        private bool _eroicaPetalAnimationActive = false;
+        private bool _moonbeamShimmerActive = false;
 
 
         // Carousel removed: buttons are static in the grid-based layout.
@@ -422,6 +427,27 @@ namespace MusicClicker
                                 DuetAbilityScreen.UpdateAbilityDisplay();
                             }
                         }
+                        
+                        // Check if Mercury Duet (Swift Delivery) has expired
+                        if (gameState.MercuryDuetActive && now > gameState.MercuryDuetExpiry)
+                        {
+                            // Grant end bonus: NPS × stacks
+                            int totalStacks = gameState.SwiftResonanceStacks;
+                            double endBonus = gameState.NotesPerSecond * totalStacks;
+                            MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, endBonus);
+                            
+                            // Consume all Swift Resonance stacks
+                            gameState.SwiftResonanceStacks = 0;
+                            
+                            // End the duet and start cooldown
+                            gameState.MercuryDuetActive = false;
+                            gameState.MercuryDuetCooldownExpiry = now.AddMinutes(3); // 3 minute cooldown
+                            
+                            if (DuetAbilityScreen?.IsVisible == true)
+                            {
+                                DuetAbilityScreen.UpdateAbilityDisplay();
+                            }
+                        }
 
                         // Check if Fate Duet has expired
                         if (gameState.FateDuetActive && now > gameState.FateDuetExpiry)
@@ -456,6 +482,22 @@ namespace MusicClicker
                             {
                                 DuetAbilityScreen.UpdateAbilityDisplay();
                             }
+                        }
+
+                        // Mars: No background processing needed for Blade of Symphonic War
+                        
+                        // Update all visual overlays in a single UI dispatch for better performance
+                        // Only update if main screen is visible to avoid unnecessary work
+                        if (MainScreen?.IsVisible == true)
+                        {
+                            Dispatcher.UIThread.Post(() => 
+                            {
+                                UpdateMarsFlameOverlay();
+                                UpdateMoonlightBeamOverlay();
+                                UpdateSwanFeatherOverlay();
+                                UpdateEroicaPetalOverlay();
+                                UpdateLaCampanellaBellOverlay();
+                            });
                         }
 
                         // Swan Lake Duet: No background processing needed (all handled in click handler)
@@ -497,6 +539,8 @@ namespace MusicClicker
                         {
                             effectiveNps *= 2.0;
                         }
+
+                        // Mars: No passive NPS bonuses in Blade of Symphonic War
 
                         // Apply duet resonance NPS multipliers
                         if (gameState.CurrentResonatedWeapon1 != "None" && gameState.CurrentResonatedWeapon2 != "None")
@@ -913,6 +957,9 @@ namespace MusicClicker
         /// </summary>
         public void ClickButton_Click(object? sender, RoutedEventArgs e)
         {
+            // Cache DateTime.Now once at start to avoid 15+ system calls per click (performance optimization)
+            DateTime clickTime = DateTime.Now;
+            
             // Cache nighttime check to avoid multiple DateTime.Now.Hour calls (performance optimization)
             bool isNighttime = MusicClicker.Armory.WeaponAbilities.IsNighttime();
             
@@ -930,7 +977,7 @@ namespace MusicClicker
             }
 
             // Check if Eroica Symphonic Catharsis buff has expired
-            if (gameState.SymphonicCatharsisActive && DateTime.Now > gameState.SymphonicCatharsisExpiry)
+            if (gameState.SymphonicCatharsisActive && clickTime > gameState.SymphonicCatharsisExpiry)
             {
                 gameState.SymphonicCatharsisActive = false;
             }
@@ -972,6 +1019,8 @@ namespace MusicClicker
                 gameState.CacophonicBlizzardBonusClicksRemaining--;
             }
             
+            // Mars: No passive NPC bonuses in Blade of Symphonic War
+            
             // Apply Incisor of Moonlight passive: Every 4th click bonus (while equipped)
             if (gameState.IncisorOfMoonlight && 
                 (gameState.CurrentResonatedWeapon1 == "IncisorOfMoonlight" || gameState.CurrentResonatedWeapon2 == "IncisorOfMoonlight"))
@@ -1008,6 +1057,20 @@ namespace MusicClicker
                 notesPerClick = swanNpcReplacement;
                 thousandWingedSwanBoostActive = true;
             }
+            
+            // Mercury Weapon 1: Mercurial Overture bonus (NPC×NPC + EM×1000 on every 3rd click)
+            if (gameState.MercuryWeapon1NextClickBonus)
+            {
+                double mercurialBonus = MusicClicker.Armory.WeaponAbilities.Mercury_MercurialOverture_GetClickBonus(gameState);
+                notesPerClick += mercurialBonus;
+                gameState.MercuryWeapon1NextClickBonus = false;
+            }
+
+            // Clair de Lune Duet: Chain of Temporality - apply stacking NPC multiplier
+            if (gameState.DuetChainOfTemporalityActive && clickTime < gameState.DuetChainOfTemporalityExpiry)
+            {
+                notesPerClick *= gameState.DuetChainOfTemporalityNpcMultiplier;
+            }
 
             // Add calculated notes to player's total
             MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, notesPerClick);
@@ -1020,31 +1083,31 @@ namespace MusicClicker
             }
 
             // Swan Lake Duet: Feather Cascade - grant feathers and note bonuses
-            if (gameState.SwanLakeDuetActive && DateTime.Now <= gameState.SwanLakeDuetExpiry)
+            if (gameState.SwanLakeDuetActive && clickTime <= gameState.SwanLakeDuetExpiry)
             {
                 MusicClicker.Armory.WeaponAbilities.SwanLakeDuet_OnClick(gameState);
             }
 
             // La Campanella Duet: Chime Chain click tracking
-            if (gameState.LaCampanellaDuetActive && DateTime.Now <= gameState.LaCampanellaDuetExpiry)
+            if (gameState.LaCampanellaDuetActive && clickTime <= gameState.LaCampanellaDuetExpiry)
             {
                 MusicClicker.Armory.WeaponAbilities.LaCampanellaDuet_OnClick(gameState);
             }
 
             // Enigma Duet: Cipher Wheel segment rewards
-            if (gameState.EnigmaDuetActive && DateTime.Now <= gameState.EnigmaDuetExpiry)
+            if (gameState.EnigmaDuetActive && clickTime <= gameState.EnigmaDuetExpiry)
             {
                 MusicClicker.Armory.WeaponAbilities.EnigmaDuet_OnClick(gameState);
             }
 
             // Fate Duet: Bank click during banking phase
-            if (gameState.FateDuetActive && !gameState.FateDuetHasFlipped && DateTime.Now <= gameState.FateDuetExpiry)
+            if (gameState.FateDuetActive && !gameState.FateDuetHasFlipped && clickTime <= gameState.FateDuetExpiry)
             {
                 MusicClicker.Armory.WeaponAbilities.FateDuet_BankAction(gameState, "Click", notesPerClick);
             }
 
             // Ode to Joy Duet: Add note to crescendo
-            if (gameState.OdeDuetActive && DateTime.Now <= gameState.OdeDuetExpiry)
+            if (gameState.OdeDuetActive && clickTime <= gameState.OdeDuetExpiry)
             {
                 MusicClicker.Armory.WeaponAbilities.OdeDuet_AddNote(gameState);
             }
@@ -1130,6 +1193,37 @@ namespace MusicClicker
             if (gameState.CurrentResonatedScore == "ClairDeLune")
             {
                 MusicClicker.Armory.WeaponAbilities.ClairDeLuneCrescendance_OnClick(gameState, this);
+            }
+            
+            // Mercury Crescendance: Swift Resonance stacking
+            if (gameState.CurrentResonatedScore == "Mercury")
+            {
+                MusicClicker.Armory.WeaponAbilities.MercuryCrescendance_OnClick(gameState, this);
+            }
+            
+            // Mars Crescendance: Conflagration of War
+            // Skip blade charging during Infinite War critical clicks
+            if (gameState.CurrentResonatedScore == "Mars" && gameState.InfiniteWarOfHarmonyCritsRemaining <= 0)
+            {
+                MusicClicker.Armory.WeaponAbilities.MarsCrescendance_OnClick(gameState, this);
+            }
+            
+            // Mercury Weapon 1: Mercurial Overture passive (every 3rd click: NPC×NPC + EM×1000)
+            if ((gameState.CurrentResonatedWeapon1 == "MercurialOverture" || gameState.CurrentResonatedWeapon2 == "MercurialOverture"))
+            {
+                MusicClicker.Armory.WeaponAbilities.Mercury_MercurialOverture_OnClick(gameState);
+            }
+            
+            // Mercury Weapon 2: Wing of the Messenger passive (every 50th click: add EM/5 to lowest minor)
+            if ((gameState.CurrentResonatedWeapon1 == "WingOfTheMessenger" || gameState.CurrentResonatedWeapon2 == "WingOfTheMessenger"))
+            {
+                MusicClicker.Armory.WeaponAbilities.Mercury_WingOfTheMessenger_OnClick(gameState);
+            }
+            
+            // Mars Weapon 1: Fractal of War passive (every 25th click: double EM + +10 all upgrades)
+            if ((gameState.CurrentResonatedWeapon1 == "FractalOfWar" || gameState.CurrentResonatedWeapon2 == "FractalOfWar"))
+            {
+                MusicClicker.Armory.WeaponAbilities.FractalOfWar_OnClick(gameState);
             }
 
             // Swan Lake Weapon: Star-Scattered Wings passive (every 10th click grants fragments)
@@ -1243,7 +1337,7 @@ namespace MusicClicker
                 // 12. Normal click
                 
                 // 1. Crescendance Bond - Thousand Winged Swan: Dawn of Swan's Glory (absolute highest priority - display only)
-                if (gameState.ThousandWingedSwanNpsBoostActive && DateTime.Now <= gameState.ThousandWingedSwanNpsBoostExpiry)
+                if (gameState.ThousandWingedSwanNpsBoostActive && clickTime <= gameState.ThousandWingedSwanNpsBoostExpiry)
                 {
                     critText = $"Dawn of the Swan's Glory!!! +{FormatNumber(notesPerClick)}";
                     critColor = Colors.White; // White text
@@ -1253,7 +1347,13 @@ namespace MusicClicker
                 else if (gameState.DiesIraeDuetNoteDoublingClicks > 0)
                 {
                     gameState.DiesIraeDuetNoteDoublingClicks--;
-                    finalNotes = gameState.Notes * 2; // Double current notes
+                    // NEW FORMULA: NPC × NPS × log₁₀(Notes+1)^8 - scales with progress but prevents exponential doubling
+                    double npc = gameState.NotesPerClick;
+                    double nps = gameState.NotesPerSecond;
+                    double currentNotes = MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes);
+                    double logFactor = Math.Pow(Math.Log10(currentNotes + 1) + 1, 8);
+                    finalNotes = npc * nps * logFactor;
+                    finalNotes = MusicClicker.Helpers.AtomicDouble.SafeValue(finalNotes);
                     MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
                     critText = $"Infernal Symphony of Oblivion!!! +{NumberFormatter.FormatLargeNumber(finalNotes)}";
                     critColor = Color.FromRgb(139, 0, 0); // Dark red
@@ -1314,9 +1414,13 @@ namespace MusicClicker
                 else if (gameState.BlizzardCommandClicksRemaining > 0)
                 {
                     gameState.BlizzardCommandClicksRemaining--;
-                    // Blizzard's Command new formula: give notes equal to (NPS * NPC)^2 per click
-                    double prod = gameState.NotesPerSecond * gameState.NotesPerClick;
-                    finalNotes = prod * prod;
+                    // NEW FORMULA: NPC × NPS × log₁₀(NPC×NPS+1)^10 - still powerful but logarithmically scaled
+                    double npc = gameState.NotesPerClick;
+                    double nps = gameState.NotesPerSecond;
+                    double prod = npc * nps;
+                    double logFactor = Math.Pow(Math.Log10(prod + 1) + 1, 10);
+                    finalNotes = prod * logFactor;
+                    finalNotes = MusicClicker.Helpers.AtomicDouble.SafeValue(finalNotes);
                     MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
                     critText = $"Blizzard's Command of Eternal Ice!!! +{NumberFormatter.FormatLargeNumber(finalNotes)}";
                     critColor = Color.FromRgb(173, 216, 230); // Light blue
@@ -1365,9 +1469,10 @@ namespace MusicClicker
                 else if (gameState.InfiniteTemporalityCritsRemaining > 0)
                 {
                     gameState.InfiniteTemporalityCritsRemaining--;
-                    // Formula: NPC^12
+                    // Formula: NPC × log₁₀(NPC+1)^8 (nerfed from log^12)
                     double npc = gameState.NotesPerClick;
-                    finalNotes = Math.Pow(npc, 12);
+                    double logFactor = Math.Pow(Math.Log10(npc + 1) + 1, 8);
+                    finalNotes = npc * logFactor;
                     MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
                     critText = $"Infinite Temporality!!! +{NumberFormatter.FormatLargeNumber(finalNotes)}";
                     critColor = Colors.Red; // Red font
@@ -1378,17 +1483,162 @@ namespace MusicClicker
                 else if (gameState.SurgeOfTimeFractalizationCritsRemaining > 0)
                 {
                     gameState.SurgeOfTimeFractalizationCritsRemaining--;
-                    // Formula: NPC^144
+                    // Formula: NPC × NPS × log₁₀(NPC+1)^12 (nerfed from log^24)
                     double npc = gameState.NotesPerClick;
-                    finalNotes = Math.Pow(npc, 144);
+                    double nps = gameState.NotesPerSecond;
+                    double logFactor = Math.Pow(Math.Log10(npc + 1) + 1, 12);
+                    finalNotes = npc * nps * logFactor;
                     MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
                     critText = $"Surge of Time's Fractalization!!! +{NumberFormatter.FormatLargeNumber(finalNotes)}";
                     critColor = Color.FromRgb(128, 128, 128); // Gray text
                     hasStroke = true;
                     strokeColor = Colors.Red; // Red shadow
                 }
+                // 6.7. Mercury: Messenger of Planetary Resonance!!! (Mercurial Overture bond - every Herald's Message consumed)
+                else if (gameState.MessengerOfPlanetaryResonanceCritsRemaining > 0)
+                {
+                    gameState.MessengerOfPlanetaryResonanceCritsRemaining--;
+                    // Formula: (NPS × 5,000) + (NPC × log₁₀(NPC+1)^8 × Planetary Alignment stacks)
+                    double npc = gameState.NotesPerClick;
+                    double logFactor = Math.Pow(Math.Log10(npc + 1) + 1, 8);
+                    finalNotes = (gameState.NotesPerSecond * 5000) + (npc * logFactor * gameState.PlanetaryAlignmentStacks);
+                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
+                    critText = $"Messenger of Planetary Resonance!!!! +{NumberFormatter.FormatLargeNumber(finalNotes)}";
+                    critColor = Color.FromRgb(135, 206, 250); // Light sky blue
+                    hasStroke = true;
+                    strokeColor = Color.FromRgb(70, 130, 180); // Steel blue outline
+                }
+                // 6.8. Mercury: A Thousand Winged Symphony for the Universe!!! (Wing of the Messenger bond - consume Planetary Alignment)
+                else if (gameState.ThousandWingedSymphonyCritsRemaining > 0)
+                {
+                    gameState.ThousandWingedSymphonyCritsRemaining--;
+                    // Formula: NPC × NPS × log10(NPC+1)^50 × (1 + Planetary Alignment stacks) (scaled down from NPC^1000 to prevent overflow)
+                    double npc = gameState.NotesPerClick;
+                    double nps = gameState.NotesPerSecond;
+                    double logFactor = Math.Pow(Math.Log10(npc + 1) + 1, 50);
+                    finalNotes = npc * nps * logFactor * (1 + gameState.PlanetaryAlignmentStacks);
+                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
+                    critText = $"A Thousand Winged Symphony for the Universe!!! +{NumberFormatter.FormatLargeNumber(finalNotes)}";
+                    critColor = Colors.White; // White text
+                    hasStroke = true;
+                    strokeColor = Color.FromRgb(173, 216, 230); // Light blue outline
+                }
+                // 6.9. Mercury Duet: Alignment of Mercurial Judgement (Swift Delivery active)
+                else if (gameState.MercuryDuetActive && clickTime <= gameState.MercuryDuetExpiry)
+                {
+                    // Every click during Mercury's Haste grants +1 Swift Resonance
+                    gameState.SwiftResonanceStacks++;
+                    
+                    // Calculate crit: NPC × NPS × log₁₀(NPC+1)^stacks (nerfed from (NPC×NPS)^stacks)
+                    int stacks = gameState.SwiftResonanceStacks;
+                    double npc = gameState.NotesPerClick;
+                    double nps = gameState.NotesPerSecond;
+                    // Clamp the exponent to avoid overflow - max of 30 for safety
+                    double safeExponent = Math.Min(stacks, 30);
+                    double logFactor = Math.Pow(Math.Log10(npc + 1) + 1, safeExponent);
+                    finalNotes = npc * nps * logFactor;
+                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
+                    critText = $"Alignment of Mercurial Judgement!!! +{NumberFormatter.FormatLargeNumber(finalNotes)}";
+                    critColor = Color.FromRgb(0, 0, 139); // Dark blue
+                    hasStroke = true;
+                    strokeColor = Colors.White; // White glow
+                }
+                // 6.9b. Mercury: Messenger of Fate's Melody!!! (old Duet - Fate's Grand Message)
+                else if (gameState.MessengerOfFateMelodyCritsRemaining > 0)
+                {
+                    gameState.MessengerOfFateMelodyCritsRemaining--;
+                    // NEW FORMULA: NPS × NPC × log₁₀(NPS+1)^10 - preserves high power scaling but prevents overflow
+                    double nps = gameState.NotesPerSecond;
+                    double npc = gameState.NotesPerClick;
+                    double logFactor = Math.Pow(Math.Log10(nps + 1) + 1, 10);
+                    finalNotes = nps * npc * logFactor;
+                    finalNotes = MusicClicker.Helpers.AtomicDouble.SafeValue(finalNotes);
+                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
+                    critText = $"Messenger of Fate's Melody!!! +{NumberFormatter.FormatLargeNumber(finalNotes)}";
+                    critColor = Color.FromRgb(192, 192, 192); // Silver/grey
+                    hasStroke = true;
+                    strokeColor = Color.FromRgb(135, 206, 250); // Light blue outline
+                }
+                // 6.10. Mars: Infinite War of Harmony!!! (every 5th Resolute Fractal consumed)
+                else if (gameState.InfiniteWarOfHarmonyCritsRemaining > 0)
+                {
+                    gameState.InfiniteWarOfHarmonyCritsRemaining--;
+                    
+                    // Formula: NPC × (Blade charge %)
+                    finalNotes = MusicClicker.Armory.WeaponAbilities.Mars_GetInfiniteWarOfHarmonyCritDamage(gameState);
+                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
+                    critText = $"Infinite War of Harmony!!! +{NumberFormatter.FormatLargeNumber(finalNotes)}";
+                    critColor = Color.FromRgb(139, 0, 0); // Deep red text
+                    hasStroke = true;
+                    strokeColor = Colors.Black; // Black outline
+                    
+                    // Fractal of War Bond: Each Infinite War crit gives +1 Oblivion's Destruction
+                    if (gameState.FractalOfWarAbility &&
+                        (gameState.CurrentResonatedWeapon1 == "FractalOfWar" || gameState.CurrentResonatedWeapon2 == "FractalOfWar"))
+                    {
+                        gameState.OblivionsDestructionStacks++;
+                    }
+                    
+                    // After all Infinite War crits are spent, fully deplete the blade
+                    if (gameState.InfiniteWarOfHarmonyCritsRemaining == 0)
+                    {
+                        gameState.BladeOfSymphonicWarCharge = 0;
+                    }
+                    
+                    // Screen shake for Infinite War
+                    TriggerScreenShake(1.5, 300);
+                }
+                // 6.11. Mars Duet: Annihilation Nocturne (time-based, NPC × log-scaled bonus + all majors)
+                else if (gameState.MarsDuetActive)
+                {
+                    // Calculate bonus with logarithmic scaling to prevent overflow
+                    double npc = gameState.NotesPerClick;
+                    double nps = gameState.NotesPerSecond;
+                    double npcNpsRatio = nps > 0 ? npc / nps : 1;
+                    double cappedRatio = Math.Min(npcNpsRatio, 10);
+                    // Use log-based scaling: NPC × log₁₀(NPC+1)^(cappedRatio) instead of NPC^ratio
+                    double logFactor = Math.Pow(Math.Log10(npc + 1) + 1, cappedRatio);
+                    double annihilationBonus = npc * logFactor;
+                    annihilationBonus = MusicClicker.Helpers.AtomicDouble.SafeValue(annihilationBonus);
+                    finalNotes = notesPerClick + annihilationBonus;
+                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, annihilationBonus);
+                    
+                    // Grant +2 to all owned major scores
+                    if (gameState.MoonlightMajorSheets > 0) gameState.MoonlightMajorSheets += 2;
+                    if (gameState.DiesIraeMajorSheets > 0) gameState.DiesIraeMajorSheets += 2;
+                    if (gameState.WinterMajorSheets > 0) gameState.WinterMajorSheets += 2;
+                    if (gameState.EroicaMajorSheets > 0) gameState.EroicaMajorSheets += 2;
+                    if (gameState.SwanLakeMajorSheets > 0) gameState.SwanLakeMajorSheets += 2;
+                    if (gameState.LaCampanellaMajorSheets > 0) gameState.LaCampanellaMajorSheets += 2;
+                    if (gameState.EnigmaMajorSheets > 0) gameState.EnigmaMajorSheets += 2;
+                    if (gameState.FateMajorSheets > 0) gameState.FateMajorSheets += 2;
+                    if (gameState.OdeToJoyMajorSheets > 0) gameState.OdeToJoyMajorSheets += 2;
+                    if (gameState.MercuryMajorOwned > 0) gameState.MercuryMajorOwned += 2;
+                    if (gameState.ClairDeLuneMajorOwned > 0) gameState.ClairDeLuneMajorOwned += 2;
+                    if (gameState.MarsMajorOwned > 0) gameState.MarsMajorOwned += 2;
+                    
+                    critText = $"Annihilation Nocturne!!! +{NumberFormatter.FormatLargeNumber(finalNotes)}";
+                    critColor = Colors.Black; // Black text
+                    hasStroke = true;
+                    strokeColor = Color.FromRgb(139, 0, 0); // Deep red outline
+                    
+                    // Screen shake for Annihilation Nocturne
+                    TriggerScreenShake(1.0, 200);
+                }
+                // 6.12. Mars: Consonance's Requiemic War bonus clicks (NPC^156)
+                else if (gameState.ConsonanceRequiemBonusClicksRemaining > 0)
+                {
+                    gameState.ConsonanceRequiemBonusClicksRemaining--;
+                    double consonanceBonus = Math.Pow(gameState.NotesPerClick, 1.56);
+                    finalNotes = notesPerClick + consonanceBonus;
+                    MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, consonanceBonus);
+                    critText = $"Requiemic Resonance!!! +{NumberFormatter.FormatLargeNumber(finalNotes)}";
+                    critColor = Color.FromRgb(178, 34, 34); // Firebrick red
+                    hasStroke = true;
+                    strokeColor = Colors.Black; // Black outline
+                }
                 // 7. Ode to Joy: Entropic Crescendo of Eternity from Petal of Melody (1500x multiplier, time-based)
-                else if (DateTime.Now <= gameState.EntropicCritExpiry)
+                else if (clickTime <= gameState.EntropicCritExpiry)
                 {
                     finalNotes = notesPerClick * 1500;
                     MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, finalNotes - notesPerClick);
@@ -1486,6 +1736,9 @@ namespace MusicClicker
                 }
                 
                 ShowFloatingText(_lastClickPosition, critText, critColor, hasStroke, strokeColor);
+                
+                // Spawn sparkle particles on click for visual flair
+                SpawnSparkleParticles(_lastClickPosition);
             }
             
             // Update UI after click
@@ -1618,6 +1871,7 @@ namespace MusicClicker
             UIUpdater.UpdateUI(this, gameState);
             UpdateDuetAbilityButtonVisibility();
             GlobalTempoManager?.RefreshDrawer();
+            RegenerateMajorScoreEffects();
         }
 
         /// <summary>
@@ -1696,6 +1950,27 @@ namespace MusicClicker
             {
                 hasCooldownDuet = true;
                 duetImagePath = "avares://MusicClicker/Assets/OdeToJoyDuetResonance.jpg";
+            }
+            // Check for Mercury Duet (Celestial Messengers)
+            else if ((weapon1 == "MercurialOverture" && weapon2 == "WingOfTheMessenger") ||
+                     (weapon1 == "WingOfTheMessenger" && weapon2 == "MercurialOverture"))
+            {
+                hasCooldownDuet = true;
+                duetImagePath = "avares://MusicClicker/Gameplay Components/Resources/Assets/Major Scores/MercuryMajor.jpg";
+            }
+            // Check for Clair de Lune Duet (Chain of Temporality)
+            else if ((weapon1 == "MetronomicDissonance" && weapon2 == "CelestialHorology") ||
+                     (weapon1 == "CelestialHorology" && weapon2 == "MetronomicDissonance"))
+            {
+                hasCooldownDuet = true;
+                duetImagePath = "avares://MusicClicker/Gameplay Components/Resources/Assets/Major Scores/ClairDeLuneMajor.jpg";
+            }
+            // Check for Mars Duet (Annihilation Nocturne)
+            else if ((weapon1 == "ConsonanceRequiemicWar" && weapon2 == "FractalOfWar") ||
+                     (weapon1 == "FractalOfWar" && weapon2 == "ConsonanceRequiemicWar"))
+            {
+                hasCooldownDuet = true;
+                duetImagePath = "avares://MusicClicker/Gameplay Components/Resources/Assets/Major Scores/MarsMajor.jpg";
             }
 
             OpenDuetAbilityButton.IsVisible = hasCooldownDuet;
@@ -1901,6 +2176,693 @@ namespace MusicClicker
             FloatingTextCanvas.Children.Remove(textBlock);
         }
         
+        // ------------------- SPARKLE PARTICLE EFFECTS -------------------
+        
+        /// <summary>
+        /// Spawns shiny sparkle particles at the click position.
+        /// Creates a burst of pink/hot pink glitter particles that scatter outward with varying sizes and opacities.
+        /// </summary>
+        public async void SpawnSparkleParticles(Point position, int particleCount = 12)
+        {
+            if (SparkleParticleCanvas == null) return;
+            
+            // Pink color palette matching the UI theme
+            Color[] sparkleColors = new Color[]
+            {
+                Color.FromRgb(255, 105, 180), // Hot Pink (#FF69B4) - Main UI accent
+                Color.FromRgb(255, 182, 193), // Light Pink
+                Color.FromRgb(255, 20, 147),  // Deep Pink
+                Color.FromRgb(255, 192, 203), // Pink
+                Color.FromRgb(255, 255, 255), // White (for extra shine)
+                Color.FromRgb(255, 240, 245)  // Lavender Blush (soft sparkle)
+            };
+            
+            var particles = new List<(Avalonia.Controls.Shapes.Ellipse particle, double vx, double vy, double rotation, double startX, double startY, double baseSize)>();
+            
+            // Create particles
+            for (int i = 0; i < particleCount; i++)
+            {
+                // Randomize particle properties for variety
+                double size = _random.Next(4, 12); // Random size 4-11px
+                Color color = sparkleColors[_random.Next(sparkleColors.Length)];
+                
+                // Calculate random velocity for outward burst
+                double angle = _random.NextDouble() * Math.PI * 2; // Random direction (0-360 degrees)
+                double speed = _random.Next(80, 200); // Random speed
+                double vx = Math.Cos(angle) * speed;
+                double vy = Math.Sin(angle) * speed;
+                
+                // Create sparkle particle (ellipse with gradient for shine effect)
+                var particle = new Avalonia.Controls.Shapes.Ellipse
+                {
+                    Width = size,
+                    Height = size,
+                    Fill = new RadialGradientBrush
+                    {
+                        GradientStops = new GradientStops
+                        {
+                            new GradientStop(Colors.White, 0.0),    // Bright white center
+                            new GradientStop(color, 0.4),           // Colored mid-ring
+                            new GradientStop(Color.FromArgb(200, color.R, color.G, color.B), 0.7), // Softer edge
+                            new GradientStop(Color.FromArgb(0, color.R, color.G, color.B), 1.0)    // Fade out
+                        }
+                    },
+                    Opacity = 1.0
+                };
+                
+                // Add glow effect for extra shine
+                particle.Effect = new DropShadowEffect
+                {
+                    Color = color,
+                    BlurRadius = size * 1.5,
+                    Opacity = 0.9,
+                    OffsetX = 0,
+                    OffsetY = 0
+                };
+                
+                // Position at click point with small random offset
+                double startX = position.X + _random.Next(-15, 16) - size / 2;
+                double startY = position.Y + _random.Next(-15, 16) - size / 2;
+                
+                Canvas.SetLeft(particle, startX);
+                Canvas.SetTop(particle, startY);
+                
+                SparkleParticleCanvas.Children.Add(particle);
+                particles.Add((particle, vx, vy, _random.NextDouble() * 360, startX, startY, size));
+            }
+            
+            // Animate particles
+            var startTime = DateTime.Now;
+            var duration = TimeSpan.FromSeconds(0.8); // Shorter duration for snappy effect
+            
+            while (DateTime.Now - startTime < duration)
+            {
+                var elapsed = (DateTime.Now - startTime).TotalSeconds;
+                var progress = elapsed / duration.TotalSeconds;
+                
+                // Ease out for natural deceleration
+                double easedProgress = 1 - Math.Pow(1 - progress, 3); // Cubic ease out
+                
+                foreach (var (particle, vx, vy, rotation, startX, startY, baseSize) in particles)
+                {
+                    // Apply gravity and friction
+                    double gravity = 150;
+                    double friction = 0.95;
+                    
+                    double currentVx = vx * Math.Pow(friction, elapsed * 60);
+                    double currentVy = vy * Math.Pow(friction, elapsed * 60) + gravity * elapsed;
+                    
+                    double newX = startX + currentVx * elapsed;
+                    double newY = startY + currentVy * elapsed;
+                    
+                    Canvas.SetLeft(particle, newX);
+                    Canvas.SetTop(particle, newY);
+                    
+                    // Fade out and shrink using base size
+                    particle.Opacity = Math.Max(0, 1.0 - easedProgress);
+                    double scale = 1.0 - easedProgress * 0.5; // Shrink to 50% size
+                    particle.Width = baseSize * scale;
+                    particle.Height = baseSize * scale;
+                    
+                    // Add twinkle effect (rapid opacity pulse)
+                    if (_random.NextDouble() < 0.3) // 30% chance per frame
+                    {
+                        particle.Opacity = Math.Min(1.0, particle.Opacity + 0.3);
+                    }
+                }
+                
+                await Task.Delay(16); // ~60fps
+            }
+            
+            // Remove all particles
+            foreach (var (particle, _, _, _, _, _, _) in particles)
+            {
+                SparkleParticleCanvas.Children.Remove(particle);
+            }
+        }
+        
+        // ------------------- MARS WAR VISUAL EFFECTS -------------------
+        
+        /// <summary>
+        /// Updates the Mars flame overlay visibility based on game state
+        /// Shows during Infinite War of Harmony crits
+        /// </summary>
+        private void UpdateMarsFlameOverlay()
+        {
+            if (MarsFlameOverlay == null || gameState == null) return;
+            
+            bool shouldShow = false;
+            double intensity = 0.7;
+            
+            // Show during Infinite War of Harmony crits
+            if (gameState.InfiniteWarOfHarmonyCritsRemaining > 0)
+            {
+                shouldShow = true;
+                intensity = 1.0; // Full intensity during Infinite War
+            }
+            
+            MarsFlameOverlay.IsVisible = shouldShow;
+            if (shouldShow)
+            {
+                MarsFlameOverlay.Opacity = intensity;
+            }
+        }
+        
+        // ------------------- MOONLIGHT SONATA VISUAL EFFECTS -------------------
+        
+        /// <summary>
+        /// Updates the Moonlight Sonata moonbeam overlay visibility based on game state
+        /// Shows when Moonlight Sonata is the current resonated score and on main menu
+        /// </summary>
+        private void UpdateMoonlightBeamOverlay()
+        {
+            if (MoonlightBeamOverlay == null || gameState == null) return;
+            
+            // Show moonbeams only when Moonlight Sonata is resonated AND on main menu
+            bool shouldShow = gameState.CurrentResonatedScore == "Moonlight Sonata" && MainScreen?.IsVisible == true;
+            
+            MoonlightBeamOverlay.IsVisible = shouldShow;
+        }
+        
+        /// <summary>
+        /// Generates random moonbeam effects for Moonlight Sonata with subtle shimmer animation
+        /// Called when equipping the score to create unique beams each time
+        /// </summary>
+        public async void GenerateMoonbeamEffects()
+        {
+            if (MoonlightBeamOverlay == null) return;
+            
+            // Stop any existing animation
+            _moonbeamShimmerActive = false;
+            await Task.Delay(50);
+            
+            // Clear existing beams
+            MoonlightBeamOverlay.Children.Clear();
+            
+            int beamCount = _random.Next(5, 8); // 5-7 beams
+            double screenWidth = 1600;
+            
+            // First add a subtle radial wash
+            var wash = new Avalonia.Controls.Border
+            {
+                Width = 1800,
+                Height = 1000,
+                Opacity = 0.25,
+                Background = new RadialGradientBrush
+                {
+                    Center = new RelativePoint(0.3, 0.2, RelativeUnit.Relative),
+                    GradientOrigin = new RelativePoint(0.3, 0.2, RelativeUnit.Relative),
+                    GradientStops = new GradientStops
+                    {
+                        new GradientStop(Color.Parse("#70E8F0FF"), 0),
+                        new GradientStop(Color.Parse("#30D0E0F8"), 0.4),
+                        new GradientStop(Color.Parse("#00000000"), 1)
+                    }
+                }
+            };
+            Canvas.SetLeft(wash, -100);
+            Canvas.SetTop(wash, -50);
+            MoonlightBeamOverlay.Children.Add(wash);
+            
+            // Store beam data for shimmer animation: (element, baseOpacity, shimmerSpeed, shimmerPhase)
+            var beams = new List<(Avalonia.Controls.Border element, double baseOpacity, double shimmerSpeed, double shimmerPhase)>();
+            
+            // Generate random diagonal moonbeams
+            for (int i = 0; i < beamCount; i++)
+            {
+                // Random properties for each beam
+                double width = _random.Next(100, 220);    // 100-220px wide beams
+                double height = _random.Next(1000, 1400); // Tall beams
+                double angle = _random.Next(10, 40);      // 10-40 degrees diagonal
+                double opacity = 0.3 + _random.NextDouble() * 0.4; // 0.3-0.7 opacity (brighter)
+                double xPos = _random.Next(-100, (int)screenWidth);
+                double yPos = _random.Next(-300, -100);
+                double shimmerSpeed = 0.3 + _random.NextDouble() * 0.6; // Different shimmer speeds
+                double shimmerPhase = _random.NextDouble() * Math.PI * 2; // Random starting phase
+                
+                // Create moonbeam border with gradient
+                var beam = new Avalonia.Controls.Border
+                {
+                    Width = width,
+                    Height = height,
+                    Opacity = opacity,
+                    RenderTransformOrigin = new RelativePoint(0.5, 0.5, RelativeUnit.Relative),
+                    RenderTransform = new RotateTransform(angle),
+                    Background = new LinearGradientBrush
+                    {
+                        StartPoint = new RelativePoint(0, 0, RelativeUnit.Relative),
+                        EndPoint = new RelativePoint(1, 0, RelativeUnit.Relative),
+                        GradientStops = new GradientStops
+                        {
+                            new GradientStop(Color.Parse("#00C0C8E0"), 0),
+                            new GradientStop(Color.Parse("#70E8EEF8"), 0.25),
+                            new GradientStop(Color.Parse("#A0FFFFFF"), 0.5), // Brighter center
+                            new GradientStop(Color.Parse("#70E8EEF8"), 0.75),
+                            new GradientStop(Color.Parse("#00C0C8E0"), 1)
+                        }
+                    }
+                };
+                
+                Canvas.SetLeft(beam, xPos);
+                Canvas.SetTop(beam, yPos);
+                MoonlightBeamOverlay.Children.Add(beam);
+                beams.Add((beam, opacity, shimmerSpeed, shimmerPhase));
+            }
+            
+            // Start shimmer animation loop
+            _moonbeamShimmerActive = true;
+            var startTime = DateTime.Now;
+            
+            while (_moonbeamShimmerActive && MoonlightBeamOverlay?.IsVisible == true)
+            {
+                var elapsed = (DateTime.Now - startTime).TotalSeconds;
+                
+                // Animate each beam's opacity for a subtle shimmer
+                foreach (var (beam, baseOpacity, shimmerSpeed, shimmerPhase) in beams)
+                {
+                    // Subtle sine wave shimmer (±15% opacity variation)
+                    double shimmer = Math.Sin(elapsed * shimmerSpeed * Math.PI * 2 + shimmerPhase) * 0.15;
+                    beam.Opacity = Math.Clamp(baseOpacity + shimmer, 0.15, 0.85);
+                }
+                
+                // Also make the wash pulse very slightly
+                double washShimmer = Math.Sin(elapsed * 0.2 * Math.PI * 2) * 0.05;
+                wash.Opacity = 0.25 + washShimmer;
+                
+                await Task.Delay(50); // ~20fps is enough for subtle shimmer
+            }
+        }
+        
+        // ------------------- SWAN LAKE VISUAL EFFECTS -------------------
+        
+        /// <summary>
+        /// Updates the Swan Lake feather overlay visibility
+        /// Shows when Swan Lake is resonated and on main menu
+        /// </summary>
+        private void UpdateSwanFeatherOverlay()
+        {
+            if (SwanFeatherOverlay == null || gameState == null) return;
+            
+            bool shouldShow = gameState.CurrentResonatedScore == "Swan" && MainScreen?.IsVisible == true;
+            SwanFeatherOverlay.IsVisible = shouldShow;
+        }
+        
+        /// <summary>
+        /// Generates random swan feather effects for Swan Lake with falling animation
+        /// </summary>
+        public async void GenerateSwanFeatherEffects()
+        {
+            if (SwanFeatherOverlay == null) return;
+            
+            // Stop any existing animation
+            _swanFeatherAnimationActive = false;
+            await Task.Delay(50); // Brief pause to let previous animation stop
+            
+            SwanFeatherOverlay.Children.Clear();
+            
+            int featherCount = _random.Next(10, 16); // 10-15 feathers
+            double screenWidth = 1600;
+            double screenHeight = 950;
+            
+            // Store feather data for animation: (element, xPos, yPos, fallSpeed, swaySpeed, swayAmount, rotation, rotationSpeed)
+            var feathers = new List<(Avalonia.Controls.Shapes.Ellipse element, double x, double y, double fallSpeed, double swaySpeed, double swayAmount, double baseRotation, double rotationSpeed)>();
+            
+            for (int i = 0; i < featherCount; i++)
+            {
+                double size = _random.Next(18, 45);       // Feather size
+                double xPos = _random.Next(0, (int)screenWidth);
+                double yPos = _random.Next(-200, (int)screenHeight); // Start some above screen
+                double opacity = 0.3 + _random.NextDouble() * 0.4; // 0.3-0.7
+                double rotation = _random.Next(-60, 60);  // Random tilt
+                double fallSpeed = 15 + _random.NextDouble() * 25; // 15-40 pixels per second
+                double swaySpeed = 0.5 + _random.NextDouble() * 1.5; // Sway frequency
+                double swayAmount = 20 + _random.NextDouble() * 40; // Horizontal sway amount
+                double rotationSpeed = (_random.NextDouble() - 0.5) * 30; // -15 to +15 degrees per second
+                
+                // Create feather shape (elongated ellipse with gradient)
+                var feather = new Avalonia.Controls.Shapes.Ellipse
+                {
+                    Width = size * 0.4,  // Narrow
+                    Height = size,       // Elongated
+                    Opacity = opacity,
+                    RenderTransformOrigin = new RelativePoint(0.5, 0.5, RelativeUnit.Relative),
+                    RenderTransform = new RotateTransform(rotation),
+                    Fill = new LinearGradientBrush
+                    {
+                        StartPoint = new RelativePoint(0, 0, RelativeUnit.Relative),
+                        EndPoint = new RelativePoint(0, 1, RelativeUnit.Relative),
+                        GradientStops = new GradientStops
+                        {
+                            new GradientStop(Color.Parse("#FFFFFFFF"), 0),    // White tip
+                            new GradientStop(Color.Parse("#F0F5F5F5"), 0.3),  // Light gray
+                            new GradientStop(Color.Parse("#D0ECECEC"), 0.6),
+                            new GradientStop(Color.Parse("#A0E0E0E0"), 1)     // Faded base
+                        }
+                    },
+                    Effect = new DropShadowEffect
+                    {
+                        Color = Colors.White,
+                        BlurRadius = 10,
+                        Opacity = 0.6,
+                        OffsetX = 0,
+                        OffsetY = 0
+                    }
+                };
+                
+                Canvas.SetLeft(feather, xPos);
+                Canvas.SetTop(feather, yPos);
+                SwanFeatherOverlay.Children.Add(feather);
+                feathers.Add((feather, xPos, yPos, fallSpeed, swaySpeed, swayAmount, rotation, rotationSpeed));
+            }
+            
+            // Start falling animation loop
+            _swanFeatherAnimationActive = true;
+            var startTime = DateTime.Now;
+            
+            while (_swanFeatherAnimationActive && SwanFeatherOverlay?.IsVisible == true)
+            {
+                var elapsed = (DateTime.Now - startTime).TotalSeconds;
+                
+                for (int i = 0; i < feathers.Count; i++)
+                {
+                    var (element, baseX, baseY, fallSpeed, swaySpeed, swayAmount, baseRotation, rotationSpeed) = feathers[i];
+                    
+                    // Calculate new position with gentle falling and swaying
+                    double newY = baseY + (fallSpeed * elapsed);
+                    double swayOffset = Math.Sin(elapsed * swaySpeed + i) * swayAmount;
+                    double newX = baseX + swayOffset;
+                    double newRotation = baseRotation + (rotationSpeed * elapsed);
+                    
+                    // Wrap around when feather goes off bottom
+                    if (newY > screenHeight + 50)
+                    {
+                        newY = -50;
+                        baseY = -50 - (fallSpeed * elapsed); // Reset base position
+                        baseX = _random.Next(0, (int)screenWidth);
+                        feathers[i] = (element, baseX, baseY, fallSpeed, swaySpeed, swayAmount, baseRotation, rotationSpeed);
+                    }
+                    
+                    Canvas.SetLeft(element, newX);
+                    Canvas.SetTop(element, newY);
+                    element.RenderTransform = new RotateTransform(newRotation);
+                }
+                
+                await Task.Delay(33); // ~30fps
+            }
+        }
+        
+        // ------------------- EROICA VISUAL EFFECTS -------------------
+        
+        /// <summary>
+        /// Updates the Eroica cherry blossom overlay visibility
+        /// Shows when Eroica is resonated and on main menu
+        /// </summary>
+        private void UpdateEroicaPetalOverlay()
+        {
+            if (EroicaPetalOverlay == null || gameState == null) return;
+            
+            bool shouldShow = gameState.CurrentResonatedScore == "Eroica" && MainScreen?.IsVisible == true;
+            EroicaPetalOverlay.IsVisible = shouldShow;
+        }
+        
+        /// <summary>
+        /// Generates random cherry blossom petal effects for Eroica with falling animation
+        /// </summary>
+        public async void GenerateEroicaPetalEffects()
+        {
+            if (EroicaPetalOverlay == null) return;
+            
+            // Stop any existing animation
+            _eroicaPetalAnimationActive = false;
+            await Task.Delay(50); // Brief pause to let previous animation stop
+            
+            EroicaPetalOverlay.Children.Clear();
+            
+            int petalCount = _random.Next(18, 28); // 18-27 petals for more density
+            double screenWidth = 1600;
+            double screenHeight = 950;
+            
+            Color[] petalColors = new Color[]
+            {
+                Color.Parse("#FFB7C9"),  // Soft pink
+                Color.Parse("#FFAEC9"),  // Rose pink  
+                Color.Parse("#FFD1DC"),  // Light pink
+                Color.Parse("#FFC0CB"),  // Pink
+                Color.Parse("#FFE4E9")   // Pale pink
+            };
+            
+            // Store petal data for animation
+            var petals = new List<(Avalonia.Controls.Shapes.Ellipse element, double x, double y, double fallSpeed, double swaySpeed, double swayAmount, double rotation, double spinSpeed)>();
+            
+            for (int i = 0; i < petalCount; i++)
+            {
+                double size = _random.Next(12, 28);       // Petal size
+                double xPos = _random.Next(0, (int)screenWidth);
+                double yPos = _random.Next(-300, (int)screenHeight); // Start some above screen
+                double opacity = 0.4 + _random.NextDouble() * 0.35; // 0.4-0.75
+                double rotation = _random.Next(0, 360);   // Random rotation
+                double fallSpeed = 25 + _random.NextDouble() * 35; // 25-60 pixels per second (faster than feathers)
+                double swaySpeed = 1.0 + _random.NextDouble() * 2.0; // Sway frequency
+                double swayAmount = 30 + _random.NextDouble() * 50; // Horizontal sway amount
+                double spinSpeed = (_random.NextDouble() - 0.5) * 80; // -40 to +40 degrees per second (more spin)
+                Color petalColor = petalColors[_random.Next(petalColors.Length)];
+                
+                // Create petal shape (rounded ellipse)
+                var petal = new Avalonia.Controls.Shapes.Ellipse
+                {
+                    Width = size,
+                    Height = size * 0.7,  // Slightly flattened
+                    Opacity = opacity,
+                    RenderTransformOrigin = new RelativePoint(0.5, 0.5, RelativeUnit.Relative),
+                    RenderTransform = new RotateTransform(rotation),
+                    Fill = new RadialGradientBrush
+                    {
+                        GradientStops = new GradientStops
+                        {
+                            new GradientStop(Color.FromArgb(255, 255, 255, 255), 0),     // White center
+                            new GradientStop(petalColor, 0.4),                          // Pink mid
+                            new GradientStop(Color.FromArgb(200, petalColor.R, petalColor.G, petalColor.B), 0.7),
+                            new GradientStop(Color.FromArgb(80, petalColor.R, petalColor.G, petalColor.B), 1)
+                        }
+                    },
+                    Effect = new DropShadowEffect
+                    {
+                        Color = petalColor,
+                        BlurRadius = 8,
+                        Opacity = 0.5,
+                        OffsetX = 0,
+                        OffsetY = 0
+                    }
+                };
+                
+                Canvas.SetLeft(petal, xPos);
+                Canvas.SetTop(petal, yPos);
+                EroicaPetalOverlay.Children.Add(petal);
+                petals.Add((petal, xPos, yPos, fallSpeed, swaySpeed, swayAmount, rotation, spinSpeed));
+            }
+            
+            // Start falling animation loop
+            _eroicaPetalAnimationActive = true;
+            var startTime = DateTime.Now;
+            
+            while (_eroicaPetalAnimationActive && EroicaPetalOverlay?.IsVisible == true)
+            {
+                var elapsed = (DateTime.Now - startTime).TotalSeconds;
+                
+                for (int i = 0; i < petals.Count; i++)
+                {
+                    var (element, baseX, baseY, fallSpeed, swaySpeed, swayAmount, baseRotation, spinSpeed) = petals[i];
+                    
+                    // Calculate new position with gentle falling, swaying, and flutter effect
+                    double newY = baseY + (fallSpeed * elapsed);
+                    double swayOffset = Math.Sin(elapsed * swaySpeed + i * 0.7) * swayAmount;
+                    double flutter = Math.Sin(elapsed * 4 + i) * 5; // Small rapid flutter
+                    double newX = baseX + swayOffset + flutter;
+                    double newRotation = baseRotation + (spinSpeed * elapsed);
+                    
+                    // Wrap around when petal goes off bottom
+                    if (newY > screenHeight + 50)
+                    {
+                        newY = -40;
+                        baseY = -40 - (fallSpeed * elapsed); // Reset base position
+                        baseX = _random.Next(0, (int)screenWidth);
+                        petals[i] = (element, baseX, baseY, fallSpeed, swaySpeed, swayAmount, baseRotation, spinSpeed);
+                    }
+                    
+                    Canvas.SetLeft(element, newX);
+                    Canvas.SetTop(element, newY);
+                    element.RenderTransform = new RotateTransform(newRotation);
+                }
+                
+                await Task.Delay(33); // ~30fps
+            }
+        }
+        
+        // ------------------- LA CAMPANELLA VISUAL EFFECTS -------------------
+        
+        /// <summary>
+        /// Updates the La Campanella bell overlay visibility
+        /// Shows when La Campanella is resonated and on main menu
+        /// </summary>
+        private void UpdateLaCampanellaBellOverlay()
+        {
+            if (LaCampanellaBellOverlay == null || gameState == null) return;
+            
+            bool shouldShow = gameState.CurrentResonatedScore == "LaCampanella" && MainScreen?.IsVisible == true;
+            LaCampanellaBellOverlay.IsVisible = shouldShow;
+        }
+        
+        /// <summary>
+        /// Generates random bell/chime effects for La Campanella
+        /// </summary>
+        public void GenerateLaCampanellaBellEffects()
+        {
+            if (LaCampanellaBellOverlay == null) return;
+            
+            LaCampanellaBellOverlay.Children.Clear();
+            
+            int bellCount = _random.Next(6, 12); // 6-11 bell shapes
+            double screenWidth = 1600;
+            double screenHeight = 900;
+            
+            for (int i = 0; i < bellCount; i++)
+            {
+                double size = _random.Next(12, 30);       // Bell size
+                double xPos = _random.Next(0, (int)screenWidth);
+                double yPos = _random.Next(0, (int)screenHeight);
+                double opacity = 0.25 + _random.NextDouble() * 0.35; // 0.25-0.6
+                double rotation = _random.Next(-15, 15);  // Slight tilt
+                
+                // Create bell shape using a combination of shapes (simplified as golden ellipse)
+                var bellBody = new Avalonia.Controls.Shapes.Ellipse
+                {
+                    Width = size,
+                    Height = size * 1.2,  // Bell-like proportions
+                    Opacity = opacity,
+                    RenderTransformOrigin = new RelativePoint(0.5, 0.5, RelativeUnit.Relative),
+                    RenderTransform = new RotateTransform(rotation),
+                    Fill = new RadialGradientBrush
+                    {
+                        Center = new RelativePoint(0.4, 0.3, RelativeUnit.Relative),
+                        GradientOrigin = new RelativePoint(0.4, 0.3, RelativeUnit.Relative),
+                        GradientStops = new GradientStops
+                        {
+                            new GradientStop(Color.Parse("#FFFFD700"), 0),      // Gold highlight
+                            new GradientStop(Color.Parse("#FFDAA520"), 0.3),    // Goldenrod
+                            new GradientStop(Color.Parse("#FFB8860B"), 0.6),    // Dark goldenrod
+                            new GradientStop(Color.Parse("#80B8860B"), 1)       // Faded edge
+                        }
+                    },
+                    Effect = new DropShadowEffect
+                    {
+                        Color = Color.Parse("#FFD700"),
+                        BlurRadius = 10,
+                        Opacity = 0.6,
+                        OffsetX = 0,
+                        OffsetY = 0
+                    }
+                };
+                
+                Canvas.SetLeft(bellBody, xPos);
+                Canvas.SetTop(bellBody, yPos);
+                LaCampanellaBellOverlay.Children.Add(bellBody);
+                
+                // Add small clapper/ringer dot below some bells
+                if (_random.NextDouble() > 0.5)
+                {
+                    var clapper = new Avalonia.Controls.Shapes.Ellipse
+                    {
+                        Width = size * 0.2,
+                        Height = size * 0.2,
+                        Opacity = opacity * 0.8,
+                        Fill = new SolidColorBrush(Color.Parse("#FFB8860B"))
+                    };
+                    Canvas.SetLeft(clapper, xPos + size * 0.4);
+                    Canvas.SetTop(clapper, yPos + size * 1.1);
+                    LaCampanellaBellOverlay.Children.Add(clapper);
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Regenerates all major score visual effects based on current resonated score
+        /// Called when equipping a score to create new random effects
+        /// </summary>
+        public void RegenerateMajorScoreEffects()
+        {
+            if (gameState == null) return;
+            
+            string currentScore = gameState.CurrentResonatedScore ?? "None";
+            
+            // Stop any running animations
+            _swanFeatherAnimationActive = false;
+            _eroicaPetalAnimationActive = false;
+            _moonbeamShimmerActive = false;
+            
+            // Clear all overlays first
+            MoonlightBeamOverlay?.Children.Clear();
+            SwanFeatherOverlay?.Children.Clear();
+            EroicaPetalOverlay?.Children.Clear();
+            LaCampanellaBellOverlay?.Children.Clear();
+            
+            // Generate effects for the currently resonated score
+            switch (currentScore)
+            {
+                case "Moonlight Sonata":
+                    GenerateMoonbeamEffects();
+                    break;
+                case "Swan":
+                    GenerateSwanFeatherEffects();
+                    break;
+                case "Eroica":
+                    GenerateEroicaPetalEffects();
+                    break;
+                case "LaCampanella":
+                    GenerateLaCampanellaBellEffects();
+                    break;
+            }
+            
+            // Update visibility
+            UpdateMoonlightBeamOverlay();
+            UpdateSwanFeatherOverlay();
+            UpdateEroicaPetalOverlay();
+            UpdateLaCampanellaBellOverlay();
+        }
+        
+        /// <summary>
+        /// Triggers a screen shake effect for Mars crits
+        /// </summary>
+        public async void TriggerScreenShake(double intensity = 1.0, int durationMs = 200)
+        {
+            if (MainScreen == null) return;
+            
+            var rng = new Random();
+            var startTime = DateTime.Now;
+            var duration = TimeSpan.FromMilliseconds(durationMs);
+            
+            // Save original transform
+            var originalTransform = MainScreen.RenderTransform;
+            MainScreen.RenderTransformOrigin = new RelativePoint(0.5, 0.5, RelativeUnit.Relative);
+            
+            while (DateTime.Now - startTime < duration)
+            {
+                var elapsed = (DateTime.Now - startTime).TotalMilliseconds;
+                var progress = elapsed / durationMs;
+                var decay = 1.0 - progress; // Shake intensity decreases over time
+                
+                double maxOffset = 6 * intensity * decay;
+                double offsetX = (rng.NextDouble() * 2 - 1) * maxOffset;
+                double offsetY = (rng.NextDouble() * 2 - 1) * maxOffset;
+                
+                MainScreen.RenderTransform = new TranslateTransform(offsetX, offsetY);
+                
+                await Task.Delay(16); // ~60fps
+            }
+            
+            // Reset transform
+            MainScreen.RenderTransform = new TranslateTransform(0, 0);
+        }
+        
         private string FormatNumber(double value)
         {
             if (value >= 1_000_000_000_000)
@@ -1933,6 +2895,10 @@ namespace MusicClicker
             if (MainEroicaStackPanel != null) MainEroicaStackPanel.IsVisible = false;
             if (MainOdeToJoyStackPanel != null) MainOdeToJoyStackPanel.IsVisible = false;
             if (MainDiesIraeStackPanel != null) MainDiesIraeStackPanel.IsVisible = false;
+            if (MainWinterStackPanel != null) MainWinterStackPanel.IsVisible = false;
+            if (MainClairDeLuneStackPanel != null) MainClairDeLuneStackPanel.IsVisible = false;
+            if (MainMercuryCrescendancePanel != null) MainMercuryCrescendancePanel.IsVisible = false;
+            if (MainMarsCrescendancePanel != null) MainMarsCrescendancePanel.IsVisible = false;
                 
             if (MainSwanFeatherPanel != null)
                 MainSwanFeatherPanel.IsVisible = true;
@@ -1996,6 +2962,10 @@ namespace MusicClicker
             if (MainEroicaStackPanel != null) MainEroicaStackPanel.IsVisible = false;
             if (MainOdeToJoyStackPanel != null) MainOdeToJoyStackPanel.IsVisible = false;
             if (MainDiesIraeStackPanel != null) MainDiesIraeStackPanel.IsVisible = false;
+            if (MainWinterStackPanel != null) MainWinterStackPanel.IsVisible = false;
+            if (MainClairDeLuneStackPanel != null) MainClairDeLuneStackPanel.IsVisible = false;
+            if (MainMercuryCrescendancePanel != null) MainMercuryCrescendancePanel.IsVisible = false;
+            if (MainMarsCrescendancePanel != null) MainMarsCrescendancePanel.IsVisible = false;
             
             if (MainMoonlightStackPanel != null)
                 MainMoonlightStackPanel.IsVisible = true;            // Update stack counts
@@ -2034,6 +3004,10 @@ namespace MusicClicker
             if (MainEroicaStackPanel != null) MainEroicaStackPanel.IsVisible = false;
             if (MainOdeToJoyStackPanel != null) MainOdeToJoyStackPanel.IsVisible = false;
             if (MainDiesIraeStackPanel != null) MainDiesIraeStackPanel.IsVisible = false;
+            if (MainWinterStackPanel != null) MainWinterStackPanel.IsVisible = false;
+            if (MainClairDeLuneStackPanel != null) MainClairDeLuneStackPanel.IsVisible = false;
+            if (MainMercuryCrescendancePanel != null) MainMercuryCrescendancePanel.IsVisible = false;
+            if (MainMarsCrescendancePanel != null) MainMarsCrescendancePanel.IsVisible = false;
             
             if (MainLaCampanellaStackPanel != null)
                 MainLaCampanellaStackPanel.IsVisible = true;            // Update bell stage text
@@ -2095,6 +3069,12 @@ namespace MusicClicker
             if (MainEroicaStackPanel != null) MainEroicaStackPanel.IsVisible = false;
             if (MainOdeToJoyStackPanel != null) MainOdeToJoyStackPanel.IsVisible = false;
             if (MainDiesIraeStackPanel != null) MainDiesIraeStackPanel.IsVisible = false;
+            if (MainWinterStackPanel != null) MainWinterStackPanel.IsVisible = false;
+            if (MainClairDeLuneStackPanel != null) MainClairDeLuneStackPanel.IsVisible = false;
+            if (MainMercuryCrescendancePanel != null) MainMercuryCrescendancePanel.IsVisible = false;
+            if (MainMarsCrescendancePanel != null) MainMarsCrescendancePanel.IsVisible = false;
+            if (MainOdeToJoyStackPanel != null) MainOdeToJoyStackPanel.IsVisible = false;
+            if (MainDiesIraeStackPanel != null) MainDiesIraeStackPanel.IsVisible = false;
             
             if (MainEnigmaStackPanel != null)
                 MainEnigmaStackPanel.IsVisible = true;            // Update stack count
@@ -2137,6 +3117,10 @@ namespace MusicClicker
             if (MainEroicaStackPanel != null) MainEroicaStackPanel.IsVisible = false;
             if (MainOdeToJoyStackPanel != null) MainOdeToJoyStackPanel.IsVisible = false;
             if (MainDiesIraeStackPanel != null) MainDiesIraeStackPanel.IsVisible = false;
+            if (MainWinterStackPanel != null) MainWinterStackPanel.IsVisible = false;
+            if (MainClairDeLuneStackPanel != null) MainClairDeLuneStackPanel.IsVisible = false;
+            if (MainMercuryCrescendancePanel != null) MainMercuryCrescendancePanel.IsVisible = false;
+            if (MainMarsCrescendancePanel != null) MainMarsCrescendancePanel.IsVisible = false;
                 
             if (MainFateStackPanel != null)
                 MainFateStackPanel.IsVisible = true;
@@ -2217,6 +3201,10 @@ namespace MusicClicker
             if (MainFateStackPanel != null) MainFateStackPanel.IsVisible = false;
             if (MainOdeToJoyStackPanel != null) MainOdeToJoyStackPanel.IsVisible = false;
             if (MainDiesIraeStackPanel != null) MainDiesIraeStackPanel.IsVisible = false;
+            if (MainWinterStackPanel != null) MainWinterStackPanel.IsVisible = false;
+            if (MainClairDeLuneStackPanel != null) MainClairDeLuneStackPanel.IsVisible = false;
+            if (MainMercuryCrescendancePanel != null) MainMercuryCrescendancePanel.IsVisible = false;
+            if (MainMarsCrescendancePanel != null) MainMarsCrescendancePanel.IsVisible = false;
                 
             if (MainEroicaStackPanel != null)
                 MainEroicaStackPanel.IsVisible = true;
@@ -2304,6 +3292,10 @@ namespace MusicClicker
             if (MainFateStackPanel != null) MainFateStackPanel.IsVisible = false;
             if (MainEroicaStackPanel != null) MainEroicaStackPanel.IsVisible = false;
             if (MainOdeToJoyStackPanel != null) MainOdeToJoyStackPanel.IsVisible = false;
+            if (MainWinterStackPanel != null) MainWinterStackPanel.IsVisible = false;
+            if (MainClairDeLuneStackPanel != null) MainClairDeLuneStackPanel.IsVisible = false;
+            if (MainMercuryCrescendancePanel != null) MainMercuryCrescendancePanel.IsVisible = false;
+            if (MainMarsCrescendancePanel != null) MainMarsCrescendancePanel.IsVisible = false;
                 
             if (MainDiesIraeStackPanel != null)
                 MainDiesIraeStackPanel.IsVisible = true;
@@ -2363,6 +3355,10 @@ namespace MusicClicker
             if (MainFateStackPanel != null) MainFateStackPanel.IsVisible = false;
             if (MainEroicaStackPanel != null) MainEroicaStackPanel.IsVisible = false;
             if (MainDiesIraeStackPanel != null) MainDiesIraeStackPanel.IsVisible = false;
+            if (MainWinterStackPanel != null) MainWinterStackPanel.IsVisible = false;
+            if (MainClairDeLuneStackPanel != null) MainClairDeLuneStackPanel.IsVisible = false;
+            if (MainMercuryCrescendancePanel != null) MainMercuryCrescendancePanel.IsVisible = false;
+            if (MainMarsCrescendancePanel != null) MainMarsCrescendancePanel.IsVisible = false;
                 
             if (MainOdeToJoyStackPanel != null)
                 MainOdeToJoyStackPanel.IsVisible = true;
@@ -2492,6 +3488,14 @@ namespace MusicClicker
             else if (gameState.CurrentResonatedScore == "ClairDeLune")
             {
                 UpdateMainClairDeLuneCrescendanceInfo();
+            }
+            else if (gameState.CurrentResonatedScore == "Mercury")
+            {
+                UpdateMainMercuryCrescendanceInfo();
+            }
+            else if (gameState.CurrentResonatedScore == "Mars")
+            {
+                UpdateMainMarsCrescendanceInfo();
             }
             else
             {
@@ -2713,6 +3717,9 @@ namespace MusicClicker
             if (MainEroicaStackPanel != null) MainEroicaStackPanel.IsVisible = false;
             if (MainOdeToJoyStackPanel != null) MainOdeToJoyStackPanel.IsVisible = false;
             if (MainDiesIraeStackPanel != null) MainDiesIraeStackPanel.IsVisible = false;
+            if (MainClairDeLuneStackPanel != null) MainClairDeLuneStackPanel.IsVisible = false;
+            if (MainMercuryCrescendancePanel != null) MainMercuryCrescendancePanel.IsVisible = false;
+            if (MainMarsCrescendancePanel != null) MainMarsCrescendancePanel.IsVisible = false;
                 
             if (MainWinterStackPanel != null)
                 MainWinterStackPanel.IsVisible = true;
@@ -2873,6 +3880,8 @@ namespace MusicClicker
             if (MainOdeToJoyStackPanel != null) MainOdeToJoyStackPanel.IsVisible = false;
             if (MainDiesIraeStackPanel != null) MainDiesIraeStackPanel.IsVisible = false;
             if (MainWinterStackPanel != null) MainWinterStackPanel.IsVisible = false;
+            if (MainMercuryCrescendancePanel != null) MainMercuryCrescendancePanel.IsVisible = false;
+            if (MainMarsCrescendancePanel != null) MainMarsCrescendancePanel.IsVisible = false;
                 
             if (MainClairDeLuneStackPanel != null)
                 MainClairDeLuneStackPanel.IsVisible = true;
@@ -2925,6 +3934,215 @@ namespace MusicClicker
             {
                 MusicClicker.Armory.WeaponAbilities.ClairConsumeTemporalFracture(gameState);
                 UpdateMainClairDeLuneCrescendanceInfo();
+                UIUpdater.UpdateUI(this, gameState);
+            }
+        }
+        
+        // Mercury Crescendance Update Method
+        public void UpdateMainMercuryCrescendanceInfo()
+        {
+            if (MainCrescendanceTitle != null)
+                MainCrescendanceTitle.Text = "Mercury: The Winged Messenger";
+                
+            if (MainCrescendanceInfoText != null)
+                MainCrescendanceInfoText.Text = "Herald of Fate. Passively gain Swift Resonance every 5 clicks. Transform into Herald's Message for EM, then consume for massive rewards. Weapons grant Planetary Alignment stacks.";
+                
+            // Hide all other panels
+            if (MainSwanFeatherPanel != null) MainSwanFeatherPanel.IsVisible = false;
+            if (MainMoonlightStackPanel != null) MainMoonlightStackPanel.IsVisible = false;
+            if (MainLaCampanellaStackPanel != null) MainLaCampanellaStackPanel.IsVisible = false;
+            if (MainEnigmaStackPanel != null) MainEnigmaStackPanel.IsVisible = false;
+            if (MainFateStackPanel != null) MainFateStackPanel.IsVisible = false;
+            if (MainEroicaStackPanel != null) MainEroicaStackPanel.IsVisible = false;
+            if (MainOdeToJoyStackPanel != null) MainOdeToJoyStackPanel.IsVisible = false;
+            if (MainDiesIraeStackPanel != null) MainDiesIraeStackPanel.IsVisible = false;
+            if (MainWinterStackPanel != null) MainWinterStackPanel.IsVisible = false;
+            if (MainClairDeLuneStackPanel != null) MainClairDeLuneStackPanel.IsVisible = false;
+            if (MainMarsCrescendancePanel != null) MainMarsCrescendancePanel.IsVisible = false;
+                
+            if (MainMercuryCrescendancePanel != null)
+                MainMercuryCrescendancePanel.IsVisible = true;
+                
+            // Update stack counts
+            if (MainSwiftResonanceCount != null)
+                MainSwiftResonanceCount.Text = gameState.SwiftResonanceStacks.ToString();
+                
+            if (MainHeraldsMessageCount != null)
+                MainHeraldsMessageCount.Text = gameState.HeraldsMessageStacks.ToString();
+                
+            if (MainPlanetaryAlignmentCount != null)
+                MainPlanetaryAlignmentCount.Text = gameState.PlanetaryAlignmentStacks.ToString();
+                
+            // Update button states
+            if (MainMercuryHeraldDescentButton != null)
+                MainMercuryHeraldDescentButton.IsEnabled = DateTime.Now >= gameState.MercuryHeraldDescentCooldownExpiry;
+                
+            if (MainMercuryResonantTransformationButton != null)
+                MainMercuryResonantTransformationButton.IsEnabled = gameState.SwiftResonanceStacks > 0;
+                
+            if (MainMercurySymphonysBountyButton != null)
+                MainMercurySymphonysBountyButton.IsEnabled = gameState.HeraldsMessageStacks >= 3;
+                
+            if (MainConsumePlanetaryAlignmentButton != null)
+                MainConsumePlanetaryAlignmentButton.IsEnabled = gameState.PlanetaryAlignmentStacks > 0;
+        }
+        
+        // Mercury Ability Button Handlers
+        private void MainMercuryHeraldDescent_Click(object? sender, RoutedEventArgs e)
+        {
+            if (DateTime.Now >= gameState.MercuryHeraldDescentCooldownExpiry)
+            {
+                MusicClicker.Armory.WeaponAbilities.Mercury_HeraldsDescent(gameState);
+                UpdateMainMercuryCrescendanceInfo();
+                UIUpdater.UpdateUI(this, gameState);
+            }
+        }
+        
+        private void MainMercuryResonantTransformation_Click(object? sender, RoutedEventArgs e)
+        {
+            if (gameState.SwiftResonanceStacks >= 1)
+            {
+                MusicClicker.Armory.WeaponAbilities.Mercury_ResonantTransformation(gameState);
+                UpdateMainMercuryCrescendanceInfo();
+                UIUpdater.UpdateUI(this, gameState);
+            }
+        }
+        
+        private void MainMercurySymphonysBounty_Click(object? sender, RoutedEventArgs e)
+        {
+            if (gameState.HeraldsMessageStacks >= 3)
+            {
+                MusicClicker.Armory.WeaponAbilities.Mercury_SymphonysBounty(gameState);
+                UpdateMainMercuryCrescendanceInfo();
+                UIUpdater.UpdateUI(this, gameState);
+            }
+        }
+        
+        private void MainConsumePlanetaryAlignment_Click(object? sender, RoutedEventArgs e)
+        {
+            if (gameState.PlanetaryAlignmentStacks > 0)
+            {
+                MusicClicker.Armory.WeaponAbilities.Mercury_ConsumePlanetaryAlignment(gameState);
+                UpdateMainMercuryCrescendanceInfo();
+                UIUpdater.UpdateUI(this, gameState);
+            }
+        }
+        
+        // Mars Crescendance Update Method
+        public void UpdateMainMarsCrescendanceInfo()
+        {
+            if (MainCrescendanceTitle != null)
+                MainCrescendanceTitle.Text = "Mars: Bringer of War";
+                
+            if (MainCrescendanceInfoText != null)
+                MainCrescendanceInfoText.Text = "Blade of Symphonic War. Charge the Blade to generate Resolute Fractal. Consume for massive notes and power!";
+                
+            // Hide all other panels
+            if (MainSwanFeatherPanel != null) MainSwanFeatherPanel.IsVisible = false;
+            if (MainMoonlightStackPanel != null) MainMoonlightStackPanel.IsVisible = false;
+            if (MainLaCampanellaStackPanel != null) MainLaCampanellaStackPanel.IsVisible = false;
+            if (MainEnigmaStackPanel != null) MainEnigmaStackPanel.IsVisible = false;
+            if (MainFateStackPanel != null) MainFateStackPanel.IsVisible = false;
+            if (MainEroicaStackPanel != null) MainEroicaStackPanel.IsVisible = false;
+            if (MainOdeToJoyStackPanel != null) MainOdeToJoyStackPanel.IsVisible = false;
+            if (MainDiesIraeStackPanel != null) MainDiesIraeStackPanel.IsVisible = false;
+            if (MainWinterStackPanel != null) MainWinterStackPanel.IsVisible = false;
+            if (MainClairDeLuneStackPanel != null) MainClairDeLuneStackPanel.IsVisible = false;
+            if (MainMercuryCrescendancePanel != null) MainMercuryCrescendancePanel.IsVisible = false;
+                
+            if (MainMarsCrescendancePanel != null)
+                MainMarsCrescendancePanel.IsVisible = true;
+                
+            // Update stack counts
+            if (MainResoluteFractalCount != null)
+                MainResoluteFractalCount.Text = gameState.ResoluteFractalStacks.ToString();
+                
+            if (MainInfiniteWarCount != null)
+                MainInfiniteWarCount.Text = gameState.InfiniteWarOfHarmonyCritsRemaining.ToString();
+                
+            if (MainOblivionsDestructionCount != null)
+                MainOblivionsDestructionCount.Text = gameState.OblivionsDestructionStacks.ToString();
+                
+            // Update Blade charge display
+            if (MainBladeChargeText != null)
+                MainBladeChargeText.Text = $"Blade Charge: {gameState.BladeOfSymphonicWarCharge:F1}%";
+                
+            // Update button states
+            if (MainConsumeResoluteFractalButton != null)
+                MainConsumeResoluteFractalButton.IsEnabled = gameState.ResoluteFractalStacks >= 1;
+            
+            if (MainConsumeAllResoluteFractalButton != null)
+                MainConsumeAllResoluteFractalButton.IsEnabled = gameState.ResoluteFractalStacks >= 5; // Only enable if we can get at least one full set
+            
+            if (MainMergeAllInfiniteWarButton != null)
+                MainMergeAllInfiniteWarButton.IsEnabled = gameState.InfiniteWarOfHarmonyCritsRemaining >= 2; // Need at least 2 to merge
+                
+            if (MainConsumeOblivionsDestructionButton != null)
+                MainConsumeOblivionsDestructionButton.IsEnabled = gameState.OblivionsDestructionStacks >= 5;
+        }
+        
+        // Mars Ability Button Handlers
+        private void MainConsumeResoluteFractal_Click(object? sender, RoutedEventArgs e)
+        {
+            if (gameState.ResoluteFractalStacks >= 1)
+            {
+                MusicClicker.Armory.WeaponAbilities.Mars_ConsumeResoluteFractal(gameState);
+                UpdateMainMarsCrescendanceInfo();
+                UIUpdater.UpdateUI(this, gameState);
+            }
+        }
+        
+        private void MainConsumeAllResoluteFractal_Click(object? sender, RoutedEventArgs e)
+        {
+            if (gameState.ResoluteFractalStacks >= 1)
+            {
+                MusicClicker.Armory.WeaponAbilities.Mars_ConsumeAllResoluteFractals(gameState);
+                UpdateMainMarsCrescendanceInfo();
+                UIUpdater.UpdateUI(this, gameState);
+            }
+        }
+        
+        private void MainMergeAllInfiniteWar_Click(object? sender, RoutedEventArgs e)
+        {
+            if (gameState.InfiniteWarOfHarmonyCritsRemaining >= 2)
+            {
+                // Store merged count before consuming
+                int mergedCount = gameState.InfiniteWarOfHarmonyCritsRemaining;
+                
+                // Consume all Infinite War crits
+                gameState.InfiniteWarOfHarmonyCritsRemaining = 0;
+                gameState.BladeOfSymphonicWarCharge = 0; // Deplete blade
+                
+                // Calculate Pyroclastic Harmony: NPC × log₁₀(NPC+1)^(mergedCount) with capped exponent
+                // Cap exponent at 50 to prevent overflow while still rewarding high merge counts
+                double npc = gameState.NotesPerClick;
+                double cappedExponent = Math.Min(mergedCount, 50);
+                double logFactor = Math.Pow(Math.Log10(npc + 1) + 1, cappedExponent);
+                double bonus = npc * logFactor * mergedCount; // Scale linearly with merge count too
+                
+                // Apply overflow protection
+                bonus = MusicClicker.Helpers.AtomicDouble.SafeValue(bonus);
+                MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, bonus);
+                
+                // Show the special critical text
+                ShowFloatingText(_lastClickPosition, 
+                    $"Pyroclastic Harmony of War's Eternal Rage!!! +{NumberFormatter.FormatLargeNumber(bonus)}", 
+                    Colors.Black, true, Colors.Red);
+                
+                // Heavy screen shake for this mega-crit
+                TriggerScreenShake(2.5, 500);
+                
+                UpdateMainMarsCrescendanceInfo();
+                UIUpdater.UpdateUI(this, gameState);
+            }
+        }
+        
+        private void MainConsumeOblivionsDestruction_Click(object? sender, RoutedEventArgs e)
+        {
+            if (gameState.OblivionsDestructionStacks >= 5)
+            {
+                MusicClicker.Armory.WeaponAbilities.Mars_ConsumeOblivionsDestruction(gameState);
+                UpdateMainMarsCrescendanceInfo();
                 UIUpdater.UpdateUI(this, gameState);
             }
         }

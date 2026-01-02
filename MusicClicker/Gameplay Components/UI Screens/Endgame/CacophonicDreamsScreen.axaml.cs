@@ -848,6 +848,7 @@ namespace MusicClicker.Views
                     this.IsVisible = false;
                     _parentWindow.MainScreen.IsVisible = true;
                 });
+                _parentWindow.RegenerateMajorScoreEffects();
             }
         }
 

@@ -307,8 +307,9 @@
                                   VerticalScrollBarVisibility="Auto"
                                   HorizontalScrollBarVisibility="Disabled">
                         <StackPanel x:Name="RightDrawerPanel" 
-                                    Orientation="Vertical" 
-                                    Spacing="8"/>
+                                   Orientation="Vertical"
+                                   Spacing="15"
+                                   Margin="0,0,0,0"/>
                     </ScrollViewer>
                 </Grid>
             </Border>

@@ -36,25 +36,25 @@
                         <Button x:Name="ClickerOption1" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2">
                             <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds &amp; Generic/Music Game Assets [A961E2A]-min.png" Width="180" Height="180" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Button>
-                        <TextBlock Text="(Click to restore to default)" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
+                        <TextBlock x:Name="ClickerText1" Text="(Click to restore to default)" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
                     </StackPanel>
                     <StackPanel>
                         <Button x:Name="ClickerOption2" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2">
                             <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/UI Buttons &amp; Menus/ALLMAJORClickerButton.png" Width="180" Height="180" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Button>
-                        <TextBlock Text="Requires all Non-Event Major Scores Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
+                        <TextBlock x:Name="ClickerText2" Text="Requires all Non-Event Major Scores Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
                     </StackPanel>
                     <StackPanel>
                         <Button x:Name="ClickerOption3" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2">
                             <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Score Icons/MoonlightIcon.jpg" Width="180" Height="180" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Button>
-                        <TextBlock Text="Requires Moonlight Sonata Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
+                        <TextBlock x:Name="ClickerText3" Text="Requires Moonlight Sonata Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
                     </StackPanel>
                     <StackPanel>
                         <Button x:Name="ClickerOption4" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2">
                             <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Score Icons/EroicaIcon.jpg" Width="180" Height="180" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Button>
-                        <TextBlock Text="Requires Eroica Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
+                        <TextBlock x:Name="ClickerText4" Text="Requires Eroica Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
                     </StackPanel>
                 </StackPanel>
 
@@ -64,25 +64,25 @@
                         <Button x:Name="ClickerOption5" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2">
                             <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Score Icons/SwanLakeIcon.jpg" Width="180" Height="180" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Button>
-                        <TextBlock Text="Requires Swan Lake Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
+                        <TextBlock x:Name="ClickerText5" Text="Requires Swan Lake Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
                     </StackPanel>
                     <StackPanel>
                         <Button x:Name="ClickerOption6" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2">
                             <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Score Icons/LaCampanellaIcon.jpg" Width="180" Height="180" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Button>
-                        <TextBlock Text="Requires La Campanella Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
+                        <TextBlock x:Name="ClickerText6" Text="Requires La Campanella Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
                     </StackPanel>
                     <StackPanel>
                         <Button x:Name="ClickerOption7" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2">
                             <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Score Icons/EnigmaIcon.jpg" Width="180" Height="180" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Button>
-                        <TextBlock Text="Requires Enigma Variations Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
+                        <TextBlock x:Name="ClickerText7" Text="Requires Enigma Variations Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
                     </StackPanel>
                     <StackPanel>
                         <Button x:Name="ClickerOption8" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2">
                             <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Score Icons/FateIcon.jpg" Width="180" Height="180" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Button>
-                        <TextBlock Text="Requires Fate Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
+                        <TextBlock x:Name="ClickerText8" Text="Requires Fate Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
                     </StackPanel>
                 </StackPanel>
 
@@ -92,43 +92,49 @@
                         <Button x:Name="ClickerOption9" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2">
                             <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Score Icons/OdeToJoyIcon.png" Width="180" Height="180" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Button>
-                        <TextBlock Text="Requires Ode to Joy Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
+                        <TextBlock x:Name="ClickerText9" Text="Requires Ode to Joy Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
                     </StackPanel>
                     <StackPanel>
                         <Button x:Name="ClickerOption10" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2">
                             <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Score Icons/DiesIraeIcon.jpg" Width="180" Height="180" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Button>
-                        <TextBlock Text="Requires Dies Irae Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
+                        <TextBlock x:Name="ClickerText10" Text="Requires Dies Irae Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
                     </StackPanel>
                     <StackPanel>
                         <Button x:Name="ClickerOption11" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2">
                             <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Score Icons/WinterIcon.jpg" Width="180" Height="180" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Button>
-                        <TextBlock Text="Requires Winter Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
+                        <TextBlock x:Name="ClickerText11" Text="Requires Winter Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
                     </StackPanel>
                     <StackPanel>
-                        <Button x:Name="ClickerOption12" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2" />
-                        <TextBlock Text="(Custom Requirement)" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
+                        <Button x:Name="ClickerOption12" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Score Icons/MercuryClickerImage.jpg" Width="180" Height="180" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Button>
+                        <TextBlock x:Name="ClickerText12" Text="Requires Mercury Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
                     </StackPanel>
                 </StackPanel>
 
                 <!-- Row 4 -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
                     <StackPanel>
-                        <Button x:Name="ClickerOption13" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2" />
-                        <TextBlock Text="(Custom Requirement)" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
+                        <Button x:Name="ClickerOption13" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Score Icons/ClairDeLuneClickerImage.jpg" Width="180" Height="180" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Button>
+                        <TextBlock x:Name="ClickerText13" Text="Requires Clair de Lune Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
                     </StackPanel>
                     <StackPanel>
-                        <Button x:Name="ClickerOption14" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2" />
-                        <TextBlock Text="(Custom Requirement)" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
+                        <Button x:Name="ClickerOption14" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Score Icons/MarsClickerImage.jpg" Width="180" Height="180" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Button>
+                        <TextBlock x:Name="ClickerText14" Text="Requires Mars Major Owned" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
                     </StackPanel>
                     <StackPanel>
-                        <Button x:Name="ClickerOption15" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2" />
-                        <TextBlock Text="(Custom Requirement)" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
+                        <Button x:Name="ClickerOption15" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2" IsVisible="False" />
+                        <TextBlock Text="" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" IsVisible="False" />
                     </StackPanel>
                     <StackPanel>
-                        <Button x:Name="ClickerOption16" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2" />
-                        <TextBlock Text="(Custom Requirement)" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" />
+                        <Button x:Name="ClickerOption16" Width="180" Height="180" Background="Black" BorderBrush="White" BorderThickness="2" IsVisible="False" />
+                        <TextBlock Text="" Foreground="White" FontSize="14" HorizontalAlignment="Center" Margin="0,8,0,0" TextWrapping="Wrap" Width="180" IsVisible="False" />
                     </StackPanel>
                 </StackPanel>
 

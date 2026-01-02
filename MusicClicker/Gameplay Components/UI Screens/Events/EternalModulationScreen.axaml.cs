@@ -123,6 +123,7 @@ namespace MusicClicker.Views
                         mainScreen.IsVisible = true;
                     });
                 }
+                mw.RegenerateMajorScoreEffects();
             }
             else if (current is Window parentWindow)
             {

@@ -22,7 +22,7 @@ namespace MusicClicker.Views
         // Reference to the game state for checking/updating player progress
         private GameState? _gameState;
 
-        // Array of all weapon names displayed in the shop (20 total weapons)
+        // Array of all weapon names displayed in the shop (24 total weapons)
         private readonly string[] _weaponNames = new[]
         {
             // Moonlight weapons — user requested Incisor first, then Eulogy
@@ -59,9 +59,17 @@ namespace MusicClicker.Views
             "Cacophonic Blizzard",      // Formerly: Winter Bow I (event)
             "The Snow's Desire",        // Formerly: Winter Bow II (event)
 
+            // Mercury Major weapons (Messenger of Planetary Resonance)
+            "Mercurial Overture",      // Mercury 1
+            "Wing of the Messenger",   // Mercury 2
+
             // Boss Fight weapons (Clair de Lune)
-            "Celestial Horology",      // Clair de Lune 1
-            "Metronomic Dissonance"     // Clair de Lune 2
+            "Clockwork Finality",      // Clair de Lune 1
+            "Celestial Horology",      // Clair de Lune 2
+
+            // Mars Major weapons (Blade of Symphonic War)
+            "Consonance's Requiemic War",  // Mars 1
+            "Fractal of War"               // Mars 2
         };
 
         // Array mapping each weapon to its required major
@@ -86,8 +94,12 @@ namespace MusicClicker.Views
             "Dies Irae",
             "Winter",                  // Required for Winter Bow I & II (actual score)
             "Winter",
+            "Mercury Major",           // Required for Mercury weapons
+            "Mercury Major",
             "Clair de Lune",           // Required for Clair de Lune weapons
-            "Clair de Lune"
+            "Clair de Lune",
+            "Mars Major",              // Required for Mars weapons
+            "Mars Major"
         };
 
         // Precomputed exponential base multipliers for weapon costs to avoid repeated Math.Pow calls.
@@ -95,7 +107,7 @@ namespace MusicClicker.Views
 
         static ArmoryOfForteScreen()
         {
-            _weaponBaseMultipliers = new double[20];
+            _weaponBaseMultipliers = new double[24];
             for (int i = 0; i < _weaponBaseMultipliers.Length; i++)
             {
                 _weaponBaseMultipliers[i] = 250 * Math.Pow(3, i + 1);
@@ -121,30 +133,34 @@ namespace MusicClicker.Views
 
         /// <summary>
         /// Connects each weapon button to its purchase handler.
-        /// Each button is linked to its corresponding weapon index (0-19).
+        /// Each button is linked to its corresponding weapon index (0-23).
         /// </summary>
         private void InitializeArmoryButtons()
         {
-            ArmoryItem1Button.Click += (s, e) => HandleArmoryPurchase(0);   // Moonlight Blade I
-            ArmoryItem2Button.Click += (s, e) => HandleArmoryPurchase(1);   // Moonlight Blade II
-            ArmoryItem3Button.Click += (s, e) => HandleArmoryPurchase(2);   // Eroica Sword I
-            ArmoryItem4Button.Click += (s, e) => HandleArmoryPurchase(3);   // Eroica Sword II
-            ArmoryItem5Button.Click += (s, e) => HandleArmoryPurchase(4);   // Swan Lance I
-            ArmoryItem6Button.Click += (s, e) => HandleArmoryPurchase(5);   // Swan Lance II
-            ArmoryItem7Button.Click += (s, e) => HandleArmoryPurchase(6);   // Campanella Dagger I
-            ArmoryItem8Button.Click += (s, e) => HandleArmoryPurchase(7);   // Campanella Dagger II
-            ArmoryItem9Button.Click += (s, e) => HandleArmoryPurchase(8);   // Enigma Staff I
-            ArmoryItem10Button.Click += (s, e) => HandleArmoryPurchase(9);  // Enigma Staff II
-            ArmoryItem11Button.Click += (s, e) => HandleArmoryPurchase(10); // Fate Axe I
-            ArmoryItem12Button.Click += (s, e) => HandleArmoryPurchase(11); // Fate Axe II
-            ArmoryItem13Button.Click += (s, e) => HandleArmoryPurchase(12); // Joy Hammer I
-            ArmoryItem14Button.Click += (s, e) => HandleArmoryPurchase(13); // Joy Hammer II
+            ArmoryItem1Button.Click += (s, e) => HandleArmoryPurchase(0);   // Incisor of Moonlight
+            ArmoryItem2Button.Click += (s, e) => HandleArmoryPurchase(1);   // Eulogy of the Moon
+            ArmoryItem3Button.Click += (s, e) => HandleArmoryPurchase(2);   // Sakura's Blossom
+            ArmoryItem4Button.Click += (s, e) => HandleArmoryPurchase(3);   // Funeral Prayer
+            ArmoryItem5Button.Click += (s, e) => HandleArmoryPurchase(4);   // Star-Scattered Wings
+            ArmoryItem6Button.Click += (s, e) => HandleArmoryPurchase(5);   // Thousand Winged Swan
+            ArmoryItem7Button.Click += (s, e) => HandleArmoryPurchase(6);   // Symphony of Bells
+            ArmoryItem8Button.Click += (s, e) => HandleArmoryPurchase(7);   // Razer of Bell's Chimes
+            ArmoryItem9Button.Click += (s, e) => HandleArmoryPurchase(8);   // Creator of Mystery
+            ArmoryItem10Button.Click += (s, e) => HandleArmoryPurchase(9);  // Truthseeker
+            ArmoryItem11Button.Click += (s, e) => HandleArmoryPurchase(10); // Astral Chainripper
+            ArmoryItem12Button.Click += (s, e) => HandleArmoryPurchase(11); // Cosmic Weaver
+            ArmoryItem13Button.Click += (s, e) => HandleArmoryPurchase(12); // Joyful Catharsis
+            ArmoryItem14Button.Click += (s, e) => HandleArmoryPurchase(13); // Ode to Creation
             ArmoryItem15Button.Click += (s, e) => HandleArmoryPurchase(14); // Seven Circles
             ArmoryItem16Button.Click += (s, e) => HandleArmoryPurchase(15); // Hell's Wrath
             ArmoryItem17Button.Click += (s, e) => HandleArmoryPurchase(16); // Cacophonic Blizzard
             ArmoryItem18Button.Click += (s, e) => HandleArmoryPurchase(17); // The Snow's Desire
-            ArmoryItem19Button.Click += (s, e) => HandleArmoryPurchase(18); // Celestial Horology
-            ArmoryItem20Button.Click += (s, e) => HandleArmoryPurchase(19); // Metronomic Dissonance
+            ArmoryItem19Button.Click += (s, e) => HandleArmoryPurchase(18); // Mercurial Overture
+            ArmoryItem20Button.Click += (s, e) => HandleArmoryPurchase(19); // Wing of the Messenger
+            ArmoryItem21Button.Click += (s, e) => HandleArmoryPurchase(20); // Clockwork Finality
+            ArmoryItem22Button.Click += (s, e) => HandleArmoryPurchase(21); // Celestial Horology
+            ArmoryItem23Button.Click += (s, e) => HandleArmoryPurchase(22); // Consonance's Requiemic War
+            ArmoryItem24Button.Click += (s, e) => HandleArmoryPurchase(23); // Fractal of War
         }
 
         /// <summary>
@@ -187,7 +203,9 @@ namespace MusicClicker.Views
                 12 or 13 => _gameState.OdeToJoyMajorOwned > 0,     // Ode to Joy weapons
                 14 or 15 => _gameState.DiesIraeOwned > 0,          // Dies Irae weapons
                 16 or 17 => _gameState.WinterOwned > 0,            // Winter weapons
-                18 or 19 => _gameState.ClairDeLuneMajorOwned > 0,       // Clair de Lune weapons
+                18 or 19 => _gameState.MercuryMajorOwned > 0,      // Mercury weapons
+                20 or 21 => _gameState.ClairDeLuneMajorOwned > 0,  // Clair de Lune weapons
+                22 or 23 => _gameState.MarsMajorOwned > 0,         // Mars weapons
                 _ => false
             };
         }
@@ -220,8 +238,12 @@ namespace MusicClicker.Views
                 15 => _gameState.HellsWrath,
                 16 => _gameState.CacophonicBlizzard,
                 17 => _gameState.TheSnowsDesire,
-                18 => _gameState.CelestialHorology,
-                19 => _gameState.MetronomicDissonance,
+                18 => _gameState.MercurialOverture,
+                19 => _gameState.WingOfTheMessenger,
+                20 => _gameState.MetronomicDissonance,
+                21 => _gameState.CelestialHorology,
+                22 => _gameState.ConsonanceRequiemicWar,
+                23 => _gameState.FractalOfWar,
                 _ => false
             };
         }
@@ -255,8 +277,12 @@ namespace MusicClicker.Views
                 case 15: _gameState.HellsWrath = value; break;
                 case 16: _gameState.CacophonicBlizzard = value; break;
                 case 17: _gameState.TheSnowsDesire = value; break;
-                case 18: _gameState.CelestialHorology = value; break;
-                case 19: _gameState.MetronomicDissonance = value; break;
+                case 18: _gameState.MercurialOverture = value; break;
+                case 19: _gameState.WingOfTheMessenger = value; break;
+                case 20: _gameState.MetronomicDissonance = value; break;
+                case 21: _gameState.CelestialHorology = value; break;
+                case 22: _gameState.ConsonanceRequiemicWar = value; break;
+                case 23: _gameState.FractalOfWar = value; break;
             }
         }
 
@@ -330,6 +356,7 @@ namespace MusicClicker.Views
                     if (mainScreen != null)
                         mainScreen.IsVisible = true;
                 });
+                mainWindow.RegenerateMajorScoreEffects();
             }
             else if (current is Window parentWindow)
             {
@@ -352,7 +379,7 @@ namespace MusicClicker.Views
             // Update the notes display at top of screen
             ArmoryNotesText.Text = $"Notes: {FormatNumber(gameState.Notes)}";
             
-            // Update all 20 weapon slots with current state
+            // Update all 24 weapon slots with current state
             UpdateWeaponSlot(0, ArmoryItem1Button, ArmoryItem1CostText, ArmoryItem1OwnedText, ArmoryItem1SoloConcertoText, ArmoryItem1SymphonicModulationText, ArmoryItem1DuetText);
             UpdateWeaponSlot(1, ArmoryItem2Button, ArmoryItem2CostText, ArmoryItem2OwnedText, ArmoryItem2SoloConcertoText, ArmoryItem2SymphonicModulationText, ArmoryItem2DuetText);
             UpdateWeaponSlot(2, ArmoryItem3Button, ArmoryItem3CostText, ArmoryItem3OwnedText, ArmoryItem3SoloConcertoText, ArmoryItem3SymphonicModulationText, ArmoryItem3DuetText);
@@ -373,6 +400,10 @@ namespace MusicClicker.Views
             UpdateWeaponSlot(17, ArmoryItem18Button, ArmoryItem18CostText, ArmoryItem18OwnedText, ArmoryItem18SoloConcertoText, ArmoryItem18SymphonicModulationText, ArmoryItem18DuetText);
             UpdateWeaponSlot(18, ArmoryItem19Button, ArmoryItem19CostText, ArmoryItem19OwnedText, ArmoryItem19SoloConcertoText, ArmoryItem19SymphonicModulationText, ArmoryItem19DuetText);
             UpdateWeaponSlot(19, ArmoryItem20Button, ArmoryItem20CostText, ArmoryItem20OwnedText, ArmoryItem20SoloConcertoText, ArmoryItem20SymphonicModulationText, ArmoryItem20DuetText);
+            UpdateWeaponSlot(20, ArmoryItem21Button, ArmoryItem21CostText, ArmoryItem21OwnedText, ArmoryItem21SoloConcertoText, ArmoryItem21SymphonicModulationText, ArmoryItem21DuetText);
+            UpdateWeaponSlot(21, ArmoryItem22Button, ArmoryItem22CostText, ArmoryItem22OwnedText, ArmoryItem22SoloConcertoText, ArmoryItem22SymphonicModulationText, ArmoryItem22DuetText);
+            UpdateWeaponSlot(22, ArmoryItem23Button, ArmoryItem23CostText, ArmoryItem23OwnedText, ArmoryItem23SoloConcertoText, ArmoryItem23SymphonicModulationText, ArmoryItem23DuetText);
+            UpdateWeaponSlot(23, ArmoryItem24Button, ArmoryItem24CostText, ArmoryItem24OwnedText, ArmoryItem24SoloConcertoText, ArmoryItem24SymphonicModulationText, ArmoryItem24DuetText);
         }
 
         /// <summary>
@@ -417,6 +448,9 @@ namespace MusicClicker.Views
                 6 => DuetDescriptions.Short.OdeToJoy,     // Ode to Joy (12-13)
                 7 => DuetDescriptions.Short.DiesIrae,     // Dies Irae (14-15)
                 8 => DuetDescriptions.Short.Winter,       // Winter (16-17)
+                9 => DuetDescriptions.Short.Mercury,      // Mercury (18-19)
+                10 => DuetDescriptions.Short.ClairDeLune, // Clair de Lune (20-21)
+                11 => DuetDescriptions.Short.Mars,        // Mars (22-23)
                 _ => "Duet Resonance: <placeholder>"
             };
 

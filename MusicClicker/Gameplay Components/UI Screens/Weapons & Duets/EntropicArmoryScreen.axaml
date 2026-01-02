@@ -26,25 +26,10 @@
                            FontSize="42"
                            Foreground="White"
                            HorizontalAlignment="Center"
-                           FontWeight="Bold"
-                           Opacity="1.0">
+                           FontWeight="Bold">
                     <TextBlock.Effect>
                         <DropShadowEffect Color="Black" BlurRadius="8" Opacity="0.8"/>
                     </TextBlock.Effect>
-                    <TextBlock.Styles>
-                        <Style Selector="TextBlock">
-                            <Style.Animations>
-                                <Animation Duration="0:0:1.5" IterationCount="Infinite" PlaybackDirection="Alternate">
-                                    <KeyFrame Cue="0%">
-                                        <Setter Property="Opacity" Value="0.6"/>
-                                    </KeyFrame>
-                                    <KeyFrame Cue="100%">
-                                        <Setter Property="Opacity" Value="1.0"/>
-                                    </KeyFrame>
-                                </Animation>
-                            </Style.Animations>
-                        </Style>
-                    </TextBlock.Styles>
                 </TextBlock>
                 
                 <!-- Entropic Melody Display -->
@@ -81,6 +66,19 @@
                 
                 <StackPanel Spacing="40" HorizontalAlignment="Center">
                     
+                    <!-- Moonlight Sonata Arsenal Label -->
+                    <Border Background="#CCFF69B4" CornerRadius="8" Padding="20,10" HorizontalAlignment="Center" Margin="0,10,0,0">
+                        <TextBlock Text="✦ Moonlight Sonata Entropic Arsenal ✦"
+                                   FontSize="24"
+                                   Foreground="White"
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Center">
+                            <TextBlock.Effect>
+                                <DropShadowEffect Color="Black" BlurRadius="4" Opacity="0.6"/>
+                            </TextBlock.Effect>
+                        </TextBlock>
+                    </Border>
+
                     <!-- Row 1: First 3 Entropic Weapons -->
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
                         
@@ -208,6 +206,19 @@
                         </StackPanel>
 
                     </StackPanel>
+
+                    <!-- Eroica Arsenal Label -->
+                    <Border Background="#CCFF69B4" CornerRadius="8" Padding="20,10" HorizontalAlignment="Center" Margin="0,10,0,0">
+                        <TextBlock Text="✦ Eroica Entropic Arsenal ✦"
+                                   FontSize="24"
+                                   Foreground="White"
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Center">
+                            <TextBlock.Effect>
+                                <DropShadowEffect Color="Black" BlurRadius="4" Opacity="0.6"/>
+                            </TextBlock.Effect>
+                        </TextBlock>
+                    </Border>
 
                     <!-- Row 2: Weapons 4-6 -->
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
@@ -337,6 +348,32 @@
 
                     </StackPanel>
 
+                    <!-- Swan Lake Arsenal Label -->
+                    <Border Background="#CCFF69B4" CornerRadius="8" Padding="20,10" HorizontalAlignment="Center" Margin="0,10,0,0">
+                        <TextBlock Text="✦ Swan Lake Entropic Arsenal ✦"
+                                   FontSize="24"
+                                   Foreground="White"
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Center">
+                            <TextBlock.Effect>
+                                <DropShadowEffect Color="Black" BlurRadius="4" Opacity="0.6"/>
+                            </TextBlock.Effect>
+                        </TextBlock>
+                    </Border>
+
+                    <!-- La Campanella Arsenal Label -->
+                    <Border Background="#CCFF69B4" CornerRadius="8" Padding="20,10" HorizontalAlignment="Center" Margin="0,10,0,0">
+                        <TextBlock Text="✦ La Campanella Entropic Arsenal ✦"
+                                   FontSize="24"
+                                   Foreground="White"
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Center">
+                            <TextBlock.Effect>
+                                <DropShadowEffect Color="Black" BlurRadius="4" Opacity="0.6"/>
+                            </TextBlock.Effect>
+                        </TextBlock>
+                    </Border>
+
                     <!-- Row 3: Weapons 7-9 -->
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
                         
@@ -465,6 +502,32 @@
 
                     </StackPanel>
 
+                    <!-- Enigma Arsenal Label -->
+                    <Border Background="#CCFF69B4" CornerRadius="8" Padding="20,10" HorizontalAlignment="Center" Margin="0,10,0,0">
+                        <TextBlock Text="✦ Enigma Entropic Arsenal ✦"
+                                   FontSize="24"
+                                   Foreground="White"
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Center">
+                            <TextBlock.Effect>
+                                <DropShadowEffect Color="Black" BlurRadius="4" Opacity="0.6"/>
+                            </TextBlock.Effect>
+                        </TextBlock>
+                    </Border>
+
+                    <!-- Fate Arsenal Label -->
+                    <Border Background="#CCFF69B4" CornerRadius="8" Padding="20,10" HorizontalAlignment="Center" Margin="0,10,0,0">
+                        <TextBlock Text="✦ Fate Entropic Arsenal ✦"
+                                   FontSize="24"
+                                   Foreground="White"
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Center">
+                            <TextBlock.Effect>
+                                <DropShadowEffect Color="Black" BlurRadius="4" Opacity="0.6"/>
+                            </TextBlock.Effect>
+                        </TextBlock>
+                    </Border>
+
                     <!-- Row 4: Weapons 10-12 -->
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
                         
@@ -592,6 +655,19 @@
                         </StackPanel>
 
                     </StackPanel>
+
+                    <!-- Ode to Joy Arsenal Label -->
+                    <Border Background="#CCFF69B4" CornerRadius="8" Padding="20,10" HorizontalAlignment="Center" Margin="0,10,0,0">
+                        <TextBlock Text="✦ Ode to Joy Entropic Arsenal ✦"
+                                   FontSize="24"
+                                   Foreground="White"
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Center">
+                            <TextBlock.Effect>
+                                <DropShadowEffect Color="Black" BlurRadius="4" Opacity="0.6"/>
+                            </TextBlock.Effect>
+                        </TextBlock>
+                    </Border>
 
                     <!-- Row 5: Weapons 13-14 -->
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">

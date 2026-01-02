@@ -794,10 +794,10 @@
 
                 </StackPanel>
 
-                <!-- Row 10: Clair de Lune Weapons -->
+                <!-- Row 7: Mercury Weapons + Clair de Lune Weapon 1 -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
                     
-                    <!-- Item 19 -->
+                    <!-- Item 19: Mercurial Overture (Mercury 1) -->
                     <StackPanel Spacing="10" Width="350">
                         <Button x:Name="ArmoryItem19Button" 
                                 Width="350" 
@@ -805,7 +805,7 @@
                                 Background="#44000000"
                                 BorderBrush="White"
                                 BorderThickness="2">
-            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/CelestialHorology.jpg" Stretch="UniformToFill" />
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/MercurialOverture.jpg" Stretch="UniformToFill" />
                         </Button>
                         <TextBlock x:Name="ArmoryItem19CostText"
                                    Text="Cost: 10,000,000,000 Notes"
@@ -835,7 +835,7 @@
                                    HorizontalAlignment="Center" />
                     </StackPanel>
 
-                    <!-- Item 20 -->
+                    <!-- Item 20: Wing of the Messenger (Mercury 2) -->
                     <StackPanel Spacing="10" Width="350">
                         <Button x:Name="ArmoryItem20Button" 
                                 Width="350" 
@@ -843,7 +843,7 @@
                                 Background="#44000000"
                                 BorderBrush="White"
                                 BorderThickness="2">
-                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/ClockworkFinality.jpg" Stretch="UniformToFill" />
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/WingOfTheMessenger.jpg" Stretch="UniformToFill" />
                         </Button>
                         <TextBlock x:Name="ArmoryItem20CostText"
                                    Text="Cost: 20,000,000,000 Notes"
@@ -866,6 +866,163 @@
                                    Foreground="#F0F0F0"
                                    TextAlignment="Center" />
                         <TextBlock x:Name="ArmoryItem20DuetText"
+                                   Text="Duet Resonance: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#F0F0F0"
+                                   TextAlignment="Center"
+                                   HorizontalAlignment="Center" />
+                    </StackPanel>
+
+                    <!-- Item 21: Clockwork Finality (Clair de Lune 1) -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmoryItem21Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/ClockworkFinality.jpg" Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="ArmoryItem21CostText"
+                                   Text="Cost: 60,000,000,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem21OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem21SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#F0F0F0"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem21SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#F0F0F0"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem21DuetText"
+                                   Text="Duet Resonance: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#F0F0F0"
+                                   TextAlignment="Center"
+                                   HorizontalAlignment="Center" />
+                    </StackPanel>
+
+                </StackPanel>
+
+                <!-- Row 8: Clair de Lune Weapon 2 + Mars Weapons -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
+                    
+                    <!-- Item 22: Celestial Horology (Clair de Lune 2) -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmoryItem22Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/CelestialHorology.jpg" Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="ArmoryItem22CostText"
+                                   Text="Cost: 180,000,000,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem22OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem22SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#F0F0F0"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem22SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#F0F0F0"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem22DuetText"
+                                   Text="Duet Resonance: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#F0F0F0"
+                                   TextAlignment="Center"
+                                   HorizontalAlignment="Center" />
+                    </StackPanel>
+
+                    <!-- Item 23: Consonance's Requiemic War (Mars 1) -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmoryItem23Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/ConsonancesRequiemicWar.jpg" Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="ArmoryItem23CostText"
+                                   Text="Cost: 500,000,000,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem23OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem23SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#F0F0F0"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem23SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#F0F0F0"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem23DuetText"
+                                   Text="Duet Resonance: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#F0F0F0"
+                                   TextAlignment="Center"
+                                   HorizontalAlignment="Center" />
+                    </StackPanel>
+
+                    <!-- Item 24: Fractal of War (Mars 2) -->
+                    <StackPanel Spacing="10" Width="350">
+                        <Button x:Name="ArmoryItem24Button" 
+                                Width="350" 
+                                Height="197"
+                                Background="#44000000"
+                                BorderBrush="White"
+                                BorderThickness="2">
+                            <Image Source="avares://MusicClicker/Gameplay Components/Resources/Assets/Weapons/FractalOfWar.jpg" Stretch="UniformToFill" />
+                        </Button>
+                        <TextBlock x:Name="ArmoryItem24CostText"
+                                   Text="Cost: 1,500,000,000,000 Notes"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem24OwnedText"
+                                   Text="Owned: 0"
+                                   FontSize="18"
+                                   Foreground="White"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem24SoloConcertoText"
+                                   Text="Solo Concerto: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#F0F0F0"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem24SymphonicModulationText"
+                                   Text="Symphonic Modulation: &lt;placeholder&gt;"
+                                   FontSize="14"
+                                   Foreground="#F0F0F0"
+                                   TextAlignment="Center" />
+                        <TextBlock x:Name="ArmoryItem24DuetText"
                                    Text="Duet Resonance: &lt;placeholder&gt;"
                                    FontSize="14"
                                    Foreground="#F0F0F0"

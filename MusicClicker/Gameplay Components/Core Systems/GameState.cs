@@ -21,6 +21,7 @@ namespace MusicClicker
         public bool DuetChainOfTemporalityActive { get; set; } = false;
         public DateTime DuetChainOfTemporalityExpiry { get; set; } = DateTime.MinValue;
         public double DuetChainOfTemporalityNpcMultiplier { get; set; } = 1.0;
+        public DateTime ClairDeLuneDuetCooldownExpiry { get; set; } = DateTime.MinValue;
         public int ClairDeLuneClickCounter { get; set; } = 0; // General click counter
         
         // Save format version - keep this field to support future migrations.
@@ -277,6 +278,35 @@ namespace MusicClicker
         
         // Clair De Lune major ability flag
         public bool ClairDeLuneMajorAbility { get; set; } = false;
+
+        // ==================== MERCURY CRESCENDANCE: THE WINGED MESSENGER ====================
+        // Mercury custom stacks
+        public int SwiftResonanceStacks { get; set; } = 0;
+        public int HeraldsMessageStacks { get; set; } = 0;
+        public int PlanetaryAlignmentStacks { get; set; } = 0;
+        
+        // Mercury ability cooldowns
+        public DateTime MercuryHeraldDescentCooldownExpiry { get; set; } = DateTime.MinValue;
+        public DateTime MercuryDuetCooldownExpiry { get; set; } = DateTime.MinValue;
+        
+        // Mercury Duet: Swift Delivery state
+        public bool MercuryDuetActive { get; set; } = false;
+        public DateTime MercuryDuetExpiry { get; set; } = DateTime.MinValue;
+        public int MercuryDuetStartingStacks { get; set; } = 0; // Stacks at start of duet for end bonus calc
+        
+        // Mercury click counter
+        public int MercuryCrescendanceClickCounter { get; set; } = 0;
+        
+        // Mercury critical hit counters
+        public bool MercuryWeapon1NextClickBonus { get; set; } = false; // For every-3rd-click passive
+        public int MercuryWeapon1ClickCounter { get; set; } = 0;
+        public int MercuryWeapon2ClickCounter { get; set; } = 0;
+        public int MessengerOfPlanetaryResonanceCritsRemaining { get; set; } = 0;
+        public int ThousandWingedSymphonyCritsRemaining { get; set; } = 0;
+        public int MessengerOfFateMelodyCritsRemaining { get; set; } = 0;
+        
+        // Mercury major ability flag
+        public bool MercuryMajorAbility { get; set; } = false;
 
         // Event Score Major Sheets
         public int _diesIraeMajorSheets = 0;
@@ -755,6 +785,50 @@ namespace MusicClicker
 
         public bool _metronomicDissonanceAbility = false;
         public bool MetronomicDissonanceAbility { get => _metronomicDissonanceAbility; set => _metronomicDissonanceAbility = value; }
+
+        // Mercury weapons (Boss Fight - Cacophonic Dreams)
+        public bool _mercurialOverture = false;
+        public bool MercurialOverture { get => _mercurialOverture; set => _mercurialOverture = value; }
+
+        public bool _wingOfTheMessenger = false;
+        public bool WingOfTheMessenger { get => _wingOfTheMessenger; set => _wingOfTheMessenger = value; }
+
+        // Mercury weapon ability flags
+        public bool _mercurialOvertureAbility = false;
+        public bool MercurialOvertureAbility { get => _mercurialOvertureAbility; set => _mercurialOvertureAbility = value; }
+
+        public bool _wingOfTheMessengerAbility = false;
+        public bool WingOfTheMessengerAbility { get => _wingOfTheMessengerAbility; set => _wingOfTheMessengerAbility = value; }
+
+        // ==================== MARS MAJOR CRESCENDANCE ====================
+        // Mars, Bringer of War - Blade of Symphonic War
+        public bool MarsMajorAbility { get; set; } = false; // True when Mars Major is resonated
+        
+        // Blade of Symphonic War charging system
+        public double BladeOfSymphonicWarCharge { get; set; } = 0;  // Charges 0-300%, generates stacks above 100%
+        public int ResoluteFractalStacks { get; set; } = 0;         // Generated above 100% charge (1 per 1%)
+        public int ResoluteFractalConsumed { get; set; } = 0;       // Tracks total consumed (every 5th triggers Infinite War)
+        public int InfiniteWarOfHarmonyCritsRemaining { get; set; } = 0; // 5 crits granted every 5th Resolute Fractal (4x effective)
+        public int OblivionsDestructionStacks { get; set; } = 0;    // From Fractal of War bond
+        
+        // Mars Weapon 1: Fractal of War
+        public bool _fractalOfWar = false;
+        public bool FractalOfWar { get => _fractalOfWar; set => _fractalOfWar = value; }
+        public bool _fractalOfWarAbility = false;
+        public bool FractalOfWarAbility { get => _fractalOfWarAbility; set => _fractalOfWarAbility = value; }
+        public int FractalOfWarClickCounter { get; set; } = 0;      // Tracks every 25th click
+        
+        // Mars Weapon 2: Consonance's Requiemic War
+        public bool _consonanceRequiemicWar = false;
+        public bool ConsonanceRequiemicWar { get => _consonanceRequiemicWar; set => _consonanceRequiemicWar = value; }
+        public bool _consonanceRequiemicWarAbility = false;
+        public bool ConsonanceRequiemicWarAbility { get => _consonanceRequiemicWarAbility; set => _consonanceRequiemicWarAbility = value; }
+        public int ConsonanceRequiemBonusClicksRemaining { get; set; } = 0; // NPC^1.56 bonus clicks
+        
+        // Mars Duet: Annihilation Nocturne (time-based)
+        public DateTime MarsDuetCooldownExpiry { get; set; } = DateTime.MinValue;
+        public DateTime MarsDuetExpiry { get; set; } = DateTime.MinValue; // 12 second duration
+        public bool MarsDuetActive => DateTime.Now <= MarsDuetExpiry;
 
         public string CurrentClickerImage { get; set; } = "avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds & Generic/Music Game Assets [A961E2A]-min.png";
         public string CurrentBackgroundImage { get; set; } = "avares://MusicClicker/Gameplay Components/Resources/Assets/Backgrounds & Generic/sacredtrevor_A_grand_musical_city_lights_everywhere_popular_shi_d84ff662-c87b-4630-9887-25228f42097b-min.png";

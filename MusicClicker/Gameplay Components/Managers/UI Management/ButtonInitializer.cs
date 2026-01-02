@@ -336,6 +336,7 @@ namespace MusicClicker
                 });
                 UIUpdater.UpdateUI(window, window.GameState);
                 MainWindow.GlobalTempoManager?.RefreshDrawer();
+                window.RegenerateMajorScoreEffects();
             };
 
             // Save Scores
@@ -357,6 +358,7 @@ namespace MusicClicker
                 });
                 UIUpdater.UpdateUI(window, window.GameState);
                 MainWindow.GlobalTempoManager?.RefreshDrawer();
+                window.RegenerateMajorScoreEffects();
             };
 
             // Heart of Harmony
@@ -378,6 +380,7 @@ namespace MusicClicker
                 });
                 UIUpdater.UpdateUI(window, window.GameState);
                 MainWindow.GlobalTempoManager?.RefreshDrawer();
+                window.RegenerateMajorScoreEffects();
             };
 
             // Unity the Symphony crafting menu
@@ -402,6 +405,7 @@ namespace MusicClicker
                 });
                 UIUpdater.UpdateUI(window, window.GameState);
                 MainWindow.GlobalTempoManager?.RefreshDrawer();
+                window.RegenerateMajorScoreEffects();
             };
 
             // Armory of Forte

@@ -1,0 +1,167 @@
+================================================================================
+PERFORMANCE OPTIMIZATIONS & INFINITY PREVENTION - CHANGELOG
+================================================================================
+Date: Session Update
+Purpose: Fix lag issues, prevent infinity display, rebalance critical formulas
+
+================================================================================
+SECTION 1: PERFORMANCE OPTIMIZATIONS
+================================================================================
+
+1.1 UI DISPATCH CONSOLIDATION (MainWindow.axaml.cs)
+-----------------------------------------------------
+BEFORE: 5 separate Dispatcher.UIThread.Post() calls per timer tick = 50 UI dispatches/second
+AFTER: 1 consolidated Dispatcher.UIThread.Post() call = 10 UI dispatches/second
+
+Changed in _backgroundNpsTimer_Tick:
+- Consolidated UpdateMoonlightMajorOverlays()
+- Consolidated UpdateSwanFeatherOverlays()
+- Consolidated UpdateEroicaPetalOverlays()
+- Consolidated UpdateMarsFlameOverlays()
+- Consolidated UpdateLaCampanellaBellOverlays()
+
+Added MainScreen visibility check:
+- Visual overlays only update when MainScreen?.IsVisible == true
+- Prevents unnecessary calculations when user is on other screens
+
+1.2 DATETIME CACHING (MainWindow.axaml.cs - ClickButton_Click)
+--------------------------------------------------------------
+BEFORE: 15+ DateTime.Now calls per click
+AFTER: 1 DateTime.Now call cached as "clickTime" and reused
+
+Lines updated to use clickTime instead of DateTime.Now:
+- SymphonicCatharsisExpiry check
+- DuetChainOfTemporalityExpiry check  
+- SwanLakeDuetExpiry check
+- LaCampanellaDuetExpiry check
+- EnigmaDuetExpiry check
+- FateDuetExpiry check
+- OdeDuetExpiry check
+- ThousandWingedSwanNpsBoostExpiry check
+- MercuryDuetExpiry check
+- EntropicCritExpiry check
+
+================================================================================
+SECTION 2: OVERFLOW PROTECTION
+================================================================================
+
+2.1 AtomicDouble OVERFLOW CAPPING (AtomicDouble.cs)
+---------------------------------------------------
+Added:
+- MaxSafeValue constant = 1e300 (leaves headroom below double.MaxValue ~1.79e308)
+- Input validation: if value is infinity/NaN, cap to MaxSafeValue * 0.01
+- Result clamping: if computed > MaxSafeValue or infinity/NaN, cap to MaxSafeValue
+- SafeValue() helper method for pre-calculation overflow checking
+
+2.2 NumberFormatter OVERFLOW HANDLING (NumberFormatter.cs)
+----------------------------------------------------------
+BEFORE: Returns "∞" for infinity/NaN values
+AFTER: Caps to MaxSafeValue and formats normally (never shows "∞")
+
+Changed:
+- Instead of returning "∞", caps number to AtomicDouble.MaxSafeValue
+- Values > MaxSafeValue are also capped before formatting
+
+================================================================================
+SECTION 3: CRITICAL FORMULA REBALANCING
+================================================================================
+
+All formulas changed from exponential (value^power) to logarithmic (value × log(value)^power)
+This prevents overflow while maintaining meaningful progression.
+
+3.1 INFERNAL SYMPHONY OF OBLIVION (MainWindow.axaml.cs)
+-------------------------------------------------------
+Location: Dies Irae Duet (Note-Doubling Clicks)
+BEFORE: finalNotes = gameState.Notes * 2  (DANGEROUS: doubles current notes)
+AFTER:  finalNotes = NPC × NPS × log₁₀(Notes+1)^8
+
+Rationale: Old formula could cause exponential growth when chained. New formula
+scales with progress logarithmically.
+
+3.2 BLIZZARD'S COMMAND OF ETERNAL ICE (MainWindow.axaml.cs)
+-----------------------------------------------------------
+Location: Winter enhanced clicks
+BEFORE: finalNotes = (NPS × NPC)²  (DANGEROUS: squared product)
+AFTER:  finalNotes = NPC × NPS × log₁₀(NPC×NPS+1)^10
+
+Rationale: Product squared grows extremely fast. Log scaling maintains power fantasy.
+
+3.3 PYROCLASTIC HARMONY OF WAR'S ETERNAL RAGE (MainWindow.axaml.cs)
+-------------------------------------------------------------------
+Location: MainMergeAllInfiniteWar_Click
+BEFORE: bonus = NPC^(mergedCount)  (VERY DANGEROUS: uncapped exponent!)
+AFTER:  bonus = NPC × log₁₀(NPC+1)^(min(mergedCount, 50)) × mergedCount
+
+Rationale: With high NPC values (1e50+) and even moderate merge counts (10+),
+old formula would immediately overflow to infinity.
+
+3.4 MESSENGER OF FATE'S MELODY (MainWindow.axaml.cs)
+----------------------------------------------------
+Location: Mercury old Duet crits
+BEFORE: finalNotes = NPS^10  (DANGEROUS: hardcoded high power)
+AFTER:  finalNotes = NPS × NPC × log₁₀(NPS+1)^10
+
+Rationale: NPS^10 with high NPS values overflows quickly.
+
+3.5 ANNIHILATION NOCTURNE (MainWindow.axaml.cs)
+-----------------------------------------------
+Location: Mars Duet
+BEFORE: annihilationBonus = NPC^(cappedRatio)  where cappedRatio ≤ 10
+AFTER:  annihilationBonus = NPC × log₁₀(NPC+1)^(cappedRatio)
+
+Rationale: Even NPC^10 can overflow with high NPC values.
+
+3.6 INFINITE WAR OF HARMONY (WeaponAbilities.cs)
+------------------------------------------------
+Location: Mars_GetInfiniteWarOfHarmonyCritDamage
+BEFORE: return NPC × BladeCharge^4  (DANGEROUS: ^4 with high charge)
+AFTER:  return NPC × BladeCharge × log₁₀(BladeCharge+1)^4
+
+Rationale: Blade charge can reach very high values, causing overflow.
+
+3.7 MERCURY MAJOR ABILITY - NPS BONUS (WeaponAbilities.cs)
+----------------------------------------------------------
+Location: Mercury_MajorAbility_ConsumeHeraldsMessage
+BEFORE: npsBonus = NPS^25  (VERY DANGEROUS: ^25 power!)
+AFTER:  npsBonus = NPS × NPC × log₁₀(NPS+1)^25
+
+Rationale: Any NPS > ~2.5 with ^25 power immediately overflows.
+
+3.8 CLAIR DE LUNE CRESCENDANCE PASSIVE (Progression.cs)
+-------------------------------------------------------
+Location: CalculateNotesPerClick
+BEFORE: npsBonus = NPS^5
+AFTER:  npsBonus = NPS × log₁₀(NPS+1)^5
+
+Rationale: Applied every NPC calculation, so must be stable.
+
+================================================================================
+SECTION 4: FORMULA COMPARISON CHART
+================================================================================
+
+| Ability                        | Old Formula              | New Formula                           |
+|--------------------------------|--------------------------|---------------------------------------|
+| Infernal Symphony of Oblivion  | Notes × 2                | NPC × NPS × log(Notes)^8              |
+| Blizzard's Command             | (NPS × NPC)²             | NPC × NPS × log(NPC×NPS)^10           |
+| Pyroclastic Harmony            | NPC^mergedCount          | NPC × log(NPC)^min(count,50) × count  |
+| Messenger of Fate's Melody     | NPS^10                   | NPS × NPC × log(NPS)^10               |
+| Annihilation Nocturne          | NPC^ratio                | NPC × log(NPC)^ratio                  |
+| Infinite War of Harmony        | NPC × BladeCharge^4      | NPC × BladeCharge × log(BladeCharge)^4|
+| Mercury NPS Bonus              | NPS^25                   | NPS × NPC × log(NPS)^25               |
+| Clair de Lune Passive          | NPS^5                    | NPS × log(NPS)^5                      |
+
+================================================================================
+SECTION 5: TESTING RECOMMENDATIONS
+================================================================================
+
+1. Test with high NPC values (1e50+) to verify no infinity displays
+2. Test Pyroclastic Harmony with max merge counts
+3. Test Mercury duet with max stacks
+4. Test Clair de Lune crescendance with high NPS
+5. Verify all critical text shows formatted numbers, never "∞"
+6. Check game performance with rapid clicking
+7. Verify smooth scrolling on score/upgrade screens
+
+================================================================================
+END OF DOCUMENTATION
+================================================================================

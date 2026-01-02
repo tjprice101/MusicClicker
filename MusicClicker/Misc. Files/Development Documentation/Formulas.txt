@@ -1,0 +1,114 @@
+# Major Score Resonance Effect Formulas
+# =====================================
+# This document lists all the scaled-down formulas used for major score resonance effects.
+# These formulas were adjusted from their original extreme values to prevent "infinite" display issues.
+# Last Updated: January 1, 2026 - Second Nerf Pass
+
+## CLAIR DE LUNE MAJOR SCORE
+## -------------------------
+
+### Infinite Temporality (Clockwork of Infinity consume)
+- ORIGINAL FORMULA: NPC^12
+- FIRST NERF: NPC × log₁₀(NPC + 1)^12
+- CURRENT FORMULA: NPC × log₁₀(NPC + 1)^8
+- RATIONALE: Further reduced exponent for more gradual progression
+
+### Surge of Time's Fractalization (Temporal Fracture consume with Clockwork Finality bond)
+- ORIGINAL FORMULA: NPC^144
+- FIRST NERF: NPC × NPS × log₁₀(NPC + 1)^24
+- CURRENT FORMULA: NPC × NPS × log₁₀(NPC + 1)^12
+- RATIONALE: Halved exponent for more reasonable late-game scaling
+
+
+## MERCURY MAJOR SCORE
+## -------------------
+
+### Messenger of Planetary Resonance (Mercurial Overture bond - 5 clicks, was 30)
+- ORIGINAL FORMULA: (NPS × 30,000) + (NPC × Planetary Alignment stacks)
+- CURRENT FORMULA: (NPS × 5,000) + (NPC × log₁₀(NPC+1)^8 × Planetary Alignment stacks)
+- CLICK COUNT: Reduced from 30 to 5 critical hits per Herald's Message consumed
+- RATIONALE: Log-based scaling with stacks provides meaningful growth without overflow
+
+### A Thousand Winged Symphony for the Universe (Wing of the Messenger bond - consume Planetary Alignment)
+- ORIGINAL FORMULA: NPC^1000
+- FIRST NERF: NPC × NPS × log₁₀(NPC + 1)^50 × (1 + stacks)
+- CURRENT FORMULA: NPC × NPS × log₁₀(NPC + 1)^20 × (1 + Planetary Alignment stacks)
+- RATIONALE: Reduced exponent from 50 to 20 for less extreme scaling
+
+### Alignment of Mercurial Judgement (Mercury Duet - Swift Delivery active)
+- ORIGINAL FORMULA: ((NPC × NPS)^stacks)
+- FIRST NERF: ((NPC × NPS)^stacks) capped at 50
+- CURRENT FORMULA: NPC × NPS × log₁₀(NPC+1)^stacks (capped at 30)
+- RATIONALE: Changed from exponential base to log-based exponent for controlled growth
+- NOTE: Each click during 30-second duration grants +1 Swift Resonance stack
+
+
+## MARS MAJOR SCORE
+## ----------------
+
+### Annihilation Nocturne (Mars Duet - time-based)
+- ORIGINAL FORMULA: NPC^(NPC/NPS) with no cap
+- CURRENT FORMULA: NPC^(min(NPC/NPS, 10)) + bonus to all majors
+- CAP: NPC/NPS ratio capped at 10 to prevent extreme exponents
+- RATIONALE: When NPC >> NPS, the ratio could become very large, causing overflow
+
+### Consonance's Requiemic War (Mars Duet bonus clicks)
+- FORMULA: NPC^1.56
+- STATUS: UNCHANGED - This formula was already reasonable
+
+
+## UNCHANGED FORMULAS (Reference)
+## =============================
+
+### Messenger of Fate's Melody (old Duet - Fate's Grand Message)
+- FORMULA: NPS^10 (fixed power based on typical stack counts)
+- STATUS: Reasonable for late-game
+
+
+## FORMULA PROGRESSION HIERARCHY
+## =============================
+# Damage increases as you progress through the weapon/ability chain:
+
+CLAIR DE LUNE PROGRESSION:
+1. Infinite Temporality: NPC × log^8 (base ability)
+2. Surge of Time's Fractalization: NPC × NPS × log^12 (bond upgrade)
+
+MERCURY PROGRESSION:
+1. Messenger of Planetary Resonance: (NPS × 5K) + (NPC × log^8 × stacks) (5 hits)
+2. Alignment of Mercurial Judgement: NPC × NPS × log^stacks (during duet)
+3. A Thousand Winged Symphony: NPC × NPS × log^20 × stacks (consume stacks)
+
+
+## ENTROPIC ARMORY COSTS
+## ====================
+# Costs grow by 5x each tier (VERY exponential progression)
+# Major Score associations noted in parentheses
+
+| Tier | Weapon                        | Major Score    | Old Cost   | New Cost       |
+|------|-------------------------------|----------------|------------|----------------|
+| 1    | Phases of Infinity            | Moonlight      | 100        | 100            |
+| 2    | Moonlit Revelation            | Moonlight      | 200        | 500            |
+| 3    | Reborn in Sakura's Embrace    | Eroica         | 400        | 2,500          |
+| 4    | A Thousand Petals             | Eroica         | 800        | 12,500         |
+| 5    | Swan's Finality               | Swan Lake      | 1,600      | 62,500         |
+| 6    | Star-Piercing Swan Song       | Swan Lake      | 3,200      | 312,500        |
+| 7    | Heaven's Chime                | La Campanella  | 6,400      | 1,562,500      |
+| 8    | Bell of Chromatic Fate        | La Campanella  | 12,800     | 7,812,500      |
+| 9    | Ever-Burning Mystery          | Enigma         | 25,600     | 39,062,500     |
+| 10   | Prismatic Enigmas             | Enigma         | 51,200     | 195,312,500    |
+| 11   | Finality of the Cosmos        | Fate           | 102,400    | 976,562,500    |
+| 12   | Destiny's Conductor           | Fate           | 204,800    | 1,000,000,000  |
+| 13   | Cathartic Divination          | Ode to Joy     | 409,600    | 2,000,000,000  |
+| 14   | Dreams of Harmony             | Ode to Joy     | 819,200    | 2,147,483,647  |
+
+Note: Costs 11-14 are capped to prevent integer overflow (max int value: 2,147,483,647)
+
+
+## DESIGN PHILOSOPHY
+## =================
+1. Use logarithmic scaling (log₁₀) for very large exponents to create meaningful but bounded growth
+2. Incorporate multiple stats (NPC, NPS, stacks) for more interesting interactions
+3. Cap ratio-based exponents to prevent edge cases
+4. Maintain thematic consistency (e.g., Thousand Winged Symphony still uses Planetary Alignment)
+5. Ensure late-game content remains powerful but never displays "infinite"
+6. Create clear progression: base abilities < bond upgrades < duet abilities < stack consumption

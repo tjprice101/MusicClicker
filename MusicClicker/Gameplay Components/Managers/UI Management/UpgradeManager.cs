@@ -78,6 +78,16 @@ namespace MusicClicker
                             // Enigma Weapon Passive - Truthseeker: Revelation Burst
                             if (gameState.TruthseekerAbility)
                                 MusicClicker.Armory.WeaponAbilities.Truthseeker_OnUpgradePurchase(gameState);
+                            
+                            // Mars Weapon 2 Passive - Consonance's Requiemic War: +5% current notes on upgrade increase
+                            if (gameState.ConsonanceRequiemicWarAbility &&
+                                (gameState.CurrentResonatedWeapon1 == "ConsonanceRequiemicWar" || gameState.CurrentResonatedWeapon2 == "ConsonanceRequiemicWar"))
+                                MusicClicker.Armory.WeaponAbilities.ConsonanceRequiemicWar_OnUpgradeIncrease(gameState);
+                            
+                            // Mars Weapon 2 Passive - Consonance's Requiemic War: +5% current notes on upgrade increase
+                            if (gameState.ConsonanceRequiemicWarAbility &&
+                                (gameState.CurrentResonatedWeapon1 == "ConsonanceRequiemicWar" || gameState.CurrentResonatedWeapon2 == "ConsonanceRequiemicWar"))
+                                MusicClicker.Armory.WeaponAbilities.ConsonanceRequiemicWar_OnUpgradeIncrease(gameState);
                         }
                         catch (Exception)
                         {

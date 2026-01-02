@@ -41,23 +41,23 @@ namespace MusicClicker.Views
             "Dreams of Harmony"
         };
 
-        // Costs in Entropic Melody (doubles each tier)
+        // Costs in Entropic Melody (grows VERY exponentially - 5x each tier)
         private readonly int[] _weaponCosts = new[]
         {
-            100,      // Phases of Infinity
-            200,      // Moonlit Revelation
-            400,      // Reborn in Sakura's Embrace
-            800,      // A Thousand Petals
-            1600,     // Swan's Finality
-            3200,     // Star-Piercing Swan Song
-            6400,     // Heaven's Chime
-            12800,    // Bell of Chromatic Fate
-            25600,    // Ever-Burning Mystery
-            51200,    // Prismatic Enigmas
-            102400,   // Finality of the Cosmos
-            204800,   // Destiny's Conductor
-            409600,   // Cathartic Divination
-            819200    // Dreams of Harmony
+            100,        // Phases of Infinity (Moonlight 1)
+            500,        // Moonlit Revelation (Moonlight 2)
+            2500,       // Reborn in Sakura's Embrace (Eroica 1)
+            12500,      // A Thousand Petals (Eroica 2)
+            62500,      // Swan's Finality (Swan Lake 1)
+            312500,     // Star-Piercing Swan Song (Swan Lake 2)
+            1562500,    // Heaven's Chime (La Campanella 1)
+            7812500,    // Bell of Chromatic Fate (La Campanella 2)
+            39062500,   // Ever-Burning Mystery (Enigma 1)
+            195312500,  // Prismatic Enigmas (Enigma 2)
+            976562500,  // Finality of the Cosmos (Fate 1)
+            1000000000, // Destiny's Conductor (Fate 2) - capped at 1 billion
+            2000000000, // Cathartic Divination (Ode to Joy 1)
+            2147483647  // Dreams of Harmony (Ode to Joy 2) - max int value
         };
 
         public EntropicArmoryScreen()

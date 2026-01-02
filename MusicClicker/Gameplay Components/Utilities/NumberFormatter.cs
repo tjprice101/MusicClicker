@@ -10,70 +10,248 @@ namespace MusicClicker.Helpers
         /// <summary>
         /// Formats large numbers with abbreviated suffixes for readability.
         /// E.g., 1,500,000 becomes "1.50M"
-        /// Supports up to Centillion (10^303)
+        /// Supports up to 10^306 (near double.MaxValue limit of ~1.79e308)
+        /// Extended to support every 3 orders of magnitude from K to Centillion
         /// </summary>
         public static string FormatLargeNumber(double num)
         {
+            // Safety check for infinity, NaN, and values exceeding our cap
             if (double.IsInfinity(num) || double.IsNaN(num))
-                return "∞";
+            {
+                num = AtomicDouble.MaxSafeValue; // Cap instead of showing ∞
+            }
+            else if (num > AtomicDouble.MaxSafeValue)
+            {
+                num = AtomicDouble.MaxSafeValue; // Cap at max safe value
+            }
 
+            // Extended notation - comprehensive coverage up to double.MaxValue
+            // Centillion range (10^303-10^306)
+            if (num >= 1e306)
+                return $"{num / 1e306:F2}UnC";   // Uncentillion (10^306)
             if (num >= 1e303)
-                return $"{num / 1e303:F2}Ct";  // Centillion
+                return $"{num / 1e303:F2}Ce";    // Centillion (10^303)
+            
+            // Nonagintillion range (10^273-10^300)
             if (num >= 1e300)
-                return $"{num / 1e300:F2}Uc";  // Uncentillion
+                return $"{num / 1e300:F2}NnN";   // Novemnonagintillion (10^300)
+            if (num >= 1e297)
+                return $"{num / 1e297:F2}OcN";   // Octononagintillion (10^297)
+            if (num >= 1e294)
+                return $"{num / 1e294:F2}SpN";   // Septennonagintillion (10^294)
+            if (num >= 1e291)
+                return $"{num / 1e291:F2}SxN";   // Sexnonagintillion (10^291)
+            if (num >= 1e288)
+                return $"{num / 1e288:F2}QnN";   // Quinnonagintillion (10^288)
+            if (num >= 1e285)
+                return $"{num / 1e285:F2}QtN";   // Quattuornonagintillion (10^285)
+            if (num >= 1e282)
+                return $"{num / 1e282:F2}TrN";   // Trenonagintillion (10^282)
+            if (num >= 1e279)
+                return $"{num / 1e279:F2}DuN";   // Duononagintillion (10^279)
+            if (num >= 1e276)
+                return $"{num / 1e276:F2}UnN";   // Unnonagintillion (10^276)
+            if (num >= 1e273)
+                return $"{num / 1e273:F2}Ng";    // Nonagintillion (10^273)
+            
+            // Octogintillion range (10^243-10^270)
             if (num >= 1e270)
-                return $"{num / 1e270:F2}No";  // Nonillion
+                return $"{num / 1e270:F2}NnO";   // Novemoctogintillion (10^270)
+            if (num >= 1e267)
+                return $"{num / 1e267:F2}OcO";   // Octooctogintillion (10^267)
+            if (num >= 1e264)
+                return $"{num / 1e264:F2}SpO";   // Septenoctogintillion (10^264)
+            if (num >= 1e261)
+                return $"{num / 1e261:F2}SxO";   // Sexoctogintillion (10^261)
+            if (num >= 1e258)
+                return $"{num / 1e258:F2}QnO";   // Quinoctogintillion (10^258)
+            if (num >= 1e255)
+                return $"{num / 1e255:F2}QtO";   // Quattuoroctogintillion (10^255)
+            if (num >= 1e252)
+                return $"{num / 1e252:F2}TrO";   // Treoctogintillion (10^252)
+            if (num >= 1e249)
+                return $"{num / 1e249:F2}DuO";   // Duooctogintillion (10^249)
+            if (num >= 1e246)
+                return $"{num / 1e246:F2}UnO";   // Unoctogintillion (10^246)
+            if (num >= 1e243)
+                return $"{num / 1e243:F2}Og";    // Octogintillion (10^243)
+            
+            // Septuagintillion range (10^213-10^240)
             if (num >= 1e240)
-                return $"{num / 1e240:F2}Og";  // Octogintillion
+                return $"{num / 1e240:F2}NnSp";  // Novemseptuagintillion (10^240)
+            if (num >= 1e237)
+                return $"{num / 1e237:F2}OcSp";  // Octoseptuagintillion (10^237)
+            if (num >= 1e234)
+                return $"{num / 1e234:F2}SpSp";  // Septenseptuagintillion (10^234)
+            if (num >= 1e231)
+                return $"{num / 1e231:F2}SxSp";  // Sexseptuagintillion (10^231)
+            if (num >= 1e228)
+                return $"{num / 1e228:F2}QnSp";  // Quinseptuagintillion (10^228)
+            if (num >= 1e225)
+                return $"{num / 1e225:F2}QtSp";  // Quattuorseptuagintillion (10^225)
+            if (num >= 1e222)
+                return $"{num / 1e222:F2}TrSp";  // Treseptuagintillion (10^222)
+            if (num >= 1e219)
+                return $"{num / 1e219:F2}DuSp";  // Duoseptuagintillion (10^219)
+            if (num >= 1e216)
+                return $"{num / 1e216:F2}UnSp";  // Unseptuagintillion (10^216)
+            if (num >= 1e213)
+                return $"{num / 1e213:F2}Spt";   // Septuagintillion (10^213)
+            
+            // Sexagintillion range (10^183-10^210)
             if (num >= 1e210)
-                return $"{num / 1e210:F2}Sg";  // Septuagintillion
+                return $"{num / 1e210:F2}NnSx";  // Novemsexagintillion (10^210)
+            if (num >= 1e207)
+                return $"{num / 1e207:F2}OcSx";  // Octosexagintillion (10^207)
+            if (num >= 1e204)
+                return $"{num / 1e204:F2}SpSx";  // Septensexagintillion (10^204)
+            if (num >= 1e201)
+                return $"{num / 1e201:F2}SxSx";  // Sexsexagintillion (10^201)
+            if (num >= 1e198)
+                return $"{num / 1e198:F2}QnSx";  // Quinsexagintillion (10^198)
+            if (num >= 1e195)
+                return $"{num / 1e195:F2}QtSx";  // Quattuorsexagintillion (10^195)
+            if (num >= 1e192)
+                return $"{num / 1e192:F2}TrSx";  // Tresexagintillion (10^192)
+            if (num >= 1e189)
+                return $"{num / 1e189:F2}DuSx";  // Duosexagintillion (10^189)
+            if (num >= 1e186)
+                return $"{num / 1e186:F2}UnSx";  // Unsexagintillion (10^186)
+            if (num >= 1e183)
+                return $"{num / 1e183:F2}Sxt";   // Sexagintillion (10^183)
+            
+            // Quinquagintillion range (10^153-10^180)
             if (num >= 1e180)
-                return $"{num / 1e180:F2}Vg";  // Vigintillion
+                return $"{num / 1e180:F2}NnQg";  // Novemquinquagintillion (10^180)
+            if (num >= 1e177)
+                return $"{num / 1e177:F2}OcQg";  // Octoquinquagintillion (10^177)
+            if (num >= 1e174)
+                return $"{num / 1e174:F2}SpQg";  // Septenquinquagintillion (10^174)
+            if (num >= 1e171)
+                return $"{num / 1e171:F2}SxQg";  // Sexquinquagintillion (10^171)
+            if (num >= 1e168)
+                return $"{num / 1e168:F2}QnQg";  // Quinquinquagintillion (10^168)
+            if (num >= 1e165)
+                return $"{num / 1e165:F2}QtQg";  // Quattuorquinquagintillion (10^165)
+            if (num >= 1e162)
+                return $"{num / 1e162:F2}TrQg";  // Trequinquagintillion (10^162)
+            if (num >= 1e159)
+                return $"{num / 1e159:F2}DuQg";  // Duoquinquagintillion (10^159)
+            if (num >= 1e156)
+                return $"{num / 1e156:F2}UnQg";  // Unquinquagintillion (10^156)
+            if (num >= 1e153)
+                return $"{num / 1e153:F2}Qgg";   // Quinquagintillion (10^153)
+            
+            // Quadragintillion range (10^123-10^150)
             if (num >= 1e150)
-                return $"{num / 1e150:F2}Qg";  // Quinquagintillion
+                return $"{num / 1e150:F2}NnQd";  // Novemquadragintillion (10^150)
+            if (num >= 1e147)
+                return $"{num / 1e147:F2}OcQd";  // Octoquadragintillion (10^147)
+            if (num >= 1e144)
+                return $"{num / 1e144:F2}SpQd";  // Septenquadragintillion (10^144)
+            if (num >= 1e141)
+                return $"{num / 1e141:F2}SxQd";  // Sexquadragintillion (10^141)
+            if (num >= 1e138)
+                return $"{num / 1e138:F2}QnQd";  // Quinquadragintillion (10^138)
+            if (num >= 1e135)
+                return $"{num / 1e135:F2}QtQd";  // Quattuorquadragintillion (10^135)
+            if (num >= 1e132)
+                return $"{num / 1e132:F2}TrQd";  // Trequadragintillion (10^132)
+            if (num >= 1e129)
+                return $"{num / 1e129:F2}DuQd";  // Duoquadragintillion (10^129)
+            if (num >= 1e126)
+                return $"{num / 1e126:F2}UnQd";  // Unquadragintillion (10^126)
+            if (num >= 1e123)
+                return $"{num / 1e123:F2}Qdt";   // Quadragintillion (10^123)
+            
+            // Trigintillion range (10^93-10^120)
             if (num >= 1e120)
-                return $"{num / 1e120:F2}Tt";  // Trigintillion
+                return $"{num / 1e120:F2}NnTg";  // Novemtrigintillion (10^120)
+            if (num >= 1e117)
+                return $"{num / 1e117:F2}OcTg";  // Octotrigintillion (10^117)
+            if (num >= 1e114)
+                return $"{num / 1e114:F2}SpTg";  // Septentrigintillion (10^114)
+            if (num >= 1e111)
+                return $"{num / 1e111:F2}SxTg";  // Sextrigintillion (10^111)
+            if (num >= 1e108)
+                return $"{num / 1e108:F2}QnTg";  // Quintrigintillion (10^108)
+            if (num >= 1e105)
+                return $"{num / 1e105:F2}QtTg";  // Quattuortrigintillion (10^105)
+            if (num >= 1e102)
+                return $"{num / 1e102:F2}TrTg";  // Tretrigintillion (10^102)
+            if (num >= 1e99)
+                return $"{num / 1e99:F2}DuTg";   // Duotrigintillion (10^99)
+            if (num >= 1e96)
+                return $"{num / 1e96:F2}UnTg";   // Untrigintillion (10^96)
+            if (num >= 1e93)
+                return $"{num / 1e93:F2}Tgt";    // Trigintillion (10^93)
+            
+            // Vigintillion range (10^63-10^90)
             if (num >= 1e90)
-                return $"{num / 1e90:F2}Dg";   // Decillion
+                return $"{num / 1e90:F2}NnVg";   // Novemvigintillion (10^90)
+            if (num >= 1e87)
+                return $"{num / 1e87:F2}OcVg";   // Octovigintillion (10^87)
+            if (num >= 1e84)
+                return $"{num / 1e84:F2}SpVg";   // Septenvigintillion (10^84)
+            if (num >= 1e81)
+                return $"{num / 1e81:F2}SxVg";   // Sexvigintillion (10^81)
+            if (num >= 1e78)
+                return $"{num / 1e78:F2}QnVg";   // Quinvigintillion (10^78)
+            if (num >= 1e75)
+                return $"{num / 1e75:F2}QtVg";   // Quattuorvigintillion (10^75)
+            if (num >= 1e72)
+                return $"{num / 1e72:F2}TrVg";   // Trevigintillion (10^72)
+            if (num >= 1e69)
+                return $"{num / 1e69:F2}DuVg";   // Duovigintillion (10^69)
+            if (num >= 1e66)
+                return $"{num / 1e66:F2}UnVg";   // Unvigintillion (10^66)
+            if (num >= 1e63)
+                return $"{num / 1e63:F2}Vgt";    // Vigintillion (10^63)
+            
+            // Decillion range (10^33-10^60)
             if (num >= 1e60)
-                return $"{num / 1e60:F2}Vl";   // Vigintillion
+                return $"{num / 1e60:F2}NvDc";   // Novemdecillion (10^60)
+            if (num >= 1e57)
+                return $"{num / 1e57:F2}OcDc";   // Octodecillion (10^57)
             if (num >= 1e54)
-                return $"{num / 1e54:F2}Nl";   // Novendecillion
+                return $"{num / 1e54:F2}SpDc";   // Septendecillion (10^54)
             if (num >= 1e51)
-                return $"{num / 1e51:F2}Sd";   // Sexdecillion
+                return $"{num / 1e51:F2}SxDc";   // Sexdecillion (10^51)
             if (num >= 1e48)
-                return $"{num / 1e48:F2}Qd";   // Quindecillion
+                return $"{num / 1e48:F2}QnDc";   // Quindecillion (10^48)
             if (num >= 1e45)
-                return $"{num / 1e45:F2}Qt";   // Quattuordecillion
+                return $"{num / 1e45:F2}QtDc";   // Quattuordecillion (10^45)
             if (num >= 1e42)
-                return $"{num / 1e42:F2}Td";   // Tredecillion
+                return $"{num / 1e42:F2}TrDc";   // Tredecillion (10^42)
             if (num >= 1e39)
-                return $"{num / 1e39:F2}Dd";   // Duodecillion
+                return $"{num / 1e39:F2}DuDc";   // Duodecillion (10^39)
             if (num >= 1e36)
-                return $"{num / 1e36:F2}Ud";   // Undecillion
+                return $"{num / 1e36:F2}UnDc";   // Undecillion (10^36)
             if (num >= 1e33)
-                return $"{num / 1e33:F2}Dc";   // Decillion
+                return $"{num / 1e33:F2}Dc";     // Decillion (10^33)
+            
+            // Standard range (10^3-10^30)
             if (num >= 1e30)
-                return $"{num / 1e30:F2}No";   // Nonillion
+                return $"{num / 1e30:F2}No";     // Nonillion (10^30)
             if (num >= 1e27)
-                return $"{num / 1e27:F2}Oc";   // Octillion
+                return $"{num / 1e27:F2}Oc";     // Octillion (10^27)
             if (num >= 1e24)
-                return $"{num / 1e24:F2}Sp";   // Septillion
+                return $"{num / 1e24:F2}Sp";     // Septillion (10^24)
             if (num >= 1e21)
-                return $"{num / 1e21:F2}Sx";   // Sextillion
+                return $"{num / 1e21:F2}Sx";     // Sextillion (10^21)
             if (num >= 1e18)
-                return $"{num / 1e18:F2}Qn";   // Quintillion
+                return $"{num / 1e18:F2}Qn";     // Quintillion (10^18)
             if (num >= 1e15)
-                return $"{num / 1e15:F2}Qd";   // Quadrillion
+                return $"{num / 1e15:F2}Qa";     // Quadrillion (10^15)
             if (num >= 1e12)
-                return $"{num / 1e12:F2}T";    // Trillion
+                return $"{num / 1e12:F2}T";      // Trillion (10^12)
             if (num >= 1e9)
-                return $"{num / 1e9:F2}B";     // Billion
+                return $"{num / 1e9:F2}B";       // Billion (10^9)
             if (num >= 1e6)
-                return $"{num / 1e6:F2}M";     // Million
+                return $"{num / 1e6:F2}M";       // Million (10^6)
             if (num >= 1e3)
-                return $"{num / 1e3:F2}K";     // Thousand
-            return $"{Math.Round(num, 1)}";     // Less than 1000, show actual number
+                return $"{num / 1e3:F2}K";       // Thousand (10^3)
+            return $"{Math.Round(num, 1)}";       // Less than 1000, show actual number
         }
     }
 }

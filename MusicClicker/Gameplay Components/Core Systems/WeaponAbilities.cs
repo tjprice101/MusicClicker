@@ -3573,7 +3573,8 @@ namespace MusicClicker.Armory
         }
         
         /// <summary>
-        /// Dies Irae Duet: Consume 15 or more Wrathful Seals for 5 note-doubling clicks
+        /// Dies Irae Duet: Consume 15 or more Wrathful Seals for 5 Infernal Symphony clicks
+        /// Formula: NPC × NPS × log₁₀(Notes+1)^8 per click
         /// </summary>
         public static void DiesIrae_ConsumeDuetWrathfulSeals(GameState gameState)
         {
@@ -3601,6 +3602,453 @@ namespace MusicClicker.Armory
             
             // Update the main window's crescendance panel
             mainWindow.UpdateMainClairDeLuneCrescendanceInfo();
+        }
+        
+        #endregion
+        
+        // =================== MERCURY MAJOR SCORE EFFECTS ===================
+        #region Mercury Crescendance: The Winged Messenger
+        
+        /// <summary>
+        /// Mercury Crescendance: On every click, passively gain Swift Resonance stacks
+        /// </summary>
+        public static void MercuryCrescendance_OnClick(GameState gameState, object uiContext)
+        {
+            if (!gameState.MercuryMajorAbility) return;
+            
+            gameState.MercuryCrescendanceClickCounter++;
+            
+            // Passively gain 1 Swift Resonance every 5 clicks
+            if (gameState.MercuryCrescendanceClickCounter % 5 == 0)
+            {
+                gameState.SwiftResonanceStacks++;
+            }
+        }
+        
+        /// <summary>
+        /// Mercury Ability 1: Herald's Descent - Double notes, gain 5 Swift Resonance (15s cooldown)
+        /// </summary>
+        public static void Mercury_HeraldsDescent(GameState gameState)
+        {
+            if (!gameState.MercuryMajorAbility) return;
+            if (DateTime.Now < gameState.MercuryHeraldDescentCooldownExpiry) return;
+            
+            double currentNotes = MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes);
+            MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, currentNotes);
+            gameState.SwiftResonanceStacks += 5;
+            gameState.MercuryHeraldDescentCooldownExpiry = DateTime.Now.AddSeconds(15);
+        }
+        
+        /// <summary>
+        /// Mercury Ability 2: Resonant Transformation - Convert Swift Resonance to Herald's Message + 250 EM
+        /// </summary>
+        public static void Mercury_ResonantTransformation(GameState gameState)
+        {
+            if (!gameState.MercuryMajorAbility) return;
+            if (gameState.SwiftResonanceStacks < 1) return;
+            
+            gameState.SwiftResonanceStacks--;
+            gameState.HeraldsMessageStacks++;
+            gameState.EntropicMelodies += 250;
+            
+            if (gameState.MercurialOvertureAbility)
+            {
+                gameState.PlanetaryAlignmentStacks++;
+                gameState.MessengerOfPlanetaryResonanceCritsRemaining += 5;
+            }
+        }
+        
+        /// <summary>
+        /// Mercury Ability 3: Symphony's Bounty - Consume 3 Herald's Message for EM and NPS^25 notes
+        /// </summary>
+        public static void Mercury_SymphonysBounty(GameState gameState)
+        {
+            if (!gameState.MercuryMajorAbility) return;
+            if (gameState.HeraldsMessageStacks < 3) return;
+            
+            gameState.HeraldsMessageStacks -= 3;
+            long totalMinors = gameState.MoonlightMinorOwned + gameState.EroicaMinorOwned + 
+                              gameState.SwanMinorOwned + gameState.LaCampanellaMinorOwned +
+                              gameState.EnigmaMinorOwned + gameState.FateMinorOwned + gameState.OdeToJoyMinorOwned;
+            int entropicGain = (int)(totalMinors * 5);
+            gameState.EntropicMelodies += entropicGain;
+            
+            // Grant NPS × NPC × log₁₀(NPS+1)^25 notes (logarithmic scaling to prevent overflow)
+            double nps = gameState.NotesPerSecond;
+            double npc = gameState.NotesPerClick;
+            double logFactor = Math.Pow(Math.Log10(nps + 1) + 1, 25);
+            double npsBonus = nps * npc * logFactor;
+            npsBonus = MusicClicker.Helpers.AtomicDouble.SafeValue(npsBonus);
+            MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, npsBonus);
+        }
+        
+        /// <summary>
+        /// Mercury Weapon 1: Mercurial Overture - Every 3rd click passive
+        /// </summary>
+        public static void Mercury_MercurialOverture_OnClick(GameState gameState)
+        {
+            if (!gameState.MercurialOverture && !gameState.MercurialOvertureAbility) return;
+            gameState.MercuryWeapon1ClickCounter++;
+            if (gameState.MercuryWeapon1ClickCounter >= 3)
+            {
+                gameState.MercuryWeapon1ClickCounter = 0;
+                gameState.MercuryWeapon1NextClickBonus = true;
+            }
+        }
+        
+        public static double Mercury_MercurialOverture_GetClickBonus(GameState gameState)
+        {
+            if (gameState.MercuryWeapon1NextClickBonus)
+            {
+                gameState.MercuryWeapon1NextClickBonus = false;
+                double npc = gameState.NotesPerClick;
+                return (npc * npc) + (gameState.EntropicMelodies * 1000);
+            }
+            return 0;
+        }
+        
+        /// <summary>
+        /// Mercury Weapon 2: Wing of the Messenger - Every 50th click adds to lowest minor
+        /// </summary>
+        public static void Mercury_WingOfTheMessenger_OnClick(GameState gameState)
+        {
+            if (!gameState.WingOfTheMessenger && !gameState.WingOfTheMessengerAbility) return;
+            gameState.MercuryWeapon2ClickCounter++;
+            if (gameState.MercuryWeapon2ClickCounter >= 50)
+            {
+                gameState.MercuryWeapon2ClickCounter = 0;
+                int minorsToAdd = gameState.EntropicMelodies / 5;
+                if (minorsToAdd < 1) minorsToAdd = 1;
+                
+                long[] minorCounts = { gameState.MoonlightMinorOwned, gameState.EroicaMinorOwned,
+                    gameState.SwanMinorOwned, gameState.LaCampanellaMinorOwned,
+                    gameState.EnigmaMinorOwned, gameState.FateMinorOwned, gameState.OdeToJoyMinorOwned };
+                
+                long lowestCount = long.MaxValue;
+                int lowestIndex = 0;
+                for (int i = 0; i < minorCounts.Length; i++)
+                {
+                    if (minorCounts[i] < lowestCount) { lowestCount = minorCounts[i]; lowestIndex = i; }
+                }
+                
+                switch (lowestIndex)
+                {
+                    case 0: gameState.MoonlightMinorOwned += minorsToAdd; break;
+                    case 1: gameState.EroicaMinorOwned += minorsToAdd; break;
+                    case 2: gameState.SwanMinorOwned += minorsToAdd; break;
+                    case 3: gameState.LaCampanellaMinorOwned += minorsToAdd; break;
+                    case 4: gameState.EnigmaMinorOwned += minorsToAdd; break;
+                    case 5: gameState.FateMinorOwned += minorsToAdd; break;
+                    case 6: gameState.OdeToJoyMinorOwned += minorsToAdd; break;
+                }
+            }
+        }
+        
+        public static void Mercury_ConsumePlanetaryAlignment(GameState gameState)
+        {
+            if (!gameState.WingOfTheMessengerAbility) return;
+            if (gameState.PlanetaryAlignmentStacks < 1) return;
+            gameState.PlanetaryAlignmentStacks--;
+            gameState.ThousandWingedSymphonyCritsRemaining += 5;
+        }
+        
+        /// <summary>
+        /// Mercury Duet Option 1: Divine Proclamation - Triple notes, double EM (3 min cooldown)
+        /// </summary>
+        public static void Mercury_DuetDivineProclamation(GameState gameState)
+        {
+            if (DateTime.Now < gameState.MercuryDuetCooldownExpiry) return;
+            
+            double currentNotes = MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes);
+            MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, currentNotes * 2);
+            gameState.EntropicMelodies *= 2;
+            gameState.MercuryDuetCooldownExpiry = DateTime.Now.AddMinutes(3);
+        }
+        
+        /// <summary>
+        /// Mercury Duet Option 2: Fate's Grand Message - Consume all stacks for NPS^(stacks) crits (8 min cooldown)
+        /// </summary>
+        public static void Mercury_DuetFatesGrandMessage(GameState gameState)
+        {
+            if (DateTime.Now < gameState.MercuryDuetCooldownExpiry) return;
+            
+            int totalStacks = gameState.SwiftResonanceStacks + gameState.HeraldsMessageStacks + gameState.PlanetaryAlignmentStacks;
+            
+            if (totalStacks > 0)
+            {
+                gameState.SwiftResonanceStacks = 0;
+                gameState.HeraldsMessageStacks = 0;
+                gameState.PlanetaryAlignmentStacks = 0;
+                gameState.MessengerOfFateMelodyCritsRemaining += 10;
+                gameState.MercuryDuetCooldownExpiry = DateTime.Now.AddMinutes(8);
+            }
+        }
+        
+        /// <summary>
+        /// Mercury Duet Option 3: Sacrificial Ascension - Sacrifice 75% notes for stacks and upgrades (5 min cooldown)
+        /// </summary>
+        public static void Mercury_DuetSacrificialAscension(GameState gameState)
+        {
+            if (DateTime.Now < gameState.MercuryDuetCooldownExpiry) return;
+            
+            double currentNotes = MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes);
+            double sacrifice = currentNotes * 0.75;
+            MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, -sacrifice);
+            
+            gameState.SwiftResonanceStacks += 3;
+            gameState.HeraldsMessageStacks += 3;
+            gameState.PlanetaryAlignmentStacks += 3;
+            
+            gameState.AriaOwned += 25;
+            gameState.RequiemOwned += 25;
+            gameState.OpusOwned += 25;
+            gameState.MagnumOpusOwned += 25;
+            gameState.ChordOwned += 25;
+            gameState.ScaleOwned += 25;
+            gameState.OrchestraOwned += 25;
+            gameState.SymphonyOwned += 25;
+            
+            gameState.MercuryDuetCooldownExpiry = DateTime.Now.AddMinutes(5);
+        }
+        
+        #endregion
+        
+        #region Mars Crescendance: Blade of Symphonic War
+        
+        /// <summary>
+        /// Mars Crescendance: Blade of Symphonic War
+        /// Charges 1% per click (0-300%), generates Resolute Fractal stacks above 100%
+        /// </summary>
+        public static void MarsCrescendance_OnClick(GameState gameState, MainWindow mainWindow)
+        {
+            if (!gameState.MarsMajorAbility) return;
+            
+            // Charge Blade by 1% per click
+            int chargeAmount = 1;
+            
+            // Quadruple charge rate during Annihilation Nocturne duet
+            if (gameState.MarsDuetActive)
+            {
+                chargeAmount *= 4;
+            }
+            
+            gameState.BladeOfSymphonicWarCharge += chargeAmount;
+            
+            // Generate Resolute Fractal stacks when above 100% (up to 300%)
+            if (gameState.BladeOfSymphonicWarCharge > 100)
+            {
+                int stacksToGenerate = (int)Math.Min(gameState.BladeOfSymphonicWarCharge - 100, chargeAmount);
+                gameState.ResoluteFractalStacks += stacksToGenerate;
+            }
+            
+            // Cap at 300%
+            if (gameState.BladeOfSymphonicWarCharge > 300)
+            {
+                gameState.BladeOfSymphonicWarCharge = 300;
+            }
+        }
+        
+        /// <summary>
+        /// Mars: Consume 1 Resolute Fractal for 5× current notes
+        /// Every 5th consumption grants 20 Infinite War of Harmony crits
+        /// </summary>
+        public static void Mars_ConsumeResoluteFractal(GameState gameState)
+        {
+            if (gameState.ResoluteFractalStacks < 1) return;
+            
+            gameState.ResoluteFractalStacks--;
+            gameState.ResoluteFractalConsumed++;
+            
+            // Grant 5× current notes (quintuple)
+            double currentNotes = MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes);
+            MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, currentNotes * 4); // Current + (Current × 4) = 5× total
+            
+            // Check for every 5th consumption → grant 5 Infinite War crits (each 4x more effective)
+            if (gameState.ResoluteFractalConsumed % 5 == 0)
+            {
+                gameState.InfiniteWarOfHarmonyCritsRemaining += 5;
+            }
+            
+            // Fractal of War Bond: Infinite War crits give Oblivion's Destruction stacks
+            // (This is handled in MainWindow crit application)
+            
+            // Consonance's Requiemic War Bond: Consumption gives NPC^156 for next 3 clicks
+            if (gameState.ConsonanceRequiemicWarAbility &&
+                (gameState.CurrentResonatedWeapon1 == "ConsonanceRequiemicWar" || gameState.CurrentResonatedWeapon2 == "ConsonanceRequiemicWar"))
+            {
+                gameState.ConsonanceRequiemBonusClicksRemaining += 3;
+            }
+        }
+        
+        /// <summary>
+        /// Mars: Consume ALL Resolute Fractals at once
+        /// Converts them to 5× notes each and triggers Infinite War crits
+        /// Any remainder (not divisible by 5) stays as Resolute Fractals
+        /// </summary>
+        public static void Mars_ConsumeAllResoluteFractals(GameState gameState)
+        {
+            if (gameState.ResoluteFractalStacks < 1) return;
+            
+            int totalStacks = gameState.ResoluteFractalStacks;
+            
+            // Calculate how many complete sets of 5 we can consume
+            int completeSets = totalStacks / 5;
+            int remainder = totalStacks % 5;
+            
+            // Consume all stacks (except remainder)
+            int stacksToConsume = totalStacks - remainder;
+            
+            if (stacksToConsume > 0)
+            {
+                // Apply 5× notes for each stack consumed
+                double currentNotes = MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes);
+                for (int i = 0; i < stacksToConsume; i++)
+                {
+                    currentNotes = currentNotes * 5; // Each consumption quintuples notes
+                }
+                // Set notes to the final value (subtract original to get the bonus)
+                double originalNotes = MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes);
+                MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, currentNotes - originalNotes);
+                
+                // Update consumed counter
+                gameState.ResoluteFractalConsumed += stacksToConsume;
+                
+                // Grant 5 Infinite War crits per complete set of 5
+                gameState.InfiniteWarOfHarmonyCritsRemaining += completeSets * 5;
+                
+                // Update remaining stacks
+                gameState.ResoluteFractalStacks = remainder;
+                
+                // Consonance's Requiemic War Bond: Consumption gives NPC^156 for next 3 clicks (per stack consumed)
+                if (gameState.ConsonanceRequiemicWarAbility &&
+                    (gameState.CurrentResonatedWeapon1 == "ConsonanceRequiemicWar" || gameState.CurrentResonatedWeapon2 == "ConsonanceRequiemicWar"))
+                {
+                    gameState.ConsonanceRequiemBonusClicksRemaining += stacksToConsume * 3;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Mars: Consume 5 Oblivion's Destruction for +30 to all owned minor scores
+        /// </summary>
+        public static void Mars_ConsumeOblivionsDestruction(GameState gameState)
+        {
+            if (gameState.OblivionsDestructionStacks < 5) return;
+            
+            gameState.OblivionsDestructionStacks -= 5;
+            
+            // Grant +30 to all owned minor scores
+            if (gameState.MelodiousOwned > 0) gameState.MelodiousOwned += 30;
+            if (gameState.HarmoniousOwned > 0) gameState.HarmoniousOwned += 30;
+            
+            // Consonance's Requiemic War Bond: Consumption gives NPC^156 for next 3 clicks
+            if (gameState.ConsonanceRequiemicWarAbility &&
+                (gameState.CurrentResonatedWeapon1 == "ConsonanceRequiemicWar" || gameState.CurrentResonatedWeapon2 == "ConsonanceRequiemicWar"))
+            {
+                gameState.ConsonanceRequiemBonusClicksRemaining += 3;
+            }
+        }
+        
+        /// <summary>
+        /// Get Infinite War of Harmony critical damage
+        /// Formula: NPC × log₁₀(BladeCharge+1)^4 (logarithmic scaling to prevent overflow)
+        /// </summary>
+        public static double Mars_GetInfiniteWarOfHarmonyCritDamage(GameState gameState)
+        {
+            double npc = gameState.NotesPerClick;
+            double logFactor = Math.Pow(Math.Log10(gameState.BladeOfSymphonicWarCharge + 1) + 1, 4);
+            double result = npc * gameState.BladeOfSymphonicWarCharge * logFactor;
+            return MusicClicker.Helpers.AtomicDouble.SafeValue(result);
+        }
+        
+        #endregion
+        
+        #region Mars Weapon 1: Fractal of War
+        
+        /// <summary>
+        /// Fractal of War Passive: Every 25th click doubles EM + grants +10 to all 8 upgrades
+        /// </summary>
+        public static void FractalOfWar_OnClick(GameState gameState)
+        {
+            if (!gameState.FractalOfWar && !gameState.FractalOfWarAbility) return;
+            if (gameState.CurrentResonatedWeapon1 != "FractalOfWar" && gameState.CurrentResonatedWeapon2 != "FractalOfWar") return;
+            
+            gameState.FractalOfWarClickCounter++;
+            
+            if (gameState.FractalOfWarClickCounter >= 25)
+            {
+                gameState.FractalOfWarClickCounter = 0;
+                
+                // Double Entropic Melodies
+                gameState.EntropicMelodies *= 2;
+                
+                // Grant +10 to all 8 upgrades
+                gameState.ChordOwned += 10;
+                gameState.ScaleOwned += 10;
+                gameState.OrchestraOwned += 10;
+                gameState.SymphonyOwned += 10;
+                gameState.AriaOwned += 10;
+                gameState.RequiemOwned += 10;
+                gameState.OpusOwned += 10;
+                gameState.MagnumOpusOwned += 10;
+            }
+        }
+        
+        #endregion
+        
+        #region Mars Weapon 2: Consonance's Requiemic War
+        
+        /// <summary>
+        /// Consonance's Requiemic War Passive: When upgrades increase, grant +5% current notes
+        /// This is checked in MainWindow when upgrades increase
+        /// </summary>
+        public static void ConsonanceRequiemicWar_OnUpgradeIncrease(GameState gameState)
+        {
+            if (!gameState.ConsonanceRequiemicWar && !gameState.ConsonanceRequiemicWarAbility) return;
+            if (gameState.CurrentResonatedWeapon1 != "ConsonanceRequiemicWar" && gameState.CurrentResonatedWeapon2 != "ConsonanceRequiemicWar") return;
+            
+            // Grant +5% current notes
+            double currentNotes = MusicClicker.Helpers.AtomicDouble.Read(ref gameState._notes);
+            MusicClicker.Helpers.AtomicDouble.Add(ref gameState._notes, currentNotes * 0.05);
+        }
+        
+        #endregion
+        
+        #region Mars Duet: Annihilation Nocturne
+        
+        /// <summary>
+        /// Mars Duet: Annihilation Nocturne
+        /// For 12 seconds, every click is an Annihilation Nocturne critical with NPC^(NPC/NPS) bonus and +2 to all owned majors
+        /// </summary>
+        public static void Mars_DuetAnnihilationNocturne(GameState gameState)
+        {
+            if (DateTime.Now < gameState.MarsDuetCooldownExpiry) return;
+            
+            // Set 12 second duration
+            gameState.MarsDuetExpiry = DateTime.Now.AddSeconds(12);
+            
+            // Fully charge Blade to 300%
+            gameState.BladeOfSymphonicWarCharge = 300;
+            
+            // 10 minute cooldown
+            gameState.MarsDuetCooldownExpiry = DateTime.Now.AddSeconds(600);
+        }
+        
+        /// <summary>
+        /// Helper: Add to minor score by index
+        /// </summary>
+        private static void AddToMinorByIndex(GameState gameState, int index, int amount)
+        {
+            switch (index)
+            {
+                case 0: gameState.MoonlightMinorOwned += amount; break;
+                case 1: gameState.EroicaMinorOwned += amount; break;
+                case 2: gameState.SwanMinorOwned += amount; break;
+                case 3: gameState.LaCampanellaMinorOwned += amount; break;
+                case 4: gameState.EnigmaMinorOwned += amount; break;
+                case 5: gameState.FateMinorOwned += amount; break;
+                case 6: gameState.OdeToJoyMinorOwned += amount; break;
+            }
         }
         
         #endregion

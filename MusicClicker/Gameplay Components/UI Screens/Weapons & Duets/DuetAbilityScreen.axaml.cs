@@ -109,6 +109,17 @@ namespace MusicClicker.Views
                 ApplyWinterTheme();
                 UpdateWinterStatus();
             }
+            // Mercury Duet
+            else if ((weapon1 == "MercurialOverture" && weapon2 == "WingOfTheMessenger") ||
+                     (weapon1 == "WingOfTheMessenger" && weapon2 == "MercurialOverture"))
+            {
+                if (DuetAbilityNameText != null)
+                    DuetAbilityNameText.Text = DuetDescriptions.Names.Mercury;
+                if (DuetAbilityDescriptionText != null)
+                    DuetAbilityDescriptionText.Text = DuetDescriptions.Full.Mercury;
+                ApplyMercuryTheme();
+                UpdateMercuryStatus();
+            }
             // Eroica Duet
             else if ((weapon1 == "SakurasBlossom" && weapon2 == "FuneralPrayer") ||
                      (weapon1 == "FuneralPrayer" && weapon2 == "SakurasBlossom"))
@@ -194,6 +205,38 @@ namespace MusicClicker.Views
                 UpdateOdeStatus();
                 // Hide other duet visuals
                 if (FateHourglassDisplay != null) FateHourglassDisplay.IsVisible = false;
+                if (VictoryMarchProgressBorder != null) VictoryMarchProgressBorder.IsVisible = false;
+            }
+            // Clair de Lune Duet: Chain of Temporality
+            else if ((weapon1 == "MetronomicDissonance" && weapon2 == "CelestialHorology") ||
+                     (weapon1 == "CelestialHorology" && weapon2 == "MetronomicDissonance"))
+            {
+                if (DuetAbilityNameText != null)
+                    DuetAbilityNameText.Text = DuetDescriptions.Names.ClairDeLune;
+                if (DuetAbilityDescriptionText != null)
+                    DuetAbilityDescriptionText.Text = DuetDescriptions.Full.ClairDeLune;
+                ApplyClairDeLuneTheme();
+                UpdateClairDeLuneStatus();
+                // Hide other duet visuals
+                if (FateHourglassDisplay != null) FateHourglassDisplay.IsVisible = false;
+                if (OdeStaffDisplay != null) OdeStaffDisplay.IsVisible = false;
+                if (VictoryMarchProgressBorder != null) VictoryMarchProgressBorder.IsVisible = false;
+                if (MarsClickCounterBorder != null) MarsClickCounterBorder.IsVisible = false;
+            }
+            // Mars Duet: Annihilation Nocturne
+            else if ((weapon1 == "FractalOfWar" && weapon2 == "ConsonanceRequiemicWar") ||
+                     (weapon1 == "ConsonanceRequiemicWar" && weapon2 == "FractalOfWar"))
+            {
+                if (DuetAbilityNameText != null)
+                    DuetAbilityNameText.Text = DuetDescriptions.Names.Mars;
+                if (DuetAbilityDescriptionText != null)
+                    DuetAbilityDescriptionText.Text = DuetDescriptions.Full.Mars;
+                ApplyMarsTheme();
+                UpdateMarsStatus();
+                // Show Mars click counter, hide other duet visuals
+                if (MarsClickCounterBorder != null) MarsClickCounterBorder.IsVisible = true;
+                if (FateHourglassDisplay != null) FateHourglassDisplay.IsVisible = false;
+                if (OdeStaffDisplay != null) OdeStaffDisplay.IsVisible = false;
                 if (VictoryMarchProgressBorder != null) VictoryMarchProgressBorder.IsVisible = false;
             }
         }
@@ -1040,6 +1083,217 @@ namespace MusicClicker.Views
             }
         }
 
+        private void ApplyMercuryTheme()
+        {
+            // Mercury: Light blue/silver theme (winged messenger)
+            if (TitleText != null)
+            {
+                TitleText.Foreground = new SolidColorBrush(Color.FromRgb(135, 206, 250)); // Light sky blue
+                TitleText.Effect = new DropShadowEffect 
+                { 
+                    Color = Color.FromRgb(192, 192, 192), // Silver shadow
+                    BlurRadius = 15, 
+                    Opacity = 0.8 
+                };
+            }
+            
+            if (ActivateButtonBorder != null)
+            {
+                ActivateButtonBorder.Background = new SolidColorBrush(Color.FromRgb(100, 200, 255)); // Bright light blue
+                ActivateButtonBorder.Effect = new DropShadowEffect 
+                { 
+                    Color = Color.FromRgb(255, 255, 255), // White glow
+                    BlurRadius = 20, 
+                    Opacity = 0.6 
+                };
+            }
+            
+            if (DuetAbilityNameText != null)
+            {
+                DuetAbilityNameText.Effect = new DropShadowEffect 
+                { 
+                    Color = Color.FromRgb(135, 206, 250), 
+                    BlurRadius = 12, 
+                    Opacity = 0.7 
+                };
+            }
+        }
+
+        private void UpdateMercuryStatus()
+        {
+            if (_gameState == null || DuetAbilityStatusText == null || ActivateDuetAbilityButton == null) return;
+
+            // Mercury Duet: Swift Delivery - Mercury's Haste
+            if (_gameState.MercuryDuetActive && _gameState.MercuryDuetExpiry > DateTime.Now)
+            {
+                double remaining = (_gameState.MercuryDuetExpiry - DateTime.Now).TotalSeconds;
+                DuetAbilityStatusText.Text = $"Mercury's Haste ACTIVE: {remaining:F1}s | Swift Resonance: {_gameState.SwiftResonanceStacks}";
+                DuetAbilityStatusText.Foreground = new SolidColorBrush(Color.FromRgb(135, 206, 250)); // Light blue (active)
+                ActivateDuetAbilityButton.Content = "HASTE ACTIVE";
+                ActivateDuetAbilityButton.IsEnabled = false;
+            }
+            else if (_gameState.MercuryDuetCooldownExpiry > DateTime.Now)
+            {
+                double cooldown = (_gameState.MercuryDuetCooldownExpiry - DateTime.Now).TotalSeconds;
+                DuetAbilityStatusText.Text = $"Cooldown: {cooldown:F1}s | Swift Resonance: {_gameState.SwiftResonanceStacks}";
+                DuetAbilityStatusText.Foreground = new SolidColorBrush(Color.FromRgb(233, 69, 96)); // Red
+                ActivateDuetAbilityButton.Content = "SWIFT DELIVERY";
+                ActivateDuetAbilityButton.IsEnabled = false;
+            }
+            else
+            {
+                DuetAbilityStatusText.Text = $"Ready! | Swift Resonance: {_gameState.SwiftResonanceStacks}";
+                DuetAbilityStatusText.Foreground = new SolidColorBrush(Color.FromRgb(78, 204, 163)); // Green
+                ActivateDuetAbilityButton.Content = "SWIFT DELIVERY";
+                ActivateDuetAbilityButton.IsEnabled = true;
+            }
+        }
+
+        private void ApplyClairDeLuneTheme()
+        {
+            // Clair de Lune: Soft moonlight blue/silver theme
+            if (TitleText != null)
+            {
+                TitleText.Foreground = new SolidColorBrush(Color.FromRgb(173, 216, 230)); // Light blue
+                TitleText.Effect = new DropShadowEffect 
+                { 
+                    Color = Color.FromRgb(100, 149, 237), // Cornflower blue
+                    BlurRadius = 15, 
+                    Opacity = 0.8 
+                };
+            }
+            
+            if (ActivateButtonBorder != null)
+            {
+                ActivateButtonBorder.Background = new SolidColorBrush(Color.FromRgb(70, 130, 180)); // Steel blue
+                ActivateButtonBorder.Effect = new DropShadowEffect 
+                { 
+                    Color = Color.FromRgb(173, 216, 230), // Light blue glow
+                    BlurRadius = 20, 
+                    Opacity = 0.6 
+                };
+            }
+            
+            if (DuetAbilityNameText != null)
+            {
+                DuetAbilityNameText.Effect = new DropShadowEffect 
+                { 
+                    Color = Color.FromRgb(173, 216, 230), 
+                    BlurRadius = 12, 
+                    Opacity = 0.7 
+                };
+            }
+        }
+
+        private void UpdateClairDeLuneStatus()
+        {
+            if (_gameState == null || DuetAbilityStatusText == null || ActivateDuetAbilityButton == null) return;
+
+            // Clair de Lune: Chain of Temporality
+            if (_gameState.DuetChainOfTemporalityActive && _gameState.DuetChainOfTemporalityExpiry > DateTime.Now)
+            {
+                double remaining = (_gameState.DuetChainOfTemporalityExpiry - DateTime.Now).TotalSeconds;
+                double multiplier = _gameState.DuetChainOfTemporalityNpcMultiplier;
+                DuetAbilityStatusText.Text = $"Active: {remaining:F1}s | NPC Multiplier: {multiplier:N0}×";
+                DuetAbilityStatusText.Foreground = new SolidColorBrush(Color.FromRgb(173, 216, 230)); // Light blue
+                ActivateDuetAbilityButton.Content = "CHAIN ACTIVE";
+                ActivateDuetAbilityButton.IsEnabled = false;
+            }
+            else if (_gameState.ClairDeLuneDuetCooldownExpiry > DateTime.Now)
+            {
+                double cooldown = (_gameState.ClairDeLuneDuetCooldownExpiry - DateTime.Now).TotalSeconds;
+                DuetAbilityStatusText.Text = $"Cooldown: {cooldown:F1}s";
+                DuetAbilityStatusText.Foreground = new SolidColorBrush(Color.FromRgb(233, 69, 96)); // Red
+                ActivateDuetAbilityButton.Content = "CHAIN OF TEMPORALITY";
+                ActivateDuetAbilityButton.IsEnabled = false;
+            }
+            else
+            {
+                DuetAbilityStatusText.Text = "Ready";
+                DuetAbilityStatusText.Foreground = new SolidColorBrush(Color.FromRgb(78, 204, 163)); // Green
+                ActivateDuetAbilityButton.Content = "CHAIN OF TEMPORALITY";
+                ActivateDuetAbilityButton.IsEnabled = true;
+            }
+        }
+
+        private void ApplyMarsTheme()
+        {
+            // Mars: Dark red/black flame theme (Bringer of War)
+            if (TitleText != null)
+            {
+                TitleText.Foreground = new SolidColorBrush(Color.FromRgb(255, 50, 50)); // Crimson red
+                TitleText.Effect = new DropShadowEffect 
+                { 
+                    Color = Color.FromRgb(30, 30, 30), // Black shadow
+                    BlurRadius = 15, 
+                    Opacity = 0.9 
+                };
+            }
+            
+            if (ActivateButtonBorder != null)
+            {
+                ActivateButtonBorder.Background = new SolidColorBrush(Color.FromRgb(139, 0, 0)); // Dark red button
+                ActivateButtonBorder.Effect = new DropShadowEffect 
+                { 
+                    Color = Color.FromRgb(255, 69, 0), // Orange-red glow
+                    BlurRadius = 20, 
+                    Opacity = 0.7 
+                };
+            }
+            
+            if (DuetAbilityNameText != null)
+            {
+                DuetAbilityNameText.Foreground = new SolidColorBrush(Color.FromRgb(255, 69, 0)); // Orange-red
+                DuetAbilityNameText.Effect = new DropShadowEffect 
+                { 
+                    Color = Colors.Black, 
+                    BlurRadius = 12, 
+                    Opacity = 0.8 
+                };
+            }
+        }
+
+        private void UpdateMarsStatus()
+        {
+            if (_gameState == null || DuetAbilityStatusText == null || ActivateDuetAbilityButton == null) return;
+
+            // Mars: Annihilation Nocturne
+            int rfStacks = _gameState.ResoluteFractalStacks;
+            int odStacks = _gameState.OblivionsDestructionStacks;
+            double bladeCharge = _gameState.BladeOfSymphonicWarCharge;
+            bool isActive = _gameState.MarsDuetActive;
+
+            // Hide the click counter - Mars duet is now time-based
+            if (MarsClickCounterBorder != null)
+            {
+                MarsClickCounterBorder.IsVisible = false;
+            }
+
+            if (_gameState.MarsDuetCooldownExpiry > DateTime.Now && !isActive)
+            {
+                double cooldown = (_gameState.MarsDuetCooldownExpiry - DateTime.Now).TotalSeconds;
+                DuetAbilityStatusText.Text = $"Cooldown: {cooldown:F1}s | Blade:{bladeCharge:F0}% RF:{rfStacks} OD:{odStacks}";
+                DuetAbilityStatusText.Foreground = new SolidColorBrush(Color.FromRgb(233, 69, 96)); // Red
+                ActivateDuetAbilityButton.Content = "RESONATE";
+                ActivateDuetAbilityButton.IsEnabled = false;
+            }
+            else if (isActive)
+            {
+                double timeRemaining = (_gameState.MarsDuetExpiry - DateTime.Now).TotalSeconds;
+                DuetAbilityStatusText.Text = $"ACTIVE: {timeRemaining:F1}s | Blade:{bladeCharge:F0}% RF:{rfStacks} OD:{odStacks}";
+                DuetAbilityStatusText.Foreground = new SolidColorBrush(Color.FromRgb(255, 215, 0)); // Gold for active
+                ActivateDuetAbilityButton.Content = "RESONATE";
+                ActivateDuetAbilityButton.IsEnabled = false;
+            }
+            else
+            {
+                DuetAbilityStatusText.Text = $"Ready | Blade:{bladeCharge:F0}% RF:{rfStacks} OD:{odStacks}";
+                DuetAbilityStatusText.Foreground = new SolidColorBrush(Color.FromRgb(78, 204, 163)); // Green
+                ActivateDuetAbilityButton.Content = "RESONATE";
+                ActivateDuetAbilityButton.IsEnabled = true;
+            }
+        }
+
         private void OnActivateButtonClicked(object? sender, RoutedEventArgs e)
         {
             if (_gameState == null) return;
@@ -1116,6 +1370,19 @@ namespace MusicClicker.Views
                     _gameState.FrozenNpsValue = _gameState.NotesPerSecond;
                     _gameState.NpsFreezeExpiry = DateTime.Now.AddSeconds(DuetDescriptions.Duration.Winter);
                     
+                    _cooldownTimer?.Start();
+                }
+            }
+            // Mercury Duet - Swift Delivery: Mercury's Haste
+            else if ((weapon1 == "MercurialOverture" && weapon2 == "WingOfTheMessenger") ||
+                     (weapon1 == "WingOfTheMessenger" && weapon2 == "MercurialOverture"))
+            {
+                if (_gameState.MercuryDuetCooldownExpiry <= DateTime.Now && !_gameState.MercuryDuetActive)
+                {
+                    // Activate Mercury's Haste for 30 seconds
+                    _gameState.MercuryDuetActive = true;
+                    _gameState.MercuryDuetExpiry = DateTime.Now.AddSeconds(30);
+                    _gameState.MercuryDuetStartingStacks = _gameState.SwiftResonanceStacks;
                     _cooldownTimer?.Start();
                 }
             }
@@ -1306,6 +1573,53 @@ namespace MusicClicker.Views
                     _gameState.Crescendo12Claimed = false;
                     _gameState.Crescendo16Claimed = false;
                 }
+            }
+
+            // Clair de Lune Duet - Chain of Temporality
+            else if ((weapon1 == "MetronomicDissonance" && weapon2 == "CelestialHorology") ||
+                     (weapon1 == "CelestialHorology" && weapon2 == "MetronomicDissonance"))
+            {
+                // Check if on cooldown
+                if (_gameState.ClairDeLuneDuetCooldownExpiry > DateTime.Now)
+                {
+                    // Still on cooldown, do nothing
+                    return;
+                }
+
+                if (_gameState.DuetChainOfTemporalityActive)
+                {
+                    // Deactivate and start cooldown
+                    _gameState.DuetChainOfTemporalityActive = false;
+                    _gameState.DuetChainOfTemporalityNpcMultiplier = 1.0;
+                    _gameState.ClairDeLuneDuetCooldownExpiry = DateTime.Now.AddSeconds(1800); // 30 minute cooldown
+                    _cooldownTimer?.Start();
+                }
+                else
+                {
+                    // Activate Chain of Temporality
+                    MusicClicker.Armory.WeaponAbilities.ClairDeLuneDuet_Activate(_gameState);
+                    _cooldownTimer?.Start();
+                }
+            }
+
+            // Mars Duet - Annihilation Nocturne
+            else if ((weapon1 == "FractalOfWar" && weapon2 == "ConsonanceRequiemicWar") ||
+                     (weapon1 == "ConsonanceRequiemicWar" && weapon2 == "FractalOfWar"))
+            {
+                // Check if on cooldown
+                if (_gameState.MarsDuetCooldownExpiry > DateTime.Now)
+                {
+                    // Still on cooldown, do nothing
+                    return;
+                }
+
+                // Activate Annihilation Nocturne
+                MusicClicker.Armory.WeaponAbilities.Mars_DuetAnnihilationNocturne(_gameState);
+                
+                // Heavy screen shake for annihilation
+                _mainWindow?.TriggerScreenShake(2.0, 400);
+                
+                _cooldownTimer?.Start();
             }
 
             UpdateAbilityDisplay();

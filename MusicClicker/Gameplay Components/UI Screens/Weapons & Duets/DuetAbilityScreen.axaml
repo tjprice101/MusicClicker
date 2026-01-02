@@ -112,6 +112,40 @@
                     </Grid>
                 </Border>
 
+                <!-- Mars Annihilation Nocturne Counter (only visible for Mars Duet) -->
+                <Border x:Name="MarsClickCounterBorder"
+                        Width="340"
+                        Height="26"
+                        Background="#2a0a0a"
+                        BorderBrush="#8B0000"
+                        BorderThickness="2"
+                        CornerRadius="12"
+                        Margin="0,3,0,0"
+                        IsVisible="False">
+                    <Grid>
+                        <Border x:Name="MarsClickCounterFill"
+                                HorizontalAlignment="Left"
+                                CornerRadius="10"
+                                Background="#DC143C"
+                                Width="0">
+                            <Border.Effect>
+                                <DropShadowEffect Color="#8B0000" BlurRadius="15" Opacity="0.8" />
+                            </Border.Effect>
+                        </Border>
+                        <TextBlock x:Name="MarsClickCounterText"
+                                   Text="0 / 100 Clicks"
+                                   FontSize="14"
+                                   FontWeight="Bold"
+                                   Foreground="#FFD700"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center">
+                            <TextBlock.Effect>
+                                <DropShadowEffect Color="Black" BlurRadius="5" Opacity="1.0" />
+                            </TextBlock.Effect>
+                        </TextBlock>
+                    </Grid>
+                </Border>
+
                 <!-- Fate Duet: Hourglass Reversal Visual (only visible for Fate Duet) -->
                 <Border x:Name="FateHourglassDisplay"
                         Width="340"

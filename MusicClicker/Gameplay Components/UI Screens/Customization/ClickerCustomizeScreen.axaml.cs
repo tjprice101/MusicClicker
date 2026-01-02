@@ -6,13 +6,14 @@
 
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.Media;
 using MusicClicker.Helpers;
 
 namespace MusicClicker.Views
 {
     /// <summary>
     /// Screen that allows players to customize the clicker button image.
-    /// Provides 16 clicker options that unlock based on major scores owned.
+    /// Provides 14 clicker options that unlock based on major scores owned.
     /// </summary>
     public partial class ClickerCustomizeScreen : UserControl
     {
@@ -21,6 +22,9 @@ namespace MusicClicker.Views
         
         // Reference to main window so we can change the clicker image
         private MainWindow? _mainWindow;
+        
+        // Track which option is currently applied (0 = none/default)
+        private int _currentAppliedOption = 0;
 
         /// <summary>
         /// Sets references to game state and main window.
@@ -71,7 +75,7 @@ namespace MusicClicker.Views
 
         /// <summary>
         /// Connects each clicker option button to the selection handler.
-        /// Each button is linked to option number 1-16.
+        /// Each button is linked to option number 1-14.
         /// </summary>
         private void InitializeClickerOptions()
         {
@@ -89,8 +93,82 @@ namespace MusicClicker.Views
             ClickerOption12.Click += (s, e) => HandleClickerSelection(12);
             ClickerOption13.Click += (s, e) => HandleClickerSelection(13);
             ClickerOption14.Click += (s, e) => HandleClickerSelection(14);
-            ClickerOption15.Click += (s, e) => HandleClickerSelection(15);
-            ClickerOption16.Click += (s, e) => HandleClickerSelection(16);
+        }
+        
+        /// <summary>
+        /// Gets the display name for a major score option
+        /// </summary>
+        private string GetScoreDisplayName(int option)
+        {
+            return option switch
+            {
+                3 => "Moonlight Sonata",
+                4 => "Eroica",
+                5 => "Swan Lake",
+                6 => "La Campanella",
+                7 => "Enigma Variations",
+                8 => "Fate",
+                9 => "Ode to Joy",
+                10 => "Dies Irae",
+                11 => "Winter",
+                12 => "Mercury",
+                13 => "Clair de Lune",
+                14 => "Mars",
+                _ => ""
+            };
+        }
+        
+        /// <summary>
+        /// Gets the TextBlock for a given option number
+        /// </summary>
+        private TextBlock? GetTextBlockForOption(int option)
+        {
+            return option switch
+            {
+                1 => ClickerText1,
+                2 => ClickerText2,
+                3 => ClickerText3,
+                4 => ClickerText4,
+                5 => ClickerText5,
+                6 => ClickerText6,
+                7 => ClickerText7,
+                8 => ClickerText8,
+                9 => ClickerText9,
+                10 => ClickerText10,
+                11 => ClickerText11,
+                12 => ClickerText12,
+                13 => ClickerText13,
+                14 => ClickerText14,
+                _ => null
+            };
+        }
+        
+        /// <summary>
+        /// Updates text for an option based on ownership and applied state
+        /// </summary>
+        private void UpdateOptionText(int option, bool isOwned, bool isApplied)
+        {
+            var textBlock = GetTextBlockForOption(option);
+            if (textBlock == null) return;
+            
+            string scoreName = GetScoreDisplayName(option);
+            
+            if (option == 1)
+            {
+                textBlock.Text = isApplied ? "Applied!" : "(Click to restore to default)";
+            }
+            else if (option == 2)
+            {
+                textBlock.Text = isApplied ? "Applied!" : (isOwned ? "All Majors Owned! Click to Apply" : "Requires all Non-Event Major Scores Owned");
+            }
+            else if (isOwned)
+            {
+                textBlock.Text = isApplied ? "Applied!" : $"{scoreName} Owned! Click to Apply";
+            }
+            else
+            {
+                textBlock.Text = $"Requires {scoreName} Major Owned";
+            }
         }
 
         /// <summary>
@@ -104,10 +182,10 @@ namespace MusicClicker.Views
 
             // Option 1: Always enabled (default clicker, no requirements)
             ClickerOption1.IsEnabled = true;
-            ClickerOption1.Background = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Colors.White);
+            ClickerOption1.Opacity = 1.0;
+            UpdateOptionText(1, true, _currentAppliedOption == 1);
 
             // Option 2: Requires ALL non-event major scores
-            // (Excludes Dies Irae and Winter which are event-only)
             bool allNonEventMajors =
                 _gameState.MoonlightMajorOwned > 0 &&
                 _gameState.EroicaMajorOwned > 0 &&
@@ -117,74 +195,80 @@ namespace MusicClicker.Views
                 _gameState.FateMajorOwned > 0 &&
                 _gameState.OdeToJoyMajorOwned > 0;
             ClickerOption2.IsEnabled = allNonEventMajors;
-            ClickerOption2.Background = new Avalonia.Media.SolidColorBrush(
-                allNonEventMajors ? Avalonia.Media.Colors.White : Avalonia.Media.Colors.Gray);
+            ClickerOption2.Opacity = allNonEventMajors ? 1.0 : 0.4;
+            UpdateOptionText(2, allNonEventMajors, _currentAppliedOption == 2);
 
             // Option 3: Requires Moonlight Sonata Major
             bool moonlight = _gameState.MoonlightMajorOwned > 0;
             ClickerOption3.IsEnabled = moonlight;
-            ClickerOption3.Background = new Avalonia.Media.SolidColorBrush(
-                moonlight ? Avalonia.Media.Colors.White : Avalonia.Media.Colors.Gray);
+            ClickerOption3.Opacity = moonlight ? 1.0 : 0.4;
+            UpdateOptionText(3, moonlight, _currentAppliedOption == 3);
 
             // Option 4: Requires Eroica Major
             bool eroica = _gameState.EroicaMajorOwned > 0;
             ClickerOption4.IsEnabled = eroica;
-            ClickerOption4.Background = new Avalonia.Media.SolidColorBrush(
-                eroica ? Avalonia.Media.Colors.White : Avalonia.Media.Colors.Gray);
+            ClickerOption4.Opacity = eroica ? 1.0 : 0.4;
+            UpdateOptionText(4, eroica, _currentAppliedOption == 4);
 
             // Option 5: Requires Swan Lake Major
             bool swan = _gameState.SwanMajorOwned > 0;
             ClickerOption5.IsEnabled = swan;
-            ClickerOption5.Background = new Avalonia.Media.SolidColorBrush(
-                swan ? Avalonia.Media.Colors.White : Avalonia.Media.Colors.Gray);
+            ClickerOption5.Opacity = swan ? 1.0 : 0.4;
+            UpdateOptionText(5, swan, _currentAppliedOption == 5);
 
             // Option 6: Requires La Campanella Major
             bool campanella = _gameState.LaCampanellaMajorOwned > 0;
             ClickerOption6.IsEnabled = campanella;
-            ClickerOption6.Background = new Avalonia.Media.SolidColorBrush(
-                campanella ? Avalonia.Media.Colors.White : Avalonia.Media.Colors.Gray);
+            ClickerOption6.Opacity = campanella ? 1.0 : 0.4;
+            UpdateOptionText(6, campanella, _currentAppliedOption == 6);
 
             // Option 7: Requires Enigma Major
             bool enigma = _gameState.EnigmaMajorOwned > 0;
             ClickerOption7.IsEnabled = enigma;
-            ClickerOption7.Background = new Avalonia.Media.SolidColorBrush(
-                enigma ? Avalonia.Media.Colors.White : Avalonia.Media.Colors.Gray);
+            ClickerOption7.Opacity = enigma ? 1.0 : 0.4;
+            UpdateOptionText(7, enigma, _currentAppliedOption == 7);
 
             // Option 8: Requires Fate Major
             bool fate = _gameState.FateMajorOwned > 0;
             ClickerOption8.IsEnabled = fate;
-            ClickerOption8.Background = new Avalonia.Media.SolidColorBrush(
-                fate ? Avalonia.Media.Colors.White : Avalonia.Media.Colors.Gray);
+            ClickerOption8.Opacity = fate ? 1.0 : 0.4;
+            UpdateOptionText(8, fate, _currentAppliedOption == 8);
 
             // Option 9: Requires Ode to Joy Major
             bool ode = _gameState.OdeToJoyMajorOwned > 0;
             ClickerOption9.IsEnabled = ode;
-            ClickerOption9.Background = new Avalonia.Media.SolidColorBrush(
-                ode ? Avalonia.Media.Colors.White : Avalonia.Media.Colors.Gray);
+            ClickerOption9.Opacity = ode ? 1.0 : 0.4;
+            UpdateOptionText(9, ode, _currentAppliedOption == 9);
 
             // Option 10: Requires Dies Irae Major (event score)
             bool dies = _gameState.DiesIraeOwned > 0;
             ClickerOption10.IsEnabled = dies;
-            ClickerOption10.Background = new Avalonia.Media.SolidColorBrush(
-                dies ? Avalonia.Media.Colors.White : Avalonia.Media.Colors.Gray);
+            ClickerOption10.Opacity = dies ? 1.0 : 0.4;
+            UpdateOptionText(10, dies, _currentAppliedOption == 10);
 
             // Option 11: Requires Winter Major (event score)
             bool winter = _gameState.WinterOwned > 0;
             ClickerOption11.IsEnabled = winter;
-            ClickerOption11.Background = new Avalonia.Media.SolidColorBrush(
-                winter ? Avalonia.Media.Colors.White : Avalonia.Media.Colors.Gray);
+            ClickerOption11.Opacity = winter ? 1.0 : 0.4;
+            UpdateOptionText(11, winter, _currentAppliedOption == 11);
 
-            // Options 12-16: Not yet implemented, disabled and grayed out
-            ClickerOption12.IsEnabled = false;
-            ClickerOption12.Background = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Colors.Gray);
-            ClickerOption13.IsEnabled = false;
-            ClickerOption13.Background = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Colors.Gray);
-            ClickerOption14.IsEnabled = false;
-            ClickerOption14.Background = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Colors.Gray);
-            ClickerOption15.IsEnabled = false;
-            ClickerOption15.Background = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Colors.Gray);
-            ClickerOption16.IsEnabled = false;
-            ClickerOption16.Background = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Colors.Gray);
+            // Option 12: Requires Mercury Major
+            bool mercury = _gameState.MercuryMajorOwned > 0;
+            ClickerOption12.IsEnabled = mercury;
+            ClickerOption12.Opacity = mercury ? 1.0 : 0.4;
+            UpdateOptionText(12, mercury, _currentAppliedOption == 12);
+
+            // Option 13: Requires Clair de Lune Major
+            bool clairDeLune = _gameState.ClairDeLuneMajorOwned > 0;
+            ClickerOption13.IsEnabled = clairDeLune;
+            ClickerOption13.Opacity = clairDeLune ? 1.0 : 0.4;
+            UpdateOptionText(13, clairDeLune, _currentAppliedOption == 13);
+
+            // Option 14: Requires Mars Major
+            bool mars = _gameState.MarsMajorOwned > 0;
+            ClickerOption14.IsEnabled = mars;
+            ClickerOption14.Opacity = mars ? 1.0 : 0.4;
+            UpdateOptionText(14, mars, _currentAppliedOption == 14);
         }
 
         /// <summary>
@@ -248,7 +332,18 @@ namespace MusicClicker.Views
                     if (!ClickerOption11.IsEnabled) return;
                     imageUri = "avares://MusicClicker/Gameplay Components/Resources/Assets/Score Icons/WinterIcon.jpg";
                     break;
-                // TODO: Add cases for options 12-16 when additional clicker images are added
+                case 12:
+                    if (!ClickerOption12.IsEnabled) return;
+                    imageUri = "avares://MusicClicker/Gameplay Components/Resources/Assets/Score Icons/MercuryClickerImage.jpg";
+                    break;
+                case 13:
+                    if (!ClickerOption13.IsEnabled) return;
+                    imageUri = "avares://MusicClicker/Gameplay Components/Resources/Assets/Score Icons/ClairDeLuneClickerImage.jpg";
+                    break;
+                case 14:
+                    if (!ClickerOption14.IsEnabled) return;
+                    imageUri = "avares://MusicClicker/Gameplay Components/Resources/Assets/Score Icons/MarsClickerImage.jpg";
+                    break;
                 default:
                     return; // Invalid option number
             }
@@ -266,6 +361,10 @@ namespace MusicClicker.Views
                 {
                     clickerImage.Source = bmp;
                     _gameState.CurrentClickerImage = imageUri;
+                    
+                    // Track applied option and update text states
+                    _currentAppliedOption = optionNumber;
+                    UpdateButtonStates();
                 }
             }
         }
